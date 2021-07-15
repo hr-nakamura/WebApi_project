@@ -120,6 +120,7 @@
     <Content Include="_home\Util\viewXML\viewXML.html" />
     <Content Include="_home\Util\viewXML\viewXmlWindow.js" />
     <Content Include="_home\viewValue.html" />
+    <Content Include="_home\debug\debug.ashx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Data\iniFile.cs" />
@@ -160,7 +161,6 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-    <Content Include="_home\debug\debug.ashx" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>
@@ -181,8 +181,7 @@
           <IISUrl>https://localhost:44308/WebApi/project</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
+          <CustomServerUrl>http://kansa.in.eandm.co.jp/WebApi/project</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
