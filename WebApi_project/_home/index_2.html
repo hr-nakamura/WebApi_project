@@ -1,0 +1,282 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="/WebApi/project/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+
+    <script src="/WebApi/project/_home/Scripts/json2.js" type="text/javascript"></script>
+    <script src="/WebApi/project/_home/Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
+    <script src="/WebApi/project/_home/debug/jquery.my.debug.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var debug_mode = true;
+        var WebApi_url = "http://192.168.86.226/WebApi/project/api/values";
+        var WebApi_url = "/WebApi/project/api/values";
+        var WebApi_url_json = "/WebApi/project/api/json";
+        var Send_JsonData = {
+            Item: "Item", Func: "Func", Json: JSON.stringify({ a: "aaaa", b: "bbbbb" })
+        };
+        var Send_Option = { a: "aaaa", b: "bbbbb" };
+    </script>
+    <script type="text/javascript">
+
+        window.onload = function () {
+            $.debug("Start");
+            var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
+            var x = window.location.pathname.split("/");
+            //alert(hostName);
+            WebApi_url = hostName + "/WebApi/project/api/values";
+            WebApi_url_json = "/WebApi/project/api/json";
+            window.status = "[" + WebApi_url + "]"
+        }
+    </script>
+    <script type="text/javascript">
+        function call_ajax_api(mode, url, item, func, json, callback) {
+            $.debug("call_ajax_mode[" + mode + "]", url);
+            window.status = "call_ajax_api[" + mode + "]";
+            var options = {
+                Item: item,
+                Func: func,
+                Json: JSON.stringify(json)
+            };
+            var result = $.ajax({
+                url: url,
+                type: mode,
+                data: options,
+                dataType: 'text',
+                dataFilter: function (data, type) {
+                    return (data);
+                },
+                //contentType: "application/json",
+                //contentType: "application/xml",
+                //contentType: "text/plain",
+                async: false
+            }).done(function (data, status, xhr) {
+                returnValue = data.replace(/\"$/, "").replace(/^\"/, "");
+                //$.alert(returnValue);
+            }).fail(function (xhr, status, error) {
+                returnValue = status;
+                window.status = xhr.statusText;
+                $.alert("call_ajax_api error:" + xhr.statusText);
+            });
+            return (returnValue);
+        }
+        function call_ajax_api_json(mode, url, item, func, json, callback) {
+            $.debug("call_ajax_api_json[" + mode + "]", url);
+            window.status = "call_ajax_api_json[" + mode + "]";
+            var options = {
+                Item: item,
+                Func: func,
+                Json: JSON.stringify(json)
+            };
+            var result = $.ajax({
+                url: url,
+                type: mode,
+                data: options,
+                dataType: 'json',
+                dataFilter: function (data, type) {
+                    return (data);
+                },
+                //contentType: "application/json",
+                //contentType: "application/xml",
+                //contentType: "text/plain",
+                async: false
+            }).done(function (data, status, xhr) {
+                returnValue = data;
+            }).fail(function (xhr, status, error) {
+                returnValue = status;
+                window.status = xhr.statusText;
+                $.alert("call_ajax_api_json error:" + xhr.statusText);
+            });
+            return (returnValue);
+        }
+        function call_ajax_get(url, options) {
+
+            // 受信側でidを指定したときは設定しないとエラーとなる
+            // 漢字は渡せない
+            //url += "?name5=漢字&Mssage=ABCDEF";
+            // ajax:dataで渡したらモデュールでも受信できるが引数指定でも受信できる
+            // 漢字も OK
+            // Get では「data」を替えると複数のパラメータで呼べる
+
+            $.debug("call_ajax_get",url);
+            window.status = "call_ajax_get";
+            var result = $.ajax({
+                url: url,
+                type: "GET",
+                data: options,
+                dataType: 'text',
+                dataFilter: function (data, type) {
+                    return (data);
+                },
+                //contentType: "application/xml",
+                //contentType: "text/plain",
+                async: false
+            }).done(function (data, status, xhr) {
+                returnValue = data.replace(/\"$/, "").replace(/^\"/, "");
+                //$.alert(returnValue);
+            }).fail(function (xhr, status, error) {
+                returnValue = status;
+                //$.alert("error:" + xhr.statusText);
+                window.status = "error:" + xhr.statusText;
+            });
+            return (returnValue);
+        }
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $(".user_json_get").on("click", function () {
+                var Item = "projectBBS";
+                var Func = "projectList";
+//                var work = call_ajax_api_json("GET", WebApi_url_json, Item, Func, Send_Option);
+                var work = call_ajax_api_json("GET", WebApi_url_json);
+                $.alert.json(work);
+
+            });
+
+//=============================================================
+
+            $(".user_get").on("click", function () {
+                var url = ($(this).attr("mode") == "json" ? WebApi_url_json : WebApi_url)
+                var Str = call_ajax_get(url);
+                StrOut(Str);
+            });
+            $(".user_get_A").on("click", function () {
+                var Item = "projectBBS";
+                var Func = "projectList_A";
+                var url = ($(this).attr("mode") == "json" ? WebApi_url_json : WebApi_url)
+                var Str = call_ajax_api("GET", url, Item, Func, Send_Option);
+                StrOut(Str);
+            });
+            $(".user_get_B").on("click", function () {
+                var Item = "projectBBS";
+                var Func = "projectList_B";
+                var url = ($(this).attr("mode") == "json" ? WebApi_url_json : WebApi_url)
+                var Str = call_ajax_api("GET", url, Item, Func, Send_Option);
+                StrOut(Str);
+            });
+            $(".user_post").on("click", function () {
+                var Item = "売上予測";
+                var Func = "売上予実_新規";
+                var url = ($(this).attr("mode") == "json" ? WebApi_url_json : WebApi_url)
+                var Str = call_ajax_api("POST", url, Item, Func, Send_Option);
+                StrOut(Str);
+            });
+            $(".user_put_start").on("click", function () {
+                var Item = "projectBBS_X";
+                var Func = "projectList";
+                var url = ($(this).attr("mode") == "json" ? WebApi_url_json : WebApi_url)
+                var Str = call_ajax_api("PUT", url, Item, Func, Send_Option);
+                StrOut(Str);
+            });
+            $(".user_put_stop").on("click", function () {
+                var Item = "projectBBS";
+                var Func = "projectList_X";
+                var url = ($(this).attr("mode") == "json" ? WebApi_url_json : WebApi_url)
+                var Str = call_ajax_api("PUT", url, Item, Func, Send_Option);
+                StrOut(Str);
+            });
+            $(".user_put_read").on("click", function () {
+                var Item = "売上予測";
+                var Func = "売上予実_部門";
+                var url = ($(this).attr("mode") == "json" ? WebApi_url_json : WebApi_url)
+                var Str = call_ajax_api("PUT", url, Item, Func, Send_Option);
+                StrOut(Str);
+            });
+            $(".user_delete").on("click", function () {
+                var Item = "売上予測";
+                var Func = "売上予実_新規";
+                var url = ($(this).attr("mode") == "json" ? WebApi_url_json : WebApi_url)
+                var Str = call_ajax_api("DELETE", url, Item, Func, Send_Option);
+                StrOut(Str);
+            });
+
+        });
+        function StrOut(xmlStr) {
+            if ($.isJSON(xmlStr)) {
+                var work = JSON.stringify(xmlStr, null, 2);
+                $.alert("結果【JSON】",work);
+            }
+            else {
+                var xmlDoc = $.str2xml(xmlStr);
+                var err = $(xmlDoc).selectSingleNode("error");
+                if (err != null && err.childNodes.length > 0) {
+                    $.alert("＝＝　エラー　＝＝", err.childNodes[0].text);
+                }
+                else {
+                    $.alert("結果【XML】", xmlStr);
+                    var a = 1;
+                    //$("data", xmlStr).each(function (i, elem) {
+                    //    //$.debug(elem.id, $(elem).attr("class"), $(elem).text());
+                    //    var a = 1;
+                    //})
+                }
+            }
+        }
+
+    </script>
+
+</head>
+<body>
+    Project
+    <span class="location"></span>
+    <br />
+    <input type="button" class="user_json_get" value="user(GET) json" />
+    <br />
+    <hr />
+<table>
+<thead>
+    <tr>
+        <th>
+XML
+        </th>
+        <th>
+Json
+        </th>
+    </tr>
+</thead>
+    <tbody>
+        <tr>
+            <td>
+                <input type="button" class="user_get" value="user(GET)" />
+                <br />
+                <input type="button" class="user_get_A" value="user(GET_A)" />
+                <br />
+                <input type="button" class="user_get_B" value="user(GET_B)" />
+                <br />
+                <input type="button" class="user_post" value="user(POST)" />
+                <br />
+                <input type="button" class="user_put_start" value="user(PUT-Start)" />
+                <br />
+                <input type="button" class="user_put_stop" value="user(PUT-Stop)" />
+                <br />
+                <input type="button" class="user_put_read" value="user(PUT-Read)" />
+                <br />
+                <input type="button" class="user_delete" value="user(DELETE)" />
+                <br />
+
+            </td>
+            <td>
+                <input type="button" class="user_get" value="user(GET)" mode="json" />
+                <br />
+                <input type="button" class="user_get_A" value="user(GET_A)"  mode="json" />
+                <br />
+                <input type="button" class="user_get_B" value="user(GET_B)" mode="json" />
+                <br />
+                <input type="button" class="user_post" value="user(POST)" mode="json" />
+                <br />
+                <input type="button" class="user_put_start" value="user(PUT-Start)" mode="json" />
+                <br />
+                <input type="button" class="user_put_stop" value="user(PUT-Stop)" mode="json" />
+                <br />
+                <input type="button" class="user_put_read" value="user(PUT-Read)" mode="json" />
+                <br />
+                <input type="button" class="user_delete" value="user(DELETE)" mode="json" />
+                <br />
+
+            </td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,46 @@
+﻿<ul class="sf-menu" id="menuBlock_content">
+	<li>
+	<div>projectBBS</div>
+		<ul>
+			<li>
+				<div class="menu_click" class_name="projectBBS" method_name="projectList_A">projectList_A</div>
+			</li>
+			<li>
+				<div class="menu_click" class_name="projectBBS" method_name="projectList">projectList</div>
+			</li>
+		</ul>
+	</li>
+	<li>
+	<div>売上予測</div>
+		<ul>
+			<li>
+				<div class="menu_click" class_name="売上予測" method_name="売上予実_分類">売上予実_分類</div>
+			</li>
+			<li>
+				<div class="menu_click" class_name="売上予測" method_name="売上予実_新規">売上予実_新規</div>
+			</li>
+			<li>
+				<div class="menu_click" class_name="売上予測" method_name="売上予実_部門">売上予実_部門</div>
+			</li>
+			<li>
+				<div class="menu_click" class_name="売上予測" method_name="売上目標_部門">売上目標_部門</div>
+			</li>
+		</ul>
+	</li>
+	<li>
+	<div>費用予測</div>
+		<ul>
+			<li>
+				<div class="menu_click" class_name="費用予測" method_name="費用状況">費用状況</div>
+			</li>
+		</ul>
+	</li>
+	<li>
+	<div>部門収支</div>
+		<ul>
+			<li>
+				<div class="menu_click" class_name="部門収支" method_name="部門収支_XML">部門収支_XML</div>
+			</li>
+		</ul>
+	</li>
+</ul>

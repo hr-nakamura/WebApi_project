@@ -1,0 +1,74 @@
+﻿body {
+    background-color: #fafafa;
+}
+.container {
+    margin: 150px auto;
+}
+
+.simpleXML ul {
+    list-style: none;
+    margin: 0px;
+    padding-left: 32px;
+}
+
+.simpleXML {
+    font-family: 'Courier New';
+    font-size: small;
+}
+
+.simpleXML-comment:after {
+    color: green;
+    content: "\a";
+    white-space: pre;
+}
+
+.simpleXML-tagHeader {
+    color: blue;
+}
+
+.simpleXML-cdata {
+    color: gray;
+}
+
+.simpleXML-tagValue {
+    color: brown;
+    font-weight: bold;
+}
+
+.simpleXML-collapsedText {
+    color: lightgray;
+}
+
+.simpleXML-attrName {
+    color: brown;
+    font-weight: bold;
+}
+
+.simpleXML-attrValue {
+    color: black;
+    font-weight: bold;
+}
+
+.simpleXML span.simpleXML-expander {
+    height: 12px;
+    width: 12px;
+    display: inline-block;
+}
+
+.simpleXML span.simpleXML-expanderClose:before {
+    content: "　";
+}
+
+.simpleXML span.simpleXML-expanderHeader {
+    cursor: pointer;
+}
+
+.simpleXML span.simpleXML-expander-expanded:before {
+    content: "-";
+    color: tomato;
+}
+
+.simpleXML span.simpleXML-expander-collapsed:before {
+    content: "+";
+    color: tomato;
+}
