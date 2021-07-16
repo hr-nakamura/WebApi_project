@@ -12,18 +12,20 @@
         window.onload = function () {
             $("#jsonBase,xmlBase").css("height", (window.parent.innerHeight - 70) + "px");
             var viewStr = $.storage("viewStr");
-            if ($.isXMLDoc($.str2xml(viewStr))) {
-                $("#xmlBase").show();
-                $("body").css("overflow-y", "visible");
-                //viewStr = $.xml2str($.loadXMLDoc("test.xsl"));
-                viewXML(viewStr);
-            }
-            else if ($.isJSON(viewStr)) {
+            if ($.isJSON(viewStr)) {
                 $("#jsonBase").show();
                 $("body").css("overflow-y", "hidden");
-
                 $("#jsonBase").text(viewStr);
 
+            }
+            else if ( $.isXMLDoc($.parseXML(viewStr))) {
+                $("#xmlBase").show();
+                $("body").css("overflow-y", "visible");
+                viewXML(viewStr);
+            }
+            else {
+                $("#jsonBase").show();
+                $("#jsonBase").text("\nデータはありません");
             }
 
 
@@ -33,7 +35,7 @@
                 $("#xmlBase").empty().simpleXML({ xmlString: xmlStr });
             } catch (e) {
                 $("#xmlBase").empty().append("Exception caught running plugin : " + e);
-                alert(e);
+                $.alert(e);
             }
 
             $("#dynamicXML-process").click(function () {

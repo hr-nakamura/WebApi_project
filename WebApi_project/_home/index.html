@@ -204,13 +204,6 @@
     </script>
     <script type="text/javascript">
         $(function () {
-            $(".user_execute").on("click", function () {
-                var Item = "projectBBS";
-                var Func = "projectList_B";
-                var url = (user_mode == "json" ? WebApi_url_json : WebApi_url)
-                var Str = call_ajax_api("GET", url, Item, Func, Send_Option);
-                StrOut(Str);
-            });
             $(".user_mode").on("click", function () {
                 user_mode = this.value;
             });
