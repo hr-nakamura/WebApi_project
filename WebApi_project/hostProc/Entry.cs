@@ -16,22 +16,25 @@ namespace WebApi_project.hostProc
         {
         //Debug.WriteLog("hostProcEntry End");
         }
-        public XmlDocument Entry(String Item, String Func, String Json)
+        public XmlDocument Entry(String Item, String Json)
         {
             XmlDocument xmlDoc = new XmlDocument();
             try
             {
+                string[] ItemWork = Item.Split('/');
+                string className = ItemWork[0];
+                string methodName = ItemWork[1];
 
-            String nameSpace = "WebApi_project.hostProc";
+                String nameSpace = "WebApi_project.hostProc";
 
-            Type classType = Type.GetType(nameSpace + "." + Item);
-            if (classType == null) throw new Exception("calss名[" + Item +"]が不明です");
-            var obj = Activator.CreateInstance(classType);
-            MethodInfo method = classType.GetMethod(Func);
-            if (method == null) throw new Exception("method名[" + Func + "]が不明です");
-            xmlDoc = (XmlDocument)method.Invoke(obj, new object[] { Json });
+                Type classType = Type.GetType(nameSpace + "." + className);
+                if (classType == null) throw new Exception("calss名[" + className + "]が不明です");
+                var obj = Activator.CreateInstance(classType);
+                MethodInfo method = classType.GetMethod(methodName);
+                if (method == null) throw new Exception("method名[" + methodName + "]が不明です");
+                xmlDoc = (XmlDocument)method.Invoke(obj, new object[] { Json });
 
-            return (xmlDoc);
+                return (xmlDoc);
             }
             catch (Exception ex)
             {

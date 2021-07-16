@@ -36,7 +36,7 @@ namespace WebApi_project.hostProc
         }
         public XmlDocument 売上予実_部門(String Json)
         {
-            var o_json = JsonConvert.DeserializeObject<SampleData3>(Json);
+            var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
 
             //XmlDocument xmlDoc = makeXmlDoc(para);
             XmlDocument xmlDoc = new XmlDocument();
@@ -44,12 +44,6 @@ namespace WebApi_project.hostProc
 
             return (xmlDoc);
         }
-        class SampleData3
-        {
-            public string a { get; set; }
-            public string b { get; set; }
-        }
-
     }
 }
 

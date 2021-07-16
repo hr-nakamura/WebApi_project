@@ -11,12 +11,6 @@ namespace WebApi_project.hostProc
 {
     public partial class 売上予測
     {
-        string DB_connectString;
-        public 売上予測()
-        {
-            hostProc hProc = new hostProc();
-            DB_connectString = hProc.DB_connectString;
-        }
         public object 売上予実_分類_json(String Json)
         {
 
@@ -42,19 +36,13 @@ namespace WebApi_project.hostProc
         }
         public XmlDocument 売上予実_分類(String Json)
         {
-            var o_json = JsonConvert.DeserializeObject<SampleData4>(Json);
+            var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
 
             //XmlDocument xmlDoc = makeXmlDoc(para);
             XmlDocument xmlDoc = new XmlDocument();
 
             return (xmlDoc);
         }
-        class SampleData4
-        {
-            public string a { get; set; }
-            public string b { get; set; }
-        }
-
     }
 }
 

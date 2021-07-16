@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
-    <script src="/WebApi/project/_home/Scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="Scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
 
-    <script src="/WebApi/project/_home/Scripts/json2.js" type="text/javascript"></script>
-    <script src="/WebApi/project/_home/Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
-    <script src="/WebApi/project/_home/debug/jquery.my.debug.js" type="text/javascript"></script>
+    <script src="Scripts/json2.js" type="text/javascript"></script>
+    <script src="Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
+    <script src="debug/jquery.my.debug.js" type="text/javascript"></script>
 
     <!-- menu -->
     <script src="Scripts/jquery.my.frame.js" type="text/javascript"></script>
@@ -47,6 +47,16 @@
 
             var menu_data = $.loadXMLDoc("menu.xml");
 
+            menu_data = make_menuData(menu_data, methodList);
+
+            $(".menuBlock_content").mymenu(menu_data, {
+                color_menu_base: "cornflowerblue",
+                color_menu_select: "royalblue",
+                click: menu_click
+            });
+            $("iframe.iframe_content").frame();
+        }
+        function make_menuData(menu_data, methodList) {
             var root = $("root", menu_data)[0];
             $.each(methodList, function (key, elem) {
                 var class_name = key;
@@ -58,19 +68,12 @@
                     var menu2 = menu_data.createElement("menu");
                     menu2.setAttribute("mode", "method");
                     menu2.setAttribute("name", metod_name);
-                    menu2.setAttribute("class_name", class_name);
-                    menu2.setAttribute("method_name", metod_name);
+                    menu2.setAttribute("item", class_name.concat("/", metod_name) );
                     $(menu1).append(menu2);
                     var a = 1;
                 })
             });
-
-            $(".menuBlock_content").mymenu(menu_data, {
-                color_menu_base: "cornflowerblue",
-                color_menu_select: "royalblue",
-                click: menu_click
-            });
-            $("iframe.iframe_content").frame();
+            return (menu_data);
         }
     </script>
     <script>
@@ -85,19 +88,18 @@
         function menu_click(o) {
             var mode = o.mode;
             if (mode == "method") {
-                var className = o.class_name;
-                var methodName = o.method_name;
+                var Item = o.item;
                 Send_Option.visitBBS = "2019/07/01 10:10:00";
                 Send_Option.limitYear = "2019";
 
                 if (user_mode == "json") {
-                    var Str = call_ajax_api_json("GET", WebApi_url_json, className, methodName, Send_Option);
+                    var Str = call_ajax_api_json("GET", WebApi_url_json, Item, Send_Option);
                     //$.alert.json(Str);
                     $.storage("viewStr", JSON.stringify(Str, null, 2));
                     $("iframe.iframe_content").attr("src", "viewValue.html");
                 }
                 else {
-                    var Str = call_ajax_api("GET", WebApi_url, className, methodName, Send_Option);
+                    var Str = call_ajax_api("GET", WebApi_url, Item, Send_Option);
                     //StrOut(Str);
                     $.storage("viewStr", Str);
                     $("iframe.iframe_content").attr("src", "viewValue.html");
@@ -110,12 +112,11 @@
         }
     </script>
     <script type="text/javascript">
-        function call_ajax_api(mode, url, item, func, json, callback) {
+        function call_ajax_api(mode, url, item, json, callback) {
             //$.alert("call_ajax_mode[" + mode + "]", url);
             window.status = "call_ajax_api[" + mode + "]";
             var options = {
                 Item: item,
-                Func: func,
                 Json: JSON.stringify(json)
             };
             var result = $.ajax({
@@ -141,12 +142,11 @@
             });
             return (returnValue);
         }
-        function call_ajax_api_json(mode, url, item, func, json, callback) {
+        function call_ajax_api_json(mode, url, item, json, callback) {
             //$.alert("call_ajax_api_json[" + mode + "]", url);
             window.status = "call_ajax_api_json[" + mode + "]";
             var options = {
                 Item: item,
-                Func: func,
                 Json: JSON.stringify(json)
             };
             var result = $.ajax({

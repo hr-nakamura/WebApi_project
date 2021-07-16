@@ -25,13 +25,13 @@ namespace WebApi_project.Controllers
             return (xmlDoc.OuterXml);
 
         }
-        public String Get(string Item, string Func, string Json)
+        public String Get(string Item,  string Json)
         {
-            paraOut("GET", Item, Func, Json);
+            paraOut("GET", Item, Json);
 
             var hProc = new hostProcEntry();
 
-            XmlDocument xmlDoc = hProc.Entry(Item, Func, Json);
+            XmlDocument xmlDoc = hProc.Entry(Item, Json);
 
             return (xmlDoc.OuterXml);
         }
@@ -48,12 +48,11 @@ namespace WebApi_project.Controllers
             ////Debug.Write(work);
 
             var Item = para.Item;
-            var Func = para.Func;
             var Json = para.Json;
-            paraOut("POST", Item, Func, Json);
+            paraOut("POST", Item, Json);
 
             var hProc = new hostProcEntry();
-            XmlDocument xmlDoc = hProc.Entry(Item, Func, Json);
+            XmlDocument xmlDoc = hProc.Entry(Item, Json);
 
             return (xmlDoc.OuterXml);
         }
@@ -63,12 +62,11 @@ namespace WebApi_project.Controllers
         public string Put([FromBody] ProjectJson para)
         {
             var Item = para.Item;
-            var Func = para.Func;
             var Json = para.Json;
-            paraOut("PUT", Item, Func, Json);
+            paraOut("PUT", Item, Json);
 
             var hProc = new hostProcEntry();
-            XmlDocument xmlDoc = hProc.Entry(Item, Func, Json);
+            XmlDocument xmlDoc = hProc.Entry(Item, Json);
 
             return (xmlDoc.OuterXml);
         }
@@ -77,24 +75,25 @@ namespace WebApi_project.Controllers
         public string Delete([FromBody] ProjectJson para)
         {
             var Item = para.Item;
-            var Func = para.Func;
             var Json = para.Json;
-            paraOut("Delete", Item, Func, Json);
+            paraOut("Delete", Item, Json);
 
             var hProc = new hostProcEntry();
-            XmlDocument xmlDoc = hProc.Entry(Item, Func, Json);
+            XmlDocument xmlDoc = hProc.Entry(Item, Json);
 
             return (xmlDoc.OuterXml);
         }
-        void paraOut(String Mode, String Item, String Func, String Json)
+        void paraOut(String Mode, String Item, String Json)
         {
+            string[] ItemWork = Item.Split('/');
             var work = new List<string>();
             work.Add(Mode);
-            work.Add(Item);
-            work.Add(Func);
+            work.Add(ItemWork[0]);
+            work.Add(ItemWork[1]);
             work.Add(Json);
-            Debug.WriteLog("[" + string.Join("][", work) + "]");
+            //Debug.WriteLog("[" + string.Join("][", work) + "]");
 
         }
+
     }
 }
