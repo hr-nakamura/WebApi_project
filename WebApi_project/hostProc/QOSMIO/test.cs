@@ -21,20 +21,17 @@ namespace WebApi_project.hostProc
         }
         public object projectTest_json(String Json)
         {
-
-            Debug.WriteLog("projectTest_json");
-
-            //var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
-            var work = new List<string>();
-            work.Add("Item");
-            work.Add("Func");
-            work.Add("Json");
+            string classPath = this.GetType().FullName;                                         //クラスパスの取得
+            string className = this.GetType().Name;                                             //クラス名の取得
+            string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;           //メソッド名の取得
+            Debug.WriteLog(classPath);
 
             string mName = Environment.MachineName;
 
             Dictionary<string, string> Tab = new Dictionary<string, string>();
-            //Tab[nameof(mName)] = mName;
             Tab.Add("mName", mName);
+            Tab.Add("className", className);
+            Tab.Add("methodName", methodName);
             Tab.Add("DB_Conn", DB_connectString);
 
             return (Tab);

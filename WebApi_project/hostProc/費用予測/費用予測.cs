@@ -13,7 +13,6 @@ namespace WebApi_project.hostProc
     public partial class 費用予測
     {
         string DB_connectString;
-        string funcName = "費用状況_json";
         public 費用予測()
         {
             hostProc hProc = new hostProc();
@@ -21,21 +20,17 @@ namespace WebApi_project.hostProc
         }
         public object 費用状況_json(String Json)
         {
-
-            Debug.WriteLog("費用状況_json");
-
-            //var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
-            var work = new List<string>();
-            work.Add("Item");
-            work.Add("Func");
-            work.Add("Json");
+            string classPath = this.GetType().FullName;                                         //クラスパスの取得
+            string className = this.GetType().Name;                                             //クラス名の取得
+            string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;           //メソッド名の取得
+            Debug.WriteLog(classPath);
 
             string mName = Environment.MachineName;
 
             Dictionary<string, string> Tab = new Dictionary<string, string>();
-            //Tab[nameof(mName)] = mName;
-            Tab.Add("funcName", funcName);
             Tab.Add("mName", mName);
+            Tab.Add("className", className);
+            Tab.Add("methodName", methodName);
             Tab.Add("DB_Conn", DB_connectString);
 
             return (Tab);

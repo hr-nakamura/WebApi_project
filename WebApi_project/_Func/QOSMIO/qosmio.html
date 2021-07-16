@@ -24,7 +24,7 @@
             }
             para.visitBBS = $.cookie("visitBBS");
 
-            var o_json = call_ajax_api("GET", WebApi_url_json, "QOSMIO", "projectTest", para);
+            var o_json = call_ajax_api("GET", WebApi_url_json, "QOSMIO/projectTest", para);
             if ($.isJSON(o_json)) {
                 var work = JSON.stringify(o_json, null, 2);
                 $.alert("結果【JSON】", work);
@@ -48,12 +48,11 @@
         });
     </script>
     <script type="text/javascript">
-        function call_ajax_api(mode, url, item, func, json, callback) {
+        function call_ajax_api(mode, url, item, json, callback) {
             //$.alert("call_ajax_mode[" + mode + "]", url);
             window.status = "call_ajax_api[" + mode + "]";
             var options = {
                 Item: item,
-                Func: func,
                 Json: JSON.stringify(json)
             };
             var result = $.ajax({
@@ -79,12 +78,11 @@
             });
             return (returnValue);
         }
-        function call_ajax_api_json(mode, url, item, func, json, callback) {
+        function call_ajax_api_json(mode, url, item, json, callback) {
             //$.alert("call_ajax_api_json[" + mode + "]", url);
             window.status = "call_ajax_api_json[" + mode + "]";
             var options = {
                 Item: item,
-                Func: func,
                 Json: JSON.stringify(json)
             };
             var result = $.ajax({

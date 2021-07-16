@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 using DebugHost;
 
-namespace WebApi_project.hostProc.要員情報
+namespace WebApi_project.hostProc
 {
     public class 要員情報 
     {
@@ -19,25 +19,19 @@ namespace WebApi_project.hostProc.要員情報
             hostProc hProc = new hostProc();
             DB_connectString = hProc.DB_connectString;
         }
-        public object 売上予実_新規_json(String Json)
+        public object 要員一覧_json(String Json)
         {
-
-            string funcName = "要員一覧";
-
-            Debug.WriteLog("要員一覧_json");
-
-            //var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
-            var work = new List<string>();
-            work.Add("Item");
-            work.Add("Func");
-            work.Add("Json");
+            string classPath = this.GetType().FullName;                                         //クラスパスの取得
+            string className = this.GetType().Name;                                             //クラス名の取得
+            string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;           //メソッド名の取得
+            Debug.WriteLog(classPath);
 
             string mName = Environment.MachineName;
 
             Dictionary<string, string> Tab = new Dictionary<string, string>();
-            //Tab[nameof(mName)] = mName;
-            Tab.Add("funcName", funcName);
             Tab.Add("mName", mName);
+            Tab.Add("className", className);
+            Tab.Add("methodName", methodName);
             Tab.Add("DB_Conn", DB_connectString);
 
             return (Tab);
