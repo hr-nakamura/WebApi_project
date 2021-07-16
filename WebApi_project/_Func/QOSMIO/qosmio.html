@@ -26,8 +26,9 @@
 
             var o_json = call_ajax_api("GET", WebApi_url_json, "QOSMIO/projectTest", para);
             if ($.isJSON(o_json)) {
-                var work = JSON.stringify(o_json, null, 2);
-                $.alert("結果【JSON】", work);
+                var Str = JSON.stringify(o_json, null, 2);
+                $(".abc").text(Str);
+//                $.alert("結果【JSON】", Str);
             }
             else {
                 $.alert(o_json);
@@ -148,6 +149,6 @@
     </style>
 </head>
 <body>
-    <textarea class="abc"></textarea>
+<textarea class="abc"></textarea>
 </body>
 </html>
