@@ -53,11 +53,12 @@ namespace WebApi_project.hostProc
             XmlDocument xmlDoc = hProc.makeXmlDoc(json_data);
             //XmlDocument xmlDoc = new XmlDocument();
 
-            var x = new projectBBS();
-            Dictionary<string, object> Tab = (Dictionary<string, object>)x.projectList_json(Json);
-            XmlDocument xmlDoc1 = (XmlDocument)Tab["Data"];
+            //var x = new projectBBS();
+            //Dictionary<string, object> Tab = (Dictionary<string, object>)x.projectList_json(Json);
+            //object Data = (object) Tab["Data"];
 
-            return (xmlDoc1);
+
+            return (xmlDoc);
         }
         class SampleData
         {
