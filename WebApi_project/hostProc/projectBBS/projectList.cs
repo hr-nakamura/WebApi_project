@@ -50,7 +50,7 @@ namespace WebApi_project.hostProc
             //var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
 
             object json_data = projectEdit_json(Json);
-            XmlDocument xmlDoc = hProc.makeXmlDoc(json_data);
+            XmlDocument xmlDoc = hProc.Json2Xml(json_data);
             //XmlDocument xmlDoc = new XmlDocument();
 
             //var x = new projectBBS();
@@ -132,9 +132,6 @@ namespace WebApi_project.hostProc
             var o_json = JsonConvert.DeserializeObject<projectPara>(Json);
             var visitBBS = o_json.visitBBS;
             var limitYear = o_json.limitYear;
-
-
-            List<string> Head = new List<string>() { "Stat", "newFlag", "pName", "pCode", "pNum", "更新日", "営業", "登録者", "グループ名", "客先会社", "期間", "規模", "場所" };
 
             Dictionary<string,object>Tab = (Dictionary<string, object>) projectList_json(Json);
             List<DB_projectNum> Data = (List<DB_projectNum>)Tab["Data"];

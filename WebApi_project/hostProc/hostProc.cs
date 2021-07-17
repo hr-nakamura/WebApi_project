@@ -100,7 +100,7 @@ namespace WebApi_project.hostProc
             {
             }
         }
-        public XmlDocument makeXmlDoc(object Tab)
+        public XmlDocument Json2Xml(object Tab)
         {
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.CreateXmlDeclaration("1.0", null, null);
@@ -114,19 +114,54 @@ namespace WebApi_project.hostProc
             xmlDoc.AppendChild(root);
 
             var Tab1 = (Dictionary<string,object>)Tab;
-
+            var data0 = root;
             foreach (var x1 in Tab1)
             {
                 XmlElement data1 = xmlDoc.CreateElement("json");
-                var Tab2 = (Dictionary<string, object>)x1.Value;
-                data1.SetAttribute("name", x1.Key);
-                root.AppendChild(data1);
-                foreach (var x2 in Tab2)
+                //Debug.Write("x1",(x1.Value).GetType().Name);
+                if( (x1.Value).GetType().Name == "String")
                 {
-                    XmlElement data2 = xmlDoc.CreateElement(x1.Key);
-                    data2.InnerText = (string)x2.Value;
-                    data2.SetAttribute("name", x2.Key);
-                    data1.AppendChild(data2);
+                    data1.InnerText = (string)x1.Value;
+                    data1.SetAttribute("name", x1.Key);
+                    data0.AppendChild(data1);
+                }
+                else
+                {
+                    var Tab2 = (Dictionary<string, object>)x1.Value;
+                    data1.SetAttribute("name", x1.Key);
+                    data0.AppendChild(data1);
+                    foreach (var x2 in Tab2)
+                    {
+                        XmlElement data2 = xmlDoc.CreateElement(x1.Key);
+                        //Debug.Write("x2", (x2.Value).GetType().Name);
+                        if ((x2.Value).GetType().Name == "String")
+                        {
+                            data2.InnerText = (string)x2.Value;
+                            data2.SetAttribute("name", x2.Key);
+                            data1.AppendChild(data2);
+                        }
+                        else
+                        {
+                            var Tab3 = (Dictionary<string, object>)x2.Value;
+                            data2.SetAttribute("name", x2.Key);
+                            root.AppendChild(data2);
+                            foreach (var x3 in Tab3)
+                            {
+                                XmlElement data3= xmlDoc.CreateElement(x2.Key);
+                                //Debug.Write("x3", (x3.Value).GetType().Name);
+                                if ((x3.Value).GetType().Name == "String")
+                                {
+                                    data3.InnerText = (string)x3.Value;
+                                    data3.SetAttribute("name", x3.Key);
+                                    data2.AppendChild(data3);
+                                }
+                                else
+                                {
+
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
@@ -143,7 +178,7 @@ namespace WebApi_project.hostProc
 
             List<string> methdList_X = new List<string>()
                 {
-                "Entry","makeXmlDoc"
+                "Entry","Json2Xml"
                 };
 
             // 指定した名前空間のクラスをすべて取得

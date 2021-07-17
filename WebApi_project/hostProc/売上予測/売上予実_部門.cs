@@ -39,7 +39,7 @@ namespace WebApi_project.hostProc
             //var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
 
             object json_data = 売上予実_部門_json(Json);
-            XmlDocument xmlDoc = hProc.makeXmlDoc(json_data);
+            XmlDocument xmlDoc = hProc.Json2Xml(json_data);
             //XmlDocument xmlDoc = new XmlDocument();
 
             return (xmlDoc);
