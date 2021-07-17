@@ -12,15 +12,20 @@ namespace WebApi_project.hostProc
 {
     public class 要員情報 
     {
+        hostProc hProc;
         string DB_connectString;
 
         public 要員情報()
         {
-            hostProc hProc = new hostProc();
+            hProc = new hostProc();
             DB_connectString = hProc.DB_connectString;
         }
         public object 要員一覧_json(String Json)
         {
+            Dictionary<string, object> Tab = new Dictionary<string, object>();
+            Dictionary<string, object> Info = new Dictionary<string, object>();
+            Dictionary<string, object> Data = new Dictionary<string, object>();
+
             string classPath = this.GetType().FullName;                                         //クラスパスの取得
             string className = this.GetType().Name;                                             //クラス名の取得
             string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;           //メソッド名の取得
@@ -28,23 +33,31 @@ namespace WebApi_project.hostProc
 
             string mName = Environment.MachineName;
 
-            Dictionary<string, string> Tab = new Dictionary<string, string>();
-            Tab.Add("mName", mName);
-            Tab.Add("className", className);
-            Tab.Add("methodName", methodName);
-            Tab.Add("DB_Conn", DB_connectString);
+            Info.Add("mName", mName);
+            Info.Add("className", className);
+            Info.Add("methodName", methodName);
+            Info.Add("DB_Conn", DB_connectString);
 
+            Tab.Add("Info", (object)Info);
+            Tab.Add("Data", (object)Data);
+
+            //XmlDocument xmlDoc = new XmlDocument();
             return (Tab);
         }
 
         public XmlDocument 要員一覧(String Json)
         {
-            var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
+            //var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
 
-            //XmlDocument xmlDoc = makeXmlDoc(para);
-            XmlDocument xmlDoc = new XmlDocument();
+            object json_data = 要員一覧_json(Json);
+            XmlDocument xmlDoc = hProc.makeXmlDoc(json_data);
+            //XmlDocument xmlDoc = new XmlDocument();
 
-            return (xmlDoc);
+            var x = new projectBBS();
+            Dictionary<string, object> Tab = (Dictionary<string, object>)x.projectList_json(Json);
+            XmlDocument xmlDoc1 = (XmlDocument)Tab["Data"];
+
+            return (xmlDoc1);
         }
         class SampleData
         {

@@ -100,28 +100,36 @@ namespace WebApi_project.hostProc
             {
             }
         }
-        public XmlDocument makeXmlDoc(string msg)
+        public XmlDocument makeXmlDoc(object Tab)
         {
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.CreateXmlDeclaration("1.0", null, null);
 
             var xmlMain = xmlDoc.CreateProcessingInstruction("xml", "version='1.0' encoding='Shift_JIS'");
             XmlElement root = xmlDoc.CreateElement("root");
-            XmlElement data1 = xmlDoc.CreateElement("data");
-            XmlElement data2 = xmlDoc.CreateElement("data");
 
-            var comment = xmlDoc.CreateComment(msg);
+            var comment = xmlDoc.CreateComment("json data");
             xmlDoc.AppendChild(xmlMain);
             xmlDoc.AppendChild(comment);
             xmlDoc.AppendChild(root);
-            root.AppendChild(data1);
-            root.AppendChild(data2);
-            data2.InnerText = "A123";
-            data2.SetAttribute("class", "c123");
-            data2.SetAttribute("id", "id123");
-            data1.InnerText = "A111";
-            data1.SetAttribute("class", "c111");
-            data1.SetAttribute("id", "id111");
+
+            var Tab1 = (Dictionary<string,object>)Tab;
+
+            foreach (var x1 in Tab1)
+            {
+                XmlElement data1 = xmlDoc.CreateElement("json");
+                var Tab2 = (Dictionary<string, object>)x1.Value;
+                data1.SetAttribute("name", x1.Key);
+                root.AppendChild(data1);
+                foreach (var x2 in Tab2)
+                {
+                    XmlElement data2 = xmlDoc.CreateElement(x1.Key);
+                    data2.InnerText = (string)x2.Value;
+                    data2.SetAttribute("name", x2.Key);
+                    data1.AppendChild(data2);
+                }
+            }
+
             return (xmlDoc);
         }
         public Dictionary<string, List<string>> methodList()
