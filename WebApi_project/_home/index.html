@@ -41,39 +41,25 @@
             //$.alert.json(TestInfo);
 
             // methodListの取得
-            var methodList = call_ajax_api_json("GET", WebApi_url_json);
-            //$.alert.json(methodList);
-
+            var methodList = call_ajax_api("GET", WebApi_url);
+            var menu_Xml = $.str2xml(methodList);
 
             var menu_data = $.loadXMLDoc("menu.xml");
 
-            menu_data = make_menuData(menu_data, methodList);
+            menu_Xml = join_menuData(menu_Xml, menu_data);
 
-            $(".menuBlock_content").mymenu(menu_data, {
+            $(".menuBlock_content").mymenu(menu_Xml, {
                 color_menu_base: "cornflowerblue",
                 color_menu_select: "royalblue",
                 click: menu_click
             });
             $("iframe.iframe_content").frame();
         }
-        function make_menuData(menu_data, methodList) {
-            var root = $("root", menu_data)[0];
-            $.each(methodList, function (key, elem) {
-                var class_name = key;
-                var menu1 = menu_data.createElement("menu");
-                menu1.setAttribute("name", key);
-                $(root).append(menu1);
-                $.each(elem, function (key2, elem2) {
-                    var metod_name = elem2;
-                    var menu2 = menu_data.createElement("menu");
-                    menu2.setAttribute("mode", "method");
-                    menu2.setAttribute("name", metod_name);
-                    menu2.setAttribute("value", class_name.concat("/", metod_name) );
-                    $(menu1).append(menu2);
-                    var a = 1;
-                })
-            });
-            return (menu_data);
+        function join_menuData(menu_xml, menu_xml2) {
+            var root = $(menu_xml).find("root");
+            var menu = $(menu_xml2).find("root>menu");
+            root.prepend(menu);
+            return (menu_xml);
         }
     </script>
     <script>

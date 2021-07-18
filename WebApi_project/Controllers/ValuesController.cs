@@ -18,10 +18,8 @@ namespace WebApi_project.Controllers
         // GET api/<controller>/5
         public string Get()
         {
-            XmlDocument xmlDoc = new XmlDocument();
-
-            Debug.Write("Get-0");
-
+            var hProc = new hostProc.hostProc();
+            XmlDocument xmlDoc = hProc.methodList();
             return (xmlDoc.OuterXml);
 
         }

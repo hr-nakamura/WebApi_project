@@ -18,7 +18,7 @@ namespace WebApi_project.Controllers
         public object Get()
         {
             var hProc = new hostProc.hostProc();
-            object Tab = hProc.methodList();
+            object Tab = hProc.methodList_json();
 
             return (Tab);
 
@@ -29,10 +29,6 @@ namespace WebApi_project.Controllers
 
             var hProc = new hostProcEntry_json();
             object Obj = hProc.Entry(Item, Json);
-            //var work = new List<string>();
-            //work.Add(Item);
-            //work.Add(Func);
-            //work.Add(Json);
             return (Obj);
         }
 

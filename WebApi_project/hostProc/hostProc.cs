@@ -167,7 +167,36 @@ namespace WebApi_project.hostProc
 
             return (xmlDoc);
         }
-        public Dictionary<string, List<string>> methodList()
+        public XmlDocument methodList()
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.CreateXmlDeclaration("1.0", null, null);
+
+            var xmlMain = xmlDoc.CreateProcessingInstruction("xml", "version='1.0' encoding='Shift_JIS'");
+            XmlElement root = xmlDoc.CreateElement("root");
+            xmlDoc.AppendChild(xmlMain);
+            root.SetAttribute("name", "EMG");
+            xmlDoc.AppendChild(root);
+
+            Dictionary<string, List<string>> list = methodList_json();
+            foreach (var x1 in list)
+            {
+                XmlElement node1 = xmlDoc.CreateElement("menu");
+                string className = x1.Key;
+                node1.SetAttribute("name", className);
+                root.AppendChild(node1);
+                foreach (var methodName in x1.Value)
+                {
+                    XmlElement node2 = xmlDoc.CreateElement("menu");
+                    node2.SetAttribute("name", methodName);
+                    node2.SetAttribute("mode", "method");
+                    node2.SetAttribute("value", className+"/"+ methodName);
+                    node1.AppendChild(node2);
+                }
+            }
+            return (xmlDoc);
+        }
+        public Dictionary<string, List<string>> methodList_json()
         {
             //object o_obj = new object();
             //String nameSpace = "WebApi_project.hostProc";
@@ -178,7 +207,7 @@ namespace WebApi_project.hostProc
 
             List<string> methdList_X = new List<string>()
                 {
-                "Entry","Json2Xml"
+                "Entry","Json2Xml","methodList"
                 };
 
             // 指定した名前空間のクラスをすべて取得
