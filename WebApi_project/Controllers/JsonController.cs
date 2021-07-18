@@ -38,10 +38,6 @@ namespace WebApi_project.Controllers
 
             HttpContext context = HttpContext.Current;
             var Request = context.Request;
-            var work1 = Request.UrlReferrer.Host;
-            var work2 = Request.UrlReferrer.LocalPath;
-            var work3 = Request.UrlReferrer.Port;
-            ////Debug.Write(work);
 
             var Item = para.Item;
             var Json = para.Json;

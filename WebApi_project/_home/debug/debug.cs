@@ -9,6 +9,8 @@ using System.Text.RegularExpressions;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
+using System.IO.Pipes;
+
 namespace DebugHost
 {
     //public partial class Log : System.Web.UI.Page
@@ -144,6 +146,8 @@ namespace DebugHost
                 lnghWnd = FindWindowEx(IntPtr.Zero, IntPtr.Zero, "Notepad", "無題 - メモ帳");
                 if (lnghWnd == IntPtr.Zero)
                 {
+                    // メモ帳が見つからなかったとき「pipe」で送信
+                    //pipe_Client(str);
                     return;
                 }
             }
@@ -156,11 +160,41 @@ namespace DebugHost
                 iChar = BitConverter.ToInt16(b1, i);
                 wParam = (IntPtr)iChar;
                 PostMessage(lnghWndTarget, WM_CHAR, wParam, IntPtr.Zero);
-
             }
             wParam = (IntPtr)0x0d;
             PostMessage(lnghWndTarget, WM_CHAR, wParam, IntPtr.Zero);
 
         }
+        private static async void pipe_Client(String message)
+        {
+            using (var pipeClient = new NamedPipeClientStream("debug_pipe"))
+            {
+                try
+                {
+                    // サーバに接続(1秒タイムアウト)
+                    await pipeClient.ConnectAsync(1000);
+
+                    // メッセージを送信（書き込み）
+                    using (var writer = new StreamWriter(pipeClient))
+                    {
+                        //var message = "test";
+
+                        await writer.WriteLineAsync(message);
+                        //Console.WriteLine($"Sent: {message}");
+                    }
+                }
+                catch (TimeoutException ex)
+                {
+                    // タイムアウト時の処理
+                    //Console.WriteLine($"TimeOut: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    // その他のエラー
+                    //Console.WriteLine($"Error: {ex.Message}");
+                }
+            }
+        }
+
     }
 }
