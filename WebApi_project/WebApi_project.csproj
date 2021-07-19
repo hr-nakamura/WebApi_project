@@ -82,6 +82,7 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="hostProc\projectBBS\projectData_XML.xml" />
+    <Content Include="hostProc\部門収支\部門収支_XML.asp" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
@@ -146,6 +147,7 @@
     <Compile Include="hostProc\部門収支\部門収支.cs" />
     <Compile Include="Models\common.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="jsonProc\部門リスト.cs" />
     <Compile Include="_home\debug\debug.ashx.cs">
       <DependentUpon>debug.ashx</DependentUpon>
     </Compile>
