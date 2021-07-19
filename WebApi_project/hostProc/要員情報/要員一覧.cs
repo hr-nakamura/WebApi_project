@@ -43,7 +43,7 @@ namespace WebApi_project.hostProc
             Tab.Add("Data", (object)Data);
 
             //XmlDocument xmlDoc = new XmlDocument();
-            Tab = dbFunc_A();
+            //Tab = dbFunc_A();
 
             return (Tab);
         }
