@@ -3,6 +3,7 @@ using System.Web;
 using System.Text;
 using System.Data.SqlClient;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 using DebugHost;
 
@@ -10,26 +11,37 @@ namespace WebApi_project.hostProc
 {
     public partial class jsonProc
     {
-        public Dictionary<string, string> memberInfo(string mailAddr)
+        class in_Data
         {
-            Dictionary<string, string> hostInfo = new Dictionary<string, string>(){
-                { "name" , "テスト　データ" },
-                { "mail", "test@eandm.co.jp" },
-                { "postCode", ""},
-                { "postName", ""},
-                { "所属名", ""},
-                { "所属コード", ""},
-                { "Tag" , "" }
-                };
+            public string mailAddr { get; set; }
+        }
+        class para_memberInfo
+        {
+            public string name { get; set; }
+            public string mail { get; set; }
+            public string postCode { get; set; }
+            public string postName { get; set; }
+            public string 所属名 { get; set; }
+            public string 所属コード { get; set; }
+            public string Tag { get; set; }
+            public List<para_memberInfo> sub { get; set; }
+        }
+        public object json_memberInfo(String Json)
+        {
+            var o_json = JsonConvert.DeserializeObject<in_Data>(Json);
+            o_json.mailAddr = "nakamura@eandm.co.jp";
 
-            memberInfoX1(mailAddr);
-            memberInfoX2(mailAddr);
+            para_memberInfo hostInfo; ;
+            string mailAddr = o_json.mailAddr;
+
+            hostInfo = memberInfoX1(mailAddr);
+            hostInfo.Tag = memberInfoX2(mailAddr);
 
             return (hostInfo);
         }
-        Dictionary<string, string> memberInfoX1(string mailAddr)
+        para_memberInfo memberInfoX1(string mailAddr)
         {
-            Dictionary<string, string> hostInfo = new Dictionary<string, string>();
+            para_memberInfo hostInfo = new para_memberInfo();
             SqlConnection DB;
             DB = new SqlConnection(DB_connectString);
             try
@@ -44,8 +56,8 @@ namespace WebApi_project.hostProc
                 sql.Append("    postCode = POST.postCode,");
                 sql.Append("    postName = PMAST.name,");
                 sql.Append("    mode = POST.兼務,");
-                sql.Append("    gName = BMAST.部署名,");
-                sql.Append("    gCode = BMAST.部署コード");
+                sql.Append("    groupName = BMAST.部署名,");
+                sql.Append("    groupCode = BMAST.部署コード");
 
                 sql.Append(" FROM");
                 sql.Append("    EMG.dbo.社員基礎データ MAST");
@@ -57,20 +69,30 @@ namespace WebApi_project.hostProc
                 sql.Append("            ON PMAST.postCode = POST.postCode");
                 sql.Append(" WHERE");
                 sql.Append("    MAST.メールアドレス = '" + mailAddr + "'");
-    
+                sql.Append(" ORDER BY");
+                sql.Append("    mode");
+
                 SqlDataReader reader = dbRead(DB, sql.ToString());
                 Debug.Write("reader Start");
 
                 while (reader.Read())
                 {
-                    var pNum = (string)reader["名前"].ToString();
-                    var pName = (string)reader["部門"];
-                    var gCode = (string)reader["gCode"].ToString();
-                    Debug.Write(pNum, pName, gCode);
-                //if (!Tab.ContainsKey(pNum))
-                //{
-                //    Tab.Add(pNum, pName);
-                //}
+                    var mode = (string)reader["mode"].ToString();
+                    if (mode == "0")
+                    {
+                        hostInfo.mail = (string)reader["mail"].ToString();
+                        hostInfo.name = (string)reader["name"].ToString();
+                        hostInfo.postCode = (string)reader["postCode"].ToString();
+                        hostInfo.postName = (string)reader["postName"].ToString();
+                        hostInfo.所属コード = (string)reader["groupCode"].ToString();
+                        hostInfo.所属名 = (string)reader["groupName"].ToString();
+                    }
+                    else
+                    {
+                        var work = new para_memberInfo();
+
+                        hostInfo.sub.Add(work);
+                    }
                 }
 
                 Debug.Write("reader Close");
@@ -92,9 +114,9 @@ namespace WebApi_project.hostProc
                 }
             return (hostInfo);
         }
-        Dictionary<string, string> memberInfoX2(string mailAddr)
+        string memberInfoX2(string mailAddr)
         {
-            Dictionary<string, string> hostInfo = new Dictionary<string, string>();
+            Dictionary<string, string> Tab = new Dictionary<string, string>();
             SqlConnection DB;
             DB = new SqlConnection(DB_connectString);
             try
@@ -133,21 +155,27 @@ namespace WebApi_project.hostProc
                 sql.Append("    MAST.メールアドレス = '" + mailAddr + "'");
                 sql.Append("    AND");
                 sql.Append("    DATA.mode = 1");
+                sql.Append(" ORDER BY");
+                sql.Append("    item");
 
 
                 SqlDataReader reader = dbRead(DB, sql.ToString());
                 Debug.Write("reader Start");
-
+                var name = "";
+                var mID = "";
+                var item = "";
+                var mode = "";
                 while (reader.Read())
                 {
-                    var pNum = (string)reader["name"].ToString();
-                    var pName = (string)reader["mID"];
-                    var gCode = (string)reader["item"].ToString();
-                    Debug.Write(pNum, pName, gCode);
-                    //if (!Tab.ContainsKey(pNum))
-                    //{
-                    //    Tab.Add(pNum, pName);
-                    //}
+                    name = (string)reader["name"].ToString();
+                    mID = (string)reader["mID"].ToString();
+                    item = (string)reader["item"].ToString();
+                    mode = (string)reader["mode"].ToString();
+                    //Debug.Write(name, mID, item, mode);
+                    if (!Tab.ContainsKey(item))
+                    {
+                        Tab.Add(item, mode);
+                    }
                 }
 
                 Debug.Write("reader Close");
@@ -167,7 +195,13 @@ namespace WebApi_project.hostProc
                 Debug.Write("DB null");
                 DB = null;
             }
-            return (hostInfo);
+            List<string> xTab = new List<string>();
+            foreach (var item in Tab)
+            {
+                xTab.Add(item.Key);
+            }
+            xTab.Sort();
+            return (string.Join(",",xTab) );
         }
     }
 }

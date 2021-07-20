@@ -11,7 +11,7 @@ namespace WebApi_project.hostProc
 {
     public partial class 売上予測 : hostProc
     {
-        public object 売上目標_部門_json(String Json)
+        public object json_売上目標_部門(String Json)
         {
             Dictionary<string, object> Tab = new Dictionary<string, object>();
             Dictionary<string, object> Info = new Dictionary<string, object>();
@@ -38,7 +38,7 @@ namespace WebApi_project.hostProc
         {
             //var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
 
-            object json_data = 売上目標_部門_json(Json);
+            object json_data = json_売上目標_部門(Json);
             XmlDocument xmlDoc = Json2Xml(json_data);
             //XmlDocument xmlDoc = new XmlDocument();
 

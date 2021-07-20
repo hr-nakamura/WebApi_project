@@ -20,7 +20,7 @@ namespace WebApi_project.hostProc
             hProc = new hostProc();
             DB_connectString = hProc.DB_connectString;
         }
-        public object projectEdit_json(String Json)
+        public object json_projectEdit(String Json)
         {
             Dictionary<string, object> Tab = new Dictionary<string, object>();
             Dictionary<string, object> Info = new Dictionary<string, object>();
@@ -49,7 +49,7 @@ namespace WebApi_project.hostProc
         {
             //var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
 
-            object json_data = projectEdit_json(Json);
+            object json_data = json_projectEdit(Json);
             XmlDocument xmlDoc = hProc.Json2Xml(json_data);
             //XmlDocument xmlDoc = new XmlDocument();
 
@@ -197,10 +197,10 @@ namespace WebApi_project.hostProc
         public object projectList_json(String Json)
         {
             Dictionary<string, object> Tab;
-            Tab = Get_projectData_json(Json);
+            Tab = json_Get_projectData(Json);
             return (Tab);
         }
-        Dictionary<string, object> Get_projectData_json(String Json)
+        Dictionary<string, object> json_Get_projectData(String Json)
         {
             SqlConnection DB;
 
@@ -299,28 +299,6 @@ namespace WebApi_project.hostProc
                 DB = null;
             }
             return (Tab);
-        }
-        SqlDataReader dbRead(SqlConnection DB, string sql)
-        {
-            SqlCommand cmd = null;
-            try
-            {
-                Debug.Write("cmd Start");
-                cmd = new SqlCommand(sql, DB);
-                SqlDataReader reader = cmd.ExecuteReader();
-                return (reader);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLog(ex.Message);
-                return (null);
-            }
-            finally
-            {
-                Debug.Write("cmd Dispose");
-                cmd.Dispose();
-                cmd = null;
-            }
         }
 
         class DB_projectNum

@@ -19,7 +19,7 @@ namespace WebApi_project.hostProc
             hostProc hProc = new hostProc();
             DB_connectString = hProc.DB_connectString;
         }
-        public object projectTest_json(String Json)
+        public object json_projectTest(String Json)
         {
             string classPath = this.GetType().FullName;                                         //クラスパスの取得
             string className = this.GetType().Name;                                             //クラス名の取得
@@ -50,7 +50,7 @@ namespace WebApi_project.hostProc
             //var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
             //var para = o_json.a;
 
-            Dictionary<string, string> o_json = (Dictionary<string, string>) projectTest_json(Json);
+            Dictionary<string, string> o_json = (Dictionary<string, string>) json_projectTest(Json);
 
             XmlDocument xmlDoc = makeXmlDoc(o_json);
             //XmlDocument xmlDoc = new XmlDocument();
