@@ -23,7 +23,7 @@ namespace WebApi_project.hostProc
             public string postName { get; set; }
             public string 所属名 { get; set; }
             public string 所属コード { get; set; }
-            public string Tag { get; set; }
+            //public string Tag { get; set; }
             public List<para_memberInfo> sub { get; set; }
         }
         public object json_memberInfo(String Json)
@@ -35,7 +35,7 @@ namespace WebApi_project.hostProc
             string mailAddr = o_json.mailAddr;
 
             hostInfo = memberInfoX1(mailAddr);
-            hostInfo.Tag = memberInfoX2(mailAddr);
+            //hostInfo.Tag = memberInfoX2(mailAddr);
 
             return (hostInfo);
         }
@@ -44,6 +44,8 @@ namespace WebApi_project.hostProc
             para_memberInfo hostInfo = new para_memberInfo();
             SqlConnection DB;
             DB = new SqlConnection(DB_connectString);
+            List<para_memberInfo> sub = new List<para_memberInfo>();
+
             try
             {
                 DB.Open();
@@ -90,11 +92,17 @@ namespace WebApi_project.hostProc
                     else
                     {
                         var work = new para_memberInfo();
+                        work.mail = (string)reader["mail"].ToString();
+                        work.name = (string)reader["name"].ToString();
+                        work.postCode = (string)reader["postCode"].ToString();
+                        work.postName = (string)reader["postName"].ToString();
+                        work.所属コード = (string)reader["groupCode"].ToString();
+                        work.所属名 = (string)reader["groupName"].ToString();
+                        sub.Add(work);
 
-                        hostInfo.sub.Add(work);
                     }
                 }
-
+                hostInfo.sub = sub;
                 Debug.Write("reader Close");
                 reader.Close();
 
@@ -111,7 +119,7 @@ namespace WebApi_project.hostProc
                 {
                     Debug.Write("DB null");
                     DB = null;
-                }
+                 }
             return (hostInfo);
         }
         string memberInfoX2(string mailAddr)
