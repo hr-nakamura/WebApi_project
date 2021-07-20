@@ -48,7 +48,6 @@ namespace WebApi_project.hostProc
 
             try
             {
-                DB.Open();
                 Debug.Write("DB Open", DB_connectString);
                 StringBuilder sql = new StringBuilder("");
 
@@ -73,9 +72,17 @@ namespace WebApi_project.hostProc
                 sql.Append("    MAST.メールアドレス = '" + mailAddr + "'");
                 sql.Append(" ORDER BY");
                 sql.Append("    mode");
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = sql.ToString();
+                //cmd.Parameters.Add(DbUtil.IntParameter("@Numb", 2));
 
-                SqlDataReader reader = dbRead(DB, sql.ToString());
+                DB.Open();
+                cmd.Connection = DB;
+
+                SqlDataReader reader = cmd.ExecuteReader();
                 Debug.Write("reader Start");
+                cmd.Dispose();
+                Debug.Write("cmd Dispose");
 
                 while (reader.Read())
                 {
@@ -129,8 +136,6 @@ namespace WebApi_project.hostProc
             DB = new SqlConnection(DB_connectString);
             try
             {
-                DB.Open();
-                Debug.Write("DB Open", DB_connectString);
                 StringBuilder sql = new StringBuilder("");
 
                 sql.Append(" SELECT");
@@ -166,9 +171,18 @@ namespace WebApi_project.hostProc
                 sql.Append(" ORDER BY");
                 sql.Append("    item");
 
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = sql.ToString();
+                //cmd.Parameters.Add(DbUtil.IntParameter("@Numb", 2));
 
-                SqlDataReader reader = dbRead(DB, sql.ToString());
+                Debug.Write("DB Open", DB_connectString);
+                DB.Open();
+                cmd.Connection = DB;
+
+                SqlDataReader reader = cmd.ExecuteReader();
                 Debug.Write("reader Start");
+                cmd.Dispose();
+                Debug.Write("cmd Dispose");
                 var name = "";
                 var mID = "";
                 var item = "";
@@ -211,21 +225,5 @@ namespace WebApi_project.hostProc
             xTab.Sort();
             return (string.Join(",",xTab) );
         }
-
-        /*
-            cmd = new SqlCommand();
-            cmd.Connection = this.con;
-            cmd.Transaction = this.trans;
-            cmd.CommandText = 
-                "INSERT INTO 承認データ"
-                    + " (伝票ID, 提出元, 提出先, 決済日付, 決済状態, 有効)"
-                    + " VALUES(@伝票ID, @提出元, @提出先, @決済日付, @決済状態, '1');"
-                    + "SELECT CAST(SCOPE_IDENTITY() as int);";
-            cmd.Parameters.Add(DbUtil.IntParameter("@伝票ID", docId));
-            cmd.Parameters.Add(DbUtil.NVarCharParameter("@提出元", 32, srcMail));
-            cmd.Parameters.Add(DbUtil.NVarCharParameter("@提出先", 32, destMail));
-            cmd.Parameters.Add(DbUtil.DateTimeParameter("@決済日付", date));
-            cmd.Parameters.Add(DbUtil.SmallIntParameter("@決済状態", status));
-         */
     }
 }

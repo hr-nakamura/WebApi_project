@@ -132,6 +132,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="hostProc\DbUtil.cs" />
     <Compile Include="hostProc\Entry.cs" />
     <Compile Include="hostProc\Entry_json.cs" />
     <Compile Include="hostProc\hostProc.cs" />

@@ -37,6 +37,8 @@ namespace WebApi_project.hostProc
         }
         public XmlDocument 費用状況(String Json)
         {
+
+            SqlCommand cmd = new SqlCommand();
             //var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
 
             object json_data = json_費用状況(Json);

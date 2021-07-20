@@ -13,13 +13,6 @@ namespace WebApi_project.hostProc
 {
     public class projectBBS : hostProc
     {
-        hostProc hProc;
-        string DB_connectString;
-        public projectBBS()
-        {
-            hProc = new hostProc();
-            DB_connectString = hProc.DB_connectString;
-        }
         public object json_projectEdit(String Json)
         {
             Dictionary<string, object> Tab = new Dictionary<string, object>();
@@ -50,7 +43,7 @@ namespace WebApi_project.hostProc
             //var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
 
             object json_data = json_projectEdit(Json);
-            XmlDocument xmlDoc = hProc.Json2Xml(json_data);
+            XmlDocument xmlDoc = Json2Xml(json_data);
             //XmlDocument xmlDoc = new XmlDocument();
 
             //var x = new projectBBS();
