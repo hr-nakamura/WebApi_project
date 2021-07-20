@@ -69,12 +69,12 @@ namespace WebApi_project.hostProc
                 sql.Append("        INNER JOIN EMG.dbo.ポストマスタ PMAST");
                 sql.Append("            ON PMAST.postCode = POST.postCode");
                 sql.Append(" WHERE");
-                sql.Append("    MAST.メールアドレス = '" + mailAddr + "'");
+                sql.Append("    MAST.メールアドレス = @mailAddr");
                 sql.Append(" ORDER BY");
                 sql.Append("    mode");
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = sql.ToString();
-                //cmd.Parameters.Add(DbUtil.IntParameter("@Numb", 2));
+                cmd.Parameters.Add(DbUtil.NVarCharParameter("@mailAddr", 32, mailAddr));
 
                 DB.Open();
                 cmd.Connection = DB;
@@ -148,7 +148,7 @@ namespace WebApi_project.hostProc
                 sql.Append("        ON DATA.memberID = MAST.社員ID");
 
                 sql.Append(" WHERE");
-                sql.Append("    MAST.メールアドレス = '" + mailAddr + "'");
+                sql.Append("    MAST.メールアドレス = @mailAddr");
                 sql.Append("    AND");
                 sql.Append("    DATA.mode = 1");
                 sql.Append(" UNION ALL ");
@@ -165,7 +165,7 @@ namespace WebApi_project.hostProc
                 sql.Append("          INNER JOIN EMG.dbo.社員基礎データ MAST");
                 sql.Append("              ON POST.memberID = MAST.社員ID");
                 sql.Append(" WHERE");
-                sql.Append("    MAST.メールアドレス = '" + mailAddr + "'");
+                sql.Append("    MAST.メールアドレス = @mailAddr");
                 sql.Append("    AND");
                 sql.Append("    DATA.mode = 1");
                 sql.Append(" ORDER BY");
@@ -173,7 +173,7 @@ namespace WebApi_project.hostProc
 
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = sql.ToString();
-                //cmd.Parameters.Add(DbUtil.IntParameter("@Numb", 2));
+                cmd.Parameters.Add(DbUtil.NVarCharParameter("@mailAddr", 32,mailAddr));
 
                 Debug.Write("DB Open", DB_connectString);
                 DB.Open();
