@@ -23,20 +23,20 @@ namespace WebApi_project.hostProc
             public string postName { get; set; }
             public string 所属名 { get; set; }
             public string 所属コード { get; set; }
-            //public string Tag { get; set; }
-            public List<para_memberInfo> sub { get; set; }
+            public string Tag { get; set; }
+            public List<para_memberInfo> 兼務 { get; set; }
         }
         public object json_memberInfo(String Json)
         {
             var o_json = JsonConvert.DeserializeObject<in_Data>(Json);
-            o_json.mailAddr = "nakamura@eandm.co.jp";
+            o_json.mailAddr = "azuma@psl-em.co.jp";
 
             para_memberInfo hostInfo; ;
             string mailAddr = o_json.mailAddr;
 
             hostInfo = memberInfoX1(mailAddr);
-            //hostInfo.Tag = memberInfoX2(mailAddr);
-
+            hostInfo.Tag = memberInfoX2(mailAddr);
+            if(hostInfo.mail == null) hostInfo.mail = mailAddr;
             return (hostInfo);
         }
         para_memberInfo memberInfoX1(string mailAddr)
@@ -102,7 +102,7 @@ namespace WebApi_project.hostProc
 
                     }
                 }
-                hostInfo.sub = sub;
+                hostInfo.兼務 = sub;
                 Debug.Write("reader Close");
                 reader.Close();
 
@@ -211,5 +211,21 @@ namespace WebApi_project.hostProc
             xTab.Sort();
             return (string.Join(",",xTab) );
         }
+
+        /*
+            cmd = new SqlCommand();
+            cmd.Connection = this.con;
+            cmd.Transaction = this.trans;
+            cmd.CommandText = 
+                "INSERT INTO 承認データ"
+                    + " (伝票ID, 提出元, 提出先, 決済日付, 決済状態, 有効)"
+                    + " VALUES(@伝票ID, @提出元, @提出先, @決済日付, @決済状態, '1');"
+                    + "SELECT CAST(SCOPE_IDENTITY() as int);";
+            cmd.Parameters.Add(DbUtil.IntParameter("@伝票ID", docId));
+            cmd.Parameters.Add(DbUtil.NVarCharParameter("@提出元", 32, srcMail));
+            cmd.Parameters.Add(DbUtil.NVarCharParameter("@提出先", 32, destMail));
+            cmd.Parameters.Add(DbUtil.DateTimeParameter("@決済日付", date));
+            cmd.Parameters.Add(DbUtil.SmallIntParameter("@決済状態", status));
+         */
     }
 }
