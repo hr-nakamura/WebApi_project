@@ -10,15 +10,8 @@ using DebugHost;
 
 namespace WebApi_project.hostProc
 {
-    public class 部門収支
+    public class 部門収支 : hostProc
     {
-        hostProc hProc;
-        string DB_connectString;
-        public 部門収支()
-        {
-            hProc = new hostProc();
-            DB_connectString = hProc.DB_connectString;
-        }
         public object 部門収支_XML_json(String Json)
         {
             Dictionary<string, object> Tab = new Dictionary<string, object>();
@@ -47,7 +40,7 @@ namespace WebApi_project.hostProc
             //var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
 
             object json_data = 部門収支_XML_json(Json);
-            XmlDocument xmlDoc = hProc.Json2Xml(json_data);
+            XmlDocument xmlDoc = Json2Xml(json_data);
             //XmlDocument xmlDoc = new XmlDocument();
 
             return (xmlDoc);

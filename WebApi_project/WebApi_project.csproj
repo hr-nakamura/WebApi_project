@@ -137,7 +137,6 @@
     <Compile Include="hostProc\hostProc.cs" />
     <Compile Include="hostProc\projectBBS\projectList.cs" />
     <Compile Include="hostProc\QOSMIO\test.cs" />
-    <Compile Include="hostProc\売上予測\売上予測_common.cs" />
     <Compile Include="hostProc\売上予測\売上予実_分類.cs" />
     <Compile Include="hostProc\売上予測\売上予実_新規.cs" />
     <Compile Include="hostProc\売上予測\売上予実_部門.cs" />
@@ -145,9 +144,11 @@
     <Compile Include="hostProc\要員情報\要員一覧.cs" />
     <Compile Include="hostProc\費用予測\費用予測.cs" />
     <Compile Include="hostProc\部門収支\部門収支.cs" />
+    <Compile Include="hostProc_json\jsonProc.cs" />
+    <Compile Include="hostProc_json\memberInfo.cs" />
+    <Compile Include="hostProc_json\部門リスト.cs" />
     <Compile Include="Models\common.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="jsonProc\部門リスト.cs" />
     <Compile Include="_home\debug\debug.ashx.cs">
       <DependentUpon>debug.ashx</DependentUpon>
     </Compile>

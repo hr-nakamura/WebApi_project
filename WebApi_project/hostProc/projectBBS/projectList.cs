@@ -11,7 +11,7 @@ using DebugHost;
 
 namespace WebApi_project.hostProc
 {
-    public class projectBBS 
+    public class projectBBS : hostProc
     {
         hostProc hProc;
         string DB_connectString;

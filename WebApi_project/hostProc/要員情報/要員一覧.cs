@@ -11,18 +11,11 @@ using DebugHost;
 
 namespace WebApi_project.hostProc
 {
-    public class 要員情報 
+    public class 要員情報 : hostProc
     {
-        hostProc hProc;
-        string DB_connectString;
-
-        public 要員情報()
-        {
-            hProc = new hostProc();
-            DB_connectString = hProc.DB_connectString;
-        }
         public object 要員一覧_json(String Json)
         {
+
             Dictionary<string, object> Tab = new Dictionary<string, object>();
             Dictionary<string, object> Info = new Dictionary<string, object>();
             Dictionary<string, object> Data = new Dictionary<string, object>();
@@ -42,7 +35,7 @@ namespace WebApi_project.hostProc
             Tab.Add("Info", (object)Info);
             Tab.Add("Data", (object)Data);
 
-            jsonProc.共通データ cmn = new jsonProc.共通データ(); 
+            jsonProc cmn = new jsonProc(); 
             var x = cmn.部門リスト_json();
             //XmlDocument xmlDoc = new XmlDocument();
             //Tab = dbFunc_A();
@@ -55,7 +48,7 @@ namespace WebApi_project.hostProc
             //var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
 
             object json_data = 要員一覧_json(Json);
-            XmlDocument xmlDoc = hProc.Json2Xml(json_data);
+            XmlDocument xmlDoc = Json2Xml(json_data);
             //XmlDocument xmlDoc = new XmlDocument();
 
             //var x = new projectBBS();

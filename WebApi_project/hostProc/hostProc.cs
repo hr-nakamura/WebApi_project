@@ -78,6 +78,28 @@ namespace WebApi_project.hostProc
 
 
         }
+        public SqlDataReader dbRead(SqlConnection DB, string sql)
+        {
+            SqlCommand cmd = null;
+            try
+            {
+                Debug.Write("cmd Start");
+                cmd = new SqlCommand(sql, DB);
+                SqlDataReader reader = cmd.ExecuteReader();
+                return (reader);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLog(ex.Message);
+                return (null);
+            }
+            finally
+            {
+                Debug.Write("cmd Dispose");
+                cmd.Dispose();
+                cmd = null;
+            }
+        }
         void IP_Chech(string IPAddr)
         {
             //解決したいIPアドレス

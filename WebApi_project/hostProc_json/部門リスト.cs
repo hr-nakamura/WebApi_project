@@ -9,17 +9,11 @@ using System.Collections.Generic;
 
 using DebugHost;
 
-namespace WebApi_project.jsonProc
+namespace WebApi_project.hostProc
 {
-    public class 共通データ
+    public partial class jsonProc
     {
-        hostProc.hostProc hProc;
-        string DB_connectString;
-        public 共通データ()
-        {
-            hProc = new hostProc.hostProc();
-            DB_connectString = hProc.DB_connectString;
-        }
+
         public object 部門リスト_json()
         {
             dbFunc_A();
@@ -114,28 +108,28 @@ namespace WebApi_project.jsonProc
             }
             return (Tab);
         }
-        SqlDataReader dbRead(SqlConnection DB, string sql)
-        {
-            SqlCommand cmd = null;
-            try
-            {
-                Debug.Write("cmd Start");
-                cmd = new SqlCommand(sql, DB);
-                SqlDataReader reader = cmd.ExecuteReader();
-                return (reader);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLog(ex.Message);
-                return (null);
-            }
-            finally
-            {
-                Debug.Write("cmd Dispose");
-                cmd.Dispose();
-                cmd = null;
-            }
-        }
+        //SqlDataReader dbRead(SqlConnection DB, string sql)
+        //{
+        //    SqlCommand cmd = null;
+        //    try
+        //    {
+        //        Debug.Write("cmd Start");
+        //        cmd = new SqlCommand(sql, DB);
+        //        SqlDataReader reader = cmd.ExecuteReader();
+        //        return (reader);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Debug.WriteLog(ex.Message);
+        //        return (null);
+        //    }
+        //    finally
+        //    {
+        //        Debug.Write("cmd Dispose");
+        //        cmd.Dispose();
+        //        cmd = null;
+        //    }
+        //}
 
         /*
                 SQL += " SELECT"

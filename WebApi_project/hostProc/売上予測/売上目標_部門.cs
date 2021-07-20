@@ -9,7 +9,7 @@ using DebugHost;
 
 namespace WebApi_project.hostProc
 {
-    public partial class 売上予測 
+    public partial class 売上予測 : hostProc
     {
         public object 売上目標_部門_json(String Json)
         {
@@ -39,7 +39,7 @@ namespace WebApi_project.hostProc
             //var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
 
             object json_data = 売上目標_部門_json(Json);
-            XmlDocument xmlDoc = hProc.Json2Xml(json_data);
+            XmlDocument xmlDoc = Json2Xml(json_data);
             //XmlDocument xmlDoc = new XmlDocument();
 
             return (xmlDoc);
