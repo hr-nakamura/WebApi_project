@@ -39,7 +39,7 @@
             WebApi_url_test = hostName + "/WebApi/project/api/test";
             WebApi_url_xml = hostName + "/WebApi/project/api/xml";
 
-            //var xmlDoc = call_ajax_xml(WebApi_url_xml);
+            var xmlDoc = call_ajax_xml(WebApi_url_xml);
             //var x = $.xml2str(xmlDoc);
 
             //$.alert.json(memberInfo);
@@ -209,11 +209,11 @@
                 url: url,
                 type: "GET",
                 data: options,
-                //dataType: 'xml',
+                dataType: 'xml',
                 dataFilter: function (data, type) {
                     return (data);
                 },
-                contentType: "application/xml",
+                //contentType: "application/xml",
                 //contentType: "text/plain",
                 async: false
             }).done(function (data, status, xhr) {

@@ -11,7 +11,7 @@ namespace WebApi_project.Controllers
     public class XmlController : ApiController
     {
         // GET api/<controller>
-        public XmlDocument Get()
+        public HttpResponseMessage Get()
         {
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.CreateXmlDeclaration("1.0", null, null);
@@ -24,7 +24,9 @@ namespace WebApi_project.Controllers
             xmlDoc.AppendChild(comment);
             xmlDoc.AppendChild(root);
 
-            return xmlDoc;
+            HttpResponseMessage response = new HttpResponseMessage();
+            response.Content = new StringContent(xmlDoc.OuterXml);
+            return (response);
         }
 
         // GET api/<controller>/5
