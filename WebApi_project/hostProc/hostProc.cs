@@ -274,21 +274,21 @@ namespace WebApi_project.hostProc
     }
     public class SqlUtil
     {
-        public static string Parameter(object value)
+        public static string Parameter(string mode, object value)
         {
             string result = "";
             string typeName = value.GetType().Name;
-            if (typeName == "String")
+            if (mode == "string" && typeName == "DateTime")
+            {
+                result = string.Concat("'", value.ToString(), "'");
+            }
+            else if (mode == "string")
             {
                 result = string.Concat("'", value, "'");
             }
-            else if (typeName == "Int32")
+            else if (mode == "number")
             {
                 result = value.ToString();
-            }
-            else if (typeName == "DateTime")
-            {
-                result = string.Concat("'", value.ToString(), "'");
             }
             else
             {
@@ -296,8 +296,6 @@ namespace WebApi_project.hostProc
             }
             return (result);
         }
-
-
     }
     public class DbUtil
     {

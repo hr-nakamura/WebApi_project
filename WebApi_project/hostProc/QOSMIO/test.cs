@@ -94,7 +94,7 @@ namespace WebApi_project.hostProc
             sql.Append("    MAST.id = @Numb");
             DateTime toDay = DateTime.Now;
 
-            sql.Replace("@Numb", SqlUtil.Parameter(2));
+            sql.Replace("@Numb", SqlUtil.Parameter("number",2));
             SqlCommand cmd = new SqlCommand();
 
             cmd.CommandText = sql.ToString();

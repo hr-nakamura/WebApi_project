@@ -13,12 +13,21 @@ namespace WebApi_project.hostProc
 {
     public partial class jsonProc
     {
-
-        public object 部門リスト_json()
+        public XmlDocument 部門リスト(String Json)
         {
-            dbFunc_A();
+            //var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
+            object json_data = json_部門リスト(Json);
+            XmlDocument xmlDoc = Json2Xml(json_data);
+            //XmlDocument xmlDoc = new XmlDocument();
 
-            return ("");
+            return (xmlDoc);
+        }
+
+        public object json_部門リスト(string Json)
+        {
+            var Tab = dbFunc_A();
+
+            return (Tab);
         }
         public Dictionary<string, object> dbFunc_A()
         {
@@ -52,9 +61,9 @@ namespace WebApi_project.hostProc
                 sql.Append("    統括本部マスタ TM");
                 sql.Append("        LEFT JOIN EMG.dbo.部署マスタ BMAST ON TM.部署ID = BMAST.部署コード");
                 sql.Append(" WHERE");
-                sql.Append("    NOT(TM.開始 > '" + e_yymm + "' or TM.終了 < '" + s_yymm + "')");
+                sql.Append("    NOT(TM.開始 > @e_yymm or TM.終了 < @s_yymm)");
                 sql.Append("    AND");
-                sql.Append("    TM.直間 IN(" + secNum + ")");
+                sql.Append("    TM.直間 IN(@secNum)");
                 if (secMode == "間接" && dispMode == "統括")
                 {
                     sql.Append("    AND");
@@ -73,19 +82,26 @@ namespace WebApi_project.hostProc
                 sql.Append("    課,");
                 sql.Append("    gCode");
 
+                sql.Replace("@s_yymm", SqlUtil.Parameter("number", s_yymm));
+                sql.Replace("@e_yymm", SqlUtil.Parameter("number", e_yymm));
+                sql.Replace("@secNum", SqlUtil.Parameter("number", secNum));
+                var x = sql.ToString();
 
                 SqlDataReader reader = dbRead(DB, sql.ToString());
                 Debug.Write("reader Start");
 
                 while (reader.Read())
                 {
-                    pNum = (string)reader["名前"].ToString();
-                    pName = (string)reader["部門"];
+                    var mode = (string)reader["直間"].ToString();
+                    var s1 = (string)reader["統括"];
+                    var s2 = (string)reader["部門"];
+                    var s3 = (string)reader["課"];
+                    var name = (string)reader["名前"].ToString();
                     gCode = (string)reader["gCode"].ToString();
-                    Debug.Write(pNum, pName,gCode);
-                    if (!Tab.ContainsKey(pNum))
+                    Debug.Write(mode, s1,s2,s3,name);
+                    if (!Tab.ContainsKey(mode))
                     {
-                        Tab.Add(pNum, pName);
+                        Tab.Add(mode, name);
                     }
                 }
 
@@ -108,60 +124,5 @@ namespace WebApi_project.hostProc
             }
             return (Tab);
         }
-        //SqlDataReader dbRead(SqlConnection DB, string sql)
-        //{
-        //    SqlCommand cmd = null;
-        //    try
-        //    {
-        //        Debug.Write("cmd Start");
-        //        cmd = new SqlCommand(sql, DB);
-        //        SqlDataReader reader = cmd.ExecuteReader();
-        //        return (reader);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Debug.WriteLog(ex.Message);
-        //        return (null);
-        //    }
-        //    finally
-        //    {
-        //        Debug.Write("cmd Dispose");
-        //        cmd.Dispose();
-        //        cmd = null;
-        //    }
-        //}
-
-        /*
-                SQL += " SELECT"
-            SQL += "   名前  = BMAST.部署名,"
-            SQL += "   直間  = TM.直間,"
-            SQL += "   統括  = TM.統括,"
-            SQL += "   部門  = TM.部門,"
-            SQL += "   課    = TM.グループ,"
-            SQL += "   gCode = TM.部署ID"
-
-            SQL += " FROM"
-            SQL += "    統括本部マスタ TM"
-            SQL += "        LEFT JOIN EMG.dbo.部署マスタ BMAST ON TM.部署ID = BMAST.部署コード"
-            SQL += " WHERE"
-            SQL += "    NOT(TM.開始 > '" + e_yymm + "' or TM.終了 < '" + s_yymm + "')"
-            SQL += "    AND"
-            SQL += "    TM.直間 IN(" + secNum + ")"
-            if(secMode == "間接" && dispMode == "統括" ){
-                SQL += "    AND"
-                SQL += "    TM.部署ID >= 0"
-                }
-            else{
-                SQL += "    AND"
-                SQL += "    TM.部署ID > 0"
-                }
-
-        SQL += " ORDER BY"
-            SQL += "    直間 desc,"
-            SQL += "    統括,"
-            SQL += "    部門,"
-            SQL += "    課,"
-            SQL += "    gCode"
-        */
     }
 }

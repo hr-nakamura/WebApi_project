@@ -76,7 +76,7 @@ namespace WebApi_project.hostProc
                 sql.Append(" ORDER BY");
                 sql.Append("    mode");
 
-                sql.Replace("@mailAddr", SqlUtil.Parameter(mailAddr));
+                sql.Replace("@mailAddr", SqlUtil.Parameter("string",mailAddr));
 
                 SqlDataReader reader = dbRead(DB, sql.ToString());
 
@@ -169,7 +169,7 @@ namespace WebApi_project.hostProc
                 sql.Append(" ORDER BY");
                 sql.Append("    item");
 
-                sql.Replace("@mailAddr", SqlUtil.Parameter(mailAddr));
+                sql.Replace("@mailAddr", SqlUtil.Parameter("string", mailAddr));
 
                 SqlDataReader reader = dbRead(DB, sql.ToString());
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web;
 using System.Xml;
+using System.Text;
 using System.Reflection;
 using Newtonsoft.Json;
 using System.Data.SqlClient;
@@ -18,22 +19,50 @@ namespace WebApi_project.hostProc
             Dictionary<string, object> Info = new Dictionary<string, object>();
             Dictionary<string, object> Data = new Dictionary<string, object>();
 
-            string classPath = this.GetType().FullName;                                         //クラスパスの取得
-            string className = this.GetType().Name;                                             //クラス名の取得
-            string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;           //メソッド名の取得
-            Debug.WriteLog(classPath);
 
-            string mName = Environment.MachineName;
+			StringBuilder sql = new StringBuilder("");
+			/*
+			sql.Append(" SELECT");
+			sql.Append("      S_name = '" + S_name + "',");
+			sql.Append("      直間   = MAST.直間,");
 
-            Info.Add("mName", mName);
-            Info.Add("className", className);
-            Info.Add("methodName", methodName);
-            Info.Add("DB_Conn", DB_connectString);
-
-            Tab.Add("Info", (object)Info);
-            Tab.Add("Data", (object)Data);
-
-            return (Tab);
+			sql.Append("      大項目 = ITEM.大項目,");
+			sql.Append("      項目   = ITEM.項目,");
+			sql.Append("      種別   = (CASE WHEN DATA.種別 = 0 THEN '計画' ELSE '予測' END),");
+			sql.Append("      yymm   = DATA.yymm,");
+			sql.Append("      amount = Sum(DATA.数値)");
+			sql.Append(" FROM");
+			sql.Append("      収支計画データ DATA ");
+			sql.Append("                     LEFT JOIN (SELECT * FROM EMG.dbo.部署マスタ WHERE NOT(開始 > @eDate or 終了 < @sDate) ) MAST");
+			sql.Append("                          ON DATA.部署ID = MAST.部署コード");
+			sql.Append("                     LEFT JOIN 収支項目マスタ ITEM");
+			sql.Append("                          ON DATA.項目ID = ITEM.ID");
+			sql.Append(" WHERE");
+			sql.Append("      ITEM.大項目 NOT IN('部門固定費','要員数')");
+			sql.Append("      AND");
+			sql.Append("      DATA.種別 IN(0,1)");              // 計画・予測
+			sql.Append("      AND");
+			sql.Append("      MAST.ACCコード >= 0");
+			sql.Append("      AND");
+			sql.Append("      DATA.yymm BETWEEN @s_yymm  AND @e_yymm");
+			if (Tab[S_name]["部署コード"].length > 0)
+			{
+				sql.Append("    AND");
+				sql.Append("    MAST.部署コード IN(" + Tab[S_name]["部署コード"].join(",") + ")");
+			}
+			if (Tab[S_name]["直間"] != "")
+			{
+				sql.Append("    AND");
+				sql.Append("    MAST.直間 IN(" + Tab[S_name]["直間"] + ")");
+			}
+			sql.Append(" GROUP BY");
+			sql.Append("      MAST.直間,");
+			sql.Append("      ITEM.大項目,");
+			sql.Append("      ITEM.項目,");
+			sql.Append("      DATA.種別,");
+			sql.Append("      DATA.yymm");
+*/
+			return (Tab);
         }
         public XmlDocument 部門収支_XML(String Json)
         {
@@ -45,8 +74,9 @@ namespace WebApi_project.hostProc
 
             return (xmlDoc);
         }
-        /*
-   		SQL  = " SELECT"
+		/*
+	for( var S_name in Tab ){
+		SQL  = " SELECT"
 		SQL += "      S_name = '" + S_name + "',"
 		SQL += "      直間   = MAST.直間,"
 
@@ -87,9 +117,11 @@ namespace WebApi_project.hostProc
 		}
 	SQL = SQLTab.join(" UNION ALL ")
 
+
+
          */
 
-        /*
+		/*
             groupPlan(DB, Tab, yymm, mCnt, dispMode, dispName, listMode)						// 計画・予測データ取得
             uriageYosoku(DB, Tab, yymm, mCnt, dispMode, dispName, listMode, fixLevel)			// 売上予測データ取得
 
@@ -112,7 +144,7 @@ namespace WebApi_project.hostProc
 
             間接部門予算(Tab, mCnt)
         */
-        class SampleData
+		class SampleData
         {
             public string a { get; set; }
             public string b { get; set; }
