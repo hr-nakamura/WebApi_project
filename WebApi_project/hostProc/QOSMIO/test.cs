@@ -91,10 +91,14 @@ namespace WebApi_project.hostProc
             sql.Append(" FROM");
             sql.Append("    ログデータ MAST");
             sql.Append(" WHERE");
-            sql.Append("    MAST.id = @Numb");
+            sql.Append("    MAST.id = @Numb2");
+            sql.Append("    MAST.id = '@Numb'");
+
+            sql.Replace("@Numb2", "1");
             SqlCommand cmd = new SqlCommand();
+
             cmd.CommandText = sql.ToString();
-            cmd.Parameters.Add(DbUtil.IntParameter("@Numb", 2));
+            //cmd.Parameters.Add(DbUtil.IntParameter("@Numb", 2));
             try
             {
                 SqlConnection DB = new SqlConnection(DB_connectString);
