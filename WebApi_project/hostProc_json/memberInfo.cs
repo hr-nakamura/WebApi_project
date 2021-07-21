@@ -26,7 +26,7 @@ namespace WebApi_project.hostProc
             public string Tag { get; set; }
             public List<para_memberInfo> 兼務 { get; set; }
         }
-        public object json_memberInfo(String Json)
+        public object json_memberInfo(string Json)
         {
             var o_json = JsonConvert.DeserializeObject<in_Data>(Json);
             o_json.mailAddr = "azuma@psl-em.co.jp";

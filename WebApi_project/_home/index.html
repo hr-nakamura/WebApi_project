@@ -23,6 +23,7 @@
         var WebApi_url = "/WebApi/project/api/values";
         var WebApi_url_json = "/WebApi/project/api/json";
         var Send_Option = { limitYear : 2019, visitBBS : "2021/07/01 10:00:00" };
+        var mailPara = { mailAddr: "azuma@psl-em.co.jp" };
     </script>
     <script type="text/javascript">
 
@@ -36,13 +37,19 @@
             WebApi_url = hostName + "/WebApi/project/api/values";
             WebApi_url_json = hostName + "/WebApi/project/api/json";
             WebApi_url_test = hostName + "/WebApi/project/api/test";
+            WebApi_url_xml = hostName + "/WebApi/project/api/xml";
 
-            var TestInfo = call_ajax_api_json("GET", WebApi_url_test);
-            //$.alert.json(TestInfo);
+            //var xmlDoc = call_ajax_xml(WebApi_url_xml);
+            //var x = $.xml2str(xmlDoc);
+
+            //$.alert.json(memberInfo);
+            //var memberInfo = call_ajax_get( WebApi_url_json, mailPara);
+            //$.alert.json(memberInfo);
 
             // methodListの取得
             var methodList = call_ajax_api("GET", WebApi_url);
             var menu_Xml = $.str2xml(methodList);
+            //var menu_Xml = methodList;
 
             var menu_data = $.loadXMLDoc("menu.xml");
 
@@ -179,6 +186,38 @@
                 async: false
             }).done(function (data, status, xhr) {
                 returnValue = data.replace(/\"$/, "").replace(/^\"/, "");
+                //$.alert(returnValue);
+            }).fail(function (xhr, status, error) {
+                returnValue = status;
+                //$.alert("error:" + xhr.statusText);
+                window.status = "error:" + xhr.statusText;
+            });
+            return (returnValue);
+        }
+        function call_ajax_xml(url, options) {
+
+            // 受信側でidを指定したときは設定しないとエラーとなる
+            // 漢字は渡せない
+            //url += "?name5=漢字&Mssage=ABCDEF";
+            // ajax:dataで渡したらモデュールでも受信できるが引数指定でも受信できる
+            // 漢字も OK
+            // Get では「data」を替えると複数のパラメータで呼べる
+
+            $.debug("call_ajax_get", url);
+            window.status = "call_ajax_get";
+            var result = $.ajax({
+                url: url,
+                type: "GET",
+                data: options,
+                //dataType: 'xml',
+                dataFilter: function (data, type) {
+                    return (data);
+                },
+                contentType: "application/xml",
+                //contentType: "text/plain",
+                async: false
+            }).done(function (data, status, xhr) {
+                returnValue = data;
                 //$.alert(returnValue);
             }).fail(function (xhr, status, error) {
                 returnValue = status;

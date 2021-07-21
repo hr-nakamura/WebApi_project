@@ -23,6 +23,13 @@ namespace WebApi_project.Controllers
             return (Tab);
 
         }
+        public object Get(string mailAddr)
+        {
+            var jProc = new hostProc.jsonProc();
+            object Obj = jProc.json_memberInfo(mailAddr);
+
+            return (Obj);
+        }
         public object Get(string Item, string Json)
         {
             paraOut("GET", Item, Json);
@@ -77,12 +84,12 @@ namespace WebApi_project.Controllers
         }
         void paraOut(String Mode, String Item, String Json)
         {
-            string[] ItemWork = Item.Split('/'); 
-            var work = new List<string>();
-            work.Add(Mode);
-            work.Add(ItemWork[0]);
-            work.Add(ItemWork[1]);
-            work.Add(Json);
+            //string[] ItemWork = Item.Split('/'); 
+            //var work = new List<string>();
+            //work.Add(Mode);
+            //work.Add(ItemWork[0]);
+            //work.Add(ItemWork[1]);
+            //work.Add(Json);
             //Debug.WriteLog("[" + string.Join("][", work) + "]");
 
         }
