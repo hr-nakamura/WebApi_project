@@ -44,11 +44,14 @@ namespace WebApi_project.hostProc
             para_memberInfo hostInfo = new para_memberInfo();
             SqlConnection DB;
             DB = new SqlConnection(DB_connectString);
+
             List<para_memberInfo> sub = new List<para_memberInfo>();
 
             try
             {
                 Debug.Write("DB Open", DB_connectString);
+                DB.Open();
+
                 StringBuilder sql = new StringBuilder("");
 
                 sql.Append(" SELECT");
@@ -72,19 +75,10 @@ namespace WebApi_project.hostProc
                 sql.Append("    MAST.メールアドレス = @mailAddr");
                 sql.Append(" ORDER BY");
                 sql.Append("    mode");
+
                 sql.Replace("@mailAddr", SqlUtil.Parameter(mailAddr));
 
-                SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = sql.ToString();
-                //cmd.Parameters.Add(DbUtil.NVarCharParameter("@mailAddr", 32, mailAddr));
-
-                DB.Open();
-                cmd.Connection = DB;
-
-                SqlDataReader reader = cmd.ExecuteReader();
-                Debug.Write("reader Start");
-                cmd.Dispose();
-                Debug.Write("cmd Dispose");
+                SqlDataReader reader = dbRead(DB, sql.ToString());
 
                 while (reader.Read())
                 {
@@ -138,6 +132,8 @@ namespace WebApi_project.hostProc
             DB = new SqlConnection(DB_connectString);
             try
             {
+                Debug.Write("DB Open", DB_connectString);
+                DB.Open();
                 StringBuilder sql = new StringBuilder("");
 
                 sql.Append(" SELECT");
@@ -175,18 +171,8 @@ namespace WebApi_project.hostProc
 
                 sql.Replace("@mailAddr", SqlUtil.Parameter(mailAddr));
 
-                SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = sql.ToString();
-                //cmd.Parameters.Add(DbUtil.NVarCharParameter("@mailAddr", 32,mailAddr));
+                SqlDataReader reader = dbRead(DB, sql.ToString());
 
-                Debug.Write("DB Open", DB_connectString);
-                DB.Open();
-                cmd.Connection = DB;
-
-                SqlDataReader reader = cmd.ExecuteReader();
-                Debug.Write("reader Start");
-                cmd.Dispose();
-                Debug.Write("cmd Dispose");
                 var name = "";
                 var mID = "";
                 var item = "";
