@@ -138,6 +138,7 @@
     <Compile Include="hostProc\hostProc.cs" />
     <Compile Include="hostProc\projectBBS\projectList.cs" />
     <Compile Include="hostProc\QOSMIO\test.cs" />
+    <Compile Include="hostProc\SqlUtil.cs" />
     <Compile Include="hostProc\売上予測\売上予実_分類.cs" />
     <Compile Include="hostProc\売上予測\売上予実_新規.cs" />
     <Compile Include="hostProc\売上予測\売上予実_部門.cs" />

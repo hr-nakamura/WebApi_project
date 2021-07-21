@@ -72,7 +72,7 @@ namespace WebApi_project.hostProc
                 sql.Append("    MAST.メールアドレス = @mailAddr");
                 sql.Append(" ORDER BY");
                 sql.Append("    mode");
-                sql.Replace("@mailAddr", mailAddr);
+                sql.Replace("@mailAddr", SqlUtil.Parameter(mailAddr));
 
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = sql.ToString();
@@ -173,7 +173,7 @@ namespace WebApi_project.hostProc
                 sql.Append(" ORDER BY");
                 sql.Append("    item");
 
-                sql.Replace("@mailAddr", mailAddr);
+                sql.Replace("@mailAddr", SqlUtil.Parameter(mailAddr));
 
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = sql.ToString();
