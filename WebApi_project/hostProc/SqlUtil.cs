@@ -8,13 +8,22 @@ namespace WebApi_project.hostProc
         public static string Parameter(object value)
         {
             string result = "";
-            if (value.GetType().Name == "String")
+            string typeName = value.GetType().Name;
+            if (typeName == "String")
             {
                 result = string.Concat("'", value, "'");
             }
+            else if (typeName == "Int32")
+            {
+                result = value.ToString();
+            }
+            else if (typeName == "DateTime")
+            {
+                result = string.Concat("'", value.ToString(), "'");
+            }
             else
             {
-                result = null;
+                result = value.ToString();
             }
             return (result);
         }
