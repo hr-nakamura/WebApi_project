@@ -31,11 +31,12 @@ namespace WebApi_project.hostProc
         }
         public Dictionary<string, object> dbFunc_A()
         {
+            Dictionary<string, Dictionary<string, object>> Tab = new Dictionary<string, Dictionary<string,object>>();
             SqlConnection DB;
             string pNum = "";
             string pName = "";
             string gCode = "";
-            Dictionary<string, object> Tab = new Dictionary<string, object>();
+            Dictionary<string, object> Tab1 = new Dictionary<string, object>();
             string secMode = "直接";
             string dispMode = "統括";
             string s_yymm = "201810";
@@ -98,10 +99,38 @@ namespace WebApi_project.hostProc
                     var s3 = (string)reader["課"];
                     var name = (string)reader["名前"].ToString();
                     gCode = (string)reader["gCode"].ToString();
-                    Debug.Write(mode, s1,s2,s3,name);
-                    if (!Tab.ContainsKey(mode))
+                    //Debug.Write(mode, s1, s2, s3, name);
+                    if (!Tab.ContainsKey(s1))
                     {
-                        Tab.Add(mode, name);
+                        Dictionary<string, object> x1 = new Dictionary<string, object>();
+                        Tab.Add(s1, x1);
+                        if (!x1.ContainsKey(s2))
+                        {
+                            Dictionary<string, object> x2 = new Dictionary<string, object>();
+                            x1.Add(s2, x2);
+                            x1.Add("name1", name);
+                            if (!x2.ContainsKey(s3))
+                            {
+                                x2.Add("name2", name);
+                            }
+                        }
+                        else
+                        {
+
+                        }
+
+                    }
+                    else
+                    {
+                        var aa = Tab[s1];
+
+                    }
+
+//=======================================
+
+                    if (!Tab1.ContainsKey(s1))
+                    {
+                        Tab1.Add(s1, name);
                     }
                 }
 
@@ -122,7 +151,12 @@ namespace WebApi_project.hostProc
                 Debug.Write("DB null");
                 DB = null;
             }
-            return (Tab);
+            return (Tab1);
+        }
+        class group
+        {
+            public string name { get; set; }
+            public Dictionary<string, object> list { get; set; }
         }
     }
 }
