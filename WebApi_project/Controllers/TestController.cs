@@ -12,8 +12,11 @@ namespace WebApi_project.Controllers
     public class TestController : ApiController
     {
         // GET api/<controller>
-        public Dictionary<string, string> Get()
+        public HttpResponseMessage Get()
         {
+            HttpResponseMessage returnValue;
+
+            XmlDocument xmlDoc = new XmlDocument();
             var hProc = new hostProc.hostProc();
 
             string mName = Environment.MachineName;
@@ -25,7 +28,9 @@ namespace WebApi_project.Controllers
             Tab.Add("DB_status", (hProc.DB_status ? "OK" : "NG"));
             Tab.Add("DB_result", hProc.DB_result);
 
-            return (Tab);
+            xmlDoc = makeXmlDoc(Tab);
+            returnValue = response_conv(xmlDoc.OuterXml);
+            return (returnValue);
         }
 
         // GET api/<controller>/5
@@ -51,15 +56,15 @@ namespace WebApi_project.Controllers
             else if( mode == "xml")
             {
                 XmlDocument xmlDoc = new XmlDocument();
-                xmlDoc.CreateXmlDeclaration("1.0", null, null);
+                var hProc = new hostProc.hostProc();
+                string mName = Environment.MachineName;
+                Dictionary<string, string> Tab = new Dictionary<string, string>();
+                Tab.Add("mName", mName);
+                Tab.Add("DB_Conn", hProc.DB_connectString);
+                Tab.Add("DB_status", (hProc.DB_status ? "OK" : "NG"));
+                Tab.Add("DB_result", hProc.DB_result);
 
-                var xmlMain = xmlDoc.CreateProcessingInstruction("xml", "version='1.0' encoding='Shift_JIS'");
-                XmlElement root = xmlDoc.CreateElement("root");
-
-                var comment = xmlDoc.CreateComment("xml data");
-                xmlDoc.AppendChild(xmlMain);
-                xmlDoc.AppendChild(comment);
-                xmlDoc.AppendChild(root);
+                xmlDoc = makeXmlDoc(Tab);
                 returnValue = response_conv(xmlDoc.OuterXml);
             }
             else
@@ -89,5 +94,30 @@ namespace WebApi_project.Controllers
         public void Delete(int id)
         {
         }
+
+        XmlDocument makeXmlDoc(Dictionary<string, string> Tab)
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.CreateXmlDeclaration("1.0", null, null);
+
+            var xmlMain = xmlDoc.CreateProcessingInstruction("xml", "version='1.0' encoding='Shift_JIS'");
+            XmlElement root = xmlDoc.CreateElement("root");
+
+            var comment = xmlDoc.CreateComment("json data");
+            xmlDoc.AppendChild(xmlMain);
+            xmlDoc.AppendChild(comment);
+            xmlDoc.AppendChild(root);
+
+            foreach (var x in Tab)
+            {
+                XmlElement data = xmlDoc.CreateElement("json");
+                data.InnerText = x.Value;
+                data.SetAttribute("name", x.Key);
+                root.AppendChild(data);
+            }
+
+            return (xmlDoc);
+        }
+
     }
 }

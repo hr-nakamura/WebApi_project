@@ -38,17 +38,34 @@
             WebApi_url_json = hostName + "/WebApi/project/api/json";
             WebApi_url_test = hostName + "/WebApi/project/api/test";
 
-            var result = call_ajax_api(WebApi_url_test, "json", "json");
-            var result = call_ajax_api(WebApi_url_test, "json", "xml");
-            var result = call_ajax_api(WebApi_url_test, "json", "text");
-            var json = JSON.parse(result);
-            var result = call_ajax_api(WebApi_url_test, "xml", "json");
-            var result = call_ajax_api(WebApi_url_test, "xml", "xml");
+            //var result = call_ajax_api(WebApi_url_test, "text", "json");
+            //var result = call_ajax_api(WebApi_url_test, "text", "xml");
+            //var result = call_ajax_api(WebApi_url_test, "text", "text");
+
+            //var result = call_ajax_api(WebApi_url_test, "json", "json");
+            //var result = call_ajax_api(WebApi_url_test, "json", "xml");
+            //var result = call_ajax_api(WebApi_url_test, "json", "text");
+            //var json = JSON.parse(result);
+
+            //var result = call_ajax_api(WebApi_url_test, "xml", "json");
+
+            var xmlDoc = call_ajax_api(WebApi_url_test, "xml", "xml");
+
+            $(xmlDoc).find("json").each(function (i) {
+                $.debug("xml", i, $(this).text());
+            });
+
             var result = call_ajax_api(WebApi_url_test, "xml", "text");
             var xmlDoc = $.str2xml(result);
-            var result = call_ajax_api(WebApi_url_test, "text", "json");
-            var result = call_ajax_api(WebApi_url_test, "text", "xml");
-            var result = call_ajax_api(WebApi_url_test, "text", "text");
+
+            $(xmlDoc).find("json").each(function (i) {
+                $.debug("text", i, $(this).text());
+            });
+
+            //var xmlDoc = loadXMLDoc("/WebApi/project/api/test");
+            //$(xmlDoc).find("json").each(function (i) {
+            //    $.debug("text", i, $(this).text());
+            //});
 
             var a = 1;
         }
@@ -62,6 +79,56 @@
 
     </script>
     <script type="text/javascript">
+        var loadXMLDoc = function (url) {
+            var asyncMode = false;
+            var doneProc = null;
+            var Buff = {};
+            var xmlDoc = null;
+            try {
+                var returnValue = "";
+
+                if ((window.ActiveXObject || "ActiveXObject" in window) && url.match(/.+\.(xslt_X|xsl_X)$/i)) {
+                    //$.debug("IE and xsl", Buff["Url"]);
+                    var xslDoc = new ActiveXObject("Microsoft.XMLDOM");
+                    xslDoc.async = false;
+                    xslDoc.load(url);
+                    return (xslDoc);
+                }
+                else {
+                    //$.debug("Not IE", Buff["Url"]);
+                    $.ajax({
+                        url: url,
+                        type: "GET",
+                        data: Buff["Arg"],
+                        contentType: "text/plain",
+                        cache: false,
+                        async: asyncMode
+                    }).done(function (data, status, xhr) {
+                        if (asyncMode == true) {
+                            //$.debug(Buff["Url"],"async done");
+                            xmlDoc = $.str2xml(xhr.responseText);
+                            doneProc(xmlDoc);
+                        }
+                        else {
+                            //$.debug(Buff["Url"],"sync done");
+                            returnValue = xhr.responseText;
+                        }
+                    }).fail(function (xhr, status, error) {
+                        //$.debug("error");
+                        throw new Error(xhr.statusText);
+                    }).always(function () {
+                        //$.debug(Buff["Url"],"always");
+                    });
+                    //$.debug(Buff["Url"],"end");
+                    xmlDoc = $.str2xml(returnValue);
+                    return (xmlDoc);
+                }
+            } catch (e) {
+                $.alert("[loadXMLDoc]", e.message, Buff["Url"]);
+                return (null);
+            }
+        }
+
     </script>
     <script type="text/javascript">
         function call_ajax_api(url, mode, type) {
