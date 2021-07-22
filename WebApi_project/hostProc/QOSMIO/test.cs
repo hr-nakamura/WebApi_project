@@ -29,13 +29,36 @@ namespace WebApi_project.hostProc
             Tab.Add("DB_Conn", DB_connectString);
 
 
-            dbFunc_A();
-
+            //            dbFunc_A();
+            testFunc();
 
 
             return (Tab);
         }
+        class group
+        {
+            public string name { get; set; }
+            public string postCode { get; set; }
+            public List<group> list { get; set; }
+        }
+        void testFunc()
+        {
+            group Top = new group() { name = "111", postCode = "xxx" }; 
 
+            List<group> sub = new List<group>();
+
+            Top.name = "EMG";
+            Top.postCode = "000";
+
+            for( int i = 0; i < 5; i++)
+            {
+                var work = new group();
+                work.name = "aaa" + i.ToString();
+                work.postCode = "789";
+
+            }
+            var a = 1;
+        }
         public XmlDocument projectTest(String Json)
         {
 
