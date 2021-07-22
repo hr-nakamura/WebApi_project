@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Xml;
+using Newtonsoft.Json;
 
 namespace WebApi_project.Controllers
 {
@@ -27,11 +29,52 @@ namespace WebApi_project.Controllers
         }
 
         // GET api/<controller>/5
-        public string Get(int id)
+        public HttpResponseMessage Get(String mode)
         {
-            return "value";
-        }
+            HttpResponseMessage returnValue;
+            if ( mode == "json")
+            {
+                var hProc = new hostProc.hostProc();
 
+                string mName = Environment.MachineName;
+
+                Dictionary<string, string> Tab = new Dictionary<string, string>();
+                //Tab[nameof(mName)] = mName;
+                Tab.Add("mName", mName);
+                Tab.Add("DB_Conn", hProc.DB_connectString);
+                Tab.Add("DB_status", (hProc.DB_status ? "OK" : "NG"));
+                Tab.Add("DB_result", hProc.DB_result);
+
+                returnValue = response_conv(JsonConvert.SerializeObject(Tab));
+
+            }
+            else if( mode == "xml")
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.CreateXmlDeclaration("1.0", null, null);
+
+                var xmlMain = xmlDoc.CreateProcessingInstruction("xml", "version='1.0' encoding='Shift_JIS'");
+                XmlElement root = xmlDoc.CreateElement("root");
+
+                var comment = xmlDoc.CreateComment("xml data");
+                xmlDoc.AppendChild(xmlMain);
+                xmlDoc.AppendChild(comment);
+                xmlDoc.AppendChild(root);
+                returnValue = response_conv(xmlDoc.OuterXml);
+            }
+            else
+            {
+                returnValue = response_conv("漢字の\n変換\nabcd\n12345");
+
+            }
+            return (returnValue);
+        }
+        HttpResponseMessage response_conv(string value)
+        {
+            HttpResponseMessage response = new HttpResponseMessage();
+            response.Content = new StringContent(value);
+            return (response);
+        }
         // POST api/<controller>
         public void Post([FromBody] string value)
         {

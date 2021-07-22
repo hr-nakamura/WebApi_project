@@ -5,6 +5,8 @@ using System.Web.Http;
 using System.Xml;
 using Newtonsoft.Json;
 using System.Reflection;
+using System.Net.Http;
+
 
 using WebApi_project.Models;
 using WebApi_project.hostProc;
@@ -16,14 +18,16 @@ namespace WebApi_project.Controllers
     public class ValuesController : ApiController
     {
         // GET api/<controller>/5
-        public string Get()
+        public HttpResponseMessage Get()
         {
             var hProc = new hostProc.hostProc();
             XmlDocument xmlDoc = hProc.methodList();
-            return (xmlDoc.OuterXml);
+
+            HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
+            return (response);
 
         }
-        public String Get(string Item,  string Json)
+        public HttpResponseMessage Get(string Item,  string Json)
         {
             paraOut("GET", Item, Json);
 
@@ -31,11 +35,12 @@ namespace WebApi_project.Controllers
 
             XmlDocument xmlDoc = hProc.Entry(Item, Json);
 
-            return (xmlDoc.OuterXml);
+            HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
+            return (response);
         }
 
         // POST api/<controller>
-        public string Post([FromBody] ProjectJson para)
+        public HttpResponseMessage Post([FromBody] ProjectJson para)
         {
 
             HttpContext context = HttpContext.Current;
@@ -52,12 +57,13 @@ namespace WebApi_project.Controllers
             var hProc = new hostProcEntry();
             XmlDocument xmlDoc = hProc.Entry(Item, Json);
 
-            return (xmlDoc.OuterXml);
+            HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
+            return (response);
         }
 
 
         // PUT api/<controller>/5
-        public string Put([FromBody] ProjectJson para)
+        public HttpResponseMessage Put([FromBody] ProjectJson para)
         {
             var Item = para.Item;
             var Json = para.Json;
@@ -66,11 +72,12 @@ namespace WebApi_project.Controllers
             var hProc = new hostProcEntry();
             XmlDocument xmlDoc = hProc.Entry(Item, Json);
 
-            return (xmlDoc.OuterXml);
+            HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
+            return (response);
         }
 
         // DELETE api/<controller>/5
-        public string Delete([FromBody] ProjectJson para)
+        public HttpResponseMessage Delete([FromBody] ProjectJson para)
         {
             var Item = para.Item;
             var Json = para.Json;
@@ -79,7 +86,14 @@ namespace WebApi_project.Controllers
             var hProc = new hostProcEntry();
             XmlDocument xmlDoc = hProc.Entry(Item, Json);
 
-            return (xmlDoc.OuterXml);
+            HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
+            return (response);
+        }
+        HttpResponseMessage response_conv(string value)
+        {
+            HttpResponseMessage response = new HttpResponseMessage();
+            response.Content = new StringContent(value);
+            return (response);
         }
         void paraOut(String Mode, String Item, String Json)
         {
@@ -90,8 +104,6 @@ namespace WebApi_project.Controllers
             work.Add(ItemWork[1]);
             work.Add(Json);
             //Debug.WriteLog("[" + string.Join("][", work) + "]");
-
         }
-
     }
 }

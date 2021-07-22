@@ -4,7 +4,7 @@ using System.Web;
 using System.Web.Http;
 using System.Xml;
 using Newtonsoft.Json;
-using System.Reflection;
+using System.Net.Http;
 
 using WebApi_project.Models;
 using WebApi_project.hostProc;
@@ -15,32 +15,36 @@ namespace WebApi_project.Controllers
     public class JsonController : ApiController
     {
         // GET api/<controller>/5
-        public object Get()
+        public HttpResponseMessage Get()
         {
             var hProc = new hostProc.hostProc();
             object Tab = hProc.methodList_json();
 
-            return (Tab);
+            HttpResponseMessage response = response_conv(JsonConvert.SerializeObject(Tab));
+            return (response);
 
         }
-        public object Get(string mailAddr)
+        public HttpResponseMessage Get(string mailAddr)
         {
             var jProc = new hostProc.jsonProc();
             object Obj = jProc.json_memberInfo(mailAddr);
 
-            return (Obj);
+            var response = response_conv(JsonConvert.SerializeObject(Obj));
+            return (response);
         }
-        public object Get(string Item, string Json)
+        public HttpResponseMessage Get(string Item, string Json)
         {
             paraOut("GET", Item, Json);
 
             var hProc = new hostProcEntry_json();
             object Obj = hProc.Entry(Item, Json);
-            return (Obj);
+
+            HttpResponseMessage response = response_conv(JsonConvert.SerializeObject(Obj));
+            return (response);
         }
 
         // POST api/<controller>
-        public object Post([FromBody] ProjectJson para)
+        public HttpResponseMessage Post([FromBody] ProjectJson para)
         {
 
             HttpContext context = HttpContext.Current;
@@ -53,12 +57,13 @@ namespace WebApi_project.Controllers
             var hProc = new hostProcEntry_json();
             object Obj = hProc.Entry(Item, Json);
 
-            return (Obj);
+            HttpResponseMessage response = response_conv(JsonConvert.SerializeObject(Obj));
+            return (response);
         }
 
 
         // PUT api/<controller>/5
-        public object Put([FromBody] ProjectJson para)
+        public HttpResponseMessage Put([FromBody] ProjectJson para)
         {
             var Item = para.Item;
             var Json = para.Json;
@@ -67,11 +72,12 @@ namespace WebApi_project.Controllers
             var hProc = new hostProcEntry_json();
             object Obj = hProc.Entry(Item, Json);
 
-            return (Obj);
+            HttpResponseMessage response = response_conv(JsonConvert.SerializeObject(Obj));
+            return (response);
         }
 
         // DELETE api/<controller>/5
-        public object Delete([FromBody] ProjectJson para)
+        public HttpResponseMessage Delete([FromBody] ProjectJson para)
         {
             var Item = para.Item;
             var Json = para.Json;
@@ -80,7 +86,14 @@ namespace WebApi_project.Controllers
             var hProc = new hostProcEntry_json();
             object Obj = hProc.Entry(Item, Json);
 
-            return (Obj);
+            var response = response_conv(JsonConvert.SerializeObject(Obj));
+            return (response);
+        }
+        HttpResponseMessage response_conv(string value)
+        {
+            HttpResponseMessage response = new HttpResponseMessage();
+            response.Content = new StringContent(value);
+            return (response);
         }
         void paraOut(String Mode, String Item, String Json)
         {

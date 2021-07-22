@@ -117,16 +117,12 @@
                 data: options,
                 dataType: 'text',
                 dataFilter: function (data, type) {
-                    data = data.replace(/\\/g, "").replace(/\"$/, "").replace(/^\"/, "");
+                    //data = data.replace(/\\/g, "").replace(/\"$/, "").replace(/^\"/, "");
                     return (data);
                 },
-                //contentType: "application/json",
-                //contentType: "application/xml",
-                //contentType: "text/plain",
                 async: false
             }).done(function (data, status, xhr) {
                 returnValue = data;
-                //$.alert(returnValue);
             }).fail(function (xhr, status, error) {
                 returnValue = status;
                 window.status = xhr.statusText;
@@ -135,7 +131,6 @@
             return (returnValue);
         }
         function call_ajax_api_json(mode, url, item, json, callback) {
-            //$.alert("call_ajax_api_json[" + mode + "]", url);
             window.status = "call_ajax_api_json[" + mode + "]";
             var options = {
                 Item: item,
@@ -149,9 +144,6 @@
                 dataFilter: function (data, type) {
                     return (data);
                 },
-                //contentType: "application/json",
-                //contentType: "application/xml",
-                //contentType: "text/plain",
                 async: false
             }).done(function (data, status, xhr) {
                 returnValue = data;
@@ -163,14 +155,6 @@
             return (returnValue);
         }
         function call_ajax_get(url, options) {
-
-            // 受信側でidを指定したときは設定しないとエラーとなる
-            // 漢字は渡せない
-            //url += "?name5=漢字&Mssage=ABCDEF";
-            // ajax:dataで渡したらモデュールでも受信できるが引数指定でも受信できる
-            // 漢字も OK
-            // Get では「data」を替えると複数のパラメータで呼べる
-
             $.debug("call_ajax_get", url);
             window.status = "call_ajax_get";
             var result = $.ajax({
@@ -181,12 +165,9 @@
                 dataFilter: function (data, type) {
                     return (data);
                 },
-                //contentType: "application/xml",
-                //contentType: "text/plain",
                 async: false
             }).done(function (data, status, xhr) {
-                returnValue = data.replace(/\"$/, "").replace(/^\"/, "");
-                //$.alert(returnValue);
+                returnValue = data;
             }).fail(function (xhr, status, error) {
                 returnValue = status;
                 //$.alert("error:" + xhr.statusText);
@@ -195,16 +176,8 @@
             return (returnValue);
         }
         function call_ajax_xml(url, options) {
-
-            // 受信側でidを指定したときは設定しないとエラーとなる
-            // 漢字は渡せない
-            //url += "?name5=漢字&Mssage=ABCDEF";
-            // ajax:dataで渡したらモデュールでも受信できるが引数指定でも受信できる
-            // 漢字も OK
-            // Get では「data」を替えると複数のパラメータで呼べる
-
-            $.debug("call_ajax_get", url);
-            window.status = "call_ajax_get";
+            $.debug("call_ajax_xml", url);
+            window.status = "call_ajax_xml";
             var result = $.ajax({
                 url: url,
                 type: "GET",
@@ -213,12 +186,9 @@
                 dataFilter: function (data, type) {
                     return (data);
                 },
-                //contentType: "application/xml",
-                //contentType: "text/plain",
                 async: false
             }).done(function (data, status, xhr) {
                 returnValue = data;
-                //$.alert(returnValue);
             }).fail(function (xhr, status, error) {
                 returnValue = status;
                 //$.alert("error:" + xhr.statusText);

@@ -100,6 +100,7 @@
     <Content Include="_home\debug\jquery.my.debug.js" />
     <Content Include="_home\images\bg00.gif" />
     <Content Include="_home\images\EM.png" />
+    <Content Include="_home\index5.html" />
     <Content Include="_home\index.html" />
     <Content Include="_home\index_1.html" />
     <Content Include="_home\index_2.html" />
@@ -122,6 +123,7 @@
     <Content Include="_home\Util\viewXML\viewXmlWindow.js" />
     <Content Include="_home\viewValue.html" />
     <Content Include="_home\debug\debug.ashx" />
+    <Content Include="_home\ajax.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Data\iniFile.cs" />
@@ -129,7 +131,6 @@
     <Compile Include="Controllers\JsonController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
-    <Compile Include="Controllers\XmlController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
