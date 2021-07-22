@@ -39,24 +39,20 @@ namespace WebApi_project.hostProc
         {
             public string name { get; set; }
             public string postCode { get; set; }
-            public List<group> list { get; set; }
+            public Dictionary<string,group> list { get; set; }
         }
         void testFunc()
         {
-            group Top = new group() { name = "111", postCode = "xxx" }; 
+            Dictionary<string, group> Top = new Dictionary<string, group>();
+            Top.Add("abc", new group() );
+            Top["abc"].name = "abc";
+            Top.Add("xyz", new group() );
+            Top["xyz"].name = "xyz";
 
-            List<group> sub = new List<group>();
+            Top["abc"].list.Add("aa-abc", new Dictionary<string, group>() );
+            Top["xyz"].list.Add("aa-xyz", new Dictionary<string, group>() );
 
-            Top.name = "EMG";
-            Top.postCode = "000";
 
-            for( int i = 0; i < 5; i++)
-            {
-                var work = new group();
-                work.name = "aaa" + i.ToString();
-                work.postCode = "789";
-
-            }
             var a = 1;
         }
         public XmlDocument projectTest(String Json)
