@@ -29,12 +29,11 @@ namespace WebApi_project.hostProc
 
             return (Tab);
         }
-        public Dictionary<string, object> dbFunc_A()
+        public object dbFunc_A()
         {
-            Dictionary<string, Dictionary<string, object>> Tab = new Dictionary<string, Dictionary<string,object>>();
+            
+            Dictionary<string,Dictionary<string, Dictionary<string, object>>> Tab = new Dictionary<string, Dictionary<string, Dictionary<string, object>>>();
             SqlConnection DB;
-            string pNum = "";
-            string pName = "";
             string gCode = "";
             Dictionary<string, object> Tab1 = new Dictionary<string, object>();
             string secMode = "直接";
@@ -42,6 +41,10 @@ namespace WebApi_project.hostProc
             string s_yymm = "201810";
             string e_yymm = "201909";
             string secNum = "0,1,2";
+            string s1 = "";
+            string s2 = "";
+            string s3 = "";
+            string name = "";
             try
             {
                 DB = new SqlConnection(DB_connectString);
@@ -94,44 +97,39 @@ namespace WebApi_project.hostProc
                 while (reader.Read())
                 {
                     var mode = (string)reader["直間"].ToString();
-                    var s1 = (string)reader["統括"];
-                    var s2 = (string)reader["部門"];
-                    var s3 = (string)reader["課"];
-                    var name = (string)reader["名前"].ToString();
+                    s1 = (string)reader["統括"].ToString();
+                    s2 = (string)reader["部門"].ToString();
+                    s3 = (string)reader["課"].ToString();
+                    name = (string)reader["名前"].ToString();
                     gCode = (string)reader["gCode"].ToString();
-                    //Debug.Write(mode, s1, s2, s3, name);
-                    if (!Tab.ContainsKey(s1))
-                    {
-                        Dictionary<string, object> x1 = new Dictionary<string, object>();
-                        Tab.Add(s1, x1);
-                        if (!x1.ContainsKey(s2))
-                        {
-                            Dictionary<string, object> x2 = new Dictionary<string, object>();
-                            x1.Add(s2, x2);
-                            x1.Add("name1", name);
-                            if (!x2.ContainsKey(s3))
+                    //Debug.Write ("====", s1, s2, s3);
+
+                     if (!Tab.ContainsKey(s1) && s1 != "")
                             {
-                                x2.Add("name2", name);
+                                Tab.Add(s1, new Dictionary<string, Dictionary<string, object>>());
+                                //Debug.Write("Add1", s1);
                             }
-                        }
-                        else
-                        {
-
-                        }
+                            else if (!Tab[s1].ContainsKey(s2) && s2 != "")
+                            {
+                                Tab[s1].Add(s2, new Dictionary<string, object>());
+                                //Debug.Write("Add2", s2);
+                            }
+                            else if (!Tab[s1][s2].ContainsKey(s3) && s2 != "" && s3 != "")
+                            {
+                                Tab[s1][s2].Add(s3, new Dictionary<string, object>());
+                                //Tab[s1][s2].Add("name", gCode);
+                                //Debug.Write("Add3", s3);
 
                     }
-                    else
-                    {
-                        var aa = Tab[s1];
 
-                    }
 
+                    var a = 1;
 //=======================================
 
-                    if (!Tab1.ContainsKey(s1))
-                    {
-                        Tab1.Add(s1, name);
-                    }
+                    //if (!Tab1.ContainsKey(s1))
+                    //{
+                    //    Tab1.Add(s1, name);
+                    //}
                 }
 
                 Debug.Write("reader Close");
@@ -144,19 +142,40 @@ namespace WebApi_project.hostProc
             }
             catch (Exception ex)
             {
-                Debug.WriteLog(ex.Message);
+                Debug.WriteLog(ex.Message,s1,s2,s3,name);
             }
             finally
             {
                 Debug.Write("DB null");
                 DB = null;
             }
-            return (Tab1);
+            return (Tab);
         }
+        /*
+                     if (!Tab.ContainsKey(s1) && s1 != "")
+                            {
+                                Tab.Add(s1, new Dictionary<string, Dictionary<string, object>>());
+                                //Debug.Write("Add1", s1);
+                            }
+                            else if (!Tab[s1].ContainsKey(s2) && s2 != "")
+                            {
+                                Tab[s1].Add(s2, new Dictionary<string, object>());
+                                //Debug.Write("Add2", s2);
+                            }
+                            else if (!Tab[s1][s2].ContainsKey(s3) && s2 != "" && s3 != "")
+                            {
+                                Tab[s1][s2].Add(s3, new Dictionary<string, object>());
+                                //Tab[s1][s2].Add("name", name);
+                                //Debug.Write("Add3", s3);
+
+                            }
+
+         */
         class group
         {
             public string name { get; set; }
-            public Dictionary<string, object> list { get; set; }
+            public string code { get; set; }
+            public group list { get; set; }
         }
     }
 }
