@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System.Text;
 using System.Data.SqlClient;
 using System.Collections.Generic;
+using System.IO;
 
 using DebugHost;
 
@@ -35,54 +36,99 @@ namespace WebApi_project.hostProc
 
             return (Tab);
         }
-        class group
+        class groupX
         {
             public string name { get; set; }
             public string postCode { get; set; }
             public Dictionary<string, group> list { get; set; }
         }
+        public class group
+        {
+            public string 直間 { get; set; }
+            public string 名前 { get; set; }
+            public string code { get; set; }
+            public string 統括 { get; set; }
+            public string 部門 { get; set; }
+            public string 課 { get; set; }
+        }
+        public class RootObject
+        {
+            public List<group> hireSchedules { get; set; }
+        }
+
         void testFunc()
         {
-            Dictionary<string, 
-                Dictionary<string, 
+            string filePath = @"E:\GitHub\hr-nakamura\WebApi_project\WebApi_project\hostProc_json\部門収支_XML.json";
+            string jsonString = File.ReadAllText(filePath, Encoding.GetEncoding("Shift_JIS"));
+            var json = JsonConvert.DeserializeObject<List<group>>(jsonString);
+            string mode = "";
+            string s1 = "";
+            string s2 = "";
+            string s3 = "";
+            string code = "";
+            string name = "";
+
+            Dictionary<string,
+                Dictionary<string,
                 Dictionary<string, group>
                 >
                 > Tab = new Dictionary<string, Dictionary<string, Dictionary<string, group>>>();
 
-            string s1 = "abc";
-            string s2 = "xyz";
-            string s3 = "aaa";
-
-            if (!Tab.ContainsKey(s1) && s1 != "")
+            json.ForEach(group =>
             {
-                Tab.Add(s1, new Dictionary<string, Dictionary<string, group>>());
-                //Debug.Write("Add1", s1);
+                //Debug.Write(group.直間, group.統括, group.部門, group.課, group.code, group.名前);
+                mode = group.直間;
+                s1 = group.統括;
+                s2 = group.部門;
+                s3 = group.課;
+                code = group.code;
+                name = group.名前;
+                if (!Tab.ContainsKey(s1) && s1 != "")
+                {
+                    Tab.Add(s1, new Dictionary<string, Dictionary<string, group>>());
+                    //Debug.Write("Add1", s1);
                 }
-            else if (!Tab[s1].ContainsKey(s2) && s2 != "")
-            {
-               Tab[s1].Add(s2, new Dictionary<string, group>());
-               //Debug.Write("Add2", s2);
-            }
-            else if (!Tab[s1][s2].ContainsKey(s3) && s2 != "" && s3 != "")
-            {
-                //Tab[s1][s2].Add(s3, new Dictionary<string, object>());
-                //Tab[s1][s2].Add("name", name);
-                //Debug.Write("Add3", s3);
-            }
-
-
-
-
-
-
-
-
-
-
-
-
+                else if (!Tab[s1].ContainsKey(s2) && s2 != "")
+                {
+                    Tab[s1].Add(s2, new Dictionary<string, group>());
+                    //Debug.Write("Add2", s2);
+                }
+                else if (!Tab[s1][s2].ContainsKey(s3) && s2 != "" && s3 != "")
+                {
+                    //Tab[s1][s2].Add(s3, new Dictionary<string, object>());
+                    //Tab[s1][s2].Add("name", name);
+                    //Debug.Write("Add3", s3);
+                }
+            });
 
         }
+            //Dictionary<string, 
+            //    Dictionary<string, 
+            //    Dictionary<string, group>
+            //    >
+            //    > Tab = new Dictionary<string, Dictionary<string, Dictionary<string, group>>>();
+
+            //string s1 = "abc";
+            //string s2 = "xyz";
+            //string s3 = "aaa";
+
+            //if (!Tab.ContainsKey(s1) && s1 != "")
+            //{
+            //    Tab.Add(s1, new Dictionary<string, Dictionary<string, group>>());
+            //    //Debug.Write("Add1", s1);
+            //    }
+            //else if (!Tab[s1].ContainsKey(s2) && s2 != "")
+            //{
+            //   Tab[s1].Add(s2, new Dictionary<string, group>());
+            //   //Debug.Write("Add2", s2);
+            //}
+            //else if (!Tab[s1][s2].ContainsKey(s3) && s2 != "" && s3 != "")
+            //{
+            //    //Tab[s1][s2].Add(s3, new Dictionary<string, object>());
+            //    //Tab[s1][s2].Add("name", name);
+            //    //Debug.Write("Add3", s3);
+            //}
+
         public XmlDocument projectTest(String Json)
         {
 
