@@ -31,7 +31,7 @@ namespace WebApi_project.hostProc
         }
         public object dbFunc_A()
         {
-            
+            List<group> Info = new List<group>();
             Dictionary<string,Dictionary<string, Dictionary<string, object>>> Tab = new Dictionary<string, Dictionary<string, Dictionary<string, object>>>();
             SqlConnection DB;
             string gCode = "";
@@ -68,16 +68,16 @@ namespace WebApi_project.hostProc
                 sql.Append("    NOT(TM.開始 > @e_yymm or TM.終了 < @s_yymm)");
                 sql.Append("    AND");
                 sql.Append("    TM.直間 IN(@secNum)");
-                if (secMode == "間接" && dispMode == "統括")
-                {
-                    sql.Append("    AND");
-                    sql.Append("    TM.部署ID >= 0");
-                }
-                else
-                {
-                    sql.Append("    AND");
-                    sql.Append("    TM.部署ID > 0");
-                }
+                //if (secMode == "間接" && dispMode == "統括")
+                //{
+                //    sql.Append("    AND");
+                //    sql.Append("    TM.部署ID >= 0");
+                //}
+                //else
+                //{
+                //    sql.Append("    AND");
+                //    sql.Append("    TM.部署ID > 0");
+                //}
 
                 sql.Append(" ORDER BY");
                 sql.Append("    直間 desc,");
@@ -102,9 +102,11 @@ namespace WebApi_project.hostProc
                     s3 = (string)reader["課"].ToString();
                     name = (string)reader["名前"].ToString();
                     gCode = (string)reader["gCode"].ToString();
-                    //Debug.Write ("====", s1, s2, s3);
+                    //Debug.Write("====", s1, s2, s3);
+                    group xxx = new group() { 直間 = mode, 名前 = name, 統括 = s1, 部門 = s2, 課 = s3, code = gCode };
+                    Info.Add(xxx);
 
-                     if (!Tab.ContainsKey(s1) && s1 != "")
+                    if (!Tab.ContainsKey(s1) && s1 != "")
                             {
                                 Tab.Add(s1, new Dictionary<string, Dictionary<string, object>>());
                                 //Debug.Write("Add1", s1);
@@ -172,9 +174,12 @@ namespace WebApi_project.hostProc
          */
         class group
         {
-            public string name { get; set; }
+            public string 直間 { get; set; }
+            public string 名前 { get; set; }
             public string code { get; set; }
-            public group list { get; set; }
+            public string 統括 { get; set; }
+            public string 部門 { get; set; }
+            public string 課 { get; set; }
         }
     }
 }
