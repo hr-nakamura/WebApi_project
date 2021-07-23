@@ -23,15 +23,15 @@ namespace WebApi_project.hostProc
 
             string mName = Environment.MachineName;
 
-            Dictionary<string, string> Tab = new Dictionary<string, string>();
-            Tab.Add("mName", mName);
-            Tab.Add("className", className);
-            Tab.Add("methodName", methodName);
-            Tab.Add("DB_Conn", DB_connectString);
+            //Dictionary<string, string> Tab = new Dictionary<string, string>();
+            //Tab.Add("mName", mName);
+            //Tab.Add("className", className);
+            //Tab.Add("methodName", methodName);
+            //Tab.Add("DB_Conn", DB_connectString);
 
 
             //            dbFunc_A();
-            testFunc();
+            object Tab = (object)testFunc();
 
 
             return (Tab);
@@ -47,16 +47,19 @@ namespace WebApi_project.hostProc
             public string 直間 { get; set; }
             public string 名前 { get; set; }
             public string code { get; set; }
+            public string codes { get; set; }
             public string 統括 { get; set; }
             public string 部門 { get; set; }
             public string 課 { get; set; }
+            public Dictionary<string, group> list { get; set; }
         }
+
         public class RootObject
         {
             public List<group> hireSchedules { get; set; }
         }
 
-        void testFunc()
+        object testFunc()
         {
             string filePath = @"E:\GitHub\hr-nakamura\WebApi_project\WebApi_project\hostProc_json\部門収支_XML.json";
             string jsonString = File.ReadAllText(filePath, Encoding.GetEncoding("Shift_JIS"));
@@ -68,12 +71,7 @@ namespace WebApi_project.hostProc
             string code = "";
             string name = "";
 
-            Dictionary<string,
-                Dictionary<string,
-                Dictionary<string, group>
-                >
-                > Tab = new Dictionary<string, Dictionary<string, Dictionary<string, group>>>();
-
+            Dictionary<string, group> Tab = new Dictionary<string, group>();
             json.ForEach(group =>
             {
                 //Debug.Write(group.直間, group.統括, group.部門, group.課, group.code, group.名前);
@@ -83,24 +81,62 @@ namespace WebApi_project.hostProc
                 s3 = group.課;
                 code = group.code;
                 name = group.名前;
-                if (!Tab.ContainsKey(s1) && s1 != "")
+
+                if (  s1 != "" && !Tab.ContainsKey(s1))
                 {
-                    Tab.Add(s1, new Dictionary<string, Dictionary<string, group>>());
+                    Tab.Add(s1, new group());
+                    Tab[s1].直間 = mode;
+                    Tab[s1].名前 = name;
+                    Tab[s1].統括 = s1;
+                    Tab[s1].部門 = s2;
+                    Tab[s1].課 = s3;
+                    Tab[s1].code = code;
+                    Tab[s1].list = new Dictionary<string, group>();
+
                     //Debug.Write("Add1", s1);
                 }
-                else if (!Tab[s1].ContainsKey(s2) && s2 != "")
+                if ( (s2 != "") && !Tab[s1].list.ContainsKey(s2) )
                 {
-                    Tab[s1].Add(s2, new Dictionary<string, group>());
-                    //Debug.Write("Add2", s2);
-                }
-                else if (!Tab[s1][s2].ContainsKey(s3) && s2 != "" && s3 != "")
-                {
-                    //Tab[s1][s2].Add(s3, new Dictionary<string, object>());
-                    //Tab[s1][s2].Add("name", name);
-                    //Debug.Write("Add3", s3);
-                }
-            });
+                    Tab[s1].list.Add(s2, new group() );
+                    Tab[s1].list[s2].直間 = mode;
+                    Tab[s1].list[s2].名前 = name;
+                    Tab[s1].list[s2].統括 = s1;
+                    Tab[s1].list[s2].部門 = s2;
+                    Tab[s1].list[s2].課 = s3;
+                    Tab[s1].list[s2].code = code;
+                    Tab[s1].list[s2].list = new Dictionary<string, group>();
 
+                    //Debug.Write("Add2", s1, s2);
+                }
+                if ( (s2 != "" && s3 != "") && !Tab[s1].list[s2].list.ContainsKey(s3) )
+                {
+                    Tab[s1].list[s2].list.Add(s3, new group());
+                    Tab[s1].list[s2].list[s3].直間 = mode;
+                    Tab[s1].list[s2].list[s3].名前 = name;
+                    Tab[s1].list[s2].list[s3].統括 = s1;
+                    Tab[s1].list[s2].list[s3].部門 = s2;
+                    Tab[s1].list[s2].list[s3].課 = s3;
+                    Tab[s1].list[s2].list[s3].code = code;
+                    //Debug.Write("Add3", s1, s2, s3);
+                }
+
+
+                /*
+
+                                else if (!Tab[s1].ContainsKey(s2) && s2 != "")
+                                {
+                                    Tab[s1].Add(s2, new Dictionary<string, group>());
+                                    //Debug.Write("Add2", s2);
+                                }
+                                else if (!Tab[s1][s2].ContainsKey(s3) && s2 != "" && s3 != "")
+                                {
+                                    //Tab[s1][s2].Add(s3, new Dictionary<string, object>());
+                                    //Tab[s1][s2].Add("name", name);
+                                    //Debug.Write("Add3", s3);
+                                }
+                */
+            });
+            return(Tab);
         }
             //Dictionary<string, 
             //    Dictionary<string, 
