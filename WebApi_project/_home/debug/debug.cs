@@ -185,11 +185,13 @@ namespace DebugHost
                 }
                 catch (TimeoutException ex)
                 {
+                    Debug.Write(ex.Message);
                     // タイムアウト時の処理
                     //Console.WriteLine($"TimeOut: {ex.Message}");
                 }
                 catch (Exception ex)
                 {
+                    Debug.Write(ex.Message);
                     // その他のエラー
                     //Console.WriteLine($"Error: {ex.Message}");
                 }

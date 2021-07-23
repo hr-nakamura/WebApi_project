@@ -11,7 +11,7 @@ using DebugHost;
 
 namespace WebApi_project.hostProc
 {
-    public class QOSMIO :hostProc
+    public class QOSMIO : hostProc
     {
         public object json_projectTest(String Json)
         {
@@ -39,21 +39,49 @@ namespace WebApi_project.hostProc
         {
             public string name { get; set; }
             public string postCode { get; set; }
-            public Dictionary<string,group> list { get; set; }
+            public Dictionary<string, group> list { get; set; }
         }
         void testFunc()
         {
-            Dictionary<string, group> Top = new Dictionary<string, group>();
-            Top.Add("abc", new group() );
-            Top["abc"].name = "abc";
-            Top.Add("xyz", new group() );
-            Top["xyz"].name = "xyz";
+            Dictionary<string, 
+                Dictionary<string, 
+                Dictionary<string, group>
+                >
+                > Tab = new Dictionary<string, Dictionary<string, Dictionary<string, group>>>();
 
-            Top["abc"].list.Add("aa-abc", new Dictionary<string, group>() );
-            Top["xyz"].list.Add("aa-xyz", new Dictionary<string, group>() );
+            string s1 = "abc";
+            string s2 = "xyz";
+            string s3 = "aaa";
+
+            if (!Tab.ContainsKey(s1) && s1 != "")
+            {
+                Tab.Add(s1, new Dictionary<string, Dictionary<string, group>>());
+                //Debug.Write("Add1", s1);
+                }
+            else if (!Tab[s1].ContainsKey(s2) && s2 != "")
+            {
+               Tab[s1].Add(s2, new Dictionary<string, group>());
+               //Debug.Write("Add2", s2);
+            }
+            else if (!Tab[s1][s2].ContainsKey(s3) && s2 != "" && s3 != "")
+            {
+                //Tab[s1][s2].Add(s3, new Dictionary<string, object>());
+                //Tab[s1][s2].Add("name", name);
+                //Debug.Write("Add3", s3);
+            }
 
 
-            var a = 1;
+
+
+
+
+
+
+
+
+
+
+
         }
         public XmlDocument projectTest(String Json)
         {
