@@ -31,20 +31,20 @@ namespace WebApi_project.hostProc
         }
         public object dbFunc_A()
         {
-            List<group> Info = new List<group>();
-            Dictionary<string,Dictionary<string, Dictionary<string, object>>> Tab = new Dictionary<string, Dictionary<string, Dictionary<string, object>>>();
+            Dictionary<string, group> Tab = new Dictionary<string, group>();
             SqlConnection DB;
-            string gCode = "";
             Dictionary<string, object> Tab1 = new Dictionary<string, object>();
             string secMode = "直接";
             string dispMode = "統括";
             string s_yymm = "201810";
             string e_yymm = "201909";
             string secNum = "0,1,2";
+            string mode = "";
             string s1 = "";
             string s2 = "";
             string s3 = "";
             string name = "";
+            string code = "";
             try
             {
                 DB = new SqlConnection(DB_connectString);
@@ -96,43 +96,56 @@ namespace WebApi_project.hostProc
 
                 while (reader.Read())
                 {
-                    var mode = (string)reader["直間"].ToString();
+                    mode = (string)reader["直間"].ToString();
                     s1 = (string)reader["統括"].ToString();
                     s2 = (string)reader["部門"].ToString();
                     s3 = (string)reader["課"].ToString();
                     name = (string)reader["名前"].ToString();
-                    gCode = (string)reader["gCode"].ToString();
-                    //Debug.Write("====", s1, s2, s3);
-                    group xxx = new group() { 直間 = mode, 名前 = name, 統括 = s1, 部門 = s2, 課 = s3, code = gCode };
-                    Info.Add(xxx);
+                    code = (string)reader["gCode"].ToString();
+                    if (s1 != "" && !Tab.ContainsKey(s1))
+                    {
+                        Tab.Add(s1, new group());
+                        Tab[s1].直間 = mode;
+                        Tab[s1].名前 = name;
+                        Tab[s1].統括 = s1;
+                        Tab[s1].部門 = s2;
+                        Tab[s1].課 = s3;
+                        Tab[s1].code = code;
+                        Tab[s1].codes = code;
+                        Tab[s1].list = new Dictionary<string, group>();
 
-                    if (!Tab.ContainsKey(s1) && s1 != "")
-                            {
-                                Tab.Add(s1, new Dictionary<string, Dictionary<string, object>>());
-                                //Debug.Write("Add1", s1);
-                            }
-                            else if (!Tab[s1].ContainsKey(s2) && s2 != "")
-                            {
-                                Tab[s1].Add(s2, new Dictionary<string, object>());
-                                //Debug.Write("Add2", s2);
-                            }
-                            else if (!Tab[s1][s2].ContainsKey(s3) && s2 != "" && s3 != "")
-                            {
-                                Tab[s1][s2].Add(s3, new Dictionary<string, object>());
-                                //Tab[s1][s2].Add("name", gCode);
-                                //Debug.Write("Add3", s3);
-
+                        //Debug.Write("Add1", s1);
                     }
+                    if ((s2 != "") && !Tab[s1].list.ContainsKey(s2))
+                    {
+                        Tab[s1].list.Add(s2, new group());
+                        Tab[s1].list[s2].直間 = mode;
+                        Tab[s1].list[s2].名前 = name;
+                        Tab[s1].list[s2].統括 = s1;
+                        Tab[s1].list[s2].部門 = s2;
+                        Tab[s1].list[s2].課 = s3;
+                        Tab[s1].list[s2].code = code;
+                        Tab[s1].codes = String.Concat(Tab[s1].codes, ",", code);
+                        Tab[s1].list[s2].codes = code;
+                        Tab[s1].list[s2].list = new Dictionary<string, group>();
 
-
-//=======================================
-
-                    //if (!Tab1.ContainsKey(s1))
-                    //{
-                    //    Tab1.Add(s1, name);
-                    //}
+                        //Debug.Write("Add2", s1, s2);
+                    }
+                    if ((s2 != "" && s3 != "") && !Tab[s1].list[s2].list.ContainsKey(s3))
+                    {
+                        Tab[s1].list[s2].list.Add(s3, new group());
+                        Tab[s1].list[s2].list[s3].直間 = mode;
+                        Tab[s1].list[s2].list[s3].名前 = name;
+                        Tab[s1].list[s2].list[s3].統括 = s1;
+                        Tab[s1].list[s2].list[s3].部門 = s2;
+                        Tab[s1].list[s2].list[s3].課 = s3;
+                        Tab[s1].list[s2].list[s3].code = code;
+                        Tab[s1].codes = String.Concat(Tab[s1].codes, ",", code);
+                        Tab[s1].list[s2].codes = String.Concat(Tab[s1].list[s2].codes, ",", code);
+                        Tab[s1].list[s2].list[s3].codes = code;
+                        //Debug.Write("Add3", s1, s2, s3);
+                    }
                 }
-
                 Debug.Write("reader Close");
                 reader.Close();
 
@@ -172,14 +185,16 @@ namespace WebApi_project.hostProc
                             }
 
          */
-        class group
+        public class group
         {
             public string 直間 { get; set; }
             public string 名前 { get; set; }
             public string code { get; set; }
+            public string codes { get; set; }
             public string 統括 { get; set; }
             public string 部門 { get; set; }
             public string 課 { get; set; }
+            public Dictionary<string, group> list { get; set; }
         }
     }
 }

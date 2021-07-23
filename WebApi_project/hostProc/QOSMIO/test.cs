@@ -91,6 +91,7 @@ namespace WebApi_project.hostProc
                     Tab[s1].部門 = s2;
                     Tab[s1].課 = s3;
                     Tab[s1].code = code;
+                    Tab[s1].codes = code;
                     Tab[s1].list = new Dictionary<string, group>();
 
                     //Debug.Write("Add1", s1);
@@ -104,6 +105,8 @@ namespace WebApi_project.hostProc
                     Tab[s1].list[s2].部門 = s2;
                     Tab[s1].list[s2].課 = s3;
                     Tab[s1].list[s2].code = code;
+                    Tab[s1].codes = String.Concat(Tab[s1].codes,",",code);
+                    Tab[s1].list[s2].codes = code;
                     Tab[s1].list[s2].list = new Dictionary<string, group>();
 
                     //Debug.Write("Add2", s1, s2);
@@ -117,6 +120,9 @@ namespace WebApi_project.hostProc
                     Tab[s1].list[s2].list[s3].部門 = s2;
                     Tab[s1].list[s2].list[s3].課 = s3;
                     Tab[s1].list[s2].list[s3].code = code;
+                    Tab[s1].codes = String.Concat(Tab[s1].codes, ",", code);
+                    Tab[s1].list[s2].codes = String.Concat(Tab[s1].list[s2].codes, ",", code);
+                    Tab[s1].list[s2].list[s3].codes = code;
                     //Debug.Write("Add3", s1, s2, s3);
                 }
 
