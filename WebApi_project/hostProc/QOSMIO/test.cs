@@ -36,12 +36,7 @@ namespace WebApi_project.hostProc
 
             return (Tab);
         }
-        class groupX
-        {
-            public string name { get; set; }
-            public string postCode { get; set; }
-            public Dictionary<string, group> list { get; set; }
-        }
+
         public class group
         {
             public string 直間 { get; set; }
@@ -59,9 +54,22 @@ namespace WebApi_project.hostProc
             public List<group> hireSchedules { get; set; }
         }
 
+        object testFuncX()
+        {
+            string mailAddr = "nakamura@eandm.co.jp";
+            string jsonStr = "{'mailAddr':'" + mailAddr + "'}";
+            hostWeb hWeb =new hostWeb();
+            //var ret = hWeb.GetRequest("https://localhost:44308/WebApi/project/api/json" + "?mailAddr=" + mailAddr);
+            var ret = hWeb.GetRequest("https://localhost:44308/WebApi/project/api/json" + "?item=jsonProc/memberInfo&json=" + jsonStr );
+            return ("");
+        }
+
         object testFunc()
         {
-            string filePath = @"E:\GitHub\hr-nakamura\WebApi_project\WebApi_project\hostProc_json\部門収支_XML.json";
+            string basePath = @"D:\GitHub\hr-nakamura\WebApi_project\WebApi_project";
+
+            string filePath = basePath + @"\hostProc_json\部門収支_XML.json";
+
             string jsonString = File.ReadAllText(filePath, Encoding.GetEncoding("Shift_JIS"));
             var json = JsonConvert.DeserializeObject<List<group>>(jsonString);
             string mode = "";
@@ -125,24 +133,18 @@ namespace WebApi_project.hostProc
                     Tab[s1].list[s2].list[s3].codes = code;
                     //Debug.Write("Add3", s1, s2, s3);
                 }
-
-
-                /*
-
-                                else if (!Tab[s1].ContainsKey(s2) && s2 != "")
-                                {
-                                    Tab[s1].Add(s2, new Dictionary<string, group>());
-                                    //Debug.Write("Add2", s2);
-                                }
-                                else if (!Tab[s1][s2].ContainsKey(s3) && s2 != "" && s3 != "")
-                                {
-                                    //Tab[s1][s2].Add(s3, new Dictionary<string, object>());
-                                    //Tab[s1][s2].Add("name", name);
-                                    //Debug.Write("Add3", s3);
-                                }
-                */
             });
-            return(Tab);
+
+
+            foreach (string 統括 in Tab.Keys)
+            {
+                Debug.Write(統括);
+            }
+
+
+
+
+            return (Tab);
         }
             //Dictionary<string, 
             //    Dictionary<string, 

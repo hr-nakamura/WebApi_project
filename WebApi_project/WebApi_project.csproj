@@ -140,6 +140,9 @@
     <Compile Include="hostProc\Entry.cs" />
     <Compile Include="hostProc\Entry_json.cs" />
     <Compile Include="hostProc\hostProc.cs" />
+    <Compile Include="hostProc\hostWeb.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="hostProc\projectBBS\projectList.cs" />
     <Compile Include="hostProc\QOSMIO\test.cs" />
     <Compile Include="hostProc\売上予測\売上予実_分類.cs" />

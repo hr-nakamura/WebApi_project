@@ -26,8 +26,9 @@ namespace WebApi_project.Controllers
         }
         public HttpResponseMessage Get(string mailAddr)
         {
+            string jsonStr = "{'mailAddr':'" + mailAddr + "'}";
             var jProc = new hostProc.jsonProc();
-            object Obj = jProc.json_memberInfo(mailAddr);
+            object Obj = jProc.json_memberInfo(jsonStr);
 
             var response = response_conv(JsonConvert.SerializeObject(Obj));
             return (response);
