@@ -25,26 +25,42 @@ namespace WebApi_project.hostProc
 
         public object json_部門リスト(string Json)
         {
-            var Tab = dbFunc_A();
+            Json = "{year:'2018',secMode:'間接',dispMode:'統括'}";
+            var Tab = dbFunc_A(Json);
 
             return (Tab);
         }
-        public object dbFunc_A()
+        public object dbFunc_A(string Json)
         {
+            var o_json = JsonConvert.DeserializeObject<部門指定>(Json);
             Dictionary<string, group> Tab = new Dictionary<string, group>();
             SqlConnection DB;
             Dictionary<string, object> Tab1 = new Dictionary<string, object>();
-            string secMode = "直接";
-            string dispMode = "統括";
-            string s_yymm = "201810";
-            string e_yymm = "201909";
-            string secNum = "0,1,2";
+            string secMode = o_json.secMode;          // 開発、間接、全社
+            string dispMode = o_json.dispMode;          // 統括、
+            int year = int.Parse(o_json.year);
+            string s_yymm = ((year -1)*100 + 10).ToString();
+            string e_yymm = ((year * 100) + 9).ToString();
+            string secNum = "";
             string mode = "";
             string s1 = "";
             string s2 = "";
             string s3 = "";
             string name = "";
             string code = "";
+            switch (secMode)
+            {
+                case "開発":
+                    secNum = "0,1";
+                    break;
+                case "間接":
+                    secNum = "2";
+                    break;
+                default:
+                    secNum = "0,1,2";
+                    break;
+            }
+
             try
             {
                 DB = new SqlConnection(DB_connectString);
@@ -68,16 +84,16 @@ namespace WebApi_project.hostProc
                 sql.Append("    NOT(TM.開始 > @e_yymm or TM.終了 < @s_yymm)");
                 sql.Append("    AND");
                 sql.Append("    TM.直間 IN(@secNum)");
-                //if (secMode == "間接" && dispMode == "統括")
-                //{
-                //    sql.Append("    AND");
-                //    sql.Append("    TM.部署ID >= 0");
-                //}
-                //else
-                //{
-                //    sql.Append("    AND");
-                //    sql.Append("    TM.部署ID > 0");
-                //}
+                if (secMode == "間接" && dispMode == "統括")
+                {
+                    sql.Append("    AND");
+                    sql.Append("    TM.部署ID >= 0");
+                }
+                else
+                {
+                    sql.Append("    AND");
+                    sql.Append("    TM.部署ID > 0");
+                }
 
                 sql.Append(" ORDER BY");
                 sql.Append("    直間 desc,");
@@ -185,6 +201,12 @@ namespace WebApi_project.hostProc
                             }
 
          */
+        public class 部門指定
+        {
+            public string year { get; set; }
+            public string secMode { get; set; }
+            public string dispMode { get; set; }
+        }
         public class group
         {
             public string 直間 { get; set; }
