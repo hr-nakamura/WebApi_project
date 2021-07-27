@@ -66,7 +66,7 @@ namespace WebApi_project.hostProc
 
         object testFunc()
         {
-            string basePath = @"D:\GitHub\hr-nakamura\WebApi_project\WebApi_project";
+            string basePath = @"E:\GitHub\hr-nakamura\WebApi_project\WebApi_project";
 
             string filePath = basePath + @"\hostProc_json\部門収支_XML.json";
 
@@ -138,7 +138,20 @@ namespace WebApi_project.hostProc
 
             foreach (string 統括 in Tab.Keys)
             {
-                Debug.Write(統括);
+                Debug.Write(統括,Tab[統括].codes);
+            }
+            Debug.Write("=======");
+            group Tab1 = Tab["開発本部"];
+
+            foreach (string 部門 in Tab1.list.Keys)
+            {
+                Debug.Write(部門, Tab1.list[部門].codes);
+            }
+            Debug.Write("=======");
+            group Tab2 = Tab["開発本部"].list["第1開発部"];
+            foreach (string 課 in Tab2.list.Keys)
+            {
+                Debug.Write(課, Tab2.list[課].codes);
             }
 
 
