@@ -36,7 +36,43 @@ namespace WebApi_project.hostProc
 
             return (Tab);
         }
+        public class Container
+        {
+            public class Nested
+            {
+                private Container parent;
 
+                public Nested()
+                {
+                }
+                public Nested(Container parent)
+                {
+                    this.parent = parent;
+                }
+            }
+        }
+        public class costList
+        {
+            public string 統括 { get; set; }
+            public string 部門 { get; set; }
+            public string 課 { get; set; }
+
+        }
+        public class costListX
+        {
+            public string 種別 { get; set; }
+            public string 直間 { get; set; }
+            public costList 部署Info { get; set; }
+            public string 統括 { get; set; }
+            public string 部門 { get; set; }
+            public string 課 { get; set; }
+            public List<string> 部署コード{ get; set; }
+            public Dictionary<string, costList> 合計 { get; set; }
+            public Dictionary<string, costList> 計画 { get; set; }
+            public Dictionary<string, costList> 予測 { get; set; }
+            public Dictionary<string, costList> 実績 { get; set; }
+            public Dictionary<string, costList> 配賦 { get; set; }
+        }
         public class group
         {
             public string 直間 { get; set; }
@@ -66,9 +102,17 @@ namespace WebApi_project.hostProc
 
         object testFunc()
         {
-            string basePath = @"E:\GitHub\hr-nakamura\WebApi_project\WebApi_project";
 
-            string filePath = basePath + @"\hostProc\QOSMIO\B_統括.json";
+            costListX cost = new costListX();
+            cost.部署Info = new costList();
+
+            cost.部署Info.部門= "ABC";
+
+            hostProc hProc = new hostProc();
+            string basePath = hProc.basePath;
+
+            //string filePath = basePath + @"\hostProc\QOSMIO\B_統括.json";
+            string filePath = basePath + @"\hostProc\QOSMIO\部門リストデータ.json";
 
             string jsonString = File.ReadAllText(filePath, Encoding.GetEncoding("Shift_JIS"));
             var json = JsonConvert.DeserializeObject<List<group>>(jsonString);

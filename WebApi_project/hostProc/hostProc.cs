@@ -15,6 +15,7 @@ namespace WebApi_project.hostProc
     public class hostProc
     {
         // DBコネクション
+        public string basePath = "";
         public string DB_connectString = "";
         public Boolean DB_status = true;
         public string DB_result;
@@ -40,9 +41,11 @@ namespace WebApi_project.hostProc
                     break;
                 case "SURFACE-PC":
                     DB_mode = "データベース_SURFACE";
+                    basePath = @"E:\GitHub\hr-nakamura\WebApi_project\WebApi_project";
                     break;
                 case "NAKAMURA-RD":
                     DB_mode = "データベース_naka";
+                    basePath = @"D:\GitHub\hr-nakamura\WebApi_project\WebApi_project";
                     break;
                 case "EMG-APSV":
                     DB_mode = "データベース_EMG";
