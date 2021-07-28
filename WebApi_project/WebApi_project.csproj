@@ -84,10 +84,16 @@
     <Content Include="Global.asax" />
     <Content Include="hostProc\projectBBS\projectData_XML.xml" />
     <Content Include="hostProc\部門収支\部門収支_XML.asp" />
+    <None Include="hostProc\QOSMIO\A_EMG.json" />
+    <None Include="hostProc\QOSMIO\A_統括.json" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="hostProc_json\部門収支_XML.json" />
     <Content Include="hostProc_json\部門収支.json" />
+    <Content Include="hostProc\QOSMIO\A_部門.json" />
+    <Content Include="hostProc\QOSMIO\A_課.json" />
+    <Content Include="hostProc\QOSMIO\B_EMG.json" />
+    <Content Include="hostProc\QOSMIO\B_統括.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

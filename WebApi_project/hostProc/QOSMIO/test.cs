@@ -68,7 +68,7 @@ namespace WebApi_project.hostProc
         {
             string basePath = @"E:\GitHub\hr-nakamura\WebApi_project\WebApi_project";
 
-            string filePath = basePath + @"\hostProc_json\部門収支_XML.json";
+            string filePath = basePath + @"\hostProc\QOSMIO\B_統括.json";
 
             string jsonString = File.ReadAllText(filePath, Encoding.GetEncoding("Shift_JIS"));
             var json = JsonConvert.DeserializeObject<List<group>>(jsonString);
