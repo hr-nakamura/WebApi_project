@@ -32,6 +32,44 @@ namespace WebApi_project.hostProc
         }
         public object dbFunc_A(string Json)
         {
+        /*
+        ＥＭＧ収支計画
+        {
+            "year": "2021",
+            "secMode": "開発",
+            "dispMode": "全社",
+            "dispName": "",
+            "listMode": "詳細",
+            "haifuMode": false
+        }
+        統括収支計画
+        {
+            "year": "2021",
+            "secMode": "開発",
+            "dispMode": "統括",
+            "dispName": "",
+            "listMode": "一覧",
+            "haifuMode": true
+        }
+        部門収支計画
+        {
+            "year": "2021",
+            "secMode": "開発",
+            "dispMode": "部門",
+            "dispName": "",
+            "listMode": "一覧",
+            "haifuMode": true"
+        }
+        課 別収支
+        {
+            "year": "2021",
+            "secMode": "開発",
+            "dispMode": "グループ",
+            "dispName": "営業本部",
+            "listMode": "一覧",
+            "haifuMode": true
+        }
+        */
             var o_json = JsonConvert.DeserializeObject<部門指定>(Json);
             Dictionary<string, group> Tab = new Dictionary<string, group>();
             SqlConnection DB;
