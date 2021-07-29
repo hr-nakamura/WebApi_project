@@ -53,25 +53,38 @@ namespace WebApi_project.hostProc
         }
         public class costList
         {
+            public string AA { get; set; }
+            public string BB { get; set; }
+            public string CC { get; set; }
+        }
+        public class secInfo
+        {
             public string 統括 { get; set; }
             public string 部門 { get; set; }
             public string 課 { get; set; }
-
         }
-        public class costListX
+        public class costList_P
         {
             public string 種別 { get; set; }
             public string 直間 { get; set; }
-            public costList 部署Info { get; set; }
-            public string 統括 { get; set; }
-            public string 部門 { get; set; }
-            public string 課 { get; set; }
+            public secInfo 部署名 { get; set; }
             public List<string> 部署コード{ get; set; }
-            public Dictionary<string, costList> 合計 { get; set; }
-            public Dictionary<string, costList> 計画 { get; set; }
-            public Dictionary<string, costList> 予測 { get; set; }
-            public Dictionary<string, costList> 実績 { get; set; }
-            public Dictionary<string, costList> 配賦 { get; set; }
+            public costList 合計 { get; set; }
+            public costList 計画 { get; set; }
+            public costList 予測 { get; set; }
+            public costList 実績 { get; set; }
+            public costList 配賦 { get; set; }
+            public costList_P()
+            {
+                this.部署名 = new secInfo();
+                this.合計 = new costList();
+                this.計画 = new costList();
+                this.予測 = new costList();
+                this.実績 = new costList();
+                this.配賦 = new costList();
+            }
+
+
         }
         public class group
         {
@@ -103,10 +116,10 @@ namespace WebApi_project.hostProc
         object testFunc()
         {
 
-            costListX cost = new costListX();
-            cost.部署Info = new costList();
+            costList_P cost = new costList_P();
+            //cost.部署Info = new costList();
 
-            cost.部署Info.部門= "ABC";
+            cost.部署名.部門= "ABC";
 
             hostProc hProc = new hostProc();
             string basePath = hProc.basePath;
