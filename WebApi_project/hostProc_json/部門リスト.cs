@@ -219,26 +219,7 @@ namespace WebApi_project.hostProc
             }
             return (Tab);
         }
-        /*
-                     if (!Tab.ContainsKey(s1) && s1 != "")
-                            {
-                                Tab.Add(s1, new Dictionary<string, Dictionary<string, object>>());
-                                //Debug.Write("Add1", s1);
-                            }
-                            else if (!Tab[s1].ContainsKey(s2) && s2 != "")
-                            {
-                                Tab[s1].Add(s2, new Dictionary<string, object>());
-                                //Debug.Write("Add2", s2);
-                            }
-                            else if (!Tab[s1][s2].ContainsKey(s3) && s2 != "" && s3 != "")
-                            {
-                                Tab[s1][s2].Add(s3, new Dictionary<string, object>());
-                                //Tab[s1][s2].Add("name", name);
-                                //Debug.Write("Add3", s3);
 
-                            }
-
-         */
         public class 部門指定
         {
             public string year { get; set; }
@@ -255,6 +236,10 @@ namespace WebApi_project.hostProc
             public string 部門 { get; set; }
             public string 課 { get; set; }
             public Dictionary<string, group> list { get; set; }
+            public group()
+            {
+                this.list = new Dictionary<string, group>();
+            }
         }
     }
 }

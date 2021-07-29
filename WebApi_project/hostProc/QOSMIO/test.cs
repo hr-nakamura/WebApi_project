@@ -8,6 +8,8 @@ using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.IO;
 
+using WebApi_project.Models;
+
 using DebugHost;
 
 namespace WebApi_project.hostProc
@@ -51,52 +53,38 @@ namespace WebApi_project.hostProc
                 }
             }
         }
-        public class costList
-        {
-            public string AA { get; set; }
-            public string BB { get; set; }
-            public string CC { get; set; }
-        }
+
+
         public class secInfo
         {
             public string 統括 { get; set; }
             public string 部門 { get; set; }
             public string 課 { get; set; }
         }
-        public class costList_P
+        public class costList
         {
             public string 種別 { get; set; }
             public string 直間 { get; set; }
             public secInfo 部署名 { get; set; }
-            public List<string> 部署コード{ get; set; }
-            public costList 合計 { get; set; }
-            public costList 計画 { get; set; }
-            public costList 予測 { get; set; }
-            public costList 実績 { get; set; }
-            public costList 配賦 { get; set; }
-            public costList_P()
+            public string 部署コード{ get; set; }
+            public accountInfo 合計 { get; set; }
+            public accountInfo 計画 { get; set; }
+            public accountInfo 予測 { get; set; }
+            public accountInfo 実績 { get; set; }
+            public accountInfo 配賦 { get; set; }
+            public costList()
             {
                 this.部署名 = new secInfo();
-                this.合計 = new costList();
-                this.計画 = new costList();
-                this.予測 = new costList();
-                this.実績 = new costList();
-                this.配賦 = new costList();
+                this.合計 = new accountInfo();
+                this.計画 = new accountInfo();
+                this.予測 = new accountInfo();
+                this.実績 = new accountInfo();
+                this.配賦 = new accountInfo();
             }
 
 
         }
-        public class group
-        {
-            public string 直間 { get; set; }
-            public string 名前 { get; set; }
-            public string code { get; set; }
-            public string codes { get; set; }
-            public string 統括 { get; set; }
-            public string 部門 { get; set; }
-            public string 課 { get; set; }
-            public Dictionary<string, group> list { get; set; }
-        }
+
 
         public class RootObject
         {
@@ -116,10 +104,9 @@ namespace WebApi_project.hostProc
         object testFunc()
         {
 
-            costList_P cost = new costList_P();
-            //cost.部署Info = new costList();
+            costList cost = new costList();
 
-            cost.部署名.部門= "ABC";
+            cost.部署名.部門 = "ABC";
 
             hostProc hProc = new hostProc();
             string basePath = hProc.basePath;
@@ -157,7 +144,7 @@ namespace WebApi_project.hostProc
                     Tab[s1].課 = s3;
                     Tab[s1].code = code;
                     Tab[s1].codes = code;
-                    Tab[s1].list = new Dictionary<string, group>();
+                    //Tab[s1].list = new Dictionary<string, group>();
 
                     //Debug.Write("Add1", s1);
                 }
@@ -172,7 +159,7 @@ namespace WebApi_project.hostProc
                     Tab[s1].list[s2].code = code;
                     Tab[s1].codes = String.Concat(Tab[s1].codes,",",code);
                     Tab[s1].list[s2].codes = code;
-                    Tab[s1].list[s2].list = new Dictionary<string, group>();
+                    //Tab[s1].list[s2].list = new Dictionary<string, group>();
 
                     //Debug.Write("Add2", s1, s2);
                 }

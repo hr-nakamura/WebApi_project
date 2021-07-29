@@ -161,7 +161,9 @@
     <Compile Include="hostProc_json\jsonProc.cs" />
     <Compile Include="hostProc_json\memberInfo.cs" />
     <Compile Include="hostProc_json\部門リスト.cs" />
+    <Compile Include="Models\accountInfo.cs" />
     <Compile Include="Models\common.cs" />
+    <Compile Include="Models\group.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="_home\debug\debug.ashx.cs">
       <DependentUpon>debug.ashx</DependentUpon>
