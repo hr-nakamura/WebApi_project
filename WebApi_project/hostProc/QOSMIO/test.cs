@@ -65,18 +65,22 @@ namespace WebApi_project.hostProc
         {
             public string 種別 { get; set; }
             public string 直間 { get; set; }
-            public string 部署名 { get; set; }
+            public secInfo 部署名 { get; set; }
             public string 部署コード{ get; set; }
             public accountInfo 合計 { get; set; }
             public accountInfo 計画 { get; set; }
             public accountInfo 予測 { get; set; }
             public accountInfo 実績 { get; set; }
             public accountInfo 配賦 { get; set; }
-            public costList(string 種別, string 直間, string 名前, string 部署コード)
+            public costList(string 直間, string 統括, string 部門, string 課, string 部署コード)
             {
+                string 種別 = (直間 == "2" ? "間接" : "直接");
+                this.部署名 = new secInfo();
                 this.種別 = 種別;
                 this.直間 = 直間;
-                this.部署名 = 名前;
+                this.部署名.統括 = 統括;
+                this.部署名.部門 = 部門;
+                this.部署名.課 = 課;
                 this.部署コード = 部署コード;
                 this.合計 = new accountInfo();
                 this.計画 = new accountInfo();
@@ -146,7 +150,7 @@ namespace WebApi_project.hostProc
                     Tab[s1].codes = code;
                     //Tab[s1].list = new Dictionary<string, group>();
 
-                    //Debug.Write("Add1", s1);
+                    //Debug.Write("Add1", s1, s2, s3);
                 }
                 if ( (s2 != "") && !Tab[s1].list.ContainsKey(s2) )
                 {
@@ -161,7 +165,7 @@ namespace WebApi_project.hostProc
                     Tab[s1].list[s2].codes = code;
                     //Tab[s1].list[s2].list = new Dictionary<string, group>();
 
-                    //Debug.Write("Add2", s1, s2);
+                    //Debug.Write("Add2", s1, s2, s3);
                 }
                 if ( (s2 != "" && s3 != "") && !Tab[s1].list[s2].list.ContainsKey(s3) )
                 {
@@ -179,11 +183,13 @@ namespace WebApi_project.hostProc
                 }
             });
 
-            costList cost = new costList(種別:"1",直間:"2",名前:"abc",部署コード:"123,223,333");
 
 
+            Debug.Write("=======");
             foreach (string 統括 in Tab.Keys)
             {
+                var x = Tab[統括];
+                costList cost = new costList(直間: x.直間, 統括: x.統括, 部門: x.部門, 課: x.課, 部署コード: x.codes);
                 Debug.Write(統括,Tab[統括].codes);
             }
             Debug.Write("=======");
@@ -191,12 +197,16 @@ namespace WebApi_project.hostProc
 
             foreach (string 部門 in Tab1.list.Keys)
             {
+                var x = Tab1.list[部門];
+                costList cost = new costList(直間: x.直間, 統括: x.統括, 部門: x.部門, 課: x.課, 部署コード: x.codes);
                 Debug.Write(部門, Tab1.list[部門].codes);
             }
             Debug.Write("=======");
             group Tab2 = Tab["開発本部"].list["第1開発部"];
             foreach (string 課 in Tab2.list.Keys)
             {
+                var x = Tab2.list[課];
+                costList cost = new costList(直間: x.直間, 統括: x.統括, 部門: x.部門, 課: x.課, 部署コード: x.codes);
                 Debug.Write(課, Tab2.list[課].codes);
             }
 
