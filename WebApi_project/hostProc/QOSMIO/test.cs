@@ -65,16 +65,19 @@ namespace WebApi_project.hostProc
         {
             public string 種別 { get; set; }
             public string 直間 { get; set; }
-            public secInfo 部署名 { get; set; }
+            public string 部署名 { get; set; }
             public string 部署コード{ get; set; }
             public accountInfo 合計 { get; set; }
             public accountInfo 計画 { get; set; }
             public accountInfo 予測 { get; set; }
             public accountInfo 実績 { get; set; }
             public accountInfo 配賦 { get; set; }
-            public costList()
+            public costList(string 種別, string 直間, string 名前, string 部署コード)
             {
-                this.部署名 = new secInfo();
+                this.種別 = 種別;
+                this.直間 = 直間;
+                this.部署名 = 名前;
+                this.部署コード = 部署コード;
                 this.合計 = new accountInfo();
                 this.計画 = new accountInfo();
                 this.予測 = new accountInfo();
@@ -104,9 +107,6 @@ namespace WebApi_project.hostProc
         object testFunc()
         {
 
-            costList cost = new costList();
-
-            cost.部署名.部門 = "ABC";
 
             hostProc hProc = new hostProc();
             string basePath = hProc.basePath;
@@ -178,6 +178,8 @@ namespace WebApi_project.hostProc
                     //Debug.Write("Add3", s1, s2, s3);
                 }
             });
+
+            costList cost = new costList(種別:"1",直間:"2",名前:"abc",部署コード:"123,223,333");
 
 
             foreach (string 統括 in Tab.Keys)

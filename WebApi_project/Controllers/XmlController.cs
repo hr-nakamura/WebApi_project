@@ -15,7 +15,7 @@ using DebugHost;
 
 namespace WebApi_project.Controllers
 {
-    public class ValuesController : ApiController
+    public class XmlController : ApiController
     {
         // GET api/<controller>/5
         public HttpResponseMessage Get()

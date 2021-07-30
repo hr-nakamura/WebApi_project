@@ -25,7 +25,7 @@ namespace WebApi_project.hostProc
                 string className = ItemWork[0];
                 string methodName = ItemWork[1];
 
-                methodName = "json_" + methodName;
+                //methodName = methodName;
                 object o_obj = new object();
                 String nameSpace = "WebApi_project.hostProc";
 

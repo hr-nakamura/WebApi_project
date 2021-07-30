@@ -34,7 +34,7 @@
             var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
             var x = window.location.pathname.split("/");
             //hostName = "http://kansa.in.eandm.co.jp";
-            WebApi_url = hostName + "/WebApi/project/api/values";
+            WebApi_url = hostName + "/WebApi/project/api/xml";
             WebApi_url_json = hostName + "/WebApi/project/api/json";
             WebApi_url_test = hostName + "/WebApi/project/api/test";
             WebApi_url_xml = hostName + "/WebApi/project/api/xml";
@@ -81,12 +81,13 @@
         function menu_click(o) {
             var mode = o.mode;
             var value = o.value;
+            var json = o.json;
             if (mode == "method") {
                 Send_Option.visitBBS = "2019/07/01 10:10:00";
                 Send_Option.limitYear = "2019";
 
                 if (user_mode == "json") {
-                    var Str = call_ajax_api_json("GET", WebApi_url_json, value, Send_Option);
+                    var Str = call_ajax_api_json("GET", WebApi_url_json, json, Send_Option);
                     //$.alert.json(Str);
                     $.storage("viewStr", JSON.stringify(Str, null, 2));
                     $("iframe.iframe_content").attr("src", "viewValue.html");
