@@ -68,6 +68,12 @@ namespace WebApi_project.hostProc
 
 			var Tab = initTab(Json);
 
+			List<string> x = new List<string>();
+			x.Add("ABC");
+			x.Add("XYZ");
+			x.Add("123");
+			var z = string.Join(":", x);
+
 			StringBuilder sql = new StringBuilder("");
 			/*
 			sql.Append(" SELECT");
