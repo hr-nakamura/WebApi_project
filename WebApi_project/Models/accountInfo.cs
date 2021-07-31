@@ -3,6 +3,42 @@ using System.Web;
 
 namespace WebApi_project.Models
 {
+    public class secInfo
+    {
+        public string 統括 { get; set; }
+        public string 部門 { get; set; }
+        public string 課 { get; set; }
+    }
+    public class costList
+    {
+        public string 種別 { get; set; }
+        public string 直間 { get; set; }
+        public secInfo 部署名 { get; set; }
+        public string 部署コード { get; set; }
+        public accountInfo 合計 { get; set; }
+        public accountInfo 計画 { get; set; }
+        public accountInfo 予測 { get; set; }
+        public accountInfo 実績 { get; set; }
+        public accountInfo 配賦 { get; set; }
+        public costList(string 直間, string 統括, string 部門, string 課, string 部署コード)
+        {
+            string 種別 = (直間 == "2" ? "間接" : "直接");
+            this.部署名 = new secInfo();
+            this.種別 = 種別;
+            this.直間 = 直間;
+            this.部署名.統括 = 統括;
+            this.部署名.部門 = 部門;
+            this.部署名.課 = 課;
+            this.部署コード = 部署コード;
+            this.合計 = new accountInfo();
+            this.計画 = new accountInfo();
+            this.予測 = new accountInfo();
+            this.実績 = new accountInfo();
+            this.配賦 = new accountInfo();
+        }
+
+
+    }
     public class accountInfo
     {
         public ACC_予算 予算 { get; set; }

@@ -18,6 +18,13 @@ namespace WebApi_project.hostProc
     {
         public object json_projectTest(String Json)
         {
+
+            List<string> x = new List<string>();
+            x.Add("ABC");
+            x.Add("XYZ");
+            x.Add("123");
+            var z = string.Join(":", x);
+
             string classPath = this.GetType().FullName;                                         //クラスパスの取得
             string className = this.GetType().Name;                                             //クラス名の取得
             string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;           //メソッド名の取得
@@ -287,117 +294,6 @@ namespace WebApi_project.hostProc
             return (xmlDoc);
         }
 
-        Dictionary<string, object> dbFunc_A()
-        {
-            Dictionary<string, object> Tab = new Dictionary<string, object>();
-            StringBuilder sql = new StringBuilder("");
-            sql.Append(" SELECT");
-            sql.Append("    pNum  = MAST.id,");
-            sql.Append("    pName = MAST.mail");
-            sql.Append(" FROM");
-            sql.Append("    ログデータ MAST");
-            sql.Append(" WHERE");
-            sql.Append("    MAST.id = @Numb");
-            DateTime toDay = DateTime.Now;
-
-            sql.Replace("@Numb", SqlUtil.Parameter("number",2));
-            SqlCommand cmd = new SqlCommand();
-
-            cmd.CommandText = sql.ToString();
-            //cmd.Parameters.Add(DbUtil.IntParameter("@Numb", 2));
-            try
-            {
-                SqlConnection DB = new SqlConnection(DB_connectString);
-                Debug.Write("DB Open");
-                DB.Open();
-                cmd.Connection = DB;
-
-                SqlDataReader cReader = cmd.ExecuteReader();
-                Debug.Write("cmd Dispose");
-                cmd.Dispose();
-
-                while (cReader.Read())
-                {
-                    int x = cReader.FieldCount;
-                    string pNum = cReader["pNum"].ToString();
-                    string pName = cReader["pName"].ToString();
-                    Debug.Write(pNum, pName);
-                }
-                Debug.Write("reader Close");
-                cReader.Close();
-                Debug.Write("DB Close");
-                DB.Close();
-                Debug.Write("DB Dispose");
-                DB.Dispose();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLog(ex.Message);
-            }
-            finally
-            {
-            }
-            return (Tab);
-        }
-
-        Dictionary<string, object> dbFunc_AX()
-        {
-            SqlConnection DB;
-            string pNum = "";
-            string pName = "";
-            Dictionary<string, object> Tab = new Dictionary<string, object>();
-
-            try
-            {
-                DB = new SqlConnection(DB_connectString);
-                DB.Open();
-                Debug.Write("DB Open", DB_connectString);
-
-                StringBuilder sql = new StringBuilder("");
-                sql.Append(" SELECT");
-                sql.Append("    pNum  = MAST.id,");
-                sql.Append("    pName = MAST.mail");
-                sql.Append(" FROM");
-                sql.Append("    ログデータ MAST");
-                sql.Append(" WHERE");
-                sql.Append("    MAST.id = 2");
-
-
-                SqlDataReader reader = dbRead(DB, sql.ToString());
-                Debug.Write("reader Start");
-
-                int i = 10;
-                while (reader.Read())
-                {
-                    pNum = (string)reader["pNum"].ToString();
-                    pName = (string)reader["pName"];
-                    Debug.Write(pNum, pName);
-                    if (!Tab.ContainsKey(pNum))
-                    {
-                        Tab.Add(pNum, pName);
-                    }
-                    if (i-- == 0) break;
-                }
-
-                Debug.Write("reader Close");
-                reader.Close();
-
-                Debug.Write("DB Close");
-                DB.Close();
-                Debug.Write("DB Dispose");
-                DB.Dispose();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLog(ex.Message);
-            }
-            finally
-            {
-                Debug.Write("DB null");
-                DB = null;
-            }
-            return (Tab);
-        }
 
         class projectPara
         {

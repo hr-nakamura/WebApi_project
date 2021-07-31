@@ -276,6 +276,10 @@ namespace WebApi_project.hostProc
             return (Tab);
         }
     }
+}
+
+namespace WebApi_project.hostProc
+{
     public class SqlUtil
     {
         public static string Parameter(string mode, object value)

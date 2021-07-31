@@ -11,11 +11,11 @@ namespace WebApi_project.hostProc
 {
     public partial class jsonProc
     {
-        class in_Data
+        class para_mailInfo
         {
             public string mailAddr { get; set; }
         }
-        class para_memberInfo
+        class s_memberInfo
         {
             public string name { get; set; }
             public string mail { get; set; }
@@ -23,29 +23,34 @@ namespace WebApi_project.hostProc
             public string postName { get; set; }
             public string 所属名 { get; set; }
             public string 所属コード { get; set; }
-            public string Tag { get; set; }
-            public List<para_memberInfo> 兼務 { get; set; }
+            public string Tag { get; set; }             // 許可情報
+            public List<s_memberInfo> 兼務 { get; set; }
+            public s_memberInfo()
+            {
+                this.兼務 = new List<s_memberInfo>();
+                this.Tag = "";
+            }
         }
         public object json_memberInfo(string Json)
         {
-            var o_json = JsonConvert.DeserializeObject<in_Data>(Json);
-            //o_json.mailAddr = "azuma@psl-em.co.jp";
+            var o_json = JsonConvert.DeserializeObject<para_mailInfo>(Json);
+            if(o_json.mailAddr == null ) o_json.mailAddr = "azuma@psl-em.co.jp";
 
-            para_memberInfo hostInfo; ;
+            s_memberInfo memberInfo; 
             string mailAddr = o_json.mailAddr;
 
-            hostInfo = memberInfoX1(mailAddr);
-            hostInfo.Tag = memberInfoX2(mailAddr);
-            if(hostInfo.mail == null) hostInfo.mail = mailAddr;
-            return (hostInfo);
+            memberInfo = memberInfoX1(mailAddr);
+            memberInfo.Tag = memberInfoX2(mailAddr);
+            if(memberInfo.mail == null) memberInfo.mail = mailAddr;
+            return (memberInfo);
         }
-        para_memberInfo memberInfoX1(string mailAddr)
+        s_memberInfo memberInfoX1(string mailAddr)
         {
-            para_memberInfo hostInfo = new para_memberInfo();
+            s_memberInfo memberInfo = new s_memberInfo();
             SqlConnection DB;
             DB = new SqlConnection(DB_connectString);
 
-            List<para_memberInfo> sub = new List<para_memberInfo>();
+            List<s_memberInfo> sub = new List<s_memberInfo>();
 
             try
             {
@@ -85,16 +90,16 @@ namespace WebApi_project.hostProc
                     var mode = (string)reader["mode"].ToString();
                     if (mode == "0")
                     {
-                        hostInfo.mail = (string)reader["mail"].ToString();
-                        hostInfo.name = (string)reader["name"].ToString();
-                        hostInfo.postCode = (string)reader["postCode"].ToString();
-                        hostInfo.postName = (string)reader["postName"].ToString();
-                        hostInfo.所属コード = (string)reader["groupCode"].ToString();
-                        hostInfo.所属名 = (string)reader["groupName"].ToString();
+                        memberInfo.mail = (string)reader["mail"].ToString();
+                        memberInfo.name = (string)reader["name"].ToString();
+                        memberInfo.postCode = (string)reader["postCode"].ToString();
+                        memberInfo.postName = (string)reader["postName"].ToString();
+                        memberInfo.所属コード = (string)reader["groupCode"].ToString();
+                        memberInfo.所属名 = (string)reader["groupName"].ToString();
                     }
                     else
                     {
-                        var work = new para_memberInfo();
+                        var work = new s_memberInfo();
                         work.mail = (string)reader["mail"].ToString();
                         work.name = (string)reader["name"].ToString();
                         work.postCode = (string)reader["postCode"].ToString();
@@ -105,7 +110,7 @@ namespace WebApi_project.hostProc
 
                     }
                 }
-                hostInfo.兼務 = sub;
+                memberInfo.兼務 = sub;
                 Debug.Write("reader Close");
                 reader.Close();
 
@@ -123,7 +128,7 @@ namespace WebApi_project.hostProc
                     Debug.Write("DB null");
                     DB = null;
                  }
-            return (hostInfo);
+            return (memberInfo);
         }
         string memberInfoX2(string mailAddr)
         {
