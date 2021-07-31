@@ -215,8 +215,8 @@ namespace WebApi_project.hostProc
                     XmlElement node2 = xmlDoc.CreateElement("menu");
                     node2.SetAttribute("name", methodName);
                     node2.SetAttribute("mode", "method");
-                    node2.SetAttribute("value", className + "/" + methodName);
-                    node2.SetAttribute("json", className + "/" + "json_" + methodName);
+                    node2.SetAttribute("item", className);
+                    node2.SetAttribute("func", methodName);
                     node1.AppendChild(node2);
                 }
             }

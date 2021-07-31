@@ -80,19 +80,21 @@
     <script type="text/javascript">
         function menu_click(o) {
             var mode = o.mode;
-            var value = o.value;
-            var json = o.json;
+            var item = o.item;
+            var func = o.func;
             if (mode == "method") {
                 Send_Option.visitBBS = "2019/07/01 10:10:00";
                 Send_Option.limitYear = "2019";
 
                 if (user_mode == "json") {
-                    var Str = call_ajax_api_json("GET", WebApi_url_json, json, Send_Option);
+                    var value = item + "/json_" + func;
+                    var Str = call_ajax_api_json("GET", WebApi_url_json, value, Send_Option);
                     //$.alert.json(Str);
                     $.storage("viewStr", JSON.stringify(Str, null, 2));
                     $("iframe.iframe_content").attr("src", "viewValue.html");
                 }
                 else {
+                    var value = item + "/" + func;
                     var Str = call_ajax_api("GET", WebApi_url, value, Send_Option);
                     //StrOut(Str);
                     $.storage("viewStr", Str);
