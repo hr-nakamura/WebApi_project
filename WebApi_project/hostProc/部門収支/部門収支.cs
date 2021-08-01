@@ -22,7 +22,7 @@ namespace WebApi_project.hostProc
 			Dictionary<string, object> Data = new Dictionary<string, object>();
 			jsonProc jProc = new jsonProc();
 
-			Json = "{year:'2020',secMode:'開発',dispMode:'グループ'}";
+			//Json = "{year:'2020',secMode:'開発',dispMode:'グループ'}";
 			var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
 
 			Dictionary<string, group> secTab = jProc.json_部門リスト(Json);
@@ -82,13 +82,12 @@ namespace WebApi_project.hostProc
 			int year = int.Parse(o_json.year);
 			string s_yymm = ((year - 1) * 100 + 10).ToString();
 			string e_yymm = ((year * 100) + 9).ToString();
-			string sDate = String.Concat((int.Parse(s_yymm) / 100) , "/" , (int.Parse(s_yymm) % 100) , "/01");
+			string s_sDate = String.Concat((int.Parse(s_yymm) / 100) , "/" , (int.Parse(s_yymm) % 100) , "/01");
 
 			int mCnt = 3;
-			DateTime theday = DateTime.Parse(sDate);
-			DateTime newday = theday.AddMonths(mCnt);
+			DateTime sDate = DateTime.Parse(s_sDate);
+			DateTime eDate = sDate.AddMonths(mCnt);
 
-			string eDate = "";
 			string work = "";
 			Dictionary<string, costList> Tab = initTab(Json);
 			SqlConnection DB = new SqlConnection(DB_connectString);
@@ -100,7 +99,7 @@ namespace WebApi_project.hostProc
 				StringBuilder sql = new StringBuilder("");
 //				Tab[S_name].部署コード;
 				sql.Append(" SELECT");
-				sql.Append("      S_name = @S_name");
+				sql.Append("      S_name = @S_name,");
 				sql.Append("      直間   = MAST.直間,");
 				sql.Append("      大項目 = ITEM.大項目,");
 				sql.Append("      項目   = ITEM.項目,");
@@ -155,10 +154,14 @@ namespace WebApi_project.hostProc
             Debug.Write("reader Start");
 
 
+			int Cnt = 0;
             while (reader.Read())
             {
-                var mode = (string)reader["直間"].ToString();
-            }
+				var name = (string)reader["S_name"].ToString();
+				var item = (string)reader["大項目"].ToString();
+				Cnt++;
+			}
+			Debug.Write(Cnt.ToString());
 			Debug.Write("reader Close");
 			reader.Close();
 
