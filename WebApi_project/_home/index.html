@@ -101,7 +101,8 @@
                     $("iframe.iframe_content").attr("src", "viewValue.html");
                 }
             }
-            else if( mode == "url") {
+            else if (mode == "url") {
+                var value = o.value;
                 $("iframe.iframe_content").attr("src", value);
             }
         }
