@@ -65,6 +65,7 @@ namespace WebApi_project.hostProc
 		}
 		public object json_部門収支_XML(String Json)
         {
+			List<db_account> dataTab = new List<db_account>();
 
 			Json = "{year:'2020',secMode:'開発',dispMode:'統括'}";
 			var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
@@ -157,9 +158,17 @@ namespace WebApi_project.hostProc
 			int Cnt = 0;
             while (reader.Read())
             {
-				var name = (string)reader["S_name"].ToString();
-				var item = (string)reader["大項目"].ToString();
-				Cnt++;
+				db_account data = new db_account()
+				{
+					名前 = (string)reader["S_name"].ToString(),
+					大項目 = (string)reader["大項目"].ToString(),
+					項目 = (string)reader["項目"].ToString(),
+                    種別 = (string)reader["種別"].ToString(),
+                    直間 = (byte)reader["直間"],
+                    yymm = (int)reader["yymm"],
+                    amount = (int)reader["amount"]
+                };
+				dataTab.Add(data);
 			}
 			Debug.Write(Cnt.ToString());
 			Debug.Write("reader Close");
@@ -293,14 +302,18 @@ namespace WebApi_project.hostProc
 
             間接部門予算(Tab, mCnt)
         */
-		class SampleData
+		class db_account
         {
-            public string a { get; set; }
-            public string b { get; set; }
-        }
-    }
+            public string 名前 { get; set; }
+			public int 直間 { get; set; }
+			public string 大項目 { get; set; }
+			public string 項目 { get; set; }
+			public string 種別 { get; set; }
+			public int yymm { get; set; }
+			public int amount { get; set; }
+		}
+	}
 }
-
 
 //Debug.Write("=======");
 //foreach (string 統括 in Tab.Keys)
