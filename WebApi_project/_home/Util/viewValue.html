@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="../Scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="../Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
+    <script src="../debug/jquery.my.debug.js"></script>
+
+    <script src="viewXML/simpleXML.js" type="text/javascript"></script>
+    <link href="viewXML/simpleXML.css" rel="Stylesheet" type="text/css" />
+    <script src="viewJson/jquery.json-viewer.js" type="text/javascript"></script>
+    <link href="viewJson/jquery.json-viewer.css" type="text/css" rel="stylesheet">
+
+    <script language="javascript">
+        window.onload = function () {
+            $("#jsonBase_text,#jsonBase,#xmlBase").css("height", (window.parent.innerHeight - 70) + "px");
+            var viewStr = $.storage("viewStr");
+            if ($.isJSON(viewStr)) {
+                if ($.Browser.name == "msie") {
+                    $("#jsonBase_text").show();
+                    $("body").css("overflow-y", "hidden");
+                    $("#jsonBase_text").text(viewStr);
+                }
+                else {
+                    $("#jsonBase").show();
+                    $("body").css("overflow-y", "visible");
+                    viewJson(viewStr)
+                }
+            }
+            else if ($.isXMLDoc($.parseXML(viewStr))) {
+                $("#xmlBase").show();
+                $("body").css("overflow-y", "visible");
+                viewXML(viewStr);
+            }
+            else {
+                $("#jsonBase_text").show();
+                $("#jsonBase_text").text("\nデータはありません");
+            }
+
+
+        }
+        function viewJson(str) {
+            try {
+                var input = eval("(" + str + ")");
+            }
+            catch (error) {
+                return alert("Cannot eval JSON: " + error);
+            }
+            var options = {
+                collapsed: false,
+                rootCollapsable: true,
+                withQuotes: false,
+                withLinks: false
+            };
+            $("#jsonBase").jsonViewer(input, options);
+        }
+        function viewXML(xmlStr) {
+            $.debug("viewXML Start");
+            try {
+                $("#xmlBase").empty().simpleXML({ xmlString: xmlStr });
+            } catch (e) {
+                $("#xmlBase").empty().append("Exception caught running plugin : " + e);
+                $.alert(e);
+            }
+
+            $("#dynamicXML-process").click(function () {
+                try {
+                    $("#dynamicXML-output").empty();
+                    var xml = $("#dynamicXML").val();
+                    $("#dynamicXML-output").simpleXML({ xmlString: xmlStr });
+
+                } catch (ex) {
+                    alert("Unable to process XML: " + ex);
+                }
+            });
+            $.debug("viewXML End");
+
+        }
+        $(function () {
+            $(window).on("resize", function () {
+                $("#jsonBase,#jsonBase,#xmlBase").css("height", (window.parent.innerHeight - 70) + "px");
+                var a = 1;
+            });
+        });
+
+    </script>
+    <style type="text/css">
+        #jsonBase_text {
+            display: none;
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+            border: 0px solid black;
+            background-color: snow;
+        }
+
+        #jsonBase {
+            display: none;
+            margin: 0 20px;
+            padding: 0px;
+            width: 100%;
+            border: 0px solid black;
+            *background-color: snow;
+            font-size:small;
+        }
+        #xmlBase {
+            display: none;
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+            border: 0px solid black;
+            *background-color: snow;
+        }
+
+        body {
+            border: 0px solid red;
+            margin: 0;
+            padding: 0px;
+            background-color: snow;
+            overflow-x: hidden;
+            *overflow-y: hidden;
+        }
+    </style>
+</head>
+<body>
+    <textarea id="jsonBase_text"></textarea>
+    <div id="jsonBase"></div>
+    <div id="xmlBase"></div>
+</body>
+</html>

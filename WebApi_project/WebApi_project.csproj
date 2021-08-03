@@ -132,7 +132,7 @@
     <Content Include="_home\Util\viewXML\simpleXML.js" />
     <Content Include="_home\Util\viewXML\viewXML.html" />
     <Content Include="_home\Util\viewXML\viewXmlWindow.js" />
-    <Content Include="_home\viewValue.html" />
+    <Content Include="_home\Util\viewValue.html" />
     <Content Include="_home\debug\debug.ashx" />
     <Content Include="_home\ajax.xlsx" />
     <Content Include="_home\Util\viewJson\jquery.json-viewer.js" />
