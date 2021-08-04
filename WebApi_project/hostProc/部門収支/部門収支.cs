@@ -150,7 +150,7 @@ namespace WebApi_project.hostProc
 			SqlConnection DB = new SqlConnection(DB_connectString);
 			DB.Open();
 			Debug.Write("DB Open", DB_connectString);
-
+/*
 			foreach (string S_name in Tab.Keys)
 			{
 				StringBuilder sql = new StringBuilder("");
@@ -177,12 +177,12 @@ namespace WebApi_project.hostProc
 				sql.Append("      MAST.ACCコード >= 0");
 				sql.Append("      AND");
 				sql.Append("      DATA.yymm BETWEEN @s_yymm  AND @e_yymm");
-                if (Tab[S_name].部署コード.Length > 0)
+                if (Tab[S_name]["部署コード"].Length > 0)
                 {
                     sql.Append("    AND");
                     sql.Append("    MAST.部署コード IN(@codes)");
                 }
-                if (Tab[S_name].直間 != "")
+                if (Tab[S_name]["直間"] != "")
                 {
                     sql.Append("    AND");
                     sql.Append("    MAST.直間 IN(@mode)");
@@ -198,13 +198,13 @@ namespace WebApi_project.hostProc
 				sql.Replace("@e_yymm", SqlUtil.Parameter("number", e_yymm));
 				sql.Replace("@sDate", SqlUtil.Parameter("string", sDate));
 				sql.Replace("@eDate", SqlUtil.Parameter("string", eDate));
-				sql.Replace("@codes", SqlUtil.Parameter("number", Tab[S_name].部署コード));
-				sql.Replace("@mode", SqlUtil.Parameter("number", Tab[S_name].直間));
+				sql.Replace("@codes", SqlUtil.Parameter("number", Tab[S_name]["部署コード"]));
+				sql.Replace("@mode", SqlUtil.Parameter("number", Tab[S_name]["直間"]));
 
 				work = sql.ToString();
 				SQLTab.Add(work);
 			}
-
+*/
 			string SQL = string.Join(" UNION ALL ", SQLTab);
 
             SqlDataReader reader = dbRead(DB, SQL);
