@@ -36,12 +36,12 @@ namespace WebApi_project.hostProc
             Json = "{year:'2020',secMode:'開発',dispMode:'統括'}";
             // secMode : 開発、間接、全社
             // dispMode : 全社、統括、部門、グループ
-            List<group_db> dataTab = get_group_data(Json);                                  // DBからデータ取得
+            List<db_group> dataTab = get_group_data(Json);                                  // DBからデータ取得
             Dictionary<string, group> Tab = convert_group_data(dataTab);                    // 取得したデータを加工
 
             return (Tab);
         }
-        List<group_db> get_group_data(string Json)
+        List<db_group> get_group_data(string Json)
         {
             /*
             secMode : 開発、間接、全社
@@ -88,7 +88,7 @@ namespace WebApi_project.hostProc
             */
             var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
 
-            List<group_db> dataTab = new List<group_db>();
+            List<db_group> dataTab = new List<db_group>();
             Dictionary<string, group> Tab = new Dictionary<string, group>();
             SqlConnection DB;
             Dictionary<string, object> Tab1 = new Dictionary<string, object>();
@@ -175,7 +175,7 @@ namespace WebApi_project.hostProc
                     s3 = (string)reader["課"].ToString();
                     name = (string)reader["名前"].ToString();
                     code = (string)reader["gCode"].ToString();
-                    group_db data = new group_db()
+                    db_group data = new db_group()
                     {
                         直間 = (string)reader["直間"].ToString(),
                         統括 = (string)reader["統括"].ToString(),
@@ -208,7 +208,7 @@ namespace WebApi_project.hostProc
             return (dataTab);
         }
 
-        Dictionary<string, group> convert_group_data(List<group_db> dataTab)
+        Dictionary<string, group> convert_group_data(List<db_group> dataTab)
         {
             Dictionary<string, group> Tab = new Dictionary<string, group>();
             string mode = "";
@@ -225,7 +225,7 @@ namespace WebApi_project.hostProc
                 s2 = group.部門;
                 s3 = group.課;
                 code = group.code;
-                            name = group.名前;
+                name = group.名前;
 
                 if (s1 != "" && !Tab.ContainsKey(s1))
                 {
@@ -302,7 +302,7 @@ namespace WebApi_project.hostProc
             return (Tab);
         }
 
-        class group_db
+        class db_group
         {
             public string 直間 { get; set; }
             public string 名前 { get; set; }

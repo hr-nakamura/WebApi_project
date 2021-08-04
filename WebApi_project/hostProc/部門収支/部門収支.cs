@@ -65,6 +65,7 @@ namespace WebApi_project.hostProc
 		}
 		public object json_部門収支_XML(String Json)
         {
+			List<db_account> dataTab = new List<db_account>();
 
 			Json = "{year:'2020',secMode:'開発',dispMode:'統括'}";
 			var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
@@ -80,9 +81,9 @@ namespace WebApi_project.hostProc
 
 			List<string> SQLTab = new List<string>();
 			int year = int.Parse(o_json.year);
-			string s_yymm = ((year - 1) * 100 + 10).ToString();
-			string e_yymm = ((year * 100) + 9).ToString();
-			string s_sDate = String.Concat((int.Parse(s_yymm) / 100) , "/" , (int.Parse(s_yymm) % 100) , "/01");
+			int s_yymm = ((year - 1) * 100 + 10);
+			int e_yymm = ((year * 100) + 9);
+			string s_sDate = String.Concat( (s_yymm / 100) , "/" , (s_yymm % 100) , "/01");
 
 			int mCnt = 3;
 			DateTime sDate = DateTime.Parse(s_sDate);
@@ -157,9 +158,17 @@ namespace WebApi_project.hostProc
 			int Cnt = 0;
             while (reader.Read())
             {
-				var name = (string)reader["S_name"].ToString();
-				var item = (string)reader["大項目"].ToString();
-				Cnt++;
+				db_account data = new db_account()
+				{
+					名前 = (string)reader["S_name"].ToString(),
+					大項目 = (string)reader["大項目"].ToString(),
+					項目 = (string)reader["項目"].ToString(),
+                    種別 = (string)reader["種別"].ToString(),
+                    直間 = (byte)reader["直間"],
+                    yymm = (int)reader["yymm"],
+                    amount = (int)reader["amount"]
+                };
+				dataTab.Add(data);
 			}
 			Debug.Write(Cnt.ToString());
 			Debug.Write("reader Close");
@@ -223,52 +232,6 @@ namespace WebApi_project.hostProc
 
             return (xmlDoc);
         }
-		/*
-	for( var S_name in Tab ){
-		SQL  = " SELECT"
-		SQL += "      S_name = '" + S_name + "',"
-		SQL += "      直間   = MAST.直間,"
-
-		SQL += "      大項目 = ITEM.大項目,"
-		SQL += "      項目   = ITEM.項目,"
-		SQL += "      種別   = (CASE WHEN DATA.種別 = 0 THEN '計画' ELSE '予測' END),"
-		SQL += "      yymm   = DATA.yymm,"
-		SQL += "      amount = Sum(DATA.数値)"
-		SQL += " FROM"
-		SQL += "      収支計画データ DATA "
-		SQL += "                     LEFT JOIN (SELECT * FROM EMG.dbo.部署マスタ WHERE NOT(開始 > '" + eDate  + "' or 終了 < '" + sDate  + "') ) MAST"
-		SQL += "                          ON DATA.部署ID = MAST.部署コード"
-		SQL += "                     LEFT JOIN 収支項目マスタ ITEM"
-		SQL += "                          ON DATA.項目ID = ITEM.ID"
-		SQL += " WHERE"
-		SQL += "      ITEM.大項目 NOT IN('部門固定費','要員数')"
-		SQL += "      AND"
-		SQL += "      DATA.種別 IN(0,1)"				// 計画・予測
-		SQL += "      AND"
-		SQL += "      MAST.ACCコード >= 0"
-		SQL += "      AND"
-		SQL += "      DATA.yymm BETWEEN " + s_yymm + " AND " + e_yymm
-		if( Tab[S_name]["部署コード"].length > 0 ){
-			SQL += "    AND"
-			SQL += "    MAST.部署コード IN(" + Tab[S_name]["部署コード"].join(",") + ")"
-			}
-		if( Tab[S_name]["直間"] != "" ){
-			SQL += "    AND"
-			SQL += "    MAST.直間 IN(" + Tab[S_name]["直間"] + ")"
-			}
-		SQL += " GROUP BY"
-		SQL += "      MAST.直間,"
-		SQL += "      ITEM.大項目,"
-		SQL += "      ITEM.項目,"
-		SQL += "      DATA.種別,"
-		SQL += "      DATA.yymm"
-		SQLTab.push(SQL)
-		}
-	SQL = SQLTab.join(" UNION ALL ")
-
-
-
-         */
 
 		/*
             groupPlan(DB, Tab, yymm, mCnt, dispMode, dispName, listMode)						// 計画・予測データ取得
@@ -293,14 +256,18 @@ namespace WebApi_project.hostProc
 
             間接部門予算(Tab, mCnt)
         */
-		class SampleData
+		class db_account
         {
-            public string a { get; set; }
-            public string b { get; set; }
-        }
-    }
+            public string 名前 { get; set; }
+			public int 直間 { get; set; }
+			public string 大項目 { get; set; }
+			public string 項目 { get; set; }
+			public string 種別 { get; set; }
+			public int yymm { get; set; }
+			public int amount { get; set; }
+		}
+	}
 }
-
 
 //Debug.Write("=======");
 //foreach (string 統括 in Tab.Keys)
