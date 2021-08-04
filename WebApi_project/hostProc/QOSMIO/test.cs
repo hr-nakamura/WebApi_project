@@ -16,8 +16,54 @@ namespace WebApi_project.hostProc
 {
     public class QOSMIO : hostProc
     {
+        Dictionary<string, dynamic> test(Dictionary<string, dynamic> Tab ,string 部門, string 種別, string 大項目, string 項目)
+        {
+            try
+            {
+                if (Tab[部門][種別][大項目][項目])
+                {
+                    return (Tab);
+                }
+            }catch(Exception ex)
+            {
+                Debug.Write(ex.Message);
+                if (!Tab.ContainsKey(部門))
+                {
+                    Tab.Add(部門, new Dictionary<string,dynamic>());
+                }
+                if (!Tab[部門].ContainsKey(種別))
+                {
+                    Tab[部門].Add(種別, new Dictionary<string, dynamic>());
+                }
+                if (!Tab[部門][種別].ContainsKey(大項目))
+                {
+                    Tab[部門][種別].Add(大項目, new Dictionary<string, dynamic>());
+                }
+                if (!Tab[部門][種別][大項目].ContainsKey(項目))
+                {
+                    Tab[部門][種別][大項目].Add(項目, new Dictionary<string, dynamic>());
+                }
+            }
+            Tab[部門][種別][大項目][項目] = new int[12];
+            var x = 1;
+            return (Tab);
+        }
         public object json_projectTest(String Json)
         {
+
+            Dictionary<string, dynamic> Tab = new Dictionary<string, dynamic>();
+
+            Debug.Write("AAA");
+            Tab = test(Tab, "部門", "種別", "大項目", "項目");
+            Debug.Write("BBB");
+            Tab = test(Tab, "部門1", "種別1", "大項目1", "項目1");
+            Debug.Write("CCC");
+            Tab = test(Tab, "部門1", "種別", "大項目1", "項目1");
+            Debug.Write("DD");
+            return (Tab);
+//            Tab["部門"]["実績"]["大項目"]["項目"]["yymm"][0] = 1234;
+
+
 
             List<string> x = new List<string>();
             x.Add("ABC");
@@ -40,7 +86,7 @@ namespace WebApi_project.hostProc
 
 
             //            dbFunc_A();
-            object Tab = (object)testFunc();
+            //object Tab = (object)testFunc();
 
 
             return (Tab);
