@@ -75,20 +75,33 @@ namespace WebApi_project.hostProc
 			if (mm == 0) { yy--; mm = 12; }
 			return ((yy * 100) + mm);
 		}
+		int yymmDiff(int base_yymm, int yymm)
+        {
+			int b_yy = base_yymm / 100;
+			int b_mm = base_yymm % 100;
+			int yy = yymm / 100;
+			int mm = yymm % 100;
+
+			mm += (yy - b_yy) * 12;
+			int n = (mm - b_mm);
+			return (n);
+        }
 		public object json_部門収支_XML(String Json)
 		{
-			Json = "{year:'2020',secMode:'開発',dispMode:'統括'}";
 
+
+			Json = "{year:'2020',secMode:'開発',dispMode:'統括'}";
+			int s_yymm = 201810;
 			Dictionary<string, costList> Tab = (Dictionary<string, costList>) initTab(Json);
-			List<object> groupPlan = (List<object>)json_groupPlan(Tab);
+			List<db_account> groupPlan = (List<db_account>)json_groupPlan(Tab);
 			foreach(db_account item in groupPlan)
             {
 
+				int n = yymmDiff(s_yymm, item.yymm);
+				//Dictionary<string, Dictionary<string, Dictionary<string, Dictionary<string, int[]>>>> Tab = new Dictionary<string, Dictionary<string, Dictionary<string, Dictionary<string, int[]>>>>() ;
+                Tab[item.名前][item.種別][item.大項目][item.項目][n] = item.amount;
 
-				Dictionary<string,Dictionary<string, Dictionary<string, Dictionary<string, int[]>>>> xTab = new Dictionary<string, Dictionary<string, Dictionary<string, Dictionary<string, int[]>>>>();
-                xTab[item.名前][item.種別][item.大項目][item.項目][0] = 123;
-
-                var x = 1;
+                //var x = 1;
             }
 			groupPlan.ForEach(item =>
 			{
