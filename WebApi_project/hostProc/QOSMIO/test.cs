@@ -18,15 +18,17 @@ namespace WebApi_project.hostProc
     {
         Dictionary<string, dynamic> test(Dictionary<string, dynamic> Tab ,string 部門, string 種別, string 大項目, string 項目)
         {
+            Debug.Write("確認");
             try
             {
-                if (Tab[部門][種別][大項目][項目])
+                if (Tab[部門][種別][大項目].ContainsKey(項目))
                 {
+                    //Debug.Write("ある");
                     return (Tab);
                 }
             }catch(Exception ex)
             {
-                Debug.Write(ex.Message);
+                //Debug.Write(ex.Message);
                 if (!Tab.ContainsKey(部門))
                 {
                     Tab.Add(部門, new Dictionary<string,dynamic>());
@@ -41,9 +43,10 @@ namespace WebApi_project.hostProc
                 }
                 if (!Tab[部門][種別][大項目].ContainsKey(項目))
                 {
-                    Tab[部門][種別][大項目].Add(項目, new Dictionary<string, dynamic>());
+                    Tab[部門][種別][大項目].Add(項目, new Dictionary<string, int[]>());
                 }
             }
+            //Debug.Write("設定");
             Tab[部門][種別][大項目][項目] = new int[12];
             var x = 1;
             return (Tab);
@@ -58,7 +61,7 @@ namespace WebApi_project.hostProc
             Debug.Write("BBB");
             Tab = test(Tab, "部門1", "種別1", "大項目1", "項目1");
             Debug.Write("CCC");
-            Tab = test(Tab, "部門1", "種別", "大項目1", "項目1");
+            Tab = test(Tab, "部門1", "種別1", "大項目1", "項目1");
             Debug.Write("DD");
             return (Tab);
 //            Tab["部門"]["実績"]["大項目"]["項目"]["yymm"][0] = 1234;
