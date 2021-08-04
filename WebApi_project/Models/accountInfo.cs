@@ -71,8 +71,14 @@ namespace WebApi_project.Models
         public string 統括 { get; set; }
         public string 部門 { get; set; }
         public string 課 { get; set; }
+        public secInfo(string 統括, string 部門, string 課)
+        {
+            this.統括 = 統括;
+            this.部門 = 部門;
+            this.課 = 課;
+        }
     }
-    public class ACC_売上原価
+        public class ACC_売上原価
     {
         public int[] 外注費 { get; set; }
         public int[] 仕入費 { get; set; }

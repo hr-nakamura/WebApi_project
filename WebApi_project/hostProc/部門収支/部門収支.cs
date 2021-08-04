@@ -15,9 +15,26 @@ namespace WebApi_project.hostProc
 {
     public class 部門収支 : hostProc
     {
-		Dictionary<string, costList> initTab(String Json)
+	public Dictionary <string,object> costList2(string 直間, string 統括, string 部門, string 課, string 部署コード)
         {
-			Dictionary<string, costList> Tab = new Dictionary<string, costList>();
+
+			Dictionary<string, object> Tab = new Dictionary<string, object>();
+            string 種別 = (直間 == "2" ? "間接" : "直接");
+			Tab.Add("種別", 種別);
+			Tab.Add("直間", 直間);
+			Tab.Add("部署名", new secInfo( 統括,  部門,  課));
+			Tab.Add("部署コード", 部署コード);
+			Tab.Add("合計", new accountInfo());
+			Tab.Add("計画", new accountInfo());
+			Tab.Add("予測", new accountInfo());
+			Tab.Add("実績", new accountInfo());
+			Tab.Add("配賦", new accountInfo());
+
+			return (Tab);
+        }
+		Dictionary<string, object> initTab(String Json)
+        {
+			Dictionary<string, object> Tab = new Dictionary<string, object>();
 			Dictionary<string, object> Info = new Dictionary<string, object>();
 			Dictionary<string, object> Data = new Dictionary<string, object>();
 			jsonProc jProc = new jsonProc();
@@ -29,14 +46,14 @@ namespace WebApi_project.hostProc
 
 			if (o_json.dispMode == "全社")
 			{
-				Tab.Add("全社", new costList(直間: "0,1,2", 統括: "", 部門: "", 課: "", 部署コード: ""));
+				Tab.Add("全社", costList2(直間: "0,1,2", 統括: "", 部門: "", 課: "", 部署コード: ""));
 			}
 			else if (o_json.dispMode == "統括")
 			{
 				foreach (string 統括 in secTab.Keys)
 				{
 					group sec = secTab[統括];
-					Tab.Add(統括, new costList(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
+					Tab.Add(統括, costList2(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
 					//Debug.Write(統括, secTab[統括].codes);
 				}
 			}
@@ -47,7 +64,7 @@ namespace WebApi_project.hostProc
                 foreach (string 部門 in sec.list.Keys)
                 {
                     var x = sec.list[部門];
-					Tab.Add(部門, new costList(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
+					Tab.Add(部門,  costList2(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
 					//Debug.Write(部門, sec.list[部門].codes);
                 }
             }
@@ -57,7 +74,7 @@ namespace WebApi_project.hostProc
                 foreach (string 課 in sec.list.Keys)
                 {
                     var x = sec.list[課];
-					Tab.Add(課, new costList(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
+					Tab.Add(課,  costList2(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
 					//Debug.Write(課, sec.list[課].codes);
                 }
             }
@@ -92,14 +109,14 @@ namespace WebApi_project.hostProc
 
 			Json = "{year:'2020',secMode:'開発',dispMode:'統括'}";
 			int s_yymm = 201810;
-			Dictionary<string, costList> Tab = (Dictionary<string, costList>) initTab(Json);
+			Dictionary<string, object> Tab = (Dictionary<string, object>) initTab(Json);
 			List<db_account> groupPlan = (List<db_account>)json_groupPlan(Tab);
 			foreach(db_account item in groupPlan)
             {
 
 				int n = yymmDiff(s_yymm, item.yymm);
 				//Dictionary<string, Dictionary<string, Dictionary<string, Dictionary<string, int[]>>>> Tab = new Dictionary<string, Dictionary<string, Dictionary<string, Dictionary<string, int[]>>>>() ;
-                Tab[item.名前][item.種別][item.大項目][item.項目][n] = item.amount;
+                //Tab[item.名前][item.種別][item.大項目][item.項目][n] = item.amount;
 
                 //var x = 1;
             }
@@ -110,7 +127,7 @@ namespace WebApi_project.hostProc
 			});
 			return (Tab);
 		}
-		public object json_groupPlan(Dictionary<string, costList> Tab)
+		public object json_groupPlan(Dictionary<string, object> Tab)
 		{
 			List<db_account> dataTab = new List<db_account>();
 
