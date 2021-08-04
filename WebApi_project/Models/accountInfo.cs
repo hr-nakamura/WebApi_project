@@ -3,12 +3,7 @@ using System.Web;
 
 namespace WebApi_project.Models
 {
-    public class secInfo
-    {
-        public string 統括 { get; set; }
-        public string 部門 { get; set; }
-        public string 課 { get; set; }
-    }
+
     public class costList
     {
         public string 種別 { get; set; }
@@ -70,6 +65,12 @@ namespace WebApi_project.Models
             this.要員数 = new ACC_要員数();
             this.売上予測 = new ACC_売上予測();
         }
+    }
+    public class secInfo
+    {
+        public string 統括 { get; set; }
+        public string 部門 { get; set; }
+        public string 課 { get; set; }
     }
     public class ACC_売上原価
     {

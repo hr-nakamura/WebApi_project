@@ -79,14 +79,14 @@ namespace WebApi_project.hostProc
 		{
 			Json = "{year:'2020',secMode:'開発',dispMode:'統括'}";
 
-			var Tab = initTab(Json);
+			Dictionary<string, costList> Tab = (Dictionary<string, costList>) initTab(Json);
 			List<object> groupPlan = (List<object>)json_groupPlan(Tab);
 			foreach(db_account item in groupPlan)
             {
-                costList xTab = Tab[item.名前];
-                var x = xTab[item.種別];
 
-                Tab[item.名前].[item.種別].[item.大項目].[item.項目][0] = 123;
+
+				Dictionary<string,Dictionary<string, Dictionary<string, Dictionary<string, int[]>>>> xTab = new Dictionary<string, Dictionary<string, Dictionary<string, Dictionary<string, int[]>>>>();
+                xTab[item.名前][item.種別][item.大項目][item.項目][0] = 123;
 
                 var x = 1;
             }
