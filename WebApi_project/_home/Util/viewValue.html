@@ -37,7 +37,7 @@
         }
         function viewJson(str) {
             if ($.Browser.name == "msie") {
-                $("#jsonBase").JSONView(str);
+                $("#jsonBase").JSONView(str, { collapsed: true });
             }
             else {
                 try {

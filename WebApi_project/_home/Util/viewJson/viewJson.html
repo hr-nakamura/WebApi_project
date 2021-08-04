@@ -27,9 +27,9 @@
         'Passer-by, stop here, please.'].join("\n")
     };
     $(function() {
-      $("#json").JSONView(json);
+        $("#json").JSONView(json, { collapsed: false });
 
-      $("#json-collapsed").JSONView(json, { collapsed: true, nl2br: true, recursive_collapser: true });
+      //$("#json-collapsed").JSONView(json, { collapsed: true, nl2br: false, recursive_collapser: true });
 
       $('#collapse-btn').on('click', function() {
         $('#json').JSONView('collapse');
@@ -50,6 +50,13 @@
       $('#toggle-level2-btn').on('click', function() {
         $('#json').JSONView('toggle', 2);
       });
+
+        // nl2br : 改行
+        // collapsed: true 閉じる
+
+        //$('#json').JSONView('escape', true);
+        //$('#json').JSONView('strict', true);
+        //$('#json').JSONView('collapse',true);
     });
   </script>
 </head>

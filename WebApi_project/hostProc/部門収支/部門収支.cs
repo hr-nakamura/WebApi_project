@@ -37,7 +37,7 @@ namespace WebApi_project.hostProc
 				{
 					group sec = secTab[統括];
 					Tab.Add(統括, new costList(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
-					Debug.Write(統括, secTab[統括].codes);
+					//Debug.Write(統括, secTab[統括].codes);
 				}
 			}
 			else if (o_json.dispMode == "部門")
@@ -63,34 +63,60 @@ namespace WebApi_project.hostProc
             }
 			return (Tab);
 		}
-		public object json_部門収支_XML(String Json)
+		int yymmAdd(int yymm, int mCnt)
         {
+			int yy = yymm / 100;
+			int mm = yymm % 100;
+
+			int ym = (yy * 12) + mm;
+			ym += mCnt;
+			yy = ym / 12;
+			mm = ym % 12;
+			if (mm == 0) { yy--; mm = 12; }
+			return ((yy * 100) + mm);
+		}
+		public object json_部門収支_XML(String Json)
+		{
+			Json = "{year:'2020',secMode:'開発',dispMode:'統括'}";
+
+			var Tab = initTab(Json);
+			List<object> groupPlan = (List<object>)json_groupPlan(Tab);
+			foreach(db_account item in groupPlan)
+            {
+                costList xTab = Tab[item.名前];
+                var x = xTab[item.種別];
+
+                Tab[item.名前].[item.種別].[item.大項目].[item.項目][0] = 123;
+
+                var x = 1;
+            }
+			groupPlan.ForEach(item =>
+			{
+				//Tab[item.名前]["計画"];
+                //var x = 1;
+			});
+			return (Tab);
+		}
+		public object json_groupPlan(Dictionary<string, costList> Tab)
+		{
 			List<db_account> dataTab = new List<db_account>();
 
-			Json = "{year:'2020',secMode:'開発',dispMode:'統括'}";
-			var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
+			//Json = "{year:'2020',secMode:'開発',dispMode:'統括'}";
+			//var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
 
-
-	//		var sDate = parseInt(yymm / 100) + "/" + (yymm % 100) + "/1"
-	//var eDate = DateAdd("m", mCnt, sDate)
-	//eDate = convertDate(DateAdd("d", -1, eDate))
-
-	//var s_yymm = yymm;
-	//		var e_yymm = yymmAdd(yymm, mCnt - 1);
-
-
+			string str_year = "2020";
 			List<string> SQLTab = new List<string>();
-			int year = int.Parse(o_json.year);
+			int mCnt = 3;
+			int year = int.Parse(str_year);
 			int s_yymm = ((year - 1) * 100 + 10);
-			int e_yymm = ((year * 100) + 9);
+			int e_yymm = yymmAdd(s_yymm, mCnt-1);
 			string s_sDate = String.Concat( (s_yymm / 100) , "/" , (s_yymm % 100) , "/01");
 
-			int mCnt = 3;
 			DateTime sDate = DateTime.Parse(s_sDate);
-			DateTime eDate = sDate.AddMonths(mCnt);
+			DateTime eDate = sDate.AddMonths(mCnt).AddDays(-1);
 
 			string work = "";
-			Dictionary<string, costList> Tab = initTab(Json);
+			//Dictionary<string, costList> Tab = initTab(Json);
 			SqlConnection DB = new SqlConnection(DB_connectString);
 			DB.Open();
 			Debug.Write("DB Open", DB_connectString);
@@ -179,54 +205,14 @@ namespace WebApi_project.hostProc
 			Debug.Write("DB Dispose");
 			DB.Dispose();
 
-			/*
-						sql.Append(" SELECT");
-						sql.Append("      S_name = @S_name");
-						sql.Append("      直間   = MAST.直間,");
-
-						sql.Append("      大項目 = ITEM.大項目,");
-						sql.Append("      項目   = ITEM.項目,");
-						sql.Append("      種別   = (CASE WHEN DATA.種別 = 0 THEN '計画' ELSE '予測' END),");
-						sql.Append("      yymm   = DATA.yymm,");
-						sql.Append("      amount = Sum(DATA.数値)");
-						sql.Append(" FROM");
-						sql.Append("      収支計画データ DATA ");
-						sql.Append("                     LEFT JOIN (SELECT * FROM EMG.dbo.部署マスタ WHERE NOT(開始 > @eDate or 終了 < @sDate) ) MAST");
-						sql.Append("                          ON DATA.部署ID = MAST.部署コード");
-						sql.Append("                     LEFT JOIN 収支項目マスタ ITEM");
-						sql.Append("                          ON DATA.項目ID = ITEM.ID");
-						sql.Append(" WHERE");
-						sql.Append("      ITEM.大項目 NOT IN('部門固定費','要員数')");
-						sql.Append("      AND");
-						sql.Append("      DATA.種別 IN(0,1)");              // 計画・予測
-						sql.Append("      AND");
-						sql.Append("      MAST.ACCコード >= 0");
-						sql.Append("      AND");
-						sql.Append("      DATA.yymm BETWEEN @s_yymm  AND @e_yymm");
-						if (Tab["部署コード"].length > 0)
-						{
-							sql.Append("    AND");
-							sql.Append("    MAST.部署コード IN(" + Tab[S_name]["部署コード"].join(",") + ")");
-						}
-						if (Tab[S_name]["直間"] != "")
-						{
-							sql.Append("    AND");
-							sql.Append("    MAST.直間 IN(" + Tab[S_name]["直間"] + ")");
-						}
-						sql.Append(" GROUP BY");
-						sql.Append("      MAST.直間,");
-						sql.Append("      ITEM.大項目,");
-						sql.Append("      ITEM.項目,");
-						sql.Append("      DATA.種別,");
-						sql.Append("      DATA.yymm");
-			*/
-			return (Tab);
+			return (dataTab);
         }
         public XmlDocument 部門収支_XML(String Json)
         {
-            //var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
+			//var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
 
-            object json_data = json_部門収支_XML(Json);
+			List<db_account> json_data = (List<db_account>)json_部門収支_XML(Json);
+
             XmlDocument xmlDoc = Json2Xml(json_data);
             //XmlDocument xmlDoc = new XmlDocument();
 
