@@ -126,8 +126,11 @@
     <Content Include="_home\Scripts\my.mnmenu.css" />
     <Content Include="_home\Scripts\superfish.css" />
     <Content Include="_home\Scripts\superfish.js" />
-    <Content Include="_home\Util\viewJson\jquery.json-viewer.css" />
+    <Content Include="_home\Util\viewJson-edge\jquery.json-viewer.css" />
+    <Content Include="_home\Util\viewJson-edge\viewJson.html" />
     <Content Include="_home\Util\viewJson\viewJson.html" />
+    <Content Include="_home\Util\viewJson\jquery.jsonview.css" />
+    <Content Include="_home\Util\viewJson\jquery.jsonview.js" />
     <Content Include="_home\Util\viewXML\simpleXML.css" />
     <Content Include="_home\Util\viewXML\simpleXML.js" />
     <Content Include="_home\Util\viewXML\viewXML.html" />
@@ -135,7 +138,7 @@
     <Content Include="_home\Util\viewValue.html" />
     <Content Include="_home\debug\debug.ashx" />
     <Content Include="_home\ajax.xlsx" />
-    <Content Include="_home\Util\viewJson\jquery.json-viewer.js" />
+    <Content Include="_home\Util\viewJson-edge\jquery.json-viewer.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Data\iniFile.cs" />

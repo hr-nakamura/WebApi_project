@@ -1,105 +1,68 @@
-﻿<!doctype HTML>
-<html>
+<!DOCTYPE HTML>
+<html lang="en">
 <head>
-    <title>jQuery json-viewer</title>
-    <meta charset="utf-8" />
-    <script src="/WebApi/project/_home/Scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
-    <script src="jquery.json-viewer.js" type="text/javascript"></script>
-    <link href="jquery.json-viewer.css" type="text/css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>JQuery JSONView</title>
+  <link rel="stylesheet" href="jquery.jsonview.css" />
+  <script type="text/javascript" src="../../Scripts/jquery-1.9.1.min.js"></script>
+  <script type="text/javascript" src="jquery.jsonview.js"></script>
+  <script type="text/javascript">
+    var json = {
+      "hey": "guy",
+      "anumber": 243,
+      "anobject": {
+        "whoa": "nuts",
+        "anarray": [1, 2, "thr<h1>ee"],
+        "more":"stuff"
+      },
+      "awesome": true,
+      "bogus": false,
+      "meaning": null,
+      "japanese":"明日がある。",
+      "link": "http://jsonview.com",
+      "notLink": "http://jsonview.com is great",
+      "multiline": ['Much like me, you make your way forward,',
+        'Walking with downturned eyes.',
+        'Well, I too kept mine lowered.',
+        'Passer-by, stop here, please.'].join("\n")
+    };
+    $(function() {
+      $("#json").JSONView(json);
 
-    <style type="text/css">
-        body {
-            margin: 0 100px;
-            font-family: sans-serif;
-        }
+      $("#json-collapsed").JSONView(json, { collapsed: true, nl2br: true, recursive_collapser: true });
 
-        p.options label {
-            margin-right: 10px;
-        }
+      $('#collapse-btn').on('click', function() {
+        $('#json').JSONView('collapse');
+      });
 
-        p.options input[type=checkbox] {
-            vertical-align: middle;
-        }
+      $('#expand-btn').on('click', function() {
+        $('#json').JSONView('expand');
+      });
 
-        textarea#json-input {
-            width: 100%;
-            height: 200px;
-        }
+      $('#toggle-btn').on('click', function() {
+        $('#json').JSONView('toggle');
+      });
 
-        div#json-renderer {
-            border: 0px solid #aaa;
-        }
-    </style>
+      $('#toggle-level1-btn').on('click', function() {
+        $('#json').JSONView('toggle', 1);
+      });
 
-    <script>
-        $(function () {
-            $(document).on("load", function () {
-                var input = eval('(' + $('#json-input').val() + ')');
-                var options = {
-                    collapsed: false,
-                    rootCollapsable: true,
-                    withQuotes: false,
-                    withLinks: false
-                };
-                $('#json-renderer').jsonViewer(input, options);
-
-            })
-            function renderJson() {
-                try {
-                    var str = '{abc:"abc",xyz:"xyz"}';
-                    var input = eval("("+ str +")");
-
-                    //var input = eval('(' + $('#json-input').val() + ')');
-                }
-                catch (error) {
-                    return alert("Cannot eval JSON: " + error);
-                }
-                var options = {
-                    collapsed: false,
-                    rootCollapsable: true,
-                    withQuotes: false,
-                    withLinks: false
-                };
-                //$.alert("AAA",$('#collapsed').is(':checked'), $('#root-collapsable').is(':checked'), $('#with-quotes').is(':checked'), $('#with-links').is(':checked'));
-                $('#json-renderer').jsonViewer(input, options);
-            }
-
-            // Generate on click
-            $('#btn-json-viewer').click(renderJson);
-
-            // Generate on option change
-            $('p.options input[type=checkbox]').click(renderJson);
-
-            // Display JSON sample on page load
-            renderJson();
-        });
-    </script>
+      $('#toggle-level2-btn').on('click', function() {
+        $('#json').JSONView('toggle', 2);
+      });
+    });
+  </script>
 </head>
 <body>
-    <textarea id="json-input" autocomplete="off">
-{
-  "id": 1001,
-  "type": "donut",
-  "name": "Cake",
-  "description": "https://en.wikipedia.org/wiki/Doughnut",
-  "price": 2.55,
-  "available": {
-    store: 42,
-    warehouse: 600
-  },
-  "toppings": [
-    { "id": 5001, "type": "None" },
-    { "id": 5002, "type": "Glazed" },
-    { "id": 5005, "type": "Sugar" },
-    { "id": 5003, "type": "Chocolate" },
-    { "id": 5004, "type": "Maple" }
-  ],
-  "uuids": [
-    "826b23ce-2669-4122-981f-3e2e4429159d",
-    "e32111a0-6a87-49ab-b58f-a01bf8d28ba0",
-    "c055a894-698e-41c0-b85f-7510a7351d9d",
-  ],
-}</textarea>
-    <div id="json-renderer"></div>
+  <h2>Data</h2>
+  <button id="collapse-btn">Collapse</button>
+  <button id="expand-btn">Expand</button>
+  <button id="toggle-btn">Toggle</button>
+  <button id="toggle-level1-btn">Toggle level1</button>
+  <button id="toggle-level2-btn">Toggle level2</button>
+  <div id="json"></div>
+  <h2>Data Collapsed</h2>
+  <div id="json-collapsed"></div>
 </body>
 </html>
+

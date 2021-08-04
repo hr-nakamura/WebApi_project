@@ -9,24 +9,19 @@
 
     <script src="viewXML/simpleXML.js" type="text/javascript"></script>
     <link href="viewXML/simpleXML.css" rel="Stylesheet" type="text/css" />
-    <script src="viewJson/jquery.json-viewer.js" type="text/javascript"></script>
-    <link href="viewJson/jquery.json-viewer.css" type="text/css" rel="stylesheet">
+    <script src="viewJson/jquery.jsonview.js" type="text/javascript"></script>
+    <link href="viewJson/jquery.jsonview.css" type="text/css" rel="stylesheet">
+    <script src="viewJson-edge/jquery.json-viewer.js" type="text/javascript"></script>
+    <link href="viewJson-edge/jquery.json-viewer.css" type="text/css" rel="stylesheet">
 
     <script language="javascript">
         window.onload = function () {
             $("#jsonBase_text,#jsonBase,#xmlBase").css("height", (window.parent.innerHeight - 70) + "px");
             var viewStr = $.storage("viewStr");
             if ($.isJSON(viewStr)) {
-                if ($.Browser.name == "msie") {
-                    $("#jsonBase_text").show();
-                    $("body").css("overflow-y", "hidden");
-                    $("#jsonBase_text").text(viewStr);
-                }
-                else {
-                    $("#jsonBase").show();
-                    $("body").css("overflow-y", "visible");
-                    viewJson(viewStr)
-                }
+                $("#jsonBase").show();
+                $("body").css("overflow-y", "hidden");
+                viewJson(viewStr)
             }
             else if ($.isXMLDoc($.parseXML(viewStr))) {
                 $("#xmlBase").show();
@@ -41,19 +36,25 @@
 
         }
         function viewJson(str) {
-            try {
-                var input = eval("(" + str + ")");
+            if ($.Browser.name == "msie") {
+                $("#jsonBase").JSONView(str);
             }
-            catch (error) {
-                return alert("Cannot eval JSON: " + error);
+            else {
+                try {
+                    var input = eval("(" + str + ")");
+                }
+                catch (error) {
+                    return alert("Cannot eval JSON: " + error);
+                }
+                var options = {
+                    collapsed: false,
+                    rootCollapsable: true,
+                    withQuotes: false,
+                    withLinks: false
+                };
+                $("#jsonBase").jsonViewer(input, options);
+
             }
-            var options = {
-                collapsed: false,
-                rootCollapsable: true,
-                withQuotes: false,
-                withLinks: false
-            };
-            $("#jsonBase").jsonViewer(input, options);
         }
         function viewXML(xmlStr) {
             $.debug("viewXML Start");
@@ -102,8 +103,9 @@
             width: 100%;
             border: 0px solid black;
             *background-color: snow;
-            font-size:small;
+            font-size: small;
         }
+
         #xmlBase {
             display: none;
             margin: 0px;
