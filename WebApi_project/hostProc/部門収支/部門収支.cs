@@ -15,7 +15,7 @@ namespace WebApi_project.hostProc
 {
     public class 部門収支 : hostProc
     {
-	public Dictionary <string,object> costList2(string 直間, string 統括, string 部門, string 課, string 部署コード)
+	public Dictionary <string,object> costList(string 直間, string 統括, string 部門, string 課, string 部署コード)
         {
 
 			Dictionary<string, object> Tab = new Dictionary<string, object>();
@@ -46,14 +46,14 @@ namespace WebApi_project.hostProc
 
 			if (o_json.dispMode == "全社")
 			{
-				Tab.Add("全社", costList2(直間: "0,1,2", 統括: "", 部門: "", 課: "", 部署コード: ""));
+				Tab.Add("全社", costList(直間: "0,1,2", 統括: "", 部門: "", 課: "", 部署コード: ""));
 			}
 			else if (o_json.dispMode == "統括")
 			{
 				foreach (string 統括 in secTab.Keys)
 				{
 					group sec = secTab[統括];
-					Tab.Add(統括, costList2(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
+					Tab.Add(統括, costList(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
 					//Debug.Write(統括, secTab[統括].codes);
 				}
 			}
@@ -64,7 +64,7 @@ namespace WebApi_project.hostProc
                 foreach (string 部門 in sec.list.Keys)
                 {
                     var x = sec.list[部門];
-					Tab.Add(部門,  costList2(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
+					Tab.Add(部門,  costList(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
 					//Debug.Write(部門, sec.list[部門].codes);
                 }
             }
@@ -74,7 +74,7 @@ namespace WebApi_project.hostProc
                 foreach (string 課 in sec.list.Keys)
                 {
                     var x = sec.list[課];
-					Tab.Add(課,  costList2(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
+					Tab.Add(課,  costList(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
 					//Debug.Write(課, sec.list[課].codes);
                 }
             }
@@ -108,23 +108,28 @@ namespace WebApi_project.hostProc
 
 
 			Json = "{year:'2020',secMode:'開発',dispMode:'統括'}";
-			int s_yymm = 201810;
-			Dictionary<string, object> Tab = (Dictionary<string, object>) initTab(Json);
+			int s_yymm = 201910;
+			Dictionary<string, object> Tab = initTab(Json);
+
+
 			List<db_account> groupPlan = (List<db_account>)json_groupPlan(Tab);
 			foreach(db_account item in groupPlan)
             {
+				Dictionary<string, object> Tab2 = (Dictionary<string, object>)Tab[item.名前];
+				var mode = item.種別;
+				accountInfo accTab = (accountInfo)Tab2[mode];
 
 				int n = yymmDiff(s_yymm, item.yymm);
-				//Dictionary<string, Dictionary<string, Dictionary<string, Dictionary<string, int[]>>>> Tab = new Dictionary<string, Dictionary<string, Dictionary<string, Dictionary<string, int[]>>>>() ;
-                //Tab[item.名前][item.種別][item.大項目][item.項目][n] = item.amount;
+                //Dictionary<string, Dictionary<string, Dictionary<string, Dictionary<string, int[]>>>> Tab = new Dictionary<string, Dictionary<string, Dictionary<string, Dictionary<string, int[]>>>>() ;
+                accTab.予算._予算[n] = item.amount;
 
-                //var x = 1;
+                var x = 1;
             }
-			groupPlan.ForEach(item =>
-			{
-				//Tab[item.名前]["計画"];
-                //var x = 1;
-			});
+			//groupPlan.ForEach(item =>
+			//{
+			//	//Tab[item.名前]["計画"];
+   //             //var x = 1;
+			//});
 			return (Tab);
 		}
 		public object json_groupPlan(Dictionary<string, object> Tab)
@@ -150,12 +155,19 @@ namespace WebApi_project.hostProc
 			SqlConnection DB = new SqlConnection(DB_connectString);
 			DB.Open();
 			Debug.Write("DB Open", DB_connectString);
-/*
-			foreach (string S_name in Tab.Keys)
+
+
+			foreach (var item in Tab)
 			{
+				string S_name = item.Key;
+				Dictionary<string, object> Tab2 = (Dictionary<string, object>)Tab[S_name];
+				string codes = (string)Tab2["部署コード"];
+				string mode = (string)Tab2["直間"];
+
+
 				StringBuilder sql = new StringBuilder("");
-//				Tab[S_name].部署コード;
-				sql.Append(" SELECT");
+
+                sql.Append(" SELECT");
 				sql.Append("      S_name = @S_name,");
 				sql.Append("      直間   = MAST.直間,");
 				sql.Append("      大項目 = ITEM.大項目,");
@@ -177,12 +189,12 @@ namespace WebApi_project.hostProc
 				sql.Append("      MAST.ACCコード >= 0");
 				sql.Append("      AND");
 				sql.Append("      DATA.yymm BETWEEN @s_yymm  AND @e_yymm");
-                if (Tab[S_name]["部署コード"].Length > 0)
+                if (codes.Length > 0)
                 {
                     sql.Append("    AND");
                     sql.Append("    MAST.部署コード IN(@codes)");
                 }
-                if (Tab[S_name]["直間"] != "")
+                if (mode != "")
                 {
                     sql.Append("    AND");
                     sql.Append("    MAST.直間 IN(@mode)");
@@ -193,18 +205,18 @@ namespace WebApi_project.hostProc
 				sql.Append("      ITEM.項目,");
 				sql.Append("      DATA.種別,");
 				sql.Append("      DATA.yymm");
-				sql.Replace("@S_name", SqlUtil.Parameter("string", S_name));
-				sql.Replace("@s_yymm", SqlUtil.Parameter("number", s_yymm));
-				sql.Replace("@e_yymm", SqlUtil.Parameter("number", e_yymm));
-				sql.Replace("@sDate", SqlUtil.Parameter("string", sDate));
-				sql.Replace("@eDate", SqlUtil.Parameter("string", eDate));
-				sql.Replace("@codes", SqlUtil.Parameter("number", Tab[S_name]["部署コード"]));
-				sql.Replace("@mode", SqlUtil.Parameter("number", Tab[S_name]["直間"]));
+                sql.Replace("@S_name", SqlUtil.Parameter("string", S_name));
+                sql.Replace("@s_yymm", SqlUtil.Parameter("number", s_yymm));
+                sql.Replace("@e_yymm", SqlUtil.Parameter("number", e_yymm));
+                sql.Replace("@sDate", SqlUtil.Parameter("string", sDate));
+                sql.Replace("@eDate", SqlUtil.Parameter("string", eDate));
+                sql.Replace("@codes", SqlUtil.Parameter("number", codes));
+                sql.Replace("@mode", SqlUtil.Parameter("number", mode));
 
-				work = sql.ToString();
+                work = sql.ToString();
 				SQLTab.Add(work);
 			}
-*/
+
 			string SQL = string.Join(" UNION ALL ", SQLTab);
 
             SqlDataReader reader = dbRead(DB, SQL);

@@ -4,7 +4,7 @@ using System.Web;
 namespace WebApi_project.Models
 {
 
-    public class costList
+    public class costListX
     {
         public string 種別 { get; set; }
         public string 直間 { get; set; }
@@ -15,10 +15,10 @@ namespace WebApi_project.Models
         public accountInfo 予測 { get; set; }
         public accountInfo 実績 { get; set; }
         public accountInfo 配賦 { get; set; }
-        public costList(string 直間, string 統括, string 部門, string 課, string 部署コード)
+        public costListX(string 直間, string 統括, string 部門, string 課, string 部署コード)
         {
             string 種別 = (直間 == "2" ? "間接" : "直接");
-            this.部署名 = new secInfo();
+            this.部署名 = new secInfo(統括,  部門,  課);
             this.種別 = 種別;
             this.直間 = 直間;
             this.部署名.統括 = 統括;
