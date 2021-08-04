@@ -121,7 +121,9 @@ namespace WebApi_project.hostProc
 
 				int n = yymmDiff(s_yymm, item.yymm);
                 //Dictionary<string, Dictionary<string, Dictionary<string, Dictionary<string, int[]>>>> Tab = new Dictionary<string, Dictionary<string, Dictionary<string, Dictionary<string, int[]>>>>() ;
-                accTab.予算._予算[n] = item.amount;
+                if( item.大項目 == "売上高" && item.項目 == "売上") accTab.売上高.売上[n] = item.amount;
+
+				//Debug.Write(item.名前,item.種別,item.大項目,item.項目,item.yymm.ToString(),item.amount.ToString());
 
                 var x = 1;
             }
@@ -141,7 +143,7 @@ namespace WebApi_project.hostProc
 
 			string str_year = "2020";
 			List<string> SQLTab = new List<string>();
-			int mCnt = 3;
+			int mCnt = 4;
 			int year = int.Parse(str_year);
 			int s_yymm = ((year - 1) * 100 + 10);
 			int e_yymm = yymmAdd(s_yymm, mCnt-1);
