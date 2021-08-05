@@ -16,63 +16,14 @@ namespace WebApi_project.hostProc
 {
     public class QOSMIO : hostProc
     {
-        Dictionary<string, dynamic> test(Dictionary<string, dynamic> Tab ,string 部門, string 種別, string 大項目, string 項目)
+        void test()
         {
-            Debug.Write("確認");
-            try
-            {
-                if (Tab[部門][種別][大項目].ContainsKey(項目))
-                {
-                    //Debug.Write("ある");
-                    return (Tab);
-                }
-            }catch(Exception ex)
-            {
-                //Debug.Write(ex.Message);
-                if (!Tab.ContainsKey(部門))
-                {
-                    Tab.Add(部門, new Dictionary<string,dynamic>());
-                }
-                if (!Tab[部門].ContainsKey(種別))
-                {
-                    Tab[部門].Add(種別, new Dictionary<string, dynamic>());
-                }
-                if (!Tab[部門][種別].ContainsKey(大項目))
-                {
-                    Tab[部門][種別].Add(大項目, new Dictionary<string, dynamic>());
-                }
-                if (!Tab[部門][種別][大項目].ContainsKey(項目))
-                {
-                    Tab[部門][種別][大項目].Add(項目, new Dictionary<string, int[]>());
-                }
-            }
-            //Debug.Write("設定");
-            Tab[部門][種別][大項目][項目] = new int[12];
-            var x = 1;
-            return (Tab);
+
         }
         public object json_projectTest(String Json)
         {
+            test();
 
-            Dictionary<string, dynamic> Tab = new Dictionary<string, dynamic>();
-
-            Debug.Write("AAA");
-            Tab = test(Tab, "部門", "種別", "大項目", "項目");
-            Debug.Write("BBB");
-            Tab = test(Tab, "部門1", "種別1", "大項目1", "項目1");
-            Debug.Write("CCC");
-            Tab = test(Tab, "部門1", "種別1", "大項目1", "項目1");
-            Debug.Write("DD");
-            return (Tab);
-//            Tab["部門"]["実績"]["大項目"]["項目"]["yymm"][0] = 1234;
-
-
-
-            List<string> x = new List<string>();
-            x.Add("ABC");
-            x.Add("XYZ");
-            x.Add("123");
-            var z = string.Join(":", x);
 
             string classPath = this.GetType().FullName;                                         //クラスパスの取得
             string className = this.GetType().Name;                                             //クラス名の取得
@@ -81,11 +32,11 @@ namespace WebApi_project.hostProc
 
             string mName = Environment.MachineName;
 
-            //Dictionary<string, string> Tab = new Dictionary<string, string>();
-            //Tab.Add("mName", mName);
-            //Tab.Add("className", className);
-            //Tab.Add("methodName", methodName);
-            //Tab.Add("DB_Conn", DB_connectString);
+            Dictionary<string, string> Tab = new Dictionary<string, string>();
+            Tab.Add("mName", mName);
+            Tab.Add("className", className);
+            Tab.Add("methodName", methodName);
+            Tab.Add("DB_Conn", DB_connectString);
 
 
             //            dbFunc_A();
@@ -342,7 +293,69 @@ namespace WebApi_project.hostProc
 
             return (xmlDoc);
         }
+        /*
+        var adjustDayCnt = 7
+        var OK_DAY = dayChk(new Date(),adjustDayCnt)
 
+        function dayChk(d,targetCnt)
+            {
+           var DB = Server.CreateObject("ADODB.Connection")
+           var RS = Server.CreateObject("ADODB.Recordset")
+           DB.Open( Session("ODBC") )
+           DB.DefaultDatabase = "kansaDB"
+
+           var sDate,eDate,curDate,n
+           var value
+
+           sDate = JsDateSerial(d.getFullYear(), d.getMonth()+1, 1)
+           eDate = JsDateAdd("m", 1, sDate)
+           eDate = JsDateAdd("d", -1, eDate)
+
+        //------------------------------------------------------------------
+           curDate = sDate 
+           var n
+           var dBuff = new Array()
+           do{
+              n = dBuff.length
+              dBuff[n] = new Object;
+              dBuff[n].日付 = JsFormatDateTime(curDate,2)
+              dBuff[n].曜日 = JsWeekday(curDate) - 1
+              dBuff[n].offDay = (dBuff[n].曜日 == 0 || dBuff[n].曜日 == 6 ? 1 : 0) 
+              curDate = JsDateAdd("d", 1, curDate)
+              }while(JsDay(curDate) != 1)
+
+        //========================================================
+        // 「土日以外で休み」及び「土日で出勤」する日のデータを更新する
+
+           var SQL,date,offDay,yy,mm,dd
+           SQL  = " SELECT *"
+           SQL += " FROM EMG.dbo.勤務出勤日"
+           SQL += " WHERE 日付 BETWEEN '" + JsFormatDateTime(sDate,2) + "' AND '" + JsFormatDateTime(eDate,2) + "'"
+           SQL += "   AND"
+           SQL += "   memberID=0"
+           RS = DB.Execute(SQL)
+           while( !RS.EOF ){
+              date   = RS.Fields("日付").Value
+              offDay = RS.Fields("offDay").Value
+              n = JsDateDiff("d",JsFormatDateTime(sDate,2),JsFormatDateTime(date,2))
+              dBuff[n].offDay = (offDay == true ? 1 : 0)
+              RS.MoveNext()
+              }
+           RS.Close()
+           DB.Close()
+           var Cnt = 0
+           for( n in dBuff ){
+              if( dBuff[n].offDay == 0 ) Cnt++
+              if( Cnt > targetCnt ) break;
+              }
+           var selDate = dBuff[n].日付
+           var d = new Date(selDate)
+           var OK_DAY = d.getDate()
+           return(OK_DAY)
+           }
+
+
+         */
 
         class projectPara
         {

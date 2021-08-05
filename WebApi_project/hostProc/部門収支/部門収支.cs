@@ -16,132 +16,10 @@ namespace WebApi_project.hostProc
     public class 部門収支 : hostProc
 
     {
-		Dictionary<string, dynamic> checkArray(Dictionary<string, dynamic> Tab, string 部門, string 種別, string 大項目, string 項目)
-		{
-			Debug.Write("確認");
-			try
-			{
-				if (Tab[部門][種別][大項目].ContainsKey(項目))
-				{
-					//Debug.Write("ある");
-					return (Tab);
-				}
-			}
-			catch (Exception ex)
-			{
-				//Debug.Write(ex.Message);
-				if (!Tab.ContainsKey(部門))
-				{
-					Tab.Add(部門, new Dictionary<string, dynamic>());
-				}
-				if (!Tab[部門].ContainsKey(種別))
-				{
-					Tab[部門].Add(種別, new Dictionary<string, dynamic>());
-				}
-				if (!Tab[部門][種別].ContainsKey(大項目))
-				{
-					Tab[部門][種別].Add(大項目, new Dictionary<string, dynamic>());
-				}
-				if (!Tab[部門][種別][大項目].ContainsKey(項目))
-				{
-					Tab[部門][種別][大項目].Add(項目, new Dictionary<string, int[]>());
-				}
-			}
-			//Debug.Write("設定");
-			Tab[部門][種別][大項目][項目] = new int[12];
-			var x = 1;
-			return (Tab);
-		}
-		public Dictionary <string,object> costList(string 直間, string 統括, string 部門, string 課, string 部署コード)
-        {
-
-			Dictionary<string, object> Tab = new Dictionary<string, object>();
-            string 種別 = (直間 == "2" ? "間接" : "直接");
-			Tab.Add("種別", 種別);
-			Tab.Add("直間", 直間);
-			Tab.Add("部署名", new secInfo( 統括,  部門,  課));
-			Tab.Add("部署コード", 部署コード);
-			Tab.Add("合計", new Dictionary<string, dynamic>());
-			Tab.Add("計画", new Dictionary<string, dynamic>());
-			Tab.Add("予測", new Dictionary<string, dynamic>());
-			Tab.Add("実績", new Dictionary<string, dynamic>());
-			Tab.Add("配賦", new Dictionary<string, dynamic>());
-
-			return (Tab);
-        }
-		Dictionary<string, dynamic> initTab(String Json)
-        {
-			Dictionary<string, dynamic> Tab = new Dictionary<string, dynamic>();
-			Dictionary<string, object> Info = new Dictionary<string, object>();
-			Dictionary<string, object> Data = new Dictionary<string, object>();
-			jsonProc jProc = new jsonProc();
-
-			//Json = "{year:'2020',secMode:'開発',dispMode:'グループ'}";
-			var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
-
-			Dictionary<string, group> secTab = jProc.json_部門リスト(Json);
-
-			if (o_json.dispMode == "全社")
-			{
-				Tab.Add("全社", costList(直間: "0,1,2", 統括: "", 部門: "", 課: "", 部署コード: ""));
-			}
-			else if (o_json.dispMode == "統括")
-			{
-				foreach (string 統括 in secTab.Keys)
-				{
-					group sec = secTab[統括];
-					Tab.Add(統括, costList(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
-					//Debug.Write(統括, secTab[統括].codes);
-				}
-			}
-			else if (o_json.dispMode == "部門")
-			{
-                group sec = secTab["開発本部"];
-
-                foreach (string 部門 in sec.list.Keys)
-                {
-                    var x = sec.list[部門];
-					Tab.Add(部門,  costList(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
-					//Debug.Write(部門, sec.list[部門].codes);
-                }
-            }
-			else if (o_json.dispMode == "グループ")
-			{
-                group sec = secTab["開発本部"].list["第1開発部"];
-                foreach (string 課 in sec.list.Keys)
-                {
-                    var x = sec.list[課];
-					Tab.Add(課,  costList(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
-					//Debug.Write(課, sec.list[課].codes);
-                }
-            }
-			return (Tab);
-		}
-		int yymmAdd(int yymm, int mCnt)
-        {
-			int yy = yymm / 100;
-			int mm = yymm % 100;
-
-			int ym = (yy * 12) + mm;
-			ym += mCnt;
-			yy = ym / 12;
-			mm = ym % 12;
-			if (mm == 0) { yy--; mm = 12; }
-			return ((yy * 100) + mm);
-		}
-		int yymmDiff(int base_yymm, int yymm)
-        {
-			int b_yy = base_yymm / 100;
-			int b_mm = base_yymm % 100;
-			int yy = yymm / 100;
-			int mm = yymm % 100;
-
-			mm += (yy - b_yy) * 12;
-			int n = (mm - b_mm);
-			return (n);
-        }
 		public object json_部門収支_XML(String Json)
 		{
+
+			Dictionary<string, dynamic> Tab = new Dictionary<string, dynamic>();
 
 
 			Json = "{year:'2021', mCnt:4, secMode:'開発',dispMode:'統括'}";
@@ -151,12 +29,13 @@ namespace WebApi_project.hostProc
             int year = o_json.year;
             int s_yymm = ((year - 1) * 100 + 10);
             int e_yymm = yymmAdd(s_yymm, mCnt - 1);
+			o_json.s_yymm = s_yymm;
+
+			Tab.Add("Info", o_json);
+			Tab.Add("data", initTab(Json));
 
 
-            Dictionary<string, dynamic> Tab = initTab(Json);
-
-
-            List<db_account> groupPlan = (List<db_account>)json_groupPlan(Json,Tab);
+			List<db_account> groupPlan = (List<db_account>)json_groupPlan(Json,Tab["data"]);
 
             return (Tab);
 		}
@@ -267,17 +146,17 @@ namespace WebApi_project.hostProc
 				checkArray(Tab, 名前, 種別,大項目,項目);
 				Tab[名前][種別][大項目][項目][n] += amount;
 
-                //db_account data = new db_account()
-                //{
-                //    名前 = (string)reader["S_name"].ToString(),
-                //    大項目 = (string)reader["大項目"].ToString(),
-                //    項目 = (string)reader["項目"].ToString(),
-                //    種別 = (string)reader["種別"].ToString(),
-                //    直間 = (byte)reader["直間"],
-                //    yymm = (int)reader["yymm"],
-                //    amount = (int)reader["amount"]
-                //};
-                //dataTab.Add(data);
+                db_account data = new db_account()
+                {
+                    名前 = (string)reader["S_name"].ToString(),
+                    大項目 = (string)reader["大項目"].ToString(),
+                    項目 = (string)reader["項目"].ToString(),
+                    種別 = (string)reader["種別"].ToString(),
+                    直間 = (byte)reader["直間"],
+                    yymm = (int)reader["yymm"],
+                    amount = (int)reader["amount"]
+                };
+                dataTab.Add(data);
             }
 			Debug.Write(Cnt.ToString());
 			Debug.Write("reader Close");
@@ -325,6 +204,130 @@ namespace WebApi_project.hostProc
 
             間接部門予算(Tab, mCnt)
         */
+		Dictionary<string, dynamic> checkArray(Dictionary<string, dynamic> Tab, string 部門, string 種別, string 大項目, string 項目)
+		{
+			Debug.Write("確認");
+			try
+			{
+				if (Tab[部門][種別][大項目].ContainsKey(項目))
+				{
+					//Debug.Write("ある");
+					return (Tab);
+				}
+			}
+			catch (Exception ex)
+			{
+				//Debug.Write(ex.Message);
+				if (!Tab.ContainsKey(部門))
+				{
+					Tab.Add(部門, new Dictionary<string, dynamic>());
+				}
+				if (!Tab[部門].ContainsKey(種別))
+				{
+					Tab[部門].Add(種別, new Dictionary<string, dynamic>());
+				}
+				if (!Tab[部門][種別].ContainsKey(大項目))
+				{
+					Tab[部門][種別].Add(大項目, new Dictionary<string, dynamic>());
+				}
+				if (!Tab[部門][種別][大項目].ContainsKey(項目))
+				{
+					Tab[部門][種別][大項目].Add(項目, new Dictionary<string, int[]>());
+				}
+			}
+			//Debug.Write("設定");
+			Tab[部門][種別][大項目][項目] = new int[12];
+			var x = 1;
+			return (Tab);
+		}
+		public Dictionary<string, object> costList(string 直間, string 統括, string 部門, string 課, string 部署コード)
+		{
+
+			Dictionary<string, object> Tab = new Dictionary<string, object>();
+			string 種別 = (直間 == "2" ? "間接" : "直接");
+			Tab.Add("種別", 種別);
+			Tab.Add("直間", 直間);
+			Tab.Add("部署名", new secInfo(統括, 部門, 課));
+			Tab.Add("部署コード", 部署コード);
+			Tab.Add("合計", new Dictionary<string, dynamic>());
+			Tab.Add("計画", new Dictionary<string, dynamic>());
+			Tab.Add("予測", new Dictionary<string, dynamic>());
+			Tab.Add("実績", new Dictionary<string, dynamic>());
+			Tab.Add("配賦", new Dictionary<string, dynamic>());
+
+			return (Tab);
+		}
+		Dictionary<string, dynamic> initTab(String Json)
+		{
+			Dictionary<string, dynamic> Tab = new Dictionary<string, dynamic>();
+			Dictionary<string, object> Info = new Dictionary<string, object>();
+			Dictionary<string, object> Data = new Dictionary<string, object>();
+			jsonProc jProc = new jsonProc();
+
+			//Json = "{year:'2020',secMode:'開発',dispMode:'グループ'}";
+			var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
+
+			Dictionary<string, group> secTab = jProc.json_部門リスト(Json);
+
+			if (o_json.dispMode == "全社")
+			{
+				Tab.Add("全社", costList(直間: "0,1,2", 統括: "", 部門: "", 課: "", 部署コード: ""));
+			}
+			else if (o_json.dispMode == "統括")
+			{
+				foreach (string 統括 in secTab.Keys)
+				{
+					group sec = secTab[統括];
+					Tab.Add(統括, costList(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
+					//Debug.Write(統括, secTab[統括].codes);
+				}
+			}
+			else if (o_json.dispMode == "部門")
+			{
+				group sec = secTab["開発本部"];
+
+				foreach (string 部門 in sec.list.Keys)
+				{
+					var x = sec.list[部門];
+					Tab.Add(部門, costList(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
+					//Debug.Write(部門, sec.list[部門].codes);
+				}
+			}
+			else if (o_json.dispMode == "グループ")
+			{
+				group sec = secTab["開発本部"].list["第1開発部"];
+				foreach (string 課 in sec.list.Keys)
+				{
+					var x = sec.list[課];
+					Tab.Add(課, costList(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
+					//Debug.Write(課, sec.list[課].codes);
+				}
+			}
+			return (Tab);
+		}
+		int yymmAdd(int yymm, int mCnt)
+		{
+			int yy = yymm / 100;
+			int mm = yymm % 100;
+
+			int ym = (yy * 12) + mm;
+			ym += mCnt;
+			yy = ym / 12;
+			mm = ym % 12;
+			if (mm == 0) { yy--; mm = 12; }
+			return ((yy * 100) + mm);
+		}
+		int yymmDiff(int base_yymm, int yymm)
+		{
+			int b_yy = base_yymm / 100;
+			int b_mm = base_yymm % 100;
+			int yy = yymm / 100;
+			int mm = yymm % 100;
+
+			mm += (yy - b_yy) * 12;
+			int n = (mm - b_mm);
+			return (n);
+		}
 		class db_account
         {
             public string 名前 { get; set; }
@@ -338,27 +341,3 @@ namespace WebApi_project.hostProc
 	}
 }
 
-//Debug.Write("=======");
-//foreach (string 統括 in Tab.Keys)
-//{
-//    var x = Tab[統括];
-//    costList cost = new costList(直間: x.直間, 統括: x.統括, 部門: x.部門, 課: x.課, 部署コード: x.codes);
-//    Debug.Write(統括, Tab[統括].codes);
-//}
-//Debug.Write("=======");
-//group Tab1 = Tab["開発本部"];
-
-//foreach (string 部門 in Tab1.list.Keys)
-//{
-//    var x = Tab1.list[部門];
-//    costList cost = new costList(直間: x.直間, 統括: x.統括, 部門: x.部門, 課: x.課, 部署コード: x.codes);
-//    Debug.Write(部門, Tab1.list[部門].codes);
-//}
-//Debug.Write("=======");
-//group Tab2 = Tab["開発本部"].list["第1開発部"];
-//foreach (string 課 in Tab2.list.Keys)
-//{
-//    var x = Tab2.list[課];
-//    costList cost = new costList(直間: x.直間, 統括: x.統括, 部門: x.部門, 課: x.課, 部署コード: x.codes);
-//    Debug.Write(課, Tab2.list[課].codes);
-//}

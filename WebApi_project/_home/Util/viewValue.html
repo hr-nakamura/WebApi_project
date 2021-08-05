@@ -20,7 +20,7 @@
             var viewStr = $.storage("viewStr");
             if ($.isJSON(viewStr)) {
                 $("#jsonBase").show();
-                $("body").css("overflow-y", "hidden");
+                $("body").css("overflow-y", "visible");
                 viewJson(viewStr)
             }
             else if ($.isXMLDoc($.parseXML(viewStr))) {
@@ -38,6 +38,7 @@
         function viewJson(str) {
             if ($.Browser.name == "msie") {
                 $("#jsonBase").JSONView(str, { collapsed: true });
+                //$("#jsonBase_text").text(str);
             }
             else {
                 try {
@@ -80,7 +81,7 @@
         }
         $(function () {
             $(window).on("resize", function () {
-                $("#jsonBase,#jsonBase,#xmlBase").css("height", (window.parent.innerHeight - 70) + "px");
+                $("#jsonBase_text,#jsonBase,#xmlBase").css("height", (window.parent.innerHeight - 70) + "px");
                 var a = 1;
             });
         });
