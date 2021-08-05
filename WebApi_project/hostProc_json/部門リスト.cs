@@ -15,9 +15,11 @@ namespace WebApi_project.hostProc
 {
     public class para_部門指定
     {
-        public string year { get; set; }
         public string secMode { get; set; }
         public string dispMode { get; set; }
+        public int year { get; set; }
+        public int mCnt { get; set; }
+
     }
     public partial class jsonProc
     {
@@ -94,7 +96,7 @@ namespace WebApi_project.hostProc
             Dictionary<string, object> Tab1 = new Dictionary<string, object>();
             string secMode = o_json.secMode;          // 開発、間接、全社
             string dispMode = o_json.dispMode;          // 統括、
-            int year = int.Parse(o_json.year);
+            int year = o_json.year;
             string s_yymm = ((year -1)*100 + 10).ToString();
             string e_yymm = ((year * 100) + 9).ToString();
             string secNum = "";

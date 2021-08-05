@@ -14,8 +14,45 @@ using DebugHost;
 namespace WebApi_project.hostProc
 {
     public class 部門収支 : hostProc
+
     {
-	public Dictionary <string,object> costList(string 直間, string 統括, string 部門, string 課, string 部署コード)
+		Dictionary<string, dynamic> checkArray(Dictionary<string, dynamic> Tab, string 部門, string 種別, string 大項目, string 項目)
+		{
+			Debug.Write("確認");
+			try
+			{
+				if (Tab[部門][種別][大項目].ContainsKey(項目))
+				{
+					//Debug.Write("ある");
+					return (Tab);
+				}
+			}
+			catch (Exception ex)
+			{
+				//Debug.Write(ex.Message);
+				if (!Tab.ContainsKey(部門))
+				{
+					Tab.Add(部門, new Dictionary<string, dynamic>());
+				}
+				if (!Tab[部門].ContainsKey(種別))
+				{
+					Tab[部門].Add(種別, new Dictionary<string, dynamic>());
+				}
+				if (!Tab[部門][種別].ContainsKey(大項目))
+				{
+					Tab[部門][種別].Add(大項目, new Dictionary<string, dynamic>());
+				}
+				if (!Tab[部門][種別][大項目].ContainsKey(項目))
+				{
+					Tab[部門][種別][大項目].Add(項目, new Dictionary<string, int[]>());
+				}
+			}
+			//Debug.Write("設定");
+			Tab[部門][種別][大項目][項目] = new int[12];
+			var x = 1;
+			return (Tab);
+		}
+		public Dictionary <string,object> costList(string 直間, string 統括, string 部門, string 課, string 部署コード)
         {
 
 			Dictionary<string, object> Tab = new Dictionary<string, object>();
@@ -24,17 +61,17 @@ namespace WebApi_project.hostProc
 			Tab.Add("直間", 直間);
 			Tab.Add("部署名", new secInfo( 統括,  部門,  課));
 			Tab.Add("部署コード", 部署コード);
-			Tab.Add("合計", new accountInfo());
-			Tab.Add("計画", new accountInfo());
-			Tab.Add("予測", new accountInfo());
-			Tab.Add("実績", new accountInfo());
-			Tab.Add("配賦", new accountInfo());
+			Tab.Add("合計", new Dictionary<string, dynamic>());
+			Tab.Add("計画", new Dictionary<string, dynamic>());
+			Tab.Add("予測", new Dictionary<string, dynamic>());
+			Tab.Add("実績", new Dictionary<string, dynamic>());
+			Tab.Add("配賦", new Dictionary<string, dynamic>());
 
 			return (Tab);
         }
-		Dictionary<string, object> initTab(String Json)
+		Dictionary<string, dynamic> initTab(String Json)
         {
-			Dictionary<string, object> Tab = new Dictionary<string, object>();
+			Dictionary<string, dynamic> Tab = new Dictionary<string, dynamic>();
 			Dictionary<string, object> Info = new Dictionary<string, object>();
 			Dictionary<string, object> Data = new Dictionary<string, object>();
 			jsonProc jProc = new jsonProc();
@@ -107,44 +144,32 @@ namespace WebApi_project.hostProc
 		{
 
 
-			Json = "{year:'2020',secMode:'開発',dispMode:'統括'}";
-			int s_yymm = 201910;
-			Dictionary<string, object> Tab = initTab(Json);
+			Json = "{year:'2021', mCnt:4, secMode:'開発',dispMode:'統括'}";
+            var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
+
+            int mCnt = o_json.mCnt;
+            int year = o_json.year;
+            int s_yymm = ((year - 1) * 100 + 10);
+            int e_yymm = yymmAdd(s_yymm, mCnt - 1);
 
 
-			List<db_account> groupPlan = (List<db_account>)json_groupPlan(Tab);
-			foreach(db_account item in groupPlan)
-            {
-				Dictionary<string, object> Tab2 = (Dictionary<string, object>)Tab[item.名前];
-				var mode = item.種別;
-				accountInfo accTab = (accountInfo)Tab2[mode];
+            Dictionary<string, dynamic> Tab = initTab(Json);
 
-				int n = yymmDiff(s_yymm, item.yymm);
-                //Dictionary<string, Dictionary<string, Dictionary<string, Dictionary<string, int[]>>>> Tab = new Dictionary<string, Dictionary<string, Dictionary<string, Dictionary<string, int[]>>>>() ;
-                if( item.大項目 == "売上高" && item.項目 == "売上") accTab.売上高.売上[n] = item.amount;
 
-				//Debug.Write(item.名前,item.種別,item.大項目,item.項目,item.yymm.ToString(),item.amount.ToString());
+            List<db_account> groupPlan = (List<db_account>)json_groupPlan(Json,Tab);
 
-                var x = 1;
-            }
-			//groupPlan.ForEach(item =>
-			//{
-			//	//Tab[item.名前]["計画"];
-   //             //var x = 1;
-			//});
-			return (Tab);
+            return (Tab);
 		}
-		public object json_groupPlan(Dictionary<string, object> Tab)
+		public object json_groupPlan(string Json, Dictionary<string, dynamic> Tab)
 		{
 			List<db_account> dataTab = new List<db_account>();
 
-			//Json = "{year:'2020',secMode:'開発',dispMode:'統括'}";
-			//var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
+            //Json = "{year:'2020',secMode:'開発',dispMode:'統括'}";
+            var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
 
-			string str_year = "2020";
 			List<string> SQLTab = new List<string>();
-			int mCnt = 4;
-			int year = int.Parse(str_year);
+			int mCnt = 12;					// 予測・計画は12ヶ月分取得
+			int year = o_json.year;
 			int s_yymm = ((year - 1) * 100 + 10);
 			int e_yymm = yymmAdd(s_yymm, mCnt-1);
 			string s_sDate = String.Concat( (s_yymm / 100) , "/" , (s_yymm % 100) , "/01");
@@ -153,8 +178,8 @@ namespace WebApi_project.hostProc
 			DateTime eDate = sDate.AddMonths(mCnt).AddDays(-1);
 
 			string work = "";
-			//Dictionary<string, costList> Tab = initTab(Json);
-			SqlConnection DB = new SqlConnection(DB_connectString);
+            //Dictionary<string, dynamic> Tab = initTab(Json);
+            SqlConnection DB = new SqlConnection(DB_connectString);
 			DB.Open();
 			Debug.Write("DB Open", DB_connectString);
 
@@ -223,23 +248,37 @@ namespace WebApi_project.hostProc
 
             SqlDataReader reader = dbRead(DB, SQL);
             Debug.Write("reader Start");
-
+			string 名前, 大項目, 項目, 種別;
+			int yymm,n,amount;
 
 			int Cnt = 0;
             while (reader.Read())
             {
-				db_account data = new db_account()
-				{
-					名前 = (string)reader["S_name"].ToString(),
-					大項目 = (string)reader["大項目"].ToString(),
-					項目 = (string)reader["項目"].ToString(),
-                    種別 = (string)reader["種別"].ToString(),
-                    直間 = (byte)reader["直間"],
-                    yymm = (int)reader["yymm"],
-                    amount = (int)reader["amount"]
-                };
-				dataTab.Add(data);
-			}
+				名前 = (string)reader["S_name"].ToString();
+				大項目 = (string)reader["大項目"].ToString();
+				項目 = (string)reader["項目"].ToString();
+				種別 = (string)reader["種別"].ToString();
+				yymm = (int)reader["yymm"];
+				amount = (int)reader["amount"];
+
+
+                n = yymmDiff(s_yymm, yymm);
+
+				checkArray(Tab, 名前, 種別,大項目,項目);
+				Tab[名前][種別][大項目][項目][n] += amount;
+
+                //db_account data = new db_account()
+                //{
+                //    名前 = (string)reader["S_name"].ToString(),
+                //    大項目 = (string)reader["大項目"].ToString(),
+                //    項目 = (string)reader["項目"].ToString(),
+                //    種別 = (string)reader["種別"].ToString(),
+                //    直間 = (byte)reader["直間"],
+                //    yymm = (int)reader["yymm"],
+                //    amount = (int)reader["amount"]
+                //};
+                //dataTab.Add(data);
+            }
 			Debug.Write(Cnt.ToString());
 			Debug.Write("reader Close");
 			reader.Close();
