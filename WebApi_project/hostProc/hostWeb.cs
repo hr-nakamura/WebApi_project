@@ -170,6 +170,7 @@ namespace WebApi_project.hostProc
             }
             catch (Exception ex)
             {
+                Debug.Write(ex.Message);
                 returnBuff = null;
             }
             finally

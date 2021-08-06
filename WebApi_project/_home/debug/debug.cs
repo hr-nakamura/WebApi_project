@@ -76,6 +76,10 @@ namespace DebugHost
             }
         }
 
+        public static void noWrite(params string[] args)
+        {
+        }
+
         public static void Write(params string[] args)
         {
             try
