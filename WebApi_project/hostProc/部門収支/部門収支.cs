@@ -398,7 +398,7 @@ namespace WebApi_project.hostProc
 
 			string S_name, secName, codes, mode;
 			int yymm, n,  直間;
-			double amount;
+			decimal amount;
 			List<string> SQLTab = new List<string>();
 			foreach (var item in Tab)
 			{
@@ -464,7 +464,7 @@ namespace WebApi_project.hostProc
 				S_name = (string)reader["S_name"].ToString();
 				直間 = (byte)reader["直間"];
 				yymm = (int)reader["yymm"];
-				amount = (double)reader["amount"];
+				amount = (decimal)reader["amount"];
 
 				n = yymmDiff(s_yymm, yymm);
 
