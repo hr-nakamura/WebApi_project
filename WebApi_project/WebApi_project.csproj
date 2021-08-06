@@ -89,7 +89,6 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="hostProc\QOSMIO\部門リストデータ.json" />
-    <Content Include="hostProc_json\部門収支.json" />
     <Content Include="hostProc\QOSMIO\A_部門.json" />
     <Content Include="hostProc\QOSMIO\A_課.json" />
     <Content Include="hostProc\QOSMIO\B_EMG.json" />

@@ -22,7 +22,7 @@ namespace WebApi_project.hostProc
 			Dictionary<string, dynamic> Tab = new Dictionary<string, dynamic>();
 
 
-			Json = "{year:'2021', mCnt:4, secMode:'開発',dispMode:'統括'}";
+			Json = "{year:'2021', mCnt:4, fixLevel:70, secMode:'開発',dispMode:'統括'}";
             var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
 
             int mCnt = o_json.mCnt;
@@ -35,7 +35,11 @@ namespace WebApi_project.hostProc
 			Tab.Add("data", initTab(Json));
 
 
-			List<db_account> groupPlan = (List<db_account>)json_groupPlan(Json,Tab["data"]);
+            //json_groupPlan(Json, Tab["data"]);
+            //json_uriageYosoku(Json, Tab["data"]);
+            json_uriageActual(Json, Tab["data"]);
+
+
 
             return (Tab);
 		}
@@ -45,8 +49,8 @@ namespace WebApi_project.hostProc
 
 			//Json = "{year:'2020',secMode:'開発',dispMode:'統括'}";
 			var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
+			string dispMode = o_json.dispMode;
 
-			List<string> SQLTab = new List<string>();
 			int mCnt = 12;                  // 予測・計画は12ヶ月分取得
 			int year = o_json.year;
 			int s_yymm = ((year - 1) * 100 + 10);
@@ -57,19 +61,18 @@ namespace WebApi_project.hostProc
 			DateTime eDate = sDate.AddMonths(mCnt).AddDays(-1);
 
 			string work = "";
-			//Dictionary<string, dynamic> Tab = initTab(Json);
 			SqlConnection DB = new SqlConnection(DB_connectString);
 			DB.Open();
 			Debug.Write("DB Open", DB_connectString);
+			string 大項目, 項目, 種別, S_name, secName;
+			int yymm, n, amount, 直間;
 
-
+			List<string> SQLTab = new List<string>();
 			foreach (var item in Tab)
 			{
-				string S_name = item.Key;
-				Dictionary<string, object> Tab2 = (Dictionary<string, object>)Tab[S_name];
-				string codes = (string)Tab2["部署コード"];
-				string mode = (string)Tab2["直間"];
-
+				S_name = item.Key;
+				string codes = Tab[S_name]["部署コード"];
+				string mode = Tab[S_name]["直間"];
 
 				StringBuilder sql = new StringBuilder("");
 
@@ -127,38 +130,73 @@ namespace WebApi_project.hostProc
 
 			SqlDataReader reader = dbRead(DB, SQL);
 			Debug.Write("reader Start");
-			string 名前, 大項目, 項目, 種別;
-			int yymm, n, amount;
 
-			int Cnt = 0;
 			while (reader.Read())
 			{
-				名前 = (string)reader["S_name"].ToString();
+				S_name = (string)reader["S_name"].ToString();
 				大項目 = (string)reader["大項目"].ToString();
 				項目 = (string)reader["項目"].ToString();
 				種別 = (string)reader["種別"].ToString();
+				直間 = (byte)reader["直間"];
 				yymm = (int)reader["yymm"];
 				amount = (int)reader["amount"];
 
-
 				n = yymmDiff(s_yymm, yymm);
 
-				checkArray(Tab, 名前, 種別, 大項目, 項目);
-				Tab[名前][種別][大項目][項目][n] += amount;
-
-				db_account data = new db_account()
+				if (S_name == null)
 				{
-					名前 = (string)reader["S_name"].ToString(),
-					大項目 = (string)reader["大項目"].ToString(),
-					項目 = (string)reader["項目"].ToString(),
-					種別 = (string)reader["種別"].ToString(),
-					直間 = (byte)reader["直間"],
-					yymm = (int)reader["yymm"],
-					amount = (int)reader["amount"]
-				};
-				dataTab.Add(data);
+					secName = "不明";
+				}
+				else if (dispMode == "全社")
+				{
+					secName = "全社";
+				}
+				else if (dispMode == "本社")
+				{
+					secName = (直間 == 2 ? "本社" : "直接");
+				}
+				else
+				{
+					secName = S_name;
+				}
+
+                checkArray(Tab, secName, 種別, 大項目, 項目);
+
+                if (大項目 == "売上付替" && 項目 == "支出") amount = -amount;
+				if (大項目 == "費用付替" && 項目 == "支出") amount = -amount;
+				if (大項目 == "売上原価" && 項目 == "期末棚卸") amount = -amount;
+
+				// 売上予測は別のところで集計
+				if (!(種別 == "予測" && 項目 == "売上"))
+				{
+					if (大項目 == "要員数")
+					{
+						Tab[secName][種別][大項目][項目][n] += amount;
+					}
+					else if (大項目 == "売上原価" && 種別 == "予測" && (項目 == "期末棚卸" || 項目 == "期首棚卸"))
+					{
+						Tab[secName]["予測"][大項目][項目][n] += amount * 1000;
+						Tab[secName]["実績"][大項目][項目][n] += amount * 1000;
+					}
+					else
+					{
+						Tab[secName][種別][大項目][項目][n] += amount * 1000;
+					}
+				}
+
+
+				//db_account data = new db_account()
+				//{
+				//	名前 = (string)reader["S_name"].ToString(),
+				//	大項目 = (string)reader["大項目"].ToString(),
+				//	項目 = (string)reader["項目"].ToString(),
+				//	種別 = (string)reader["種別"].ToString(),
+				//	直間 = (byte)reader["直間"],
+				//	yymm = (int)reader["yymm"],
+				//	amount = (int)reader["amount"]
+				//};
+				//dataTab.Add(data);
 			}
-			Debug.Write(Cnt.ToString());
 			Debug.Write("reader Close");
 			reader.Close();
 
@@ -177,7 +215,10 @@ namespace WebApi_project.hostProc
 			//Json = "{year:'2020',secMode:'開発',dispMode:'統括'}";
 			var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
 
-			List<string> SQLTab = new List<string>();
+			var fixLevel = o_json.fixLevel;
+
+			string dispMode = o_json.dispMode;
+
 			int mCnt = 12;                  // 予測・計画は12ヶ月分取得
 			int year = o_json.year;
 			int s_yymm = ((year - 1) * 100 + 10);
@@ -193,22 +234,21 @@ namespace WebApi_project.hostProc
 			DB.Open();
 			Debug.Write("DB Open", DB_connectString);
 
+			string S_name, secName, codes, mode;
+			int yymm, n, amount, level, 直間;
 
+			List<string> SQLTab = new List<string>();
 			foreach (var item in Tab)
 			{
-				string S_name = item.Key;
-				Dictionary<string, object> Tab2 = (Dictionary<string, object>)Tab[S_name];
-				string codes = (string)Tab2["部署コード"];
-				string mode = (string)Tab2["直間"];
-
+				S_name = item.Key;
+				codes = Tab[S_name]["部署コード"];
+				mode = Tab[S_name]["直間"];
 
 				StringBuilder sql = new StringBuilder("");
 
 				sql.Append(" SELECT");
-
 				sql.Append("      S_name = @S_name,");
 				sql.Append("      直間   = MAST.直間,");
-
 				sql.Append("	  level  = PNUM.fix_level,");
 				sql.Append("	  yymm   = DATA.yymm,");
 				sql.Append("	  amount = sum(DATA.sales) * 1000");
@@ -262,38 +302,204 @@ namespace WebApi_project.hostProc
 
 			SqlDataReader reader = dbRead(DB, SQL);
 			Debug.Write("reader Start");
-			string 名前, 大項目, 項目, 種別;
-			int yymm, n, amount;
 
-			int Cnt = 0;
 			while (reader.Read())
 			{
-				名前 = (string)reader["S_name"].ToString();
-				大項目 = (string)reader["大項目"].ToString();
-				項目 = (string)reader["項目"].ToString();
-				種別 = (string)reader["種別"].ToString();
+				S_name = (string)reader["S_name"].ToString();
+				直間 = (byte)reader["直間"];
+				level = (int)reader["level"];
 				yymm = (int)reader["yymm"];
 				amount = (int)reader["amount"];
 
+				n = yymmDiff(s_yymm, yymm);
+
+				if (S_name == null)
+				{
+					secName = "不明";
+				}
+				else if (dispMode == "全社")
+				{
+					secName = "全社";
+				}
+				else if (dispMode == "本社")
+				{
+					secName = (直間 == 2 ? "本社" : "直接");
+				}
+				else
+				{
+					secName = S_name;
+				}
+
+				checkArray(Tab, secName, "予測", "売上高", "売上");
+				checkArray(Tab, secName, "予測", "売上予測", "確度70");
+				checkArray(Tab, secName, "予測", "売上予測", "確度50");
+				checkArray(Tab, secName, "予測", "売上予測", "確度30");
+				checkArray(Tab, secName, "予測", "売上予測", "確度10");
+
+				if (level >= 70) Tab[secName]["予測"]["売上予測"]["確度70"][n] += amount;
+				if (level >= 50) Tab[secName]["予測"]["売上予測"]["確度50"][n] += amount;
+				if (level >= 30) Tab[secName]["予測"]["売上予測"]["確度30"][n] += amount;
+				if (level >= 10) Tab[secName]["予測"]["売上予測"]["確度10"][n] += amount;
+
+				//db_account data = new db_account()
+				//{
+				//	名前 = (string)reader["S_name"].ToString(),
+				//	level = (int)reader["level"],
+				//	直間 = (byte)reader["直間"],
+				//	yymm = (int)reader["yymm"],
+				//	amount = (int)reader["amount"]
+				//};
+				//dataTab.Add(data);
+			}
+			foreach (var item in Tab)
+			{
+				secName = item.Key;
+				var Cnt = Tab[secName]["予測"]["売上高"]["売上"].Length;
+				for (var m = 0; m < Cnt; m++) Tab[secName]["予測"]["売上高"]["売上"][m] = Tab[secName]["予測"]["売上予測"]["確度" + fixLevel][m];
+			}
+
+
+			Debug.Write("reader Close");
+			reader.Close();
+
+			Debug.Write("DB Close");
+			DB.Close();
+			Debug.Write("DB Dispose");
+			DB.Dispose();
+
+			return (dataTab);
+		}
+
+		public object json_uriageActual(string Json, Dictionary<string, dynamic> Tab)
+		{
+			List<db_account> dataTab = new List<db_account>();
+
+			//Json = "{year:'2020',secMode:'開発',dispMode:'統括'}";
+			var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
+
+			var fixLevel = o_json.fixLevel;
+
+			string dispMode = o_json.dispMode;
+
+			int mCnt = 12;                  // 予測・計画は12ヶ月分取得
+			int year = o_json.year;
+			int s_yymm = ((year - 1) * 100 + 10);
+			int e_yymm = yymmAdd(s_yymm, mCnt - 1);
+			string s_sDate = String.Concat((s_yymm / 100), "/", (s_yymm % 100), "/01");
+
+			DateTime sDate = DateTime.Parse(s_sDate);
+			DateTime eDate = sDate.AddMonths(mCnt).AddDays(-1);
+
+			string work = "";
+			//Dictionary<string, dynamic> Tab = initTab(Json);
+			SqlConnection DB = new SqlConnection(DB_connectString);
+			DB.Open();
+			Debug.Write("DB Open", DB_connectString);
+
+			string S_name, secName, codes, mode;
+			int yymm, n,  直間;
+			double amount;
+			List<string> SQLTab = new List<string>();
+			foreach (var item in Tab)
+			{
+				S_name = item.Key;
+				codes = Tab[S_name]["部署コード"];
+				mode = Tab[S_name]["直間"];
+
+				StringBuilder sql = new StringBuilder("");
+
+				sql.Append(" SELECT");
+				sql.Append("      S_name = @S_name,");
+				sql.Append("      直間   = MAST.直間,");
+				sql.Append("	  yymm   = DATA.yymm,");
+				sql.Append("	  amount = sum(DATA.金額)");
+				sql.Append(" FROM");
+				sql.Append("	  営業売上データ DATA ");
+				sql.Append("                     LEFT JOIN 業務部署データ BUSYO");
+				sql.Append("                          ON DATA.pNum    = BUSYO.pNum");
+				sql.Append("                     LEFT JOIN (SELECT * FROM EMG.dbo.部署マスタ WHERE NOT(開始 > @eDate or 終了 < @sDate) )  MAST");
+				sql.Append("                          ON MAST.部署コード = BUSYO.部署ID");
+				sql.Append(" WHERE");
+				sql.Append("      (DATA.yymm BETWEEN @s_yymm and @e_yymm )");
+				sql.Append("      AND");
+				sql.Append("	  (DATA.yymm Between BUSYO.開始 And BUSYO.終了)");
+				sql.Append("	  AND");
+				sql.Append("	  DATA.付替 = 0");
+				sql.Append("	  AND");
+				sql.Append("	  DATA.Flag = 0");
+
+				if (codes.Length > 0)
+				{
+					sql.Append("    AND");
+					sql.Append("    BUSYO.部署ID IN(@codes)");
+				}
+				if (mode != "")
+				{
+					sql.Append("    AND");
+					sql.Append("    MAST.直間 IN(@mode)");
+				}
+				sql.Append(" GROUP BY");
+				sql.Append("      MAST.直間,");
+				sql.Append("	  DATA.yymm");
+
+				sql.Replace("@S_name", SqlUtil.Parameter("string", S_name));
+				sql.Replace("@s_yymm", SqlUtil.Parameter("number", s_yymm));
+				sql.Replace("@e_yymm", SqlUtil.Parameter("number", e_yymm));
+				sql.Replace("@sDate", SqlUtil.Parameter("string", sDate));
+				sql.Replace("@eDate", SqlUtil.Parameter("string", eDate));
+				sql.Replace("@codes", SqlUtil.Parameter("number", codes));
+				sql.Replace("@mode", SqlUtil.Parameter("number", mode));
+
+				work = sql.ToString();
+				SQLTab.Add(work);
+			}
+
+			string SQL = string.Join(" UNION ALL ", SQLTab);
+
+			SqlDataReader reader = dbRead(DB, SQL);
+			Debug.Write("reader Start");
+
+			while (reader.Read())
+			{
+				S_name = (string)reader["S_name"].ToString();
+				直間 = (byte)reader["直間"];
+				yymm = (int)reader["yymm"];
+				amount = (double)reader["amount"];
 
 				n = yymmDiff(s_yymm, yymm);
 
-				checkArray(Tab, 名前, 種別, 大項目, 項目);
-				Tab[名前][種別][大項目][項目][n] += amount;
-
-				db_account data = new db_account()
+				if (S_name == null)
 				{
-					名前 = (string)reader["S_name"].ToString(),
-					大項目 = (string)reader["大項目"].ToString(),
-					項目 = (string)reader["項目"].ToString(),
-					種別 = (string)reader["種別"].ToString(),
-					直間 = (byte)reader["直間"],
-					yymm = (int)reader["yymm"],
-					amount = (int)reader["amount"]
-				};
-				dataTab.Add(data);
+					secName = "不明";
+				}
+				else if (dispMode == "全社")
+				{
+					secName = "全社";
+				}
+				else if (dispMode == "本社")
+				{
+					secName = (直間 == 2 ? "本社" : "直接");
+				}
+				else
+				{
+					secName = S_name;
+				}
+
+				checkArray(Tab, secName, "実績", "売上高", "売上");
+				Tab[secName]["実績"]["売上高"]["売上"][n] += amount;
+
+
+				//db_account data = new db_account()
+				//{
+				//	名前 = (string)reader["S_name"].ToString(),
+				//	level = (int)reader["level"],
+				//	直間 = (byte)reader["直間"],
+				//	yymm = (int)reader["yymm"],
+				//	amount = (int)reader["amount"]
+				//};
+				//dataTab.Add(data);
 			}
-			Debug.Write(Cnt.ToString());
+
 			Debug.Write("reader Close");
 			reader.Close();
 
@@ -577,6 +783,7 @@ function uriageYosoku(DB,Tab,yymm,mCnt,dispMode,dispName,listMode,fixLevel)
 			public string 大項目 { get; set; }
 			public string 項目 { get; set; }
 			public string 種別 { get; set; }
+			public int level { get; set; }
 			public int yymm { get; set; }
 			public int amount { get; set; }
 		}

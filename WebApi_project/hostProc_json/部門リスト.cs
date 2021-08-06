@@ -21,6 +21,8 @@ namespace WebApi_project.hostProc
         public int mCnt { get; set; }
         public int s_yymm { get; set; }
         public int c_yymm { get; set; }
+        public int fixLevel { get; set; }
+
 
     }
     public partial class jsonProc
