@@ -39,7 +39,7 @@ namespace WebApi_project.hostProc
 
         public Dictionary<string, group> json_部門リスト(string Json)
         {
-            Json = "{year:'2020',secMode:'開発',dispMode:'統括'}";
+            Json = "{year:'2021',secMode:'開発',dispMode:'統括'}";
             // secMode : 開発、間接、全社
             // dispMode : 全社、統括、部門、グループ
             List<db_group> dataTab = get_group_data(Json);                                  // DBからデータ取得
@@ -103,7 +103,7 @@ namespace WebApi_project.hostProc
             int year = o_json.year;
             string s_yymm = ((year -1)*100 + 10).ToString();
             string e_yymm = ((year * 100) + 9).ToString();
-            string secNum = "";
+            //string secNum = "";
             string mode = "";
             string s1 = "";
             string s2 = "";
@@ -113,13 +113,13 @@ namespace WebApi_project.hostProc
             switch (secMode)
             {
                 case "開発":
-                    secNum = "0,1";
+                    mode = "0,1";
                     break;
                 case "間接":
-                    secNum = "2";
+                    mode = "2";
                     break;
                 default:
-                    secNum = "0,1,2";
+                    mode = "0,1,2";
                     break;
             }
 
@@ -145,7 +145,7 @@ namespace WebApi_project.hostProc
                 sql.Append(" WHERE");
                 sql.Append("    NOT(TM.開始 > @e_yymm or TM.終了 < @s_yymm)");
                 sql.Append("    AND");
-                sql.Append("    TM.直間 IN(@secNum)");
+                sql.Append("    TM.直間 IN(@mode)");
                 if (secMode == "間接" && dispMode == "統括")
                 {
                     sql.Append("    AND");
@@ -166,7 +166,7 @@ namespace WebApi_project.hostProc
 
                 sql.Replace("@s_yymm", SqlUtil.Parameter("number", s_yymm));
                 sql.Replace("@e_yymm", SqlUtil.Parameter("number", e_yymm));
-                sql.Replace("@secNum", SqlUtil.Parameter("number", secNum));
+                sql.Replace("@mode", SqlUtil.Parameter("number", mode));
                 var x = sql.ToString();
 
                 SqlDataReader reader = dbRead(DB, sql.ToString());

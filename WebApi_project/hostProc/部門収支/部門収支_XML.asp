@@ -16,7 +16,7 @@ try{
 //	var dispCmd = "“Š‡Ú×"
 //	var dispCmd = "•”–å”z•Š"
 
-
+EMGLog.Write("","ABC");
 var secMode = "ŠÔÚ"
 var dispCmd = "ŠÔÚˆê——"
 var dispName = ""

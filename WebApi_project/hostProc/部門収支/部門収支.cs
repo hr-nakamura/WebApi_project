@@ -41,11 +41,11 @@ namespace WebApi_project.hostProc
             //json_accountActual(Json, Tab["data"]);                          // 費用実績データ取得
             //json_accountCost(Json, Tab["data"]);                         // 費用付替
 
-            json_salesCost(Json, Tab["data"]);								// 売上付替
+            //json_salesCost(Json, Tab["data"]);								// 売上付替
 
             //if (dispMode != "全社")
             //{
-            //	groupCost(Json, Tab["data"]);							// 部門固定費データ取得
+            json_groupCost(Json, Tab["data"]);							// 部門固定費データ取得
             //}
             //memberPlan(Json, Tab["data"]);
             //memberActual(Json, Tab["data"]);
@@ -908,8 +908,6 @@ namespace WebApi_project.hostProc
 			Debug.Write("DB Open", DB_connectString);
 
 			string S_name, secName, codes, mode;
-			int yymm, n, 直間;
-			decimal amount;
 			StringBuilder sql = new StringBuilder("");
 			List<string> SQLTab = new List<string>();
 			foreach (var item in Tab)
@@ -973,6 +971,7 @@ namespace WebApi_project.hostProc
 			SqlDataReader reader = dbRead(DB, SQL);
 			Debug.Write("reader Start");
 			int 付替;
+			int yymm, n, 直間;
 			decimal cost;
 			while (reader.Read())
 			{
@@ -1018,7 +1017,195 @@ namespace WebApi_project.hostProc
 
 			return (dataTab);
 		}
+		
+		public object json_groupCost(string Json, Dictionary<string, dynamic> Tab)
+		{
+			List<db_account> dataTab = new List<db_account>();
 
+			//Json = "{year:'2020',secMode:'開発',dispMode:'統括'}";
+			var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
+
+			var fixLevel = o_json.fixLevel;
+
+			string dispMode = o_json.dispMode;
+
+			int mCnt = 12;                  // 予測・計画は12ヶ月分取得
+			int year = o_json.year;
+			int s_yymm = ((year - 1) * 100 + 10);
+			int e_yymm = yymmAdd(s_yymm, mCnt - 1);
+			string s_sDate = String.Concat((s_yymm / 100), "/", (s_yymm % 100), "/01");
+
+			DateTime sDate = DateTime.Parse(s_sDate);
+			DateTime eDate = sDate.AddMonths(mCnt).AddDays(-1);
+
+			string work = "";
+			//Dictionary<string, dynamic> Tab = initTab(Json);
+			SqlConnection DB = new SqlConnection(DB_connectString);
+			DB.Open();
+			Debug.Write("DB Open", DB_connectString);
+
+			string S_name, secName, codes, mode;
+			StringBuilder sql = new StringBuilder("");
+			List<string> SQLTab = new List<string>();
+			foreach (var item in Tab)
+			{
+				S_name = item.Key;
+				codes = Tab[S_name]["部署コード"];
+				mode = Tab[S_name]["直間"];
+
+				sql.Clear();
+
+				sql.Append(" SELECT");
+				sql.Append("      S_name = @S_name,");
+				sql.Append("      直間   = MAST.直間,");
+				sql.Append("      大項目 = ITEM.大項目,");
+				sql.Append("      項目   = ITEM.項目,");
+				sql.Append("      種別   = (CASE WHEN DATA.種別 = 0 THEN '計画' ELSE '予測' END),");
+				sql.Append("      yymm   = DATA.yymm,");
+				sql.Append("      amount = Sum(DATA.数値)");
+				sql.Append(" FROM");
+				sql.Append("      収支計画データ DATA ");
+				sql.Append("                     LEFT JOIN (SELECT * FROM EMG.dbo.部署マスタ WHERE NOT(開始 > @eDate or 終了 < @sDate ) ) MAST");
+				sql.Append("                          ON DATA.部署ID = MAST.部署コード");
+				sql.Append("                     LEFT JOIN 収支項目マスタ ITEM");
+				sql.Append("                          ON DATA.項目ID = ITEM.ID");
+				sql.Append(" WHERE");
+				sql.Append("      ITEM.大項目 = '部門固定費'");
+				sql.Append("      AND");
+				sql.Append("      DATA.種別 IN(0,1)");              // 計画・予測
+				sql.Append("      AND");
+				sql.Append("      MAST.ACCコード >= 0");
+				sql.Append("      AND");
+				sql.Append("      DATA.yymm BETWEEN @s_yymm AND @e_yymm");
+				if (codes.Length > 0)
+				{
+					sql.Append("    AND");
+					sql.Append("    MAST.部署コード IN(@codes)");
+				}
+				if (mode != "")
+				{
+					sql.Append("    AND");
+					sql.Append("    MAST.直間 IN(@mode)");
+				}
+				sql.Append(" GROUP BY");
+				sql.Append("      MAST.直間,");
+				sql.Append("      ITEM.大項目,");
+				sql.Append("      ITEM.項目,");
+				sql.Append("      DATA.種別,");
+				sql.Append("      DATA.yymm");
+				sql.Replace("@S_name", SqlUtil.Parameter("string", S_name));
+				sql.Replace("@s_yymm", SqlUtil.Parameter("number", s_yymm));
+				sql.Replace("@e_yymm", SqlUtil.Parameter("number", e_yymm));
+				sql.Replace("@sDate", SqlUtil.Parameter("string", sDate));
+				sql.Replace("@eDate", SqlUtil.Parameter("string", eDate));
+				sql.Replace("@codes", SqlUtil.Parameter("number", codes));
+				sql.Replace("@mode", SqlUtil.Parameter("number", mode));
+
+				work = sql.ToString();
+				SQLTab.Add(work);
+
+				//	実績データ
+				sql.Clear();
+				sql.Append(" SELECT");
+				sql.Append("      S_name = @S_name,");
+				sql.Append("      直間   = MAST.直間,");
+
+				sql.Append("      大項目 = ITEM.大項目,");
+				sql.Append("      項目   = ITEM.項目,");
+				sql.Append("      種別   = '実績',");
+				sql.Append("      yymm   = DATA.yymm,");
+				sql.Append("      amount = Sum(DATA.費用)");
+				sql.Append(" FROM");
+				sql.Append("      部門固定費実績データ DATA ");
+				sql.Append("                           LEFT JOIN (SELECT * FROM EMG.dbo.部署マスタ WHERE NOT(開始 > @eDate or 終了 < @sDate ) ) MAST");
+				sql.Append("                                ON DATA.部署ID = MAST.部署コード");
+				sql.Append("                           LEFT JOIN 収支項目マスタ ITEM");
+				sql.Append("                                ON DATA.項目ID = ITEM.ID");
+
+				sql.Append(" WHERE");
+				sql.Append("      ITEM.大項目 = '部門固定費'");
+				sql.Append("      AND");
+				sql.Append("      MAST.ACCコード >= 0");
+				sql.Append("      AND");
+				sql.Append("      DATA.yymm BETWEEN @s_yymm AND @e_yymm");
+				if (codes.Length > 0)
+				{
+					sql.Append("    AND");
+					sql.Append("    MAST.部署コード IN(@codes)");
+				}
+				if (mode != "")
+				{
+					sql.Append("    AND");
+					sql.Append("    MAST.直間 IN(@mode)");
+				}
+				sql.Append(" GROUP BY");
+				sql.Append("    MAST.直間,");
+				sql.Append("    ITEM.大項目,");
+				sql.Append("    ITEM.項目,");
+				sql.Append("    DATA.yymm");
+				sql.Replace("@S_name", SqlUtil.Parameter("string", S_name));
+				sql.Replace("@s_yymm", SqlUtil.Parameter("number", s_yymm));
+				sql.Replace("@e_yymm", SqlUtil.Parameter("number", e_yymm));
+				sql.Replace("@sDate", SqlUtil.Parameter("string", sDate));
+				sql.Replace("@eDate", SqlUtil.Parameter("string", eDate));
+				sql.Replace("@codes", SqlUtil.Parameter("number", codes));
+				sql.Replace("@mode", SqlUtil.Parameter("number", mode));
+
+				work = sql.ToString();
+				SQLTab.Add(work);
+
+			}
+
+			string SQL = string.Join(" UNION ALL ", SQLTab);
+
+			SqlDataReader reader = dbRead(DB, SQL);
+			Debug.Write("reader Start");
+			int yymm, n, 直間, amount;
+			string 種別,大項目, 項目;
+			while (reader.Read())
+			{
+				S_name = (string)reader["S_name"].ToString();
+				大項目 = (string)reader["大項目"].ToString();
+				項目 = (string)reader["項目"].ToString();
+				種別 = (string)reader["種別"].ToString();
+				直間 = (byte)reader["直間"];
+				yymm = (int)reader["yymm"];
+				amount = (int)reader["amount"];
+
+				n = yymmDiff(s_yymm, yymm);
+
+				if (S_name == null)
+				{
+					secName = "不明";
+				}
+				else if (dispMode == "全社")
+				{
+					secName = "全社";
+				}
+				else if (dispMode == "本社")
+				{
+					secName = (直間 == 2 ? "本社" : "直接");
+				}
+				else
+				{
+					secName = S_name;
+				}
+
+				checkArray(Tab, secName, 種別, 大項目, 項目);
+				Tab[secName][種別][大項目][項目][n] += amount * (種別 == "実績" ? 1 : 1000)
+;
+			}
+
+			Debug.Write("reader Close");
+			reader.Close();
+
+			Debug.Write("DB Close");
+			DB.Close();
+			Debug.Write("DB Dispose");
+			DB.Dispose();
+
+			return (dataTab);
+		}
 		public XmlDocument 部門収支_XML(String Json)
         {
 			//var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
