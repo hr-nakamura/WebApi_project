@@ -83,6 +83,10 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="hostProc\projectBBS\projectData_XML.xml" />
+    <Content Include="_Func\部門収支\account.css" />
+    <Content Include="_Func\部門収支\EMG.xml" />
+    <Content Include="_Func\部門収支\EMG収支計画.html" />
+    <Content Include="_Func\部門収支\EMG部門収支.xsl" />
     <Content Include="hostProc\部門収支\部門収支_XML.asp" />
     <None Include="hostProc\QOSMIO\A_EMG.json" />
     <None Include="hostProc\QOSMIO\A_統括.json" />
@@ -105,6 +109,8 @@
     <Content Include="_Func\projectBBS\projectList.xsl" />
     <Content Include="_Func\projectBBS\test.html" />
     <Content Include="_Func\QOSMIO\qosmio.html" />
+    <Content Include="_Func\部門収支\index.html" />
+    <Content Include="_Func\inc\sub_cmn.xsl" />
     <Content Include="_home\debug\jquery.my.debug.js" />
     <Content Include="_home\images\bg00.gif" />
     <Content Include="_home\images\EM.png" />
@@ -114,6 +120,7 @@
     <Content Include="_home\index_2.html" />
     <Content Include="_home\memo.txt" />
     <Content Include="_home\menu.xml" />
+    <Content Include="_home\Scripts\encoding.js" />
     <Content Include="_home\Scripts\jquery-1.9.1.min.js" />
     <Content Include="_home\Scripts\jquery.Cookie.js" />
     <Content Include="_home\Scripts\jquery.kansa.Query.js" />
