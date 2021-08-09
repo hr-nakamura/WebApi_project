@@ -17,6 +17,8 @@ namespace WebApi_project.hostProc
     {
         public string secMode { get; set; }
         public string dispMode { get; set; }
+        public string dispName { get; set; }
+        public string dispCmd { get; set; }
         public int year { get; set; }
         public int mCnt { get; set; }
         public int s_yymm { get; set; }
@@ -37,70 +39,27 @@ namespace WebApi_project.hostProc
             return (xmlDoc);
         }
 
-        public Dictionary<string, group> json_部門リスト(string Json)
+        public Dictionary<string, group> json_部門リスト(Dictionary<string, dynamic> o_json)
         {
-            Json = "{year:'2021',secMode:'開発',dispMode:'統括'}";
+            //Json = "{year:'2021',secMode:'全社',dispMode:'全社'}";
             // secMode : 開発、間接、全社
             // dispMode : 全社、統括、部門、グループ
-            List<db_group> dataTab = get_group_data(Json);                                  // DBからデータ取得
+            List<db_group> dataTab = get_group_data(o_json);                                  // DBからデータ取得
             Dictionary<string, group> Tab = convert_group_data(dataTab);                    // 取得したデータを加工
 
             return (Tab);
         }
-        List<db_group> get_group_data(string Json)
+        List<db_group> get_group_data(Dictionary<string,dynamic> o_json)
         {
-            /*
-            secMode : 開発、間接、全社
-            dispMode : 全社、統括、部門、グループ
-            listMode : 一覧、詳細
-
-            
-            ＥＭＧ収支計画
-            {
-                "year": "2021",
-                "secMode": "開発",
-                "dispMode": "全社",
-                "dispName": "",
-                "listMode": "詳細",
-                "haifuMode": false
-            }
-            統括収支計画
-            {
-                "year": "2021",
-                "secMode": "開発",
-                "dispMode": "統括",
-                "dispName": "",
-                "listMode": "一覧",
-                "haifuMode": true
-            }
-            部門収支計画
-            {
-                "year": "2021",
-                "secMode": "開発",
-                "dispMode": "部門",
-                "dispName": "",
-                "listMode": "一覧",
-                "haifuMode": true"
-            }
-            課 別収支
-            {
-                "year": "2021",
-                "secMode": "開発",
-                "dispMode": "グループ",
-                "dispName": "営業本部",
-                "listMode": "一覧",
-                "haifuMode": true
-            }
-            */
-            var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
+            //var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
 
             List<db_group> dataTab = new List<db_group>();
             Dictionary<string, group> Tab = new Dictionary<string, group>();
             SqlConnection DB;
             Dictionary<string, object> Tab1 = new Dictionary<string, object>();
-            string secMode = o_json.secMode;          // 開発、間接、全社
-            string dispMode = o_json.dispMode;          // 統括、
-            int year = o_json.year;
+            string secMode = o_json["secMode"];          // 開発、間接、全社
+            string dispMode = o_json["dispMode"];        // 統括、
+            int year = o_json["year"];
             string s_yymm = ((year -1)*100 + 10).ToString();
             string e_yymm = ((year * 100) + 9).ToString();
             //string secNum = "";
