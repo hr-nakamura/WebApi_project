@@ -51,17 +51,20 @@ namespace WebApi_project.hostProc
 			var dataTab = Tab["data"];
 			foreach(var sec in dataTab)
             {
+				var name = sec.Key;
+				var targetTab = sec.Value;
+				var target = checkData(targetTab, "実績", "売上高", "売上");
+
 				for (var i = 0; i < 12; i++)
 				{
-					int value = sec.Value["実績"]["売上高"]["売上"][i];
+					int value = target[i];
 					var s = value.ToString();
-					Debug.Write("ABC", sec.Key, i.ToString(), s);
+					Debug.Write("ABC", name, i.ToString(), s);
 				}
 
 			}
 
 
-			var x1 = checkData(dataTab["全社"],"実績", "売上高","売上");
 
 			//XmlDocument xmlDoc = Json2Xml(Tab["data"]);
 			XmlDocument xmlDoc = new XmlDocument();
