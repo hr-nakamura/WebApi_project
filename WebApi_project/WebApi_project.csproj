@@ -111,6 +111,7 @@
     <Content Include="_Func\QOSMIO\qosmio.html" />
     <Content Include="_Func\部門収支\index.html" />
     <Content Include="_Func\inc\sub_cmn.xsl" />
+    <Content Include="_Func\部門収支\部門収支.html" />
     <Content Include="_home\debug\jquery.my.debug.js" />
     <Content Include="_home\images\bg00.gif" />
     <Content Include="_home\images\EM.png" />
@@ -120,6 +121,7 @@
     <Content Include="_home\index_2.html" />
     <Content Include="_home\memo.txt" />
     <Content Include="_home\menu.xml" />
+    <Content Include="_home\Scripts\cmn.js" />
     <Content Include="_home\Scripts\encoding.js" />
     <Content Include="_home\Scripts\jquery-1.9.1.min.js" />
     <Content Include="_home\Scripts\jquery.Cookie.js" />

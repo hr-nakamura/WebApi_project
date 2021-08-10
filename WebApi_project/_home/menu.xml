@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root name="EMG">
   <menu name="TEST" memo="" >
-	  <!--<menu name="部門収支" memo="" mode="url" value="/WebApi/project/_Func/部門収支/EMG部門収支.html"/>-->
+	  <menu name="部門収支" memo="" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html"/>
 	  <menu name="部門収支" memo="" mode="url" value="/WebApi/project/_Func/部門収支/index.html"/>
 	  <menu name="projectBBS" memo="" mode="url" value="/WebApi/project/_Func/projectBBS/test.html"/>
 	  <menu name="QOSMIO" memo="" mode="url" value="/WebApi/project/_Func/QOSMIO/qosmio.html"/>
