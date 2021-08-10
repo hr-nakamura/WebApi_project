@@ -37,12 +37,53 @@ namespace WebApi_project.hostProc
 
 			Dictionary<string, dynamic> Tab = (Dictionary<string, dynamic>)json_部門収支_XML(Json);
 
+			//foreach (KeyValuePair<string, dynamic> item in Tab["data"])
+			//{
+			//	//Debug.Write("ABC",item.Value["実績"]["売上高"]["売上"][0]);
+			//	//Debug.Write(item.Key, item.Value["実績"].Value);
+			//	for ( var i = 0; i < 12; i++){
+			//		int value = item.Value["実績"]["売上高"]["売上"][i];
+			//		var s = value.ToString();
+			//		Debug.Write("ABC",i.ToString(),s);
+			//	}
+
+			//}
+			var dataTab = Tab["data"];
+			foreach(var sec in dataTab)
+            {
+				for (var i = 0; i < 12; i++)
+				{
+					int value = sec.Value["実績"]["売上高"]["売上"][i];
+					var s = value.ToString();
+					Debug.Write("ABC", sec.Key, i.ToString(), s);
+				}
+
+			}
 
 
-            //XmlDocument xmlDoc = Json2Xml(Tab["data"]);
-            XmlDocument xmlDoc = new XmlDocument();
+			var x1 = checkData(dataTab["全社"],"実績", "売上高","売上");
+
+			//XmlDocument xmlDoc = Json2Xml(Tab["data"]);
+			XmlDocument xmlDoc = new XmlDocument();
 
             return (xmlDoc);
+		}
+		int[] checkData(Dictionary<string, dynamic> Tab, string s1, string s2, string s3)
+		{
+			try
+			{
+				if (Tab[s1][s2].ContainsKey(s3))
+				{
+					//Debug.Write("ある");
+					return (Tab[s1][s2][s3]);
+				}
+			}
+			catch (Exception ex)
+			{
+				Debug.noWrite(ex.Message);
+			}
+			int[] x = new int[0];
+			return (x);
 		}
 		public object json_部門収支_XML(String Json)
 		{
@@ -1357,6 +1398,8 @@ namespace WebApi_project.hostProc
 
             間接部門予算(Tab, mCnt)
         */
+
+
 		Dictionary<string, dynamic> checkArray(Dictionary<string, dynamic> Tab, string 部門, string 種別, string 大項目, string 項目)
 		{
 			//Debug.Write("確認");
