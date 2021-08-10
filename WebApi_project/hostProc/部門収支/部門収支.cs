@@ -28,20 +28,57 @@ EMG		dispCmd=EMG														&year=2021		&fix=70		&yosoku=3]
 
 namespace WebApi_project.hostProc
 {
-    public class 部門収支 : hostProc
+	public struct para_部門収支
+	{
+		public string secMode { get; set; }				// 直接・間接
+		public string dispCmd { get; set; }				// EMG・統括一覧・部門一覧・課一覧・間接一覧・統括詳細・部門詳細・課詳細・統括配賦・部門配賦
+		public string name { get; set; }				// 統括/部門/課
+		public int year { get; set; }
+		public int mCnt { get; set; }
+		public int fixLevel { get; set; }
+
+
+	}
+	public struct cmd_部門収支
+	{
+		public string secMode { get; set; }
+		public string dispMode { get; set; }
+		public string listMode { get; set; }
+		public bool haifuMode { get; set; }
+		public string 統括 { get; set; }
+		public string 部 { get; set; }
+		public string 課 { get; set; }
+		public int year { get; set; }
+		public int mCnt { get; set; }
+		public int s_yymm { get; set; }
+		public int c_yymm { get; set; }
+		public int fixLevel { get; set; }
+
+
+	} 
+	public class 部門収支 : hostProc
 
     {
-		Dictionary<string, dynamic> checkCmd(string Json)
+		cmd_部門収支 checkCmd(string Json)
         {
-			var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
+			var o_json = JsonConvert.DeserializeObject<para_部門収支>(Json);
+			string[] work = o_json.name.Split('/');
+
+			string 統括 = work[0];
+			string 部 = work[1];
+			string 課 = work[2];
 			int s_yymm = ((o_json.year - 1) * 100 + 10);
+
+			cmd_部門収支 cmd = new cmd_部門収支(); 
 
 			Dictionary<string, dynamic> o = new Dictionary<string, dynamic>() {
 				{ "dispMode","" },
 				{ "secMode","" },
 				{ "listMode","" },
-				{ "dispName","" },
 				{ "haifuMode","" },
+
+				{ "dispName","" },
+
 				{ "year",o_json.year },
 				{ "mCnt",o_json.mCnt },
 				{ "s_yymm",s_yymm },
@@ -52,78 +89,81 @@ namespace WebApi_project.hostProc
             switch (o_json.dispCmd)
 			{
 				case "EMG":
-					o["dispMode"] = "全社";
-					o["listMode"] = "詳細";
-					o["haifuMode"] = false;
+					cmd.dispMode = "全社";
+					cmd.listMode = "詳細";
+					cmd.haifuMode = false;
 					break;
 				case "統括一覧":
-					o["dispMode"] = "統括";
-					o["dispName"] = "";
-					o["listMode"] = "一覧";
-					o["secMode"] = "開発";
-					o["haifuMode"] = true;
-			break;
+					cmd.dispMode = "統括";
+					cmd.listMode = "一覧";
+					cmd.secMode = "開発";
+					cmd.haifuMode = true;
+					break;
 				case "部門一覧":;
-					o["dispMode"] = "部門";
-					o["dispName"] = "";
-					o["listMode"] = "一覧";
-					o["secMode"] = "開発";
-					o["haifuMode"] = (o_json.secMode == "間接" ? false : true);
-			break;
+					cmd.dispMode = "部門";
+					cmd.統括 = 統括;
+					cmd.listMode = "一覧";
+					cmd.secMode = "開発";
+					cmd.haifuMode = (o_json.secMode == "間接" ? false : true);
+					break;
 				case "課一覧":
-					o["dispMode"] = "グループ";
-					o["dispName"] = o_json.dispName;     // 部門の名前
-					o["listMode"] = "一覧";
-					o["secMode"] = "開発";
-					o["haifuMode"] = true;        // 課に対しては計算しない
-			break;
+					cmd.dispMode = "グループ";
+					cmd.統括 = 統括;
+					cmd.部 = 部;
+					cmd.listMode = "一覧";
+					cmd.secMode = "開発";
+					cmd.haifuMode = true;        // 課に対しては計算しない
+					break;
 				case "統括詳細":
-					o["dispMode"] = "統括";
-					o["dispName"] = o_json.dispName;     // 部門の名前
-					o["listMode"] = "詳細";
-					o["secMode"] = "開発";
-					o["haifuMode"] = true;
-			break;
+					cmd.dispMode = "統括";
+					cmd.統括 = 統括;
+					cmd.listMode = "詳細";
+					cmd.secMode = "開発";
+					cmd.haifuMode = true;
+					break;
 				case "部門詳細":
-					o["dispMode"] = "部門";
-					o["dispName"] = o_json.dispName;     // 部門の名前
-					o["listMode"] = "詳細";
-					o["secMode"] = "開発";
-					o["haifuMode"] = true;
-			break;
+					cmd.dispMode = "部門";
+					cmd.統括 = 統括;
+					cmd.部 = 部;
+					cmd.listMode = "詳細";
+					cmd.secMode = "開発";
+					cmd.haifuMode = true;
+					break;
 				case "課詳細":
-					o["dispMode"] = "グループ";
-					o["dispName"] = o_json.dispName;     // 課のコード
-					o["listMode"] = "詳細";
-					o["secMode"] = "開発";
-					o["haifuMode"] = true;        // 課に対しては計算しない
-			break;
+					cmd.dispMode = "グループ";
+					cmd.統括 = 統括;
+					cmd.部 = 部;
+					cmd.課 = 課;
+					cmd.listMode = "詳細";
+					cmd.secMode = "開発";
+					cmd.haifuMode = true;        // 課に対しては計算しない
+					break;
 				//	配賦
 				case "統括配賦":
-					o["dispMode"] = "統括";
-					o["dispName"] = o_json.dispName;
-					o["listMode"] = "配賦";
-					o["secMode"] = "開発";
-					o["haifuMode"] = true;
-			break;
+					cmd.dispMode = "統括";
+					cmd.統括 = 統括;
+					cmd.listMode = "配賦";
+					cmd.secMode = "開発";
+					cmd.haifuMode = true;
+					break;
 				case "部門配賦":
-					o["dispMode"] = "部門";
-					o["dispName"] = o_json.dispName;
-					o["listMode"] = "配賦";
-					o["secMode"] = "開発";
-					o["haifuMode"] = true;
-			break;
+					cmd.dispMode = "部門";
+					cmd.統括 = 統括;
+					cmd.部 = 部;
+					cmd.listMode = "配賦";
+					cmd.secMode = "開発";
+					cmd.haifuMode = true;
+					break;
 				case "間接一覧":
-					o[".dispMode"] = "グループ";
-					o["dispName"] = "";
-					o["listMode"] = "間接一覧";
-					o["secMode"] = "間接";
-					o["haifuMode"] = false;
-			break;
+					cmd.dispMode = "グループ";
+					cmd.listMode = "間接一覧";
+					cmd.secMode = "間接";
+					cmd.haifuMode = false;
+					break;
 				default:
 					break;
 			}
-			return (o);
+			return (cmd);
 		}
 		public object json_部門収支_XML(String Json)
 		{
@@ -136,7 +176,7 @@ namespace WebApi_project.hostProc
 			//Json = "{dispCmd:部門一覧	,secMode:'開発'							,year:'2021', mCnt:4, fixLevel:70 }";
 			//Json = "{dispCmd:課一覧		,secMode:'開発'	,dispMode:'営業本部'	,year:'2021', mCnt:4, fixLevel:70 }";
 			//var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
-			var o_json = checkCmd(Json);
+			var cmd = checkCmd(Json);
 
 			//int mCnt = o_json.mCnt;
    //         int year = o_json.year;
@@ -144,21 +184,21 @@ namespace WebApi_project.hostProc
    //         int e_yymm = yymmAdd(s_yymm, mCnt - 1);
 			//o_json.s_yymm = s_yymm;
 
-			Tab.Add("Info", o_json);
-			Tab.Add("data", initTab(o_json));
+			Tab.Add("Info", cmd);
+			Tab.Add("data", initTab(cmd));
 
 
-            json_groupPlan(Json, Tab["data"]);							// 計画・予測データ取得
-            json_uriageYosoku(Json, Tab["data"]);                       // 売上予測データ取得
-            json_uriageActual(Json, Tab["data"]);                       // 売上実績データ取得
-            json_accountActual(Json, Tab["data"]);                          // 費用実績データ取得
-            json_accountCost(Json, Tab["data"]);                         // 費用付替
+            json_groupPlan(cmd, Tab["data"]);							// 計画・予測データ取得
+            json_uriageYosoku(cmd, Tab["data"]);                       // 売上予測データ取得
+            json_uriageActual(cmd, Tab["data"]);                       // 売上実績データ取得
+            json_accountActual(cmd, Tab["data"]);                          // 費用実績データ取得
+            json_accountCost(cmd, Tab["data"]);                         // 費用付替
 
-            json_salesCost(Json, Tab["data"]);								// 売上付替
+            json_salesCost(cmd, Tab["data"]);								// 売上付替
 
-            if (o_json["dispMode"] != "全社")
+            if (cmd.dispMode != "全社")
             {
-                json_groupCost(Json, Tab["data"]);							// 部門固定費データ取得
+                json_groupCost(cmd, Tab["data"]);							// 部門固定費データ取得
             }
             //memberPlan(Json, Tab["data"]);
             //memberActual(Json, Tab["data"]);
@@ -166,16 +206,15 @@ namespace WebApi_project.hostProc
 
             return (Tab);
 		}
-		public object json_groupPlan(string Json, Dictionary<string, dynamic> Tab)
+		public object json_groupPlan(cmd_部門収支 cmd, Dictionary<string, dynamic> Tab)
 		{
 			List<db_account> dataTab = new List<db_account>();
 
 			//Json = "{year:'2020',secMode:'開発',dispMode:'統括'}";
-			var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
-			string dispMode = o_json.dispMode;
+			string dispMode = cmd.dispMode;
 
 			int mCnt = 12;                  // 予測・計画は12ヶ月分取得
-			int year = o_json.year;
+			int year = cmd.year;
 			int s_yymm = ((year - 1) * 100 + 10);
 			int e_yymm = yymmAdd(s_yymm, mCnt - 1);
 			string s_sDate = String.Concat((s_yymm / 100), "/", (s_yymm % 100), "/01");
@@ -331,19 +370,18 @@ namespace WebApi_project.hostProc
 			return (dataTab);
 		}
 
-		public object json_uriageYosoku(string Json, Dictionary<string, dynamic> Tab)
+		public object json_uriageYosoku(cmd_部門収支 cmd, Dictionary<string, dynamic> Tab)
 		{
 			List<db_account> dataTab = new List<db_account>();
 
 			//Json = "{year:'2020',secMode:'開発',dispMode:'統括'}";
-			var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
 
 			var fixLevel = o_json.fixLevel;
 
-			string dispMode = o_json.dispMode;
+			string dispMode = cmd.dispMode;
 
 			int mCnt = 12;                  // 予測・計画は12ヶ月分取得
-			int year = o_json.year;
+			int year = cmd.year;
 			int s_yymm = ((year - 1) * 100 + 10);
 			int e_yymm = yymmAdd(s_yymm, mCnt - 1);
 			string s_sDate = String.Concat((s_yymm / 100), "/", (s_yymm % 100), "/01");
@@ -493,19 +531,18 @@ namespace WebApi_project.hostProc
 			return (dataTab);
 		}
 
-		public object json_uriageActual(string Json, Dictionary<string, dynamic> Tab)
+		public object json_uriageActual(cmd_部門収支 cmd, Dictionary<string, dynamic> Tab)
 		{
 			List<db_account> dataTab = new List<db_account>();
 
 			//Json = "{year:'2020',secMode:'開発',dispMode:'統括'}";
-			var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
 
 			var fixLevel = o_json.fixLevel;
 
-			string dispMode = o_json.dispMode;
+			string dispMode = cmd.dispMode;
 
 			int mCnt = 12;                  // 予測・計画は12ヶ月分取得
-			int year = o_json.year;
+			int year = cmd.year;
 			int s_yymm = ((year - 1) * 100 + 10);
 			int e_yymm = yymmAdd(s_yymm, mCnt - 1);
 			string s_sDate = String.Concat((s_yymm / 100), "/", (s_yymm % 100), "/01");
@@ -623,19 +660,18 @@ namespace WebApi_project.hostProc
 			return (dataTab);
 		}
 
-		public object json_accountActual(string Json, Dictionary<string, dynamic> Tab)
+		public object json_accountActual(cmd_部門収支 cmd, Dictionary<string, dynamic> Tab)
 		{
 			List<db_account> dataTab = new List<db_account>();
 
 			//Json = "{year:'2020',secMode:'開発',dispMode:'統括'}";
-			var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
 
-			var fixLevel = o_json.fixLevel;
+			var fixLevel = cmd.fixLevel;
 
 			string dispMode = o_json.dispMode;
 
 			int mCnt = 12;                  // 予測・計画は12ヶ月分取得
-			int year = o_json.year;
+			int year = cmd.year;
 			int s_yymm = ((year - 1) * 100 + 10);
 			int e_yymm = yymmAdd(s_yymm, mCnt - 1);
 			string s_sDate = String.Concat((s_yymm / 100), "/", (s_yymm % 100), "/01");
@@ -819,19 +855,18 @@ namespace WebApi_project.hostProc
 		}
 
 
-		public object json_accountCost(string Json, Dictionary<string, dynamic> Tab)
+		public object json_accountCost(cmd_部門収支 cmd, Dictionary<string, dynamic> Tab)
 		{
 			List<db_account> dataTab = new List<db_account>();
 
 			//Json = "{year:'2020',secMode:'開発',dispMode:'統括'}";
-			var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
 
-			var fixLevel = o_json.fixLevel;
+			var fixLevel = cmd.fixLevel;
 
-			string dispMode = o_json.dispMode;
+			string dispMode = cmd.dispMode;
 
 			int mCnt = 12;                  // 予測・計画は12ヶ月分取得
-			int year = o_json.year;
+			int year = cmd.year;
 			int s_yymm = ((year - 1) * 100 + 10);
 			int e_yymm = yymmAdd(s_yymm, mCnt - 1);
 			string s_sDate = String.Concat((s_yymm / 100), "/", (s_yymm % 100), "/01");
@@ -994,19 +1029,18 @@ namespace WebApi_project.hostProc
 			return (dataTab);
 		}
 
-		public object json_salesCost(string Json, Dictionary<string, dynamic> Tab)
+		public object json_salesCost(cmd_部門収支 cmd, Dictionary<string, dynamic> Tab)
 		{
 			List<db_account> dataTab = new List<db_account>();
 
 			//Json = "{year:'2020',secMode:'開発',dispMode:'統括'}";
-			var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
 
-			var fixLevel = o_json.fixLevel;
+			var fixLevel = cmd.fixLevel;
 
-			string dispMode = o_json.dispMode;
+			string dispMode = cmd.dispMode;
 
 			int mCnt = 12;                  // 予測・計画は12ヶ月分取得
-			int year = o_json.year;
+			int year = cmd.year;
 			int s_yymm = ((year - 1) * 100 + 10);
 			int e_yymm = yymmAdd(s_yymm, mCnt - 1);
 			string s_sDate = String.Concat((s_yymm / 100), "/", (s_yymm % 100), "/01");
@@ -1131,19 +1165,18 @@ namespace WebApi_project.hostProc
 			return (dataTab);
 		}
 		
-		public object json_groupCost(string Json, Dictionary<string, dynamic> Tab)
+		public object json_groupCost(cmd_部門収支 cmd, Dictionary<string, dynamic> Tab)
 		{
 			List<db_account> dataTab = new List<db_account>();
 
 			//Json = "{year:'2020',secMode:'開発',dispMode:'統括'}";
-			var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
 
-			var fixLevel = o_json.fixLevel;
+			var fixLevel = cmd.fixLevel;
 
-			string dispMode = o_json.dispMode;
+			string dispMode = "cmd.dispMode";
 
 			int mCnt = 12;                  // 予測・計画は12ヶ月分取得
-			int year = o_json.year;
+			int year = cmd.year;
 			int s_yymm = ((year - 1) * 100 + 10);
 			int e_yymm = yymmAdd(s_yymm, mCnt - 1);
 			string s_sDate = String.Concat((s_yymm / 100), "/", (s_yymm % 100), "/01");
@@ -1321,7 +1354,6 @@ namespace WebApi_project.hostProc
 		}
 		public XmlDocument 部門収支_XML(String Json)
         {
-			//var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
 
 			List<db_account> json_data = (List<db_account>)json_部門収支_XML(Json);
 
@@ -1406,7 +1438,7 @@ namespace WebApi_project.hostProc
 
 			return (Tab);
 		}
-		Dictionary<string, dynamic> initTab(Dictionary<string,dynamic> o_json)
+		Dictionary<string, dynamic> initTab(cmd_部門収支 o_json)
 		{
 			Dictionary<string, dynamic> Tab = new Dictionary<string, dynamic>();
 			Dictionary<string, object> Info = new Dictionary<string, object>();
@@ -1418,11 +1450,11 @@ namespace WebApi_project.hostProc
 
             Dictionary<string, group> secTab = jProc.json_部門リスト(o_json);
 
-            if (o_json["dispMode"] == "全社")
+            if (o_json.dispMode == "全社")
             {
                 Tab.Add("全社", costList(直間: "0,1,2", 統括: "", 部門: "", 課: "", 部署コード: ""));
             }
-            else if (o_json["dispMode"] == "統括")
+            else if (o_json.dispMode == "統括")
             {
                 foreach (string 統括 in secTab.Keys)
                 {
@@ -1431,7 +1463,7 @@ namespace WebApi_project.hostProc
                     //Debug.Write(統括, secTab[統括].codes);
                 }
             }
-            else if (o_json["dispMode"] == "部門")
+            else if (o_json.dispMode == "部門")
             {
                 group sec = secTab["開発本部"];
 
@@ -1442,7 +1474,7 @@ namespace WebApi_project.hostProc
                     //Debug.Write(部門, sec.list[部門].codes);
                 }
             }
-            else if (o_json["dispMode"] == "グループ")
+            else if (o_json.dispMode == "課")
             {
                 group sec = secTab["開発本部"].list["第1開発部"];
                 foreach (string 課 in sec.list.Keys)

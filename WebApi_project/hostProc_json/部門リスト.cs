@@ -13,20 +13,6 @@ using DebugHost;
 
 namespace WebApi_project.hostProc
 {
-    public class para_部門指定
-    {
-        public string secMode { get; set; }
-        public string dispMode { get; set; }
-        public string dispName { get; set; }
-        public string dispCmd { get; set; }
-        public int year { get; set; }
-        public int mCnt { get; set; }
-        public int s_yymm { get; set; }
-        public int c_yymm { get; set; }
-        public int fixLevel { get; set; }
-
-
-    }
     public partial class jsonProc
     {
         public XmlDocument 部門リスト(String Json)
@@ -51,8 +37,6 @@ namespace WebApi_project.hostProc
         }
         List<db_group> get_group_data(Dictionary<string,dynamic> o_json)
         {
-            //var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
-
             List<db_group> dataTab = new List<db_group>();
             Dictionary<string, group> Tab = new Dictionary<string, group>();
             SqlConnection DB;
