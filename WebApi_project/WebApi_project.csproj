@@ -149,6 +149,7 @@
     <Content Include="_home\Util\viewJson-edge\jquery.json-viewer.js" />
     <Content Include="hostProc\部門収支\部門収支.json" />
     <Content Include="_home\json.json" />
+    <Content Include="_home\Scripts\jquery.my.webapi.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Data\iniFile.cs" />

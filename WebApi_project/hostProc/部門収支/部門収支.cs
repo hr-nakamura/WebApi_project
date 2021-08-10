@@ -28,49 +28,76 @@ EMG		dispCmd=EMG														&year=2021		&fix=70		&yosoku=3]
 
 namespace WebApi_project.hostProc
 {
-	public struct para_部門収支
-	{
-		public string secMode { get; set; }				// 直接・間接
-		public string dispCmd { get; set; }				// EMG・統括一覧・部門一覧・課一覧・間接一覧・統括詳細・部門詳細・課詳細・統括配賦・部門配賦
-		public string name { get; set; }				// 統括/部門/課
-		public int year { get; set; }
-		public int mCnt { get; set; }
-		public int fixLevel { get; set; }
-
-
-	}
-	public struct cmd_部門収支
-	{
-		public string secMode { get; set; }
-		public string dispMode { get; set; }
-		public string listMode { get; set; }
-		public bool haifuMode { get; set; }
-		public string 統括 { get; set; }
-		public string 部 { get; set; }
-		public string 課 { get; set; }
-		public int year { get; set; }
-		public int mCnt { get; set; }
-		public int s_yymm { get; set; }
-		public int c_yymm { get; set; }
-		public int fixLevel { get; set; }
-
-
-	} 
 	public class 部門収支 : hostProc
 
     {
+		public XmlDocument 部門収支_XML(String Json)
+		{
+			Json = "{dispCmd:'EMG',year:'2021', mCnt:'4', fixLevel:'70' ,name:''}";
+
+			Dictionary<string, dynamic> Tab = (Dictionary<string, dynamic>)json_部門収支_XML(Json);
+
+
+
+            //XmlDocument xmlDoc = Json2Xml(Tab["data"]);
+            XmlDocument xmlDoc = new XmlDocument();
+
+            return (xmlDoc);
+		}
+		public object json_部門収支_XML(String Json)
+		{
+
+			Dictionary<string, dynamic> Tab = new Dictionary<string, dynamic>();
+
+
+			Json = "{dispCmd:'EMG',year:'2021', mCnt:'4', fixLevel:'70' ,name:''}";
+			//Json = "{dispCmd:統括一覧											,year:'2021', mCnt:4, fixLevel:70 }";
+			//Json = "{dispCmd:部門一覧	,secMode:'開発'							,year:'2021', mCnt:4, fixLevel:70 }";
+			//Json = "{dispCmd:課一覧		,secMode:'開発'	,dispMode:'営業本部'	,year:'2021', mCnt:4, fixLevel:70 }";
+			//var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
+			var cmd = checkCmd(Json);
+
+			//int mCnt = o_json.mCnt;
+   //         int year = o_json.year;
+   //         int s_yymm = ((year - 1) * 100 + 10);
+   //         int e_yymm = yymmAdd(s_yymm, mCnt - 1);
+			//o_json.s_yymm = s_yymm;
+
+			Tab.Add("Info", cmd);
+			Tab.Add("data", initTab(cmd));
+
+
+            //json_groupPlan(cmd, Tab["data"]);							// 計画・予測データ取得
+            //json_uriageYosoku(cmd, Tab["data"]);                       // 売上予測データ取得
+            json_uriageActual(cmd, Tab["data"]);                       // 売上実績データ取得
+            //json_accountActual(cmd, Tab["data"]);                          // 費用実績データ取得
+            //json_accountCost(cmd, Tab["data"]);                         // 費用付替
+
+            //json_salesCost(cmd, Tab["data"]);								// 売上付替
+
+            //if (cmd.dispMode != "全社")
+            //{
+            //    json_groupCost(cmd, Tab["data"]);							// 部門固定費データ取得
+            //}
+            //memberPlan(Json, Tab["data"]);
+            //memberActual(Json, Tab["data"]);
+
+
+            return (Tab);
+		}
 		cmd_部門収支 checkCmd(string Json)
-        {
+		{
 			var o_json = JsonConvert.DeserializeObject<para_部門収支>(Json);
 			string[] work = o_json.name.Split('/');
 
 			string 統括 = work[0];
-			string 部 = ( work.Length > 1 ? work[1] : "");
-			string 課 = ( work.Length > 2 ? work[2] : "");
+			string 部 = (work.Length > 1 ? work[1] : "");
+			string 課 = (work.Length > 2 ? work[2] : "");
 			int s_yymm = ((o_json.year - 1) * 100 + 10);
 
-			cmd_部門収支 cmd = new cmd_部門収支() {
-				year = o_json.year,				
+			cmd_部門収支 cmd = new cmd_部門収支()
+			{
+				year = o_json.year,
 				mCnt = o_json.mCnt,
 				fixLevel = o_json.fixLevel,
 				s_yymm = s_yymm,
@@ -79,7 +106,7 @@ namespace WebApi_project.hostProc
 				課 = 課
 			};
 
-            switch (o_json.dispCmd)
+			switch (o_json.dispCmd)
 			{
 				case "EMG":
 					cmd.dispMode = "全社";
@@ -93,7 +120,8 @@ namespace WebApi_project.hostProc
 					cmd.secMode = "開発";
 					cmd.haifuMode = true;
 					break;
-				case "部門一覧":;
+				case "部門一覧":
+					;
 					cmd.dispMode = "部門";
 					cmd.統括 = 統括;
 					cmd.listMode = "一覧";
@@ -158,47 +186,6 @@ namespace WebApi_project.hostProc
 					break;
 			}
 			return (cmd);
-		}
-		public object json_部門収支_XML(String Json)
-		{
-
-			Dictionary<string, dynamic> Tab = new Dictionary<string, dynamic>();
-
-
-			Json = "{dispCmd:'EMG',year:'2021', mCnt:'4', fixLevel:'70' ,name:''}";
-			//Json = "{dispCmd:統括一覧											,year:'2021', mCnt:4, fixLevel:70 }";
-			//Json = "{dispCmd:部門一覧	,secMode:'開発'							,year:'2021', mCnt:4, fixLevel:70 }";
-			//Json = "{dispCmd:課一覧		,secMode:'開発'	,dispMode:'営業本部'	,year:'2021', mCnt:4, fixLevel:70 }";
-			//var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
-			var cmd = checkCmd(Json);
-
-			//int mCnt = o_json.mCnt;
-   //         int year = o_json.year;
-   //         int s_yymm = ((year - 1) * 100 + 10);
-   //         int e_yymm = yymmAdd(s_yymm, mCnt - 1);
-			//o_json.s_yymm = s_yymm;
-
-			Tab.Add("Info", cmd);
-			Tab.Add("data", initTab(cmd));
-
-
-            json_groupPlan(cmd, Tab["data"]);							// 計画・予測データ取得
-            json_uriageYosoku(cmd, Tab["data"]);                       // 売上予測データ取得
-            json_uriageActual(cmd, Tab["data"]);                       // 売上実績データ取得
-            json_accountActual(cmd, Tab["data"]);                          // 費用実績データ取得
-            json_accountCost(cmd, Tab["data"]);                         // 費用付替
-
-            json_salesCost(cmd, Tab["data"]);								// 売上付替
-
-            if (cmd.dispMode != "全社")
-            {
-                json_groupCost(cmd, Tab["data"]);							// 部門固定費データ取得
-            }
-            //memberPlan(Json, Tab["data"]);
-            //memberActual(Json, Tab["data"]);
-
-
-            return (Tab);
 		}
 		public object json_groupPlan(cmd_部門収支 cmd, Dictionary<string, dynamic> Tab)
 		{
@@ -1346,16 +1333,6 @@ namespace WebApi_project.hostProc
 
 			return (dataTab);
 		}
-		public XmlDocument 部門収支_XML(String Json)
-        {
-
-			List<db_account> json_data = (List<db_account>)json_部門収支_XML(Json);
-
-            XmlDocument xmlDoc = Json2Xml(json_data);
-            //XmlDocument xmlDoc = new XmlDocument();
-
-            return (xmlDoc);
-        }
 
 		/*
             groupPlan(DB, Tab, yymm, mCnt, dispMode, dispName, listMode)						// 計画・予測データ取得

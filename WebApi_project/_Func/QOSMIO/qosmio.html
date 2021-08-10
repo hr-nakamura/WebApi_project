@@ -10,7 +10,7 @@
     <script src="/WebApi/project/_home/debug/jquery.my.debug.js" type="text/javascript"></script>
 
     <script type="text/javascript">
-        var WebApi_url = "/WebApi/project/api/values";
+        var WebApi_url = "/WebApi/project/api/xml";
         var WebApi_url_json = "/WebApi/project/api/json";
         var para = {
             visitBBS: "2021/07/01 10:00:00",
@@ -62,7 +62,7 @@
                 data: options,
                 dataType: 'text',
                 dataFilter: function (data, type) {
-                    data = data.replace(/\\/g, "").replace(/\"$/, "").replace(/^\"/, "");
+                    //data = data.replace(/\\/g, "").replace(/\"$/, "").replace(/^\"/, "");
                     return (data);
                 },
                 //contentType: "application/json",
@@ -70,7 +70,7 @@
                 //contentType: "text/plain",
                 async: false
             }).done(function (data, status, xhr) {
-                returnValue = data;
+                returnValue = $.str2xml(data);
                 //$.alert(returnValue);
             }).fail(function (xhr, status, error) {
                 returnValue = status;
@@ -130,8 +130,9 @@
                 //contentType: "text/plain",
                 async: false
             }).done(function (data, status, xhr) {
-                returnValue = data.replace(/\"$/, "").replace(/^\"/, "");
+                //returnValue = data.replace(/\"$/, "").replace(/^\"/, "");
                 //$.alert(returnValue);
+                returnValue = $.str2xml(data);
             }).fail(function (xhr, status, error) {
                 returnValue = status;
                 //$.alert("error:" + xhr.statusText);

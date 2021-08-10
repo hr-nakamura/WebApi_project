@@ -6,6 +6,7 @@
     <script src="Scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
 
     <script src="Scripts/json2.js" type="text/javascript"></script>
+    <script src="Scripts/jquery.my.webapi.js" type="text/javascript"></script>
     <script src="Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
     <script src="debug/jquery.my.debug.js" type="text/javascript"></script>
 
@@ -22,7 +23,7 @@
         var user_mode = "json";
         var WebApi_url = "/WebApi/project/api/values";
         var WebApi_url_json = "/WebApi/project/api/json";
-        var Send_Option = { limitYear : 2019, visitBBS : "2021/07/01 10:00:00" };
+        var Send_Option = { limitYear: 2019, visitBBS: "2021/07/01 10:00:00" };
         var mailPara = { mailAddr: "azuma@psl-em.co.jp" };
     </script>
     <script type="text/javascript">
@@ -39,17 +40,17 @@
             WebApi_url_test = hostName + "/WebApi/project/api/test";
             WebApi_url_xml = hostName + "/WebApi/project/api/xml";
 
-            var xmlDoc = call_ajax_xml(WebApi_url_xml);
-            //var x = $.xml2str(xmlDoc);
+            var xmlDoc = $.call_ajax_get(WebApi_url_xml);
+            var x = $.xml2str(xmlDoc);
 
             //$.alert.json(memberInfo);
-            //var memberInfo = call_ajax_get( WebApi_url_json, mailPara);
+            //var memberInfo = $.call_ajax_get( WebApi_url_json, mailPara);
             //$.alert.json(memberInfo);
 
             // methodListの取得
-            var methodList = call_ajax_api("GET", WebApi_url);
-            var menu_Xml = $.str2xml(methodList);
-            //var menu_Xml = methodList;
+            var methodList = $.call_ajax_api("GET", WebApi_url);
+            //var menu_Xml = $.str2xml(methodList);
+            var menu_Xml = methodList;
 
             var menu_data = $.loadXMLDoc("menu.xml");
 
@@ -88,14 +89,15 @@
 
                 if (user_mode == "json") {
                     var value = item + "/json_" + func;
-                    var Str = call_ajax_api_json("GET", WebApi_url_json, value, Send_Option);
+                    var Str = $.call_ajax_api_json("GET", WebApi_url_json, value, Send_Option);
                     //$.alert.json(Str);
                     $.storage("viewStr", JSON.stringify(Str, null, 2));
                     $("iframe.iframe_content").attr("src", "Util/viewValue.html");
                 }
                 else {
                     var value = item + "/" + func;
-                    var Str = call_ajax_api("GET", WebApi_url, value, Send_Option);
+                    var xmlDoc = $.call_ajax_api("GET", WebApi_url, value, Send_Option);
+                    var Str = $.xml2str(xmlDoc);
                     //StrOut(Str);
                     $.storage("viewStr", Str);
                     $("iframe.iframe_content").attr("src", "Util/viewValue.html");
@@ -105,100 +107,6 @@
                 var value = o.value;
                 $("iframe.iframe_content").attr("src", value);
             }
-        }
-    </script>
-    <script type="text/javascript">
-        function call_ajax_api(mode, url, item, json, callback) {
-            //$.alert("call_ajax_mode[" + mode + "]", url);
-            window.status = "call_ajax_api[" + mode + "]";
-            var options = {
-                Item: item,
-                Json: JSON.stringify(json)
-            };
-            var result = $.ajax({
-                url: url,
-                type: mode,
-                data: options,
-                dataType: 'text',
-                dataFilter: function (data, type) {
-                    //data = data.replace(/\\/g, "").replace(/\"$/, "").replace(/^\"/, "");
-                    return (data);
-                },
-                async: false
-            }).done(function (data, status, xhr) {
-                returnValue = data;
-            }).fail(function (xhr, status, error) {
-                returnValue = status;
-                window.status = xhr.statusText;
-                $.alert("call_ajax_api error:" + xhr.statusText);
-            });
-            return (returnValue);
-        }
-        function call_ajax_api_json(mode, url, item, json, callback) {
-            window.status = "call_ajax_api_json[" + mode + "]";
-            var options = {
-                Item: item,
-                Json: JSON.stringify(json)
-            };
-            var result = $.ajax({
-                url: url,
-                type: mode,
-                data: options,
-                dataType: 'json',
-                dataFilter: function (data, type) {
-                    return (data);
-                },
-                async: false
-            }).done(function (data, status, xhr) {
-                returnValue = data;
-            }).fail(function (xhr, status, error) {
-                returnValue = status;
-                window.status = xhr.statusText;
-                $.alert("call_ajax_api_json error:" + xhr.statusText);
-            });
-            return (returnValue);
-        }
-        function call_ajax_get(url, options) {
-            $.debug("call_ajax_get", url);
-            window.status = "call_ajax_get";
-            var result = $.ajax({
-                url: url,
-                type: "GET",
-                data: options,
-                dataType: 'text',
-                dataFilter: function (data, type) {
-                    return (data);
-                },
-                async: false
-            }).done(function (data, status, xhr) {
-                returnValue = data;
-            }).fail(function (xhr, status, error) {
-                returnValue = status;
-                //$.alert("error:" + xhr.statusText);
-                window.status = "error:" + xhr.statusText;
-            });
-            return (returnValue);
-        }
-        function call_ajax_xml(url, options) {
-            $.debug("call_ajax_xml", url);
-            window.status = "call_ajax_xml";
-            var result = $.ajax({
-                url: url,
-                type: "GET",
-                data: options,
-                dataType: 'xml',
-                dataFilter: function (data, type) {
-                    return (data);
-                },
-                async: false
-            }).done(function (data, status, xhr) {
-                returnValue = data;
-            }).fail(function (xhr, status, error) {
-                returnValue = status;
-                //$.alert("error:" + xhr.statusText);
-                window.status = "error:" + xhr.statusText;
-            });
-            return (returnValue);
         }
     </script>
     <script type="text/javascript">
