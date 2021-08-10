@@ -65,25 +65,18 @@ namespace WebApi_project.hostProc
 			string[] work = o_json.name.Split('/');
 
 			string 統括 = work[0];
-			string 部 = work[1];
-			string 課 = work[2];
+			string 部 = ( work.Length > 1 ? work[1] : "");
+			string 課 = ( work.Length > 2 ? work[2] : "");
 			int s_yymm = ((o_json.year - 1) * 100 + 10);
 
-			cmd_部門収支 cmd = new cmd_部門収支(); 
-
-			Dictionary<string, dynamic> o = new Dictionary<string, dynamic>() {
-				{ "dispMode","" },
-				{ "secMode","" },
-				{ "listMode","" },
-				{ "haifuMode","" },
-
-				{ "dispName","" },
-
-				{ "year",o_json.year },
-				{ "mCnt",o_json.mCnt },
-				{ "s_yymm",s_yymm },
-				{ "c_yymm","" },
-				{ "fixLevel",o_json.fixLevel }
+			cmd_部門収支 cmd = new cmd_部門収支() {
+				year = o_json.year,				
+				mCnt = o_json.mCnt,
+				fixLevel = o_json.fixLevel,
+				s_yymm = s_yymm,
+				統括 = 統括,
+				部 = 部,
+				課 = 課
 			};
 
             switch (o_json.dispCmd)
@@ -91,6 +84,7 @@ namespace WebApi_project.hostProc
 				case "EMG":
 					cmd.dispMode = "全社";
 					cmd.listMode = "詳細";
+					cmd.secMode = "";
 					cmd.haifuMode = false;
 					break;
 				case "統括一覧":
@@ -171,7 +165,7 @@ namespace WebApi_project.hostProc
 			Dictionary<string, dynamic> Tab = new Dictionary<string, dynamic>();
 
 
-			Json = "{dispCmd:'EMG',year:'2021', mCnt:'4', fixLevel:'70' }";
+			Json = "{dispCmd:'EMG',year:'2021', mCnt:'4', fixLevel:'70' ,name:''}";
 			//Json = "{dispCmd:統括一覧											,year:'2021', mCnt:4, fixLevel:70 }";
 			//Json = "{dispCmd:部門一覧	,secMode:'開発'							,year:'2021', mCnt:4, fixLevel:70 }";
 			//Json = "{dispCmd:課一覧		,secMode:'開発'	,dispMode:'営業本部'	,year:'2021', mCnt:4, fixLevel:70 }";
@@ -376,7 +370,7 @@ namespace WebApi_project.hostProc
 
 			//Json = "{year:'2020',secMode:'開発',dispMode:'統括'}";
 
-			var fixLevel = o_json.fixLevel;
+			var fixLevel = cmd.fixLevel;
 
 			string dispMode = cmd.dispMode;
 
@@ -537,7 +531,7 @@ namespace WebApi_project.hostProc
 
 			//Json = "{year:'2020',secMode:'開発',dispMode:'統括'}";
 
-			var fixLevel = o_json.fixLevel;
+			var fixLevel = cmd.fixLevel;
 
 			string dispMode = cmd.dispMode;
 
@@ -668,7 +662,7 @@ namespace WebApi_project.hostProc
 
 			var fixLevel = cmd.fixLevel;
 
-			string dispMode = o_json.dispMode;
+			string dispMode = cmd.dispMode;
 
 			int mCnt = 12;                  // 予測・計画は12ヶ月分取得
 			int year = cmd.year;

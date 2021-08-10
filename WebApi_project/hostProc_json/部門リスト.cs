@@ -25,7 +25,7 @@ namespace WebApi_project.hostProc
             return (xmlDoc);
         }
 
-        public Dictionary<string, group> json_部門リスト(Dictionary<string, dynamic> o_json)
+        public Dictionary<string, group> json_部門リスト(cmd_部門収支 o_json)
         {
             //Json = "{year:'2021',secMode:'全社',dispMode:'全社'}";
             // secMode : 開発、間接、全社
@@ -35,15 +35,15 @@ namespace WebApi_project.hostProc
 
             return (Tab);
         }
-        List<db_group> get_group_data(Dictionary<string,dynamic> o_json)
+        List<db_group> get_group_data(cmd_部門収支 o_json)
         {
             List<db_group> dataTab = new List<db_group>();
             Dictionary<string, group> Tab = new Dictionary<string, group>();
             SqlConnection DB;
             Dictionary<string, object> Tab1 = new Dictionary<string, object>();
-            string secMode = o_json["secMode"];          // 開発、間接、全社
-            string dispMode = o_json["dispMode"];        // 統括、
-            int year = o_json["year"];
+            string secMode = o_json.secMode;          // 開発、間接、全社
+            string dispMode = o_json.dispMode;        // 統括、
+            int year = o_json.year;
             string s_yymm = ((year -1)*100 + 10).ToString();
             string e_yymm = ((year * 100) + 9).ToString();
             //string secNum = "";
