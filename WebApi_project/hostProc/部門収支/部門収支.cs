@@ -51,7 +51,7 @@ namespace WebApi_project.hostProc
 			var dataTab = Tab["data"];
 			foreach(var sec in dataTab)
             {
-				var name = sec.Key;
+				var targetName = sec.Key;
 				var targetTab = sec.Value;
 				var target = checkData(targetTab, "実績", "売上高", "売上");
 
@@ -59,7 +59,7 @@ namespace WebApi_project.hostProc
 				{
 					int value = target[i];
 					var s = value.ToString();
-					Debug.Write("ABC", name, i.ToString(), s);
+					Debug.Write("ABC", targetName, i.ToString(), s);
 				}
 
 			}
