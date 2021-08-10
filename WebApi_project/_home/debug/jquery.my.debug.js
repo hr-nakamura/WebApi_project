@@ -147,6 +147,7 @@
 
     function getFileName() {
         var str = $(location).attr('pathname');
+        var str = decodeURI(str);
         var name = str.slice(str.lastIndexOf("/") + 1);
         return (name);
     }
