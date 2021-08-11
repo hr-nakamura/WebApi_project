@@ -35,39 +35,88 @@ namespace WebApi_project.hostProc
 		{
 			Json = "{dispCmd:'EMG',year:'2021', mCnt:'4', fixLevel:'70' ,name:''}";
 
-			Dictionary<string, dynamic> Tab = (Dictionary<string, dynamic>)json_部門収支_XML(Json);
+			List<string> func = new List<string>(){ "計画","予測","実績","配賦"};
 
-			//foreach (KeyValuePair<string, dynamic> item in Tab["data"])
-			//{
-			//	//Debug.Write("ABC",item.Value["実績"]["売上高"]["売上"][0]);
-			//	//Debug.Write(item.Key, item.Value["実績"].Value);
-			//	for ( var i = 0; i < 12; i++){
-			//		int value = item.Value["実績"]["売上高"]["売上"][i];
-			//		var s = value.ToString();
-			//		Debug.Write("ABC",i.ToString(),s);
-			//	}
+            string classPath = this.GetType().FullName;                                         //クラスパスの取得
+            string className = this.GetType().Name;                                             //クラス名の取得
+            string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;           //メソッド名の取得
+																								//Debug.WriteLog(classPath);
+			string fName = @"D:\GitHub\hr-nakamura\WebApi_project\WebApi_project\hostProc\部門収支\EMG.xml";
 
-			//}
-			var dataTab = Tab["data"];
-			foreach(var sec in dataTab)
+            var xmlDoc = new XmlDocument();
+            xmlDoc.Load(fName);
+
+			var node = xmlDoc.SelectNodes("//項目/月");
+			for( var i = 0; i < node.Count; i++)
             {
-				var targetName = sec.Key;
-				var targetTab = sec.Value;
-				var target = checkData(targetTab, "実績", "売上高", "売上");
+                node[i].InnerText = "0";
 
-				for (var i = 0; i < 12; i++)
-				{
-					int value = target[i];
-					var s = value.ToString();
-					Debug.Write("ABC", targetName, i.ToString(), s);
-				}
+            }
 
-			}
+			Dictionary<string, dynamic> Tab = (Dictionary<string, dynamic>)json_部門収支_XML(Json);
+			Dictionary<string, dynamic> dataTab = Tab["data"];
+			string secName;
+			string 大項目;
+			string 項目;
+
+			foreach (KeyValuePair<string, dynamic> item1 in dataTab)
+            {
+				secName = item1.Key;
+                foreach (string funcName in func)
+                {
+                    foreach (KeyValuePair<string, dynamic> item3 in dataTab[secName][funcName])
+					{
+						大項目 = item3.Key;
+						foreach (KeyValuePair<string, dynamic> item4 in dataTab[secName][funcName][大項目])
+                        {
+							項目 = item4.Key;
+							int[] targetTab = item4.Value;
+							Debug.Write("target",secName, funcName,大項目, 項目,(targetTab.Length).ToString());
+							// ここでxmlノードを探してデータ設定する
+
+						}
+					}
 
 
+                }
+            }
+
+
+			/*
+						foreach (KeyValuePair<string, dynamic> item in Tab["data"])
+						{
+							//Debug.Write("ABC",item.Value["実績"]["売上高"]["売上"][0]);
+							//Debug.Write(item.Key, item.Value["実績"].Value);
+							for (var i = 0; i < 12; i++)
+							{
+								int value = item.Value["実績"]["売上高"]["売上"][i];
+								var s = value.ToString();
+								Debug.Write("ABC", i.ToString(), s);
+							}
+
+						}
+			*/
+			/*
+						var dataTab = Tab["data"];
+						foreach(var sec in dataTab)
+						{
+							var targetName = sec.Key;
+							var targetTab = sec.Value;
+							var target = checkData(targetTab, "実績", "売上高", "売上");
+
+							for (var i = 0; i < 12; i++)
+							{
+								int value = target[i];
+								var s = value.ToString();
+								Debug.Write("ABC", targetName, i.ToString(), s);
+							}
+
+						}
+
+			*/
 
 			//XmlDocument xmlDoc = Json2Xml(Tab["data"]);
-			XmlDocument xmlDoc = new XmlDocument();
+			//XmlDocument xmlDoc = new XmlDocument();
 
             return (xmlDoc);
 		}

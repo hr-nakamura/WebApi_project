@@ -83,6 +83,7 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="hostProc\projectBBS\projectData_XML.xml" />
+    <Content Include="hostProc\部門収支\EMG.xml" />
     <Content Include="_Func\部門収支\account.css" />
     <Content Include="_Func\部門収支\EMG.xml" />
     <Content Include="_Func\部門収支\EMG収支計画.html" />
