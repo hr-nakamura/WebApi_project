@@ -37,19 +37,14 @@ namespace WebApi_project.hostProc
 
 			List<string> func = new List<string>(){ "計画","予測","実績","配賦"};
 
-            string classPath = this.GetType().FullName;                                         //クラスパスの取得
-            string className = this.GetType().Name;                                             //クラス名の取得
-            string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;           //メソッド名の取得
-																								//Debug.WriteLog(classPath);
-			string fName = @"D:\GitHub\hr-nakamura\WebApi_project\WebApi_project\hostProc\部門収支\EMG.xml";
-
+			string fName = getAbsoluteFileName("/hostProc/部門収支/EMG.xml");
             var xmlDoc = new XmlDocument();
             xmlDoc.Load(fName);
 
 			var node = xmlDoc.SelectNodes("//項目/月");
 			for( var i = 0; i < node.Count; i++)
             {
-                node[i].InnerText = "0";
+                //node[i].InnerText = "0";
 
             }
 

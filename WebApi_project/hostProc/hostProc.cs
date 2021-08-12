@@ -81,6 +81,13 @@ namespace WebApi_project.hostProc
 
 
         }
+        public string getAbsoluteFileName( string fileName )
+        {
+            HttpContext context = HttpContext.Current;
+            string AppPath = context.Request.ApplicationPath;
+            string iFile = context.Server.MapPath(AppPath + fileName);
+            return (iFile);
+        }
         public SqlDataReader dbRead(SqlConnection DB, string sql)
         {
             SqlCommand cmd = null;
