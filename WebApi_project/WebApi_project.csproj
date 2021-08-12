@@ -114,6 +114,7 @@
     <Content Include="_Func\inc\sub_cmn.xsl" />
     <Content Include="_Func\部門収支\統括.xml" />
     <Content Include="_Func\部門収支\部門収支.html" />
+    <Content Include="_Func\部門収支\部門収支.xsl" />
     <Content Include="_home\debug\jquery.my.debug.js" />
     <Content Include="_home\images\bg00.gif" />
     <Content Include="_home\images\EM.png" />
