@@ -6,6 +6,7 @@ using System.Reflection;
 using Newtonsoft.Json;
 using System.Data.SqlClient;
 using System.Collections.Generic;
+using System.Linq;
 
 using WebApi_project.Models;
 
@@ -46,7 +47,9 @@ namespace WebApi_project.hostProc
 				{ "A:A1" },
 				{ "B:B2" }
 			};
-			XmlDocument xmlDoc = makeBaseXML(secInfo);
+
+
+			XmlDocument xmlDoc = makeBaseXML(dataTab);
 			string secName;
 			string 大項目;
 			string 項目;
@@ -73,11 +76,9 @@ namespace WebApi_project.hostProc
 			}
 		return (xmlDoc);
 		}
-		XmlDocument makeBaseXML(List<string> work)
+		XmlDocument makeBaseXML(Dictionary<string, dynamic> dataTab)
         {
-
-
-            string fName = getAbsoluteFileName("/funcProc/部門収支/EMG.xml");
+			string fName = getAbsoluteFileName("/funcProc/部門収支/EMG.xml");
 			var xmlDoc = new XmlDocument();
 			xmlDoc.Load(fName);
 			XmlNode topNode = xmlDoc.SelectSingleNode("//全体");
@@ -86,33 +87,35 @@ namespace WebApi_project.hostProc
 			for (var i = 0; i < node.Count; i++)
 			{
 				node[i].InnerText = "0";
-
 			}
 
 
-			var x = work.Count;
-			for( var i = 1; i < x; i++)
+			for( var i = 1; i < dataTab.Count; i++)
 			{
 				XmlNode Node = secNode.CloneNode(true);
 				topNode.AppendChild(Node);
 			}
 
+			// キーの配列に変換
+			var keyArray = dataTab.Keys.ToArray();
+
+			// 値の配列に変換
+			var valueArray = dataTab.Values.ToArray();
+
 			var NodeList = xmlDoc.SelectNodes("//グループ");
 			var No = 0;
 			foreach( XmlElement elem in NodeList)
             {
-				string[] x1 = work[No++].Split(':');
-				elem.SetAttribute("name", x1[0]);
-				elem.SetAttribute("kind", x1[1]);
-			}
-			//foreach (KeyValuePair<string, string> item in work)
-			//{
-   //             (XmlElement)NodeList[0].SetAttribute("kind", item.Key);
-   //             secNode.SetAttribute("name", item.Value);
-			//}
-
-
-
+				XmlNode nameNode = elem.SelectSingleNode("名前");
+				string name = keyArray[No];
+				nameNode.InnerText = name;
+				string mode = (valueArray[No]["直間"] == "2" ? "間接" : "開発");
+				string kind = (valueArray[No]["種別"] == "間接" ? "間接" : "開発");			// 間接・直接
+				elem.SetAttribute("name", name);
+				elem.SetAttribute("kind", mode);
+				elem.SetAttribute("kind2", valueArray[No]["種別"]);
+				No++;
+            }
 			return (xmlDoc);
 		}
 		void checkNode(XmlDocument xmlDoc, string secName, string funcName, string 大項目, string 項目, int[] values)
@@ -157,8 +160,8 @@ namespace WebApi_project.hostProc
 
 			Dictionary<string, dynamic> Tab = new Dictionary<string, dynamic>();
 
-
 			Json = "{dispCmd:'統括一覧',year:'2021', mCnt:'4', fixLevel:'70' ,name:''}";
+
 			//Json = "{dispCmd:統括一覧											,year:'2021', mCnt:4, fixLevel:70 }";
 			//Json = "{dispCmd:部門一覧	,secMode:'開発'							,year:'2021', mCnt:4, fixLevel:70 }";
 			//Json = "{dispCmd:課一覧		,secMode:'開発'	,dispMode:'営業本部'	,year:'2021', mCnt:4, fixLevel:70 }";

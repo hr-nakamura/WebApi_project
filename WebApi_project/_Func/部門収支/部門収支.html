@@ -76,7 +76,7 @@
             xmlDoc = $.WebApi("GET", url, "部門収支/部門収支_XML",json);
 
 
-            var xsl_name1 = "EMG部門収支.xsl";
+            var xsl_name1 = "部門収支.xsl";
             var xslDoc = $.loadXMLDoc(xsl_name1);
 
             var Buff = $.transformNode(xmlDoc, xslDoc);
