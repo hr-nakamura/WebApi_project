@@ -40,7 +40,7 @@
             WebApi_url_test = hostName + "/WebApi/project/api/test";
             WebApi_url_xml = hostName + "/WebApi/project/api/xml";
 
-            var xmlDoc = $.call_webapi_get(WebApi_url_xml);
+            var xmlDoc = $.call_WebApi_get(WebApi_url_xml);
             var x = $.xml2str(xmlDoc);
 
             //$.alert.json(memberInfo);
@@ -48,7 +48,7 @@
             //$.alert.json(memberInfo);
 
             // methodListの取得
-            var methodList = $.call_webapi("GET", WebApi_url);
+            var methodList = $.call_WebApi("GET", WebApi_url);
             //var menu_Xml = $.str2xml(methodList);
             var menu_Xml = methodList;
 
