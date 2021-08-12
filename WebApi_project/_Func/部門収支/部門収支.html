@@ -30,7 +30,6 @@
     </script>
 
     <script type="text/javascript">
-        //var url = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp";				// 地域別
         var url = "/WebApi/project/_Func/部門収支/EMG.xml";
         var para = {
             dispCmd: "EMG",
@@ -71,10 +70,10 @@
 
             $.debug("para", paraStr);
 
-                        xmlDoc = $.loadXMLDoc("統括.xml");
+//            xmlDoc = $.loadXMLDoc("統括.xml");
             var url = "/webapi/project/api/xml";
             var json = "{year:2021}";
-            //xmlDoc = $.WebApi("GET", url, "部門収支/部門収支_XML",json);
+            xmlDoc = $.WebApi("GET", url, "部門収支/部門収支_XML",json);
 
 
             var xsl_name1 = "EMG部門収支.xsl";

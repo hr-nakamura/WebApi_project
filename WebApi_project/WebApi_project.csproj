@@ -82,22 +82,22 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
-    <Content Include="hostProc\projectBBS\projectData_XML.xml" />
-    <Content Include="hostProc\部門収支\EMG.xml" />
+    <Content Include="funcProc\projectBBS\projectData_XML.xml" />
+    <Content Include="funcProc\部門収支\EMG.xml" />
     <Content Include="_Func\部門収支\account.css" />
     <Content Include="_Func\部門収支\EMG.xml" />
     <Content Include="_Func\部門収支\EMG収支計画.html" />
     <Content Include="_Func\部門収支\EMG部門収支.xsl" />
-    <Content Include="hostProc\部門収支\部門収支_XML.asp" />
-    <None Include="hostProc\QOSMIO\A_EMG.json" />
-    <None Include="hostProc\QOSMIO\A_統括.json" />
+    <Content Include="funcProc\部門収支\部門収支_XML.asp" />
+    <None Include="funcProc\QOSMIO\A_EMG.json" />
+    <None Include="funcProc\QOSMIO\A_統括.json" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="hostProc\QOSMIO\部門リストデータ.json" />
-    <Content Include="hostProc\QOSMIO\A_部門.json" />
-    <Content Include="hostProc\QOSMIO\A_課.json" />
-    <Content Include="hostProc\QOSMIO\B_EMG.json" />
-    <Content Include="hostProc\QOSMIO\B_統括.json" />
+    <Content Include="funcProc\QOSMIO\部門リストデータ.json" />
+    <Content Include="funcProc\QOSMIO\A_部門.json" />
+    <Content Include="funcProc\QOSMIO\A_課.json" />
+    <Content Include="funcProc\QOSMIO\B_EMG.json" />
+    <Content Include="funcProc\QOSMIO\B_統括.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -150,7 +150,7 @@
     <Content Include="_home\debug\debug.ashx" />
     <Content Include="_home\ajax.xlsx" />
     <Content Include="_home\Util\viewJson-edge\jquery.json-viewer.js" />
-    <Content Include="hostProc\部門収支\部門収支.json" />
+    <Content Include="funcProc\部門収支\部門収支.json" />
     <Content Include="_home\json.json" />
     <Content Include="_home\Scripts\jquery.my.webapi.js" />
   </ItemGroup>
@@ -169,15 +169,15 @@
     <Compile Include="hostProc\hostWeb.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="hostProc\projectBBS\projectList.cs" />
-    <Compile Include="hostProc\QOSMIO\test.cs" />
-    <Compile Include="hostProc\売上予測\売上予実_分類.cs" />
-    <Compile Include="hostProc\売上予測\売上予実_新規.cs" />
-    <Compile Include="hostProc\売上予測\売上予実_部門.cs" />
-    <Compile Include="hostProc\売上予測\売上目標_部門.cs" />
-    <Compile Include="hostProc\要員情報\要員一覧.cs" />
-    <Compile Include="hostProc\費用予測\費用予測.cs" />
-    <Compile Include="hostProc\部門収支\部門収支.cs" />
+    <Compile Include="funcProc\projectBBS\projectList.cs" />
+    <Compile Include="funcProc\QOSMIO\test.cs" />
+    <Compile Include="funcProc\売上予測\売上予実_分類.cs" />
+    <Compile Include="funcProc\売上予測\売上予実_新規.cs" />
+    <Compile Include="funcProc\売上予測\売上予実_部門.cs" />
+    <Compile Include="funcProc\売上予測\売上目標_部門.cs" />
+    <Compile Include="funcProc\要員情報\要員一覧.cs" />
+    <Compile Include="funcProc\費用予測\費用予測.cs" />
+    <Compile Include="funcProc\部門収支\部門収支.cs" />
     <Compile Include="hostProc_json\jsonProc.cs" />
     <Compile Include="hostProc_json\memberInfo.cs" />
     <Compile Include="hostProc_json\部門リスト.cs" />

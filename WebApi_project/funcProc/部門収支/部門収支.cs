@@ -33,37 +33,34 @@ namespace WebApi_project.hostProc
     {
 		public XmlDocument 部門収支_XML(String Json)
 		{
-			Json = "{dispCmd:'EMG',year:'2021', mCnt:'4', fixLevel:'70' ,name:''}";
+			Json = "{dispCmd:'統括一覧',year:'2021', mCnt:'4', fixLevel:'70' ,name:''}";
 
 			List<string> func = new List<string>(){ "計画","予測","実績","配賦"};
 
-			string fName = getAbsoluteFileName("/hostProc/部門収支/EMG.xml");
-            var xmlDoc = new XmlDocument();
-            xmlDoc.Load(fName);
 
-			var node = xmlDoc.SelectNodes("//項目/月");
-			for( var i = 0; i < node.Count; i++)
-            {
-                node[i].InnerText = "0";
-
-            }
 
 			Dictionary<string, dynamic> Tab = (Dictionary<string, dynamic>)json_部門収支_XML(Json);
 			Dictionary<string, dynamic> dataTab = Tab["data"];
+			List<string> secInfo = new List<string>()
+			{
+				{ "A:A1" },
+				{ "B:B2" }
+			};
+			XmlDocument xmlDoc = makeBaseXML(secInfo);
 			string secName;
 			string 大項目;
 			string 項目;
 
 			foreach (KeyValuePair<string, dynamic> item1 in dataTab)
-            {
+			{
 				secName = item1.Key;
-                foreach (string funcName in func)
-                {
-                    foreach (KeyValuePair<string, dynamic> item3 in dataTab[secName][funcName])
+				foreach (string funcName in func)
+				{
+					foreach (KeyValuePair<string, dynamic> item3 in dataTab[secName][funcName])
 					{
 						大項目 = item3.Key;
 						foreach (KeyValuePair<string, dynamic> item4 in dataTab[secName][funcName][大項目])
-                        {
+						{
 							項目 = item4.Key;
 							int[] targetTab = item4.Value;
 							//Debug.noWrite("target",secName, funcName,大項目, 項目,(targetTab.Length).ToString());
@@ -72,14 +69,51 @@ namespace WebApi_project.hostProc
 
 						}
 					}
+				}
+			}
+		return (xmlDoc);
+		}
+		XmlDocument makeBaseXML(List<string> work)
+        {
 
 
-                }
-            }
+            string fName = getAbsoluteFileName("/funcProc/部門収支/EMG.xml");
+			var xmlDoc = new XmlDocument();
+			xmlDoc.Load(fName);
+			XmlNode topNode = xmlDoc.SelectSingleNode("//全体");
+			XmlElement secNode = (XmlElement)xmlDoc.SelectSingleNode("//グループ");
+			var node = xmlDoc.SelectNodes("//項目/月");
+			for (var i = 0; i < node.Count; i++)
+			{
+				node[i].InnerText = "0";
+
+			}
+
+
+			var x = work.Count;
+			for( var i = 1; i < x; i++)
+			{
+				XmlNode Node = secNode.CloneNode(true);
+				topNode.AppendChild(Node);
+			}
+
+			var NodeList = xmlDoc.SelectNodes("//グループ");
+			var No = 0;
+			foreach( XmlElement elem in NodeList)
+            {
+				string[] x1 = work[No++].Split(':');
+				elem.SetAttribute("name", x1[0]);
+				elem.SetAttribute("kind", x1[1]);
+			}
+			//foreach (KeyValuePair<string, string> item in work)
+			//{
+   //             (XmlElement)NodeList[0].SetAttribute("kind", item.Key);
+   //             secNode.SetAttribute("name", item.Value);
+			//}
 
 
 
-            return (xmlDoc);
+			return (xmlDoc);
 		}
 		void checkNode(XmlDocument xmlDoc, string secName, string funcName, string 大項目, string 項目, int[] values)
 		{

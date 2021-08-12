@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Xml;
 using System.Reflection;
+using System.Xml;
 
 using DebugHost;
 
@@ -14,7 +14,7 @@ namespace WebApi_project.hostProc
         }
         ~hostProcEntry()
         {
-        //Debug.WriteLog("hostProcEntry End");
+            //Debug.WriteLog("hostProcEntry End");
         }
         public XmlDocument Entry(String Item, String Json)
         {
@@ -27,7 +27,7 @@ namespace WebApi_project.hostProc
 
                 String nameSpace = "WebApi_project.hostProc";
 
-                Type classType = Type.GetType(nameSpace + "." + className);
+                Type classType = Type.GetType(string.Concat(nameSpace ,"." ,className) );
                 if (classType == null) throw new Exception("calss名[" + className + "]が不明です");
                 var obj = Activator.CreateInstance(classType);
                 MethodInfo method = classType.GetMethod(methodName);

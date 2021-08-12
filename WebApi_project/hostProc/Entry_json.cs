@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Xml;
-using System.Reflection;
 using System.Collections.Generic;
+using System.Reflection;
 
 using DebugHost;
 
@@ -19,17 +18,16 @@ namespace WebApi_project.hostProc
         }
         public object Entry(String Item, String Json)
         {
+            object o_obj = new object();
             try
             {
                 string[] ItemWork = Item.Split('/');
                 string className = ItemWork[0];
                 string methodName = ItemWork[1];
 
-                //methodName = methodName;
-                object o_obj = new object();
                 String nameSpace = "WebApi_project.hostProc";
 
-                Type classType = Type.GetType(nameSpace + "." + className);
+                Type classType = Type.GetType(string.Concat(nameSpace, "." , className) );
                 if (classType == null) throw new Exception("calss名[" + className + "]が不明です");
                 var obj = Activator.CreateInstance(classType);
                 MethodInfo method = classType.GetMethod(methodName);
