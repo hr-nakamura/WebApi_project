@@ -44,7 +44,7 @@ namespace WebApi_project.hostProc
 			var node = xmlDoc.SelectNodes("//項目/月");
 			for( var i = 0; i < node.Count; i++)
             {
-                //node[i].InnerText = "0";
+                node[i].InnerText = "0";
 
             }
 
@@ -66,8 +66,9 @@ namespace WebApi_project.hostProc
                         {
 							項目 = item4.Key;
 							int[] targetTab = item4.Value;
-							Debug.Write("target",secName, funcName,大項目, 項目,(targetTab.Length).ToString());
+							//Debug.noWrite("target",secName, funcName,大項目, 項目,(targetTab.Length).ToString());
 							// ここでxmlノードを探してデータ設定する
+							checkNode(xmlDoc, secName, funcName, 大項目, 項目, targetTab);
 
 						}
 					}
@@ -77,51 +78,36 @@ namespace WebApi_project.hostProc
             }
 
 
-			/*
-						foreach (KeyValuePair<string, dynamic> item in Tab["data"])
-						{
-							//Debug.Write("ABC",item.Value["実績"]["売上高"]["売上"][0]);
-							//Debug.Write(item.Key, item.Value["実績"].Value);
-							for (var i = 0; i < 12; i++)
-							{
-								int value = item.Value["実績"]["売上高"]["売上"][i];
-								var s = value.ToString();
-								Debug.Write("ABC", i.ToString(), s);
-							}
-
-						}
-			*/
-			/*
-						var dataTab = Tab["data"];
-						foreach(var sec in dataTab)
-						{
-							var targetName = sec.Key;
-							var targetTab = sec.Value;
-							var target = checkData(targetTab, "実績", "売上高", "売上");
-
-							for (var i = 0; i < 12; i++)
-							{
-								int value = target[i];
-								var s = value.ToString();
-								Debug.Write("ABC", targetName, i.ToString(), s);
-							}
-
-						}
-
-			*/
-
-			//XmlDocument xmlDoc = Json2Xml(Tab["data"]);
-			//XmlDocument xmlDoc = new XmlDocument();
 
             return (xmlDoc);
 		}
+		void checkNode(XmlDocument xmlDoc, string secName, string funcName, string 大項目, string 項目, int[] values)
+		{
+			XmlNode rootNode = xmlDoc.SelectSingleNode("/root");
+			XmlNodeList targetsecNodeList = rootNode.SelectNodes("全体/グループ");
+			XmlNode SecNode = rootNode.SelectSingleNode("全体/グループ[@name='" + secName + "']");
+			XmlNode Node = rootNode.SelectSingleNode("全体/グループ[@name='" + secName + "']/データ[@name='" + funcName + "']/" + 大項目 + "/項目[@name='" + 項目 + "']");
+			if (Node == null)
+			{
+				Debug.Write(string.Concat("対象無し：[",secName, "][", funcName, "][", 大項目, "][", 項目,"]"));
+			}
+            else
+            {
+                XmlNodeList targetList = Node.SelectNodes("月");
+                for (var i = 0; i < 12; i++)
+                {
+					targetList[i].InnerText = values[i].ToString();
+                }
+            }
+		}
+
 		int[] checkData(Dictionary<string, dynamic> Tab, string s1, string s2, string s3)
 		{
 			try
 			{
 				if (Tab[s1][s2].ContainsKey(s3))
 				{
-					//Debug.Write("ある");
+					//Debug.noWrite("ある");
 					return (Tab[s1][s2][s3]);
 				}
 			}
@@ -155,18 +141,17 @@ namespace WebApi_project.hostProc
 			Tab.Add("data", initTab(cmd));
 
 
-            //json_groupPlan(cmd, Tab["data"]);							// 計画・予測データ取得
-            //json_uriageYosoku(cmd, Tab["data"]);                       // 売上予測データ取得
+            json_groupPlan(cmd, Tab["data"]);							// 計画・予測データ取得
+            json_uriageYosoku(cmd, Tab["data"]);                       // 売上予測データ取得
             json_uriageActual(cmd, Tab["data"]);                       // 売上実績データ取得
-            //json_accountActual(cmd, Tab["data"]);                          // 費用実績データ取得
-            //json_accountCost(cmd, Tab["data"]);                         // 費用付替
+            json_accountActual(cmd, Tab["data"]);                          // 費用実績データ取得
 
-            //json_salesCost(cmd, Tab["data"]);								// 売上付替
-
-            //if (cmd.dispMode != "全社")
-            //{
-            //    json_groupCost(cmd, Tab["data"]);							// 部門固定費データ取得
-            //}
+            if (cmd.dispMode != "全社")
+            {
+                json_accountCost(cmd, Tab["data"]);                         // 費用付替
+                json_salesCost(cmd, Tab["data"]);                               // 売上付替
+                json_groupCost(cmd, Tab["data"]);                           // 部門固定費データ取得
+            }
             //memberPlan(Json, Tab["data"]);
             //memberActual(Json, Tab["data"]);
 
@@ -294,7 +279,7 @@ namespace WebApi_project.hostProc
 			string work = "";
 			SqlConnection DB = new SqlConnection(DB_connectString);
 			DB.Open();
-			Debug.Write("DB Open", DB_connectString);
+			Debug.noWrite("DB Open", DB_connectString);
 			string 大項目, 項目, 種別, S_name, secName;
 			int yymm, n, amount, 直間;
 
@@ -360,7 +345,7 @@ namespace WebApi_project.hostProc
 			string SQL = string.Join(" UNION ALL ", SQLTab);
 
 			SqlDataReader reader = dbRead(DB, SQL);
-			Debug.Write("reader Start");
+			Debug.noWrite("reader Start");
 
 			while (reader.Read())
 			{
@@ -428,12 +413,12 @@ namespace WebApi_project.hostProc
 				//};
 				//dataTab.Add(data);
 			}
-			Debug.Write("reader Close");
+			Debug.noWrite("reader Close");
 			reader.Close();
 
-			Debug.Write("DB Close");
+			Debug.noWrite("DB Close");
 			DB.Close();
-			Debug.Write("DB Dispose");
+			Debug.noWrite("DB Dispose");
 			DB.Dispose();
 
 			return (dataTab);
@@ -462,7 +447,7 @@ namespace WebApi_project.hostProc
 			//Dictionary<string, dynamic> Tab = initTab(Json);
 			SqlConnection DB = new SqlConnection(DB_connectString);
 			DB.Open();
-			Debug.Write("DB Open", DB_connectString);
+			Debug.noWrite("DB Open", DB_connectString);
 
 			string S_name, secName, codes, mode;
 			int yymm, n, amount, level, 直間;
@@ -531,7 +516,7 @@ namespace WebApi_project.hostProc
 			string SQL = string.Join(" UNION ALL ", SQLTab);
 
 			SqlDataReader reader = dbRead(DB, SQL);
-			Debug.Write("reader Start");
+			Debug.noWrite("reader Start");
 
 			while (reader.Read())
 			{
@@ -589,12 +574,12 @@ namespace WebApi_project.hostProc
 			}
 
 
-			Debug.Write("reader Close");
+			Debug.noWrite("reader Close");
 			reader.Close();
 
-			Debug.Write("DB Close");
+			Debug.noWrite("DB Close");
 			DB.Close();
-			Debug.Write("DB Dispose");
+			Debug.noWrite("DB Dispose");
 			DB.Dispose();
 
 			return (dataTab);
@@ -623,7 +608,7 @@ namespace WebApi_project.hostProc
 			//Dictionary<string, dynamic> Tab = initTab(Json);
 			SqlConnection DB = new SqlConnection(DB_connectString);
 			DB.Open();
-			Debug.Write("DB Open", DB_connectString);
+			Debug.noWrite("DB Open", DB_connectString);
 
 			string S_name, secName, codes, mode;
 			int yymm, n, 直間;
@@ -686,7 +671,7 @@ namespace WebApi_project.hostProc
 			string SQL = string.Join(" UNION ALL ", SQLTab);
 
 			SqlDataReader reader = dbRead(DB, SQL);
-			Debug.Write("reader Start");
+			Debug.noWrite("reader Start");
 
 			while (reader.Read())
 			{
@@ -718,12 +703,12 @@ namespace WebApi_project.hostProc
 				Tab[secName]["実績"]["売上高"]["売上"][n] += amount;
 			}
 
-			Debug.Write("reader Close");
+			Debug.noWrite("reader Close");
 			reader.Close();
 
-			Debug.Write("DB Close");
+			Debug.noWrite("DB Close");
 			DB.Close();
-			Debug.Write("DB Dispose");
+			Debug.noWrite("DB Dispose");
 			DB.Dispose();
 
 			return (dataTab);
@@ -752,7 +737,7 @@ namespace WebApi_project.hostProc
 			//Dictionary<string, dynamic> Tab = initTab(Json);
 			SqlConnection DB = new SqlConnection(DB_connectString);
 			DB.Open();
-			Debug.Write("DB Open", DB_connectString);
+			Debug.noWrite("DB Open", DB_connectString);
 
 			string S_name, secName, codes, mode;
 			string 大項目, 分類, 科目, EMG;
@@ -867,7 +852,7 @@ namespace WebApi_project.hostProc
 			string SQL = string.Join(" UNION ALL ", SQLTab);
 
 			SqlDataReader reader = dbRead(DB, SQL);
-			Debug.Write("reader Start");
+			Debug.noWrite("reader Start");
 			while (reader.Read())
 			{
 				S_name = (string)reader["S_name"].ToString();
@@ -897,9 +882,9 @@ namespace WebApi_project.hostProc
 				{
 					secName = S_name;
 				}
-				checkArray(Tab, secName, "実績", 大項目, 分類);
-				if (大項目 != null && 分類 != null)
+				if (大項目 != null && 分類 != null && 大項目　!= "")
 				{
+					checkArray(Tab, secName, "実績", 大項目, 分類);
 					n = yymmDiff(s_yymm, yymm);
 					if (EMG == "1") amount = -amount;
 					Tab[secName]["実績"][大項目][分類][n] += amount;
@@ -907,17 +892,18 @@ namespace WebApi_project.hostProc
 				else
 				{
 					var work1 = "[" + yymm + "][" + 科目 + "][" + amount + "]";
+					work1 = string.Concat("[",分類,"][",yymm,"][",科目,"][",amount);
 					Debug.Write("[会計データ集計での不明科目データ]" + work1);
 					}
 
 			}
 
-			Debug.Write("reader Close");
+			Debug.noWrite("reader Close");
 			reader.Close();
 
-			Debug.Write("DB Close");
+			Debug.noWrite("DB Close");
 			DB.Close();
-			Debug.Write("DB Dispose");
+			Debug.noWrite("DB Dispose");
 			DB.Dispose();
 
 			return (dataTab);
@@ -947,7 +933,7 @@ namespace WebApi_project.hostProc
 			//Dictionary<string, dynamic> Tab = initTab(Json);
 			SqlConnection DB = new SqlConnection(DB_connectString);
 			DB.Open();
-			Debug.Write("DB Open", DB_connectString);
+			Debug.noWrite("DB Open", DB_connectString);
 
 			string S_name, secName, codes, mode;
 			int yymm, n, 直間;
@@ -1044,7 +1030,7 @@ namespace WebApi_project.hostProc
 			string payMode;
 			int cost;
 			SqlDataReader reader = dbRead(DB, SQL);
-			Debug.Write("reader Start");
+			Debug.noWrite("reader Start");
 			while (reader.Read())
 			{
 				sql.Append("      S_name  = @S_name,");
@@ -1087,12 +1073,12 @@ namespace WebApi_project.hostProc
 
 			}
 
-			Debug.Write("reader Close");
+			Debug.noWrite("reader Close");
 			reader.Close();
 
-			Debug.Write("DB Close");
+			Debug.noWrite("DB Close");
 			DB.Close();
-			Debug.Write("DB Dispose");
+			Debug.noWrite("DB Dispose");
 			DB.Dispose();
 
 			return (dataTab);
@@ -1121,7 +1107,7 @@ namespace WebApi_project.hostProc
 			//Dictionary<string, dynamic> Tab = initTab(Json);
 			SqlConnection DB = new SqlConnection(DB_connectString);
 			DB.Open();
-			Debug.Write("DB Open", DB_connectString);
+			Debug.noWrite("DB Open", DB_connectString);
 
 			string S_name, secName, codes, mode;
 			StringBuilder sql = new StringBuilder("");
@@ -1185,7 +1171,7 @@ namespace WebApi_project.hostProc
 			string SQL = string.Join(" UNION ALL ", SQLTab);
 
 			SqlDataReader reader = dbRead(DB, SQL);
-			Debug.Write("reader Start");
+			Debug.noWrite("reader Start");
 			int 付替;
 			int yymm, n, 直間;
 			decimal cost;
@@ -1223,12 +1209,12 @@ namespace WebApi_project.hostProc
 
 			}
 
-			Debug.Write("reader Close");
+			Debug.noWrite("reader Close");
 			reader.Close();
 
-			Debug.Write("DB Close");
+			Debug.noWrite("DB Close");
 			DB.Close();
-			Debug.Write("DB Dispose");
+			Debug.noWrite("DB Dispose");
 			DB.Dispose();
 
 			return (dataTab);
@@ -1257,7 +1243,7 @@ namespace WebApi_project.hostProc
 			//Dictionary<string, dynamic> Tab = initTab(Json);
 			SqlConnection DB = new SqlConnection(DB_connectString);
 			DB.Open();
-			Debug.Write("DB Open", DB_connectString);
+			Debug.noWrite("DB Open", DB_connectString);
 
 			string S_name, secName, codes, mode;
 			StringBuilder sql = new StringBuilder("");
@@ -1374,7 +1360,7 @@ namespace WebApi_project.hostProc
 			string SQL = string.Join(" UNION ALL ", SQLTab);
 
 			SqlDataReader reader = dbRead(DB, SQL);
-			Debug.Write("reader Start");
+			Debug.noWrite("reader Start");
 			int yymm, n, 直間, amount;
 			string 種別,大項目, 項目;
 			while (reader.Read())
@@ -1411,12 +1397,12 @@ namespace WebApi_project.hostProc
 ;
 			}
 
-			Debug.Write("reader Close");
+			Debug.noWrite("reader Close");
 			reader.Close();
 
-			Debug.Write("DB Close");
+			Debug.noWrite("DB Close");
 			DB.Close();
-			Debug.Write("DB Dispose");
+			Debug.noWrite("DB Dispose");
 			DB.Dispose();
 
 			return (dataTab);
@@ -1449,12 +1435,16 @@ namespace WebApi_project.hostProc
 
 		Dictionary<string, dynamic> checkArray(Dictionary<string, dynamic> Tab, string 部門, string 種別, string 大項目, string 項目)
 		{
-			//Debug.Write("確認");
+			//Debug.noWrite("確認");
+			if (大項目 == "")
+			{
+				Debug.Write("XX");
+			}
 			try
 			{
 				if (Tab[部門][種別][大項目].ContainsKey(項目))
 				{
-					//Debug.Write("ある");
+					//Debug.noWrite("ある");
 					return (Tab);
 				}
 			}
@@ -1478,7 +1468,7 @@ namespace WebApi_project.hostProc
 					Tab[部門][種別][大項目].Add(項目, new Dictionary<string, int[]>());
 				}
 			}
-			//Debug.Write("設定");
+			//Debug.noWrite("設定");
 			Tab[部門][種別][大項目][項目] = new int[12];
 			return (Tab);
 		}
@@ -1521,7 +1511,7 @@ namespace WebApi_project.hostProc
                 {
                     group sec = secTab[統括];
                     Tab.Add(統括, costList(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
-                    //Debug.Write(統括, secTab[統括].codes);
+                    //Debug.noWrite(統括, secTab[統括].codes);
                 }
             }
             else if (o_json.dispMode == "部門")
@@ -1532,7 +1522,7 @@ namespace WebApi_project.hostProc
                 {
                     var x = sec.list[部門];
                     Tab.Add(部門, costList(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
-                    //Debug.Write(部門, sec.list[部門].codes);
+                    //Debug.noWrite(部門, sec.list[部門].codes);
                 }
             }
             else if (o_json.dispMode == "課")
@@ -1542,7 +1532,7 @@ namespace WebApi_project.hostProc
                 {
                     var x = sec.list[課];
                     Tab.Add(課, costList(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
-                    //Debug.Write(課, sec.list[課].codes);
+                    //Debug.noWrite(課, sec.list[課].codes);
                 }
             }
             return (Tab);

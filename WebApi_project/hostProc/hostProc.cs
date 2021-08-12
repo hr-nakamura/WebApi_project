@@ -93,7 +93,7 @@ namespace WebApi_project.hostProc
             SqlCommand cmd = null;
             try
             {
-                Debug.Write("cmd Start");
+                Debug.noWrite("cmd Start");
                 cmd = new SqlCommand(sql, DB);
                 SqlDataReader reader = cmd.ExecuteReader();
                 return (reader);
@@ -105,7 +105,7 @@ namespace WebApi_project.hostProc
             }
             finally
             {
-                Debug.Write("cmd Dispose");
+                Debug.noWrite("cmd Dispose");
                 cmd.Dispose();
                 cmd = null;
             }

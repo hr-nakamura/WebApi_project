@@ -17,7 +17,7 @@
                 }, 1);
             });
         },
-        $.call_WebApi = function(mode, url, item, json, callback) {
+        $.WebApi = function(mode, url, item, json, callback) {
             //WebApi_url = hostName + "/WebApi/project/api/xml";
             window.status = "call_ajax_api[" + mode + "]";
             var options = {
@@ -42,7 +42,7 @@
             });
             return (returnValue);
         },
-        $.call_WebApi_json = function(mode, url, item, json, callback) {
+        $.WebApi_json = function(mode, url, item, json, callback) {
             //WebApi_url_json = hostName + "/WebApi/project/api/json";
             window.status = "call_ajax_api_json[" + mode + "]";
             var options = {
@@ -67,7 +67,7 @@
             });
             return (returnValue);
         },
-        $.call_WebApi_get = function(url, options) {
+        $.WebApi_get = function(url, options) {
             //WebApi_url = hostName + "/WebApi/project/api/xml";
             window.status = "call_ajax_get";
             var result = $.ajax({

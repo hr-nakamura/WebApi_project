@@ -40,7 +40,7 @@
             WebApi_url_test = hostName + "/WebApi/project/api/test";
             WebApi_url_xml = hostName + "/WebApi/project/api/xml";
 
-            var xmlDoc = $.call_WebApi_get(WebApi_url_xml);
+            var xmlDoc = $.WebApi_get(WebApi_url_xml);
             var x = $.xml2str(xmlDoc);
 
             //$.alert.json(memberInfo);
@@ -48,7 +48,7 @@
             //$.alert.json(memberInfo);
 
             // methodListの取得
-            var methodList = $.call_WebApi("GET", WebApi_url);
+            var methodList = $.WebApi("GET", WebApi_url);
             //var menu_Xml = $.str2xml(methodList);
             var menu_Xml = methodList;
 
@@ -89,14 +89,14 @@
 
                 if (user_mode == "json") {
                     var value = item + "/json_" + func;
-                    var Str = $.call_ajax_api_json("GET", WebApi_url_json, value, Send_Option);
+                    var Str = $.WebApi_json("GET", WebApi_url_json, value, Send_Option);
                     //$.alert.json(Str);
                     $.storage("viewStr", JSON.stringify(Str, null, 2));
                     $("iframe.iframe_content").attr("src", "Util/viewValue.html");
                 }
                 else {
                     var value = item + "/" + func;
-                    var xmlDoc = $.call_ajax_api("GET", WebApi_url, value, Send_Option);
+                    var xmlDoc = $.WebApi("GET", WebApi_url, value, Send_Option);
                     var Str = $.xml2str(xmlDoc);
                     //StrOut(Str);
                     $.storage("viewStr", Str);

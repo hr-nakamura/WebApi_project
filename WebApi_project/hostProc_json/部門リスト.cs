@@ -70,7 +70,7 @@ namespace WebApi_project.hostProc
             {
                 DB = new SqlConnection(DB_connectString);
                 DB.Open();
-                Debug.Write("DB Open", DB_connectString);
+                Debug.noWrite("DB Open", DB_connectString);
 
                 StringBuilder sql = new StringBuilder("");
 
@@ -113,7 +113,7 @@ namespace WebApi_project.hostProc
                 var x = sql.ToString();
 
                 SqlDataReader reader = dbRead(DB, sql.ToString());
-                Debug.Write("reader Start");
+                Debug.noWrite("reader Start");
 
 
                 while (reader.Read())
@@ -137,12 +137,12 @@ namespace WebApi_project.hostProc
 
                     dataTab.Add(data);
                 }
-                Debug.Write("reader Close");
+                Debug.noWrite("reader Close");
                 reader.Close();
 
-                Debug.Write("DB Close");
+                Debug.noWrite("DB Close");
                 DB.Close();
-                Debug.Write("DB Dispose");
+                Debug.noWrite("DB Dispose");
                 DB.Dispose();
             }
             catch (Exception ex)
@@ -151,7 +151,7 @@ namespace WebApi_project.hostProc
             }
             finally
             {
-                Debug.Write("DB null");
+                Debug.noWrite("DB null");
                 DB = null;
             }
             return (dataTab);

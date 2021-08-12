@@ -54,7 +54,7 @@ namespace WebApi_project.hostProc
 
             try
             {
-                Debug.Write("DB Open", DB_connectString);
+                Debug.noWrite("DB Open", DB_connectString);
                 DB.Open();
 
                 StringBuilder sql = new StringBuilder("");
@@ -111,12 +111,12 @@ namespace WebApi_project.hostProc
                     }
                 }
                 memberInfo.兼務 = sub;
-                Debug.Write("reader Close");
+                Debug.noWrite("reader Close");
                 reader.Close();
 
-                Debug.Write("DB Close");
+                Debug.noWrite("DB Close");
                 DB.Close();
-                Debug.Write("DB Dispose");
+                Debug.noWrite("DB Dispose");
                 DB.Dispose();
                 }
                 catch (Exception ex)
@@ -125,7 +125,7 @@ namespace WebApi_project.hostProc
                 }
                 finally
                 {
-                    Debug.Write("DB null");
+                    Debug.noWrite("DB null");
                     DB = null;
                  }
             return (memberInfo);
@@ -137,7 +137,7 @@ namespace WebApi_project.hostProc
             DB = new SqlConnection(DB_connectString);
             try
             {
-                Debug.Write("DB Open", DB_connectString);
+                Debug.noWrite("DB Open", DB_connectString);
                 DB.Open();
                 StringBuilder sql = new StringBuilder("");
 
@@ -188,19 +188,19 @@ namespace WebApi_project.hostProc
                     mID = (string)reader["mID"].ToString();
                     item = (string)reader["item"].ToString();
                     mode = (string)reader["mode"].ToString();
-                    //Debug.Write(name, mID, item, mode);
+                    //Debug.noWrite(name, mID, item, mode);
                     if (!Tab.ContainsKey(item))
                     {
                         Tab.Add(item, mode);
                     }
                 }
 
-                Debug.Write("reader Close");
+                Debug.noWrite("reader Close");
                 reader.Close();
 
-                Debug.Write("DB Close");
+                Debug.noWrite("DB Close");
                 DB.Close();
-                Debug.Write("DB Dispose");
+                Debug.noWrite("DB Dispose");
                 DB.Dispose();
             }
             catch (Exception ex)
@@ -209,7 +209,7 @@ namespace WebApi_project.hostProc
             }
             finally
             {
-                Debug.Write("DB null");
+                Debug.noWrite("DB null");
                 DB = null;
             }
             List<string> xTab = new List<string>();
