@@ -124,7 +124,7 @@ namespace WebApi_project.hostProc
 			Dictionary<string, dynamic> Tab = new Dictionary<string, dynamic>();
 
 
-			Json = "{dispCmd:'EMG',year:'2021', mCnt:'4', fixLevel:'70' ,name:''}";
+			Json = "{dispCmd:'統括一覧',year:'2021', mCnt:'4', fixLevel:'70' ,name:''}";
 			//Json = "{dispCmd:統括一覧											,year:'2021', mCnt:4, fixLevel:70 }";
 			//Json = "{dispCmd:部門一覧	,secMode:'開発'							,year:'2021', mCnt:4, fixLevel:70 }";
 			//Json = "{dispCmd:課一覧		,secMode:'開発'	,dispMode:'営業本部'	,year:'2021', mCnt:4, fixLevel:70 }";
