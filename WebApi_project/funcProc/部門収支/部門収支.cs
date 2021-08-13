@@ -241,8 +241,9 @@ namespace WebApi_project.hostProc
 			//cmd_部門収支 cmd = Tab["Info"];
 
 			Dictionary<string, dynamic> dataTab = Tab["data"];
-            string secName, 大項目;
-			int[] planTab, yosokuTab, actualTab;
+			Dictionary<string, dynamic> workTab = new Dictionary<string, dynamic>();
+
+			string secName, 大項目;
             foreach (KeyValuePair<string, dynamic> item in dataTab)
             {
                 secName = item.Key;
@@ -252,10 +253,13 @@ namespace WebApi_project.hostProc
 					foreach( string 項目 in item1.Value)
                     {
                         checkArray(dataTab, secName, "結合", 大項目, 項目);
-						planTab = checkData(dataTab[secName], "計画", 大項目, 項目);
-						yosokuTab = checkData(dataTab[secName], "予測", 大項目, 項目);
-						actualTab = checkData(dataTab[secName], "実績", 大項目, 項目);
-
+						workTab["計画"] = checkData(dataTab[secName], "計画", 大項目, 項目);
+						workTab["予測"] = checkData(dataTab[secName], "予測", 大項目, 項目);
+						workTab["実績"] = checkData(dataTab[secName], "実績", 大項目, 項目);
+						for (var i = 0; i < 12; i++)
+						{
+							dataTab[secName]["結合"][大項目][項目][i] = (workTab["実績"][i] != null ? workTab["実績"][i] : 0);
+						}
 
 					}
 				}
