@@ -36,18 +36,12 @@ namespace WebApi_project.hostProc
 		{
 			Json = "{dispCmd:'統括一覧',year:'2021', mCnt:'4', fixLevel:'70' ,name:''}";
 
-			List<string> func = new List<string>(){ "計画","予測","実績"};
+			List<string> func = new List<string>(){ "結合","計画","予測","実績"};
 
 
 
 			Dictionary<string, dynamic> Tab = (Dictionary<string, dynamic>)json_部門収支_XML(Json);
 			Dictionary<string, dynamic> dataTab = Tab["data"];
-			List<string> secInfo = new List<string>()
-			{
-				{ "A:A1" },
-				{ "B:B2" }
-			};
-
 
 			XmlDocument xmlDoc = makeBaseXML(dataTab);
 			string secName;
@@ -183,12 +177,237 @@ namespace WebApi_project.hostProc
                 json_salesCost(cmd, Tab["data"]);                               // 売上付替
                 json_groupCost(cmd, Tab["data"]);                           // 部門固定費データ取得
             }
-            //memberPlan(Json, Tab["data"]);
-            //memberActual(Json, Tab["data"]);
+			if( cmd.haifuMode == true)
+            {
+                本社費配賦(cmd, Tab["data"]);
+            }
+			//memberPlan(Json, Tab["data"]);
+			//memberActual(Json, Tab["data"]);
 
+			// 結合データを作成する
+			meke_JoinData(Tab);
 
-            return (Tab);
+			return (Tab);
 		}
+	void meke_JoinData(Dictionary<string, dynamic> Tab)
+        {
+			cmd_部門収支 cmd = Tab["Info"];
+
+			Dictionary<string, dynamic> dataTab = Tab["data"];
+			string secName,大項目, 項目;
+			foreach (KeyValuePair<string, dynamic> item in dataTab)
+            {
+				secName = item.Key;
+
+				foreach (KeyValuePair<string, dynamic> item3 in dataTab[secName]["実績"])
+				{
+					大項目 = item3.Key;
+					foreach (KeyValuePair<string, dynamic> item4 in dataTab[secName][funcName][大項目])
+					{
+						項目 = item4.Key;
+						int[] targetTab = item4.Value;
+						//Debug.noWrite("target",secName, funcName,大項目, 項目,(targetTab.Length).ToString());
+						// ここでxmlノードを探してデータ設定する
+
+					}
+				}
+			}
+
+		}
+		//=====================================================================================
+
+		void 本社費配賦(cmd_部門収支 cmd, Dictionary<string, dynamic> dataTab)
+		{
+			var mCnt = cmd.mCnt;
+			var year = cmd.year;
+
+			if (mCnt == 0) return;
+
+			foreach (KeyValuePair<string, dynamic> item in dataTab)
+            {
+				string S_name = item.Key;
+				if (S_name == "本社") calcTargetPlan(cmd,dataTab[S_name]);
+			}
+			calcHaifu(cmd, dataTab);
+
+		}
+
+		void calcTargetPlan(cmd_部門収支 cmd, Dictionary<string, dynamic> dataTab)
+        {
+
+        }
+		void calcHaifu(cmd_部門収支 cmd, Dictionary<string, dynamic> dataTab)
+		{
+
+		}
+/*
+		//	本社費の目標値の計算（本社の費用を合計する）
+		void calcTargetPlan(string Tab1, string mCnt1);
+		{
+			int mCnt = 3;
+			//	if( !IsObject(xTab["本社"]) ) return
+			//	var Tab = xTab["本社"]
+			for (var m = 0; m < mCnt; m++)
+			{
+				// 支出の部
+				var itemStr = "売上原価,販管費,営業外費用".split(",");
+				for(var iNum in itemStr)
+				{
+					var item = itemStr[iNum];
+					for(var kind in Tab["計画"][item])
+					{
+						Tab["計画"]["予算"]["予算"][m] += Tab["計画"][item][kind][m];
+						Tab["予測"]["予算"]["予算"][m] += Tab["計画"][item][kind][m];
+						Tab["実績"]["予算"]["予算"][m] += Tab["計画"][item][kind][m];
+					}
+				}
+// 収入の部
+				var itemStr = "営業外収益,費用付替,売上付替".split(",");
+				for(var iNum in itemStr)
+				{
+					var item = itemStr[iNum];
+					for(var kind in Tab["計画"][item])
+					{
+						Tab["計画"]["予算"]["予算"][m] -= Tab["計画"][item][kind][m];
+						Tab["予測"]["予算"]["予算"][m] -= Tab["計画"][item][kind][m];
+						Tab["実績"]["予算"]["予算"][m] -= Tab["計画"][item][kind][m];
+					}
+				}
+			}
+			//	本社計画値から本社売上を引く
+			//	表示から売上を引いた数値にするため
+			for (var m = 0; m < mCnt; m++)
+			{
+				Tab["計画"]["予算"]["予算"][m] -= Tab["計画"]["売上高"]["売上"][m];
+				Tab["予測"]["予算"]["予算"][m] -= Tab["計画"]["売上高"]["売上"][m];
+				Tab["実績"]["予算"]["予算"][m] -= Tab["計画"]["売上高"]["売上"][m];
+			}
+		}
+
+		void calcHaihu(cmd_部門収支 cmd, Dictionary<string, dynamic> Tab)
+		{
+
+	//[本社の全計画] - [本社の売上計画] - [部門の固定費合計] = [配布対象額]
+
+
+	//人件費・雑給・原価外注費・固定費の人件費
+
+	//[全部門の合計を分母とする]
+
+
+
+	//部門固定費・人件費
+	//販管費・人件費
+	//販管費・雑給
+	//売上原価・"外注費
+
+
+
+
+	//	パートの配賦は2008年度まで1/4  (0.25)
+	//				  2009年度から1/100(0.01)
+
+			int year = 2021;
+			int mCnt = 3;
+
+			double partUnit = 1;
+			double guestUnit = 1;
+			if (year <= 2008)
+			{                               // - 2008
+				partUnit = 0.25;
+				guestUnit = 0.25;
+			}
+			else if (year >= 2009 && year <= 2010)
+			{       // 2009 - 2010
+				partUnit = 0.01;
+				guestUnit = 0.01;
+			}
+			else if (year >= 2011 && year <= 2015)
+			{           // 2011 - 2015
+				partUnit = 0.03;
+				guestUnit = 0.03;
+			}
+			else if (year >= 2016)
+			{                       // 2016 -
+				partUnit = 1.0;
+				guestUnit = 0.10;
+			}
+			else
+			{
+				partUnit = 1.0;
+				guestUnit = 0.10;
+			}
+
+			var modeTab = ["計画", "予測", "実績"];
+			for (var i = 0; i < modeTab.length; i++)
+			{           // 実績・予測・計画
+				var mode = modeTab[i];
+				for (var m = 0; m < mCnt; m++)
+				{
+				// 配賦対象額の作成
+				xTab["本社"]["配賦"][mode]["本社予算"][m] += xTab["本社"]["計画"]["予算"]["予算"][m];
+				xTab["本社"]["配賦"][mode]["売上"][m] += xTab["本社"]["計画"]["売上高"]["売上"][m];
+
+				// 部門の固定費合計
+					for(var item in xTab["直接"][mode]["部門固定費"])
+					{
+						xTab["本社"]["配賦"][mode]["固定費合計"][m] += xTab["直接"][mode]["部門固定費"][item][m];
+					}
+				// 配賦対象額の算出
+				//	ここの本社予算は売上を引いた数値
+				//	ここで売上を引かないのが正しい
+					xTab["本社"]["配賦"][mode]["配賦対象"][m] += xTab["本社"]["配賦"][mode]["本社予算"][m];
+				//			xTab["本社"]["配賦"][mode]["配賦対象"][m] -= xTab["本社"]["配賦"][mode]["売上"][m]
+					xTab["本社"]["配賦"][mode]["配賦対象"][m] -= xTab["本社"]["配賦"][mode]["固定費合計"][m];
+
+
+				// 部門の計算の分母作成
+					xTab["本社"]["配賦"][mode]["販管人件費"][m] += xTab["直接"][mode]["販管費"]["人件費"][m];
+					xTab["本社"]["配賦"][mode]["販管雑給"][m] += xTab["直接"][mode]["販管費"]["雑給"][m];
+					xTab["本社"]["配賦"][mode]["原価外注費"][m] += xTab["直接"][mode]["売上原価"]["外注費"][m];
+					xTab["本社"]["配賦"][mode]["固定人件費"][m] += xTab["直接"][mode]["部門固定費"]["人件費"][m];
+
+				// 部門の計算
+					for(var secName in xTab)
+					{
+						if (secName == "本社" || secName == "直接") continue;
+						xTab[secName]["配賦"][mode]["販管人件費"][m] += xTab[secName][mode]["販管費"]["人件費"][m];
+						xTab[secName]["配賦"][mode]["固定人件費"][m] += xTab[secName][mode]["部門固定費"]["人件費"][m];
+						xTab[secName]["配賦"][mode]["原価外注費"][m] += xTab[secName][mode]["売上原価"]["外注費"][m];
+						xTab[secName]["配賦"][mode]["販管雑給"][m] += xTab[secName][mode]["販管費"]["雑給"][m];
+					}
+
+					for(var secName in xTab)
+					{
+						if (secName == "直接") continue;
+						xTab[secName]["配賦"][mode]["計算額"][m] += xTab[secName]["配賦"][mode]["販管人件費"][m];
+						if (year >= 2013)
+						{
+							xTab[secName]["配賦"][mode]["計算額"][m] += xTab[secName]["配賦"][mode]["固定人件費"][m];
+						}
+						xTab[secName]["配賦"][mode]["計算額"][m] += (xTab[secName]["配賦"][mode]["販管雑給"][m] * partUnit);
+						xTab[secName]["配賦"][mode]["計算額"][m] += (xTab[secName]["配賦"][mode]["原価外注費"][m] * guestUnit);
+					}
+				// 分配の計算
+					for(var secName in xTab)
+					{
+						if (secName == "本社" || secName == "直接") continue;
+						xTab[secName]["配賦"][mode]["分配率"][m] = xTab[secName]["配賦"][mode]["計算額"][m] / xTab["本社"]["配賦"][mode]["計算額"][m];
+					}
+			// 分配の計算
+
+					for(var secName in xTab)
+					{
+						if (secName == "本社" || secName == "直接") continue;
+						var value = xTab["本社"]["配賦"][mode]["配賦対象"][m] * xTab[secName]["配賦"][mode]["分配率"][m];
+						xTab[secName][mode]["本社費配賦"]["本社費"][m] = (isNaN(value) ? 0 : value);
+					}
+
+
+				}
+			}
+		}
+*/
 		cmd_部門収支 checkCmd(string Json)
 		{
 			var o_json = JsonConvert.DeserializeObject<para_部門収支>(Json);
@@ -1512,11 +1731,11 @@ namespace WebApi_project.hostProc
 			Tab.Add("直間", 直間);
 			Tab.Add("部署名", new secInfo(統括, 部門, 課));
 			Tab.Add("部署コード", 部署コード);
-			Tab.Add("合計", new Dictionary<string, dynamic>());
+			Tab.Add("結合", new Dictionary<string, dynamic>());
 			Tab.Add("計画", new Dictionary<string, dynamic>());
 			Tab.Add("予測", new Dictionary<string, dynamic>());
 			Tab.Add("実績", new Dictionary<string, dynamic>());
-			Tab.Add("配賦", new Dictionary<string, dynamic>());
+			Tab.Add("予測データ", new Dictionary<string, dynamic>());
 
 			return (Tab);
 		}
