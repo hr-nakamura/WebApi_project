@@ -222,16 +222,17 @@ namespace WebApi_project.hostProc
 		}
 		void meke_JoinData(Dictionary<string, dynamic> Tab)
 		{
-			List<string> func = new List<string>() { "実績", "実績", "実績", "実績", "実績", "実績", "実績", "実績", "実績", "実績", "予測", "予測" };
-			string secName, funcName, 大項目, 項目;
 			Dictionary<string, dynamic> dataTab = Tab["data"];
+			List<string> func = new List<string>() { "実績", "実績", "実績", "実績", "実績", "実績", "実績", "実績", "実績", "実績", "予測", "予測" };
+			List<string> funcList = new List<string>() { "実績", "予測", "計画" };
+			string secName, funcName, 大項目, 項目;
 			foreach (KeyValuePair<string, dynamic> item in dataTab)
             {
 				secName = item.Key;
 				foreach (KeyValuePair<string, dynamic> item1 in dataTab[secName])
                 {
 					funcName = item1.Key;
-					if (funcName != "予測") continue;
+					if ( !funcList.Contains(funcName) ) continue;
 					foreach (KeyValuePair<string, dynamic> item2 in dataTab[secName][funcName])
                     {
 						大項目 = item2.Key;
@@ -241,19 +242,14 @@ namespace WebApi_project.hostProc
 							checkArray(dataTab, secName, "結合", 大項目, 項目);
 							for (var i = 0; i < 12; i++)
 							{
-								string work = func[i];
                                 if (funcName == func[i])
                                 {
 									dataTab[secName]["結合"][大項目][項目][i] = dataTab[secName][funcName][大項目][項目][i];
 								}
 							}
-
 						}
-
 					}
-
 				}
-
 			}
 		}
 		void meke_JoinData1(Dictionary<string, dynamic> Tab)
