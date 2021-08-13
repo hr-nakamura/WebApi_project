@@ -36,7 +36,7 @@ namespace WebApi_project.hostProc
 		{
 			Json = "{dispCmd:'統括一覧',year:'2021', mCnt:'4', fixLevel:'70' ,name:''}";
 
-			List<string> func = new List<string>(){ "結合","計画","予測","実績"};
+			List<string> func = new List<string>(){ "計画","予測","実績"};
 
 
 
@@ -83,12 +83,6 @@ namespace WebApi_project.hostProc
 			xmlDoc.Load(fName);
 			XmlNode topNode = xmlDoc.SelectSingleNode("//全体");
 			XmlElement secNode = (XmlElement)xmlDoc.SelectSingleNode("//グループ");
-			var node = xmlDoc.SelectNodes("//項目/月");
-			for (var i = 0; i < node.Count; i++)
-			{
-				node[i].InnerText = "0";
-			}
-
 
 			for( var i = 1; i < dataTab.Count; i++)
 			{
