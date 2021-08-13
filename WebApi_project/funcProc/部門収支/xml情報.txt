@@ -1,0 +1,49 @@
+EMG
+	結合
+	計画
+	予測
+	実績
+	予測データ
+	dispCmd=EMG&year=2021&fix=70&yosoku=3
+
+統括一覧
+
+	結合
+	予測データ
+	dispCmd=統括一覧&year=2021&fix=70&yosoku=3-->
+
+
+部門一覧
+	結合
+	予測データ
+	dispCmd=部門一覧&secMode=開発&dispName=&year=2021&fix=70&yosoku=2
+
+
+課一覧
+	結合
+	予測データ
+	dispCmd=課一覧&dispName=営業本部&secMode=開発&year=2021&fix=70&yosoku=2
+
+統括詳細
+	結合
+	計画
+	予測
+	実績
+	予測データ
+	dispCmd=統括詳細&dispName=営業本部&secMode=開発&year=2021&fix=70&yosoku=3-->
+
+部門詳細
+	結合
+	計画
+	予測
+	実績
+	予測データ
+	dispCmd=部門詳細&dispName=営業本部営業部&secMode=開発&year=2021&fix=70&yosoku=2
+
+課詳細
+	結合
+	計画
+	予測
+	実績
+	予測データ
+	dispCmd=課詳細&dispName=297&secMode=開発&year=2021&fix=70&yosoku=2
