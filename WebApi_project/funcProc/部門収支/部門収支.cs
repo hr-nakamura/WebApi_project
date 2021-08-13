@@ -223,8 +223,8 @@ namespace WebApi_project.hostProc
 		void meke_JoinData(Dictionary<string, dynamic> Tab)
 		{
 			Dictionary<string, dynamic> dataTab = Tab["data"];
-			List<string> func = new List<string>() { "実績", "実績", "実績", "実績", "実績", "実績", "実績", "実績", "実績", "実績", "予測", "予測" };
-			List<string> funcList = new List<string>() { "実績", "予測", "計画" };
+            cmd_部門収支 cmd = Tab["Info"];
+			List<string> func = new List<string>() { "実績", "予測", "計画" };
 			string secName, funcName, 大項目, 項目;
 			foreach (KeyValuePair<string, dynamic> item in dataTab)
             {
@@ -232,7 +232,7 @@ namespace WebApi_project.hostProc
 				foreach (KeyValuePair<string, dynamic> item1 in dataTab[secName])
                 {
 					funcName = item1.Key;
-					if ( !funcList.Contains(funcName) ) continue;
+					if ( !func.Contains(funcName) ) continue;
 					foreach (KeyValuePair<string, dynamic> item2 in dataTab[secName][funcName])
                     {
 						大項目 = item2.Key;
@@ -242,7 +242,7 @@ namespace WebApi_project.hostProc
 							checkArray(dataTab, secName, "結合", 大項目, 項目);
 							for (var i = 0; i < 12; i++)
 							{
-                                if (funcName == func[i])
+                                if (funcName == cmd.funcList[i])
                                 {
 									dataTab[secName]["結合"][大項目][項目][i] = dataTab[secName][funcName][大項目][項目][i];
 								}
@@ -504,6 +504,8 @@ namespace WebApi_project.hostProc
 			int c_yymm = 202107;
 			int actualCnt = 10;
 			int yosokuCnt = 2;
+			List<string> funcList = new List<string>() { "実績", "実績", "実績", "実績", "実績", "実績", "実績", "実績", "実績", "実績", "予測", "予測" };
+
 			cmd_部門収支 cmd = new cmd_部門収支()
 			{
 				year = o_json.year,
@@ -515,7 +517,8 @@ namespace WebApi_project.hostProc
 				yosokuCnt = yosokuCnt,
 				統括 = 統括,
 				部 = 部,
-				課 = 課
+				課 = 課,
+				funcList = funcList
 			};
 
 			switch (o_json.dispCmd)
