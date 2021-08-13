@@ -26,6 +26,8 @@ namespace WebApi_project.Models
 		public string 課 { get; set; }
 		public int year { get; set; }
 		public int mCnt { get; set; }
+		public int actualCnt{ get; set;}
+		public int yosokuCnt{ get; set;}
 		public int s_yymm { get; set; }
 		public int c_yymm { get; set; }
 		public int fixLevel { get; set; }

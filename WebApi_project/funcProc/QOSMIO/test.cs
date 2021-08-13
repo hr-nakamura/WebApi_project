@@ -7,6 +7,7 @@ using System.Text;
 using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 using WebApi_project.Models;
 
@@ -18,6 +19,10 @@ namespace WebApi_project.hostProc
     {
         void test()
         {
+            Dictionary<string, List<string>> itemTab = new Dictionary<string, List<string>>();
+            itemTab["売上"] = new List<string>() { "確度70", "確度50", "確度30", "確度10" };
+            itemTab["売上予測"] = new List<string>() { "確度70,確度50,確度30,確度10" };
+
 
         }
         XmlDocument makeBaseXML()

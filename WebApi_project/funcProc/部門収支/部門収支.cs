@@ -36,14 +36,23 @@ namespace WebApi_project.hostProc
 		{
 			Json = "{dispCmd:'統括一覧',year:'2021', mCnt:'4', fixLevel:'70' ,name:''}";
 
-			List<string> func = new List<string>(){ "結合","計画","予測","実績"};
 
 
 
 			Dictionary<string, dynamic> Tab = (Dictionary<string, dynamic>)json_部門収支_XML(Json);
 			Dictionary<string, dynamic> dataTab = Tab["data"];
+			List<string> func;
 
-			XmlDocument xmlDoc = makeBaseXML(dataTab);
+			cmd_部門収支 cmd = Tab["Info"];
+			if( cmd.listMode == "一覧")
+            {
+				func = new List<string>() { "結合" };
+			}
+			else
+            {
+				func = new List<string>() { "結合", "計画", "予測", "実績" };
+			}
+			XmlDocument xmlDoc = makeBaseXML(Tab);
 			string secName;
 			string 大項目;
 			string 項目;
@@ -70,15 +79,36 @@ namespace WebApi_project.hostProc
 			}
 		return (xmlDoc);
 		}
-		XmlDocument makeBaseXML(Dictionary<string, dynamic> dataTab)
+		XmlDocument makeBaseXML(Dictionary<string, dynamic> Tab)
         {
+			cmd_部門収支 cmd = Tab["Info"];
+			Dictionary<string, dynamic> dataTab = Tab["data"];
+
 			string fName = getAbsoluteFileName("/funcProc/部門収支/BASE.xml");
 			var xmlDoc = new XmlDocument();
 			xmlDoc.Load(fName);
 			XmlNode topNode = xmlDoc.SelectSingleNode("//全体");
 			XmlElement secNode = (XmlElement)xmlDoc.SelectSingleNode("//グループ");
 
-			for( var i = 1; i < dataTab.Count; i++)
+			XmlNodeList nodeList;
+
+			nodeList = secNode.SelectNodes("データ/本社費配賦|データ/売上付替|データ/費用付替|データ/部門固定費");
+			foreach (XmlNode node in nodeList)
+			{
+				node.ParentNode.RemoveChild(node);
+			}
+
+
+			if ( cmd.listMode == "一覧")
+            {
+				nodeList = secNode.SelectNodes("データ[@name!='結合']");
+				foreach (XmlNode node in nodeList)
+				{
+					node.ParentNode.RemoveChild(node);
+				}
+			}
+
+			for ( var i = 1; i < dataTab.Count; i++)
 			{
 				XmlNode Node = secNode.CloneNode(true);
 				topNode.AppendChild(Node);
@@ -108,6 +138,7 @@ namespace WebApi_project.hostProc
 		}
 		void checkNode(XmlDocument xmlDoc, string secName, string funcName, string 大項目, string 項目, int[] values)
 		{
+
 			XmlNode rootNode = xmlDoc.SelectSingleNode("/root");
 			XmlNodeList targetsecNodeList = rootNode.SelectNodes("全体/グループ");
 			XmlNode SecNode = rootNode.SelectSingleNode("全体/グループ[@name='" + secName + "']");
@@ -148,13 +179,13 @@ namespace WebApi_project.hostProc
 
 			Dictionary<string, dynamic> Tab = new Dictionary<string, dynamic>();
 
-			Json = "{dispCmd:'統括一覧',year:'2021', mCnt:'4', fixLevel:'70' ,name:''}";
+			Json = "{dispCmd:'EMG',year:'2021', mCnt:'4', fixLevel:'70' ,name:''}";
 
 			//Json = "{dispCmd:統括一覧											,year:'2021', mCnt:4, fixLevel:70 }";
 			//Json = "{dispCmd:部門一覧	,secMode:'開発'							,year:'2021', mCnt:4, fixLevel:70 }";
 			//Json = "{dispCmd:課一覧		,secMode:'開発'	,dispMode:'営業本部'	,year:'2021', mCnt:4, fixLevel:70 }";
 			//var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
-			var cmd = checkCmd(Json);
+			var cmd = InitCmd(Json);
 
 			//int mCnt = o_json.mCnt;
    //         int year = o_json.year;
@@ -191,26 +222,59 @@ namespace WebApi_project.hostProc
 		}
 	void meke_JoinData(Dictionary<string, dynamic> Tab)
         {
-			cmd_部門収支 cmd = Tab["Info"];
+			Dictionary<string, List<string>> itemTab = new Dictionary<string, List<string>>();
+			itemTab["予算"] = new List<string>(){"予算"};
+			itemTab["売上高"] = new List<string>() { "売上" };
+			itemTab["売上原価"] = new List<string>() { "外注費", "仕入費", "外注費・EMG間費用", "仕入費・EMG間費用", "期首棚卸", "期末棚卸" };
+			itemTab["販管費"] = new List<string>() { "人件費", "雑給", "広告交際", "交通費", "通信費", "発送費", "備品", "設備費", "家賃", "その他", "EMG間費用" };
+			itemTab["固定資産"] = new List<string>() { "機器・ソフト" };
+			itemTab["営業外収益"] = new List<string>() { "雑収入他", "EMG間費用" };
+			itemTab["営業外費用"] = new List<string>() { "雑支出他", "EMG間費用" };
+			itemTab["部門固定費"] = new List<string>() { "その他", "光熱費", "事務所費", "光熱費", "転勤費" };
+			itemTab["本社費配賦"] = new List<string>() { "本社費" };
+			itemTab["売上付替"] = new List<string>() { "収入", "支出" };
+			itemTab["費用付替"] = new List<string>() { "収入", "支出" };
+			itemTab["要員数"] = new List<string>() { "社員", "パート", "協力", "契約", "派遣", "休職" };
+			itemTab["売上予測"] = new List<string>() { "確度70", "確度50", "確度30", "確度10" };
+
+			List<string> func = new List<string>() { "実績", "実績", "実績", "実績", "実績", "実績", "実績", "実績", "実績", "実績", "予測", "予測" };
+			//cmd_部門収支 cmd = Tab["Info"];
 
 			Dictionary<string, dynamic> dataTab = Tab["data"];
-			string secName,大項目, 項目;
-			foreach (KeyValuePair<string, dynamic> item in dataTab)
+            string secName, 大項目;
+			int[] planTab, yosokuTab, actualTab;
+            foreach (KeyValuePair<string, dynamic> item in dataTab)
             {
-				secName = item.Key;
+                secName = item.Key;
+				foreach (KeyValuePair<string, List<string>> item1 in itemTab)
+                {
+					大項目 = item1.Key;
+					foreach( string 項目 in item1.Value)
+                    {
+                        checkArray(dataTab, secName, "結合", 大項目, 項目);
+						planTab = checkData(dataTab[secName], "計画", 大項目, 項目);
+						yosokuTab = checkData(dataTab[secName], "予測", 大項目, 項目);
+						actualTab = checkData(dataTab[secName], "実績", 大項目, 項目);
 
-				foreach (KeyValuePair<string, dynamic> item3 in dataTab[secName]["実績"])
-				{
-					大項目 = item3.Key;
-					foreach (KeyValuePair<string, dynamic> item4 in dataTab[secName][funcName][大項目])
-					{
-						項目 = item4.Key;
-						int[] targetTab = item4.Value;
-						//Debug.noWrite("target",secName, funcName,大項目, 項目,(targetTab.Length).ToString());
-						// ここでxmlノードを探してデータ設定する
 
 					}
 				}
+
+					/*
+
+									foreach (KeyValuePair<string, dynamic> item3 in dataTab[secName]["実績"])
+									{
+										大項目 = item3.Key;
+										//foreach (KeyValuePair<string, dynamic> item4 in dataTab[secName][funcName][大項目])
+										//{
+										//    項目 = item4.Key;
+										//    int[] targetTab = item4.Value;
+										//    //Debug.noWrite("target",secName, funcName,大項目, 項目,(targetTab.Length).ToString());
+										//    // ここでxmlノードを探してデータ設定する
+
+										//}
+									}
+					*/
 			}
 
 		}
@@ -408,7 +472,7 @@ namespace WebApi_project.hostProc
 			}
 		}
 */
-		cmd_部門収支 checkCmd(string Json)
+		cmd_部門収支 InitCmd(string Json)
 		{
 			var o_json = JsonConvert.DeserializeObject<para_部門収支>(Json);
 			string[] work = o_json.name.Split('/');
@@ -417,13 +481,18 @@ namespace WebApi_project.hostProc
 			string 部 = (work.Length > 1 ? work[1] : "");
 			string 課 = (work.Length > 2 ? work[2] : "");
 			int s_yymm = ((o_json.year - 1) * 100 + 10);
-
+			int c_yymm = 202107;
+			int actualCnt = 10;
+			int yosokuCnt = 2;
 			cmd_部門収支 cmd = new cmd_部門収支()
 			{
 				year = o_json.year,
 				mCnt = o_json.mCnt,
 				fixLevel = o_json.fixLevel,
 				s_yymm = s_yymm,
+				c_yymm = c_yymm,
+				actualCnt = actualCnt,
+				yosokuCnt = yosokuCnt,
 				統括 = 統括,
 				部 = 部,
 				課 = 課
@@ -796,15 +865,15 @@ namespace WebApi_project.hostProc
 				}
 
 				checkArray(Tab, secName, "予測", "売上高", "売上");
-				checkArray(Tab, secName, "予測", "売上予測", "確度70");
-				checkArray(Tab, secName, "予測", "売上予測", "確度50");
-				checkArray(Tab, secName, "予測", "売上予測", "確度30");
-				checkArray(Tab, secName, "予測", "売上予測", "確度10");
+				checkArray(Tab, secName, "予測データ", "売上予測", "確度70");
+				checkArray(Tab, secName, "予測データ", "売上予測", "確度50");
+				checkArray(Tab, secName, "予測データ", "売上予測", "確度30");
+				checkArray(Tab, secName, "予測データ", "売上予測", "確度10");
 
-				if (level >= 70) Tab[secName]["予測"]["売上予測"]["確度70"][n] += amount;
-				if (level >= 50) Tab[secName]["予測"]["売上予測"]["確度50"][n] += amount;
-				if (level >= 30) Tab[secName]["予測"]["売上予測"]["確度30"][n] += amount;
-				if (level >= 10) Tab[secName]["予測"]["売上予測"]["確度10"][n] += amount;
+				if (level >= 70) Tab[secName]["予測データ"]["売上予測"]["確度70"][n] += amount;
+				if (level >= 50) Tab[secName]["予測データ"]["売上予測"]["確度50"][n] += amount;
+				if (level >= 30) Tab[secName]["予測データ"]["売上予測"]["確度30"][n] += amount;
+				if (level >= 10) Tab[secName]["予測データ"]["売上予測"]["確度10"][n] += amount;
 
 				//db_account data = new db_account()
 				//{
@@ -820,7 +889,7 @@ namespace WebApi_project.hostProc
 			{
 				secName = item.Key;
 				var Cnt = Tab[secName]["予測"]["売上高"]["売上"].Length;
-				for (var m = 0; m < Cnt; m++) Tab[secName]["予測"]["売上高"]["売上"][m] = Tab[secName]["予測"]["売上予測"]["確度" + fixLevel][m];
+				for (var m = 0; m < Cnt; m++) Tab[secName]["予測"]["売上高"]["売上"][m] = Tab[secName]["予測データ"]["売上予測"]["確度" + fixLevel][m];
 			}
 
 
