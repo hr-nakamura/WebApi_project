@@ -220,8 +220,44 @@ namespace WebApi_project.hostProc
 
 			return (Tab);
 		}
-	void meke_JoinData(Dictionary<string, dynamic> Tab)
-        {
+		void meke_JoinData(Dictionary<string, dynamic> Tab)
+		{
+			List<string> func = new List<string>() { "実績", "実績", "実績", "実績", "実績", "実績", "実績", "実績", "実績", "実績", "予測", "予測" };
+			string secName, funcName, 大項目, 項目;
+			Dictionary<string, dynamic> dataTab = Tab["data"];
+			foreach (KeyValuePair<string, dynamic> item in dataTab)
+            {
+				secName = item.Key;
+				foreach (KeyValuePair<string, dynamic> item1 in dataTab[secName])
+                {
+					funcName = item1.Key;
+					if (funcName != "予測") continue;
+					foreach (KeyValuePair<string, dynamic> item2 in dataTab[secName][funcName])
+                    {
+						大項目 = item2.Key;
+						foreach (KeyValuePair<string, dynamic> item3 in dataTab[secName][funcName][大項目])
+                        {
+							項目 = item3.Key;
+							checkArray(dataTab, secName, "結合", 大項目, 項目);
+							for (var i = 0; i < 12; i++)
+							{
+								string work = func[i];
+                                if (funcName == func[i])
+                                {
+									dataTab[secName]["結合"][大項目][項目][i] = dataTab[secName][funcName][大項目][項目][i];
+								}
+							}
+
+						}
+
+					}
+
+				}
+
+			}
+		}
+		void meke_JoinData1(Dictionary<string, dynamic> Tab)
+		{
 			Dictionary<string, List<string>> itemTab = new Dictionary<string, List<string>>();
 			itemTab["予算"] = new List<string>(){"予算"};
 			itemTab["売上高"] = new List<string>() { "売上" };
