@@ -258,27 +258,11 @@ namespace WebApi_project.hostProc
 						workTab["実績"] = checkData(dataTab[secName], "実績", 大項目, 項目);
 						for (var i = 0; i < 12; i++)
 						{
-							dataTab[secName]["結合"][大項目][項目][i] = (workTab["実績"][i] != null ? workTab["実績"][i] : 0);
+							string work = func[i];
+							dataTab[secName]["結合"][大項目][項目][i] = (workTab[work].Length > 0 ? workTab[work][i] : 0);
 						}
-
 					}
 				}
-
-					/*
-
-									foreach (KeyValuePair<string, dynamic> item3 in dataTab[secName]["実績"])
-									{
-										大項目 = item3.Key;
-										//foreach (KeyValuePair<string, dynamic> item4 in dataTab[secName][funcName][大項目])
-										//{
-										//    項目 = item4.Key;
-										//    int[] targetTab = item4.Value;
-										//    //Debug.noWrite("target",secName, funcName,大項目, 項目,(targetTab.Length).ToString());
-										//    // ここでxmlノードを探してデータ設定する
-
-										//}
-									}
-					*/
 			}
 
 		}
