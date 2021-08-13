@@ -36,7 +36,7 @@ namespace WebApi_project.hostProc
 		{
 			Json = "{dispCmd:'統括一覧',year:'2021', mCnt:'4', fixLevel:'70' ,name:''}";
 
-			List<string> func = new List<string>(){ "計画","予測","実績","配賦"};
+			List<string> func = new List<string>(){ "結合","計画","予測","実績"};
 
 
 
@@ -78,7 +78,7 @@ namespace WebApi_project.hostProc
 		}
 		XmlDocument makeBaseXML(Dictionary<string, dynamic> dataTab)
         {
-			string fName = getAbsoluteFileName("/funcProc/部門収支/EMG.xml");
+			string fName = getAbsoluteFileName("/funcProc/部門収支/BASE.xml");
 			var xmlDoc = new XmlDocument();
 			xmlDoc.Load(fName);
 			XmlNode topNode = xmlDoc.SelectSingleNode("//全体");

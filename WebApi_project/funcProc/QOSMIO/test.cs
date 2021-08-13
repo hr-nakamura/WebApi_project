@@ -20,6 +20,29 @@ namespace WebApi_project.hostProc
         {
 
         }
+        XmlDocument makeBaseXML()
+        {
+            string fName = getAbsoluteFileName("/funcProc/QOSMIO/BASE.xml");
+            var xmlDoc = new XmlDocument();
+            xmlDoc.Load(fName);
+            XmlNode topNode = xmlDoc.SelectSingleNode("//全体");
+            XmlElement secNode = (XmlElement)xmlDoc.SelectSingleNode("//グループ");
+            var node = xmlDoc.SelectNodes("//項目/月");
+            for (var i = 0; i < node.Count; i++)
+            {
+                node[i].InnerText = "0";
+            }
+            XmlElement Node1 = (XmlElement)xmlDoc.SelectSingleNode("//部署コード");
+            Node1.InnerText = "";
+            XmlElement Node2 = (XmlElement)xmlDoc.SelectSingleNode("//名前");
+            Node2.InnerText = "";
+            XmlElement Node3 = (XmlElement)xmlDoc.SelectSingleNode("//統括");
+            Node3.InnerText = "";
+            secNode.SetAttribute("name", "");
+            secNode.SetAttribute("kind", "");
+            xmlDoc.Save(fName);
+            return (xmlDoc);
+        }
         public object json_projectTest(String Json)
         {
             test();
@@ -78,7 +101,7 @@ namespace WebApi_project.hostProc
 
             Dictionary<string, string> o_json = (Dictionary<string, string>) json_projectTest(Json);
 
-            XmlDocument xmlDoc = makeXmlDoc(o_json);
+            XmlDocument xmlDoc = makeBaseXML();
             //XmlDocument xmlDoc = new XmlDocument();
 
             return (xmlDoc);
