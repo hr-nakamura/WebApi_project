@@ -17,6 +17,7 @@ namespace WebApi_project.Models
 	}
 	public struct cmd_部門収支
 	{
+		public string title { get; set; }
 		public string secMode { get; set; }
 		public string dispMode { get; set; }
 		public string listMode { get; set; }
