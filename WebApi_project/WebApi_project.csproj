@@ -98,6 +98,7 @@
     <Content Include="_Func\部門収支\EMG収支計画.html" />
     <Content Include="_Func\部門収支\EMG部門収支.xsl" />
     <Content Include="funcProc\部門収支\部門収支_XML.asp" />
+    <Content Include="funcProc\QOSMIO\abc.json" />
     <None Include="funcProc\QOSMIO\A_EMG.json" />
     <None Include="funcProc\QOSMIO\A_統括.json" />
     <Content Include="Scripts\bootstrap.js" />

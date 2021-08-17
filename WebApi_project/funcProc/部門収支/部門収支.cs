@@ -34,9 +34,10 @@ namespace WebApi_project.hostProc
     {
 		public XmlDocument 部門収支_XML(String Json)
 		{
-			Json = "{dispCmd:'統括一覧',year:'2021', mCnt:'4', fixLevel:'70' ,name:'EMG'}";
-
-
+			if (Json == "{}")
+			{
+				Json = "{dispCmd:'統括一覧',year:'2021', mCnt:'2', fixLevel:'70' }";
+			}
 
 
 			Dictionary<string, dynamic> Tab = (Dictionary<string, dynamic>)json_部門収支_XML(Json);
@@ -201,15 +202,10 @@ namespace WebApi_project.hostProc
 		{
 
 			Dictionary<string, dynamic> Tab = new Dictionary<string, dynamic>();
-			if( Json == "")
+			if( Json == "{}")
             {
-				Json = "{dispCmd:'統括一覧',year:'2021', mCnt:'4', fixLevel:'70' ,name:''}";
+				Json = "{dispCmd:'統括一覧',year:'2021', mCnt:'2', fixLevel:'70'}";
 			}
-
-			//Json = "{dispCmd:統括一覧											,year:'2021', mCnt:4, fixLevel:70 }";
-			//Json = "{dispCmd:部門一覧	,secMode:'開発'							,year:'2021', mCnt:4, fixLevel:70 }";
-			//Json = "{dispCmd:課一覧		,secMode:'開発'	,dispMode:'営業本部'	,year:'2021', mCnt:4, fixLevel:70 }";
-			//var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
 
 			var cmd = InitCmd(Json);
 
@@ -469,6 +465,7 @@ namespace WebApi_project.hostProc
 		cmd_部門収支 InitCmd(string Json)
 		{
 			var o_json = JsonConvert.DeserializeObject<para_部門収支>(Json);
+			if (String.IsNullOrEmpty(o_json.name)) o_json.name = "";
 			string[] work = o_json.name.Split('/');
 
 			string 統括 = work[0];
@@ -476,8 +473,8 @@ namespace WebApi_project.hostProc
 			string 課 = (work.Length > 2 ? work[2] : "");
 			int s_yymm = ((o_json.year - 1) * 100 + 10);
 			int c_yymm = 202107;
-			int actualCnt = 5;
-			int yosokuCnt = 3;
+			int actualCnt = 10;
+			int yosokuCnt = 2;
 			List<string> funcList = new List<string>() { "計画", "計画", "計画", "計画", "計画", "計画", "計画", "計画", "計画", "計画", "計画", "計画" };
 			var ii = 0;
 			for (var i = 0; i < actualCnt; i++,ii++)
@@ -1838,6 +1835,8 @@ namespace WebApi_project.hostProc
                     Tab.Add(統括, costList(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
                     //Debug.noWrite(統括, secTab[統括].codes);
                 }
+				Tab.Add("本社", costList(直間: "2", 統括: "", 部門: "", 課: "", 部署コード: ""));
+				Tab.Add("直接", costList(直間: "0,1", 統括: "", 部門: "", 課: "", 部署コード: ""));
 			}
 			else if (o_json.dispMode == "部門")
             {

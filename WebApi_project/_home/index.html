@@ -23,7 +23,7 @@
         var user_mode = "json";
         var WebApi_url = "/WebApi/project/api/values";
         var WebApi_url_json = "/WebApi/project/api/json";
-        var Send_Option = { limitYear: 2019, visitBBS: "2021/07/01 10:00:00" };
+        var Send_Option = { };
         var mailPara = { mailAddr: "azuma@psl-em.co.jp" };
     </script>
     <script type="text/javascript">
@@ -84,8 +84,8 @@
             var item = o.item;
             var func = o.func;
             if (mode == "method") {
-                Send_Option.visitBBS = "2019/07/01 10:10:00";
-                Send_Option.limitYear = "2019";
+                //Send_Option.visitBBS = "2019/07/01 10:10:00";
+                //Send_Option.limitYear = "2019";
 
                 if (user_mode == "json") {
                     var value = item + "/json_" + func;
