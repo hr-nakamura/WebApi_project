@@ -34,7 +34,7 @@ namespace WebApi_project.hostProc
     {
 		public XmlDocument 部門収支_XML(String Json)
 		{
-			Json = "{dispCmd:'EMG',year:'2021', mCnt:'4', fixLevel:'70' ,name:'EMG'}";
+			Json = "{dispCmd:'統括一覧',year:'2021', mCnt:'4', fixLevel:'70' ,name:'EMG'}";
 
 
 
@@ -90,6 +90,15 @@ namespace WebApi_project.hostProc
 			XmlNode topNode = xmlDoc.SelectSingleNode("//全体");
 			XmlElement secNode = (XmlElement)xmlDoc.SelectSingleNode("//グループ");
 
+			// 実績・予測・計画の設定
+			XmlNodeList NodeListM = xmlDoc.SelectNodes("//データ/月情報");
+			for( var m = 0; m < 12; m++)
+            {
+				var node = xmlDoc.SelectNodes("//データ/月情報/月[@m='" + m + "']");
+				for( var i = 0; i < node.Count; i++) node[i].InnerText = cmd.funcList[m];
+            }
+
+
 			XmlNodeList nodeList;
 			if( cmd.secMode != "開発")
             {
@@ -136,6 +145,8 @@ namespace WebApi_project.hostProc
 				elem.SetAttribute("kind2", valueArray[No]["種別"]);
 				No++;
             }
+
+			if( !String.IsNullOrEmpty(cmd.title) ) xmlDoc.SelectSingleNode("//グループ/名前").InnerText = cmd.title;
 			return (xmlDoc);
 		}
 		void checkNode(XmlDocument xmlDoc, string secName, string funcName, string 大項目, string 項目, int[] values)
@@ -465,10 +476,18 @@ namespace WebApi_project.hostProc
 			string 課 = (work.Length > 2 ? work[2] : "");
 			int s_yymm = ((o_json.year - 1) * 100 + 10);
 			int c_yymm = 202107;
-			int actualCnt = 10;
-			int yosokuCnt = 2;
-			List<string> funcList = new List<string>() { "実績", "実績", "実績", "実績", "実績", "実績", "実績", "実績", "実績", "実績", "予測", "予測" };
-
+			int actualCnt = 5;
+			int yosokuCnt = 3;
+			List<string> funcList = new List<string>() { "計画", "計画", "計画", "計画", "計画", "計画", "計画", "計画", "計画", "計画", "計画", "計画" };
+			var ii = 0;
+			for (var i = 0; i < actualCnt; i++,ii++)
+			{
+				funcList[ii] = "実績";
+			}
+			for (var j = 0; j < yosokuCnt; j++,ii++)
+			{
+				funcList[ii] = "予測";
+			}
 			cmd_部門収支 cmd = new cmd_部門収支()
 			{
 				year = o_json.year,
@@ -1819,8 +1838,8 @@ namespace WebApi_project.hostProc
                     Tab.Add(統括, costList(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
                     //Debug.noWrite(統括, secTab[統括].codes);
                 }
-            }
-            else if (o_json.dispMode == "部門")
+			}
+			else if (o_json.dispMode == "部門")
             {
                 group sec = secTab["開発本部"];
 
