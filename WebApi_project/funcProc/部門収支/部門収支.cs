@@ -71,7 +71,7 @@ namespace WebApi_project.hostProc
 						foreach (KeyValuePair<string, dynamic> item4 in dataTab[secName][funcName][大項目])
 						{
 							項目 = item4.Key;
-							int[] targetTab = item4.Value;
+							double[] targetTab = item4.Value;
 							//Debug.noWrite("target",secName, funcName,大項目, 項目,(targetTab.Length).ToString());
 							// ここでxmlノードを探してデータ設定する
 							checkNode(xmlDoc, secName, funcName, 大項目, 項目, targetTab);
@@ -165,7 +165,7 @@ namespace WebApi_project.hostProc
 			if( !String.IsNullOrEmpty(cmd.title) ) xmlDoc.SelectSingleNode("//グループ/名前").InnerText = cmd.title;
 			return (xmlDoc);
 		}
-		void checkNode(XmlDocument xmlDoc, string secName, string funcName, string 大項目, string 項目, int[] values)
+		void checkNode(XmlDocument xmlDoc, string secName, string funcName, string 大項目, string 項目, double[] values)
 		{
 
 			XmlNode rootNode = xmlDoc.SelectSingleNode("/root");
@@ -346,41 +346,130 @@ namespace WebApi_project.hostProc
 		}
 		void calcHaifu(cmd_部門収支 cmd, Dictionary<string, dynamic> dataTab)
 		{
-			checkArray(dataTab, "本社", "配賦", "計画", "本社予算");
-			checkArray(dataTab, "本社", "配賦", "計画", "売上");
+
+			double partUnit = 1;
+			double guestUnit = 1;
+			if (cmd.year <= 2008)
+			{                               // - 2008
+				partUnit = 0.25;
+				guestUnit = 0.25;
+			}
+			else if (cmd.year >= 2009 && cmd.year <= 2010)
+			{       // 2009 - 2010
+				partUnit = 0.01;
+				guestUnit = 0.01;
+			}
+			else if (cmd.year >= 2011 && cmd.year <= 2015)
+			{           // 2011 - 2015
+				partUnit = 0.03;
+				guestUnit = 0.03;
+			}
+			else if (cmd.year >= 2016)
+			{                       // 2016 -
+				partUnit = 1.0;
+				guestUnit = 0.10;
+			}
+			else
+			{
+				partUnit = 1.0;
+				guestUnit = 0.10;
+			}
 			List<string> funcList = new List<string>() { "計画", "予測", "実績" };
 			foreach(string func in funcList)
             {
 				// 配賦対象額の作成
 				checkArray(dataTab, "本社", "配賦", func, "本社予算");
 				checkArray(dataTab, "本社", "配賦", func, "売上");
-                copyArray(dataTab["本社"]["配賦"][func]["本社予算"], dataTab["本社"]["計画"]["予算"]["予算"], "+", 12);
+				checkArray(dataTab, "本社", "配賦", func, "固定費合計");
+				checkArray(dataTab, "本社", "配賦", func, "配賦対象");
+				checkArray(dataTab, "本社", "配賦", func, "販管人件費");
+				checkArray(dataTab, "本社", "配賦", func, "販管雑給");
+				checkArray(dataTab, "本社", "配賦", func, "原価外注費");
+				checkArray(dataTab, "本社", "配賦", func, "固定人件費");
+				
+				copyArray(dataTab["本社"]["配賦"][func]["本社予算"], dataTab["本社"]["計画"]["予算"]["予算"], "+", 12);
                 copyArray(dataTab["本社"]["配賦"][func]["売上"], dataTab["本社"]["計画"]["売上高"]["売上"], "+", 12);
 
 				// 部門の固定費合計
-				checkArray(dataTab, "本社", "配賦", func, "固定費合計");
 				foreach (var x in dataTab["直接"][func]["部門固定費"])
 				{
 					string item = x.Key;
 					copyArray(dataTab["本社"]["配賦"][func]["固定費合計"], dataTab["直接"][func]["部門固定費"][item], "+", 12);
 				}
 				// 配賦対象額の算出
-				checkArray(dataTab, "本社", "配賦", func, "配賦対象");
 				copyArray(dataTab["本社"]["配賦"][func]["配賦対象"], dataTab["本社"]["配賦"][func]["本社予算"], "+", 12);
 				copyArray(dataTab["本社"]["配賦"][func]["配賦対象"], dataTab["本社"]["配賦"][func]["固定費合計"], "-", 12);
 
 				// 部門の計算の分母作成
-				checkArray(dataTab, "本社", "配賦", func, "販管人件費");
-				checkArray(dataTab, "本社", "配賦", func, "販管雑給");
-				checkArray(dataTab, "本社", "配賦", func, "原価外注費");
-				checkArray(dataTab, "本社", "配賦", func, "固定人件費");
 				copyArray(dataTab["本社"]["配賦"][func]["販管人件費"], dataTab["直接"][func]["販管費"]["人件費"], "+", 12);
 				copyArray(dataTab["本社"]["配賦"][func]["販管雑給"], dataTab["直接"][func]["販管費"]["雑給"], "+", 12);
 				copyArray(dataTab["本社"]["配賦"][func]["原価外注費"], dataTab["直接"][func]["売上原価"]["外注費"], "+", 12);
 				copyArray(dataTab["本社"]["配賦"][func]["固定人件費"], dataTab["直接"][func]["部門固定費"]["人件費"], "+", 12);
+
+						// 部門の計算
+				foreach(var x in dataTab)
+				{
+					string secName = x.Key;
+					if (secName == "本社" || secName == "直接") continue;
+					checkArray(dataTab, secName, "配賦", func, "販管人件費");
+					checkArray(dataTab, secName, "配賦", func, "販管雑給");
+					checkArray(dataTab, secName, "配賦", func, "原価外注費");
+					checkArray(dataTab, secName, "配賦", func, "固定人件費");
+
+					checkArray(dataTab, secName, func, "販管費", "人件費");
+					checkArray(dataTab, secName, func, "販管費", "雑給");
+					checkArray(dataTab, secName, func, "部門固定費", "人件費");
+					checkArray(dataTab, secName, func, "売上原価", "外注費");
+
+					copyArray(dataTab[secName]["配賦"][func]["販管人件費"], dataTab[secName][func]["販管費"]["人件費"], "+", 12);
+					copyArray(dataTab[secName]["配賦"][func]["販管雑給"], dataTab[secName][func]["販管費"]["雑給"], "+", 12);
+					copyArray(dataTab[secName]["配賦"][func]["固定人件費"], dataTab[secName][func]["部門固定費"]["人件費"], "+", 12);
+					copyArray(dataTab[secName]["配賦"][func]["原価外注費"], dataTab[secName][func]["売上原価"]["外注費"], "+", 12);
+				}
+				foreach(var x in dataTab)
+				{
+					string secName = x.Key;
+					if (secName == "直接") continue;
+					checkArray(dataTab, secName, "配賦", func, "計算額");
+					copyArray(dataTab[secName]["配賦"][func]["計算額"], dataTab[secName]["配賦"][func]["販管人件費"], "+", 12);
+					if (cmd.year >= 2013)
+					{
+						copyArray(dataTab[secName]["配賦"][func]["計算額"], dataTab[secName]["配賦"][func]["固定人件費"], "+", 12);
+					}
+					for( int m = 0; m < 12; m++)
+                    {
+						dataTab[secName]["配賦"][func]["計算額"][m] += (dataTab[secName]["配賦"][func]["販管雑給"][m] * partUnit);
+						dataTab[secName]["配賦"][func]["計算額"][m] += (dataTab[secName]["配賦"][func]["原価外注費"][m] * guestUnit);
+					}
+				}
+						// 分配の計算
+				foreach(var x in dataTab)
+				{
+					string secName = x.Key;
+					if (secName == "本社" || secName == "直接") continue;
+					checkArray(dataTab, secName, "配賦", func, "分配率");
+					for (int m = 0; m < 12; m++)
+                    {
+						dataTab[secName]["配賦"][func]["分配率"][m] = dataTab[secName]["配賦"][func]["計算額"][m] / dataTab["本社"]["配賦"][func]["計算額"][m];
+					}
+				}
+					// 分配の計算
+
+				foreach(var x in dataTab)
+				{
+					string secName = x.Key;
+					if (secName == "本社" || secName == "直接") continue;
+					checkArray(dataTab, secName, func, "本社費配賦", "本社費");
+					for (int m = 0; m < 12; m++)
+                    {
+						double value = dataTab["本社"]["配賦"][func]["配賦対象"][m] * dataTab[secName]["配賦"][func]["分配率"][m];
+						Debug.Write("XXX", value.ToString());
+						dataTab[secName][func]["本社費配賦"]["本社費"][m] = value;
+					}
+				}
 			}
 		}
-		void copyArray(int[] destArray,int[] srcArray, string mode,int mCnt)
+		void copyArray(double[] destArray,double[] srcArray, string mode,int mCnt)
         {
 			for( var m = 0; m < mCnt; m++)
             {
@@ -1032,7 +1121,8 @@ namespace WebApi_project.hostProc
 
 			string S_name, secName, codes, mode;
 			int yymm, n, 直間;
-			decimal amount;
+			decimal amountX;
+			double amount;
 			StringBuilder sql = new StringBuilder("");
 			List<string> SQLTab = new List<string>();
 			foreach (var item in Tab)
@@ -1098,7 +1188,9 @@ namespace WebApi_project.hostProc
 				S_name = (string)reader["S_name"].ToString();
 				直間 = (byte)reader["直間"];
 				yymm = (int)reader["yymm"];
-				amount = (decimal)reader["amount"];
+                amountX = (decimal)reader["amount"];
+                amount = decimal.ToDouble(amountX);
+                //amount = (double)reader["amount"];
 
 				n = yymmDiff(s_yymm, yymm);
 
@@ -1162,7 +1254,7 @@ namespace WebApi_project.hostProc
 			string S_name, secName, codes, mode;
 			string 大項目, 分類, 科目, EMG;
 			int yymm, n, 直間;
-			decimal amount;
+			double amount;
 			List<string> SQLTab = new List<string>();
 			StringBuilder sql = new StringBuilder("");
 			foreach (var item in Tab)
@@ -1282,7 +1374,7 @@ namespace WebApi_project.hostProc
 				EMG = (string)reader["EMG"].ToString();
 				直間 = (byte)reader["直間"];
 				yymm = (int)reader["yymm"];
-				amount = (decimal)reader["amount"];
+				amount = decimal.ToDouble((decimal)reader["amount"]);
 
 				n = yymmDiff(s_yymm, yymm);
 
@@ -1594,14 +1686,14 @@ namespace WebApi_project.hostProc
 			Debug.noWrite("reader Start");
 			int 付替;
 			int yymm, n, 直間;
-			decimal cost;
+			double cost;
 			while (reader.Read())
 			{
 				S_name = (string)reader["S_name"].ToString();
 				付替 = (byte)reader["付替"];
 				直間 = (byte)reader["直間"];
 				yymm = (int)reader["yymm"];
-				cost = (decimal)reader["金額"];
+				cost = decimal.ToDouble((decimal)reader["金額"]);
 
 				n = yymmDiff(s_yymm, yymm);
 
@@ -1885,11 +1977,11 @@ namespace WebApi_project.hostProc
 				}
 				if (!Tab[部門][種別][大項目].ContainsKey(項目))
 				{
-					Tab[部門][種別][大項目].Add(項目, new Dictionary<string, int[]>());
+					Tab[部門][種別][大項目].Add(項目, new Dictionary<string, double[]>());
 				}
 			}
 			//Debug.noWrite("設定");
-			Tab[部門][種別][大項目][項目] = new int[12];
+			Tab[部門][種別][大項目][項目] = new double[12];
 			return (Tab);
 		}
 		public Dictionary<string, object> costList(string 直間, string 統括, string 部門, string 課, string 部署コード)
