@@ -463,7 +463,6 @@ namespace WebApi_project.hostProc
 					for (int m = 0; m < 12; m++)
                     {
 						double value = dataTab["本社"]["配賦"][func]["配賦対象"][m] * dataTab[secName]["配賦"][func]["分配率"][m];
-						Debug.Write("XXX", value.ToString());
 						dataTab[secName][func]["本社費配賦"]["本社費"][m] = value;
 					}
 				}
