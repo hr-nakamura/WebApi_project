@@ -36,7 +36,9 @@ namespace WebApi_project.hostProc
 		{
 			if (Json == "{}")
 			{
+				//Json = "{dispCmd:'EMG',year:'2021', mCnt:'2', fixLevel:'70' }";
 				Json = "{dispCmd:'統括一覧',year:'2021', mCnt:'2', fixLevel:'70' }";
+				//Json = "{dispCmd:'詳細',統括:'営業本部',year:'2021', mCnt:'2', fixLevel:'70' }";
 			}
 
 
@@ -101,7 +103,7 @@ namespace WebApi_project.hostProc
 
 
 			XmlNodeList nodeList;
-			if( cmd.secMode != "開発")
+            if (cmd.listMode == "詳細" && cmd.secMode != "開発")
             {
                 nodeList = secNode.SelectNodes("データ/本社費配賦|データ/売上付替|データ/費用付替|データ/部門固定費");
                 foreach (XmlNode node in nodeList)
@@ -109,7 +111,6 @@ namespace WebApi_project.hostProc
                     node.ParentNode.RemoveChild(node);
                 }
             }
-
 
             if ( cmd.listMode == "一覧")
             {
@@ -144,6 +145,20 @@ namespace WebApi_project.hostProc
 				elem.SetAttribute("name", name);
 				elem.SetAttribute("kind", mode);
 				elem.SetAttribute("kind2", valueArray[No]["種別"]);
+				var nodeListStr = "";
+				if( mode == "開発")
+                {
+					nodeListStr = "データ/予算";
+                }
+                else
+                {
+					 nodeListStr = "データ/部門固定費|データ/本社費配賦";
+				}
+				var nodeList1 = elem.SelectNodes(nodeListStr);
+				foreach (XmlNode node in nodeList1)
+				{
+					node.ParentNode.RemoveChild(node);
+				}
 				No++;
             }
 
@@ -280,7 +295,13 @@ namespace WebApi_project.hostProc
 			foreach (KeyValuePair<string, dynamic> item in dataTab)
             {
 				string S_name = item.Key;
-				if (S_name == "本社") calcTargetPlan(cmd,dataTab[S_name]);
+				if (S_name == "本社")
+				{
+					checkArray(dataTab, S_name, "予算", "予算", "予算");
+					checkArray(dataTab, S_name, "予測", "予算", "予算");
+					checkArray(dataTab, S_name, "実績", "予算", "予算");
+					calcTargetPlan(cmd, dataTab[S_name]);
+				}
 			}
 			calcHaifu(cmd, dataTab);
 
@@ -288,8 +309,35 @@ namespace WebApi_project.hostProc
 
 		void calcTargetPlan(cmd_部門収支 cmd, Dictionary<string, dynamic> dataTab)
         {
+			var Tab = dataTab;
+			// 支出の部
+			string[] itemStr_O = "売上原価,販管費,営業外費用".Split(',');
+			var m = 0;
+			for(int iNum = 0; iNum< itemStr_O.Length; iNum++)
+			{
+				string item = itemStr_O[iNum];
+				foreach(var itemx in Tab["計画"][item])
+				{
+					string kind = itemx.Key;
+					Tab["予算"]["予算"]["予算"][m] += Tab["計画"][item][kind][m];
+					Tab["予測"]["予算"]["予算"][m] += Tab["計画"][item][kind][m];
+					Tab["実績"]["予算"]["予算"][m] += Tab["計画"][item][kind][m];
+				}
+			}
+			var itemStr_I = "営業外収益,費用付替,売上付替".Split(',');
+			for (int iNum = 0; iNum < itemStr_I.Length; iNum++)
+			{
+				string item = itemStr_I[iNum];
+				foreach (var itemx in Tab["計画"][item])
+				{
+					string kind = itemx.Key;
+					//Tab["計画"]["予算"]["予算"][m] -= Tab["計画"][item][kind][m];
+					//Tab["予測"]["予算"]["予算"][m] -= Tab["計画"][item][kind][m];
+					//Tab["実績"]["予算"]["予算"][m] -= Tab["計画"][item][kind][m];
+				}
+			}
 
-        }
+		}
 		void calcHaifu(cmd_部門収支 cmd, Dictionary<string, dynamic> dataTab)
 		{
 
