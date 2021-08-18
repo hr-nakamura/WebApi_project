@@ -48,7 +48,8 @@
             window.status = "call_ajax_api_json[" + mode + "]";
             var options = {
                 Item: item,
-                Json: JSON.stringify(json)
+                Json: json
+//                Json: JSON.stringify(json)
             };
             var result = $.ajax({
                 url: url,

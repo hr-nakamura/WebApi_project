@@ -30,7 +30,7 @@
 
         window.onload = function () {
 
-            $.debug("Start");
+            $.debug("StartX");
 
             var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
             var x = window.location.pathname.split("/");
@@ -89,7 +89,7 @@
 
                 if (user_mode == "json") {
                     var value = item + "/json_" + func;
-                    var Str = $.WebApi_json("GET", WebApi_url_json, value, Send_Option);
+                    var Str = $.WebApi_json("GET", WebApi_url_json, value, "{}");
                     //$.alert.json(Str);
                     $.storage("viewStr", JSON.stringify(Str, null, 2));
                     $("iframe.iframe_content").attr("src", "Util/viewValue.html");
