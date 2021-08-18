@@ -319,12 +319,9 @@ namespace WebApi_project.hostProc
 				foreach (var itemx in Tab["計画"][item])
 				{
 					string kind = itemx.Key;
-					for( var m = 0; m < 12; m++)
-                    {
-						Tab["計画"]["予算"]["予算"][m] += Tab["計画"][item][kind][m];
-						Tab["予測"]["予算"]["予算"][m] += Tab["計画"][item][kind][m];
-						Tab["実績"]["予算"]["予算"][m] += Tab["計画"][item][kind][m];
-					}
+					copyArray(Tab["計画"]["予算"]["予算"], Tab["計画"][item][kind], "+",12);
+					copyArray(Tab["予測"]["予算"]["予算"], Tab["計画"][item][kind], "+",12);
+					copyArray(Tab["実績"]["予算"]["予算"], Tab["計画"][item][kind], "+",12);
 				}
 			}
 			// 収入の部
@@ -336,73 +333,64 @@ namespace WebApi_project.hostProc
 				foreach (var itemx in Tab["計画"][item])
                 {
                     string kind = itemx.Key;
-					for (var m = 0; m < 12; m++)
-					{
-						Tab["計画"]["予算"]["予算"][m] -= Tab["計画"][item][kind][m];
-						Tab["予測"]["予算"]["予算"][m] -= Tab["計画"][item][kind][m];
-						Tab["実績"]["予算"]["予算"][m] -= Tab["計画"][item][kind][m];
-					}
-                }
-            }
+					copyArray(Tab["計画"]["予算"]["予算"], Tab["計画"][item][kind], "-",12);
+					copyArray(Tab["予測"]["予算"]["予算"], Tab["計画"][item][kind], "-",12);
+					copyArray(Tab["実績"]["予算"]["予算"], Tab["計画"][item][kind], "-",12);
+				}
+			}
 			//	本社計画値から本社売上を引く
 			//	表示から売上を引いた数値にするため
-			for (var m = 0; m < 12; m++)
-			{
-				Tab["計画"]["予算"]["予算"][m] -= Tab["計画"]["売上高"]["売上"][m];
-				Tab["予測"]["予算"]["予算"][m] -= Tab["計画"]["売上高"]["売上"][m];
-				Tab["実績"]["予算"]["予算"][m] -= Tab["計画"]["売上高"]["売上"][m];
-			}
-
+			copyArray(Tab["計画"]["予算"]["予算"], Tab["計画"]["売上高"]["売上"], "-",12);
+			copyArray(Tab["予測"]["予算"]["予算"], Tab["計画"]["売上高"]["売上"], "-",12);
+			copyArray(Tab["実績"]["予算"]["予算"], Tab["計画"]["売上高"]["売上"], "-",12);
 		}
 		void calcHaifu(cmd_部門収支 cmd, Dictionary<string, dynamic> dataTab)
 		{
 			checkArray(dataTab, "本社", "配賦", "計画", "本社予算");
 			checkArray(dataTab, "本社", "配賦", "計画", "売上");
-			//			xTab["本社"]["配賦"][mode]["売上"][m] += xTab["本社"]["計画"]["売上高"]["売上"][m];
-		}
-		/*
-				//	本社費の目標値の計算（本社の費用を合計する）
-				void calcTargetPlan(string Tab1, string mCnt1);
+			List<string> funcList = new List<string>() { "計画", "予測", "実績" };
+			foreach(string func in funcList)
+            {
+				// 配賦対象額の作成
+				checkArray(dataTab, "本社", "配賦", func, "本社予算");
+				checkArray(dataTab, "本社", "配賦", func, "売上");
+                copyArray(dataTab["本社"]["配賦"][func]["本社予算"], dataTab["本社"]["計画"]["予算"]["予算"], "+", 12);
+                copyArray(dataTab["本社"]["配賦"][func]["売上"], dataTab["本社"]["計画"]["売上高"]["売上"], "+", 12);
+
+				// 部門の固定費合計
+				checkArray(dataTab, "本社", "配賦", func, "固定費合計");
+				foreach (var x in dataTab["直接"][func]["部門固定費"])
 				{
-					int mCnt = 3;
-					//	if( !IsObject(xTab["本社"]) ) return
-					//	var Tab = xTab["本社"]
-					for (var m = 0; m < mCnt; m++)
-					{
-						// 支出の部
-						var itemStr = "売上原価,販管費,営業外費用".split(",");
-						for(var iNum in itemStr)
-						{
-							var item = itemStr[iNum];
-							for(var kind in Tab["計画"][item])
-							{
-								Tab["計画"]["予算"]["予算"][m] += Tab["計画"][item][kind][m];
-								Tab["予測"]["予算"]["予算"][m] += Tab["計画"][item][kind][m];
-								Tab["実績"]["予算"]["予算"][m] += Tab["計画"][item][kind][m];
-							}
-						}
-		// 収入の部
-						var itemStr = "営業外収益,費用付替,売上付替".split(",");
-						for(var iNum in itemStr)
-						{
-							var item = itemStr[iNum];
-							for(var kind in Tab["計画"][item])
-							{
-								Tab["計画"]["予算"]["予算"][m] -= Tab["計画"][item][kind][m];
-								Tab["予測"]["予算"]["予算"][m] -= Tab["計画"][item][kind][m];
-								Tab["実績"]["予算"]["予算"][m] -= Tab["計画"][item][kind][m];
-							}
-						}
-					}
-					//	本社計画値から本社売上を引く
-					//	表示から売上を引いた数値にするため
-					for (var m = 0; m < mCnt; m++)
-					{
-						Tab["計画"]["予算"]["予算"][m] -= Tab["計画"]["売上高"]["売上"][m];
-						Tab["予測"]["予算"]["予算"][m] -= Tab["計画"]["売上高"]["売上"][m];
-						Tab["実績"]["予算"]["予算"][m] -= Tab["計画"]["売上高"]["売上"][m];
-					}
+					string item = x.Key;
+					copyArray(dataTab["本社"]["配賦"][func]["固定費合計"], dataTab["直接"][func]["部門固定費"][item], "+", 12);
 				}
+				// 配賦対象額の算出
+				checkArray(dataTab, "本社", "配賦", func, "配賦対象");
+				copyArray(dataTab["本社"]["配賦"][func]["配賦対象"], dataTab["本社"]["配賦"][func]["本社予算"], "+", 12);
+				copyArray(dataTab["本社"]["配賦"][func]["配賦対象"], dataTab["本社"]["配賦"][func]["固定費合計"], "-", 12);
+
+				// 部門の計算の分母作成
+				checkArray(dataTab, "本社", "配賦", func, "販管人件費");
+				checkArray(dataTab, "本社", "配賦", func, "販管雑給");
+				checkArray(dataTab, "本社", "配賦", func, "原価外注費");
+				checkArray(dataTab, "本社", "配賦", func, "固定人件費");
+				copyArray(dataTab["本社"]["配賦"][func]["販管人件費"], dataTab["直接"][func]["販管費"]["人件費"], "+", 12);
+				copyArray(dataTab["本社"]["配賦"][func]["販管雑給"], dataTab["直接"][func]["販管費"]["雑給"], "+", 12);
+				copyArray(dataTab["本社"]["配賦"][func]["原価外注費"], dataTab["直接"][func]["売上原価"]["外注費"], "+", 12);
+				copyArray(dataTab["本社"]["配賦"][func]["固定人件費"], dataTab["直接"][func]["部門固定費"]["人件費"], "+", 12);
+			}
+		}
+		void copyArray(int[] destArray,int[] srcArray, string mode,int mCnt)
+        {
+			for( var m = 0; m < mCnt; m++)
+            {
+				if( mode == "-" ) destArray[m] -= srcArray[m];
+				else if( mode == "+") destArray[m] += srcArray[m];
+				else destArray[m] = srcArray[m];
+			}
+        }
+
+		/*
 
 				void calcHaihu(cmd_部門収支 cmd, Dictionary<string, dynamic> Tab)
 				{
@@ -527,7 +515,51 @@ namespace WebApi_project.hostProc
 						}
 					}
 				}
-		*/
+
+		 				//	本社費の目標値の計算（本社の費用を合計する）
+				void calcTargetPlan(string Tab1, string mCnt1);
+				{
+					int mCnt = 3;
+					//	if( !IsObject(xTab["本社"]) ) return
+					//	var Tab = xTab["本社"]
+					for (var m = 0; m < mCnt; m++)
+					{
+						// 支出の部
+						var itemStr = "売上原価,販管費,営業外費用".split(",");
+						for(var iNum in itemStr)
+						{
+							var item = itemStr[iNum];
+							for(var kind in Tab["計画"][item])
+							{
+								Tab["計画"]["予算"]["予算"][m] += Tab["計画"][item][kind][m];
+								Tab["予測"]["予算"]["予算"][m] += Tab["計画"][item][kind][m];
+								Tab["実績"]["予算"]["予算"][m] += Tab["計画"][item][kind][m];
+							}
+						}
+		// 収入の部
+						var itemStr = "営業外収益,費用付替,売上付替".split(",");
+						for(var iNum in itemStr)
+						{
+							var item = itemStr[iNum];
+							for(var kind in Tab["計画"][item])
+							{
+								Tab["計画"]["予算"]["予算"][m] -= Tab["計画"][item][kind][m];
+								Tab["予測"]["予算"]["予算"][m] -= Tab["計画"][item][kind][m];
+								Tab["実績"]["予算"]["予算"][m] -= Tab["計画"][item][kind][m];
+							}
+						}
+					}
+					//	本社計画値から本社売上を引く
+					//	表示から売上を引いた数値にするため
+					for (var m = 0; m < mCnt; m++)
+					{
+						Tab["計画"]["予算"]["予算"][m] -= Tab["計画"]["売上高"]["売上"][m];
+						Tab["予測"]["予算"]["予算"][m] -= Tab["計画"]["売上高"]["売上"][m];
+						Tab["実績"]["予算"]["予算"][m] -= Tab["計画"]["売上高"]["売上"][m];
+					}
+				}
+
+		 */
 		cmd_部門収支 InitCmd(string Json)
 		{
 			var o_json = JsonConvert.DeserializeObject<para_部門収支>(Json);
