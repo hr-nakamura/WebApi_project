@@ -19,6 +19,57 @@ namespace WebApi_project.hostProc
     {
         void test()
         {
+            DateTime sDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month , 1);
+            DateTime eDate = sDate.AddMonths(1).AddDays(-1);
+            DateTime curDate = sDate;
+
+            var a = 1;
+
+/*
+
+        //------------------------------------------------------------------
+            curDate = sDate
+           var n
+           var dBuff = new Array()
+           do
+            {
+                n = dBuff.length
+              dBuff[n] = new Object;
+                dBuff[n].日付 = JsFormatDateTime(curDate, 2)
+              dBuff[n].曜日 = JsWeekday(curDate) - 1
+              dBuff[n].offDay = (dBuff[n].曜日 == 0 || dBuff[n].曜日 == 6 ? 1 : 0)
+              curDate = JsDateAdd("d", 1, curDate)
+              } while (JsDay(curDate) != 1)
+
+
+
+            DateTime sDate = DateTime.Parse(s_sDate);
+            DateTime eDate = sDate.AddMonths(mCnt).AddDays(-1);
+
+
+            string SQL = "";
+            StringBuilder sql = new StringBuilder("");
+
+            SqlConnection DB = new SqlConnection(DB_connectString);
+            DB.Open();
+            sql.Append(" SELECT *");
+            sql.Append(" FROM EMG.dbo.勤務出勤日");
+            sql.Append(" WHERE 日付 BETWEEN @sDate AND @eDate");
+            sql.Append(" AND memberID = 0");
+
+            sql.Replace("@sDate", SqlUtil.Parameter("string", sDate));
+            sql.Replace("@eDate", SqlUtil.Parameter("string", eDate));
+            SQL = sql.ToString();
+
+            SqlDataReader reader = dbRead(DB, SQL);
+            while (reader.Read())
+            {
+
+            }
+            reader.Close();
+            DB.Close();
+            DB.Dispose();
+*/
             int year = 2020;
             int s_yymm = ((year - 1) * 100 + 10);
             int c_yymm = 202107;

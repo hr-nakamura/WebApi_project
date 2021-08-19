@@ -92,6 +92,7 @@
     <Content Include="funcProc\部門収支\部門詳細.xml" />
     <Content Include="Global.asax" />
     <Content Include="funcProc\projectBBS\projectData_XML.xml" />
+    <Content Include="_Func\QOSMIO\a.asp" />
     <Content Include="_Func\部門収支\account.css" />
     <Content Include="_Func\部門収支\EMG.xml" />
     <Content Include="_Func\部門収支\EMG収支計画.html" />
