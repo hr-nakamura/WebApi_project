@@ -19,7 +19,11 @@ namespace WebApi_project.hostProc
     {
         void test()
         {
-
+            int year = 2020;
+            int s_yymm = ((year - 1) * 100 + 10);
+            int c_yymm = 202107;
+            int actualCnt = 10;
+            int yosokuCnt = 2;
         }
         XmlDocument makeBaseXML()
         {

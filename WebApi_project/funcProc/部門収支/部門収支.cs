@@ -29,8 +29,7 @@ EMG		dispCmd=EMG														&year=2021		&fix=70		&yosoku=3]
 
 namespace WebApi_project.hostProc
 {
-	public class 部門収支 : hostProc
-
+	partial class 部門収支 : hostProc
     {
 		public XmlDocument 部門収支_XML(String Json)
 		{
@@ -165,54 +164,7 @@ namespace WebApi_project.hostProc
 			if( !String.IsNullOrEmpty(cmd.title) ) xmlDoc.SelectSingleNode("//グループ/名前").InnerText = cmd.title;
 			return (xmlDoc);
 		}
-		void checkNode(XmlDocument xmlDoc, string secName, string funcName, string 大項目, string 項目, double[] values)
-		{
 
-			XmlNode rootNode = xmlDoc.SelectSingleNode("/root");
-			XmlNodeList targetsecNodeList = rootNode.SelectNodes("全体/グループ");
-			XmlNode SecNode = rootNode.SelectSingleNode("全体/グループ[@name='" + secName + "']");
-			XmlNode Node; 
-			if (funcName == "予測データ")
-            {
-				Node = rootNode.SelectSingleNode("全体/グループ[@name='" + secName + "']/予測データ/" + 大項目 + "/項目[@name='" + 項目 + "']");
-
-			}
-			else
-            {
-				Node = rootNode.SelectSingleNode("全体/グループ[@name='" + secName + "']/データ[@name='" + funcName + "']/" + 大項目 + "/項目[@name='" + 項目 + "']");
-
-			}
-			if (Node == null)
-			{
-				Debug.Write(string.Concat("対象無し：[",secName, "][", funcName, "][", 大項目, "][", 項目,"]"));
-			}
-            else
-            {
-                XmlNodeList targetList = Node.SelectNodes("月");
-                for (var i = 0; i < 12; i++)
-                {
-					targetList[i].InnerText = values[i].ToString();
-                }
-            }
-		}
-
-		int[] checkData(Dictionary<string, dynamic> Tab, string s1, string s2, string s3)
-		{
-			try
-			{
-				if (Tab[s1][s2].ContainsKey(s3))
-				{
-					//Debug.noWrite("ある");
-					return (Tab[s1][s2][s3]);
-				}
-			}
-			catch (Exception ex)
-			{
-				Debug.noWrite(ex.Message);
-			}
-			int[] x = new int[0];
-			return (x);
-		}
 		public object json_部門収支_XML(String Json)
 		{
 
@@ -250,6 +202,126 @@ namespace WebApi_project.hostProc
 			meke_JoinData(Tab);
 
 			return (Tab);
+		}
+		cmd_部門収支 InitCmd(string Json)
+		{
+			var o_json = JsonConvert.DeserializeObject<para_部門収支>(Json);
+			if (String.IsNullOrEmpty(o_json.name)) o_json.name = "";
+			string[] work = o_json.name.Split('/');
+
+			string 統括 = work[0];
+			string 部 = (work.Length > 1 ? work[1] : "");
+			string 課 = (work.Length > 2 ? work[2] : "");
+			int s_yymm = ((o_json.year - 1) * 100 + 10);
+			int c_yymm = 202107;
+			int actualCnt = 10;
+			int yosokuCnt = 2;
+			List<string> funcList = new List<string>() { "計画", "計画", "計画", "計画", "計画", "計画", "計画", "計画", "計画", "計画", "計画", "計画" };
+			var ii = 0;
+			for (var i = 0; i < actualCnt; i++, ii++)
+			{
+				funcList[ii] = "実績";
+			}
+			for (var j = 0; j < yosokuCnt; j++, ii++)
+			{
+				funcList[ii] = "予測";
+			}
+			cmd_部門収支 cmd = new cmd_部門収支()
+			{
+				year = o_json.year,
+				mCnt = o_json.mCnt,
+				fixLevel = o_json.fixLevel,
+				s_yymm = s_yymm,
+				c_yymm = c_yymm,
+				actualCnt = actualCnt,
+				yosokuCnt = yosokuCnt,
+				統括 = 統括,
+				部 = 部,
+				課 = 課,
+				funcList = funcList
+			};
+
+			switch (o_json.dispCmd)
+			{
+				case "EMG":
+					cmd.title = "EMG";
+					cmd.dispMode = "全社";
+					cmd.listMode = "詳細";
+					cmd.secMode = "";
+					cmd.haifuMode = false;
+					break;
+				case "統括一覧":
+					cmd.dispMode = "統括";
+					cmd.listMode = "一覧";
+					cmd.secMode = "開発";
+					cmd.haifuMode = true;
+					break;
+				case "部門一覧":
+					;
+					cmd.dispMode = "部門";
+					cmd.統括 = 統括;
+					cmd.listMode = "一覧";
+					cmd.secMode = "開発";
+					cmd.haifuMode = (o_json.secMode == "間接" ? false : true);
+					break;
+				case "課一覧":
+					cmd.dispMode = "グループ";
+					cmd.統括 = 統括;
+					cmd.部 = 部;
+					cmd.listMode = "一覧";
+					cmd.secMode = "開発";
+					cmd.haifuMode = true;        // 課に対しては計算しない
+					break;
+				case "統括詳細":
+					cmd.dispMode = "統括";
+					cmd.統括 = 統括;
+					cmd.listMode = "詳細";
+					cmd.secMode = "開発";
+					cmd.haifuMode = true;
+					break;
+				case "部門詳細":
+					cmd.dispMode = "部門";
+					cmd.統括 = 統括;
+					cmd.部 = 部;
+					cmd.listMode = "詳細";
+					cmd.secMode = "開発";
+					cmd.haifuMode = true;
+					break;
+				case "課詳細":
+					cmd.dispMode = "グループ";
+					cmd.統括 = 統括;
+					cmd.部 = 部;
+					cmd.課 = 課;
+					cmd.listMode = "詳細";
+					cmd.secMode = "開発";
+					cmd.haifuMode = true;        // 課に対しては計算しない
+					break;
+				//	配賦
+				case "統括配賦":
+					cmd.dispMode = "統括";
+					cmd.統括 = 統括;
+					cmd.listMode = "配賦";
+					cmd.secMode = "開発";
+					cmd.haifuMode = true;
+					break;
+				case "部門配賦":
+					cmd.dispMode = "部門";
+					cmd.統括 = 統括;
+					cmd.部 = 部;
+					cmd.listMode = "配賦";
+					cmd.secMode = "開発";
+					cmd.haifuMode = true;
+					break;
+				case "間接一覧":
+					cmd.dispMode = "グループ";
+					cmd.listMode = "間接一覧";
+					cmd.secMode = "間接";
+					cmd.haifuMode = false;
+					break;
+				default:
+					break;
+			}
+			return (cmd);
 		}
 		void meke_JoinData(Dictionary<string, dynamic> Tab)
 		{
@@ -468,306 +540,217 @@ namespace WebApi_project.hostProc
 				}
 			}
 		}
-		void copyArray(double[] destArray,double[] srcArray, string mode,int mCnt)
-        {
-			for( var m = 0; m < mCnt; m++)
-            {
-				if( mode == "-" ) destArray[m] -= srcArray[m];
-				else if( mode == "+") destArray[m] += srcArray[m];
-				else destArray[m] = srcArray[m];
-			}
-        }
 
 		/*
+            groupPlan(DB, Tab, yymm, mCnt, dispMode, dispName, listMode)						// 計画・予測データ取得
+            uriageYosoku(DB, Tab, yymm, mCnt, dispMode, dispName, listMode, fixLevel)			// 売上予測データ取得
 
-				void calcHaihu(cmd_部門収支 cmd, Dictionary<string, dynamic> Tab)
-				{
+            uriageActual(DB, Tab, yymm, mCnt, dispMode, dispName, listMode)					// 売上実績データ取得
 
-			//[本社の全計画] - [本社の売上計画] - [部門の固定費合計] = [配布対象額]
+            accountActual(DB, Tab, yymm, mCnt, dispMode, dispName, listMode)					// 費用実績データ取得
 
+            accountCost(DB, Tab, yymm, mCnt, dispMode, dispName, listMode)					// 費用付替
 
-			//人件費・雑給・原価外注費・固定費の人件費
+            salesCost(DB, Tab, yymm, mCnt, dispMode, dispName, listMode)						// 売上付替
 
-			//[全部門の合計を分母とする]
+            if(dispMode != "全社" ){
+                groupCost(DB, Tab, yymm, mCnt, dispMode, dispName, listMode)					// 部門固定費データ取得
 
+                }
+            memberPlan(DB, Tab, yymm, mCnt, dispMode, dispName, listMode)
 
-
-			//部門固定費・人件費
-			//販管費・人件費
-			//販管費・雑給
-			//売上原価・"外注費
-
-
-
-
-			//	パートの配賦は2008年度まで1/4  (0.25)
-			//				  2009年度から1/100(0.01)
-
-					int year = 2021;
-					int mCnt = 3;
-
-					double partUnit = 1;
-					double guestUnit = 1;
-					if (year <= 2008)
-					{                               // - 2008
-						partUnit = 0.25;
-						guestUnit = 0.25;
-					}
-					else if (year >= 2009 && year <= 2010)
-					{       // 2009 - 2010
-						partUnit = 0.01;
-						guestUnit = 0.01;
-					}
-					else if (year >= 2011 && year <= 2015)
-					{           // 2011 - 2015
-						partUnit = 0.03;
-						guestUnit = 0.03;
-					}
-					else if (year >= 2016)
-					{                       // 2016 -
-						partUnit = 1.0;
-						guestUnit = 0.10;
-					}
-					else
-					{
-						partUnit = 1.0;
-						guestUnit = 0.10;
-					}
-
-					var modeTab = ["計画", "予測", "実績"];
-					for (var i = 0; i < modeTab.length; i++)
-					{           // 実績・予測・計画
-						var mode = modeTab[i];
-						for (var m = 0; m < mCnt; m++)
-						{
-						// 配賦対象額の作成
-						xTab["本社"]["配賦"][mode]["本社予算"][m] += xTab["本社"]["計画"]["予算"]["予算"][m];
-						xTab["本社"]["配賦"][mode]["売上"][m] += xTab["本社"]["計画"]["売上高"]["売上"][m];
-
-						// 部門の固定費合計
-							for(var item in xTab["直接"][mode]["部門固定費"])
-							{
-								xTab["本社"]["配賦"][mode]["固定費合計"][m] += xTab["直接"][mode]["部門固定費"][item][m];
-							}
-						// 配賦対象額の算出
-						//	ここの本社予算は売上を引いた数値
-						//	ここで売上を引かないのが正しい
-							xTab["本社"]["配賦"][mode]["配賦対象"][m] += xTab["本社"]["配賦"][mode]["本社予算"][m];
-						//			xTab["本社"]["配賦"][mode]["配賦対象"][m] -= xTab["本社"]["配賦"][mode]["売上"][m]
-							xTab["本社"]["配賦"][mode]["配賦対象"][m] -= xTab["本社"]["配賦"][mode]["固定費合計"][m];
+            memberActual(DB, Tab, yymm, mCnt, dispMode, dispName, listMode)
 
 
-						// 部門の計算の分母作成
-							xTab["本社"]["配賦"][mode]["販管人件費"][m] += xTab["直接"][mode]["販管費"]["人件費"][m];
-							xTab["本社"]["配賦"][mode]["販管雑給"][m] += xTab["直接"][mode]["販管費"]["雑給"][m];
-							xTab["本社"]["配賦"][mode]["原価外注費"][m] += xTab["直接"][mode]["売上原価"]["外注費"][m];
-							xTab["本社"]["配賦"][mode]["固定人件費"][m] += xTab["直接"][mode]["部門固定費"]["人件費"][m];
-
-						// 部門の計算
-							for(var secName in xTab)
-							{
-								if (secName == "本社" || secName == "直接") continue;
-								xTab[secName]["配賦"][mode]["販管人件費"][m] += xTab[secName][mode]["販管費"]["人件費"][m];
-								xTab[secName]["配賦"][mode]["固定人件費"][m] += xTab[secName][mode]["部門固定費"]["人件費"][m];
-								xTab[secName]["配賦"][mode]["原価外注費"][m] += xTab[secName][mode]["売上原価"]["外注費"][m];
-								xTab[secName]["配賦"][mode]["販管雑給"][m] += xTab[secName][mode]["販管費"]["雑給"][m];
-							}
-
-							for(var secName in xTab)
-							{
-								if (secName == "直接") continue;
-								xTab[secName]["配賦"][mode]["計算額"][m] += xTab[secName]["配賦"][mode]["販管人件費"][m];
-								if (year >= 2013)
-								{
-									xTab[secName]["配賦"][mode]["計算額"][m] += xTab[secName]["配賦"][mode]["固定人件費"][m];
-								}
-								xTab[secName]["配賦"][mode]["計算額"][m] += (xTab[secName]["配賦"][mode]["販管雑給"][m] * partUnit);
-								xTab[secName]["配賦"][mode]["計算額"][m] += (xTab[secName]["配賦"][mode]["原価外注費"][m] * guestUnit);
-							}
-						// 分配の計算
-							for(var secName in xTab)
-							{
-								if (secName == "本社" || secName == "直接") continue;
-								xTab[secName]["配賦"][mode]["分配率"][m] = xTab[secName]["配賦"][mode]["計算額"][m] / xTab["本社"]["配賦"][mode]["計算額"][m];
-							}
-					// 分配の計算
-
-							for(var secName in xTab)
-							{
-								if (secName == "本社" || secName == "直接") continue;
-								var value = xTab["本社"]["配賦"][mode]["配賦対象"][m] * xTab[secName]["配賦"][mode]["分配率"][m];
-								xTab[secName][mode]["本社費配賦"]["本社費"][m] = (isNaN(value) ? 0 : value);
-							}
+            間接部門予算(Tab, mCnt)
+        */
 
 
-						}
-					}
-				}
 
-		 				//	本社費の目標値の計算（本社の費用を合計する）
-				void calcTargetPlan(string Tab1, string mCnt1);
-				{
-					int mCnt = 3;
-					//	if( !IsObject(xTab["本社"]) ) return
-					//	var Tab = xTab["本社"]
-					for (var m = 0; m < mCnt; m++)
-					{
-						// 支出の部
-						var itemStr = "売上原価,販管費,営業外費用".split(",");
-						for(var iNum in itemStr)
-						{
-							var item = itemStr[iNum];
-							for(var kind in Tab["計画"][item])
-							{
-								Tab["計画"]["予算"]["予算"][m] += Tab["計画"][item][kind][m];
-								Tab["予測"]["予算"]["予算"][m] += Tab["計画"][item][kind][m];
-								Tab["実績"]["予算"]["予算"][m] += Tab["計画"][item][kind][m];
-							}
-						}
-		// 収入の部
-						var itemStr = "営業外収益,費用付替,売上付替".split(",");
-						for(var iNum in itemStr)
-						{
-							var item = itemStr[iNum];
-							for(var kind in Tab["計画"][item])
-							{
-								Tab["計画"]["予算"]["予算"][m] -= Tab["計画"][item][kind][m];
-								Tab["予測"]["予算"]["予算"][m] -= Tab["計画"][item][kind][m];
-								Tab["実績"]["予算"]["予算"][m] -= Tab["計画"][item][kind][m];
-							}
-						}
-					}
-					//	本社計画値から本社売上を引く
-					//	表示から売上を引いた数値にするため
-					for (var m = 0; m < mCnt; m++)
-					{
-						Tab["計画"]["予算"]["予算"][m] -= Tab["計画"]["売上高"]["売上"][m];
-						Tab["予測"]["予算"]["予算"][m] -= Tab["計画"]["売上高"]["売上"][m];
-						Tab["実績"]["予算"]["予算"][m] -= Tab["計画"]["売上高"]["売上"][m];
-					}
-				}
-
-		 */
-		cmd_部門収支 InitCmd(string Json)
+		Dictionary<string, dynamic> initTab(cmd_部門収支 o_json)
 		{
-			var o_json = JsonConvert.DeserializeObject<para_部門収支>(Json);
-			if (String.IsNullOrEmpty(o_json.name)) o_json.name = "";
-			string[] work = o_json.name.Split('/');
+			Dictionary<string, dynamic> Tab = new Dictionary<string, dynamic>();
+			Dictionary<string, object> Info = new Dictionary<string, object>();
+			Dictionary<string, object> Data = new Dictionary<string, object>();
+			jsonProc jProc = new jsonProc();
 
-			string 統括 = work[0];
-			string 部 = (work.Length > 1 ? work[1] : "");
-			string 課 = (work.Length > 2 ? work[2] : "");
-			int s_yymm = ((o_json.year - 1) * 100 + 10);
-			int c_yymm = 202107;
-			int actualCnt = 10;
-			int yosokuCnt = 2;
-			List<string> funcList = new List<string>() { "計画", "計画", "計画", "計画", "計画", "計画", "計画", "計画", "計画", "計画", "計画", "計画" };
-			var ii = 0;
-			for (var i = 0; i < actualCnt; i++,ii++)
-			{
-				funcList[ii] = "実績";
-			}
-			for (var j = 0; j < yosokuCnt; j++,ii++)
-			{
-				funcList[ii] = "予測";
-			}
-			cmd_部門収支 cmd = new cmd_部門収支()
-			{
-				year = o_json.year,
-				mCnt = o_json.mCnt,
-				fixLevel = o_json.fixLevel,
-				s_yymm = s_yymm,
-				c_yymm = c_yymm,
-				actualCnt = actualCnt,
-				yosokuCnt = yosokuCnt,
-				統括 = 統括,
-				部 = 部,
-				課 = 課,
-				funcList = funcList
-			};
+            //Json = "{year:'2020',secMode:'開発',dispMode:'グループ'}";
+            //var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
 
-			switch (o_json.dispCmd)
-			{
-				case "EMG":
-					cmd.title = "EMG";
-					cmd.dispMode = "全社";
-					cmd.listMode = "詳細";
-					cmd.secMode = "";
-					cmd.haifuMode = false;
-					break;
-				case "統括一覧":
-					cmd.dispMode = "統括";
-					cmd.listMode = "一覧";
-					cmd.secMode = "開発";
-					cmd.haifuMode = true;
-					break;
-				case "部門一覧":
-					;
-					cmd.dispMode = "部門";
-					cmd.統括 = 統括;
-					cmd.listMode = "一覧";
-					cmd.secMode = "開発";
-					cmd.haifuMode = (o_json.secMode == "間接" ? false : true);
-					break;
-				case "課一覧":
-					cmd.dispMode = "グループ";
-					cmd.統括 = 統括;
-					cmd.部 = 部;
-					cmd.listMode = "一覧";
-					cmd.secMode = "開発";
-					cmd.haifuMode = true;        // 課に対しては計算しない
-					break;
-				case "統括詳細":
-					cmd.dispMode = "統括";
-					cmd.統括 = 統括;
-					cmd.listMode = "詳細";
-					cmd.secMode = "開発";
-					cmd.haifuMode = true;
-					break;
-				case "部門詳細":
-					cmd.dispMode = "部門";
-					cmd.統括 = 統括;
-					cmd.部 = 部;
-					cmd.listMode = "詳細";
-					cmd.secMode = "開発";
-					cmd.haifuMode = true;
-					break;
-				case "課詳細":
-					cmd.dispMode = "グループ";
-					cmd.統括 = 統括;
-					cmd.部 = 部;
-					cmd.課 = 課;
-					cmd.listMode = "詳細";
-					cmd.secMode = "開発";
-					cmd.haifuMode = true;        // 課に対しては計算しない
-					break;
-				//	配賦
-				case "統括配賦":
-					cmd.dispMode = "統括";
-					cmd.統括 = 統括;
-					cmd.listMode = "配賦";
-					cmd.secMode = "開発";
-					cmd.haifuMode = true;
-					break;
-				case "部門配賦":
-					cmd.dispMode = "部門";
-					cmd.統括 = 統括;
-					cmd.部 = 部;
-					cmd.listMode = "配賦";
-					cmd.secMode = "開発";
-					cmd.haifuMode = true;
-					break;
-				case "間接一覧":
-					cmd.dispMode = "グループ";
-					cmd.listMode = "間接一覧";
-					cmd.secMode = "間接";
-					cmd.haifuMode = false;
-					break;
-				default:
-					break;
+            Dictionary<string, group> secTab = jProc.json_部門リスト(o_json);
+
+            if (o_json.dispMode == "全社")
+            {
+                Tab.Add("全社", costList(直間: "0,1,2", 統括: "", 部門: "", 課: "", 部署コード: ""));
+            }
+            else if (o_json.dispMode == "統括")
+            {
+                foreach (string 統括 in secTab.Keys)
+                {
+                    group sec = secTab[統括];
+                    Tab.Add(統括, costList(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
+                    //Debug.noWrite(統括, secTab[統括].codes);
+                }
+				Tab.Add("本社", costList(直間: "2", 統括: "", 部門: "", 課: "", 部署コード: ""));
+				Tab.Add("直接", costList(直間: "0,1", 統括: "", 部門: "", 課: "", 部署コード: ""));
 			}
-			return (cmd);
+			else if (o_json.dispMode == "部門")
+            {
+                group sec = secTab["開発本部"];
+
+                foreach (string 部門 in sec.list.Keys)
+                {
+                    var x = sec.list[部門];
+                    Tab.Add(部門, costList(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
+                    //Debug.noWrite(部門, sec.list[部門].codes);
+                }
+            }
+            else if (o_json.dispMode == "課")
+            {
+                group sec = secTab["開発本部"].list["第1開発部"];
+                foreach (string 課 in sec.list.Keys)
+                {
+                    var x = sec.list[課];
+                    Tab.Add(課, costList(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
+                    //Debug.noWrite(課, sec.list[課].codes);
+                }
+            }
+            return (Tab);
 		}
+		public Dictionary<string, object> costList(string 直間, string 統括, string 部門, string 課, string 部署コード)
+		{
+
+			Dictionary<string, object> Tab = new Dictionary<string, object>();
+			string 種別 = (直間 == "2" ? "間接" : "直接");
+			Tab.Add("種別", 種別);
+			Tab.Add("直間", 直間);
+			Tab.Add("部署名", new secInfo(統括, 部門, 課));
+			Tab.Add("部署コード", 部署コード);
+			Tab.Add("結合", new Dictionary<string, dynamic>());
+			Tab.Add("計画", new Dictionary<string, dynamic>());
+			Tab.Add("予測", new Dictionary<string, dynamic>());
+			Tab.Add("実績", new Dictionary<string, dynamic>());
+			Tab.Add("予測データ", new Dictionary<string, dynamic>());
+			Tab.Add("配賦", new Dictionary<string, dynamic>());
+
+			return (Tab);
+		}
+		void checkNode(XmlDocument xmlDoc, string secName, string funcName, string 大項目, string 項目, double[] values)
+		{
+
+			XmlNode rootNode = xmlDoc.SelectSingleNode("/root");
+			XmlNodeList targetsecNodeList = rootNode.SelectNodes("全体/グループ");
+			XmlNode SecNode = rootNode.SelectSingleNode("全体/グループ[@name='" + secName + "']");
+			XmlNode Node;
+			if (funcName == "予測データ")
+			{
+				Node = rootNode.SelectSingleNode("全体/グループ[@name='" + secName + "']/予測データ/" + 大項目 + "/項目[@name='" + 項目 + "']");
+
+			}
+			else
+			{
+				Node = rootNode.SelectSingleNode("全体/グループ[@name='" + secName + "']/データ[@name='" + funcName + "']/" + 大項目 + "/項目[@name='" + 項目 + "']");
+
+			}
+			if (Node == null)
+			{
+				Debug.Write(string.Concat("対象無し：[", secName, "][", funcName, "][", 大項目, "][", 項目, "]"));
+			}
+			else
+			{
+				XmlNodeList targetList = Node.SelectNodes("月");
+				for (var i = 0; i < 12; i++)
+				{
+					targetList[i].InnerText = values[i].ToString();
+				}
+			}
+		}
+		void copyArray(double[] destArray, double[] srcArray, string mode, int mCnt)
+		{
+			for (var m = 0; m < mCnt; m++)
+			{
+				if (mode == "-") destArray[m] -= srcArray[m];
+				else if (mode == "+") destArray[m] += srcArray[m];
+				else destArray[m] = srcArray[m];
+			}
+		}
+
+		Dictionary<string, dynamic> checkArray(Dictionary<string, dynamic> Tab, string 部門, string 種別, string 大項目, string 項目)
+		{
+			//Debug.noWrite("確認");
+			if (大項目 == "")
+			{
+				Debug.Write("XX");
+			}
+			try
+			{
+				if (Tab[部門][種別][大項目].ContainsKey(項目))
+				{
+					//Debug.noWrite("ある");
+					return (Tab);
+				}
+			}
+			catch (Exception ex)
+			{
+				Debug.noWrite(ex.Message);
+				if (!Tab.ContainsKey(部門))
+				{
+					Tab.Add(部門, new Dictionary<string, dynamic>());
+				}
+				if (!Tab[部門].ContainsKey(種別))
+				{
+					Tab[部門].Add(種別, new Dictionary<string, dynamic>());
+				}
+				if (!Tab[部門][種別].ContainsKey(大項目))
+				{
+					Tab[部門][種別].Add(大項目, new Dictionary<string, dynamic>());
+				}
+				if (!Tab[部門][種別][大項目].ContainsKey(項目))
+				{
+					Tab[部門][種別][大項目].Add(項目, new Dictionary<string, double[]>());
+				}
+			}
+			//Debug.noWrite("設定");
+			Tab[部門][種別][大項目][項目] = new double[12];
+			return (Tab);
+		}
+		int yymmAdd(int yymm, int mCnt)
+		{
+			int yy = yymm / 100;
+			int mm = yymm % 100;
+
+			int ym = (yy * 12) + mm;
+			ym += mCnt;
+			yy = ym / 12;
+			mm = ym % 12;
+			if (mm == 0) { yy--; mm = 12; }
+			return ((yy * 100) + mm);
+		}
+		int yymmDiff(int base_yymm, int yymm)
+		{
+			int b_yy = base_yymm / 100;
+			int b_mm = base_yymm % 100;
+			int yy = yymm / 100;
+			int mm = yymm % 100;
+
+			mm += (yy - b_yy) * 12;
+			int n = (mm - b_mm);
+			return (n);
+		}
+		class db_account
+        {
+            public string 名前 { get; set; }
+			public int 直間 { get; set; }
+			public string 大項目 { get; set; }
+			public string 項目 { get; set; }
+			public string 種別 { get; set; }
+			public int level { get; set; }
+			public int yymm { get; set; }
+			public int amount { get; set; }
+		}
+	}
+	partial class 部門収支
+	{
 		public object json_groupPlan(cmd_部門収支 cmd, Dictionary<string, dynamic> Tab)
 		{
 			List<db_account> dataTab = new List<db_account>();
@@ -789,8 +772,8 @@ namespace WebApi_project.hostProc
 			DB.Open();
 			Debug.noWrite("DB Open", DB_connectString);
 			string 大項目, 項目, 種別, S_name, secName;
-			int yymm, n, amount, 直間;
-
+			int yymm, n, 直間;
+			double amount;
 			StringBuilder sql = new StringBuilder("");
 			List<string> SQLTab = new List<string>();
 			foreach (var item in Tab)
@@ -863,7 +846,7 @@ namespace WebApi_project.hostProc
 				種別 = (string)reader["種別"].ToString();
 				直間 = (byte)reader["直間"];
 				yymm = (int)reader["yymm"];
-				amount = (int)reader["amount"];
+				amount = Convert.ToDouble(reader["amount"]);
 
 				n = yymmDiff(s_yymm, yymm);
 
@@ -884,9 +867,9 @@ namespace WebApi_project.hostProc
 					secName = S_name;
 				}
 
-                checkArray(Tab, secName, 種別, 大項目, 項目);
+				checkArray(Tab, secName, 種別, 大項目, 項目);
 
-                if (大項目 == "売上付替" && 項目 == "支出") amount = -amount;
+				if (大項目 == "売上付替" && 項目 == "支出") amount = -amount;
 				if (大項目 == "費用付替" && 項目 == "支出") amount = -amount;
 				if (大項目 == "売上原価" && 項目 == "期末棚卸") amount = -amount;
 
@@ -958,8 +941,8 @@ namespace WebApi_project.hostProc
 			Debug.noWrite("DB Open", DB_connectString);
 
 			string S_name, secName, codes, mode;
-			int yymm, n, amount, level, 直間;
-
+			int yymm, n, level, 直間;
+			double amount;
 			StringBuilder sql = new StringBuilder("");
 			List<string> SQLTab = new List<string>();
 			foreach (var item in Tab)
@@ -1032,7 +1015,7 @@ namespace WebApi_project.hostProc
 				直間 = (byte)reader["直間"];
 				level = (int)reader["level"];
 				yymm = (int)reader["yymm"];
-				amount = (int)reader["amount"];
+				amount = Convert.ToDouble(reader["amount"]);
 
 				n = yymmDiff(s_yymm, yymm);
 
@@ -1064,15 +1047,6 @@ namespace WebApi_project.hostProc
 				if (level >= 30) Tab[secName]["予測データ"]["売上予測"]["確度30"][n] += amount;
 				if (level >= 10) Tab[secName]["予測データ"]["売上予測"]["確度10"][n] += amount;
 
-				//db_account data = new db_account()
-				//{
-				//	名前 = (string)reader["S_name"].ToString(),
-				//	level = (int)reader["level"],
-				//	直間 = (byte)reader["直間"],
-				//	yymm = (int)reader["yymm"],
-				//	amount = (int)reader["amount"]
-				//};
-				//dataTab.Add(data);
 			}
 			foreach (var item in Tab)
 			{
@@ -1120,7 +1094,6 @@ namespace WebApi_project.hostProc
 
 			string S_name, secName, codes, mode;
 			int yymm, n, 直間;
-			decimal amountX;
 			double amount;
 			StringBuilder sql = new StringBuilder("");
 			List<string> SQLTab = new List<string>();
@@ -1187,9 +1160,7 @@ namespace WebApi_project.hostProc
 				S_name = (string)reader["S_name"].ToString();
 				直間 = (byte)reader["直間"];
 				yymm = (int)reader["yymm"];
-                amountX = (decimal)reader["amount"];
-                amount = decimal.ToDouble(amountX);
-                //amount = (double)reader["amount"];
+				amount = Convert.ToDouble(reader["amount"]);
 
 				n = yymmDiff(s_yymm, yymm);
 
@@ -1373,7 +1344,7 @@ namespace WebApi_project.hostProc
 				EMG = (string)reader["EMG"].ToString();
 				直間 = (byte)reader["直間"];
 				yymm = (int)reader["yymm"];
-				amount = decimal.ToDouble((decimal)reader["amount"]);
+				amount = Convert.ToDouble(reader["amount"]);
 
 				n = yymmDiff(s_yymm, yymm);
 
@@ -1393,19 +1364,19 @@ namespace WebApi_project.hostProc
 				{
 					secName = S_name;
 				}
-				if (大項目 != null && 分類 != null && 大項目　!= "")
+				if (大項目 != null && 分類 != null && 大項目 != "")
 				{
 					checkArray(Tab, secName, "実績", 大項目, 分類);
 					n = yymmDiff(s_yymm, yymm);
 					if (EMG == "1") amount = -amount;
 					Tab[secName]["実績"][大項目][分類][n] += amount;
-					}
+				}
 				else
 				{
 					var work1 = "[" + yymm + "][" + 科目 + "][" + amount + "]";
-					work1 = string.Concat("[",分類,"][",yymm,"][",科目,"][",amount);
+					work1 = string.Concat("[", 分類, "][", yymm, "][", 科目, "][", amount);
 					Debug.Write("[会計データ集計での不明科目データ]" + work1);
-					}
+				}
 
 			}
 
@@ -1539,7 +1510,7 @@ namespace WebApi_project.hostProc
 			string SQL = string.Join(" UNION ALL ", SQLTab);
 
 			string payMode;
-			int cost;
+			double cost;
 			SqlDataReader reader = dbRead(DB, SQL);
 			Debug.noWrite("reader Start");
 			while (reader.Read())
@@ -1556,7 +1527,7 @@ namespace WebApi_project.hostProc
 				payMode = (string)reader["payMode"].ToString();
 				直間 = (byte)reader["直間"];
 				yymm = (int)reader["yymm"];
-				cost = (int)reader["金額"];
+				cost = Convert.ToDouble(reader["金額"]);
 
 				n = yymmDiff(s_yymm, yymm);
 
@@ -1692,8 +1663,7 @@ namespace WebApi_project.hostProc
 				付替 = (byte)reader["付替"];
 				直間 = (byte)reader["直間"];
 				yymm = (int)reader["yymm"];
-				cost = decimal.ToDouble((decimal)reader["金額"]);
-
+				cost = Convert.ToDouble(reader["金額"]);
 				n = yymmDiff(s_yymm, yymm);
 
 				if (S_name == null)
@@ -1730,7 +1700,7 @@ namespace WebApi_project.hostProc
 
 			return (dataTab);
 		}
-		
+
 		public object json_groupCost(cmd_部門収支 cmd, Dictionary<string, dynamic> Tab)
 		{
 			List<db_account> dataTab = new List<db_account>();
@@ -1872,8 +1842,9 @@ namespace WebApi_project.hostProc
 
 			SqlDataReader reader = dbRead(DB, SQL);
 			Debug.noWrite("reader Start");
-			int yymm, n, 直間, amount;
-			string 種別,大項目, 項目;
+			int yymm, n, 直間;
+			double amount;
+			string 種別, 大項目, 項目;
 			while (reader.Read())
 			{
 				S_name = (string)reader["S_name"].ToString();
@@ -1882,7 +1853,7 @@ namespace WebApi_project.hostProc
 				種別 = (string)reader["種別"].ToString();
 				直間 = (byte)reader["直間"];
 				yymm = (int)reader["yymm"];
-				amount = (int)reader["amount"];
+				amount = Convert.ToDouble(reader["amount"]);
 
 				n = yymmDiff(s_yymm, yymm);
 
@@ -1917,172 +1888,6 @@ namespace WebApi_project.hostProc
 			DB.Dispose();
 
 			return (dataTab);
-		}
-
-		/*
-            groupPlan(DB, Tab, yymm, mCnt, dispMode, dispName, listMode)						// 計画・予測データ取得
-            uriageYosoku(DB, Tab, yymm, mCnt, dispMode, dispName, listMode, fixLevel)			// 売上予測データ取得
-
-            uriageActual(DB, Tab, yymm, mCnt, dispMode, dispName, listMode)					// 売上実績データ取得
-
-            accountActual(DB, Tab, yymm, mCnt, dispMode, dispName, listMode)					// 費用実績データ取得
-
-            accountCost(DB, Tab, yymm, mCnt, dispMode, dispName, listMode)					// 費用付替
-
-            salesCost(DB, Tab, yymm, mCnt, dispMode, dispName, listMode)						// 売上付替
-
-            if(dispMode != "全社" ){
-                groupCost(DB, Tab, yymm, mCnt, dispMode, dispName, listMode)					// 部門固定費データ取得
-
-                }
-            memberPlan(DB, Tab, yymm, mCnt, dispMode, dispName, listMode)
-
-            memberActual(DB, Tab, yymm, mCnt, dispMode, dispName, listMode)
-
-
-            間接部門予算(Tab, mCnt)
-        */
-
-
-		Dictionary<string, dynamic> checkArray(Dictionary<string, dynamic> Tab, string 部門, string 種別, string 大項目, string 項目)
-		{
-			//Debug.noWrite("確認");
-			if (大項目 == "")
-			{
-				Debug.Write("XX");
-			}
-			try
-			{
-				if (Tab[部門][種別][大項目].ContainsKey(項目))
-				{
-					//Debug.noWrite("ある");
-					return (Tab);
-				}
-			}
-			catch (Exception ex)
-			{
-                Debug.noWrite(ex.Message);
-                if (!Tab.ContainsKey(部門))
-				{
-					Tab.Add(部門, new Dictionary<string, dynamic>());
-				}
-				if (!Tab[部門].ContainsKey(種別))
-				{
-					Tab[部門].Add(種別, new Dictionary<string, dynamic>());
-				}
-				if (!Tab[部門][種別].ContainsKey(大項目))
-				{
-					Tab[部門][種別].Add(大項目, new Dictionary<string, dynamic>());
-				}
-				if (!Tab[部門][種別][大項目].ContainsKey(項目))
-				{
-					Tab[部門][種別][大項目].Add(項目, new Dictionary<string, double[]>());
-				}
-			}
-			//Debug.noWrite("設定");
-			Tab[部門][種別][大項目][項目] = new double[12];
-			return (Tab);
-		}
-		public Dictionary<string, object> costList(string 直間, string 統括, string 部門, string 課, string 部署コード)
-		{
-
-			Dictionary<string, object> Tab = new Dictionary<string, object>();
-			string 種別 = (直間 == "2" ? "間接" : "直接");
-			Tab.Add("種別", 種別);
-			Tab.Add("直間", 直間);
-			Tab.Add("部署名", new secInfo(統括, 部門, 課));
-			Tab.Add("部署コード", 部署コード);
-			Tab.Add("結合", new Dictionary<string, dynamic>());
-			Tab.Add("計画", new Dictionary<string, dynamic>());
-			Tab.Add("予測", new Dictionary<string, dynamic>());
-			Tab.Add("実績", new Dictionary<string, dynamic>());
-			Tab.Add("予測データ", new Dictionary<string, dynamic>());
-
-			return (Tab);
-		}
-		Dictionary<string, dynamic> initTab(cmd_部門収支 o_json)
-		{
-			Dictionary<string, dynamic> Tab = new Dictionary<string, dynamic>();
-			Dictionary<string, object> Info = new Dictionary<string, object>();
-			Dictionary<string, object> Data = new Dictionary<string, object>();
-			jsonProc jProc = new jsonProc();
-
-            //Json = "{year:'2020',secMode:'開発',dispMode:'グループ'}";
-            //var o_json = JsonConvert.DeserializeObject<para_部門指定>(Json);
-
-            Dictionary<string, group> secTab = jProc.json_部門リスト(o_json);
-
-            if (o_json.dispMode == "全社")
-            {
-                Tab.Add("全社", costList(直間: "0,1,2", 統括: "", 部門: "", 課: "", 部署コード: ""));
-            }
-            else if (o_json.dispMode == "統括")
-            {
-                foreach (string 統括 in secTab.Keys)
-                {
-                    group sec = secTab[統括];
-                    Tab.Add(統括, costList(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
-                    //Debug.noWrite(統括, secTab[統括].codes);
-                }
-				Tab.Add("本社", costList(直間: "2", 統括: "", 部門: "", 課: "", 部署コード: ""));
-				Tab.Add("直接", costList(直間: "0,1", 統括: "", 部門: "", 課: "", 部署コード: ""));
-			}
-			else if (o_json.dispMode == "部門")
-            {
-                group sec = secTab["開発本部"];
-
-                foreach (string 部門 in sec.list.Keys)
-                {
-                    var x = sec.list[部門];
-                    Tab.Add(部門, costList(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
-                    //Debug.noWrite(部門, sec.list[部門].codes);
-                }
-            }
-            else if (o_json.dispMode == "課")
-            {
-                group sec = secTab["開発本部"].list["第1開発部"];
-                foreach (string 課 in sec.list.Keys)
-                {
-                    var x = sec.list[課];
-                    Tab.Add(課, costList(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
-                    //Debug.noWrite(課, sec.list[課].codes);
-                }
-            }
-            return (Tab);
-		}
-		int yymmAdd(int yymm, int mCnt)
-		{
-			int yy = yymm / 100;
-			int mm = yymm % 100;
-
-			int ym = (yy * 12) + mm;
-			ym += mCnt;
-			yy = ym / 12;
-			mm = ym % 12;
-			if (mm == 0) { yy--; mm = 12; }
-			return ((yy * 100) + mm);
-		}
-		int yymmDiff(int base_yymm, int yymm)
-		{
-			int b_yy = base_yymm / 100;
-			int b_mm = base_yymm % 100;
-			int yy = yymm / 100;
-			int mm = yymm % 100;
-
-			mm += (yy - b_yy) * 12;
-			int n = (mm - b_mm);
-			return (n);
-		}
-		class db_account
-        {
-            public string 名前 { get; set; }
-			public int 直間 { get; set; }
-			public string 大項目 { get; set; }
-			public string 項目 { get; set; }
-			public string 種別 { get; set; }
-			public int level { get; set; }
-			public int yymm { get; set; }
-			public int amount { get; set; }
 		}
 	}
 }
