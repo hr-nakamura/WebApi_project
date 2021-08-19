@@ -30,15 +30,15 @@
     </script>
 
     <script type="text/javascript">
-        var url = "/WebApi/project/_Func/部門収支/EMG.xml";
-        var para = {
-            dispCmd: "EMG",
-            secMode: "",
-            year: "2021",
-            fix: "70",
-            yosoku: "13",
-            browser: ""
-        }
+        //var url = "/WebApi/project/_Func/部門収支/EMG.xml";
+        //var para = {
+        //    dispCmd: "EMG",
+        //    secMode: "",
+        //    year: "2021",
+        //    fix: "70",
+        //    yosoku: "13",
+        //    browser: ""
+        //}
     </script>
 
     <script type="text/javascript">
@@ -51,13 +51,13 @@
                 //          [引数]dispCmd = 統括詳細 & dispName=開発本部 & secMode=開発 & year=2019 & fix=70 & yosoku=-1
                 //          [引数]dispCmd = 部門詳細 & dispName=開発本部第7開発部 & secMode=開発 & year=2019 & fix=70 & yosoku=7
 
-                para.dispCmd = $.queryString("dispCmd", "");
-                para.year = $.queryString("year", "");
-                para.fix = $.queryString("fix", "");
-                para.yosoku = $.queryString("yosoku", "");
-                para.browser = $.Browser.name;
+                //para.dispCmd = $.queryString("dispCmd", "");
+                //para.year = $.queryString("year", "");
+                //para.fix = $.queryString("fix", "");
+                //para.yosoku = $.queryString("yosoku", "");
+                //para.browser = $.Browser.name;
 
-                dispData(para);
+                dispData();
             });
 
         });
@@ -65,16 +65,16 @@
 
     <script type="text/javascript">
         function dispData(para) {
-            var pObj = new $.ValueCollection(para);
-            var paraStr = pObj.ToString();
+            //var pObj = new $.ValueCollection(para);
+            //var paraStr = pObj.ToString();
 
-            $.debug("para", paraStr);
+            //$.debug("para", paraStr);
 
 //            xmlDoc = $.loadXMLDoc("統括.xml");
             var url = "/webapi/project/api/xml";
             var json = {
                 dispCmd: '統括一覧',
-                year: 2020,
+                year: 2021,
                 mCnt: 0,
                 fixLevel: 70
             };

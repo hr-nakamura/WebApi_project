@@ -41,9 +41,58 @@ namespace WebApi_project.hostProc
             return (n);
         }
 
-        int dayChk(DateTime d,int adjustDayCnt)
+        int dayChk(int yymm,int adjustDayCnt)
         {
-            return (10);
+
+            int yy = yymm / 100;
+            int mm = yymm % 100;
+            Dictionary<DateTime, bool> dBuff = new Dictionary<DateTime, bool>();
+            DateTime sDate = new DateTime(yy, mm, 1);
+            DateTime eDate = sDate.AddMonths(1).AddDays(-1);
+            DateTime curDate = sDate;
+            do
+            {
+                dBuff.Add(curDate, "0,6".Contains(curDate.DayOfWeek.ToString("d")));            // "0":日 ,"6":土
+                curDate = curDate.AddDays(1);
+            } while (curDate <= eDate);
+
+
+            string SQL = "";
+            StringBuilder sql = new StringBuilder("");
+
+            SqlConnection DB = new SqlConnection(DB_connectString);
+            DB.Open();
+            sql.Append(" SELECT *");
+            sql.Append(" FROM EMG.dbo.勤務出勤日");
+            sql.Append(" WHERE 日付 BETWEEN @sDate AND @eDate");
+            sql.Append(" AND memberID = 0");
+
+            sql.Replace("@sDate", SqlUtil.Parameter("string", sDate));
+            sql.Replace("@eDate", SqlUtil.Parameter("string", eDate));
+            SQL = sql.ToString();
+            DateTime targetDay;
+            bool offDay;
+            SqlDataReader reader = dbRead(DB, SQL);
+            while (reader.Read())
+            {
+                targetDay = (DateTime)reader["日付"];
+                offDay = (bool)reader["offDay"];
+                if(dBuff.ContainsKey(targetDay)) dBuff[targetDay] = offDay;
+            }
+            reader.Close();
+            DB.Close();
+            DB.Dispose();
+
+            int Cnt = 0;
+            DateTime target = new DateTime();
+            foreach ( DateTime n in dBuff.Keys )
+            {
+                target = n;
+                if (dBuff[n] == false) Cnt++;           // 出勤日を数える
+                if (Cnt > adjustDayCnt) break;
+            }
+            Debug.Write(yymm.ToString(), target.Day.ToString());
+            return (target.Day);
         }
 
         string 確定日(int year, int? yosokuCnt)
@@ -54,8 +103,8 @@ namespace WebApi_project.hostProc
 
 
             DateTime d = DateTime.Today;
-            int OKday = dayChk(d, adjustDayCnt);
             int yymm = (d.Year * 100) + d.Month;
+            int OKday = dayChk(yymm, adjustDayCnt);
             yymm = (d.Day < OKday ? yymmAdd(yymm, -1) : yymmAdd(yymm, 0));      // データ有効月の計算(12日以前は前々月)
 
             int b_yymm = ((year - 1) * 100) + 10;
@@ -91,15 +140,15 @@ namespace WebApi_project.hostProc
             // 次回の確定日のお知らせ
             if (actualCnt >= 0 && actualCnt < dispCnt)
             {
-                int x_yymm = yymmAdd(s_yymm, actualCnt);
-                int x_yy = (x_yymm / 100);
-                int x_mm = x_yymm % 100;
-                int xx_yymm = yymmAdd(x_yymm, 1);
-                int xx_yy = xx_yymm / 100;
-                int xx_mm = xx_yymm % 100;
-                int xx_dd = dayChk(new DateTime(xx_yy, xx_mm, 1), adjustDayCnt);
+                int c_yymm = yymmAdd(s_yymm, actualCnt);
+                int c_yy = c_yymm / 100;
+                int c_mm = c_yymm % 100;
+                int n_yymm = yymmAdd(c_yymm, 1);
+                int n_yy = n_yymm / 100;
+                int n_mm = n_yymm % 100;
+                int n_dd = dayChk(n_yymm, adjustDayCnt);
 
-                Buff = (x_yy + "年" + x_mm + "月の実績表示は" + xx_mm + "月" + xx_dd + "日以降です");
+                Buff = String.Concat(c_yy ,"年" ,c_mm ,"月の実績表示は" ,n_yy ,"年" ,n_mm ,"月" ,n_dd ,"日以降です");
             }
             else if (actualCnt == dispCnt)
             {
@@ -117,65 +166,7 @@ namespace WebApi_project.hostProc
             int? yosokuCnt = null;
             string Buff = 確定日(year,yosokuCnt);
 
-
-            //var a = 1;
-
-            /*
-                        DateTime sDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month , 1);
-                        DateTime eDate = sDate.AddMonths(1).AddDays(-1);
-                        DateTime curDate = sDate;
-
-                    //------------------------------------------------------------------
-                        curDate = sDate
-                       var n
-                       var dBuff = new Array()
-                       do
-                        {
-                            n = dBuff.length
-                          dBuff[n] = new Object;
-                            dBuff[n].日付 = JsFormatDateTime(curDate, 2)
-                          dBuff[n].曜日 = JsWeekday(curDate) - 1
-                          dBuff[n].offDay = (dBuff[n].曜日 == 0 || dBuff[n].曜日 == 6 ? 1 : 0)
-                          curDate = JsDateAdd("d", 1, curDate)
-                          } while (JsDay(curDate) != 1)
-
-*/
-
-            DateTime sDate = DateTime.Parse("2021/8/1");
-            DateTime eDate = sDate.AddMonths(1).AddDays(-1);
-
-
-            string SQL = "";
-            StringBuilder sql = new StringBuilder("");
-
-            SqlConnection DB = new SqlConnection(DB_connectString);
-            DB.Open();
-            sql.Append(" SELECT *");
-            sql.Append(" FROM EMG.dbo.勤務出勤日");
-            sql.Append(" WHERE 日付 BETWEEN @sDate AND @eDate");
-            sql.Append(" AND memberID = 0");
-
-            sql.Replace("@sDate", SqlUtil.Parameter("string", sDate));
-            sql.Replace("@eDate", SqlUtil.Parameter("string", eDate));
-            SQL = sql.ToString();
-            DateTime d;
-            bool offDay;
-            SqlDataReader reader = dbRead(DB, SQL);
-            while (reader.Read())
-            {
-                d = (DateTime)reader["日付"];
-                offDay= (bool)reader["offDay"];
-            }
-            reader.Close();
-            DB.Close();
-            DB.Dispose();
-
-
-            //int year = 2020;
-            //int s_yymm = ((year - 1) * 100 + 10);
-            //int c_yymm = 202107;
-            //int actualCnt = 10;
-            //int yosokuCnt = 2;
+            Debug.Write(Buff);
         }
 
         public object json_projectTest(String Json)

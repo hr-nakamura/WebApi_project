@@ -71,19 +71,23 @@ namespace WebApi_project.hostProc
 						{
 							項目 = item4.Key;
 							double[] targetTab = item4.Value;
-							//Debug.noWrite("target",secName, funcName,大項目, 項目,(targetTab.Length).ToString());
-							// ここでxmlノードを探してデータ設定する
-							checkNode(xmlDoc, secName, funcName, 大項目, 項目, targetTab);
+                            Debug.noWrite("target", secName, funcName, 大項目, 項目, (targetTab.Length).ToString());
+                            // ここでxmlノードを探してデータ設定する(全てJson→XML)
+                            checkNode(xmlDoc, secName, funcName, 大項目, 項目, targetTab);
 
 						}
 					}
 				}
 			}
-		return (xmlDoc);
+			string Buff = 確定日(cmd.year, cmd.yosokuCnt);
+			XmlNode dNode = xmlDoc.SelectSingleNode("//実績日付");
+			dNode.InnerText = Buff;
+			return (xmlDoc);
 		}
 		XmlDocument makeBaseXML(Dictionary<string, dynamic> Tab)
         {
 			cmd_部門収支 cmd = Tab["Info"];
+
 			Dictionary<string, dynamic> dataTab = Tab["data"];
 
 			string fName = getAbsoluteFileName("/funcProc/部門収支/BASE.xml");
@@ -216,6 +220,8 @@ namespace WebApi_project.hostProc
 			int c_yymm = 202107;
 			int actualCnt = 10;
 			int yosokuCnt = 2;
+			string Buff = 確定日(o_json.year, yosokuCnt);
+
 			List<string> funcList = new List<string>() { "計画", "計画", "計画", "計画", "計画", "計画", "計画", "計画", "計画", "計画", "計画", "計画" };
 			var ii = 0;
 			for (var i = 0; i < actualCnt; i++, ii++)
@@ -238,6 +244,7 @@ namespace WebApi_project.hostProc
 				統括 = 統括,
 				部 = 部,
 				課 = 課,
+				guide = Buff,
 				funcList = funcList
 			};
 
@@ -736,6 +743,136 @@ namespace WebApi_project.hostProc
 			mm += (yy - b_yy) * 12;
 			int n = (mm - b_mm);
 			return (n);
+		}
+		int dayChk(int yymm, int adjustDayCnt)
+		{
+
+			int yy = yymm / 100;
+			int mm = yymm % 100;
+			Dictionary<DateTime, bool> dBuff = new Dictionary<DateTime, bool>();
+			DateTime sDate = new DateTime(yy, mm, 1);
+			DateTime eDate = sDate.AddMonths(1).AddDays(-1);
+			DateTime curDate = sDate;
+			do
+			{
+				dBuff.Add(curDate, "0,6".Contains(curDate.DayOfWeek.ToString("d")));            // "0":日 ,"6":土
+				curDate = curDate.AddDays(1);
+			} while (curDate <= eDate);
+
+
+			string SQL = "";
+			StringBuilder sql = new StringBuilder("");
+
+			SqlConnection DB = new SqlConnection(DB_connectString);
+			DB.Open();
+			sql.Append(" SELECT *");
+			sql.Append(" FROM EMG.dbo.勤務出勤日");
+			sql.Append(" WHERE 日付 BETWEEN @sDate AND @eDate");
+			sql.Append(" AND memberID = 0");
+
+			sql.Replace("@sDate", SqlUtil.Parameter("string", sDate));
+			sql.Replace("@eDate", SqlUtil.Parameter("string", eDate));
+			SQL = sql.ToString();
+			DateTime targetDay;
+			bool offDay;
+			SqlDataReader reader = dbRead(DB, SQL);
+			while (reader.Read())
+			{
+				targetDay = (DateTime)reader["日付"];
+				offDay = (bool)reader["offDay"];
+				if (dBuff.ContainsKey(targetDay)) dBuff[targetDay] = offDay;
+			}
+			reader.Close();
+			DB.Close();
+			DB.Dispose();
+
+			int Cnt = 0;
+			DateTime target = new DateTime();
+			foreach (DateTime n in dBuff.Keys)
+			{
+				target = n;
+				if (dBuff[n] == false) Cnt++;           // 出勤日を数える
+				if (Cnt > adjustDayCnt) break;
+			}
+			Debug.Write(yymm.ToString(), target.Day.ToString());
+			return (target.Day);
+		}
+
+		string 確定日(int year, int? yosokuCnt)
+		{
+			int adjustDayCnt = 7;
+
+			DateTime d = DateTime.Today;
+			int yymm = (d.Year * 100) + d.Month;
+			int OKday = dayChk(yymm, adjustDayCnt);
+			yymm = (d.Day < OKday ? yymmAdd(yymm, -1) : yymmAdd(yymm, 0));      // データ有効月の計算(12日以前は前々月)
+
+			int b_yymm = ((year - 1) * 100) + 10;
+
+			int actualCnt = yymmDiff(b_yymm, yymm);
+
+			if (actualCnt >= 12) actualCnt = 12;
+
+			if (!yosokuCnt.HasValue)        // nullの時
+			{
+				yosokuCnt = 12 - actualCnt;
+			}
+			else
+			{
+				if (yosokuCnt == 0)
+				{
+					//	すべて計画
+					actualCnt = 0;
+					yosokuCnt = 0;
+				}
+				else if (yosokuCnt < 0)
+				{
+					// 残り全て予測
+					yosokuCnt = 12 - actualCnt;
+				}
+			}
+
+			string Buff = "";
+			var dispCnt = 12;
+			var s_yymm = ((year - 1) * 100) + 10;
+
+
+			// 次回の確定日のお知らせ
+			if (actualCnt >= 0 && actualCnt < dispCnt)
+			{
+				int c_yymm = yymmAdd(s_yymm, actualCnt);
+				int c_yy = c_yymm / 100;
+				int c_mm = c_yymm % 100;
+				int n_yymm = yymmAdd(c_yymm, 1);
+				int n_yy = n_yymm / 100;
+				int n_mm = n_yymm % 100;
+				int n_dd = dayChk(n_yymm, adjustDayCnt);
+
+				Buff = String.Concat(c_yy, "年", c_mm, "月の実績表示は", n_yy, "年", n_mm, "月", n_dd, "日以降です");
+			}
+			else if (actualCnt == dispCnt)
+			{
+				Buff = "(すべて実績データです)";
+			}
+			else
+			{
+				Buff = "実績データはありません";
+			}
+			確定情報 x = new 確定情報();
+			x.year = 2021;
+			x.guide = "";
+			x.actualCnt = 1;
+			x.yosokuCnt = 1;
+
+			return (Buff);
+		}
+		class 確定情報
+        {
+			public int year { get; set; }
+			public int actualCnt { get; set; }
+			public int yosokuCnt { get; set; }
+			public string guide { get; set; }
+
 		}
 		class db_account
         {

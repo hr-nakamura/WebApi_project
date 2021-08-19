@@ -32,6 +32,7 @@ namespace WebApi_project.Models
 		public int s_yymm { get; set; }
 		public int c_yymm { get; set; }
 		public int fixLevel { get; set; }
+		public string guide { get; set; }
 		public List<string> funcList { get; set; }
 	}
 	public class group
