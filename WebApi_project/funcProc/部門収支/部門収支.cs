@@ -859,10 +859,10 @@ namespace WebApi_project.hostProc
 				Buff = "実績データはありません";
 			}
 			確定情報 x = new 確定情報();
-			x.year = 2021;
-			x.guide = "";
-			x.actualCnt = 1;
-			x.yosokuCnt = 1;
+			x.year = year;
+			x.guide = Buff;
+			x.actualCnt = actualCnt;
+			x.yosokuCnt = (int)yosokuCnt;
 
 			return (Buff);
 		}
