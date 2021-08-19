@@ -25,29 +25,7 @@ namespace WebApi_project.hostProc
             int actualCnt = 10;
             int yosokuCnt = 2;
         }
-        XmlDocument makeBaseXML()
-        {
-            string fName = getAbsoluteFileName("/funcProc/QOSMIO/BASE.xml");
-            var xmlDoc = new XmlDocument();
-            xmlDoc.Load(fName);
-            XmlNode topNode = xmlDoc.SelectSingleNode("//全体");
-            XmlElement secNode = (XmlElement)xmlDoc.SelectSingleNode("//グループ");
-            var node = xmlDoc.SelectNodes("//項目/月");
-            for (var i = 0; i < node.Count; i++)
-            {
-                node[i].InnerText = "0";
-            }
-            XmlElement Node1 = (XmlElement)xmlDoc.SelectSingleNode("//部署コード");
-            Node1.InnerText = "";
-            XmlElement Node2 = (XmlElement)xmlDoc.SelectSingleNode("//名前");
-            Node2.InnerText = "";
-            XmlElement Node3 = (XmlElement)xmlDoc.SelectSingleNode("//統括");
-            Node3.InnerText = "";
-            secNode.SetAttribute("name", "");
-            secNode.SetAttribute("kind", "");
-            xmlDoc.Save(fName);
-            return (xmlDoc);
-        }
+
         public object json_projectTest(String Json)
         {
             test();
@@ -96,45 +74,11 @@ namespace WebApi_project.hostProc
 
             Debug.WriteLog("projectTest");
 
-            Dictionary<string, string> Tab = new Dictionary<string, string>();
-            //Tab = dbFunc_A();
-            //dbFunc_A();
-            Tab["ABC"] = "ABC";
-
-            //var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
-            //var para = o_json.a;
-
-            Dictionary<string, string> o_json = (Dictionary<string, string>) json_projectTest(Json);
-
-            XmlDocument xmlDoc = makeBaseXML();
-            //XmlDocument xmlDoc = new XmlDocument();
-
-            return (xmlDoc);
-        }
-
-        XmlDocument makeXmlDoc(Dictionary<string,string> Tab)
-        {
             XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.CreateXmlDeclaration("1.0", null, null);
-
-            var xmlMain = xmlDoc.CreateProcessingInstruction("xml", "version='1.0' encoding='Shift_JIS'");
-            XmlElement root = xmlDoc.CreateElement("root");
-
-            var comment = xmlDoc.CreateComment("json data");
-            xmlDoc.AppendChild(xmlMain);
-            xmlDoc.AppendChild(comment);
-            xmlDoc.AppendChild(root);
-
-            foreach(var x in Tab)
-            {
-                XmlElement data = xmlDoc.CreateElement("json");
-                data.InnerText = x.Value;
-                data.SetAttribute("name",x.Key);
-                root.AppendChild(data);
-            }
 
             return (xmlDoc);
         }
+
         /*
         var adjustDayCnt = 7
         var OK_DAY = dayChk(new Date(),adjustDayCnt)

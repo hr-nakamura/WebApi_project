@@ -81,7 +81,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="funcProc\QOSMIO\BASE.xml" />
     <Content Include="funcProc\部門収支\EMG.xml" />
     <Content Include="funcProc\部門収支\xml情報.txt" />
     <Content Include="funcProc\部門収支\統括一覧.xml" />
@@ -98,16 +97,8 @@
     <Content Include="_Func\部門収支\EMG収支計画.html" />
     <Content Include="_Func\部門収支\EMG部門収支.xsl" />
     <Content Include="funcProc\部門収支\部門収支_XML.asp" />
-    <Content Include="funcProc\QOSMIO\abc.json" />
-    <None Include="funcProc\QOSMIO\A_EMG.json" />
-    <None Include="funcProc\QOSMIO\A_統括.json" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="funcProc\QOSMIO\部門リストデータ.json" />
-    <Content Include="funcProc\QOSMIO\A_部門.json" />
-    <Content Include="funcProc\QOSMIO\A_課.json" />
-    <Content Include="funcProc\QOSMIO\B_EMG.json" />
-    <Content Include="funcProc\QOSMIO\B_統括.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
