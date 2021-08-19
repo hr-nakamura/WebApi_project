@@ -72,8 +72,14 @@
 
 //            xmlDoc = $.loadXMLDoc("統括.xml");
             var url = "/webapi/project/api/xml";
-            var json = "{}";
-            xmlDoc = $.WebApi("GET", url, "部門収支/部門収支_XML",json);
+            var json = {
+                dispCmd: '統括一覧',
+                year: '2021',
+                mCnt: '2',
+                fixLevel: '70'
+            };
+
+            xmlDoc = $.WebApi("GET", url, "部門収支/部門収支_XML", json);
 
 
             var xsl_name1 = "EMG部門収支.xsl";

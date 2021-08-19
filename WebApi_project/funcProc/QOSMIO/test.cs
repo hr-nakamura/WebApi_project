@@ -19,14 +19,6 @@ namespace WebApi_project.hostProc
     {
         void test()
         {
-            int[] x = new int[2];
-            x[0] = 1;
-            x[1] = 2;
-
-            if (x.Any())
-            {
-                var a = 1;
-            }
 
         }
         XmlDocument makeBaseXML()
