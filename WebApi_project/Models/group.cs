@@ -10,8 +10,8 @@ namespace WebApi_project.Models
 		public string dispCmd { get; set; }             // EMG・統括一覧・部門一覧・課一覧・間接一覧・統括詳細・部門詳細・課詳細・統括配賦・部門配賦
 		public string name { get; set; }                // 統括/部門/課
 		public int year { get; set; }
-		public int yosokuCnt { get; set; }
-		public int fixLevel { get; set; }
+		public int yosoku { get; set; }
+		public int fix { get; set; }
 
 
 	}

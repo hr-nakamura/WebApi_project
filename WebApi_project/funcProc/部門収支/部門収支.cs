@@ -215,7 +215,10 @@ namespace WebApi_project.hostProc
 			string 統括 = work[0];
 			string 部 = (work.Length > 1 ? work[1] : "");
 			string 課 = (work.Length > 2 ? work[2] : "");
-			確定日情報 Buff = 確定日(o_json.year, o_json.yosokuCnt);
+			string secMode = o_json.secMode;
+			int fixLevel = o_json.fix;
+			int year = o_json.year;
+			確定日情報 Buff = 確定日(year, o_json.yosoku);
 			int s_yymm = Buff.s_yymm;
 			int c_yymm = Buff.c_yymm;
 			int actualCnt = Buff.actualCnt;
@@ -233,8 +236,9 @@ namespace WebApi_project.hostProc
 			}
 			cmd_部門収支 cmd = new cmd_部門収支()
 			{
-				year = o_json.year,
-				fixLevel = o_json.fixLevel,
+				year = year,
+				fixLevel = fixLevel,
+				secMode = secMode,
 				s_yymm = s_yymm,
 				c_yymm = c_yymm,
 				actualCnt = actualCnt,
@@ -368,7 +372,6 @@ namespace WebApi_project.hostProc
 			var year = cmd.year;
 
             if (actualCnt == 0) return;
-
             foreach (KeyValuePair<string, dynamic> item in dataTab)
             {
 				string S_name = item.Key;
@@ -601,11 +604,11 @@ namespace WebApi_project.hostProc
 			}
 			else if (o_json.dispMode == "部門")
             {
-                group sec = secTab["開発本部"];
+                group secList = secTab["開発本部"];
 
-                foreach (string 部門 in sec.list.Keys)
+                foreach (string 部門 in secList.list.Keys)
                 {
-                    var x = sec.list[部門];
+                    var sec = secList.list[部門];
                     Tab.Add(部門, costList(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
                     //Debug.noWrite(部門, sec.list[部門].codes);
                 }
