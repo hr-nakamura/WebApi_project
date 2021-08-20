@@ -52,7 +52,8 @@
                 //          [引数]dispCmd = 部門詳細 & dispName=開発本部第7開発部 & secMode=開発 & year=2019 & fix=70 & yosoku=7
 
                 para.dispCmd = $.queryString("dispCmd", "");
-                $.debug(para.dispCmd);
+                para.secMode = $.queryString("secMode", "");
+                $.debug(para.dispCmd,para.secMode);
                 //para.year = $.queryString("year", "");
                 //para.fix = $.queryString("fix", "");
                 //para.yosoku = $.queryString("yosoku", "");
