@@ -35,9 +35,9 @@ namespace WebApi_project.hostProc
 		{
 			if (Json == "{}")
 			{
-				//Json = "{dispCmd:'EMG',year:'2021', mCnt:'2', fixLevel:'70' }";
-				Json = "{dispCmd:'統括一覧',year:'2021', mCnt:'2', fixLevel:'70' }";
-				//Json = "{dispCmd:'詳細',統括:'営業本部',year:'2021', mCnt:'2', fixLevel:'70' }";
+				//Json = "{dispCmd:'EMG',year:'2021', yosokuCnt:'3', fixLevel:'70' }";
+				Json = "{dispCmd:'統括一覧',year:'2021', yosokuCnt:'3', fixLevel:'70' }";
+				//Json = "{dispCmd:'詳細',統括:'営業本部',year:'2021', yosokuCnt:'3', fixLevel:'70' }";
 			}
 
 
@@ -79,9 +79,9 @@ namespace WebApi_project.hostProc
 					}
 				}
 			}
-			string Buff = 確定日(cmd.year, cmd.yosokuCnt);
-			XmlNode dNode = xmlDoc.SelectSingleNode("//実績日付");
-			dNode.InnerText = Buff;
+            XmlNode dNode = xmlDoc.SelectSingleNode("//実績日付");
+            dNode.InnerText = cmd.guide;
+            if (!String.IsNullOrEmpty(cmd.title)) xmlDoc.SelectSingleNode("//グループ/名前").InnerText = cmd.title;
 			return (xmlDoc);
 		}
 		XmlDocument makeBaseXML(Dictionary<string, dynamic> Tab)
@@ -151,21 +151,20 @@ namespace WebApi_project.hostProc
 				var nodeListStr = "";
 				if( mode == "開発")
                 {
-					nodeListStr = "データ/予算";
+                    nodeListStr = "データ/予算";
                 }
                 else
                 {
-					 nodeListStr = "データ/部門固定費|データ/本社費配賦";
-				}
+                    nodeListStr = "データ/部門固定費|データ/本社費配賦";
+                }
 				var nodeList1 = elem.SelectNodes(nodeListStr);
 				foreach (XmlNode node in nodeList1)
 				{
-					node.ParentNode.RemoveChild(node);
-				}
+                    node.ParentNode.RemoveChild(node);
+                }
 				No++;
             }
 
-			if( !String.IsNullOrEmpty(cmd.title) ) xmlDoc.SelectSingleNode("//グループ/名前").InnerText = cmd.title;
 			return (xmlDoc);
 		}
 
@@ -175,7 +174,7 @@ namespace WebApi_project.hostProc
 			Dictionary<string, dynamic> Tab = new Dictionary<string, dynamic>();
 			if( Json == "{}")
             {
-				Json = "{dispCmd:'統括一覧',year:'2021', mCnt:'2', fixLevel:'70'}";
+				Json = "{dispCmd:'統括一覧',year:'2021',yosokuCnt:'3', fixLevel:'70'}";
 			}
 
 			var cmd = InitCmd(Json);
@@ -216,11 +215,11 @@ namespace WebApi_project.hostProc
 			string 統括 = work[0];
 			string 部 = (work.Length > 1 ? work[1] : "");
 			string 課 = (work.Length > 2 ? work[2] : "");
-			int s_yymm = ((o_json.year - 1) * 100 + 10);
-			int c_yymm = 202107;
-			int actualCnt = 10;
-			int yosokuCnt = 2;
-			string Buff = 確定日(o_json.year, yosokuCnt);
+			確定日情報 Buff = 確定日(o_json.year, o_json.yosokuCnt);
+			int s_yymm = Buff.s_yymm;
+			int c_yymm = Buff.c_yymm;
+			int actualCnt = Buff.actualCnt;
+			int yosokuCnt = Buff.yosokuCnt;
 
 			List<string> funcList = new List<string>() { "計画", "計画", "計画", "計画", "計画", "計画", "計画", "計画", "計画", "計画", "計画", "計画" };
 			var ii = 0;
@@ -235,7 +234,6 @@ namespace WebApi_project.hostProc
 			cmd_部門収支 cmd = new cmd_部門収支()
 			{
 				year = o_json.year,
-				mCnt = o_json.mCnt,
 				fixLevel = o_json.fixLevel,
 				s_yymm = s_yymm,
 				c_yymm = c_yymm,
@@ -244,7 +242,7 @@ namespace WebApi_project.hostProc
 				統括 = 統括,
 				部 = 部,
 				課 = 課,
-				guide = Buff,
+				guide = Buff.guide,
 				funcList = funcList
 			};
 
@@ -366,12 +364,12 @@ namespace WebApi_project.hostProc
 
 		void 本社費配賦(cmd_部門収支 cmd, Dictionary<string, dynamic> dataTab)
 		{
-			var mCnt = cmd.mCnt;
+			var actualCnt = cmd.actualCnt;
 			var year = cmd.year;
 
-			if (mCnt == 0) return;
+            if (actualCnt == 0) return;
 
-			foreach (KeyValuePair<string, dynamic> item in dataTab)
+            foreach (KeyValuePair<string, dynamic> item in dataTab)
             {
 				string S_name = item.Key;
 				if (S_name == "本社")
@@ -382,9 +380,9 @@ namespace WebApi_project.hostProc
 					calcTargetPlan(cmd, dataTab[S_name]);
 				}
 			}
-			calcHaifu(cmd, dataTab);
+            calcHaifu(cmd, dataTab);
 
-		}
+        }
 
 		void calcTargetPlan(cmd_部門収支 cmd, Dictionary<string, dynamic> dataTab)
         {
@@ -638,9 +636,9 @@ namespace WebApi_project.hostProc
 			Tab.Add("予測", new Dictionary<string, dynamic>());
 			Tab.Add("実績", new Dictionary<string, dynamic>());
 			Tab.Add("予測データ", new Dictionary<string, dynamic>());
-			Tab.Add("配賦", new Dictionary<string, dynamic>());
+            Tab.Add("配賦", new Dictionary<string, dynamic>());
 
-			return (Tab);
+            return (Tab);
 		}
 		void checkNode(XmlDocument xmlDoc, string secName, string funcName, string 大項目, string 項目, double[] values)
 		{
@@ -794,11 +792,10 @@ namespace WebApi_project.hostProc
 				if (dBuff[n] == false) Cnt++;           // 出勤日を数える
 				if (Cnt > adjustDayCnt) break;
 			}
-			Debug.Write(yymm.ToString(), target.Day.ToString());
 			return (target.Day);
 		}
 
-		string 確定日(int year, int? yosokuCnt)
+		確定日情報 確定日(int year, int? yosokuCnt)
 		{
 			int adjustDayCnt = 7;
 
@@ -812,6 +809,7 @@ namespace WebApi_project.hostProc
 			int actualCnt = yymmDiff(b_yymm, yymm);
 
 			if (actualCnt >= 12) actualCnt = 12;
+			if (actualCnt < 0  ) actualCnt = 0;
 
 			if (!yosokuCnt.HasValue)        // nullの時
 			{
@@ -830,6 +828,10 @@ namespace WebApi_project.hostProc
 					// 残り全て予測
 					yosokuCnt = 12 - actualCnt;
 				}
+                else
+                {
+					yosokuCnt = 12 - actualCnt;
+				}
 			}
 
 			string Buff = "";
@@ -838,15 +840,16 @@ namespace WebApi_project.hostProc
 
 
 			// 次回の確定日のお知らせ
-			if (actualCnt >= 0 && actualCnt < dispCnt)
+			int c_yymm=0, c_yy, c_mm, n_yymm, n_yy=0, n_mm, n_dd=0;
+			if (actualCnt > 0 && actualCnt < dispCnt)
 			{
-				int c_yymm = yymmAdd(s_yymm, actualCnt);
-				int c_yy = c_yymm / 100;
-				int c_mm = c_yymm % 100;
-				int n_yymm = yymmAdd(c_yymm, 1);
-				int n_yy = n_yymm / 100;
-				int n_mm = n_yymm % 100;
-				int n_dd = dayChk(n_yymm, adjustDayCnt);
+				c_yymm = yymmAdd(s_yymm, actualCnt);
+				c_yy = c_yymm / 100;
+				c_mm = c_yymm % 100;
+				n_yymm = yymmAdd(c_yymm, 1);
+				n_yy = n_yymm / 100;
+				n_mm = n_yymm % 100;
+				n_dd = dayChk(n_yymm, adjustDayCnt);
 
 				Buff = String.Concat(c_yy, "年", c_mm, "月の実績表示は", n_yy, "年", n_mm, "月", n_dd, "日以降です");
 			}
@@ -858,17 +861,23 @@ namespace WebApi_project.hostProc
 			{
 				Buff = "実績データはありません";
 			}
-			確定情報 x = new 確定情報();
-			x.year = year;
-			x.guide = Buff;
-			x.actualCnt = actualCnt;
-			x.yosokuCnt = (int)yosokuCnt;
+			確定日情報 work = new 確定日情報();
+			work.year = n_yy;
+			work.day = n_dd;
+			work.s_yymm = s_yymm;
+			work.c_yymm = c_yymm;
+			work.guide = Buff;
+			work.actualCnt = actualCnt;
+			work.yosokuCnt = (int)yosokuCnt;
 
-			return (Buff);
+			return (work);
 		}
-		class 確定情報
+		class 確定日情報
         {
 			public int year { get; set; }
+			public int day { get; set; }
+			public int s_yymm { get; set; }
+			public int c_yymm { get; set; }
 			public int actualCnt { get; set; }
 			public int yosokuCnt { get; set; }
 			public string guide { get; set; }
