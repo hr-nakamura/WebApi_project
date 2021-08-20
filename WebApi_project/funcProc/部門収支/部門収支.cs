@@ -267,7 +267,7 @@ namespace WebApi_project.hostProc
 					cmd.統括 = 統括;
 					cmd.listMode = "一覧";
 					cmd.secMode = "開発";
-					cmd.haifuMode = (o_json.secMode == "間接" ? false : true);
+					cmd.haifuMode = (cmd.secMode == "間接" ? false : true);
 					break;
 				case "課一覧":
 					cmd.dispMode = "グループ";

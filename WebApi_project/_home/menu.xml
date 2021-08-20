@@ -2,8 +2,8 @@
 <root name="EMG">
   <menu name="TEST" memo="" >
 	  <menu name="部門収支(EMG)" memo="" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?dispCmd=EMG"/>
-	  <menu name="部門収支(統括一覧)" memo="" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?dispCmd=統括一覧"/>
-	  <menu name="部門収支(部門一覧)" memo="" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?dispCmd=部門一覧"/>
+	  <menu name="部門収支(統括一覧)" memo="" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?dispCmd=統括一覧&secMode=開発"/>
+	  <menu name="部門収支(部門一覧)" memo="" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?dispCmd=部門一覧&secMode=開発"/>
 	  <menu name="部門収支(課一覧)" memo="" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?dispCmd=課一覧"/>
 	  <menu name="projectBBS" memo="" mode="url" value="/WebApi/project/_Func/projectBBS/test.html"/>
 	  <menu name="QOSMIO" memo="" mode="url" value="/WebApi/project/_Func/QOSMIO/qosmio.html"/>

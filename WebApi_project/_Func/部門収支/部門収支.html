@@ -52,27 +52,28 @@
                 //          [引数]dispCmd = 部門詳細 & dispName=開発本部第7開発部 & secMode=開発 & year=2019 & fix=70 & yosoku=7
 
                 para.dispCmd = $.queryString("dispCmd", "");
+                $.debug(para.dispCmd);
                 //para.year = $.queryString("year", "");
                 //para.fix = $.queryString("fix", "");
                 //para.yosoku = $.queryString("yosoku", "");
                 //para.browser = $.Browser.name;
 
-                dispData();
+                dispData(para);
             });
 
         });
     </script>
 
     <script type="text/javascript">
-        function dispData() {
+        function dispData(para) {
             var url = "/webapi/project/api/xml";
             var json = {
                 dispCmd: 'EMG',
-                year: 2022,
+                year: 2021,
                 yosokuCnt: 3,
                 fixLevel: 70
             };
-
+            json.dispCmd = para.dispCmd;
             xmlDoc = $.WebApi("GET", url, "部門収支/部門収支_XML", json);
 
 
