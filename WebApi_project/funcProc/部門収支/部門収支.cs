@@ -620,7 +620,7 @@ namespace WebApi_project.hostProc
 				Tab.Add("本社", costList(直間: "2", 統括: "", 部門: "", 課: "", 部署コード: ""));
 				Tab.Add("直接", costList(直間: "0,1", 統括: "", 部門: "", 課: "", 部署コード: ""));
 			}
-			else if (o_json.dispMode == "課")
+			else if (o_json.dispMode == "グループ")
             {
                 group sec = secTab["開発本部"].list["第1開発部"];
                 foreach (string 課 in sec.list.Keys)
