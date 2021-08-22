@@ -15,7 +15,7 @@ namespace WebApi_project.hostProc
 {
     public partial class jsonProc
     {
-        public XmlDocument 部門リスト(String Json)
+        public XmlDocument 部門リスト_X(String Json)
         {
             if (Json == "{}")
             {
@@ -25,10 +25,24 @@ namespace WebApi_project.hostProc
             }
             var o_json = JsonConvert.DeserializeObject<cmd_部門収支>(Json);
             object json_data = json_部門リスト(o_json);
-            XmlDocument xmlDoc = Json2Xml(json_data);
-            //XmlDocument xmlDoc = new XmlDocument();
+            //XmlDocument xmlDoc = Json2Xml(json_data);
+            XmlDocument xmlDoc = new XmlDocument();
 
             return (xmlDoc);
+        }
+
+        public Dictionary<string, group> json_部門リスト_X(string Json)
+        {
+        if( Json == "{}")
+            {
+                Json = "{year:'2021',secMode:'開発',dispMode:'部門'}";
+                // secMode : 開発、間接、全社
+                // dispMode : 全社、統括、部門、グループ
+
+            }
+            var o_json = JsonConvert.DeserializeObject<cmd_部門収支>(Json);
+            Dictionary<string, group> Tab = json_部門リスト(o_json);
+            return (Tab);
         }
 
         public Dictionary<string, group> json_部門リスト(cmd_部門収支 o_json)
@@ -225,7 +239,53 @@ namespace WebApi_project.hostProc
                 }
             });
 
+/*
+        var Tab = { }
 
+        var oTab = []
+
+        var oPos = 0		//null
+    	for(var T_Name in allTab)
+            {
+	    	for(var B_Name in allTab[T_Name])
+                {
+		    	for(var K_Name in allTab[T_Name][B_Name])
+                    {
+                        var name = allTab[T_Name][B_Name][K_Name].名前
+
+                var mode = allTab[T_Name][B_Name][K_Name].直間
+
+                var code = allTab[T_Name][B_Name][K_Name].code
+
+                if (dispMode == "統括" && B_Name == "" && K_Name == "")
+                        {
+                            oPos = oTab.length
+
+                    oTab[oPos] = { 名前: name,統括: T_Name,部: B_Name,課: K_Name,直間: mode,部門コード: code,codes: "",code:[]}
+                        }
+                        else if (dispMode == "部" && K_Name == "")
+                        {
+                            oPos = oTab.length
+        
+                    oTab[oPos] = { 名前: name,統括: T_Name,部: B_Name,課: K_Name,直間: mode,部門コード: code,codes: "",code:[]}
+                        }
+                        else if (dispMode == "課")
+                        {
+                            oPos = oTab.length
+        
+                    oTab[oPos] = { 名前: name,統括: T_Name,部: B_Name,課: K_Name,直間: mode,部門コード: code,codes: "",code:[]}
+                        }
+                        else
+                        {
+                            //pr("-----------"+paraOut(dispMode,oPos,T_Name,B_Name,K_Name))
+                        }
+                        if (IsObject(oTab[oPos])) oTab[oPos].code.push(code)
+
+                }
+                }
+            }
+
+*/
             //Debug.Write("=======");
             //foreach (string 統括 in Tab.Keys)
             //{
