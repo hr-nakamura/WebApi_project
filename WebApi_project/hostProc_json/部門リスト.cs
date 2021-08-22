@@ -17,10 +17,16 @@ namespace WebApi_project.hostProc
     {
         public XmlDocument 部門リスト(String Json)
         {
-            //var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
-            //object json_data = json_部門リスト(Json);
-            //XmlDocument xmlDoc = Json2Xml(json_data);
-            XmlDocument xmlDoc = new XmlDocument();
+            if (Json == "{}")
+            {
+                //Json = "{dispCmd:'EMG',year:'2021', yosoku:'3', fix:'70' }";
+                Json = "{dispCmd:'統括一覧',year:'2021', yosoku:'3', fix:'70' }";
+                //Json = "{dispCmd:'詳細',統括:'営業本部',year:'2021', yosoku:'3', fix:'70' }";
+            }
+            var o_json = JsonConvert.DeserializeObject<cmd_部門収支>(Json);
+            object json_data = json_部門リスト(o_json);
+            XmlDocument xmlDoc = Json2Xml(json_data);
+            //XmlDocument xmlDoc = new XmlDocument();
 
             return (xmlDoc);
         }
