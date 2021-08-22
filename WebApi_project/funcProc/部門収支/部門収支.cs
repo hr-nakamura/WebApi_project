@@ -593,10 +593,10 @@ namespace WebApi_project.hostProc
             }
             else if (o_json.dispMode == "統括")
             {
-                foreach (string 統括 in secTab.Keys)
+                foreach (string secName in secTab.Keys)
                 {
-                    group sec = secTab[統括];
-                    Tab.Add(統括, costList(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
+                    group sec = secTab[secName];
+                    Tab.Add(secName, costList(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
                     //Debug.noWrite(統括, secTab[統括].codes);
                 }
 				Tab.Add("本社", costList(直間: "2", 統括: "", 部門: "", 課: "", 部署コード: ""));
@@ -604,14 +604,19 @@ namespace WebApi_project.hostProc
 			}
 			else if (o_json.dispMode == "部門")
             {
-                group secList = secTab["開発本部"];
+				foreach (string secName in secTab.Keys)
+				{
+					group secList = secTab[secName];
+					Tab.Add(secName, costList(直間: secList.直間, 統括: secList.統括, 部門: secList.部門, 課: secList.課, 部署コード: secList.code));
+					//Debug.noWrite(統括, secTab[統括].codes);
+					foreach (string 部門 in secList.list.Keys)
+					{
+						var sec = secList.list[部門];
+						Tab.Add(部門, costList(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
+						//Debug.noWrite(部門, sec.list[部門].codes);
+					}
+				}
 
-                foreach (string 部門 in secList.list.Keys)
-                {
-                    var sec = secList.list[部門];
-                    Tab.Add(部門, costList(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
-                    //Debug.noWrite(部門, sec.list[部門].codes);
-                }
 				Tab.Add("本社", costList(直間: "2", 統括: "", 部門: "", 課: "", 部署コード: ""));
 				Tab.Add("直接", costList(直間: "0,1", 統括: "", 部門: "", 課: "", 部署コード: ""));
 			}
@@ -626,6 +631,16 @@ namespace WebApi_project.hostProc
                 }
 				Tab.Add("本社", costList(直間: "2", 統括: "", 部門: "", 課: "", 部署コード: ""));
 				Tab.Add("直接", costList(直間: "0,1", 統括: "", 部門: "", 課: "", 部署コード: ""));
+			}
+
+			foreach (var item in Tab)
+			{
+				string secName = item.Key;
+				checkArray(Tab, secName, "予測", "売上高", "売上");
+				checkArray(Tab, secName, "予測データ", "売上予測", "確度70");
+				checkArray(Tab, secName, "予測データ", "売上予測", "確度50");
+				checkArray(Tab, secName, "予測データ", "売上予測", "確度30");
+				checkArray(Tab, secName, "予測データ", "売上予測", "確度10");
 			}
 			return (Tab);
 		}
@@ -722,8 +737,8 @@ namespace WebApi_project.hostProc
 					Tab[部門][種別][大項目].Add(項目, new Dictionary<string, double[]>());
 				}
 			}
-			//Debug.noWrite("設定");
-			Tab[部門][種別][大項目][項目] = new double[12];
+            Debug.noWrite("作成", 部門, 種別, 大項目, 項目);
+            Tab[部門][種別][大項目][項目] = new double[12];
 			return (Tab);
 		}
 		int yymmAdd(int yymm, int mCnt)

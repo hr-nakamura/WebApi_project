@@ -302,11 +302,10 @@ namespace WebApi_project.hostProc
 					secName = S_name;
 				}
 
-				checkArray(Tab, secName, "予測", "売上高", "売上");
-				checkArray(Tab, secName, "予測データ", "売上予測", "確度70");
-				checkArray(Tab, secName, "予測データ", "売上予測", "確度50");
-				checkArray(Tab, secName, "予測データ", "売上予測", "確度30");
-				checkArray(Tab, secName, "予測データ", "売上予測", "確度10");
+				//checkArray(Tab, secName, "予測データ", "売上予測", "確度70");
+				//checkArray(Tab, secName, "予測データ", "売上予測", "確度50");
+				//checkArray(Tab, secName, "予測データ", "売上予測", "確度30");
+				//checkArray(Tab, secName, "予測データ", "売上予測", "確度10");
 
 				if (level >= 70) Tab[secName]["予測データ"]["売上予測"]["確度70"][n] += amount;
 				if (level >= 50) Tab[secName]["予測データ"]["売上予測"]["確度50"][n] += amount;
@@ -317,6 +316,11 @@ namespace WebApi_project.hostProc
 			foreach (var item in Tab)
 			{
 				secName = item.Key;
+				//checkArray(Tab, secName, "予測", "売上高", "売上");
+				//checkArray(Tab, secName, "予測データ", "売上予測", "確度70");
+				//checkArray(Tab, secName, "予測データ", "売上予測", "確度50");
+				//checkArray(Tab, secName, "予測データ", "売上予測", "確度30");
+				//checkArray(Tab, secName, "予測データ", "売上予測", "確度10");
 				var Cnt = Tab[secName]["予測"]["売上高"]["売上"].Length;
 				for (var m = 0; m < Cnt; m++) Tab[secName]["予測"]["売上高"]["売上"][m] = Tab[secName]["予測データ"]["売上予測"]["確度" + fixLevel][m];
 			}
