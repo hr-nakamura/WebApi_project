@@ -53,9 +53,9 @@
                 //          [引数]dispCmd = 部門詳細 & dispName=開発本部第7開発部 & secMode=開発 & year=2019 & fix=70 & yosoku=7
 
                 para.dispCmd = $.queryString("dispCmd", "");
+                para.dispName = $.queryString("dispName", "");
                 para.secMode = $.queryString("secMode", "");
-                para.name = $.queryString("name", "");
-                $.debug(para.dispCmd, para.secMode, para.name);
+                $.debug(para.dispCmd, para.secMode, para.dispName);
                 //para.year = $.queryString("year", "");
                 //para.fix = $.queryString("fix", "");
                 //para.yosoku = $.queryString("yosoku", "");
@@ -72,8 +72,8 @@
             var url = "/webapi/project/api/xml";
             var json = {
                 dispCmd: para.dispCmd,
+                dispName: para.dispName,
                 secMode: para.secMode,
-                name: para.name,
                 year: 2021,
                 yosoku: 3,
                 fix: 70

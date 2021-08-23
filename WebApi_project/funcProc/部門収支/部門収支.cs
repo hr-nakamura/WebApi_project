@@ -174,7 +174,7 @@ namespace WebApi_project.hostProc
 			Dictionary<string, dynamic> Tab = new Dictionary<string, dynamic>();
 			if( Json == "{}")
             {
-				Json = "{dispCmd:'課一覧',secMode:'開発',name:'開発本部/第1開発部',year:'2021',yosoku:'3', fix:'70'}";
+				Json = "{dispCmd:'課一覧',secMode:'開発',dispName:'開発本部/第1開発部',year:'2021',yosoku:'3', fix:'70'}";
 			}
 
 			var cmd = InitCmd(Json);
@@ -209,8 +209,8 @@ namespace WebApi_project.hostProc
 		cmd_部門収支 InitCmd(string Json)
 		{
 			var o_json = JsonConvert.DeserializeObject<para_部門収支>(Json);
-			if (String.IsNullOrEmpty(o_json.name)) o_json.name = "";
-			string[] work = o_json.name.Split('/');
+			if (String.IsNullOrEmpty(o_json.dispName)) o_json.dispName = "";
+			string[] work = o_json.dispName.Split('/');
 
 			string 統括 = work[0];
 			string 部 = (work.Length > 1 ? work[1] : "");
