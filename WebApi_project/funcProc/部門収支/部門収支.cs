@@ -585,7 +585,7 @@ namespace WebApi_project.hostProc
 			//Json = "{year:'2020',secMode:'開発',dispMode:'グループ'}";
 			//var o_json = JsonConvert.DeserializeObject<cmd_部門収支>(Json);
 
-			Dictionary<string, group> secTab = jProc.json_部門リスト(o_json);
+			Dictionary<string, group> secTab = jProc.json_部門リスト_sub(o_json);
 
             if (o_json.dispMode == "全社")
             {

@@ -15,7 +15,7 @@ namespace WebApi_project.hostProc
 {
     public partial class jsonProc
     {
-        public XmlDocument 部門リスト_X(String Json)
+        public XmlDocument 部門リスト(String Json)
         {
             if (Json == "{}")
             {
@@ -23,15 +23,14 @@ namespace WebApi_project.hostProc
                 Json = "{dispCmd:'統括一覧',year:'2021', yosoku:'3', fix:'70' }";
                 //Json = "{dispCmd:'詳細',統括:'営業本部',year:'2021', yosoku:'3', fix:'70' }";
             }
-            var o_json = JsonConvert.DeserializeObject<cmd_部門収支>(Json);
-            object json_data = json_部門リスト(o_json);
+            object json_data = json_部門リスト(Json);
             //XmlDocument xmlDoc = Json2Xml(json_data);
             XmlDocument xmlDoc = new XmlDocument();
 
             return (xmlDoc);
         }
 
-        public Dictionary<string, group> json_部門リスト_X(string Json)
+        public Dictionary<string, group> json_部門リスト(string Json)
         {
         if( Json == "{}")
             {
@@ -41,11 +40,11 @@ namespace WebApi_project.hostProc
 
             }
             var o_json = JsonConvert.DeserializeObject<cmd_部門収支>(Json);
-            Dictionary<string, group> Tab = json_部門リスト(o_json);
+            Dictionary<string, group> Tab = json_部門リスト_sub(o_json);
             return (Tab);
         }
 
-        public Dictionary<string, group> json_部門リスト(cmd_部門収支 o_json)
+        public Dictionary<string, group> json_部門リスト_sub(cmd_部門収支 o_json)
         {
             //Json = "{year:'2021',secMode:'全社',dispMode:'全社'}";
             // secMode : 開発、間接、全社
