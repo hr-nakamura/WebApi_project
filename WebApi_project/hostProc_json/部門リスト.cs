@@ -20,7 +20,7 @@ namespace WebApi_project.hostProc
             if (Json == "{}")
             {
                 //Json = "{dispCmd:'EMG',year:'2021', yosoku:'3', fix:'70' }";
-                Json = "{dispCmd:'統括一覧',year:'2021', yosoku:'3', fix:'70' }";
+                Json = "{dispCmd:'グループ',year:'2021', yosoku:'3', fix:'70' }";
                 //Json = "{dispCmd:'詳細',統括:'営業本部',year:'2021', yosoku:'3', fix:'70' }";
             }
             object json_data = json_部門リスト(Json);
@@ -34,7 +34,8 @@ namespace WebApi_project.hostProc
         {
         if( Json == "{}")
             {
-                Json = "{year:'2021',secMode:'開発',dispMode:'部門'}";
+                Json = "{dispCmd:'グループ',secMode:'開発',year:'2021', yosoku:'3', fix:'70' }";
+//                Json = "{year:'2021',secMode:'開発',dispMode:'部門'}";
                 // secMode : 開発、間接、全社
                 // dispMode : 全社、統括、部門、グループ
 

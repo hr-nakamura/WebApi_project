@@ -22,10 +22,10 @@
         var 部門;
         var 直間;
         var secTab = {
-            "EMG": { name: "EMG", title: "ＥＭＧ収支計画" },
+            "EMG" : { name: "EMG", title: "ＥＭＧ収支計画" },
             "統括": { name: "統括一覧", title: "統括収支計画" },
             "部門": { name: "部門一覧", title: "部門収支計画" },
-            "グループ": { name: "課一覧", title: "グループ収支計画" }
+            "課"  : { name: "課一覧", title: "グループ収支計画" }
         }
     </script>
 
@@ -34,6 +34,7 @@
         var para = {
             dispCmd: "EMG",
             secMode: "",
+            name:"",
             year: "2021",
             fix: "70",
             yosoku: "13",
@@ -53,7 +54,8 @@
 
                 para.dispCmd = $.queryString("dispCmd", "");
                 para.secMode = $.queryString("secMode", "");
-                $.debug(para.dispCmd,para.secMode);
+                para.name = $.queryString("name", "");
+                $.debug(para.dispCmd, para.secMode, para.name);
                 //para.year = $.queryString("year", "");
                 //para.fix = $.queryString("fix", "");
                 //para.yosoku = $.queryString("yosoku", "");
@@ -70,7 +72,8 @@
             var url = "/webapi/project/api/xml";
             var json = {
                 dispCmd: para.dispCmd,
-                secMode:para.secMode,
+                secMode: para.secMode,
+                name: para.name,
                 year: 2021,
                 yosoku: 3,
                 fix: 70

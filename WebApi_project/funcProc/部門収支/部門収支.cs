@@ -174,7 +174,7 @@ namespace WebApi_project.hostProc
 			Dictionary<string, dynamic> Tab = new Dictionary<string, dynamic>();
 			if( Json == "{}")
             {
-				Json = "{dispCmd:'統括一覧',year:'2021',yosoku:'3', fix:'70'}";
+				Json = "{dispCmd:'課一覧',secMode:'開発',name:'開発本部/第1開発部',year:'2021',yosoku:'3', fix:'70'}";
 			}
 
 			var cmd = InitCmd(Json);
@@ -622,12 +622,14 @@ namespace WebApi_project.hostProc
 			}
 			else if (o_json.dispMode == "グループ")
             {
-                group sec = secTab["開発本部"].list["第1開発部"];
-                foreach (string 課 in sec.list.Keys)
+                group secList = secTab[o_json.統括].list[o_json.部];
+				//Debug.Write(課, sec.list[課].codes);
+				Tab.Add(o_json.部, costList(直間: secList.直間, 統括: secList.統括, 部門: secList.部門, 課: secList.課, 部署コード: secList.code));
+				foreach (string 課 in secList.list.Keys)
                 {
-                    var x = sec.list[課];
+                    var sec = secList.list[課];
                     Tab.Add(課, costList(直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
-                    //Debug.noWrite(課, sec.list[課].codes);
+                    Debug.Write(課, secList.list[課].codes);
                 }
 				Tab.Add("本社", costList(直間: "2", 統括: "", 部門: "", 課: "", 部署コード: ""));
 				Tab.Add("直接", costList(直間: "0,1", 統括: "", 部門: "", 課: "", 部署コード: ""));
