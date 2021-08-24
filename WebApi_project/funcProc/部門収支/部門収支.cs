@@ -603,7 +603,7 @@ namespace WebApi_project.hostProc
                 {
                     group sec = secTab[secName];
                     Tab.Add(secName, costList(表示: "一覧", 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
-                    //Debug.noWrite(統括, secTab[統括].codes);
+                    Debug.Write("統括", secName);
                 }
 				Tab.Add("本社", costList(表示: "一覧", 直間: "2", 統括: "", 部門: "", 課: "", 部署コード: ""));
 				Tab.Add("直接", costList(表示: "", 直間: "0,1", 統括: "", 部門: "", 課: "", 部署コード: ""));
@@ -614,13 +614,13 @@ namespace WebApi_project.hostProc
 				{
 					group secList = secTab[secName];
 					Tab.Add(secName, costList(表示: "一覧", 直間: secList.直間, 統括: secList.統括, 部門: secList.部門, 課: secList.課, 部署コード: secList.code));
-					//Debug.noWrite(統括, secTab[統括].codes);
-					foreach (string 部門 in secList.list.Keys)
+                    Debug.Write("部門", secName);
+                    foreach (string 部門 in secList.list.Keys)
 					{
 						var sec = secList.list[部門];
 						Tab.Add(部門, costList(表示: "一覧", 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
-						//Debug.noWrite(部門, sec.list[部門].codes);
-					}
+                        Debug.Write("部門", 部門);
+                    }
 				}
 
 				Tab.Add("本社", costList(表示: "", 直間: "2", 統括: "", 部門: "", 課: "", 部署コード: ""));
@@ -629,13 +629,14 @@ namespace WebApi_project.hostProc
 			else if (o_json.dispMode == "グループ")
             {
                 group secList = secTab[o_json.統括].list[o_json.部];
-				//Debug.Write(課, sec.list[課].codes);
-				Tab.Add(o_json.部, costList(表示: "一覧", 直間: secList.直間, 統括: secList.統括, 部門: secList.部門, 課: secList.課, 部署コード: secList.code));
+				string secName = o_json.部;
+				Debug.Write("課", secName);
+                Tab.Add(o_json.部, costList(表示: "一覧", 直間: secList.直間, 統括: secList.統括, 部門: secList.部門, 課: secList.課, 部署コード: secList.code));
 				foreach (string 課 in secList.list.Keys)
                 {
                     var sec = secList.list[課];
-                    Tab.Add(課, costList(表示: "一覧", 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
-                    Debug.Write(課, secList.list[課].codes);
+					Tab.Add(課, costList(表示: "一覧", 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
+                    Debug.Write("課", 課);
                 }
 				Tab.Add("本社", costList(表示: "", 直間: "2", 統括: "", 部門: "", 課: "", 部署コード: ""));
 				Tab.Add("直接", costList(表示: "", 直間: "0,1", 統括: "", 部門: "", 課: "", 部署コード: ""));
