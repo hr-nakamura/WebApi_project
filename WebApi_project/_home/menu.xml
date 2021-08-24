@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root name="EMG">
-  <menu name="TEST" memo="" >
-	  <menu name="部門収支(EMG)" memo="" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?dispCmd=EMG"/>
+  <menu name="一覧" memo="" >
 	  <menu name="部門収支(統括一覧)" memo="" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?dispCmd=統括一覧&amp;secMode=開発"/>
 	  <menu name="部門収支(部門一覧)" memo="" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?dispCmd=部門一覧&amp;secMode=開発"/>
 	  <menu name="部門収支(課一覧)" memo="" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?dispCmd=課一覧&amp;secMode=開発&amp;dispName=開発本部/第2開発部"/>
-	  <menu name="projectBBS" memo="" mode="url" value="/WebApi/project/_Func/projectBBS/test.html"/>
-	  <menu name="QOSMIO" memo="" mode="url" value="/WebApi/project/_Func/QOSMIO/qosmio.html"/>
-    <menu name="viewJson" memo="" mode="url" value="/WebApi/project/_home/Util/viewJson/viewJson.html"/>
+
+  </menu>
+  <menu name="詳細" memo="" >
+	  <menu name="部門収支(EMG)" memo="" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?dispCmd=EMG"/>
+	  <menu name="部門収支(統括詳細)" memo="" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?dispCmd=統括詳細&amp;secMode=開発&amp;dispName=開発本部"/>
+	  <menu name="部門収支(部門詳細)" memo="" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?dispCmd=部門詳細&amp;secMode=開発&amp;dispName=開発本部/第2開発部"/>
+	  <menu name="部門収支(課詳細)" memo="" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?dispCmd=課詳細&amp;secMode=開発&amp;dispName=開発本部/第2開発部/第1開発課"/>
+  </menu>
+  <menu name="TEST" memo="" >
+		<menu name="projectBBS" memo="" mode="url" value="/WebApi/project/_Func/projectBBS/test.html"/>
+		  <menu name="QOSMIO" memo="" mode="url" value="/WebApi/project/_Func/QOSMIO/qosmio.html"/>
+		<menu name="viewJson" memo="" mode="url" value="/WebApi/project/_home/Util/viewJson/viewJson.html"/>
   </menu>
 </root>
 
