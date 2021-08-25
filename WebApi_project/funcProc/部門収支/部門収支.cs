@@ -43,10 +43,14 @@ namespace WebApi_project.hostProc
 
 			Dictionary<string, dynamic> Tab = (Dictionary<string, dynamic>)json_部門収支_XML(Json);
 			Dictionary<string, dynamic> dataTab = Tab["data"];
-			List<string> func;
+
+            // dataTabの「表示」以外の要素を削除
+            var removeList = dataTab.Where(item => item.Value["名前"] == "").ToList();
+            foreach (var elem in removeList) dataTab.Remove(elem.Key);
 
 			cmd_部門収支 cmd = Tab["Info"];
-			if( cmd.listMode == "一覧")
+			List<string> func;
+			if ( cmd.listMode == "一覧")
             {
 				func = new List<string>() { "結合" };
 			}
@@ -89,10 +93,6 @@ namespace WebApi_project.hostProc
 			cmd_部門収支 cmd = Tab["Info"];
 
 			Dictionary<string, dynamic> dataTab = Tab["data"];
-
-			// dataTabの「表示」以外の要素を削除
-			var removeList = dataTab.Where(item => item.Value["表示"] == "").ToList();
-			foreach (var elem in removeList) dataTab.Remove(elem.Key);
 
 			string fName = getAbsoluteFileName("/funcProc/部門収支/BASE.xml");
 			var xmlDoc = new XmlDocument();
@@ -147,7 +147,7 @@ namespace WebApi_project.hostProc
 				XmlNode nameNode = elem.SelectSingleNode("名前");
                 string name = keyArray[No];
 				//string title = string.Concat(valueArray[No]["部署名"].統括, valueArray[No]["部署名"].部門, valueArray[No]["部署名"].課); ;
-				string title = valueArray[No]["表示"];
+				string title = valueArray[No]["名前"];
 				nameNode.InnerText = title;
 				string mode = (valueArray[No]["直間"] == "2" ? "間接" : "開発");
 				string kind = (valueArray[No]["種別"] == "間接" ? "間接" : "開発");         // 間接・直接
@@ -179,7 +179,7 @@ namespace WebApi_project.hostProc
 			Dictionary<string, dynamic> Tab = new Dictionary<string, dynamic>();
 			if( Json == "{}")
             {
-				Json = "{dispCmd:'課一覧',secMode:'開発',dispName:'開発本部/第1開発部',year:'2021',yosoku:'3', fix:'70'}";
+				Json = "{dispCmd:'間接一覧',secMode:'間接',dispName:'',year:'2021',yosoku:'3', fix:'70'}";
 			}
 
 			var cmd = InitCmd(Json);
@@ -203,6 +203,17 @@ namespace WebApi_project.hostProc
             {
                 本社費配賦(cmd, Tab["data"]);
             }
+			if(cmd.secMode == "間接")
+            {
+				foreach(KeyValuePair<string,dynamic> elem in Tab["data"])
+                {
+					checkArray(Tab["data"], elem.Key, "計画", "売上高", "売上");
+					checkArray(Tab["data"], elem.Key, "計画", "予算", "予算");
+                    checkArray(Tab["data"], elem.Key, "予測", "予算", "予算");
+					checkArray(Tab["data"], elem.Key, "実績", "予算", "予算");
+					calcTargetPlan(cmd, Tab["data"][elem.Key]);
+                }
+			}
 			//memberPlan(Json, Tab["data"]);
 			//memberActual(Json, Tab["data"]);
 
@@ -329,7 +340,7 @@ namespace WebApi_project.hostProc
 					break;
 				case "間接一覧":
 					cmd.dispMode = "グループ";
-					cmd.listMode = "間接一覧";
+					cmd.listMode = "一覧";
 					cmd.secMode = "間接";
 					cmd.haifuMode = false;
 					break;
@@ -384,18 +395,17 @@ namespace WebApi_project.hostProc
 				if (S_name == "本社")
 				{
 					checkArray(dataTab, S_name, "計画", "予算", "予算");
-					checkArray(dataTab, S_name, "予測", "予算", "予算");
-					checkArray(dataTab, S_name, "実績", "予算", "予算");
-					calcTargetPlan(cmd, dataTab[S_name]);
+                    checkArray(dataTab, S_name, "予測", "予算", "予算");
+                    checkArray(dataTab, S_name, "実績", "予算", "予算");
+                    calcTargetPlan(cmd, dataTab[S_name]);
 				}
 			}
             calcHaifu(cmd, dataTab);
 
         }
 
-		void calcTargetPlan(cmd_部門収支 cmd, Dictionary<string, dynamic> dataTab)
+		void calcTargetPlan(cmd_部門収支 cmd, Dictionary<string, dynamic> Tab)
         {
-			var Tab = dataTab;
 			// 支出の部
 			string[] itemStr_O = "売上原価,販管費,営業外費用".Split(',');
 			for(int iNum = 0; iNum< itemStr_O.Length; iNum++)
@@ -595,111 +605,126 @@ namespace WebApi_project.hostProc
 			string dispName = "";
             if (o_json.dispMode == "全社")
             {
-                Tab.Add("全社", costList(表示: "EMG", 直間: "0,1,2", 統括: "", 部門: "", 課: "", 部署コード: ""));
+                Tab.Add("全社", costList(名前: "EMG", 直間: "0,1,2", 統括: "", 部門: "", 課: "", 部署コード: ""));
             }
-			else if (o_json.listMode == "一覧" && o_json.dispMode == "統括")
+			else if (o_json.secMode == "開発" && o_json.listMode == "一覧" && o_json.dispMode == "統括")
 			{
 				foreach (string secName in secTab.Keys)
 				{
 					group sec = secTab[secName];
 					dispName = sec.統括;
-					Tab.Add(secName, costList(表示: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
+					Tab.Add(secName, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
 					Debug.noWrite("統括", secName);
 				}
-				Tab.Add("本社", costList(表示: "本社", 直間: "2", 統括: "", 部門: "", 課: "", 部署コード: ""));
-				Tab.Add("直接", costList(表示: "", 直間: "0,1", 統括: "", 部門: "", 課: "", 部署コード: ""));
+				Tab.Add("本社", costList(名前: "本社", 直間: "2", 統括: "", 部門: "", 課: "", 部署コード: ""));
+				Tab.Add("直接", costList(名前: "", 直間: "0,1", 統括: "", 部門: "", 課: "", 部署コード: ""));
 			}
-			else if (o_json.listMode == "詳細" && o_json.dispMode == "統括")
+			else if (o_json.secMode == "開発" && o_json.listMode == "詳細" && o_json.dispMode == "統括")
 			{
 				foreach (string secName in secTab.Keys)
 				{
 					group sec = secTab[secName];
 					dispName = (sec.統括 == o_json.統括 ? sec.統括 : "");
-					Tab.Add(secName, costList(表示: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
+					Tab.Add(secName, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
 					Debug.noWrite("統括", secName);
 				}
-				Tab.Add("本社", costList(表示: "", 直間: "2", 統括: "", 部門: "", 課: "", 部署コード: ""));
-				Tab.Add("直接", costList(表示: "", 直間: "0,1", 統括: "", 部門: "", 課: "", 部署コード: ""));
+				Tab.Add("本社", costList(名前: "", 直間: "2", 統括: "", 部門: "", 課: "", 部署コード: ""));
+				Tab.Add("直接", costList(名前: "", 直間: "0,1", 統括: "", 部門: "", 課: "", 部署コード: ""));
 			}
-			else if (o_json.listMode == "一覧" && o_json.dispMode == "部門")
+			else if (o_json.secMode == "開発" && o_json.listMode == "一覧" && o_json.dispMode == "部門")
 			{
 				foreach (string secName in secTab.Keys)
 				{
 					group secList = secTab[secName];
 					var sec = secList;
 					dispName = string.Concat(sec.統括, sec.部門);
-					Tab.Add(secName, costList(表示: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.code));
+					Tab.Add(secName, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.code));
 					Debug.noWrite("部門", secName);
 					foreach (string 部門 in secList.list.Keys)
 					{
 						sec = secList.list[部門];
 						dispName = string.Concat(sec.統括, sec.部門);
-						Tab.Add(部門, costList(表示: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
+						Tab.Add(部門, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
 						Debug.noWrite("部門", 部門);
 					}
 				}
 
-				Tab.Add("本社", costList(表示: "", 直間: "2", 統括: "", 部門: "", 課: "", 部署コード: ""));
-				Tab.Add("直接", costList(表示: "", 直間: "0,1", 統括: "", 部門: "", 課: "", 部署コード: ""));
+				Tab.Add("本社", costList(名前: "", 直間: "2", 統括: "", 部門: "", 課: "", 部署コード: ""));
+				Tab.Add("直接", costList(名前: "", 直間: "0,1", 統括: "", 部門: "", 課: "", 部署コード: ""));
 			}
-			else if (o_json.listMode == "詳細" && o_json.dispMode == "部門")
+			else if (o_json.secMode == "開発" && o_json.listMode == "詳細" && o_json.dispMode == "部門")
 			{
 				foreach (string secName in secTab.Keys)
 				{
 					group secList = secTab[secName];
 					var sec = secList;
 					dispName = (secList.統括 == o_json.統括 && secList.部門 == o_json.部 ? string.Concat(sec.統括, sec.部門) : "");
-					Tab.Add(secName, costList(表示: dispName, 直間: secList.直間, 統括: secList.統括, 部門: secList.部門, 課: secList.課, 部署コード: secList.code));
+					Tab.Add(secName, costList(名前: dispName, 直間: secList.直間, 統括: secList.統括, 部門: secList.部門, 課: secList.課, 部署コード: secList.code));
 					Debug.noWrite("部門", secName);
 					foreach (string 部門 in secList.list.Keys)
 					{
 						sec = secList.list[部門];
 						dispName = (sec.統括 == o_json.統括 && sec.部門 == o_json.部 ? string.Concat(sec.統括, sec.部門) : "");
-						Tab.Add(部門, costList(表示: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
+						Tab.Add(部門, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
 						Debug.noWrite("部門", 部門);
 					}
 				}
 
-				Tab.Add("本社", costList(表示: "", 直間: "2", 統括: "", 部門: "", 課: "", 部署コード: ""));
-				Tab.Add("直接", costList(表示: "", 直間: "0,1", 統括: "", 部門: "", 課: "", 部署コード: ""));
+				Tab.Add("本社", costList(名前: "", 直間: "2", 統括: "", 部門: "", 課: "", 部署コード: ""));
+				Tab.Add("直接", costList(名前: "", 直間: "0,1", 統括: "", 部門: "", 課: "", 部署コード: ""));
 			}
-			else if (o_json.listMode == "一覧" && o_json.dispMode == "グループ")
+			else if (o_json.secMode == "開発" && o_json.listMode == "一覧" && o_json.dispMode == "グループ")
 			{
 				group secList = secTab[o_json.統括].list[o_json.部];
 				var sec = secList;
 				string secName = o_json.部;
 				Debug.noWrite("課", secName);
 				dispName = string.Concat(sec.統括, sec.部門, sec.課);
-				Tab.Add(o_json.部, costList(表示: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.code));
+				Tab.Add(o_json.部, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.code));
 				foreach (string 課 in secList.list.Keys)
 				{
 					sec = secList.list[課];
 					dispName = string.Concat(sec.統括, sec.部門, sec.課);
-					Tab.Add(課, costList(表示: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
+					Tab.Add(課, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
 					Debug.noWrite("課", 課);
 				}
-				Tab.Add("本社", costList(表示: "", 直間: "2", 統括: "", 部門: "", 課: "", 部署コード: ""));
-				Tab.Add("直接", costList(表示: "", 直間: "0,1", 統括: "", 部門: "", 課: "", 部署コード: ""));
+				Tab.Add("本社", costList(名前: "", 直間: "2", 統括: "", 部門: "", 課: "", 部署コード: ""));
+				Tab.Add("直接", costList(名前: "", 直間: "0,1", 統括: "", 部門: "", 課: "", 部署コード: ""));
 			}
-			else if (o_json.listMode == "詳細" && o_json.dispMode == "グループ")
+			else if (o_json.secMode == "開発" && o_json.listMode == "詳細" && o_json.dispMode == "グループ")
 			{
 				group secList = secTab[o_json.統括].list[o_json.部];
 				var sec = secList;
 				string secName = o_json.部;
 				dispName = (sec.統括 == o_json.統括 && sec.部門 == o_json.部 && sec.課 == o_json.課 ? string.Concat(sec.統括, sec.部門, sec.課) : "");
 				Debug.noWrite("課", secName);
-				Tab.Add(o_json.部, costList(表示: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.code));
+				Tab.Add(o_json.部, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.code));
 				foreach (string 課 in secList.list.Keys)
 				{
 					sec = secList.list[課];
 					dispName = (sec.統括 == o_json.統括 && sec.部門 == o_json.部 && sec.課 == o_json.課 ? string.Concat(sec.統括, sec.部門, sec.課) : "");
-					Tab.Add(課, costList(表示: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
+					Tab.Add(課, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
 					Debug.noWrite("課", 課);
 				}
-				Tab.Add("本社", costList(表示: "", 直間: "2", 統括: "", 部門: "", 課: "", 部署コード: ""));
-				Tab.Add("直接", costList(表示: "", 直間: "0,1", 統括: "", 部門: "", 課: "", 部署コード: ""));
+				Tab.Add("本社", costList(名前: "", 直間: "2", 統括: "", 部門: "", 課: "", 部署コード: ""));
+				Tab.Add("直接", costList(名前: "", 直間: "0,1", 統括: "", 部門: "", 課: "", 部署コード: ""));
 			}
 
+			else if (o_json.secMode == "間接" && o_json.listMode == "一覧" && o_json.dispMode == "グループ")
+			{
+				foreach (string secName in secTab.Keys)
+				{
+					group secList = secTab[secName];
+
+					foreach (string 部門 in secList.list.Keys)
+					{
+						var sec = secList.list[部門];
+						dispName = string.Concat(sec.統括, sec.部門);
+						Tab.Add(部門, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
+						Debug.noWrite("部門", 部門);
+					}
+				}
+			}
 			foreach (var item in Tab)
 			{
 				string secName = item.Key;
@@ -711,12 +736,12 @@ namespace WebApi_project.hostProc
 			}
 			return (Tab);
 		}
-		public Dictionary<string, object> costList(string 表示, string 直間, string 統括, string 部門, string 課, string 部署コード)
+		public Dictionary<string, object> costList(string 名前, string 直間, string 統括, string 部門, string 課, string 部署コード)
 		{
 
 			Dictionary<string, object> Tab = new Dictionary<string, object>();
 			string 種別 = (直間 == "2" ? "間接" : "直接");
-			Tab.Add("表示", 表示);
+			Tab.Add("名前", 名前);
 			Tab.Add("種別", 種別);
 			Tab.Add("直間", 直間);
 			Tab.Add("部署名", new secInfo(統括, 部門, 課));

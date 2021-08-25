@@ -154,7 +154,7 @@ namespace WebApi_project.hostProc
                         code = (string)reader["gCode"].ToString()
                     };
 
-
+                    Debug.Write(s1,s2,s3,name,code);
                     dataTab.Add(data);
                 }
                 Debug.noWrite("reader Close");

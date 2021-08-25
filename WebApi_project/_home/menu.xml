@@ -4,6 +4,7 @@
 	  <menu name="部門収支(統括一覧)" memo="" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?dispCmd=統括一覧&amp;secMode=開発"/>
 	  <menu name="部門収支(部門一覧)" memo="" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?dispCmd=部門一覧&amp;secMode=開発"/>
 	  <menu name="部門収支(課一覧)" memo="" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?dispCmd=課一覧&amp;secMode=開発&amp;dispName=開発本部/第2開発部"/>
+	  <menu name="部門収支(間接部門一覧)" memo="" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?dispCmd=間接一覧&amp;secMode=間接"/>
 
   </menu>
   <menu name="詳細" memo="" >
