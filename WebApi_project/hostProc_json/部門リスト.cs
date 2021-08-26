@@ -154,7 +154,7 @@ namespace WebApi_project.hostProc
                         code = (string)reader["gCode"].ToString()
                     };
 
-                    Debug.Write(s1,s2,s3,name,code);
+                    Debug.noWrite(s1,s2,s3,name,code);
                     dataTab.Add(data);
                 }
                 Debug.noWrite("reader Close");
@@ -238,81 +238,6 @@ namespace WebApi_project.hostProc
                     //Debug.Write("Add3", s1, s2, s3);
                 }
             });
-
-/*
-        var Tab = { }
-
-        var oTab = []
-
-        var oPos = 0		//null
-    	for(var T_Name in allTab)
-            {
-	    	for(var B_Name in allTab[T_Name])
-                {
-		    	for(var K_Name in allTab[T_Name][B_Name])
-                    {
-                        var name = allTab[T_Name][B_Name][K_Name].名前
-
-                var mode = allTab[T_Name][B_Name][K_Name].直間
-
-                var code = allTab[T_Name][B_Name][K_Name].code
-
-                if (dispMode == "統括" && B_Name == "" && K_Name == "")
-                        {
-                            oPos = oTab.length
-
-                    oTab[oPos] = { 名前: name,統括: T_Name,部: B_Name,課: K_Name,直間: mode,部門コード: code,codes: "",code:[]}
-                        }
-                        else if (dispMode == "部" && K_Name == "")
-                        {
-                            oPos = oTab.length
-        
-                    oTab[oPos] = { 名前: name,統括: T_Name,部: B_Name,課: K_Name,直間: mode,部門コード: code,codes: "",code:[]}
-                        }
-                        else if (dispMode == "課")
-                        {
-                            oPos = oTab.length
-        
-                    oTab[oPos] = { 名前: name,統括: T_Name,部: B_Name,課: K_Name,直間: mode,部門コード: code,codes: "",code:[]}
-                        }
-                        else
-                        {
-                            //pr("-----------"+paraOut(dispMode,oPos,T_Name,B_Name,K_Name))
-                        }
-                        if (IsObject(oTab[oPos])) oTab[oPos].code.push(code)
-
-                }
-                }
-            }
-
-*/
-            //Debug.Write("=======");
-            //foreach (string 統括 in Tab.Keys)
-            //{
-            //    var x = Tab[統括];
-            //    costList cost = new costList(直間: x.直間, 統括: x.統括, 部門: x.部門, 課: x.課, 部署コード: x.codes);
-            //    Debug.Write(統括, Tab[統括].codes);
-            //}
-            //Debug.Write("=======");
-            //group Tab1 = Tab["開発本部"];
-
-            //foreach (string 部門 in Tab1.list.Keys)
-            //{
-            //    var x = Tab1.list[部門];
-            //    costList cost = new costList(直間: x.直間, 統括: x.統括, 部門: x.部門, 課: x.課, 部署コード: x.codes);
-            //    Debug.Write(部門, Tab1.list[部門].codes);
-            //}
-            //Debug.Write("=======");
-            //group Tab2 = Tab["開発本部"].list["第1開発部"];
-            //foreach (string 課 in Tab2.list.Keys)
-            //{
-            //    var x = Tab2.list[課];
-            //    costList cost = new costList(直間: x.直間, 統括: x.統括, 部門: x.部門, 課: x.課, 部署コード: x.codes);
-            //    Debug.Write(課, Tab2.list[課].codes);
-            //}
-
-
-
 
             return (Tab);
         }

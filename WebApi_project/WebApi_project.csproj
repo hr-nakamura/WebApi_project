@@ -81,15 +81,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="funcProc\部門収支\EMG.xml" />
-    <Content Include="funcProc\部門収支\xml情報.txt" />
-    <Content Include="funcProc\部門収支\統括一覧.xml" />
     <Content Include="funcProc\部門収支\BASE.xml" />
-    <Content Include="funcProc\部門収支\統括詳細.xml" />
-    <Content Include="funcProc\部門収支\課一覧.xml" />
-    <Content Include="funcProc\部門収支\課詳細.xml" />
-    <Content Include="funcProc\部門収支\部門一覧.xml" />
-    <Content Include="funcProc\部門収支\部門詳細.xml" />
     <Content Include="Global.asax" />
     <Content Include="funcProc\projectBBS\projectData_XML.xml" />
     <Content Include="_Func\QOSMIO\a.asp" />
@@ -97,7 +89,6 @@
     <Content Include="_Func\部門収支\EMG.xml" />
     <Content Include="_Func\部門収支\EMG収支計画.html" />
     <Content Include="_Func\部門収支\EMG部門収支.xsl" />
-    <Content Include="funcProc\部門収支\部門収支_XML.asp" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
@@ -152,7 +143,6 @@
     <Content Include="_home\debug\debug.ashx" />
     <Content Include="_home\ajax.xlsx" />
     <Content Include="_home\Util\viewJson-edge\jquery.json-viewer.js" />
-    <Content Include="funcProc\部門収支\部門収支.json" />
     <Content Include="_home\json.json" />
     <Content Include="_home\Scripts\jquery.my.webapi.js" />
   </ItemGroup>
@@ -162,7 +152,7 @@
     <Compile Include="Controllers\JsonController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\XmlController.cs" />
-    <Compile Include="funcProc\部門収支\StopWatch.cs" />
+    <Compile Include="App_Data\StopWatch.cs" />
     <Compile Include="funcProc\部門収支\部門収支_DB.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

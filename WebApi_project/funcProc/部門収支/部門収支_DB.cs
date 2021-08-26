@@ -645,8 +645,8 @@ namespace WebApi_project.hostProc
 				{
 					var work1 = "[" + yymm + "][" + 科目 + "][" + amount + "]";
 					work1 = string.Concat("[", 分類, "][", yymm, "][", 科目, "][", amount);
-					Debug.Write("[会計データ集計での不明科目データ]" + work1);
-				}
+                    Debug.WriteLog("[会計データ集計での不明科目データ]" + work1);
+                }
 
 			}
 

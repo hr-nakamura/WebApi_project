@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Collections.Generic;
+
+using DebugHost;
 
 namespace CodingSquareCS
 {
@@ -12,6 +15,7 @@ namespace CodingSquareCS
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
+		List<string> work;
 		public StopWatch()
 		{
 			// 計測用の内部ストップウォッチインスタンス作成
@@ -27,8 +31,13 @@ namespace CodingSquareCS
 		public void Start(string title = "Stopwatch")
 		{
 			// タイトルと見出し表示
-			Trace.WriteLine($"-------------------< {title} >-------------------");
-			Trace.WriteLine("Total Time       | Lap Time         | Comment");
+			//Trace.WriteLine($"-------------------< {title} >-------------------");
+			//Trace.WriteLine("Total Time       | Lap Time         | Comment");
+
+			work = new List<string>();
+			work.Add("");
+			work.Add($"-------------------< {title} >-------------------");
+			work.Add($"Total Time       | Lap Time         | Comment");
 
 			// 区間計測用の前回経過時間の初期化
 			LastElapsed = new TimeSpan();
@@ -66,7 +75,20 @@ namespace CodingSquareCS
 			TimeSpan lap = elapsed - LastElapsed;
 
 			// 時間表示
-			Trace.WriteLine($"{elapsed} | {lap} | " + comment);
+			//Trace.WriteLine($"{elapsed} | {lap} | " + comment);
+
+			if( comment != "Stop")
+            {
+				work.Add($"{elapsed} | {lap} | " + comment);
+			}
+			else
+			{
+				work.Add($"{elapsed} | {lap} | " + comment);
+				work.Add($"===================< 計測終了 >===================");
+
+				string output = string.Join(Environment.NewLine, work.ToArray());
+                DebugHost.Debug.Write(output);
+            }
 
 			// 前回経過時間として今回の経過時間を退避
 			LastElapsed = elapsed;

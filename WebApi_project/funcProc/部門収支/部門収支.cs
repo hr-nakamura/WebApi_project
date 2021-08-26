@@ -112,7 +112,7 @@ namespace WebApi_project.hostProc
 			XmlNodeList nodeList;
             if (cmd.listMode == "詳細" && cmd.secMode != "開発")
             {
-				DebugHost.Debug.Write("AAA",cmd.listMode, cmd.secMode);
+				DebugHost.Debug.noWrite("AAA",cmd.listMode, cmd.secMode);
                 nodeList = secNode.SelectNodes("データ/本社費配賦|データ/売上付替|データ/費用付替|データ/部門固定費");
                 foreach (XmlNode node in nodeList)
                 {
@@ -122,7 +122,7 @@ namespace WebApi_project.hostProc
 
             if ( cmd.listMode == "一覧")
             {
-				DebugHost.Debug.Write("BBB", cmd.listMode, cmd.secMode);
+				DebugHost.Debug.noWrite("BBB", cmd.listMode, cmd.secMode);
 				nodeList = secNode.SelectNodes("データ[@name!='結合']");
 				foreach (XmlNode node in nodeList)
 				{
@@ -147,15 +147,24 @@ namespace WebApi_project.hostProc
 			foreach( XmlElement elem in NodeList)
             {
 				XmlNode nameNode = elem.SelectSingleNode("名前");
-                string name = keyArray[No];
-				//string title = string.Concat(valueArray[No]["部署名"].統括, valueArray[No]["部署名"].部門, valueArray[No]["部署名"].課); ;
-				string title = valueArray[No]["名前"];
-				nameNode.InnerText = title;
+				XmlNode nameNode1 = elem.SelectSingleNode("統括");
+				XmlNode nameNode2 = elem.SelectSingleNode("部門");
+				XmlNode nameNode3 = elem.SelectSingleNode("課");
+				XmlNode nameNode4 = elem.SelectSingleNode("部署コード");
+				string name = keyArray[No];
 				string mode = (valueArray[No]["直間"] == "2" ? "間接" : "開発");
 				string kind = (valueArray[No]["種別"] == "間接" ? "間接" : "開発");         // 間接・直接
-				elem.SetAttribute("name", name);
-				elem.SetAttribute("kind", mode);
-				elem.SetAttribute("kind2", valueArray[No]["種別"]);
+                elem.SetAttribute("target", name);
+                elem.SetAttribute("kind", mode);
+				elem.SetAttribute("統括", valueArray[No]["部署名"].統括);
+				elem.SetAttribute("部", valueArray[No]["部署名"].部門);
+				elem.SetAttribute("課", valueArray[No]["部署名"].課);
+
+				nameNode.InnerText = valueArray[No]["名前"];
+				nameNode1.InnerText = valueArray[No]["部署名"].統括;
+				nameNode2.InnerText = valueArray[No]["部署名"].部門;
+				nameNode3.InnerText = valueArray[No]["部署名"].課;
+				nameNode4.InnerText = valueArray[No]["部署コード"];
 				var nodeListStr = "";
 				if (mode == "開発")
 				{
@@ -180,7 +189,7 @@ namespace WebApi_project.hostProc
 			Dictionary<string, dynamic> Tab = new Dictionary<string, dynamic>();
 			if( Json == "{}")
             {
-				Json = "{dispCmd:'部門一覧',secMode:'間接',dispName:'',year:'2021',yosoku:'3', fix:'70'}";
+				Json = "{dispCmd:'EMG',secMode:'',dispName:'',year:'2021',yosoku:'3', fix:'70'}";
 			}
             var sw = new StopWatch();
             sw.Start("計測開始"); // 計測開始
@@ -204,16 +213,21 @@ namespace WebApi_project.hostProc
             sw.Lap("json_accountActual");
             json_accountActual(cmd, Tab["data"]);                          // 費用実績データ取得
 
-            sw.Lap("5");
             if (cmd.dispMode != "全社")
             {
-                json_accountCost(cmd, Tab["data"]);                         // 費用付替
-                json_salesCost(cmd, Tab["data"]);                               // 売上付替
-                json_groupCost(cmd, Tab["data"]);                           // 部門固定費データ取得
+				sw.Lap("json_accountCost");
+				json_accountCost(cmd, Tab["data"]);                         // 費用付替
+
+				sw.Lap("json_salesCost");
+				json_salesCost(cmd, Tab["data"]);                               // 売上付替
+
+				sw.Lap("json_groupCost");
+				json_groupCost(cmd, Tab["data"]);                           // 部門固定費データ取得
             }
 			if( cmd.haifuMode == true)
             {
-                本社費配賦(cmd, Tab["data"]);
+				sw.Lap("本社費配賦");
+				本社費配賦(cmd, Tab["data"]);
             }
 			if(cmd.secMode == "間接")
             {
@@ -229,6 +243,7 @@ namespace WebApi_project.hostProc
 			//memberPlan(Json, Tab["data"]);
 			//memberActual(Json, Tab["data"]);
 
+			sw.Lap("結合データを作成");
 			// 結合データを作成する
 			meke_JoinData(Tab);
 
@@ -236,7 +251,7 @@ namespace WebApi_project.hostProc
 
 
             // 時間計測終了
-            sw.Stop("終了"); // 計測終了
+            sw.Stop(); // 計測終了
 
             return (Tab);
 		}
@@ -856,16 +871,16 @@ namespace WebApi_project.hostProc
 
 			XmlNode rootNode = xmlDoc.SelectSingleNode("/root");
 			XmlNodeList targetsecNodeList = rootNode.SelectNodes("全体/グループ");
-			XmlNode SecNode = rootNode.SelectSingleNode("全体/グループ[@name='" + secName + "']");
+			XmlNode SecNode = rootNode.SelectSingleNode("全体/グループ[@target='" + secName + "']");
 			XmlNode Node;
 			if (funcName == "予測データ")
 			{
-				Node = rootNode.SelectSingleNode("全体/グループ[@name='" + secName + "']/予測データ/" + 大項目 + "/項目[@name='" + 項目 + "']");
+				Node = rootNode.SelectSingleNode("全体/グループ[@target='" + secName + "']/予測データ/" + 大項目 + "/項目[@name='" + 項目 + "']");
 
 			}
 			else
 			{
-				Node = rootNode.SelectSingleNode("全体/グループ[@name='" + secName + "']/データ[@name='" + funcName + "']/" + 大項目 + "/項目[@name='" + 項目 + "']");
+				Node = rootNode.SelectSingleNode("全体/グループ[@target='" + secName + "']/データ[@name='" + funcName + "']/" + 大項目 + "/項目[@name='" + 項目 + "']");
 
 			}
 			if (Node == null)
@@ -891,12 +906,48 @@ namespace WebApi_project.hostProc
 			}
 		}
 
+		Dictionary<string, dynamic> checkArray_X(Dictionary<string, dynamic> Tab, string 部門, string 種別, string 大項目, string 項目)
+		{
+			//DebugHost.Debug.noWrite("確認");
+			if (大項目 == "")
+			{
+				DebugHost.Debug.noWrite("XX");
+			}
+			try
+			{
+				if (Tab[部門][種別][大項目].ContainsKey(項目))
+				{
+					return (Tab);
+				}
+			}
+			catch (Exception ex)
+			{
+				if (!Tab.ContainsKey(部門))
+				{
+					Tab.Add(部門, new Dictionary<string, dynamic>());
+				}
+				if (!Tab[部門].ContainsKey(種別))
+				{
+					Tab[部門].Add(種別, new Dictionary<string, dynamic>());
+				}
+				if (!Tab[部門][種別].ContainsKey(大項目))
+				{
+					Tab[部門][種別].Add(大項目, new Dictionary<string, dynamic>());
+				}
+				if (!Tab[部門][種別][大項目].ContainsKey(項目))
+				{
+					Tab[部門][種別][大項目].Add(項目, new Dictionary<string, double[]>());
+				}
+			}
+			Tab[部門][種別][大項目][項目] = new double[12];
+			return (Tab);
+		}
 		Dictionary<string, dynamic> checkArray(Dictionary<string, dynamic> Tab, string 部門, string 種別, string 大項目, string 項目)
 		{
 			//DebugHost.Debug.noWrite("確認");
 			if (大項目 == "")
 			{
-				DebugHost.Debug.Write("XX");
+				DebugHost.Debug.noWrite("XX");
 			}
 			if (!Tab.ContainsKey(部門))
 			{
@@ -915,45 +966,6 @@ namespace WebApi_project.hostProc
 				Tab[部門][種別][大項目].Add(項目, new Dictionary<string, double[]>());
 				Tab[部門][種別][大項目][項目] = new double[12];
 			}
-			return (Tab);
-		}
-		Dictionary<string, dynamic> checkArrayX(Dictionary<string, dynamic> Tab, string 部門, string 種別, string 大項目, string 項目)
-		{
-			//DebugHost.Debug.noWrite("確認");
-			if (大項目 == "")
-			{
-				DebugHost.Debug.Write("XX");
-			}
-			try
-			{
-				if (Tab[部門][種別][大項目].ContainsKey(項目))
-				{
-					//DebugHost.Debug.noWrite("ある");
-					return (Tab);
-				}
-			}
-			catch (Exception ex)
-			{
-				DebugHost.Debug.noWrite(ex.Message);
-				if (!Tab.ContainsKey(部門))
-				{
-					Tab.Add(部門, new Dictionary<string, dynamic>());
-				}
-				if (!Tab[部門].ContainsKey(種別))
-				{
-					Tab[部門].Add(種別, new Dictionary<string, dynamic>());
-				}
-				if (!Tab[部門][種別].ContainsKey(大項目))
-				{
-					Tab[部門][種別].Add(大項目, new Dictionary<string, dynamic>());
-				}
-				if (!Tab[部門][種別][大項目].ContainsKey(項目))
-				{
-					Tab[部門][種別][大項目].Add(項目, new Dictionary<string, double[]>());
-				}
-			}
-			DebugHost.Debug.noWrite("作成", 部門, 種別, 大項目, 項目);
-            Tab[部門][種別][大項目][項目] = new double[12];
 			return (Tab);
 		}
 		int yymmAdd(int yymm, int mCnt)
