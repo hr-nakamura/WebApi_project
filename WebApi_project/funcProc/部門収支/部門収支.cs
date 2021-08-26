@@ -7,8 +7,10 @@ using Newtonsoft.Json;
 using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.Linq;
+using System.Diagnostics;
 
 using WebApi_project.Models;
+using CodingSquareCS;
 
 using DebugHost;
 
@@ -75,7 +77,7 @@ namespace WebApi_project.hostProc
 						{
 							項目 = item4.Key;
 							double[] targetTab = item4.Value;
-                            Debug.noWrite("target", secName, funcName, 大項目, 項目, (targetTab.Length).ToString());
+							DebugHost.Debug.noWrite("target", secName, funcName, 大項目, 項目, (targetTab.Length).ToString());
                             // ここでxmlノードを探してデータ設定する(全てJson→XML)
                             checkNode(xmlDoc, secName, funcName, 大項目, 項目, targetTab);
 
@@ -110,7 +112,7 @@ namespace WebApi_project.hostProc
 			XmlNodeList nodeList;
             if (cmd.listMode == "詳細" && cmd.secMode != "開発")
             {
-				Debug.Write("AAA",cmd.listMode, cmd.secMode);
+				DebugHost.Debug.Write("AAA",cmd.listMode, cmd.secMode);
                 nodeList = secNode.SelectNodes("データ/本社費配賦|データ/売上付替|データ/費用付替|データ/部門固定費");
                 foreach (XmlNode node in nodeList)
                 {
@@ -120,7 +122,7 @@ namespace WebApi_project.hostProc
 
             if ( cmd.listMode == "一覧")
             {
-				Debug.Write("BBB", cmd.listMode, cmd.secMode);
+				DebugHost.Debug.Write("BBB", cmd.listMode, cmd.secMode);
 				nodeList = secNode.SelectNodes("データ[@name!='結合']");
 				foreach (XmlNode node in nodeList)
 				{
@@ -172,27 +174,37 @@ namespace WebApi_project.hostProc
             }
 			return (xmlDoc);
 		}
-
 		public object json_部門収支_XML(String Json)
 		{
 
 			Dictionary<string, dynamic> Tab = new Dictionary<string, dynamic>();
 			if( Json == "{}")
             {
-				Json = "{dispCmd:'間接一覧',secMode:'間接',dispName:'',year:'2021',yosoku:'3', fix:'70'}";
+				Json = "{dispCmd:'部門一覧',secMode:'間接',dispName:'',year:'2021',yosoku:'3', fix:'70'}";
 			}
+            var sw = new StopWatch();
+            sw.Start("計測開始"); // 計測開始
 
-			var cmd = InitCmd(Json);
+            var cmd = InitCmd(Json);
 
 			Tab.Add("Info", cmd);
 			Tab.Add("data", initTab(cmd));
 
 
-            json_groupPlan(cmd, Tab["data"]);							// 計画・予測データ取得
+            // ラップタイム計測
+            sw.Lap("json_groupPlan");
+            json_groupPlan(cmd, Tab["data"]);                           // 計画・予測データ取得
+
+            sw.Lap("json_uriageYosoku");
             json_uriageYosoku(cmd, Tab["data"]);                       // 売上予測データ取得
+
+            sw.Lap("json_uriageActual");
             json_uriageActual(cmd, Tab["data"]);                       // 売上実績データ取得
+
+            sw.Lap("json_accountActual");
             json_accountActual(cmd, Tab["data"]);                          // 費用実績データ取得
 
+            sw.Lap("5");
             if (cmd.dispMode != "全社")
             {
                 json_accountCost(cmd, Tab["data"]);                         // 費用付替
@@ -220,7 +232,13 @@ namespace WebApi_project.hostProc
 			// 結合データを作成する
 			meke_JoinData(Tab);
 
-			return (Tab);
+
+
+
+            // 時間計測終了
+            sw.Stop("終了"); // 計測終了
+
+            return (Tab);
 		}
 		cmd_部門収支 InitCmd(string Json)
 		{
@@ -626,6 +644,8 @@ namespace WebApi_project.hostProc
 			//Json = "{year:'2020',secMode:'開発',dispMode:'グループ'}";
 			//var o_json = JsonConvert.DeserializeObject<cmd_部門収支>(Json);
 
+		try
+		{
 			Dictionary<string, group> secTab = jProc.json_部門リスト_sub(o_json);
 			string dispName = "";
             if (o_json.dispMode == "全社")
@@ -639,7 +659,7 @@ namespace WebApi_project.hostProc
 					group sec = secTab[secName];
 					dispName = sec.統括;
 					Tab.Add(secName, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
-					Debug.noWrite("統括", secName);
+					DebugHost.Debug.noWrite("統括", secName);
 				}
 				Tab.Add("本社", costList(名前: "本社", 直間: "2", 統括: "", 部門: "", 課: "", 部署コード: ""));
 				Tab.Add("直接", costList(名前: "", 直間: "0,1", 統括: "", 部門: "", 課: "", 部署コード: ""));
@@ -651,7 +671,7 @@ namespace WebApi_project.hostProc
 					group sec = secTab[secName];
 					dispName = (sec.統括 == o_json.統括 ? sec.統括 : "");
 					Tab.Add(secName, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
-					Debug.noWrite("統括", secName);
+					DebugHost.Debug.noWrite("統括", secName);
 				}
 				Tab.Add("本社", costList(名前: "", 直間: "2", 統括: "", 部門: "", 課: "", 部署コード: ""));
 				Tab.Add("直接", costList(名前: "", 直間: "0,1", 統括: "", 部門: "", 課: "", 部署コード: ""));
@@ -664,13 +684,13 @@ namespace WebApi_project.hostProc
 					var sec = secList;
 					dispName = string.Concat(sec.統括, sec.部門);
 					Tab.Add(secName, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.code));
-					Debug.noWrite("部門", secName);
+					DebugHost.Debug.noWrite("部門", secName);
 					foreach (string 部門 in secList.list.Keys)
 					{
 						sec = secList.list[部門];
 						dispName = string.Concat(sec.統括, sec.部門);
 						Tab.Add(部門, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
-						Debug.noWrite("部門", 部門);
+						DebugHost.Debug.noWrite("部門", 部門);
 					}
 				}
 
@@ -685,13 +705,13 @@ namespace WebApi_project.hostProc
 					var sec = secList;
 					dispName = (sec.統括 == o_json.統括 && sec.部門 == o_json.部 ? string.Concat(sec.統括, sec.部門) : "");
 					Tab.Add(secName, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.code));
-					Debug.noWrite("部門", secName);
+					DebugHost.Debug.noWrite("部門", secName);
 					foreach (string 部門 in secList.list.Keys)
 					{
 						sec = secList.list[部門];
 						dispName = (sec.統括 == o_json.統括 && sec.部門 == o_json.部 ? string.Concat(sec.統括, sec.部門) : "");
 						Tab.Add(部門, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
-						Debug.noWrite("部門", 部門);
+						DebugHost.Debug.noWrite("部門", 部門);
 					}
 				}
 
@@ -703,7 +723,7 @@ namespace WebApi_project.hostProc
 				group secList = secTab[o_json.統括].list[o_json.部];
 				var sec = secList;
 				string secName = o_json.部;
-				Debug.noWrite("課", secName);
+				DebugHost.Debug.noWrite("課", secName);
 				dispName = string.Concat(sec.統括, sec.部門, sec.課);
 				Tab.Add(o_json.部, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.code));
 				foreach (string 課 in secList.list.Keys)
@@ -711,7 +731,7 @@ namespace WebApi_project.hostProc
 					sec = secList.list[課];
 					dispName = string.Concat(sec.統括, sec.部門, sec.課);
 					Tab.Add(課, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
-					Debug.noWrite("課", 課);
+					DebugHost.Debug.noWrite("課", 課);
 				}
 				Tab.Add("本社", costList(名前: "", 直間: "2", 統括: "", 部門: "", 課: "", 部署コード: ""));
 				Tab.Add("直接", costList(名前: "", 直間: "0,1", 統括: "", 部門: "", 課: "", 部署コード: ""));
@@ -722,14 +742,14 @@ namespace WebApi_project.hostProc
 				var sec = secList;
 				string secName = o_json.部;
 				dispName = (sec.統括 == o_json.統括 && sec.部門 == o_json.部 && sec.課 == o_json.課 ? string.Concat(sec.統括, sec.部門, sec.課) : "");
-				Debug.noWrite("課", secName);
+				DebugHost.Debug.noWrite("課", secName);
 				Tab.Add(o_json.部, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.code));
 				foreach (string 課 in secList.list.Keys)
 				{
 					sec = secList.list[課];
 					dispName = (sec.統括 == o_json.統括 && sec.部門 == o_json.部 && sec.課 == o_json.課 ? string.Concat(sec.統括, sec.部門, sec.課) : "");
 					Tab.Add(課, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
-					Debug.noWrite("課", 課);
+					DebugHost.Debug.noWrite("課", 課);
 				}
 				Tab.Add("本社", costList(名前: "", 直間: "2", 統括: "", 部門: "", 課: "", 部署コード: ""));
 				Tab.Add("直接", costList(名前: "", 直間: "0,1", 統括: "", 部門: "", 課: "", 部署コード: ""));
@@ -746,7 +766,7 @@ namespace WebApi_project.hostProc
 						var sec = secList.list[部門];
 						dispName = string.Concat(sec.統括, sec.部門);
 						Tab.Add(部門, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
-						Debug.noWrite("部門", 部門);
+						DebugHost.Debug.noWrite("部門", 部門);
 					}
 				}
 			}
@@ -761,7 +781,7 @@ namespace WebApi_project.hostProc
 						var sec = secList.list[部門];
 						dispName = (sec.統括 == o_json.統括 && sec.部門 == o_json.部 ? string.Concat(sec.統括, sec.部門) : "");
 						Tab.Add(部門, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
-						Debug.noWrite("部門", 部門);
+						DebugHost.Debug.noWrite("部門", 部門);
 					}
 				}
 			}
@@ -770,7 +790,7 @@ namespace WebApi_project.hostProc
 				group secList = secTab[o_json.統括].list[o_json.部];
 				var sec = secList;
 				string secName = o_json.部;
-				Debug.noWrite("課", secName);
+				DebugHost.Debug.noWrite("課", secName);
 				dispName = string.Concat(sec.統括, sec.部門);
 				Tab.Add(o_json.部, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.code));
 				foreach (string 課 in secList.list.Keys)
@@ -778,7 +798,7 @@ namespace WebApi_project.hostProc
 					sec = secList.list[課];
 					dispName = string.Concat(sec.統括, sec.部門);
 					Tab.Add(課, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
-					Debug.noWrite("課", 課);
+					DebugHost.Debug.noWrite("課", 課);
 				}
 			}
 			else if (o_json.secMode == "間接" && o_json.listMode == "詳細" && o_json.dispMode == "グループ")
@@ -786,7 +806,7 @@ namespace WebApi_project.hostProc
 				group secList = secTab[o_json.統括].list[o_json.部];
 				var sec = secList;
 				string secName = o_json.部;
-				Debug.noWrite("課", secName);
+				DebugHost.Debug.noWrite("課", secName);
 				dispName = (sec.統括 == o_json.統括 && sec.部門 == o_json.部 && sec.課 == o_json.課 ? string.Concat(sec.統括, sec.部門, sec.課) : "");
 				Tab.Add(o_json.部, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.code));
 				foreach (string 課 in secList.list.Keys)
@@ -794,7 +814,7 @@ namespace WebApi_project.hostProc
 					sec = secList.list[課];
 					dispName = (sec.統括 == o_json.統括 && sec.部門 == o_json.部 && sec.課 == o_json.課 ? string.Concat(sec.統括, sec.部門, sec.課) : "");
 					Tab.Add(課, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
-					Debug.noWrite("課", 課);
+					DebugHost.Debug.noWrite("課", 課);
 				}
 			}
 			foreach (var item in Tab)
@@ -806,6 +826,10 @@ namespace WebApi_project.hostProc
 				checkArray(Tab, secName, "予測データ", "売上予測", "確度30");
 				checkArray(Tab, secName, "予測データ", "売上予測", "確度10");
 			}
+			}catch(Exception ex)
+            {
+				DebugHost.Debug.Write(ex.Message);
+            }
 			return (Tab);
 		}
 		public Dictionary<string, object> costList(string 名前, string 直間, string 統括, string 部門, string 課, string 部署コード)
@@ -846,7 +870,7 @@ namespace WebApi_project.hostProc
 			}
 			if (Node == null)
 			{
-				Debug.Write(string.Concat("対象無し：[", secName, "][", funcName, "][", 大項目, "][", 項目, "]"));
+				DebugHost.Debug.Write(string.Concat("対象無し：[", secName, "][", funcName, "][", 大項目, "][", 項目, "]"));
 			}
 			else
 			{
@@ -869,22 +893,48 @@ namespace WebApi_project.hostProc
 
 		Dictionary<string, dynamic> checkArray(Dictionary<string, dynamic> Tab, string 部門, string 種別, string 大項目, string 項目)
 		{
-			//Debug.noWrite("確認");
+			//DebugHost.Debug.noWrite("確認");
 			if (大項目 == "")
 			{
-				Debug.Write("XX");
+				DebugHost.Debug.Write("XX");
+			}
+			if (!Tab.ContainsKey(部門))
+			{
+				Tab.Add(部門, new Dictionary<string, dynamic>());
+			}
+			if (!Tab[部門].ContainsKey(種別))
+			{
+				Tab[部門].Add(種別, new Dictionary<string, dynamic>());
+			}
+			if (!Tab[部門][種別].ContainsKey(大項目))
+			{
+				Tab[部門][種別].Add(大項目, new Dictionary<string, dynamic>());
+			}
+			if (!Tab[部門][種別][大項目].ContainsKey(項目))
+			{
+				Tab[部門][種別][大項目].Add(項目, new Dictionary<string, double[]>());
+				Tab[部門][種別][大項目][項目] = new double[12];
+			}
+			return (Tab);
+		}
+		Dictionary<string, dynamic> checkArrayX(Dictionary<string, dynamic> Tab, string 部門, string 種別, string 大項目, string 項目)
+		{
+			//DebugHost.Debug.noWrite("確認");
+			if (大項目 == "")
+			{
+				DebugHost.Debug.Write("XX");
 			}
 			try
 			{
 				if (Tab[部門][種別][大項目].ContainsKey(項目))
 				{
-					//Debug.noWrite("ある");
+					//DebugHost.Debug.noWrite("ある");
 					return (Tab);
 				}
 			}
 			catch (Exception ex)
 			{
-				Debug.noWrite(ex.Message);
+				DebugHost.Debug.noWrite(ex.Message);
 				if (!Tab.ContainsKey(部門))
 				{
 					Tab.Add(部門, new Dictionary<string, dynamic>());
@@ -902,7 +952,7 @@ namespace WebApi_project.hostProc
 					Tab[部門][種別][大項目].Add(項目, new Dictionary<string, double[]>());
 				}
 			}
-            Debug.noWrite("作成", 部門, 種別, 大項目, 項目);
+			DebugHost.Debug.noWrite("作成", 部門, 種別, 大項目, 項目);
             Tab[部門][種別][大項目][項目] = new double[12];
 			return (Tab);
 		}

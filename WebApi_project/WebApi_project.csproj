@@ -162,6 +162,7 @@
     <Compile Include="Controllers\JsonController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\XmlController.cs" />
+    <Compile Include="funcProc\部門収支\StopWatch.cs" />
     <Compile Include="funcProc\部門収支\部門収支_DB.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
