@@ -228,9 +228,9 @@ namespace WebApi_project.hostProc
 			if (String.IsNullOrEmpty(o_json.dispName)) o_json.dispName = "";
 			string[] work = o_json.dispName.Split('/');
 
-			string 統括 = work[0];
-			string 部 = (work.Length > 1 ? work[1] : "");
-			string 課 = (work.Length > 2 ? work[2] : "");
+			string 統括 = (work.Length > 0 ? work[0] : "");
+			string 部   = (work.Length > 1 ? work[1] : "");
+			string 課   = (work.Length > 2 ? work[2] : "");
 			string secMode = o_json.secMode;
 			int fixLevel = o_json.fix;
 			int year = o_json.year;
@@ -266,7 +266,7 @@ namespace WebApi_project.hostProc
 				funcList = funcList
 			};
 
-			switch (o_json.dispCmd)
+			switch (o_json.secMode+o_json.dispCmd)
 			{
 				case "EMG":
 					cmd.title = "EMG";
@@ -276,51 +276,82 @@ namespace WebApi_project.hostProc
 					cmd.secMode = "";
 					cmd.haifuMode = false;
 					break;
-				case "統括一覧":
+				case "開発統括一覧":
 					cmd.dispMode = "統括";
 					cmd.listMode = "一覧";
 					cmd.secMode = "開発";
 					cmd.haifuMode = true;
 					break;
-				case "部門一覧":
+				case "開発部門一覧":
 					;
 					cmd.dispMode = "部門";
-					cmd.統括 = 統括;
 					cmd.listMode = "一覧";
 					cmd.secMode = "開発";
-					cmd.haifuMode = (cmd.secMode == "間接" ? false : true);
-					break;
-				case "課一覧":
-					cmd.dispMode = "グループ";
+					cmd.haifuMode = true;
 					cmd.統括 = 統括;
-					cmd.部 = 部;
+					break;
+				case "開発課一覧":
+					cmd.dispMode = "グループ";
 					cmd.listMode = "一覧";
 					cmd.secMode = "開発";
 					cmd.haifuMode = true;        // 課に対しては計算しない
+					cmd.統括 = 統括;
+					cmd.部 = 部;
 					break;
-				case "統括詳細":
+				case "開発統括詳細":
 					cmd.dispMode = "統括";
 					cmd.統括 = 統括;
 					cmd.listMode = "詳細";
 					cmd.secMode = "開発";
 					cmd.haifuMode = true;
 					break;
-				case "部門詳細":
+				case "開発部門詳細":
 					cmd.dispMode = "部門";
-					cmd.統括 = 統括;
-					cmd.部 = 部;
 					cmd.listMode = "詳細";
 					cmd.secMode = "開発";
 					cmd.haifuMode = true;
+					cmd.統括 = 統括;
+					cmd.部 = 部;
 					break;
-				case "課詳細":
+				case "開発課詳細":
 					cmd.dispMode = "グループ";
+					cmd.listMode = "詳細";
+					cmd.secMode = "開発";
+					cmd.haifuMode = true;        // 課に対しては計算しない
 					cmd.統括 = 統括;
 					cmd.部 = 部;
 					cmd.課 = 課;
+					break;
+				case "間接部門一覧":
+					cmd.dispMode = "部門";
+					cmd.listMode = "一覧";
+					cmd.secMode = "間接";
+					cmd.haifuMode = false;
+					break;
+				case "間接課一覧":
+					cmd.dispMode = "グループ";
+					cmd.listMode = "一覧";
+					cmd.secMode = "間接";
+					cmd.haifuMode = false;
+					cmd.統括 = 統括;
+					cmd.部 = 部;
+					break;
+				case "間接部門詳細":
+					cmd.dispMode = "部門";
 					cmd.listMode = "詳細";
-					cmd.secMode = "開発";
-					cmd.haifuMode = true;        // 課に対しては計算しない
+					cmd.secMode = "間接";
+					cmd.haifuMode = false;
+					cmd.統括 = 統括;
+					cmd.部 = 部;
+					break;
+				case "間接課詳細":
+					cmd.dispMode = "グループ";
+					cmd.listMode = "詳細";
+					cmd.secMode = "間接";
+					cmd.haifuMode = false;
+					cmd.統括 = 統括;
+					cmd.部 = 部;
+					cmd.課 = 課;
 					break;
 				//	配賦
 				case "統括配賦":
@@ -337,12 +368,6 @@ namespace WebApi_project.hostProc
 					cmd.listMode = "配賦";
 					cmd.secMode = "開発";
 					cmd.haifuMode = true;
-					break;
-				case "間接一覧":
-					cmd.dispMode = "グループ";
-					cmd.listMode = "一覧";
-					cmd.secMode = "間接";
-					cmd.haifuMode = false;
 					break;
 				default:
 					break;
@@ -658,8 +683,8 @@ namespace WebApi_project.hostProc
 				{
 					group secList = secTab[secName];
 					var sec = secList;
-					dispName = (secList.統括 == o_json.統括 && secList.部門 == o_json.部 ? string.Concat(sec.統括, sec.部門) : "");
-					Tab.Add(secName, costList(名前: dispName, 直間: secList.直間, 統括: secList.統括, 部門: secList.部門, 課: secList.課, 部署コード: secList.code));
+					dispName = (sec.統括 == o_json.統括 && sec.部門 == o_json.部 ? string.Concat(sec.統括, sec.部門) : "");
+					Tab.Add(secName, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.code));
 					Debug.noWrite("部門", secName);
 					foreach (string 部門 in secList.list.Keys)
 					{
@@ -710,7 +735,7 @@ namespace WebApi_project.hostProc
 				Tab.Add("直接", costList(名前: "", 直間: "0,1", 統括: "", 部門: "", 課: "", 部署コード: ""));
 			}
 
-			else if (o_json.secMode == "間接" && o_json.listMode == "一覧" && o_json.dispMode == "グループ")
+			else if (o_json.secMode == "間接" && o_json.listMode == "一覧" && o_json.dispMode == "部門")
 			{
 				foreach (string secName in secTab.Keys)
 				{
@@ -723,6 +748,53 @@ namespace WebApi_project.hostProc
 						Tab.Add(部門, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
 						Debug.noWrite("部門", 部門);
 					}
+				}
+			}
+			else if (o_json.secMode == "間接" && o_json.listMode == "詳細" && o_json.dispMode == "部門")
+			{
+				foreach (string secName in secTab.Keys)
+				{
+					group secList = secTab[secName];
+
+					foreach (string 部門 in secList.list.Keys)
+					{
+						var sec = secList.list[部門];
+						dispName = (sec.統括 == o_json.統括 && sec.部門 == o_json.部 ? string.Concat(sec.統括, sec.部門) : "");
+						Tab.Add(部門, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
+						Debug.noWrite("部門", 部門);
+					}
+				}
+			}
+			else if (o_json.secMode == "間接" && o_json.listMode == "一覧" && o_json.dispMode == "グループ")
+			{
+				group secList = secTab[o_json.統括].list[o_json.部];
+				var sec = secList;
+				string secName = o_json.部;
+				Debug.noWrite("課", secName);
+				dispName = string.Concat(sec.統括, sec.部門);
+				Tab.Add(o_json.部, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.code));
+				foreach (string 課 in secList.list.Keys)
+				{
+					sec = secList.list[課];
+					dispName = string.Concat(sec.統括, sec.部門);
+					Tab.Add(課, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
+					Debug.noWrite("課", 課);
+				}
+			}
+			else if (o_json.secMode == "間接" && o_json.listMode == "詳細" && o_json.dispMode == "グループ")
+			{
+				group secList = secTab[o_json.統括].list[o_json.部];
+				var sec = secList;
+				string secName = o_json.部;
+				Debug.noWrite("課", secName);
+				dispName = (sec.統括 == o_json.統括 && sec.部門 == o_json.部 && sec.課 == o_json.課 ? string.Concat(sec.統括, sec.部門, sec.課) : "");
+				Tab.Add(o_json.部, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.code));
+				foreach (string 課 in secList.list.Keys)
+				{
+					sec = secList.list[課];
+					dispName = (sec.統括 == o_json.統括 && sec.部門 == o_json.部 && sec.課 == o_json.課 ? string.Concat(sec.統括, sec.部門, sec.課) : "");
+					Tab.Add(課, costList(名前: dispName, 直間: sec.直間, 統括: sec.統括, 部門: sec.部門, 課: sec.課, 部署コード: sec.codes));
+					Debug.noWrite("課", 課);
 				}
 			}
 			foreach (var item in Tab)

@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root name="EMG">
   <menu name="一覧" memo="" >
-	  <menu name="部門収支(統括一覧)" memo="" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?dispCmd=統括一覧&amp;secMode=開発"/>
-	  <menu name="部門収支(部門一覧)" memo="" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?dispCmd=部門一覧&amp;secMode=開発"/>
-	  <menu name="部門収支(課一覧)" memo="" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?dispCmd=課一覧&amp;secMode=開発&amp;dispName=開発本部/第2開発部"/>
-	  <menu name="部門収支(間接部門一覧)" memo="" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?dispCmd=間接一覧&amp;secMode=間接"/>
+	  <menu name="収支(開発・統括一覧)" memo="" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?secMode=開発&amp;dispCmd=統括一覧"/>
+	  <menu name="収支(開発・部門一覧)" memo="" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?secMode=開発&amp;dispCmd=部門一覧"/>
+	  <menu name="収支(開発・課一覧)" memo="" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?secMode=開発&amp;dispCmd=課一覧&amp;dispName=開発本部/第2開発部"/>
+	  <menu name="収支(間接・部門一覧)" memo="" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?secMode=間接&amp;dispCmd=部門一覧"/>
+	  <menu name="収支(間接・課一覧)" memo="" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?secMode=間接&amp;dispCmd=課一覧&amp;dispName=本社/EMG共通/コンプライアンス委員会"/>
 
   </menu>
   <menu name="詳細" memo="" >
-	  <menu name="部門収支(EMG)" memo="EMG" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?dispCmd=EMG"/>
-	  <menu name="部門収支(統括詳細)" memo="開発本部" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?dispCmd=統括詳細&amp;secMode=開発&amp;dispName=開発本部"/>
-	  <menu name="部門収支(部門詳細)" memo="=開発本部/第2開発部" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?dispCmd=部門詳細&amp;secMode=開発&amp;dispName=開発本部/第2開発部"/>
-	  <menu name="部門収支(課詳細)" memo="開発本部/第2開発部/第1開発課" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?dispCmd=課詳細&amp;secMode=開発&amp;dispName=開発本部/第2開発部/第1開発課"/>
+	  <menu name="収支(EMG)" memo="EMG" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?dispCmd=EMG"/>
+	  <menu name="収支(開発・統括詳細)" memo="開発本部" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?secMode=開発&amp;dispCmd=統括詳細&amp;dispName=開発本部"/>
+	  <menu name="収支(開発・部門詳細)" memo="=開発本部/第2開発部" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?secMode=開発&amp;dispCmd=部門詳細&amp;dispName=開発本部/第2開発部"/>
+	  <menu name="収支(開発・課詳細)" memo="開発本部/第2開発部" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?secMode=開発&amp;dispCmd=課詳細&amp;dispName=開発本部/第2開発部"/>
+	  <menu name="収支(開発・課詳細)" memo="開発本部/第2開発部/第1開発課" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?secMode=開発&amp;dispCmd=課詳細&amp;dispName=開発本部/第2開発部/第1開発課"/>
+	  <menu name="収支(間接・部門詳細)" memo="本社/管理本部/財務経理課" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?secMode=間接&amp;dispCmd=部門詳細&amp;dispName=本社/管理本部/財務経理課"/>
+	  <menu name="収支(間接・課詳細)" memo="本社/管理本部/財務経理課" mode="url" value="/WebApi/project/_Func/部門収支/部門収支.html?secMode=間接&amp;dispCmd=課詳細&amp;dispName=本社/管理本部/財務経理課"/>
   </menu>
   <menu name="TEST" memo="" >
 		<menu name="projectBBS" memo="" mode="url" value="/WebApi/project/_Func/projectBBS/test.html"/>
