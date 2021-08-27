@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/WebApi_project/home
+/WebApi_project/home/_hostInfo
+/WebApi_project/home/_menu
