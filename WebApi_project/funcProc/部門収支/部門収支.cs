@@ -85,9 +85,14 @@ namespace WebApi_project.hostProc
 					}
 				}
 			}
+			// 日付設定
             XmlNode dNode = xmlDoc.SelectSingleNode("//実績日付");
             dNode.InnerText = cmd.guide;
+			// タイトル設定
             if (!String.IsNullOrEmpty(cmd.title)) xmlDoc.SelectSingleNode("//グループ/名前").InnerText = cmd.title;
+			var NodeList = xmlDoc.SelectNodes("//グループ");
+			foreach (XmlElement elem in NodeList) elem.RemoveAttribute("target");
+
 			return (xmlDoc);
 		}
 		XmlDocument makeBaseXML(Dictionary<string, dynamic> Tab)
