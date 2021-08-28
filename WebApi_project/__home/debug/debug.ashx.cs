@@ -18,6 +18,7 @@ namespace WebApi_project._home.debug
             //context.Response.Write("Hello World");
 
             string LogData = context.Request.Form["LogData"];
+            if (LogData == null) return;
             LogData = Regex.Replace(LogData, "&lt;", "<");
             LogData = Regex.Replace(LogData, "&gt;", ">");
             string name= context.Request.Form["Name"];

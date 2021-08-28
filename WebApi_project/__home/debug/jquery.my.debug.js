@@ -1,8 +1,16 @@
 ﻿(function ($) {
+    $.UrlExists = function (url) {
+        var http = new XMLHttpRequest();
+        http.open('HEAD', url, false);
+        http.send();
+        return http.status != 404;
+    }
+    var debugUrl = "/WebApi/project/__home/debug/debug.ashx";     // + para.join("&");
     var fileName = getFileName();
     if (typeof (window.debugTab) === "undefined") window.debugTab = {};
     if (typeof (window.debugTab[fileName]) === "undefined") window.debugTab[fileName] = 0;
     //if (typeof (window.debug_mode) === "undefined") window.debug_mode = true;
+    var debug_mode = ($.UrlExists(debugUrl) ? true : false);
     var methods = {
 
         init: function (options) {
@@ -34,7 +42,7 @@
         },
         debug: function () {
             try {
-                //if ($.window.top.debug_mode != true) return;
+                if (debug_mode != true) return;
                 var o = this;
                 var fCnt = [window.debugTab[fileName]++];
                 fCnt = ("000".concat(fCnt)).substr(-3);
@@ -60,7 +68,7 @@
         },
         log: function () {
             try {
-                //if ($.window.top.debug_mode != true) return;
+                if (debug_mode != true) return;
                 var loginMail = $.session("loginMail");
                 var o = this;
                 var fCnt = [window.debugTab[fileName]++];
@@ -88,7 +96,7 @@
         },
         note: function () {
             try {
-                //if ($.window.top.debug_mode != true) return;
+                if (debug_mode != true) return;
                 var o = this;
                 var fCnt = [window.debugTab[fileName]++];
                 fCnt = ("000".concat(fCnt)).substr(-3);
@@ -117,7 +125,7 @@
 
     function send_PostMessage(sendObj) {
         try {
-            var url = "/WebApi/project/_home/debug/debug.ashx";     // + para.join("&");
+            if (debug_mode != true) return;
             sendObj.LogData = sendObj.LogData.replace(/</g, '&lt;').replace(/>/g, '&gt;');
                 //.replace(/"/g, '&quot;')
                 //.replace(/'/g, '&#39;');
@@ -125,7 +133,7 @@
 
             var stat = "";
             $.ajax({
-                url: url,
+                url: debugUrl,
                 async: false,
                 data: sendObj,
                 type: 'POST',                  //GET,POSTを指定してHTTPの通信タイプを決定
