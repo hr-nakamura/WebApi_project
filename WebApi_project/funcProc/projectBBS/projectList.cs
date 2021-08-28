@@ -120,7 +120,10 @@ namespace WebApi_project.hostProc
      // <item name="yymm"> 202107 </item>
      // <item name="beforBBS">2021/06/30 00:00:00</item>
      // <item name="visitBBS">2021/07/07 10:12:12</item>
-
+            if( Json == "{}")
+            {
+                Json = @"{beforBBS:'2021/06/30 00:00:00',visitBBS:'2021/07/07 10:12:12',limitYear:2019}";
+            }
             Debug.WriteLog("projectList");
             var o_json = JsonConvert.DeserializeObject<projectPara>(Json);
             var visitBBS = o_json.visitBBS;
@@ -202,7 +205,7 @@ namespace WebApi_project.hostProc
 
             var o_json = JsonConvert.DeserializeObject<projectPara>(Json);
             var visitBBS = o_json.visitBBS;
-            var limitYear = ( o_json.limitYear == "undefined" ? "2019" : o_json.limitYear);
+            var limitYear = ( o_json.limitYear == null ? "2019" : o_json.limitYear);
             var i_limitYear = int.Parse(limitYear);
             string limitNum = (i_limitYear * 10000).ToString();
 

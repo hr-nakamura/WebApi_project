@@ -1,0 +1,105 @@
+TH {
+	PADDING-RIGHT: 4px;
+	PADDING-LEFT: 4px;
+	PADDING-BOTTOM: 4px;
+	PADDING-TOP: 4px;
+	}
+TD {
+	FONT-FAMILY:"Arial";
+	PADDING-RIGHT: 2px;
+	PADDING-LEFT: 8px;
+	PADDING-BOTTOM: 2px;
+	PADDING-TOP: 2px;
+	WHITE-SPACE: nowrap;
+	}
+.table {
+	border-collapse:collapse;
+	FONT-SIZE: smaller;
+	BACKGROUND-COLOR: snow;
+	border:1px solid gray;
+	}
+.table TH {
+	PADDING-RIGHT: 4px;
+	PADDING-LEFT: 4px;
+	PADDING-BOTTOM: 4px;
+	PADDING-TOP: 4px;
+	border:1px solid gray;
+	}
+.table TD {
+	FONT-FAMILY:"Arial";
+	PADDING-RIGHT: 3px;
+	PADDING-LEFT: 8px;
+	PADDING-BOTTOM: 3px;
+	PADDING-TOP: 3px;
+	WHITE-SPACE: nowrap;
+	border:1px solid gray;
+	}
+.groupType{
+	WHITE-SPACE: nowrap;
+	BACKGROUND-COLOR: linen;
+	TEXT-ALIGN: center;
+	}
+.groupTypeData {
+	WHITE-SPACE: nowrap;
+	BACKGROUND-COLOR: linen;
+	TEXT-ALIGN: right;
+	}
+.userType {
+	WHITE-SPACE: nowrap;
+	BACKGROUND-COLOR: mintcream;
+	TEXT-ALIGN: center;
+	}
+.xTotal {
+	WHITE-SPACE: nowrap;
+	BACKGROUND-COLOR: blanchedalmond;
+	}
+.secTotal {
+	WHITE-SPACE: nowrap;
+	BACKGROUND-COLOR: aliceblue;
+	TEXT-ALIGN: right;
+	}
+.allTotal {
+	WHITE-SPACE: nowrap;
+	BACKGROUND-COLOR: linen;
+	TEXT-ALIGN: right;
+	}
+
+.target {
+	COLOR: darkgreen;
+	WHITE-SPACE: nowrap;
+	BACKGROUND-COLOR: snow;
+	TEXT-ALIGN: right;
+	}
+.actual {
+	COLOR: black;
+	WHITE-SPACE: nowrap;
+	BACKGROUND-COLOR: snow;
+	TEXT-ALIGN: right;
+	}
+.yosoku {
+	COLOR: blue;
+	WHITE-SPACE: nowrap;
+	BACKGROUND-COLOR: gainsboro;
+	TEXT-ALIGN: right;
+	}
+
+.quarter {
+	WHITE-SPACE: nowrap;
+	BACKGROUND-COLOR: navajowhite;
+	TEXT-ALIGN: right;
+	}
+.lastTarget {
+	WHITE-SPACE: nowrap;
+	BACKGROUND-COLOR: springgreen;
+	TEXT-ALIGN: right;
+	}
+.mounth {
+	WHITE-SPACE: nowrap;
+	BACKGROUND-COLOR: lavender;
+	TEXT-ALIGN: center;
+	}
+.m{
+	WHITE-SPACE: nowrap;
+	BACKGROUND-COLOR: lavender;
+	TEXT-ALIGN: center;
+	}

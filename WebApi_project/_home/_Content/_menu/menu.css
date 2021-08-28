@@ -1,0 +1,52 @@
+﻿div.row {
+    display: none;
+    background: inherit;
+    vertical-align: top;
+    border: 0px solid blue;
+    padding: 10px;
+    *background-color: snow;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.col {
+    display: none;
+    background: inherit;
+    padding: 10px;
+    border: 0px solid blue;
+}
+
+div.content div {
+    padding: 4px;
+    border: 0px solid red;
+    background: inherit;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
+div.col > fieldset {
+    display: block;
+    padding: 4px;
+    *background-color: gainsboro;
+    border-radius: 8px;
+    border: 2px solid gainsboro;
+    color: black;
+    text-decoration: none;
+}
+
+div.col > fieldset > legend {
+    font-size: 1em;
+    margin: auto;
+    padding: 4px 8px;
+    display: block;
+    background-image: linear-gradient(to right, darkgrey,gainsboro,white);
+    *background-color: gainsboro;
+    border-radius: 8px;
+    border: 1px solid gainsboro;
+    color: black;
+    text-decoration: none;
+    box-shadow: 5px 5px 5px gainsboro;
+    text-shadow: 1px 1px 3px #000;
+}

@@ -4,11 +4,11 @@
     <meta charset="utf-8" />
     <title></title>
     <script src="/WebApi/project/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
-    <script src="/WebApi/project/_home/Scripts/jquery.Cookie.js" type="text/javascript"></script>
-    <script src="/WebApi/project/_home/Scripts/json2.js" type="text/javascript"></script>
-    <script src="/WebApi/project/_home/Scripts/jquery.my.webapi.js" type="text/javascript"></script>
-    <script src="/WebApi/project/_home/Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
-    <script src="/WebApi/project/_home/debug/jquery.my.debug.js" type="text/javascript"></script>
+    <script src="/WebApi/project/__home/Scripts/jquery.Cookie.js" type="text/javascript"></script>
+    <script src="/WebApi/project/__home/Scripts/json2.js" type="text/javascript"></script>
+    <script src="/WebApi/project/__home/Scripts/jquery.my.webapi.js" type="text/javascript"></script>
+    <script src="/WebApi/project/__home/Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
+    <script src="/WebApi/project/__home/debug/jquery.my.debug.js" type="text/javascript"></script>
 
     <script type="text/javascript">
         //var WebApi_url = "http://kansa.in.eandm.co.jp/WebApi/project/api/xml";
@@ -25,7 +25,7 @@
             }
             para.visitBBS = $.cookie("visitBBS");
 
-            var xmlDoc = $.call_ajax_get("GET", WebApi_url, "projectBBS/projectList", para);
+            var xmlDoc = $.WebApi("GET", WebApi_url, "projectBBS/projectList", para);
             var xslDoc = $.loadXMLDoc("projectList.xsl");
             //var xmlDoc = $.str2xml(xmlStr);
             var work = $(xmlDoc).transformNode(xslDoc);

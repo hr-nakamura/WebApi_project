@@ -1,0 +1,1099 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+<div title="IE 11" align="right" id="IE_Mode">.</div>
+<table align="left" border="0">
+<tbody>
+	<tr>
+	<td><font size="3"><strong>ＥＭＧ プロジェクト情報</strong></font></td>
+	</tr>
+	<tr>
+	<td>
+	<br/>
+	中村　博
+	</td>
+	</tr>
+	<tr>
+	<td>
+		<table id="menuTable" border="0" cellspacing="10" cellpadding="0">
+<!--	<CAPTION><font color="red"><H2><B>２０１２年度の数値は現在作業中です</B></H2></font></CAPTION>	-->
+			<tbody><tr>
+			<td id="menuCell" nowrap="" valign="top">
+			<fieldset id="menuField" style="display: block;">
+			<legend>収支状況</legend>
+				
+
+<table width="100%" id="Table1" border="0" cellpadding="10">
+	<tbody>
+	<tr><td nowrap="">
+		<table width="100%" id="Table2" border="0" cellspacing="4">
+		<tbody>
+		<tr><td nowrap="">
+		<a style="color: royalblue; font-size: smaller;" url="/Project/部門収支/EMG収支計画.asp">ＥＭＧ収支計画</a>
+		</td></tr>
+		<tr><td nowrap=""><br/></td></tr>
+
+		<tr><td nowrap="">
+<!--		<img src="new.gif"/>	-->
+		<a style="color: royalblue; font-size: smaller;" url="/Project/部門収支/統括収支計画.asp">統括収支計画</a>
+
+		</td></tr>
+		<tr><td nowrap=""><br/></td></tr>
+		<tr><td nowrap="">
+<!--		<img src="new.gif"/>	-->
+		<a style="color: royalblue; font-size: smaller;" url="/Project/部門収支/部門収支計画.asp">部門収支計画</a>
+		<tr><td nowrap="">
+		<a style="color: royalblue; font-size: smaller;" url="/Project/計画入力/GRP予測入力.asp"><small>(予測データ設定)</small></a><br/>
+		<a style="color: royalblue; font-size: smaller;" url="/Project/計画入力/付替処理/index_開発.asp"><small>(付替予測設定)</small></a>
+		</td></tr>
+
+		 
+			<tr><td nowrap="">
+			<fieldset>
+				<small>＝＝　開発部門（課）　＝＝</small><br/>
+				<a style="color: royalblue; font-size: smaller;" url="/Project/部門収支/グループ収支計画.asp">課 別収支</a><br/>
+			</fieldset>
+			</td></tr>
+			
+			<tr><td nowrap="">
+			<fieldset>
+				<small>＝＝　間接部門　＝＝</small><br/>
+				<a style="color: royalblue; font-size: smaller;" url="/Project/部門収支/部門収支計画.asp?dispCmd=部門一覧&amp;secMode=間接">部門収支計画</a><br/>
+<!--				<A url="/Project/部門収支/間接収支計画.asp">グループ別収支</A><br/>	-->
+				<a style="color: royalblue; font-size: smaller;" url="/Project/計画入力/間接予測入力.asp"><small>(予測データ設定)</small></a><br/>
+				<a style="color: royalblue; font-size: smaller;" url="/Project/計画入力/付替処理/index_間接.asp"><small>(付替予測設定)</small></a><br/><br/>
+				<a style="color: royalblue; font-size: smaller;" url="/Project/部門収支/グループ収支計画.asp?secMode=間接">課 別収支</a><br/>
+			</fieldset>
+			</td></tr>
+			
+			<tr><td nowrap="">
+			<fieldset>
+				<small>＝＝　部門集計用　DB　＝＝</small><br/>
+				<a style="color: royalblue; font-size: smaller;" url="/Project/common_data/統括本部編集/main.asp">統括本部マスタ編集</a><br/>
+			</fieldset>
+			</td></tr>
+			
+		 </tbody>
+		 </table>
+
+	</td></tr>
+	</tbody>
+  </table>
+
+			</fieldset>
+
+			<fieldset id="menuField" style="display: block;">
+			<legend>予測・実績</legend>
+				
+
+<table width="100%">
+	<tbody><tr>
+	<td nowrap="">
+	<a style="color: royalblue; font-size: smaller;" url="/Project/売上予測/売上目標_部門.asp">売上目標</a><!--	 <img src="new7.gif"/>	-->
+	</td>
+	</tr>
+	<tr>
+	<td nowrap="">	
+<!--
+	<A url="/Project/売上予測/売上予実.asp">売上実績+予測</A>
+	<br/>
+-->
+	<a style="color: royalblue; font-size: smaller;" url="/Project/売上予測/売上予実_部門.asp">売上実績+予測</a>
+	<!--	<img src="new.gif"/><br/>
+	<small>(グループ予実を70%以上にしました)</small>
+		-->	
+	</td>
+	</tr>
+	<tr>
+	<td nowrap="">	
+	<a style="color: royalblue; font-size: smaller;" url="/Project/売上予測/売上予実_分類.asp">売上実績+予測（分類別）</a>
+	</td>
+	</tr>
+	<tr>
+	<td nowrap="">	
+	<a style="color: royalblue; font-size: smaller;" url="/Project/売上予測/売上予実_新規.asp">売上実績+予測（新規別）</a>
+	</td>
+	</tr>
+	<tr>
+	<td nowrap="">	
+	<a style="color: royalblue; font-size: smaller;" url="/Project/売上予測/売上予実_新規2.asp">売上実績+予測（新規別2）</a>
+	</td>
+	</tr>
+  </tbody></table>
+
+
+<table width="100%">
+	<tbody><tr>
+	<td nowrap="">
+	<a style="color: royalblue; font-size: smaller;" url="/Project/費用予測/EMG費用状況.asp">費用状況</a>
+	</td>
+	</tr>
+  </tbody></table>
+
+
+<table width="100%">
+	<tbody><tr>
+	<td nowrap="">
+<!--
+	<img src="new.gif"/>
+-->
+	<a style="color: royalblue; font-size: smaller;" url="/Project/営業情報/保有リソース/本部要員数.asp">保有リソース</a>
+	</td>
+	</tr>
+    <tr><td align="center" nowrap="">
+    <br/>
+    <a style="color: royalblue; font-size: smaller;" url="/Project/営業情報/保有リソース/協力会社費用/main1.asp">協力会社費用</a><br/>
+    <a style="color: royalblue; font-size: smaller;" url="/Project/営業情報/保有リソース/協力会社費用/main2.asp">協力会社費用・累計</a><br/><br/>
+    </td></tr>
+  </tbody></table>
+
+			</fieldset>
+			<fieldset id="menuField" style="display: block;">
+			<legend>グラフ</legend>
+				
+
+
+<link href="/Project/menu/menu_A.css" rel="stylesheet" type="text/css"/>
+<table width="100%">
+<tbody><tr>
+</tr>
+    <tr>
+    <td nowrap="">
+    <a style="color: royalblue; font-size: smaller;" url="/Project/業務情報/戦略別売上/客先別売上.asp">客先別売上(実績)</a><br/>
+    <a style="color: royalblue; font-size: smaller;" url="/Project/業務情報/戦略別売上/分類名別売上.asp">分類名別売上(実績)</a><br/>
+    <a style="color: royalblue; font-size: smaller;" url="/Project/業務情報/戦略別売上/新規名別売上.asp">新規名別売上(実績)</a><br/>
+    </td>
+    </tr>
+    <tr>
+    <td nowrap="">
+    <a style="color: royalblue; font-size: smaller;" url="/Project/業務情報/戦略別売上/客先別売上_予測.asp">客先別売上(予測含む)</a>
+    </td>
+    </tr>
+    <tr>
+    <td nowrap="">
+    <a style="color: royalblue; font-size: smaller;" url="/Project/業務情報/戦略別売上/年度別売上.asp">年度別売上</a>
+    </td>
+    </tr>
+  </tbody></table>
+
+
+			</fieldset>
+			<fieldset id="menuField" style="display: block;">
+			<legend>グループ会社</legend>
+				
+<table width="100%" border="0" cellspacing="1">
+	<tbody>
+	<tr><td nowrap="">
+		<table width="100%" cellspacing="2">
+		<tbody>
+			<tr>
+			<td nowrap="">
+			<a style="color: royalblue; font-size: smaller;" url="/Project/関連会社/収支状況/収支状況.asp">収支状況</a>
+			</td>
+			</tr>
+			<tr>
+			<td nowrap="">
+			<a style="color: royalblue; font-size: smaller;" url="/Project/関連会社/計画入力/GRP予測入力.asp"><small>(予測データ入力)</small></a><br/>
+			</td>
+			</tr>
+		</tbody>
+		</table>
+	</td></tr>
+	</tbody>
+  </table>
+
+			</fieldset>
+			</td>
+			<td id="menuCell" nowrap="" valign="top">
+			<fieldset id="menuField" style="display: block;">
+			<legend>データ入力</legend>
+				
+
+<table width="100%"> 
+<tbody><tr>
+<td nowrap="">
+<a style="color: royalblue; font-size: smaller;" url="/Project/projectBBS/bbs.asp">プロジェクト引合</a>
+</td>
+</tr>
+</tbody></table>
+
+
+<table width="100%">
+	<tbody><tr>
+	<td nowrap="">
+	<a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/projectAssumption/main.asp">プロジェクト　初期情報</a>
+	</td>
+	</tr>
+	<tr>
+	<td nowrap="">
+	<a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/projectCostList_差分.asp">プロジェクト工数比較<br/><small>【予実 －　予測（計画）】</small></a>
+	<br/>
+	</td>
+	</tr>
+ </tbody></table>
+
+
+	<table width="100%">
+		<tbody><tr>
+		<td nowrap="">
+		<br/>
+		<hr width="50%">
+		<a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/projectCostList.asp">プロジェクト原価率・情報入力</a>
+		<br/>
+		<a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/projectCostList_未入力.asp">プロジェクト原価率・未入力</a>
+		<br/>
+	    <a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/projectCostList_Adm_掲示板.asp">プロジェクト 掲示板一覧</a>
+		<br/>
+		<br/>
+<!--	<img src="new.gif"/>	-->
+		<a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/MenuMember.asp">プロジェクト結合集計</a>
+		<br/>
+		<br/>
+		<hr width="50%"/>
+		</td>
+		</tr>
+	  </tbody></table>
+
+	<table width="100%">
+		<tbody><tr>
+		<td nowrap="">
+		<br/>
+<!--	<img src="new.gif"/>	-->
+		<a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/MenuManager.asp">プロジェクト管理用</a>
+		<br/>
+		<br/>
+		<hr width="50%"/>
+		<br/>
+		</td>
+		</tr>
+	  </tbody></table>
+
+	<table width="100%">
+		<tbody><tr>
+		<td nowrap="">
+		<a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/MenuAdm.asp">プロジェクト監査用</a>
+		<br/>
+		<br/>
+		<hr width="100%"/>
+		</td>
+		</tr>
+	  </tbody></table>
+
+<!--				<hr width="50%">	-->
+				
+<table width="100%" id="Table1" border="0" cellpadding="10">
+	<tbody>
+		<tr><td nowrap="">
+		<a style="color: royalblue; font-size: smaller;" url="/Project/付替処理/売上付替/売上付替.asp">売上付替</a><br/>
+		<a style="color: royalblue; font-size: smaller;" url="/Project/付替処理/協力費用付替/main.asp?mode=2">協力会社費用付替(開発)</a><br/>
+		<a style="color: royalblue; font-size: smaller;" url="/Project/付替処理/協力費用付替/main.asp?mode=1">協力会社費用付替(部門)</a><br/>
+		<a style="color: royalblue; font-size: smaller;" url="/Project/付替処理/協力費用付替/main.asp?mode=0">協力会社費用付替(間接)</a><br/><br/>
+		<a style="color: royalblue; font-size: smaller;" url="/Project/付替処理/費用付替/費用付替.asp">費用付替</a><br/><br/>
+		</td></tr>
+	</tbody>
+</table>
+
+<table width="100%" id="Table1" border="0" cellpadding="10">
+	<tbody>
+		<tr><td nowrap="">
+		<a style="color: royalblue; font-size: smaller;" url="/Project/部門固定費/部門固定費.asp">部門固定費</a><br/>
+		</td></tr>
+	</tbody>
+</table>
+
+<table width="100%">
+	<tbody><tr>
+	<td nowrap="">
+	<a style="color: royalblue; font-size: smaller;" url="/Project/業務計画/index.asp">売上予測入力</a>
+	</td>
+	</tr>
+  </tbody></table>
+
+			</fieldset>
+
+			<fieldset id="menuField" style="display: block;">
+			<legend>プロジェクト情報</legend>
+				
+<table width="100%">
+	<tbody><tr>
+	<td nowrap="">
+	<a style="color: royalblue; font-size: smaller;" url="/Project/プロジェクト一覧/main.asp">プロジェクト一覧</a><br/>
+	<a style="color: royalblue; font-size: smaller;" url="/Project/プロジェクト一覧/main_Ext.asp">プロジェクト作業一覧</a><br/>
+	</td>
+	</tr>
+  </tbody></table>
+
+
+<table width="100%">
+	<tbody><tr>
+	<td nowrap="">
+	<a style="color: royalblue; font-size: smaller;" url="/Project/プロジェクト一覧/main_Cost.asp">プロジェクト原価一覧</a><br/>
+	</td>
+	</tr>
+  </tbody></table>
+
+
+<table width="100%" id="Table1" border="0" cellpadding="10">
+	<tbody>
+	<tr><td nowrap="">
+		<a style="color: royalblue; font-size: smaller;" url="/Project/業務状況/main.asp">プロジェクト状況</a><!--	<img src="new.gif">	-->
+	</td></tr>
+	</tbody>
+  </table>
+			
+			</fieldset>
+			<fieldset id="menuField" style="display: block;">
+			<legend>ドキュメント</legend>
+				
+
+<table width="100%">
+	<tbody><tr>
+	<td nowrap="">
+	<a style="color: royalblue; font-size: smaller;" url="/Project/projectDocument/projectDoc_Main.asp">プロジェクト・ドキュメント</a>
+	</td>
+	</tr>
+  </tbody></table>
+
+<hr width="50%"/>
+<table width="100%">
+	<tbody><tr>
+	<td nowrap="">
+	<a style="color: royalblue; font-size: smaller;" url="/Project/projectDocument/projectDoc_管理.asp">プロジェクト・ドキュメント（管理）</a>
+	</td>
+	</tr>
+	<tr>
+	<td nowrap="">
+	<a style="color: royalblue; font-size: smaller;" url="/Project/projectDocument/Kind_master/Kind_master.asp">項目名編集</a>
+	</td>
+	</tr>
+  </tbody></table>
+
+<hr width="50%"/>
+<table width="100%">
+	<tbody><tr>
+	<td nowrap="">
+	<a style="color: royalblue; font-size: smaller;" url="/Project/projectDocument/projectDoc_審査.asp">プロジェクト・ドキュメント（審査）</a>
+	</td>
+	</tr>
+  </tbody></table>
+
+
+
+			</fieldset>
+			<fieldset id="menuField" style="display: block;">
+			<legend></legend>
+				
+
+<table width="100%">
+	<tbody><tr>
+	<td nowrap="">
+	<br/>
+	<fieldset id="menuField" style="border-color: snow; padding: 6px; display: block;">
+	<legend>プロジェクト審査　設定用(須江・井上・中村のみ)</legend>
+	    <a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/projectJoin/Join_List_審査.asp">プロジェクト結合リスト（原価）</a>
+	    <br/>
+	    <a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/projectJoin/Join_main_審査.asp">プロジェクト結合・編集</a>
+	    <br/>
+	</fieldset>
+	</td>
+	</tr>
+	<tr>
+	<td nowrap="">
+	<br/>
+	</td>
+	</tr>
+	<tr>
+	<td nowrap="">
+	<fieldset id="menuField" style="border-color: snow; padding: 6px; display: block;">
+	<legend>井上さん個人用(審査マークテスト用)</legend>
+	    <a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/projectJoin/Join_List_審査.asp?mID=586782">プロジェクト結合リスト（原価）</a>
+	    <br/>
+	    <a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/projectJoin/Join_main_審査.asp?mID=586782">プロジェクト結合・編集</a>
+	    <br/>
+	    <a style="color: royalblue; font-size: smaller;" url="/Project/projectDocument/projectDoc_審査.asp?mID=586782">プロジェクト・ドキュメント　審査リスト</a>
+	    <br/>
+	</fieldset>
+	</td>
+	</tr>
+  </tbody></table>
+
+
+<table width="100%">
+	<tbody><tr>
+	<td nowrap="">
+	<fieldset id="menuField" style="border-color: snow; padding: 6px; display: block;">
+	<legend>原価管理</legend>
+
+		<hr/>
+	    <a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/業務情報/main_協力費用.asp">業務費・協力費</a>
+	    <br/>
+	    <a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/業務情報/main_労務費.asp">人件費・付帯費・労務費</a>
+	    <br/>
+		<hr/>
+	    <a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/業務情報/main_部門別年度収支.asp">部門別・年間収支</a>
+	    <br/>
+<!--
+	    <A url="/Project/projectCostProc/a_15/部門業務費.asp">業務費一覧</A>
+	    <A url="/Project/projectCostProc/a_15/部門業務費.asp?mode=詳細">業務費一覧(詳細)</A>
+	    <br/>
+	    <A url="/Project/projectCostProc/a_15/部門協力費.asp">協力費一覧</A>
+	    <A url="/Project/projectCostProc/a_15/部門協力費.asp?mode=詳細">協力費一覧(詳細)</A>
+	    <br/>
+	    <A url="/Project/projectCostProc/a_15/部門労務費.asp?func=労務費">労務費一覧</A>
+	    <A url="/Project/projectCostProc/a_15/部門労務費.asp?func=労務費&mode=詳細">労務費一覧(詳細)</A>
+	    <br/>
+	    <A url="/Project/projectCostProc/a_15/部門労務費.asp?func=付帯費">付帯費一覧</A>
+	    <A url="/Project/projectCostProc/a_15/部門労務費.asp?func=付帯費&mode=詳細">付帯費一覧(詳細)</A>
+	    <br/>
+	    <A url="/Project/projectCostProc/a_15/部門労務費.asp?func=人件費">人件費一覧</A>
+	    <A url="/Project/projectCostProc/a_15/部門労務費.asp?func=人件費&mode=詳細">人件費一覧(詳細)</A>
+	    <br/>
+	    <br/>
+-->
+	    <a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/年度別原価/overhead_projectCostList.asp">年間原価情報(2015)</a>
+	    <br/>
+
+		<hr/>
+	    <a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/a_12/main_人件費グレード.asp">グレード別単価設定</a>
+	    <br/>
+	    <a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/a_12/main_人件費.asp">人件費一覧</a>
+	    <br/>
+	    <a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/a_12/main_付帯費.asp">付帯費一覧</a>
+	    <br/>
+
+	</fieldset>
+	</td>
+	</tr>
+  </tbody></table>
+
+			</fieldset>
+			<fieldset id="menuField" style="display: none;">
+			<legend>メニュー</legend>
+			</fieldset>
+			<fieldset id="menuField" style="display: none;">
+			<legend>メニュー</legend>
+			</fieldset>
+			<fieldset id="menuField" style="display: none;">
+			<legend>メニュー</legend>
+			</fieldset>
+		</td>
+		<td id="menuCell" nowrap="" valign="top">
+			<fieldset id="menuField" style="display: block;">
+			<legend>作業情報</legend>
+				
+<table width="100%">
+<!--<img src="new.gif">	-->
+<tbody>
+	<tr>
+		<td nowrap="">
+			<a style="color: royalblue; font-size: smaller;" url="/Project/残業一覧/業務承認情報/main.asp">承認対象者の残業状況</a>
+			<br/>
+			<a style="color: royalblue; font-size: smaller;" url="/Project/残業一覧/業務承認情報/workTime_Approve.asp">承認対象者の作業状況</a>
+			<br/>
+			<a style="color: royalblue; font-size: smaller;" url="/Project/残業一覧/業務PM別_ORG/PMInfo.asp">担当プロジェクト(個別)</a>
+			<br/>
+			<a style="color: royalblue; font-size: smaller;" url="/Project/残業一覧/業務PM別/PMListAll.asp">担当プロジェクト(全期間)</a>
+			<br/>
+			<br/>
+			<a style="color: royalblue; font-size: smaller;" url="/Project/残業一覧/残業状況/zanMain.asp">残業 一覧</a>
+			<br/>
+			<!--	<img src="new7.gif">	-->
+			<a style="color: royalblue; font-size: smaller;" url="/Project/残業一覧/残業予測/main.asp">今月の残業の予測</a>
+			<br/>
+			<br/>
+		</td>
+	</tr>
+	<tr><td nowrap="">
+		<fieldset>
+		<a style="color: royalblue; font-size: smaller;" url="/Project/残業一覧/業務PM別_ORG/PMInfoAll.asp">プロジェクトの残業一覧</a><br/>
+<!--		<A url="/Project/残業一覧/業務PM別_ORG/PMInfoAll_Join.asp">プロジェクトの残業一覧(結合)</A><br/>	-->
+		</fieldset>
+	</td></tr>
+
+	<tr><td nowrap="">
+		<fieldset>
+		<a style="color: royalblue; font-size: smaller;" url="/Project/common_data/workTime/workTime_Area.asp?area=宮崎">作業状況 (地域別)</a><br/>
+<!--		<A url="/Project/残業一覧/勤怠分析/enter.asp">打刻状況</A><br/>	-->
+		<a style="color: royalblue; font-size: smaller;" url="/Project/残業一覧/勤怠分析/leave.asp">打刻状況</a><br/>
+		</fieldset>
+	</td></tr>
+
+
+
+	
+	
+</tbody>
+</table>
+
+
+<!--	<img src="new7.gif">-->
+
+<table width="100%" id="Table1" border="0" cellpadding="10">
+	<tbody>
+	<tr>
+	<td>
+	<hr/>
+	</td>
+	</tr>
+	<tr><td nowrap="">
+		<table width="100%" id="Table2" border="0" cellspacing="6">
+		<tbody>
+		<tr><td nowrap="">
+			<div align="left"><a style="color: royalblue; font-size: smaller;" url="/Project/業務情報/予定実績一覧/projectList.asp">作業の予定実績(プロジェクト)</a><br/></div>
+			<div align="left"><a style="color: royalblue; font-size: smaller;" url="/Project/業務情報/予定実績一覧/projectListPM.asp">作業の予定実績(担当ＰＭ)</a><br/></div>
+		</td></tr>
+		<tr><td nowrap="">
+<!--
+			<DIV align=left><A url="/Project/業務情報/作業予定一覧/projectPlanList.asp">作業の予定(プロジェクト)</A><br/></DIV>
+-->
+			<div align="left"><a style="color: royalblue; font-size: smaller;" url="/Project/業務情報/作業予定一覧/memberPlanList.asp">作業の予定(メンバー)</a><br/></div>
+<!--
+			<DIV align=left><A url="/Project/業務情報/作業予定一覧/projectPMPlanList.asp">作業の予定(担当ＰＭ)</A><br/></DIV>
+			<DIV align=left><A url="/Project/業務情報/作業予定一覧/工数情報/planData.asp">作業の予定(空状況)</A><br/></DIV>
+-->
+		</td></tr>
+		</tbody>
+		</table>
+	</td></tr>
+	<tr><td nowrap="">
+		<table width="100%" id="Table2" border="0" cellspacing="4">
+		<tbody>
+		<tr><td nowrap="">
+		<a style="color: royalblue; font-size: smaller;" url="/Project/業務情報/稼動状況/mainProject.asp">プロジェクト情報</a><br/>
+		<a style="color: royalblue; font-size: smaller;" url="/Project/業務情報/稼動状況/mainMember.asp">メンバー情報</a>
+		</td></tr>
+		 </tbody>
+		 </table>
+	</td></tr>
+	</tbody>
+  </table>
+
+
+<table width="100%" id="Table1">
+	<tbody><tr>
+	<td nowrap="">
+	<hr/>
+	</td>
+	</tr>
+	<tr>
+	<td nowrap="">
+	<a style="color: royalblue; font-size: smaller;" url="/Project/承認関連図/main.asp">勤務承認ルート</a>
+	</td>
+	</tr>
+  </tbody></table>
+
+
+<table width="100%" id="Table1">
+	<tbody><tr>
+	<td nowrap="">
+	<a style="color: royalblue; font-size: smaller;" url="/Project/会社組織図/main.asp">会社組織図</a>
+	</td>
+	</tr>
+  </tbody></table>
+
+			</fieldset>
+			<fieldset id="menuField" style="display: block;">
+			<legend>要員情報</legend>
+				
+
+<table width="100%">
+	<tbody><tr>
+	<td nowrap="">
+	<a style="color: royalblue; font-size: smaller;" url="/Project/要員情報/AGE/main.asp">社員分布図</a>
+	</td>
+	</tr>
+	<tr>
+	<td nowrap="">
+	<a style="color: royalblue; font-size: smaller;" url="/Project/common_data/workTime/workTime_Area.asp?area=宮崎">作業状況 (地域別)</a><br/>
+	</td>
+	</tr>
+  </tbody></table>
+
+			</fieldset>
+			<fieldset id="menuField" style="display: block;">
+			<legend>社員情報</legend>
+				
+
+<table width="100%">
+	<tbody><tr>
+	<td nowrap="">
+	<a style="color: royalblue; font-size: smaller;" url="/Project/社員情報/main.asp">社員情報</a>
+	</td>
+	</tr>
+  </tbody></table>
+
+			</fieldset>
+			<fieldset id="menuField" style="display: block;">
+			<legend>監査情報</legend>
+				
+
+
+<table width="100%">
+	<tbody><tr>
+	<td nowrap="">
+	<a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/業務情報/main_協力費用.asp">協力費</a><br/>
+	<a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/業務情報/main_業務費用.asp">業務費</a><br/>
+	<a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/業務情報/main_労務費.asp">人件費・付帯費・労務費</a><br/>
+	</td>
+	</tr>
+	<tr>
+	<td nowrap="">
+	<br/>
+	<a style="color: royalblue; font-size: smaller;" url="/Project/事業監査/">TEST</a><br/>
+	</td>
+	</tr>
+  </tbody></table>
+
+			</fieldset>
+			<fieldset id="menuField" style="display: block;">
+			<legend>プロジェクトレポート(試用版)</legend>
+				
+
+    <a style="color: royalblue; font-size: smaller;" url="/Project/projectReport/main.asp">プロジェクトレポート</a><br/>
+    <a style="color: royalblue; font-size: smaller;" url="/Project/projectReport/projectReportList.asp?mode=1">プロジェクトレポートリスト</a><br/>
+<!--
+プロジェクトレポートリスト<br/>
+（調整中です）
+-->
+
+			</fieldset>
+			<fieldset id="menuField" style="display: none;">
+			<legend>メニュー</legend>
+			</fieldset>
+			<fieldset id="menuField" style="display: none;">
+			<legend>メニュー</legend>
+			</fieldset>
+			<fieldset id="menuField" style="display: none;">
+			<legend>メニュー</legend>
+			</fieldset>
+		</td>
+		<td id="menuCell" nowrap="" valign="top">
+			<fieldset id="menuField" style="display: block;">
+			<legend>営業情報</legend>
+				
+
+<table width="100%" border="0" cellspacing="2">
+	<tbody>
+
+	<tr><td nowrap="">
+	<a style="color: royalblue; font-size: smaller;" url="/Project/営業情報/売上履歴/main.asp">売上更新履歴</a><br/>
+	<a style="color: royalblue; font-size: smaller;" url="/Project/営業情報/売上工数/main.asp">売上・工数</a><br/><br/>
+	<a style="color: royalblue; font-size: smaller;" url="/Project/営業情報/年度単位売上/main.asp">年度単位売上</a><br/><br/>
+	</td></tr>
+
+	<tr><td nowrap="">
+	<a style="color: royalblue; font-size: smaller;" url="/Project/営業情報/協力会社/Menu.asp">協力会社関連</a><br/><br/>
+	</td></tr>
+	<tr><td nowrap="">
+	<a style="color: royalblue; font-size: smaller;" url="/Project/営業情報/工数履歴/main.asp">工数更新履歴</a><br/>
+	</td>
+	</tr>
+
+<!--
+	<TR><TD nowrap>
+	<A url="/Project/営業情報/協力会社/main.asp">協力会社費用<br/><small>(費用＠グループ：プロジェクト)</small></A><br/><br/>
+	</TD></TR>
+	<TR><TD nowrap>
+	<A url="/Project/営業情報/協力会社/main2.asp">協力会社費用<br/><small>(単価・費用・工数@グループ：協力会社)</small></A><br/><br/>
+	<A url="/Project/営業情報/協力会社/main2-1.asp">協力会社費用<br/><small>(単価・費用・工数@グループ)</small></A><br/><br/>
+	<A url="/Project/営業情報/協力会社/main3.asp">協力会社費用<br/><small>(単価・費用・工数@協力会社：グループ)</small></A><br/><br/>
+	</TD></TR>
+-->
+	</tbody>
+  </table>
+
+			</fieldset>
+			<fieldset id="menuField" style="display: block;">
+			<legend>DB更新</legend>
+				
+<table width="100%" id="Table1" bgcolor="#c8d0c8" border="1" cellspacing="2">
+	<tbody>
+	<tr><td nowrap="">DB更新</td></tr>
+	<tr><td nowrap="">
+	<table width="100%" bgcolor="#f0f0f0" cellspacing="6">
+		<tbody>
+	<tr><td nowrap="">
+		<a style="color: royalblue; font-size: smaller;" url="/Project/定時処理/実行_menu.asp">定時処理</a><br/>
+	</td></tr>
+	</tbody>
+	</table>
+	</td></tr>
+	</tbody>
+  </table>
+
+			</fieldset>
+			<fieldset id="menuField" style="display: block;">
+			<legend>計画入力</legend>
+				
+
+<table width="100%" id="Table1" bgcolor="#c8d0c8" border="1" cellspacing="2">
+	<tbody>
+	<tr><td nowrap="">計画データ設定用</td></tr>
+	<tr><td nowrap="">
+	<table width="100%" bgcolor="#f0f0f0" cellspacing="6">
+		<tbody>
+	<tr><td nowrap="">
+	<a style="color: royalblue; font-size: smaller;" url="/Project/計画入力/indexPlan.asp">計画入力(計画データ設定)</a>
+	</td></tr>
+	<tr><td nowrap="">
+	<a style="color: royalblue; font-size: smaller;" url="/Project/計画入力/indexPlan2.asp">計画入力(項目別データ設定)</a>
+	</td></tr>
+	<tr><td nowrap=""><br/>
+	<a style="color: royalblue; font-size: smaller;" url="/Project/計画入力/付替処理/index.asp">付替設定(売上・費用)</a>
+	</td></tr>
+	</tbody>
+	</table>
+	</td></tr>
+	</tbody>
+  </table>
+
+			</fieldset>
+			<fieldset id="menuField" style="display: block;">
+			<legend>グループ会社(データ入力)</legend>
+				
+<table width="100%" border="0" cellspacing="1">
+	<tbody>
+	<tr><td nowrap="">
+		<table width="100%" bgcolor="#f0f0f0" cellspacing="6">
+		<tbody>
+			<tr>
+			<td nowrap="">
+			<a style="color: royalblue; font-size: smaller;" url="/Project/関連会社/収支状況/収支状況.asp">収支状況</a>
+			</td>
+			</tr>
+		</tbody>
+		</table>
+	</td></tr>
+	</tbody>
+  </table>
+
+<table width="100%" id="Table1" bgcolor="#6495ed" border="0" cellspacing="1">
+	<tbody>
+	<tr><td nowrap="">
+
+		<table width="100%" bgcolor="#f0f0f0" cellspacing="6">
+		<tbody>
+			<tr>
+			<td align="center" nowrap="">
+			<a style="color: royalblue; font-size: smaller;" url="/Project/関連会社/計画入力/GRP実績入力.asp">実績入力</a><br/>
+			<br/>
+			<a style="color: royalblue; font-size: smaller;" url="/Project/関連会社/計画入力/GRP予測入力.asp">予測入力</a><br/>
+			<a style="color: royalblue; font-size: smaller;" url="/Project/関連会社/計画入力/GRP計画入力.asp">計画入力</a>
+			</td>
+			</tr>
+		</tbody>
+		</table>
+
+	</td></tr>
+	</tbody>
+  </table>
+
+			</fieldset>
+		</td>
+		<td id="menuCell" nowrap="" valign="top">
+			<fieldset id="menuField" style="display: block;">
+			<legend>━━━━━　テスト　━━━━━</legend>
+				
+<link href="/Project/menu/menu_A.css" rel="stylesheet" type="text/css"/>
+<table width="100%" id="Table1" bgcolor="#6495ed" border="1" cellspacing="2">
+	<tbody>
+    <tr><td nowrap="">テスト開発ページ</td></tr>
+    <tr><td nowrap="">
+
+	<table width="100%" bgcolor="#f0f0f0" cellspacing="6">
+		<tbody>
+		    <tr>
+		    <td nowrap="">
+			<hr/>
+		    <a style="color: royalblue; font-size: smaller;" url="/Project/TEST/履歴/loginMain.asp">ログイン</a>
+		    <br/>
+		    <br/>
+		    <a style="color: royalblue; font-size: smaller;" url="/Project/TEST/履歴/main.asp">参照履歴</a>
+		    <br/>
+		    <br/>
+		    <a style="color: royalblue; font-size: smaller;" url="/Project/参照設定/main.asp">参照設定</a>
+		    <br/>
+<!--
+		    <A url="/Project/Auth/editAuth.asp">参照設定(旧)</A>
+		    <br/>
+-->
+			</td>
+			</tr>
+
+
+		    <tr>
+		    <td nowrap="">
+			<hr/>
+		    <a style="color: royalblue; font-size: smaller;" url="/Project/定時処理/実行_menu.asp">定時処理</a><br/>
+			</td>
+			</tr>
+
+		    <tr>
+		    <td nowrap="">
+			<hr/>
+		    <a style="color: royalblue; font-size: smaller;" url="/Project/TEST/部署一覧/main.asp">部署一覧</a>
+		    <br/>
+		    <a style="color: royalblue; font-size: smaller;" url="/Project/TEST/部署一覧/main2.asp">部署一覧2</a>
+		    <br/>
+		    <a style="color: royalblue; font-size: smaller;" url="/Project/TEST/プロジェクト名設定/main.asp">プロジェクト名設定</a>
+		    <br/>
+			</td>
+			</tr>
+
+		    <tr>
+		    <td nowrap="">
+			<hr/>
+		    <a style="color: royalblue; font-size: smaller;" url="/Project/TEST/稼動状況/main.asp">プロジェクト 稼動状況</a><br/>
+			</td>
+			</tr>
+
+		    <tr>
+		    <td nowrap="">
+		    <hr/>
+		    <a style="color: royalblue; font-size: smaller;" url="/sales/">営業情報</a>
+		    <br/>
+		    </td>
+		    </tr>
+		    <tr>
+		    <td nowrap="">
+			<hr/>
+		    <a style="color: royalblue; font-size: smaller;" url="/Project/TEST/Menu_TEST.asp">テスト　メニュ</a><br/>
+
+			</td>
+			</tr>
+
+<!--	
+		    <TR>
+		    <TD nowrap>
+			<HR>
+		    <A url="/Project/TEST/">テスト</A><br/>
+		    <A url="/Project/付替処理/check.asp">業務所属データの検査</A>
+		    <br/>
+			<HR>
+		    <A url="/Project/TEST/mailTest/test.asp">メール　テスト</A><br/>
+		    <A url="/Project/TEST/mailTest/send_mail.asp">メール送信　テスト</A>
+		    <br/>
+		    </TD>
+		    </TR>
+	    
+		    <TR>
+		    <TD nowrap>
+			<HR>
+		    <A url="/Project/業務情報/電話料金/電話料金登録.asp">電話料金登録</A><br/>
+		    <A url="/Project/業務情報/電話料金/電話所属設定.asp">電話所属設定</A><br/>
+		    <A url="/Project/業務情報/電話料金/電話一覧_X.asp">電話一覧</A><br/>
+		    <br/>
+		    <A url="/Project/業務情報/出張一覧/main.asp">出張一覧</A><br/>
+		    <A url="/Project/業務情報/超過申請一覧/main.asp">超過申請一覧</A><br/>
+		    <br/>
+		    <br/>
+		    </TD>
+		    </TR>
+-->
+		</tbody>
+	</table>
+
+    </td></tr>
+	</tbody>
+  </table>
+  
+			</fieldset>
+			<fieldset id="menuField" style="display: block;">
+			<legend>━━━━━　USR　━━━━━</legend>
+				
+
+
+<table width="100%">
+	<tbody><tr>
+	<td nowrap="">
+	<a style="color: royalblue; font-size: smaller;" url="/Project/USR/承認関連図/main.asp">承認関連図</a><br/>
+	<a style="color: royalblue; font-size: smaller;" url="/Project/USR/売上予測/売上目標_部門.asp">売上目標_部門</a><br/>
+	<a style="color: royalblue; font-size: smaller;" url="/Project/USR/売上予測/test.asp">売上目標_部門 XML</a><br/>
+	</td>
+	</tr>
+	<tr>
+	<td nowrap="">
+	<a style="color: royalblue; font-size: smaller;" url="http://www.in.eandm.co.jp/ADM/DOOR/Felica_Test/FelicaCtrl.asp">フェリカ読み取り（新）(EMG)</a><br/>
+	<a style="color: royalblue; font-size: smaller;" url="http://kansa.in.eandm.co.jp/Project/USR/Felica_Test/FelicaCtrl.asp">フェリカ読み取り（新）</a><br/>
+	</td>
+	</tr>
+	<tr>
+	<td nowrap="">
+	<a style="color: royalblue; font-size: smaller;" url="/Project/USR/excel/test1.asp">EXCEL TEST</a><br/>
+	</td>
+	</tr>
+  </tbody></table>
+
+
+			</fieldset>
+			<fieldset id="menuField" style="display: none;">
+			<legend>メニュー</legend>
+			</fieldset>
+			<fieldset id="menuField" style="display: none;">
+			<legend>メニュー</legend>
+			</fieldset>
+		</td>
+		<td id="menuCell" nowrap="" valign="top">
+			<fieldset id="menuField" style="display: block;">
+			<legend>原価管理</legend>
+				
+<table width="100%" id="Table1" bgcolor="#6495ed" border="1" cellspacing="2">
+	<tbody>
+    <tr><td nowrap="">プロジェクト原価管理(新)</td></tr>
+    <tr><td nowrap="">
+
+	<table width="100%" bgcolor="#f0f0f0" cellspacing="6">
+		<tbody>
+		    <tr>
+		    <td nowrap="">
+			<hr/>
+		    <a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/projectCostList.asp">プロジェクト原価</a><br/>
+		    <a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/xml/projectInfoList_XML.asp">XML</a><br/>
+			</td>
+			</tr>
+		</tbody>
+	</table>
+
+    </td></tr>
+	</tbody>
+  </table>
+<table width="100%">
+	<tbody><tr>
+	<td nowrap="">
+	<fieldset id="menuField" style="border-color: snow; padding: 6px; display: block;">
+	<legend>原価管理</legend>
+
+	    <a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/a_15/部門業務費.asp">業務費一覧</a>
+	    <br/>
+	    <a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/a_15/部門業務費.asp?mode=詳細">業務費一覧(詳細)</a>
+	    <br/>
+	    <a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/a_15/部門協力費.asp">協力費一覧</a>
+	    <br/>
+	    <a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/a_15/部門協力費.asp?mode=詳細">協力費一覧(詳細)</a>
+	    <br/>
+	    <a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/a_15/部門人件費.asp">人件費一覧</a>
+	    <br/>
+	    <a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/a_15/部門人件費.asp?mode=詳細">人件費一覧(詳細)</a>
+	    <br/>
+	    <a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/a_15/部門付帯費.asp">付帯費一覧</a>
+	    <br/>
+	    <a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/a_15/部門付帯費.asp?mode=詳細">付帯費一覧(詳細)</a>
+	    <br/>
+	    <br/>
+		<hr/>
+	    <a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/a_12/main_人件費.asp">メンバグレード設定</a>
+	    <br/>
+	    <br/>
+	    <a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/a_12/main_人件費グレード.asp">グレード別単価設定</a>
+	    <br/>
+	    <br/>
+	    <a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/a_12/main_付帯費.asp">部門別付帯費一覧</a>
+	    <br/>
+	    <br/>
+		<hr/>
+	    <br/>
+	    <a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/年度別原価/overhead_projectCostList.asp">年間原価情報(2015)</a>
+	    <br/>
+	    <br/>
+	    <a style="color: royalblue; font-size: smaller;" url="/Project/projectCostProc/a_21/main_工数表示.asp">工数表示</a>
+	    <br/>
+	</fieldset>
+	</td>
+	</tr>
+  </tbody>
+</table>
+
+</fieldset>
+		</td>
+
+<td id="menuCell" nowrap="" valign="top">
+			<fieldset id="menuField" style="display: block;">
+			<legend>試作中</legend>
+				
+
+
+	<a style="color: royalblue; font-size: smaller;" url="/Project/未公開/組織図編集/main.asp">組織図編集</a><br/><br/>
+	<a style="color: royalblue; font-size: smaller;" url="/Project/未公開/会社組織図/main.asp">会社組織図</a><br/><br/>
+	<hr/>
+
+	<a style="color: royalblue; font-size: smaller;" url="/Project/common_data/統括本部編集/main.asp">統括本部編集</a><br/>
+	<hr/>
+	<br/>
+	<a style="color: royalblue; font-size: smaller;" url="/Project/未公開/部署編集/groupList.asp">部署編集</a><br/>
+	<a style="color: royalblue; font-size: smaller;" url="/Project/未公開/プロジェクト結合/main.asp">プロジェクト結合</a><br/>
+	<br/>
+	<hr/>
+
+	<a style="color: royalblue; font-size: smaller;" url="/Project/未公開/担当プロジェクト/main.asp">担当プロジェクト　一覧</a><br/><br/>
+	<hr/>
+
+
+	<a style="color: royalblue; font-size: smaller;" url="/Project/定時処理/実行_main.asp?menu=1">定時処理</a><br/><br/><hr>
+
+	<a style="color: royalblue; font-size: smaller;" url="/Project/未公開/商魂/salesDisp.asp">売上</a><br/><br/>
+	<a style="color: royalblue; font-size: smaller;" url="/Project/未公開/商魂/xml/salesData_X_XML.asp">売上 XML</a><br/><br/>
+
+	<a style="color: royalblue; font-size: smaller;" url="/Project/未公開/商魂/DBList.asp">商魂DB 表示</a><br/><br/>
+	<a style="color: royalblue; font-size: smaller;" url="/Project/未公開/PCA/DBList.asp">PCA_DB 表示</a><br/><br/>
+
+	<a style="color: royalblue; font-size: smaller;" url="/Project/未公開/商魂/PCA/営業DB_検索.asp">DB検索</a><br/><br/>
+
+
+	<a style="color: royalblue; font-size: smaller;" url="/Project/未公開/PCA/PCA.asp">PCA データベース一覧</a><br/><br/>
+
+<!--
+	<A url="/Project/未公開/AGE/main.asp">年齢分布(バブルチャート)</A><br/>
+	<A url="/Project/未公開/AGE/mainX.asp">年齢分布(横棒グラフ)</A><br/>
+	<br/>
+	<hr>
+-->
+<!--
+	<A url="/Project/業務計画/sales/salesPlan.asp">売上計画</A><br/><br/>
+
+
+	<A url="/Project/未公開/部門収支/EMG収支計画.asp">EMG収支計画</A><br/><br/>
+	<A url="/Project/未公開/部門収支/統括収支計画.asp">統括収支計画</A><br/><br/>
+	<A url="/Project/未公開/部門収支/部門収支計画.asp">部門収支計画</A><br/><br/>
+	<A url="/Project/未公開/部門収支/グループ収支計画.asp">課単位収支計画</A><br/><br/>
+	<A url="/Project/未公開/部門収支/グループ収支計画2.asp">課単位収支計画(全)</A><br/><br/>
+	<A url="/Project/未公開/部門収支/xml/部門収支_XML.asp">部門収支 XML</A><br/><br/>
+	<hr>
+-->
+<!--
+	<A url="/Project/部門収支/本社費配賦.asp">本社費配賦</A><br/>
+	<hr>
+	<br/>
+	<br/>
+	<A url="/Project/戦略別売上/分類設定">戦略別集計・分類名設定</A><br/>
+	<hr>
+	<br/>
+	<A url="/Project/業務情報/予定実績一覧/memberList.asp">作業の予定実績(メンバー)</A><br/>
+	<br/>
+	<hr>
+	<br/>
+
+-->
+
+	<hr/>
+	<a style="color: royalblue; font-size: smaller;" url="/Project/未公開/要員一覧/xml/要員一覧_XML.asp">要員一覧 XML</a><br/>
+	<a style="color: royalblue; font-size: smaller;" url="/Project/未公開/要員一覧/要員一覧.asp?year=2014">要員一覧</a>
+	<hr/>
+	<a style="color: royalblue; font-size: smaller;" url="/Project/部門収支/本社費配賦.asp?dispCmd=統括配賦&amp;dispName=計画">本社費配賦（統括・計画）</a><br/>
+	<a style="color: royalblue; font-size: smaller;" url="/Project/部門収支/本社費配賦.asp?dispCmd=統括配賦&amp;dispName=結合">本社費配賦（統括・結合）</a><br/><br/>
+	<a style="color: royalblue; font-size: smaller;" url="/Project/部門収支/本社費配賦.asp?dispCmd=部門配賦&amp;dispName=計画">本社費配賦（部門・計画）</a><br/>
+	<a style="color: royalblue; font-size: smaller;" url="/Project/部門収支/本社費配賦.asp?dispCmd=部門配賦&amp;dispName=結合">本社費配賦（部門・結合）</a><br/><br/>
+
+	<a style="color: royalblue; font-size: smaller;" url="/Project/部門収支/間接部門内訳.asp?dispCmd=間接一覧">間接部門（予算元データ）</a><br/>
+	<br/>
+    
+			</fieldset>
+		</td>
+		</tr>
+		</tbody>
+		</table>
+	</td>
+	</tr>
+</tbody>
+</table>
+
+</root>
+

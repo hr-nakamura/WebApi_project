@@ -1,0 +1,409 @@
+﻿
+                $.debug("A"+1);
+                buy(30)
+                    .then(function (change) {
+                        $.debug("X1:" + change  );
+                    })
+                    .catch(function (error) {
+                        $.debug("X2:" + error);
+                    });
+
+                $.debug("B"+3);
+
+
+                function buy(pay) {
+                    // Promise を返す
+                    return new Promise(function (resolve, reject) {
+                        setTimeout(function () {
+                            if (pay >= 100) {
+                                $.debug("100円で購入しました");
+                                // 成功時
+                                resolve("成功");
+                            } else {
+                                $.debug("お金が足りないよ");
+                                // 失敗時
+                                reject("失敗");
+                            }
+                        }, 500);
+                    });
+                }
+
+
+        div.row {
+            display: table-cell;
+            vertical-align: top;
+            border: 0px solid blue;
+            padding: 10px;
+            background-color: snow;
+        }
+
+        div.col {
+            padding: 10px;
+            border: 1px solid blue;
+            background-color: pink;
+        }
+
+        div.colZ {
+            padding: 10px;
+            border: 1px solid blue;
+            background-color: pink;
+        }
+
+        div.colX {
+            padding: 10px;
+            border: 1px solid blue;
+            background-color: pink;
+        }
+
+        .content table {
+            *text-align: center;
+            padding: 10px;
+            border: 0px solid red;
+            background-color: snow;
+            margin-left: auto;
+            margin-right: auto;
+            width: 10em;
+        }
+
+
+
+        .col > fieldset {
+            display: block;
+            padding: 4px;
+            background-color: gainsboro;
+            border-radius: 8px;
+            border: 1px solid blue;
+            color: black;
+            text-decoration: none;
+        }
+
+            .col > fieldset > legend {
+                font-size: 1em;
+                margin-left: 8px;
+                padding: 6px 10px;
+                display: block;
+                padding: 4px;
+                background-image: linear-gradient(to right, darkgrey,gainsboro,white);
+                *background-color: gainsboro;
+                border-radius: 8px;
+                border: 0px solid red;
+                color: black;
+                text-decoration: none;
+                box-shadow: 5px 5px 5px gainsboro;
+                text-shadow: 1px 1px 3px #000;
+            }
+
+        .colX > fieldset {
+            display: block;
+            padding: 4px;
+            background-color: gainsboro;
+            border-radius: 8px;
+            border: 2px solid blue;
+            color: black;
+            text-decoration: none;
+        }
+
+            .colX > fieldset > legend {
+                font-size: 1em;
+                display: block;
+                padding: 4px;
+                background-color: gainsboro;
+                border-radius: 8px;
+                border: 2px solid red;
+                color: black;
+                text-decoration: none;
+            }
+
+        .colZ > fieldset {
+            padding: 10px;
+            font-size: 1em;
+            border: 2px solid blue;
+            width: auto;
+            margin-right: 6px;
+            box-shadow: 5px 5px 5px gainsboro;
+            border-radius: 10px;
+            background-color: gainsboro;
+        }
+
+            .colZ > fieldset > legend {
+                display: block;
+                margin-left: 8px;
+                padding: 6px 10px;
+                background-image: linear-gradient(to right, darkgrey,gainsboro,white);
+                color: #ffffff;
+                font-weight: bold;
+                box-shadow: 5px 5px 5px gainsboro;
+                text-shadow: 1px 1px 3px #000;
+                border-radius: 8px;
+            }
+
+        <section class="no1">
+            <h2>①display:flex</h2>
+            <div class="row">
+                <div class="col">
+                    <fieldset>
+                        <legend>表題</legend>
+                        <div class="content">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="colX">
+                    <fieldset>
+                        <legend>表題</legend>
+                        <div class="content">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="colZ">
+                    <fieldset>
+                        <legend>表題</legend>
+                        <div class="content">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <fieldset>
+                        <legend>表題</legend>
+                        <div class="content">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="col">
+                    <fieldset>
+                        <legend>表題</legend>
+                        <div class="content">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="col">
+                    <fieldset>
+                        <legend>表題</legend>
+                        <div class="content">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <fieldset>
+                        <legend>表題</legend>
+                        <div class="content">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="col">
+                    <fieldset>
+                        <legend>表題</legend>
+                        <div class="content">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="col">
+                    <fieldset>
+                        <legend>表題</legend>
+                        <div class="content">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <fieldset>
+                        <legend>表題</legend>
+                        <div class="content">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="col">
+                    <fieldset>
+                        <legend>表題</legend>
+                        <div class="content">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="col">
+                    <fieldset>
+                        <legend>表題</legend>
+                        <div class="content">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAA</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </section>

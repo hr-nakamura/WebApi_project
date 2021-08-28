@@ -1,0 +1,60 @@
+﻿.easy-select-box {
+    background: #fffdf4;
+    border: 2px solid #d2ba85;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    text-align: left;
+    font-size: 14px;
+    color: #0c2245;
+}
+
+    .easy-select-box .esb-displayer {
+        background: url(/wp/wp-content/themes/brisk/before_2018/sample/img/select-box-arrow.png) no-repeat right top;
+        color: #0c2245;
+        cursor: default;
+        height: 30px;
+        line-height: 30px;
+        padding: 0 3px;
+        text-indent: 5px;
+        width: 195px;
+    }
+
+        .easy-select-box .esb-displayer:hover {
+            filter: alpha(opacity=80);
+            -ms-filter: 'alpha(opacity=80)';
+            opacity: .8;
+        }
+
+    .easy-select-box:hover .esb-displayer {
+        text-decoration: none;
+    }
+
+    .easy-select-box.disabled .esb-displayer,
+    .easy-select-box:hover.disabled .esb-displayer {
+        background-position: 0 -36px;
+    }
+
+    .easy-select-box .esb-dropdown {
+        background: #fff;
+        border: 1px solid #ccc;
+        display: none;
+        max-height: 200px;
+        overflow: auto;
+        position: absolute;
+        z-index: 999;
+        width: 200px;
+    }
+
+    .easy-select-box .esb-item {
+        padding: 3px;
+        background: #fffdf4;
+        color: #0c2245;
+        cursor: default;
+    }
+
+        .easy-select-box .esb-item:hover {
+            background: #d2ba85;
+            color: #FFFFFF;
+            text-decoration: none;
+        }

@@ -1,0 +1,144 @@
+﻿[引数]		dispCmd=EMG&year=2020&fix=70&yosoku=3
+[全社][][詳細][開発]	【/Project/部門収支/xml/部門収支_XML.asp】
+
+
+[引数]		dispCmd=統括一覧&year=2020&fix=70&yosoku=3
+[統括][][一覧][開発]	【/Project/部門収支/xml/部門収支_XML.asp】
+【/Project/部門収支/xml/部門収支_XML.asp】
+
+
+[引数]		dispCmd=部門一覧&secMode=開発&dispName=&year=2020&fix=70&yosoku=2
+[部門][][一覧][開発]	【/Project/部門収支/xml/部門収支_XML.asp】
+[calcHaihu][2020][12]	【/Project/部門収支/xml/部門収支_XML.asp】
+
+
+[引数]		dispCmd=課一覧&dispName=営業本部&secMode=開発&year=2020&fix=70&yosoku=2
+[グループ][営業本部][一覧][開発]	【/Project/部門収支/xml/部門収支_XML.asp】
+[calcHaihu][2020][12]	【/Project/部門収支/xml/部門収支_XML.asp】
+
+
+[引数]		dispCmd=部門一覧&secMode=間接&dispName=&year=2020&fix=70&yosoku=2
+[部門][][一覧][間接]	【/Project/部門収支/xml/部門収支_XML.asp】
+
+
+[引数]		dispCmd=課一覧&dispName=本社EMG共通&secMode=間接&year=2020&fix=70&yosoku=2
+[グループ][本社EMG共通][一覧][間接]	【/Project/部門収支/xml/部門収支_XML.asp】
+[calcHaihu][2020][12]	【/Project/部門収支/xml/部門収支_XML.asp】
+
+
+項目 
+
+F_Project 
+F_プロジェクト一覧 
+F_プロジェクト一覧_原価 
+F_営業情報 
+F_開発中 
+F_管理部門 
+F_関連会社 
+F_協力会社 
+F_業務監査 
+F_業務管理 
+F_業務計画 
+F_業務集計 
+F_業務情報 
+F_業務状況 
+F_計画入力 
+F_事業監査 
+F_社員情報 
+F_収支計画 
+F_承認関連図 
+F_戦略会議 
+F_戦略別売上 
+F_組織データ編集 
+F_売上予測 
+F_費用予測 
+F_付替処理 
+F_部門固定費 
+F_部門収支 
+F_部門収支_課 
+F_部門収支_間接部門 
+F_保有リソース 
+F_未公開 
+F_要員情報 
+
+
+データベース更新 
+プロジェクト_原価管理 
+プロジェクトドキュメント 
+プロジェクトドキュメント_管理 
+プロジェクトドキュメント_管理_管理 
+プロジェクトドキュメント_審査 
+プロジェクトドキュメント_審査_管理 
+プロジェクトレポート 
+プロジェクト結合_編集 
+関連会社_収支_ACEL 
+関連会社_収支_CASA 
+関連会社_収支_EM 
+関連会社_収支_PIEM 
+関連会社_収支_PSL 
+残業一覧_残業分析 
+残業一覧_担当PM 
+残業一覧_担当PM一覧 
+社員情報_管理 
+社員情報_参照 
+承認情報編集 
+臨時公開 
+
+
+
+                        $.MessageBox({
+                    buttonDone: "OK",
+                    message: applicantInfo[3] + " さんの代理提出データです<br />代理提出者設定をして下さい"
+                }).done(function () {
+                }).fail(function () {
+                });
+
+                $.MessageBox({
+                    buttonDone: "はい",
+                    buttonFail: "いいえ",
+                    message: "申請書を削除します<br />よろしいですか？"
+                }).done(function () {
+                }).fail(function () {
+                });
+
+
+
+                                window.open('about:blank', '_self').close();
+
+//============================================================================================
+
+営業情報
+	保有リソース
+		本部要員数.asp
+		協力会社費用
+			協力会社費用/main1.asp
+			協力会社費用・累計/main2.asp
+
+業務情報
+	戦略別売上
+		客先別売上.asp
+		分類名別売上.asp
+		新規名別売上.asp
+		客先別売上_予測.asp
+		年度別売上.asp
+
+
+common_data/統括本部編集/main.asp
+projectBBS/bbs.asp
+売上付替						/Project/付替処理/売上付替/売上付替.asp
+協力会社費用付替(開発)	/Project/付替処理/協力費用付替/main.asp?mode=2
+協力会社費用付替(部門)	/Project/付替処理/協力費用付替/main.asp?mode=1
+協力会社費用付替(間接)	/Project/付替処理/協力費用付替/main.asp?mode=0
+費用付替						/Project/付替処理/費用付替/費用付替.asp
+
+部門固定費					/Project/部門固定費/部門固定費.asp
+本社費配賦					/Project/部門収支/本社費配賦.html
+
+
+
+売上予測・実績一覧				/Project/業務計画/sales/main2.asp
+売上予測一覧(プロジェクト)		/Project/業務計画/sales/main.asp
+売上予測一覧(営業担当者)		/Project/業務計画/sales/salesMan.asp
+売上予測一覧(確度別)				/Project/業務計画/sales/salesMan.asp
+メンバー作業履歴 					/Project/業務計画/memberInfo/main.asp
+

@@ -1,0 +1,556 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="/Project/home/_Content/_Scripts/jquery-1.12.4.js" type="text/javascript"></script>
+    <script src="/Project/home/_Content/_Scripts/encoding.js" type="text/javascript"></script>
+    <script src="/Project/home/_Content/_Scripts/jquery.my.frame.js" type="text/javascript"></script>
+    <script src="/Project/home/_Content/_Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
+    <script src="/Project/home/_Content/_Scripts/jquery.my.webapi.js" type="text/javascript"></script>
+    <script src="/Project/home/_Content/_Scripts/jquery.my.searcher.js" type="text/javascript"></script>
+    <script src="/Project/home/_Content/_Scripts/jquery.complete.js" type="text/javascript"></script>
+    <script src="/Project/home/_Content/_Scripts/json2.js" type="text/javascript"></script>
+    <script src="/Project/home/_Content/_Scripts/promise-7.0.4.min.js" type="text/javascript"></script>
+    <script src="/Project/home/_Content/_Scripts/jquery.inview.js" type="text/javascript"></script>
+    <script src="/Project/home/_Content/_Scripts/jquery.stopWatch.js" type="text/javascript"></script>
+    <script src="/Project/home/_Content/_Scripts/store.min.js" type="text/javascript"></script>
+    <script src="/Project/home/_Content/_debug/jquery.my.debug.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        ; (function ($) {
+        })(jQuery);
+    </script>
+    <script type="text/javascript">
+        var projectInfo = {
+            Timeout_id: null,
+            Cancel: false,
+            Do: false,
+            optionInfo: false
+        };
+        var searchCancel = false;
+        var hostName = "http://kansa.in.eandm.co.jp";
+        //var hostName = "http://localhost";
+        //var hostName = "";
+        var xslDoc = null;
+        var xmlDoc = null;
+        $(function () {
+            $(".target").on("inview", function () {
+                //ブラウザの表示域に表示されたときに実行する処理
+                $.debug("inview");
+                test();
+            });
+            $(window).on("load", function () {
+                try {
+                    //var o1 = $.stopwatch();
+
+                    $(".target").frame({ border: "1px solid blue" });
+                    var Cnt = 0;
+
+                    //$(o1).stopwatch("開始1");
+
+                    //$(o1).stopwatch("xsl読込1");
+                    xmlDoc = $.str2xml("<root><projectNumList/></root>");
+                    xslDoc = $.loadXMLDoc("projectList.xsl");
+
+                    //$(o1).stopwatch("変換1");
+                    var Buff = $(xmlDoc).transformNode(xslDoc);
+                    //$(o1).stopwatch("表示1");
+                    $(".target").frame("html", Buff);
+
+                    // 選択表示(非同期実行)
+                    var webapi_url = "http://localhost/WebApi/project/api/xml";
+                    var item = "projectBBS";
+                    var func = "projectList";
+                    para = {
+                        limitYear: 2019,
+                        visitBBS : "2021/07/07"
+                    }
+                    //$.loadXMLDoc("/Project/home/_xml/projectBBS/projectNum.xml", dispProject);
+//                    $.loadXMLDoc("/Project/home/_xml/projectBBS/projectNum_Full.xml", dispProject);
+                    //$.loadXMLDoc(hostName + "/Project/home/_xml/projectBBS/projectData_XML.asp", dispProject);
+                    var work = $.WebApi("GET", webapi_url, item, func, para, dispProject);
+                    var xmlDoc = $.str2xml(work);
+                    dispProject(xmlDoc);
+                    //var Buff = $(o1).stopwatch();
+                    //$.debug("開始時", Buff);
+
+
+
+                } catch (e) {
+                    alert(e.message);
+                }
+            });
+            function test() {
+                $.debug.log(this, "ABCDEF");
+            }
+            function dispProject(xmlDoc) {
+                //var o2 = $.stopwatch();
+                //$(o2).stopwatch("プロジェクト一覧 html 変換");
+                var Buff = $(xmlDoc).transformNode(xslDoc);
+
+                //$(o2).stopwatch("html 表示");
+                $(".target").frame("html", Buff);
+
+                //$(o2).stopwatch("クリック");
+                $("input[class='stat'][value='0']").prop("checked", true).trigger("change");
+
+                //$(o2).stopwatch("selectBox作成");
+                if (projectInfo.optionInfo == false) {
+                    setOptionInfo();
+                    projectInfo.optionInfo = true;
+                }
+                //var Buff = $(o2).stopwatch();
+                //$.debug("dispProject", Buff);
+            }
+            function setOptionInfo() {
+                //var o2 = $.stopwatch();
+
+                //$(o2).stopwatch("setOptionInfo 開始");
+
+                var disp = $(".target").find("tbody > tr");
+
+                //$(o2).stopwatch("データ数 表示");
+                $(".spanTotal").text(disp.length);
+
+                var Tab = {
+                    select_group: { set: new Set(), name: [] },
+                    select_user: { set: new Set(), name: [] },
+                    select_regist: { set: new Set(), name: [] },
+                };
+
+
+                //$(o2).stopwatch("データ取得");
+                $(disp).each(function (index, elem) {
+                    Tab.select_group.set.add($(elem).attr("group"));
+                    Tab.select_user.set.add($(elem).attr("user"));
+                    Tab.select_regist.set.add($(elem).attr("regist"));
+
+                });
+                //======================================
+                //$(o2).stopwatch("option 設定");
+                for (var name in Tab) {
+                    var select_value = $("#" + name + " option:selected").val();
+                    Tab[name].set.forEach(function (value) {
+                        Tab[name].name.push(value);
+                    });
+                    Tab[name].name.sort();
+
+                    //$("option", "#" + name).remove();
+                    $("#" + name).html("");
+                    $("#" + name).append($("<option id='op'>").val('').text(''));
+                    Tab[name].name.forEach(function (value) {
+                        $("#" + name).append($("<option>").val(value).text(value));
+                    });
+                    if (select_value != "") {
+                        $("option:eq(1)", "#" + name).prop('selected', true);
+                    }
+                }
+                //var Buff = $(o2).stopwatch();
+                //$.debug("setOptionInfo", Buff);
+
+            }
+        });
+    </script>
+    <script type="text/javascript">
+        $(function () {
+
+            $("body").on("DOMSubtreeModified propertychange", ".count", function () {
+                var a = 1;
+                $.debug.json("===========", {
+                    type: event.type,
+                    count: $(".count").text(),
+                    Info: {
+                        tagName: this.tagName,
+                        id: this.id,
+                        name: this.name,
+                        class: this.className
+                    }
+                });
+            });
+            $("body").on("focusin focusout", "[name='searcher'],[name='search']", function () {
+                var count = $(".count").text();
+                //$("body").css("cursor", "progress");
+                //$("body").css("cursor", "default");
+                //$.debug("===========", event.type, x, this.id, this.tagName);
+                //$.debug.json("===========", {
+                //    type: event.type,
+                //    count: count,
+                //    Info: {
+                //        tagName: this.tagName,
+                //        id: this.id,
+                //        name: this.name,
+                //        class: this.className
+                //    }
+                //});
+                if (event.type == "focusin") {
+                    $("[name = 'searcher']").val("");
+                    return;
+                }
+                else if (event.type == "focusout") {
+                    //$.debug("focusout");
+                    //this.value = "";
+                }
+            });
+            $("body").on("click", ".test", function () {
+                //var o2 = $.stopwatch();
+                //$(o2).stopwatch("開始");
+                var regex = /(id)/gim;
+                //$(o2).stopwatch("開始 filter");
+                var res = $("tbody>tr>td.pName", ".table").filter(function () {
+                    containsText = this.textContent.match(regex);
+                    containsText ? $(this).parent().show() : $(this).parent().hide();
+                    return (containsText);
+                })
+                //var Buff = $(o2).stopwatch();
+                //$.debug("find test", res.length, Buff);
+            });
+            $("body").on("click", "[name='reset']", function () {
+                //$.debug("reset");
+                var parent = $(this).closest("div");
+                $("select option:eq(0)", parent).prop('selected', true).trigger("change");
+            });
+
+            $("input[name='searcher']").complete(function (event) {
+                try {
+                    var value = $(this).val();
+                    var name = this.id;
+                    //$.debug("key in", value, projectInfo.Do, event.key, event.code);
+                    var wait = (value == "" ? 1 : 400);
+                    clearTimeout(projectInfo.Timeout_id);
+                    projectInfo.Timeout_id = setTimeout(
+                        $.asyncExecute,
+                        wait,
+                        searchExec,
+                        { value: value, name: name }
+                    );
+
+                } catch (e) {
+                    $.debug("AA", e.message);
+                }
+
+            });
+            function searchExec(para) {
+                try {
+                    projectInfo.Do = true;
+                    var disp = null;
+                    var searchValue = para.value;
+                    var className = para.name;
+                    $.debug("searchExec 開始", searchValue);
+                    var options = {
+                        itemSelector: ".table>tbody>tr",
+                        textSelector: "td.pName",
+                        caseSensitive: true
+                    }
+                    //var o2 = $.stopwatch();
+                    //$(o2).stopwatch("開始1");
+                    if (searchValue == "123") {
+                        //$(o2).stopwatch("開始6 show");
+                        disp = $(options.itemSelector).show();
+                        //$(o2).stopwatch("開始6 show:" + disp.length);
+                    }
+                    else {
+                        //$(o2).stopwatch("開始2");
+                        //var cName = this.id;
+                        if (className == "input_name") {
+                            options = $.extend(options, { textSelector: "td.pName" });
+                        }
+                        else {
+                            options = $.extend(options, { textSelector: "td.pCode" });
+                        }
+                        //$(o2).stopwatch("開始3");
+                        //var value = this.value;
+                        var flags = "gm" + (options.caseSensitive ? "i" : "");
+                        var regex = new RegExp("(" + escapeRegExp(searchValue) + ")", flags);
+                        //regex = new RegExp("^" + value + ".*$", flags);
+                        //$.debug.log("regex", searchValue, regex);
+                        //$(o2).stopwatch("開始4 filter");
+                        disp = $(options.textSelector).filter(function () {
+                            containsText = this.textContent.match(regex);
+                            $(this).parent().css("display", containsText ? "table-row" : "none");
+                            return (containsText);
+                        })
+                    }
+                    $(".count").text(disp.length);
+                    //$(".target").focus();
+                } catch (e) {
+                    $.debug("cancel発生", e.message);
+                } finally {
+                    //var Buff = $(o2).stopwatch();
+                    //$.debug("searchExec", searchValue, disp.length, Buff);
+                    projectInfo.Do = false;
+                    //$.debug("searchExec 終了");
+                    return (disp);
+                }
+                function escapeRegExp(text) {
+                    return text.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+                }
+
+            }
+            $("body").on("change", "[name='search']", function () {
+                var value = $(this).val();
+                var id = this.id;
+                var className = this.className;
+                var selectTab = {
+                    "select_group": "Group",
+                    "select_user": "User",
+                    "select_regist": "Regist"
+                };
+                var statTab = {
+                    "0": "newFlag!='0'",
+                    "1": "Stat='0'",
+                    "2": "Stat='1'",
+                    "3": "Stat='4'",
+                    "4": "Stat='5'",
+                    "5": "Stat='-1'",
+                    "6": ""
+                }
+                var work = [];
+
+                //$.debug("click", this.id, this.className, this.tagName, value);
+                var o_select = $(".select option:selected");
+                o_select.each(function (i, elem) {
+                    var value = elem.text;
+                    //$.debug("option", i, value);
+                    if (value != "") work.push(selectTab[elem.parentElement.id] + "='" + value + "'");
+                });
+                var stat_value = $(".stat:checked").val();
+                //$.debug("stat", stat_value);
+                if (statTab[stat_value] != "") work.push(statTab[stat_value]);
+
+                // 選択表示(非同期実行)
+                var selectorStr = (work.length > 0 ? "[" + work.join("][") + "]" : "");
+                $.asyncExecute(selectProject, selectorStr);
+            });
+            function selectProject(selector) {
+                try {
+                    projectInfo.Do = true;
+                    $.debug("selectProject 開始", selector);
+                    var disp = null;
+                    var total = null;
+                    //var o2 = $.stopwatch();
+                    if (selector == "") {
+                        //$(o2).stopwatch("selectProject 全show");
+                        disp = $(".target").find("tbody > tr").css("display", "table-row");
+                    }
+                    else {
+                        //$(o2).stopwatch("selectProject hide");
+
+                        //var total = $(".target").find("tbody > tr ").hide();
+                        total = $(".target").find("tbody > tr ").css("display", "none");
+
+                        //$(o2).stopwatch("selectProject show 表示数");
+                        //var disp = $(".target").find("tbody > tr" + selector).show();
+                        disp = $(".target").find("tbody > tr" + selector).css("display", "table-row");
+                    }
+                    $(".count").text(disp.length);
+                } catch (e) {
+                    $.debug("error", e.message);
+                } finally {
+                    //var Buff = $(o2).stopwatch();
+                    //$.debug("selectProject", selector, disp.length, Buff);
+                    projectInfo.Do = false;
+                    //$.debug("selectProject 終了");
+                }
+
+            }
+            $("body").on("mouseenter mouseleave click", "td.pRegist, td.pGroup", function () {
+                if (event.type == "mouseover") {
+                    $(this).css("color", "blue").css("textDecoration", "underline");
+                }
+                else if (event.type == "mouseout") {
+                    $(this).css("color", "").css("textDecoration", "");
+                }
+                else {
+                    var pNum = $(this).parent().attr("pNum");
+                    var name = this.className;
+                    $.debug("pNum", event.type, name, pNum);
+                    return (false);
+                }
+            });
+            $("body").on("click", ".pNumLine", function () {
+                var pNum = $(this).attr("pNum");
+                $.debug("tr pNum", pNum);
+                var a = 1;
+            });
+            $("body").on("mouseenter mouseleave", ".pNumLine", function () {
+                //$.debug("mouse", event.type);
+                if (event.type == "mouseover") {
+                    $(this).css("background-color", "pink").css("cursor", "pointer");
+                }
+                else {
+                    $(this).css("background-color", "").css("cursor", "");
+                }
+                var a = 1;
+            });
+        });
+
+    </script>
+    <style type="text/css">
+        body {
+            background: url(/Project/home/_images/bg00.gif);
+            padding: 0px;
+            border: 0px solid green;
+            margin: 10px;
+            overflow: auto;
+        }
+
+        .container {
+            text-align: left;
+            border: 0px solid tomato;
+            display: table;
+            width: 100%;
+        }
+
+        .headerTable {
+            text-align: left;
+            border: 0px solid green;
+            display: table;
+            width: 100%;
+        }
+
+        .target {
+            border: 1px solid blue;
+            padding: 0px;
+            margin: 0px;
+            *background-color: snow;
+            *border-radius: 20px;
+            width: 100%;
+        }
+
+        .flexbox-container {
+            margin: 0px;
+            padding: 4px;
+            display: flex;
+        }
+
+        .flexbox-item {
+            border-radius: 5px;
+            margin: 5px;
+            font-size: smaller;
+            border: 1px solid;
+            border-color: gainsboro;
+            padding: 4px;
+        }
+
+            .flexbox-item ul {
+                margin: 0px;
+                padding: 4px;
+                display: table;
+                position: relative;
+                *background-color: red;
+            }
+
+            .flexbox-item li {
+                margin: 0px;
+                list-style: none;
+                *background-color: blue;
+            }
+    </style>
+
+
+</head>
+<body>
+    <div class="container">
+
+        <table class="headerTable">
+            <CAPTION class='mainTitle'> プロジェクト引合状況</CAPTION>
+            <TBODY>
+                <tr>
+                    <td ALIGN="center" colspan="3"> <INPUT type="button" value="新規登録" ID="registNew" disabled style="display:none"> </td>
+                </tr>
+                <tr>
+                    <td WIDTH="25%" ALIGN="left" VALIGN="bottom">
+                        <TABLE ID="Tab_Code" BORDER=0>
+                            <TBODY>
+                                <TR> <TD nowrap class="showNumber" ALIGN="left"> 表示数</TD> <TD ALIGN="right"> <SPAN class="count"> </SPAN> /<SPAN class="spanTotal"> </SPAN> </TD> </TR>
+                                <TR> <TD nowrap class="searchName" ALIGN="right"> ﾌﾟﾛｼﾞｪｸﾄｺｰﾄﾞ：</TD> <TD> <INPUT class="searchText" size="10" maxlength="7" name="searcher" id='input_code'> </TD> </TR>
+                                <TR> <TD nowrap class="searchName" ALIGN="left"> ﾌﾟﾛｼﾞｪｸﾄ名：</TD> <TD> <INPUT class="searchText" size="10" maxlength="16" name="searcher" id='input_name'> </TD> </TR>
+                            </TBODY>
+                        </TABLE>
+                    </td>
+                    <td WIDTH="35%" ALIGN="center" VALIGN="bottom">
+                        <TABLE ID="Tab_Stat" BORDER=0>
+                            <TBODY>
+                                <TR>
+                                    <TD nowrap> <INPUT type="radio" name=search class="stat" VALUE=0 id="stat0">更新のみ</TD>
+                                    <TD nowrap> <INPUT type="radio" name=search class="stat" VALUE=1 id="stat1"><FONT COLOR="green">▲</FONT> 引合中</TD>
+                                    <TD nowrap> <INPUT type="radio" name=search class="stat" VALUE=2 id="stat2"><FONT COLOR="blue">●</FONT> 開発中</TD>
+                                    <TD nowrap> <INPUT type="radio" name=search class="stat" VALUE=3 id="stat3"><FONT COLOR="gray">●</FONT> 開発終了</TD>
+                                    <TD nowrap> <INPUT type="radio" name=search class="stat" VALUE=4 id="stat4"><FONT COLOR="gray">★</FONT> 終了</TD>
+                                    <TD nowrap> <INPUT type="radio" name=search class="stat" VALUE=5 id="stat5"><FONT COLOR="gray">×</FONT> 没</TD>
+                                    <TD nowrap> <INPUT type="radio" name=search class="stat" VALUE=6 id="stat6">すべて</TD>
+                                </TR>
+
+                            </TBODY>
+                        </TABLE>
+
+                    </td>
+                    <td WIDTH="40%" ALIGN="left" VALIGN="bottom">
+                        <TABLE ID="Tab_Group" BORDER="0" WIDTH="100%" CELLSPACING="0" CELLPADDING="1">
+                            <TBODY>
+
+                                <TR>
+                                    <TD nowrap ALIGN="right" WIDTH="25%" class="selectTab"> グループ名：</TD>
+                                    <TD width="75%">
+                                        <div style="display:flex">
+                                            <INPUT type="button" id="reset_group" class="reset" style="font-size: x-small; color: gray;" name="reset" value="✖">
+                                            <SELECT id="select_group" size=1 class="select selectbox" name="search"><option value=""></option> </SELECT>
+                                        </div>                                    </td>
+                                </TR>
+                                <TR>
+                                    <TD nowrap ALIGN="right" class="selectTab"> 会社名：</TD>
+                                    <TD>
+                                         <div  style="display:flex">
+                                        <INPUT type="button" id="reset_user" class="reset" style="font-size: x-small; color: gray" name="reset" value="✖">
+                                        <SELECT id="select_user" size=1 class="select selectbox" name="search"><option value=""></option> </SELECT>
+                                        </div >
+                                    </td>
+                                </TR>
+                                <TR>
+                                    <TD nowrap ALIGN="right" class="selectTab"> 登録者：</TD>
+                                    <TD>
+                                        <div  style="display:flex">
+                                        <INPUT type="button" id="reset_regist" class="reset" style="font-size:x-small;color:gray" name="reset" value="✖">
+                                        <SELECT id="select_regist" size=1 class="select selectbox" name="search"><option value=""></option> </SELECT>
+                                        </div >
+                                    </td>
+                                </TR>
+
+                            </TBODY>
+                        </TABLE>
+                    </td>
+                </tr>
+            </TBODY>
+        </table>
+        <!-- <label > === ヘッダー ===</label >-->
+        <div class="target">
+        </div>
+        <!-- <label > === フッター ===</label >-->
+        <div class="flexbox-container">
+            <div class="flexbox-item">
+                <ul>
+                    <li><span style="font-family: monospace; color: green;">▲</span>：引合があり交渉中です</li>
+                    <li><span style="font-family: monospace; color: blue;">●</span>：開発中</li>
+                    <li><span style="font-family: monospace; color: gray;">●</span>：開発終了</li>
+                    <li><span style="font-family: monospace; color: gray;">★</span>：終了(入金処理などすべて終了)</li>
+                    <li><span style="font-family: monospace; color: gray;">×</span>：不成立となりました</li>
+                </ul>
+            </div>
+            <div class="flexbox-item">
+                <ul>
+                    <li><IMG src='new.gif' />：前回参照した時刻以降に更新された。</li>
+                    <li><IMG src='new7.gif' />：本日より１週間以内に更新された。</li>
+                </ul>
+            </div>
+            <div class="flexbox-item">
+                <ul>
+                    <li> プロジェクトの内容を変更する時は<B> 登録者名</B> をクリックしてください。</li>
+                    <li> 担当グループを変更する時は<B> グループ名</B> をクリックしてください。</li>
+                    <li><input type="button" class="test" value="test"/></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</body>
+        </html >

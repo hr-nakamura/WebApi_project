@@ -4,16 +4,15 @@
     <meta charset="utf-8" />
     <title></title>
 
-    <script src="/WebApi/project/__home/Scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="../_Content/_Scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
 
-    <script src="/WebApi/project/__home/Scripts/encoding.js" type="text/javascript"></script>
-    <script src="/WebApi/project/__home/Scripts/jquery.my.webapi.js" type="text/javascript"></script>
-    <script src="/WebApi/project/__home/Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
-    <script src="/WebApi/project/__home/Scripts/cmn.js" type="text/javascript" charset="Shift_JIS"></script>
+    <script src="../_Content/_Scripts/encoding.js" type="text/javascript"></script>
+    <script src="../_Content/_Scripts/jquery.my.webapi.js" type="text/javascript"></script>
+    <script src="../_Content/_Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
+    <script src="../_Content/_Scripts/cmn.js" type="text/javascript" charset="Shift_JIS"></script>
     <LINK rel="stylesheet" href="account.css" type="text/css">
 
-    <script src="/WebApi/project/__home/Util/viewXML/viewXmlWindow.js" type="text/javascript"></script>
-    <script src="/WebApi/project/__home/debug/jquery.my.debug.js" type="text/javascript"></script>
+    <script src="../_Content/_debug/jquery.my.debug.js" type="text/javascript"></script>
     <script type="text/javascript">
         var yymm = "";
         var manTitle = "";
@@ -22,10 +21,10 @@
         var 部門;
         var 直間;
         var secTab = {
-            "EMG" : { name: "EMG", title: "ＥＭＧ収支計画" },
+            "EMG": { name: "EMG", title: "ＥＭＧ収支計画" },
             "統括": { name: "統括一覧", title: "統括収支計画" },
             "部門": { name: "部門一覧", title: "部門収支計画" },
-            "課"  : { name: "課一覧", title: "グループ収支計画" }
+            "課": { name: "課一覧", title: "グループ収支計画" }
         }
     </script>
 
@@ -34,33 +33,42 @@
         var para = {
             dispCmd: "EMG",
             secMode: "",
-            name:"",
+            name: "",
             year: "2021",
             fix: "70",
-            yosoku: "13",
+            yosoku: "3",
             browser: ""
         }
+
+        /*
+         secMode=開発&dispCmd=EMG
+         secMode=開発&dispCmd=統括一覧
+         secMode=開発&dispCmd=部門一覧
+         secMode=開発&dispCmd=課一覧
+         secMode=開発&dispCmd=統括詳細&dispName=開発本部
+         secMode=開発&dispCmd=課詳細&dispName=開発本部/第2開発部
+         secMode=間接&dispCmd=課詳細&dispName=本社/管理本部/財務経理課
+         */ 
     </script>
 
     <script type="text/javascript">
     </script>
     <script type="text/javascript">
-        var viewXmlWindow = new viewXmlWindow();               // xml表示用オブジェクト準備
+        //var viewXmlWindow = new viewXmlWindow();               // xml表示用オブジェクト準備
         $(function () {
             $(window).on("load", function (e) {
 
                 //          [引数]dispCmd = 統括詳細 & dispName=開発本部 & secMode=開発 & year=2019 & fix=70 & yosoku=-1
                 //          [引数]dispCmd = 部門詳細 & dispName=開発本部第7開発部 & secMode=開発 & year=2019 & fix=70 & yosoku=7
 
-                para.dispCmd = $.queryString("dispCmd", "");
-                para.dispName = $.queryString("dispName", "");
-                para.secMode = $.queryString("secMode", "");
-                $.debug(para.dispCmd, para.secMode, para.dispName);
+                //para.dispCmd = $.queryString("dispCmd", "");
+                //para.dispName = $.queryString("dispName", "");
+                //para.secMode = $.queryString("secMode", "");
+                $.debug("X",para.dispCmd, para.secMode, para.dispName);
                 //para.year = $.queryString("year", "");
                 //para.fix = $.queryString("fix", "");
                 //para.yosoku = $.queryString("yosoku", "");
-                //para.browser = $.Browser.name;
-
+                para.browser = $.Browser.name;
                 dispData(para);
             });
 
@@ -136,7 +144,7 @@
 
     <style>
         body {
-            background-image: url("/Project/home/_images/bg00.gif");
+            background-image: url("../_Content/_images/bg00.gif");
         }
 
         .Block_help {
