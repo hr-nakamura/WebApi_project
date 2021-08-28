@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="/Project/home/_Scripts/jquery-1.12.4.js" type="text/javascript"></script>
+    <script src="/Project/home/_Scripts/AuthCheck.js" type="text/javascript"></script>
+
+    <script src="/Project/home/_Scripts/encoding.js" type="text/javascript"></script>
+    <script src="/Project/home/_Scripts/jquery.my.frame.js" type="text/javascript"></script>
+
+    <script src="/Project/home/_Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
+    <script src="/Project/home/_Contents/debug/jquery.my.debug.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var url = "部門収支.html";
+        var para = {
+            dispCmd: "部門一覧",
+            secMode: "",
+            year: 2020,
+            fix: 70,
+            yosoku: 3
+        }
+    </script>
+    <script type="text/javascript">
+        window.onload = function () {
+            $(".mainTitle").html("部門収支計画");
+
+            loadHTML(para);
+        }
+        function loadHTML(para) {
+            var year = para.year;
+            var yymm = ((year - 1) * 100) + 10;
+            var dispCnt = 12;
+            //            var fixLevel = $(xmlDoc).find("確度").text();
+            var yyyy = parseInt(yymm / 100, 10);
+            var subTitle = "(" + $.strMonth(yymm) + "～" + $.strMonth($.yymmAdd(yymm, dispCnt - 1)) + ")";
+
+            $(".subTitle").html(subTitle);
+
+            var fixLevel = para.fix;
+            $(".level[value='" + fixLevel + "']").attr("checked", true);
+
+            var pObj = new $.ValueCollection(para);
+            var paraStr = pObj.ToString();
+
+            $("iframe.iframe_content").frame();
+            $("iframe.iframe_content").attr("src", "".concat(url, "?", paraStr));                // サブウインドオープン
+
+        }
+    </script>
+    <script type="text/javascript">
+        $(document).on("click", ".level", function (e) {
+            try {
+                $.debug(this.value);
+                switch (this.value) {
+                    case "70":
+                        para.fix = 70;
+                        break;
+                    case "50":
+                        para.fix = 50;
+                        break;
+                    case "30":
+                        para.fix = 30;
+                        break;
+                    case "10":
+                        para.fix = 10;
+                        break;
+                }
+                loadHTML(para);
+            } catch (e) {
+                $.alert(e.message);
+            }
+        });
+        $(document).on("click", ".prev, .next", function (e) {
+            try {
+                $.debug(this.className);
+                switch (this.className) {
+                    case "prev":
+                        para.year -= 1;
+                        break;
+                    case "next":
+                        para.year += 1;
+                        break;
+                }
+                loadHTML(para);
+            } catch (e) {
+                $.alert(e.message);
+            }
+        });
+    </script>
+
+    <script type="text/javascript">
+    </script>
+    <style type="text/css">
+        body {
+            background-image: url(/Project/home/_images/bg00.gif);
+            *font-family: Arial;
+            overflow: hidden;
+            padding: 0;
+            border: 0px solid green;
+            margin: 0px 0px 0px 0px;
+            background-color: snow;
+        }
+
+        .mainTitle {
+            font-size: larger;
+            font-weight: bold;
+        }
+
+        iframe.iframe_content {
+            background-image: url(/Project/home/_images/bg00.gif);
+            width: 0;
+            height: 0;
+            margin: 0px;
+            padding: 0px;
+            border-width: 0px;
+            border-collapse: collapse;
+            border-bottom-style: solid;
+            border-color: red;
+            vertical-align: top;
+            text-align: center;
+        }
+
+        .yosokuDiv {
+            text-wrap: none;
+            border: 0px solid red;
+        }
+    </style>
+
+</head>
+<body>
+    <table ALIGN="center" border="0">
+        <caption><SPAN class="mainTitle">aaa</SPAN></caption>
+        <tbody>
+            <TR>
+                <TD align="right" width="30%">
+                </TD>
+                <TD align=center width="40%" nowrap>
+                    <DIV nowrap>
+                        <SPAN><INPUT type="radio" class="level" name="level" value="70">Ａ</SPAN>
+                        <SPAN><INPUT type="radio" class="level" name="level" value="50">Ｂ</SPAN>
+                        <SPAN><INPUT type="radio" class="level" name="level" value="30">Ｃ</SPAN>
+                        <SPAN><INPUT type="radio" class="level" name="level" value="10">Ｄ</SPAN>
+                    </DIV>
+                </TD>
+                <TD align="left" width="30%" nowrap>
+                    <fieldset class="yosokuDiv" width="40%" style="display:block">
+                        <legend>予測の期間</legend>
+                        <SPAN><INPUT type="radio" class="yosokuMode" name="yosokuMode" value="3">３ヶ月</SPAN>
+                        <SPAN><INPUT type="radio" class="yosokuMode" name="yosokuMode" value="-1" checked>残り全て</SPAN>
+                    </fieldset>
+                </TD>
+            </TR>
+            <TR>
+                <TD ALIGN="right"><IMG SRC="/Project/home/_images/arrow_l1.gif" class="prev" border="0" TITLE="前の期" STYLE="DISPLAY: block"></TD>
+                <TD ALIGN="center"><SPAN class="subTitle">　</SPAN></TD>
+                <TD ALIGN="left"><IMG SRC="/Project/home/_images/arrow_r1.gif" class="next" border="0" TITLE="次の期" STYLE="DISPLAY: block"></TD>
+            </TR>
+        </tbody>
+    </table>
+    <br />
+    <iframe class="iframe_content"></iframe>
+</body>
+</html>

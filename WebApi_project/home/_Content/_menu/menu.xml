@@ -1,0 +1,484 @@
+<?xml version="1.0"?>
+<root>
+	<列>
+		<block name="test">
+			<menu>
+				<a style="text-align:left" url="/Project/_Test/test.html" mode="" test="F_TEST1">test</a>
+			</menu>
+		</block>
+		<block name="original xml">
+			<menu>
+				<a style="text-align:left" url="http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp" mode="" test="F_TEST">/Project/部門収支/xml/部門収支_XML.asp</a>
+				<a style="text-align:left" url="http://kansa.in.eandm.co.jp/Project/営業情報/保有リソース/xml/manPower_XML.asp" mode="" test="F_TEST1">/Project/営業情報/保有リソース/xml/manPower_XML.asp</a>
+				<a style="text-align:left" url="http://kansa.in.eandm.co.jp/Project/営業情報/保有リソース/協力会社費用/manPower_XML.asp" mode="" test="F_TEST1">/Project/営業情報/保有リソース/協力会社費用/manPower_XML.asp</a>
+				<a style="text-align:left" url="http://kansa.in.eandm.co.jp/Project/要員情報/要員一覧/xml/要員一覧_XML.asp" mode="">/Project/要員情報/要員一覧/xml/要員一覧_XML.asp</a>
+				<hr></hr>
+				<a style="text-align:left" url="/Project/home/要員情報/要員一覧/要員一覧.html" mode="" test="F_TEST1">/Project/要員情報/要員一覧</a>
+			</menu>
+		</block>
+		<block name="呼び出した xml">
+			<menu>
+				<a style="text-align:left" url="/Project/home/_xml/営業情報/保有リソース_協力会社/manPower_XML.asp" mode="" test="F_TEST1">xml 保有リソース_協力会社/manPower_XML.asp</a>
+				<a style="text-align:left" url="/Project/home/_xml/営業情報/保有リソース/manPower_XML.asp" mode="" test="F_TEST1">xml 保有リソース/manPower_XML.asp</a>
+				<a style="text-align:left" url="/Project/home/_xml/部門収支/部門収支_XML.asp" mode="" test="F_TEST1">xml 部門収支_XML.asp</a>
+				<a style="text-align:left" url="/Project/home/_xml/要員情報/要員一覧_XML.asp" mode="" test="F_TEST1">xml 要員一覧_XML.asp</a>
+			</menu>
+		</block>
+		<block name="作成した xml">
+			<menu>
+				<a style="text-align:left" url="/Project/home/_xml/projectBBS/projectData_XML.asp?json=1" mode="" test="F_TEST1">projectBBS_XML(JSON)</a>
+				<a style="text-align:left" url="http://kansa.in.eandm.co.jp/Project/home/_xml/projectBBS/projectData_XML.asp" mode="" test="F_TEST1">projectBBS_XML</a>
+				<a style="text-align:left" url="/Project/home/projectBBS/bbsMain.html" mode="" test="F_TEST1">projectBBS</a>
+				<hr></hr>
+				<a style="text-align:left" url="/Project/home/_xml/費用予測/費用状況_XML.asp" mode="" test="F_TEST1">費用状況_XML.asp</a>
+				<a style="text-align:left" url="/Project/home/_xml/売上予測/売上目標_部門_XML.asp" mode="" test="F_TEST1">売上目標_部門_XML.asp</a>
+				<a style="text-align:left" url="/Project/home/_xml/売上予測/売上予実_部門_XML.asp" mode="" test="F_TEST1">売上予実_部門_XML.asp</a>
+				<a style="text-align:left" url="/Project/home/_xml/売上予測/売上予実_分類_XML.asp" mode="" test="F_TEST1">売上予実_分類_XML.asp</a>
+				<a style="text-align:left" url="/Project/home/_xml/売上予測/売上予実_新規_XML.asp" mode="" test="F_TEST1">売上予実_新規_XML.asp</a>
+			</menu>
+		</block>
+		<block name="TEST">
+			<menu>
+				<a style="text-align:left" url="/Project/home/売上予測/売上目標_部門.html" mode="" test="F_TEST1">売上目標</a>
+				<a style="text-align:left" url="/Project/home/売上予測/売上予実_部門.html" mode="" test="F_TEST1">売上実績+予測</a>
+				<a style="text-align:left" url="/Project/home/売上予測/売上予実_分類.html" mode="" test="F_TEST1">売上実績+予測(分類)</a>
+				<a style="text-align:left" url="/Project/home/売上予測/売上予実_新規.html" mode="" test="F_TEST1">売上実績+予測(新規)</a>
+			</menu>
+		</block>
+	</列>
+	<列>
+    	<block name="収支状況">
+          <menu>
+            <a url="/Project/home/部門収支/部門収支.html" mode="F_TEST">ＥＭＧ収支計画(test)</a>
+            </menu>
+      <menu>
+        <a url="/Project/部門収支/EMG収支計画.asp" mode="F_TEST1">ＥＭＧ収支計画</a>
+      </menu>
+      <menu>
+        <a url="/Project/部門収支/統括収支計画.asp" mode="F_TEST1">統括収支計画</a>
+      </menu>
+      <menu>
+        <a url="/Project/部門収支/部門収支計画.asp" mode="F_TEST1">部門収支計画</a>
+        <a url="/Project/計画入力/GRP予測入力.asp" mode="" style="font-size:smaller">(予測データ設定)</a>
+        <a url="/Project/計画入力/付替処理/index_開発.asp" mode="" style="font-size:smaller">(付替予測設定)</a>
+      </menu>
+      <menu>
+        <label>== 開発部門(課) ==</label>
+        <a url="/Project/部門収支/グループ収支計画.asp" mode="">課 別収支</a>
+      </menu>
+      <menu>
+        <label>== 間接部門 ==</label>
+        <a url="/Project/部門収支/部門収支計画.asp?dispCmd=部門一覧&amp;secMode=間接" mode="">部門収支計画</a>
+        <a url="/Project/計画入力/間接予測入力.asp" mode="">(予測データ設定)</a>
+        <a url="/Project/計画入力/付替処理/index_間接.asp" mode="">(付替予測設定)</a>
+      </menu>
+      <menu>
+        <a url="/Project/部門収支/グループ収支計画.asp?secMode=間接" mode="">課 別収支</a>
+      </menu>
+      <menu>
+        <label>== 部門集計用 DB ==</label>
+        <a url="/Project/common_data/統括本部編集/main.asp" mode="">統括本部マスタ編集</a>
+      </menu>
+    </block>
+    <block name="予測・実績">
+      <menu>
+		  <a url="/Project/売上予測/売上目標_部門.asp" mode="">売上目標</a>
+        <a url="/Project/売上予測/売上予実_部門.asp" mode="">売上実績+予測</a>
+        <a url="/Project/売上予測/売上予実_分類.asp" mode="">売上実績+予測（分類別）</a>
+        <a url="/Project/売上予測/売上予実_新規.asp" mode="">売上実績+予測（新規別）</a>
+        <a url="/Project/売上予測/売上予実_新規2.asp" mode="">売上実績+予測（新規別2）</a>
+        <a url="/Project/費用予測/EMG費用状況.asp" mode="">費用状況</a>
+        <a url="/Project/営業情報/保有リソース/本部要員数.asp" mode="">保有リソース</a>
+      </menu>
+      <menu>
+        <a url="/Project/営業情報/保有リソース/協力会社費用/main1.asp" mode="">協力会社費用</a>
+        <a url="/Project/営業情報/保有リソース/協力会社費用/main2.asp" mode="">協力会社費用・累計</a>
+      </menu>
+    </block>
+    <block name="グラフ">
+      <menu>
+  	    <a url="/Project/業務情報/戦略別売上/客先別売上.asp" mode="">客先別売上(実績)</a>
+      </menu>
+      <menu>
+	    <a url="/Project/業務情報/戦略別売上/客先別売上.asp" mode="">客先別売上(実績)</a>
+        <a url="/Project/業務情報/戦略別売上/分類名別売上.asp" mode="">分類名別売上(実績)</a>
+        <a url="/Project/業務情報/戦略別売上/新規名別売上.asp" mode="">新規名別売上(実績)</a>
+        <a url="/Project/業務情報/戦略別売上/客先別売上_予測.asp" mode="">客先別売上(予測含む)</a>
+        <a url="/Project/業務情報/戦略別売上/年度別売上.asp" mode="">年度別売上</a>
+      </menu>
+    </block>
+    <block name="グループ会社">
+      <menu>
+        <a url="/Project/関連会社/収支状況/収支状況.asp" mode="">収支状況</a>
+        <a url="/Project/関連会社/計画入力/GRP予測入力.asp" mode="">(予測データ入力)</a>
+      </menu>
+    </block>
+  </列>
+  <列>
+    <block name="データ入力">
+      <menu>
+        <a url="/Project/home/projectBBS/bbsMain.html" mode="F_Project" test="F_TEST">プロジェクト引合</a>
+        <a url="/Project/projectCostProc/projectAssumption/main.asp" mode="">プロジェクト　初期情報</a>
+        <a url="/Project/projectCostProc/projectCostList_差分.asp" mode="">プロジェクト工数比較<br/><small>【予実 －　予測（計画）】</small>
+        </a>
+      </menu>
+      <menu>
+        <hr/>
+        <a url="/Project/projectCostProc/projectCostList.asp" mode="">プロジェクト原価率・情報入力</a>
+        <a url="/Project/projectCostProc/projectCostList_未入力.asp" mode="">プロジェクト原価率・未入力</a>
+        <a url="/Project/projectCostProc/projectCostList_Adm_掲示板.asp" mode="">プロジェクト 掲示板一覧</a>
+      </menu>
+      <menu>
+        <a url="/Project/projectCostProc/MenuMember.asp" mode="">プロジェクト結合集計</a>
+      </menu>
+      <menu>
+        <hr/>
+        <a url="/Project/projectCostProc/MenuManager.asp" mode="">プロジェクト管理用</a>
+      </menu>
+      <menu>
+        <a url="/Project/projectCostProc/MenuAdm.asp" mode="">プロジェクト監査用</a>
+      </menu>
+      <menu>
+        <hr/>
+        <a url="/Project/付替処理/売上付替/売上付替.asp" mode="">売上付替</a>
+        <a url="/Project/付替処理/協力費用付替/main.asp?mode=2" mode="">協力会社費用付替(開発)</a>
+        <a url="/Project/付替処理/協力費用付替/main.asp?mode=1" mode="">協力会社費用付替(部門)</a>
+        <a url="/Project/付替処理/協力費用付替/main.asp?mode=0" mode="">協力会社費用付替(間接)</a>
+      </menu>
+      <menu>
+        <a url="/Project/付替処理/費用付替/費用付替.asp" mode="">費用付替</a>
+      </menu>
+      <menu>
+        <a url="/Project/部門固定費/部門固定費.asp" mode="">部門固定費</a>
+        <a url="/Project/業務計画/index.asp" mode="">売上予測入力</a>
+      </menu>
+    </block>
+    <block name="プロジェクト情報">
+      <menu>
+        <a url="/Project/プロジェクト一覧/main.asp" mode="">プロジェクト一覧</a>
+        <a url="/Project/プロジェクト一覧/main_Ext.asp" mode="">プロジェクト作業一覧</a>
+        <a url="/Project/プロジェクト一覧/main_Cost.asp" mode="">プロジェクト原価一覧</a>
+        <a url="/Project/業務状況/main.asp" mode="">プロジェクト状況</a>
+      </menu>
+    </block>
+    <block name="ドキュメント">
+      <menu>
+        <a url="/Project/projectDocument/projectDoc_Main.asp" mode="">プロジェクト・ドキュメント</a>
+        <hr/>
+        <a url="/Project/projectDocument/projectDoc_管理.asp" mode="">プロジェクト・ドキュメント（管理）</a>
+        <a url="/Project/projectDocument/Kind_master/Kind_master.asp" mode="">項目名編集</a>
+        <hr/>
+        <a url="/Project/projectDocument/projectDoc_審査.asp" mode="">プロジェクト・ドキュメント（審査）</a>
+      </menu>
+    </block>
+    <block name="プロジェクト審査　設定用(井上・中村)">
+      <menu>
+        <a url="/Project/projectCostProc/projectJoin/Join_List_審査.asp" mode="">プロジェクト結合リスト（原価）</a>
+        <a url="/Project/projectCostProc/projectJoin/Join_main_審査.asp" mode="">プロジェクト結合・編集</a>
+      </menu>
+    </block>
+    <block name="井上さん個人用(審査マークテスト用)">
+      <menu>
+        <a url="/Project/projectCostProc/projectJoin/Join_List_審査.asp?mID=586782" mode="">プロジェクト結合リスト（原価）</a>
+        <a url="/Project/projectCostProc/projectJoin/Join_main_審査.asp?mID=586782" mode="">プロジェクト結合・編集</a>
+        <a url="/Project/projectDocument/projectDoc_審査.asp?mID=586782" mode="">プロジェクト・ドキュメント　審査リスト</a>
+      </menu>
+    </block>
+    <block name="原価管理">
+      <menu>
+        <a url="/Project/projectCostProc/業務情報/main_協力費用.asp" mode="">業務費・協力費</a>
+        <a url="/Project/projectCostProc/業務情報/main_労務費.asp" mode="">人件費・付帯費・労務費</a>
+      </menu>
+      <menu>
+        <hr/>
+        <a url="/Project/projectCostProc/業務情報/main_部門別年度収支.asp" mode="">部門別・年間収支</a>
+        <a url="/Project/projectCostProc/年度別原価/overhead_projectCostList.asp" mode="">年間原価情報(2015)</a>
+      </menu>
+      <menu>
+        <hr/>
+        <a url="/Project/projectCostProc/a_12/main_人件費グレード.asp" mode="">グレード別単価設定</a>
+        <a url="/Project/projectCostProc/a_12/main_人件費.asp" mode="">人件費一覧</a>
+        <a url="/Project/projectCostProc/a_12/main_付帯費.asp" mode="">付帯費一覧</a>
+      </menu>
+    </block>
+  </列>
+  <列>
+    <block name="作業情報">
+      <menu>
+        <a url="/Project/残業一覧/業務承認情報/main.asp" mode="">承認対象者の残業状況</a>
+        <a url="/Project/残業一覧/業務承認情報/workTime_Approve.asp" mode="">承認対象者の作業状況</a>
+        <a url="/Project/残業一覧/業務PM別_ORG/PMInfo.asp" mode="">担当プロジェクト(個別)</a>
+        <a url="/Project/残業一覧/業務PM別/PMListAll.asp" mode="">担当プロジェクト(全期間)</a>
+      </menu>
+      <menu>
+        <a url="/Project/残業一覧/残業状況/zanMain.asp" mode="">残業 一覧</a>
+        <a url="/Project/残業一覧/残業予測/main.asp" mode="">今月の残業の予測</a>
+      </menu>
+      <menu>
+        <a url="/Project/残業一覧/業務PM別_ORG/PMInfoAll.asp" mode="">プロジェクトの残業一覧</a>
+      </menu>
+      <menu>
+        <a url="/Project/common_data/workTime/workTime_Area.asp?area=宮崎" mode="">作業状況 (地域別)</a>
+        <a url="/Project/残業一覧/勤怠分析/leave.asp" mode="">打刻状況</a>
+      </menu>
+      <menu>
+        <hr/>
+        <a url="/Project/業務情報/予定実績一覧/projectList.asp" mode="">作業の予定実績(プロジェクト)</a>
+        <a url="/Project/業務情報/予定実績一覧/projectListPM.asp" mode="">作業の予定実績(担当ＰＭ)</a>
+        <a url="/Project/業務情報/作業予定一覧/memberPlanList.asp" mode="">作業の予定(メンバー)</a>
+      </menu>
+      <menu>
+        <a url="/Project/業務情報/稼動状況/mainProject.asp" mode="">プロジェクト情報</a>
+        <a url="/Project/業務情報/稼動状況/mainMember.asp" mode="">メンバー情報</a>
+      </menu>
+      <menu>
+        <hr/>
+        <a url="/Project/承認関連図/main.asp" mode="">勤務承認ルート</a>
+        <a url="/Project/会社組織図/main.asp" mode="">会社組織図</a>
+      </menu>
+    </block>
+    <block name="要員情報">
+      <menu>
+        <a url="/Project/要員情報/AGE/main.asp" mode="">社員分布図</a>
+        <a url="/Project/common_data/workTime/workTime_Area.asp?area=宮崎" mode="">作業状況 (地域別)</a>
+      </menu>
+    </block>
+    <block name="社員情報">
+      <menu>
+        <a url="/Project/社員情報/main.asp" mode="">社員情報</a>
+      </menu>
+    </block>
+    <block name="監査情報">
+      <menu>
+        <a url="/Project/projectCostProc/業務情報/main_協力費用.asp" mode="">協力費</a>
+        <a url="/Project/projectCostProc/業務情報/main_業務費用.asp" mode="">業務費</a>
+        <a url="/Project/projectCostProc/業務情報/main_労務費.asp" mode="">人件費・付帯費・労務費</a>
+      </menu>
+      <menu>
+        <a url="/Project/事業監査/" mode="">TEST</a>
+      </menu>
+    </block>
+    <block name="プロジェクトレポート(試用版)">
+      <menu>
+        <a url="/Project/projectReport/main.asp" mode="">プロジェクトレポート</a>
+        <a url="/Project/projectReport/projectReportList.asp?mode=1" mode="">プロジェクトレポートリスト</a>
+      </menu>
+    </block>
+  </列>
+  <列>
+    <block name="営業情報">
+      <menu>
+        <a url="/Project/営業情報/売上履歴/main.asp" mode="">売上更新履歴</a>
+      </menu>
+      <menu>
+        <a url="/Project/営業情報/売上工数/main.asp" mode="">売上・工数</a>
+      </menu>
+      <menu>
+        <a url="/Project/営業情報/年度単位売上/main.asp" mode="">年度単位売上</a>
+      </menu>
+      <menu>
+        <a url="/Project/営業情報/協力会社/Menu.asp" mode="">協力会社関連</a>
+      </menu>
+      <menu>
+        <a url="/Project/営業情報/工数履歴/main.asp" mode="">工数更新履歴</a>
+      </menu>
+    </block>
+    <block name="DB更新">
+      <menu>
+        <a url="/Project/定時処理/実行_menu.asp" mode="">定時処理</a>
+      </menu>
+    </block>
+    <block name="計画入力">
+      <menu>
+        <a url="/Project/計画入力/indexPlan.asp" mode="">計画入力(計画データ設定)</a>
+      </menu>
+      <menu>
+        <a url="/Project/計画入力/indexPlan2.asp" mode="">計画入力(項目別データ設定)</a>
+      </menu>
+      <menu>
+        <a url="/Project/計画入力/付替処理/index.asp" mode="">付替設定(売上・費用)</a>
+      </menu>
+    </block>
+    <block name="グループ会社(データ入力)">
+      <menu>
+        <a url="/Project/関連会社/収支状況/収支状況.asp" mode="">収支状況</a>
+      </menu>
+      <menu>
+        <a url="/Project/関連会社/計画入力/GRP実績入力.asp" mode="">実績入力</a>
+      </menu>
+      <menu>
+        <a url="/Project/関連会社/計画入力/GRP予測入力.asp" mode="">予測入力</a>
+      </menu>
+      <menu>
+        <a url="/Project/関連会社/計画入力/GRP計画入力.asp" mode="">計画入力</a>
+      </menu>
+    </block>
+  </列>
+  <列>
+    <block name="━━━━━　テスト　━━━━━">
+      <menu>
+        <a url="/Project/TEST/履歴/loginMain.asp" mode="">ログイン</a>
+      </menu>
+      <menu>
+        <a url="/Project/TEST/履歴/main.asp" mode="">参照履歴</a>
+      </menu>
+      <menu>
+        <a url="/Project/参照設定/main.asp" mode="">参照設定</a>
+      </menu>
+      <menu>
+        <a url="/Project/定時処理/実行_menu.asp" mode="">定時処理</a>
+      </menu>
+      <menu>
+        <a url="/Project/TEST/部署一覧/main.asp" mode="">部署一覧</a>
+      </menu>
+      <menu>
+        <a url="/Project/TEST/部署一覧/main2.asp" mode="">部署一覧2</a>
+      </menu>
+      <menu>
+        <a url="/Project/TEST/プロジェクト名設定/main.asp" mode="">プロジェクト名設定</a>
+      </menu>
+      <menu>
+        <a url="/Project/TEST/稼動状況/main.asp" mode="">プロジェクト 稼動状況</a>
+      </menu>
+      <menu>
+        <a url="/sales/" mode="">営業情報</a>
+      </menu>
+      <menu>
+        <a url="/Project/TEST/Menu_TEST.asp" mode="">テスト　メニュ</a>
+      </menu>
+    </block>
+    <block name="━━━━━　USR　━━━━━">
+      <menu>
+        <a url="/Project/USR/承認関連図/main.asp" mode="">承認関連図</a>
+      </menu>
+      <menu>
+        <a url="/Project/USR/売上予測/売上目標_部門.asp" mode="">売上目標_部門</a>
+      </menu>
+      <menu>
+        <a url="/Project/USR/売上予測/test.asp" mode="">売上目標_部門 XML</a>
+      </menu>
+      <menu>
+        <a url="http://www.in.eandm.co.jp/ADM/DOOR/Felica_Test/FelicaCtrl.asp" mode="">フェリカ読み取り（新）(EMG)</a>
+      </menu>
+      <menu>
+        <a url="http://kansa.in.eandm.co.jp/Project/USR/Felica_Test/FelicaCtrl.asp" mode="">フェリカ読み取り（新）</a>
+      </menu>
+      <menu>
+        <a url="/Project/USR/excel/test1.asp" mode="">EXCEL TEST</a>
+      </menu>
+    </block>
+  </列>
+  <列>
+    <block name="原価管理２">
+      <menu>
+        <a url="/Project/projectCostProc/projectCostList.asp" mode="">プロジェクト原価</a>
+      </menu>
+      <menu>
+        <a url="/Project/projectCostProc/xml/projectInfoList_XML.asp" mode="">XML</a>
+      </menu>
+      <menu>
+        <a url="/Project/projectCostProc/a_15/部門業務費.asp" mode="">業務費一覧</a>
+      </menu>
+      <menu>
+        <a url="/Project/projectCostProc/a_15/部門業務費.asp?mode=詳細" mode="">業務費一覧(詳細)</a>
+      </menu>
+      <menu>
+        <a url="/Project/projectCostProc/a_15/部門協力費.asp" mode="">協力費一覧</a>
+      </menu>
+      <menu>
+        <a url="/Project/projectCostProc/a_15/部門協力費.asp?mode=詳細" mode="">協力費一覧(詳細)</a>
+      </menu>
+      <menu>
+        <a url="/Project/projectCostProc/a_15/部門人件費.asp" mode="">人件費一覧</a>
+      </menu>
+      <menu>
+        <a url="/Project/projectCostProc/a_15/部門人件費.asp?mode=詳細" mode="">人件費一覧(詳細)</a>
+      </menu>
+      <menu>
+        <a url="/Project/projectCostProc/a_15/部門付帯費.asp" mode="">付帯費一覧</a>
+      </menu>
+      <menu>
+        <a url="/Project/projectCostProc/a_15/部門付帯費.asp?mode=詳細" mode="">付帯費一覧(詳細)</a>
+      </menu>
+      <menu>
+        <a url="/Project/projectCostProc/a_12/main_人件費.asp" mode="">メンバグレード設定</a>
+      </menu>
+      <menu>
+        <a url="/Project/projectCostProc/a_12/main_人件費グレード.asp" mode="">グレード別単価設定</a>
+      </menu>
+      <menu>
+        <a url="/Project/projectCostProc/a_12/main_付帯費.asp" mode="">部門別付帯費一覧</a>
+      </menu>
+      <menu>
+        <a url="/Project/projectCostProc/年度別原価/overhead_projectCostList.asp" mode="">年間原価情報(2015)</a>
+      </menu>
+      <menu>
+        <a url="/Project/projectCostProc/a_21/main_工数表示.asp" mode="">工数表示</a>
+      </menu>
+    </block>
+  </列>
+  <列>
+    <block name="試作中">
+      <menu>
+        <a url="/Project/未公開/組織図編集/main.asp" mode="">組織図編集</a>
+      </menu>
+      <menu>
+        <a url="/Project/未公開/会社組織図/main.asp" mode="">会社組織図</a>
+      </menu>
+      <menu>
+        <a url="/Project/common_data/統括本部編集/main.asp" mode="">統括本部編集</a>
+      </menu>
+      <menu>
+        <a url="/Project/未公開/部署編集/groupList.asp" mode="">部署編集</a>
+      </menu>
+      <menu>
+        <a url="/Project/未公開/プロジェクト結合/main.asp" mode="">プロジェクト結合</a>
+      </menu>
+      <menu>
+        <a url="/Project/未公開/担当プロジェクト/main.asp" mode="">担当プロジェクト　一覧</a>
+      </menu>
+      <menu>
+        <a url="/Project/定時処理/実行_main.asp?menu=1" mode="">定時処理</a>
+      </menu>
+      <menu>
+        <a url="/Project/未公開/商魂/salesDisp.asp" mode="">売上</a>
+      </menu>
+      <menu>
+        <a url="/Project/未公開/商魂/xml/salesData_X_XML.asp" mode="">売上 XML</a>
+      </menu>
+      <menu>
+        <a url="/Project/未公開/商魂/DBList.asp" mode="">商魂DB 表示</a>
+      </menu>
+      <menu>
+        <a url="/Project/未公開/PCA/DBList.asp" mode="">PCA_DB 表示</a>
+      </menu>
+      <menu>
+        <a url="/Project/未公開/商魂/PCA/営業DB_検索.asp" mode="">DB検索</a>
+      </menu>
+      <menu>
+        <a url="/Project/未公開/PCA/PCA.asp" mode="">PCA データベース一覧</a>
+      </menu>
+      <menu>
+        <a url="/Project/未公開/要員一覧/xml/要員一覧_XML.asp" mode="">要員一覧 XML</a>
+      </menu>
+      <menu>
+        <a url="/Project/未公開/要員一覧/要員一覧.asp?year=2014" mode="">要員一覧</a>
+      </menu>
+      <menu>
+        <a url="/Project/部門収支/本社費配賦.asp?dispCmd=統括配賦&amp;dispName=計画" mode="">本社費配賦（統括・計画）</a>
+      </menu>
+      <menu>
+        <a url="/Project/部門収支/本社費配賦.asp?dispCmd=統括配賦&amp;dispName=結合" mode="">本社費配賦（統括・結合）</a>
+      </menu>
+      <menu>
+        <a url="/Project/部門収支/本社費配賦.asp?dispCmd=部門配賦&amp;dispName=計画" mode="">本社費配賦（部門・計画）</a>
+      </menu>
+      <menu>
+        <a url="/Project/部門収支/本社費配賦.asp?dispCmd=部門配賦&amp;dispName=結合" mode="">本社費配賦（部門・結合）</a>
+      </menu>
+      <menu>
+        <a url="/Project/部門収支/間接部門内訳.asp?dispCmd=間接一覧" mode="">間接部門（予算元データ）</a>
+      </menu>
+    </block>
+  </列>
+</root>
