@@ -659,7 +659,7 @@ namespace WebApi_project.hostProc
 			Dictionary<string, dynamic> Tab = new Dictionary<string, dynamic>();
 			Dictionary<string, object> Info = new Dictionary<string, object>();
 			Dictionary<string, object> Data = new Dictionary<string, object>();
-			jsonProc jProc = new jsonProc();
+			projectInfo jProc = new projectInfo();
 
 			//Json = "{year:'2020',secMode:'開発',dispMode:'グループ'}";
 			//var o_json = JsonConvert.DeserializeObject<cmd_部門収支>(Json);

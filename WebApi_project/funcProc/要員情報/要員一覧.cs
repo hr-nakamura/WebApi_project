@@ -35,7 +35,7 @@ namespace WebApi_project.hostProc
             Tab.Add("Info", (object)Info);
             Tab.Add("Data", (object)Data);
 
-            jsonProc cmn = new jsonProc(); 
+            projectInfo cmn = new projectInfo(); 
             //var x = cmn.json_部門リスト(Json);
             //XmlDocument xmlDoc = new XmlDocument();
             //Tab = dbFunc_A();

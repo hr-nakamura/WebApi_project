@@ -8,7 +8,7 @@
     <script src="_Content/_Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
     <script src="_Content/_Scripts/DocumentWindow.js" type="text/javascript"></script>
     <script src="_Content/_Scripts/json2.js" type="text/javascript"></script>
-    <link href="_Content/_menu/menu.css" rel="stylesheet" type="text/css" />
+    <link  href="_Content/_menu/menu.css" rel="stylesheet" type="text/css" />
 
     <script src="_Content/_debug/jquery.my.debug.js" type="text/javascript"></script>
     <script type="text/javascript">
@@ -24,7 +24,6 @@
         var viewXmlWindow;
         $(window).ready(function () {
             try {
-                $.debug("manageMenu.html");
                 docWin = new DocumentWindow();
                 ////hostInfo = $.loadJSONDoc("/Project/home/_hostInfo/memberInfo.asp");
                 //var workInfo = $.loadJSONDoc("/Project/home/_hostInfo/memberInfo.asp");
@@ -44,6 +43,7 @@
         window.onload = function () {
             try {
                 $.debug("onload Start");
+                var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
                 if (typeof (hostInfo) == "undefined" || hostInfo.mail == "") {
                     alert("認証されていません、ログインしてください");
                     window.open('about:blank', '_self').close();
@@ -62,8 +62,6 @@
     </script>
     <script type="text/javascript">
         function dispMenu() {
-            var Tab = new $.UrlValueCollection();
-
             var xmlDoc = $.loadXMLDoc("_Content/_menu/menu.xml");
             var xslDoc = $.loadXMLDoc("_Content/_menu/menu.xslt");
 
@@ -77,8 +75,6 @@
 
             var Buff = $(xmlDoc).transformNode(xslDoc);
             $(".menu").html(Buff);
-
-            hostInfo["url"] = Tab;
 
 
             // 有効なメニューだけを表示
@@ -203,6 +199,11 @@
     </script>
 
     <style type="text/css">
+		body{
+			overflow:hidden;
+            background: url(_Content/_images/bg00.gif);
+
+		}
         div.main {
             display: none;
             text-align: center;
@@ -247,11 +248,6 @@
             margin-left: auto;
             margin-right: auto;
             border: 0px solid green;
-        }
-
-
-        body {
-            background-image: url(/Project/home/_images/bg00.gif);
         }
 
 

@@ -33,7 +33,6 @@
     <script type="text/javascript">
 
         window.onload = function () {
-
             $.debug("StartX");
 
             var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
@@ -48,12 +47,11 @@
             //var x = $.xml2str(xmlDoc);
 
             //$.alert.json(memberInfo);
-            //var memberInfo = $.call_ajax_get( WebApi_url_json, mailPara);
-            //$.alert.json(memberInfo);
+            var memberInfo = $.WebApi_json( "GET",WebApi_url_json, "projectInfo/json_memberInfo",mailPara);
+            $.alert.json(memberInfo);
 
             // methodListの取得
             var methodList = $.WebApi("GET", WebApi_url);
-            //var menu_Xml = $.str2xml(methodList);
             var menu_Xml = methodList;
 
             var menu_data = $.loadXMLDoc("menu.xml");

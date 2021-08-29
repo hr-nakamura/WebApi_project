@@ -3,34 +3,30 @@ using System.Web;
 using System.Text;
 using System.Data.SqlClient;
 using System.Collections.Generic;
+using System.Xml;
+
 using Newtonsoft.Json;
 
 using DebugHost;
 
 namespace WebApi_project.hostProc
 {
-    public partial class jsonProc
+    public partial class projectInfo : hostProc
     {
-        class para_mailInfo
+        public XmlDocument memberInfo(String Json)
         {
-            public string mailAddr { get; set; }
-        }
-        class s_memberInfo
-        {
-            public string name { get; set; }
-            public string mail { get; set; }
-            public string postCode { get; set; }
-            public string postName { get; set; }
-            public string 所属名 { get; set; }
-            public string 所属コード { get; set; }
-            public string Tag { get; set; }             // 許可情報
-            public List<s_memberInfo> 兼務 { get; set; }
-            public s_memberInfo()
+            if( Json == "{}")
             {
-                this.兼務 = new List<s_memberInfo>();
-                this.Tag = "";
+                Json = "{mailAddr : 'nakamura@eandm.co.jp'}";
             }
+            //            var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
+            object json_data = json_memberInfo(Json);
+            XmlDocument xmlDoc = Json2Xml(json_data);
+            //XmlDocument xmlDoc = new XmlDocument();
+
+            return (xmlDoc);
         }
+
         public object json_memberInfo(string Json)
         {
             var o_json = JsonConvert.DeserializeObject<para_mailInfo>(Json);
@@ -219,6 +215,26 @@ namespace WebApi_project.hostProc
             }
             xTab.Sort();
             return (string.Join(",",xTab) );
+        }
+    }
+    class para_mailInfo
+    {
+        public string mailAddr { get; set; }
+    }
+    class s_memberInfo
+    {
+        public string name { get; set; }
+        public string mail { get; set; }
+        public string postCode { get; set; }
+        public string postName { get; set; }
+        public string 所属名 { get; set; }
+        public string 所属コード { get; set; }
+        public string Tag { get; set; }             // 許可情報
+        public List<s_memberInfo> 兼務 { get; set; }
+        public s_memberInfo()
+        {
+            this.兼務 = new List<s_memberInfo>();
+            this.Tag = "";
         }
     }
 }
