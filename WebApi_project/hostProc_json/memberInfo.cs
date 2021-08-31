@@ -21,8 +21,8 @@ namespace WebApi_project.hostProc
             }
             //            var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
             object json_data = json_memberInfo(Json);
-            XmlDocument xmlDoc = Json2Xml(json_data);
-            //XmlDocument xmlDoc = new XmlDocument();
+            //XmlDocument xmlDoc = Json2Xml(json_data);
+            XmlDocument xmlDoc = new XmlDocument();
 
             return (xmlDoc);
         }
@@ -126,7 +126,7 @@ namespace WebApi_project.hostProc
                  }
             return (memberInfo);
         }
-        string memberInfoX2(string mailAddr)
+        List<string> memberInfoX2(string mailAddr)
         {
             Dictionary<string, string> Tab = new Dictionary<string, string>();
             SqlConnection DB;
@@ -214,7 +214,8 @@ namespace WebApi_project.hostProc
                 xTab.Add(item.Key);
             }
             xTab.Sort();
-            return (string.Join(",",xTab) );
+//            return (string.Join(",", xTab));
+            return (xTab);
         }
     }
     class para_mailInfo
@@ -229,12 +230,12 @@ namespace WebApi_project.hostProc
         public string postName { get; set; }
         public string 所属名 { get; set; }
         public string 所属コード { get; set; }
-        public string Tag { get; set; }             // 許可情報
+        public List<string> Tag { get; set; }             // 許可情報
         public List<s_memberInfo> 兼務 { get; set; }
         public s_memberInfo()
         {
             this.兼務 = new List<s_memberInfo>();
-            this.Tag = "";
+            this.Tag = new List<string>();
         }
     }
 }

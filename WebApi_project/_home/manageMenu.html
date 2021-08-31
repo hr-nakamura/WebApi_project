@@ -4,20 +4,24 @@
     <meta charset="shift_jis" />
     <title></title>
     <script src="_Content/_Scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
-
+    <script src="_Content/_Scripts/jquery.my.webapi.js" type="text/javascript"></script>
     <script src="_Content/_Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
     <script src="_Content/_Scripts/DocumentWindow.js" type="text/javascript"></script>
     <script src="_Content/_Scripts/json2.js" type="text/javascript"></script>
-    <link  href="_Content/_menu/menu.css" rel="stylesheet" type="text/css" />
+    <link href="_Content/_menu/menu.css" rel="stylesheet" type="text/css" />
 
     <script src="_Content/_debug/jquery.my.debug.js" type="text/javascript"></script>
     <script type="text/javascript">
         var debug_mode = true;
+        var WebApi_url = "/WebApi/project/api/xml";
+        var WebApi_url_json = "/WebApi/project/api/json";
+        var mailPara = {
+            mailAddr: "nakamura@eandm.co.jp"
+        };
+        var memberInfo = {};
         var hostInfo = {
             "name": "テスト　データ",
             "mail": "test@eandm.co.jp",
-            "post": "",
-            "sub": [],
             "Tag": ["F_TEST"]
         }
         var docWin;
@@ -44,13 +48,18 @@
             try {
                 $.debug("onload Start");
                 var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
-                if (typeof (hostInfo) == "undefined" || hostInfo.mail == "") {
+                //hostName = "http://kansa.in.eandm.co.jp";
+
+                memberInfo = $.WebApi_json("GET", WebApi_url_json, "projectInfo/json_memberInfo", mailPara);
+                hostInfo.Tag.forEach(function (elem) { memberInfo.Tag.push(elem); });
+
+                if (typeof (memberInfo) == "undefined" || memberInfo.mail == "") {
                     alert("認証されていません、ログインしてください");
                     window.open('about:blank', '_self').close();
                 }
                 else {
                     dispMenu();
-                    $(".memberName").text("【" + hostInfo.name + "】");
+                    $(".memberName").text("【" + memberInfo.name + "】");
                 }
             } catch (e) {
                 $.alert("onload", e.message);
@@ -62,19 +71,29 @@
     </script>
     <script type="text/javascript">
         function dispMenu() {
+            var Tab = new $.UrlValueCollection();
+            var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
+            //hostName = "http://kansa.in.eandm.co.jp";
+
+            var Url = hostName + WebApi_url_json;
+            memberInfo = $.WebApi_json("GET", Url, "projectInfo/json_memberInfo", mailPara);
+            hostInfo.Tag.forEach(function (elem) { memberInfo.Tag.push(elem); });
+
+
             var xmlDoc = $.loadXMLDoc("_Content/_menu/menu.xml");
             var xslDoc = $.loadXMLDoc("_Content/_menu/menu.xslt");
 
             var root = $(xmlDoc).find("root");
             var modeInfo = xmlDoc.createElement("modeInfo");
-            //$(modeInfo).append("["+hostInfo.Tag.join("][")+"]");
-            var modeText = xmlDoc.createTextNode("[" + hostInfo.Tag.join("][") + "]");
+            var modeText = xmlDoc.createTextNode("[" + memberInfo.Tag.join("][") + "]");
             modeInfo.appendChild(modeText);
 
             root.prepend(modeInfo);
 
             var Buff = $(xmlDoc).transformNode(xslDoc);
             $(".menu").html(Buff);
+
+            hostInfo["url"] = Tab;
 
 
             // 有効なメニューだけを表示
@@ -199,11 +218,11 @@
     </script>
 
     <style type="text/css">
-		body{
-			overflow:hidden;
+        body {
+            overflow: hidden;
             background: url(_Content/_images/bg00.gif);
+        }
 
-		}
         div.main {
             display: none;
             text-align: center;

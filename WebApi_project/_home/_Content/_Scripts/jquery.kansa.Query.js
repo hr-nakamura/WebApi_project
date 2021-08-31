@@ -1,13 +1,30 @@
 ﻿;(function ($) {
-    $.alert = function () {
-        var work = [];
-        var Cnt = arguments.length;
-        for (var i = 0; i < Cnt; i++) {
-            work.push(arguments[i]);
-        }
-        alert(work.join("\n"));
-        return (this);
-    },
+        $.alert = function () {
+            var work = [];
+            var Cnt = arguments.length;
+            for (var i = 0; i < Cnt; i++) {
+                work.push(arguments[i]);
+            }
+            alert(work.join("\n"));
+            return (this);
+        },
+        $.alert.json = function () {
+            var message = JSON.stringify(arguments[0], null, 2);
+            alert(message);
+
+        },
+        $.isJSON = function( arg ) {
+                arg = (typeof arg === "function") ? arg() : arg;
+                if (typeof arg !== "string") {
+                    return false;
+                }
+                try {
+                    arg = (!JSON) ? eval("(" + arg + ")") : JSON.parse(arg);
+                    return true;
+                } catch (e) {
+                    return false;
+                }
+            },
         $.xml2str = function (xmlNode) {
             var xmlString = "";
             var browser = $.Browser.name;
@@ -542,6 +559,49 @@
         }
 
     })(jQuery);
+; (function ($) {
+    // <xsl:variable name="list_title" >仮払の申請伝票</xsl:variable >
+    // xslDoc.selectSingleNode("//xsl:variable[name='list_tile']")
+    // $(xslDoc).selectSingleNode("//xsl:variable[name='list_tile']");
+    $.fn.selectSingleNode = function (str) {
+        var nodes = this.selectNodes(str);
+        if (nodes == null) return (null);
+
+        var ptn1 = /xsl:(\w+)(\[@(\w+)='(\w+)'\])*/i;
+        var work = str.match(ptn1);
+        if (work == null || work.length <= 2) return (nodes[0]);
+        var tagName = work[1];
+        var attrName = work[3];
+        var attrValue = work[4];
+        var node = null;
+        $.each(nodes, function (i, elem) {
+            var n = $(elem).attr(attrName);
+            if (n == attrValue) {
+                node = elem;
+                return (false);
+            }
+        });
+        return (node);
+    };
+    $.fn.selectNodes = function (str) {
+        var ptn1 = /xsl:(\w+)(\[@(\w+)='(\w+)'\])*/i;
+        var work = str.match(ptn1);
+        var nodes = null;
+        if (work == null) {
+            nodes = this[0].getElementsByTagName(str);
+        }
+        else {
+            var tagName = work[1];
+            try {
+                nodes = this[0].getElementsByTagNameNS("http://www.w3.org/1999/XSL/Transform", tagName);
+            } catch (e) {
+                //alert(e.message);
+                nodes = this[0].getElementsByTagName("xsl:" + tagName);
+            }
+        }
+        return (nodes);
+    };
+})(jQuery);
 
 ;(function ($) {
 	$.Browser = {
