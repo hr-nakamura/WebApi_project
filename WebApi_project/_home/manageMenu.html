@@ -29,13 +29,14 @@
         $(window).ready(function () {
             try {
                 docWin = new DocumentWindow();
-                ////hostInfo = $.loadJSONDoc("/Project/home/_hostInfo/memberInfo.asp");
-                //var workInfo = $.loadJSONDoc("/Project/home/_hostInfo/memberInfo.asp");
-                //if (!$.isEmptyObject(workInfo) && $.isEmptyObject(workInfo.Tag)) {
-                //    $.merge(workInfo.Tag, hostInfo.Tag);
-                //}
-                //$.extend(hostInfo, workInfo);
-                //alert(JSON.stringify(hostInfo,null,2));
+                var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
+                //hostName = "http://kansa.in.eandm.co.jp";
+
+                var Url = hostName + WebApi_url_json;
+                memberInfo = $.WebApi_json("GET", Url, "projectInfo/json_memberInfo", mailPara);
+                hostInfo.Tag.forEach(function (elem) { memberInfo.Tag.push(elem); });
+
+
             } catch (e) {
                 $.alert("onready", e.message);
             }
@@ -47,19 +48,14 @@
         window.onload = function () {
             try {
                 $.debug("onload Start");
-                var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
-                //hostName = "http://kansa.in.eandm.co.jp";
-
-                memberInfo = $.WebApi_json("GET", WebApi_url_json, "projectInfo/json_memberInfo", mailPara);
-                hostInfo.Tag.forEach(function (elem) { memberInfo.Tag.push(elem); });
 
                 if (typeof (memberInfo) == "undefined" || memberInfo.mail == "") {
                     alert("認証されていません、ログインしてください");
                     window.open('about:blank', '_self').close();
                 }
                 else {
-                    dispMenu();
                     $(".memberName").text("【" + memberInfo.name + "】");
+                    dispMenu();
                 }
             } catch (e) {
                 $.alert("onload", e.message);
@@ -71,13 +67,7 @@
     </script>
     <script type="text/javascript">
         function dispMenu() {
-            var Tab = new $.UrlValueCollection();
-            var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
-            //hostName = "http://kansa.in.eandm.co.jp";
-
-            var Url = hostName + WebApi_url_json;
-            memberInfo = $.WebApi_json("GET", Url, "projectInfo/json_memberInfo", mailPara);
-            hostInfo.Tag.forEach(function (elem) { memberInfo.Tag.push(elem); });
+            //var Tab = new $.UrlValueCollection();
 
 
             var xmlDoc = $.loadXMLDoc("_Content/_menu/menu.xml");
@@ -93,7 +83,7 @@
             var Buff = $(xmlDoc).transformNode(xslDoc);
             $(".menu").html(Buff);
 
-            hostInfo["url"] = Tab;
+            //hostInfo["url"] = Tab;
 
 
             // 有効なメニューだけを表示
@@ -181,32 +171,6 @@
             for (var n = 0; n < Cnt; n++) {
                 if (windowTab[n] != null && !windowTab[n].closed) windowTab[n].close();
             }
-        }
-    </script>
-    <script type="text/javascript">
-
-        function Menu_Load(url) {
-            try {
-
-                var returnValue = "";
-                $.ajax({
-                    url: url,
-                    type: "GET",
-                    contentType: "text/html",
-                    cache: false,
-                    async: false,
-                    timeout: 10
-                }).done(function (data, status, xhr) {
-                    returnValue = xhr.responseText;
-                }).fail(function (xhr, status, error) {
-                    throw new Error(xhr.statusText);
-                }).always(function () {
-                    //$.alert("always");
-                });
-            } catch (e) {
-                $.alert("ajax load error", url, e.message);
-            }
-            return (returnValue);
         }
     </script>
     <script type="text/javascript">
