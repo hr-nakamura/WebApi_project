@@ -46,22 +46,22 @@
 			</menu>
 		</block>
 	</列>
-	<列>
-    	<block name="収支状況">
-          <menu>
-            <a url="部門収支/部門収支.html" mode="F_TEST">ＥＭＧ収支計画(test)</a>
+    <列>
+        <block name="収支状況">
+            <menu>
+                <a url="部門収支/部門収支.html" mode="F_TEST">ＥＭＧ収支計画(test)</a>
             </menu>
-      <menu>
-        <a url="/Project/部門収支/EMG収支計画.asp" mode="F_TEST1">ＥＭＧ収支計画</a>
-      </menu>
-      <menu>
-        <a url="/Project/部門収支/統括収支計画.asp" mode="F_TEST1">統括収支計画</a>
-      </menu>
-      <menu>
-        <a url="/Project/部門収支/部門収支計画.asp" mode="F_TEST1">部門収支計画</a>
-        <a url="/Project/計画入力/GRP予測入力.asp" mode="" style="font-size:smaller">(予測データ設定)</a>
-        <a url="/Project/計画入力/付替処理/index_開発.asp" mode="" style="font-size:smaller">(付替予測設定)</a>
-      </menu>
+            <menu>
+                <a url="部門収支/EMG収支計画.html" mode="F_TEST">ＥＭＧ収支計画</a>
+            </menu>
+            <menu>
+                <a url="部門収支/統括収支計画.html" mode="F_TEST">統括収支計画</a>
+            </menu>
+            <menu>
+                <a url="/Project/部門収支/部門収支計画.asp" mode="F_TEST1">部門収支計画</a>
+                <a url="/Project/計画入力/GRP予測入力.asp" mode="" style="font-size:smaller">(予測データ設定)</a>
+                <a url="/Project/計画入力/付替処理/index_開発.asp" mode="" style="font-size:smaller">(付替予測設定)</a>
+            </menu>
       <menu>
         <label>== 開発部門(課) ==</label>
         <a url="/Project/部門収支/グループ収支計画.asp" mode="">課 別収支</a>
