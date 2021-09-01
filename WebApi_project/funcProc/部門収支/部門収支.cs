@@ -1051,12 +1051,12 @@ namespace WebApi_project.hostProc
 
 		確定日情報 確定日(int year, DateTime d, int? yosokuCnt)
 		{
-//			int adjustDayCnt = 7;
+			//			int adjustDayCnt = 7;
 
-			dayCheck dChk = new dayCheck();
+			projectInfo pInfo = new projectInfo();
 //			DateTime d = DateTime.Today;
 			int yymm = (d.Year * 100) + d.Month;
-			int OKday = dChk.dayChk(yymm);
+			int OKday = pInfo.dayChk(yymm);
 			yymm = (d.Day < OKday ? yymmAdd(yymm, -1) : yymmAdd(yymm, 0));      // データ有効月の計算(12日以前は前々月)
 
 			int b_yymm = ((year - 1) * 100) + 10;
@@ -1104,7 +1104,7 @@ namespace WebApi_project.hostProc
 				n_yymm = yymmAdd(c_yymm, 1);
 				n_yy = n_yymm / 100;
 				n_mm = n_yymm % 100;
-				n_dd = dChk.dayChk(n_yymm);
+				n_dd = pInfo.dayChk(n_yymm);
 
 				Buff = String.Concat(c_yy, "年", c_mm, "月の実績表示は", n_yy, "年", n_mm, "月", n_dd, "日以降です");
 			}

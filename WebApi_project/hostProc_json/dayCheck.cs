@@ -10,8 +10,19 @@ using System.Collections.Generic;
 
 namespace WebApi_project.hostProc
 {
-    public class dayCheck : hostProc
-    {
+	partial class projectInfo : hostProc
+	{
+		class para_dayChk
+        {
+			public int yymm { get; set; }
+			public int day { get; set; }
+		}
+	public object json_dayChk(string Json)
+        {
+            var o_json = JsonConvert.DeserializeObject<para_dayChk>(Json);
+			o_json.day = dayChk(o_json.yymm);
+			return (o_json);
+        }
 		public int dayChk(int yymm, int adjustDayCnt = 7)
 		{
 
