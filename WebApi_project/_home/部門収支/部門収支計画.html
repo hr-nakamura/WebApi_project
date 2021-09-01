@@ -3,19 +3,19 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
-    <script src="/Project/home/_Scripts/jquery-1.12.4.js" type="text/javascript"></script>
-    <script src="/Project/home/_Scripts/AuthCheck.js" type="text/javascript"></script>
+    <script src="../_Content/_Scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <!--    <script src="../_Content/_Scripts/AuthCheck.js" type="text/javascript"></script>-->
 
-    <script src="/Project/home/_Scripts/encoding.js" type="text/javascript"></script>
-    <script src="/Project/home/_Scripts/jquery.my.frame.js" type="text/javascript"></script>
+    <script src="../_Content/_Scripts/encoding.js" type="text/javascript"></script>
+    <script src="../_Content/_Scripts/jquery.my.frame.js" type="text/javascript"></script>
 
-    <script src="/Project/home/_Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
-    <script src="/Project/home/_Contents/debug/jquery.my.debug.js" type="text/javascript"></script>
+    <script src="../_Content/_Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
+    <script src="../_Content/debug/jquery.my.debug.js" type="text/javascript"></script>
     <script type="text/javascript">
         var url = "部門収支.html";
         var para = {
             dispCmd: "部門一覧",
-            secMode: "",
+            secMode: "開発",
             year: 2020,
             fix: 70,
             yosoku: 3
@@ -93,7 +93,7 @@
     </script>
     <style type="text/css">
         body {
-            background-image: url(/Project/home/_images/bg00.gif);
+            background-image: url(../_Content/_images/bg00.gif);
             *font-family: Arial;
             overflow: hidden;
             padding: 0;
@@ -108,7 +108,7 @@
         }
 
         iframe.iframe_content {
-            background-image: url(/Project/home/_images/bg00.gif);
+            background-image: url(../_Content/_images/bg00.gif);
             width: 0;
             height: 0;
             margin: 0px;
@@ -152,9 +152,10 @@
                 </TD>
             </TR>
             <TR>
-                <TD ALIGN="right"><IMG SRC="/Project/home/_images/arrow_l1.gif" class="prev" border="0" TITLE="前の期" STYLE="DISPLAY: block"></TD>
+            <TR>
+                <TD ALIGN="right"><IMG SRC="../_Content/_images/arrow_l1.gif" class="prev" border="0" TITLE="前の期" STYLE="DISPLAY: block"></TD>
                 <TD ALIGN="center"><SPAN class="subTitle">　</SPAN></TD>
-                <TD ALIGN="left"><IMG SRC="/Project/home/_images/arrow_r1.gif" class="next" border="0" TITLE="次の期" STYLE="DISPLAY: block"></TD>
+                <TD ALIGN="left"><IMG SRC="../_Content/_images/arrow_r1.gif" class="next" border="0" TITLE="次の期" STYLE="DISPLAY: block"></TD>
             </TR>
         </tbody>
     </table>

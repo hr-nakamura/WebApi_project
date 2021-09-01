@@ -31,9 +31,8 @@
     <script type="text/javascript">
         //var url = "/WebApi/project/_Func/部門収支/EMG.xml";
         var para = {
-            dispCmd: "",
+            dispCmd: "EMG",
             secMode: "",
-            name: "",
             year: "2021",
             fix: "70",
             yosoku: "3",
@@ -61,14 +60,15 @@
                 //          [引数]dispCmd = 統括詳細 & dispName=開発本部 & secMode=開発 & year=2019 & fix=70 & yosoku=-1
                 //          [引数]dispCmd = 部門詳細 & dispName=開発本部第7開発部 & secMode=開発 & year=2019 & fix=70 & yosoku=7
 
-                para.dispCmd = $.queryString("dispCmd", "");
-                para.dispName = $.queryString("dispName", "");
-                para.secMode = $.queryString("secMode", "");
-                $.debug("X",para.dispCmd, para.secMode, para.dispName);
-                para.year = $.queryString("year", "");
-                para.fix = $.queryString("fix", "");
-                para.yosoku = $.queryString("yosoku", "");
+                para.dispCmd = $.queryString("dispCmd", para.dispCmd);
+                para.dispName = $.queryString("dispName", para.dispName);
+                para.secMode = $.queryString("secMode", para.secMode);
+                para.year = $.queryString("year", para.year);
+                para.fix = $.queryString("fix", para.fix);
+                para.yosoku = $.queryString("yosoku", para.yosoku);
                 para.browser = $.Browser.name;
+                $.debug.json("para", para);
+//                $.debug("X", para.dispCmd, para.secMode, para.dispName);
                 dispData(para);
             });
 
@@ -77,20 +77,23 @@
 
     <script type="text/javascript">
         function dispData(para) {
-            var url = "http://localhost/webapi/project/api/xml";
+            var host_name = "http://localhost";
+            host_name = "";
+            var url = host_name + "/webapi/project/api/xml";
             var json = {
                 dispCmd: para.dispCmd,
-                dispName: para.dispName,
+                dispName:para.dispName,
                 secMode: para.secMode,
-                year: 2021,
-                yosoku: 3,
-                fix: 70
+                year: para.year,
+                yosoku: para.yosoku,
+                fix: para.fix
             };
+//            $.debug.json("para",json);
             xmlDoc = $.WebApi("GET", url, "部門収支/部門収支_XML", json);
 
 
-            var xsl_name1 = "EMG部門収支.xsl";
-            var xslDoc = $.loadXMLDoc(xsl_name1);
+            var xsl_name = "EMG部門収支.xsl";
+            var xslDoc = $.loadXMLDoc(xsl_name);
 
             var Buff = $.transformNode(xmlDoc, xslDoc);
             $(".dataG").html(Buff);

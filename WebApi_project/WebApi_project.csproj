@@ -155,10 +155,10 @@
     <Content Include="_home\部門収支\xsl\部門_リスト_select.xsl" />
     <Content Include="_home\部門収支\xsl\部門収支.xsl" />
     <Content Include="_home\部門収支\xsl\間接部門内訳.xsl" />
-    <Content Include="_home\部門収支\グループ収支計画.html" />
     <Content Include="_home\部門収支\統括収支計画.html" />
     <Content Include="_home\部門収支\部門収支.html" />
     <Content Include="_home\部門収支\部門収支.xsl" />
+    <Content Include="_home\部門収支\グループ収支計画.html" />
     <Content Include="_home\部門収支\部門収支計画.html" />
     <Content Include="_Func\QOSMIO\a.asp" />
     <Content Include="_Func\部門収支\account.css" />
