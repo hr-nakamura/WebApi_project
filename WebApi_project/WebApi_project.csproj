@@ -257,7 +257,7 @@
     <Compile Include="funcProc\要員情報\要員一覧.cs" />
     <Compile Include="funcProc\費用予測\費用予測.cs" />
     <Compile Include="funcProc\部門収支\部門収支.cs" />
-    <Compile Include="hostProc_json\jsonProc.cs" />
+    <Compile Include="hostProc_json\dayCheck.cs" />
     <Compile Include="hostProc_json\memberInfo.cs" />
     <Compile Include="hostProc_json\部門リスト.cs" />
     <Compile Include="Models\accountInfo.cs" />

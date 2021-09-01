@@ -272,7 +272,7 @@ namespace WebApi_project.hostProc
 			string secMode = o_json.secMode;
 			int fixLevel = o_json.fix;
 			int year = o_json.year;
-			確定日情報 Buff = 確定日(year, o_json.yosoku);
+			確定日情報 Buff = 確定日(year, DateTime.Today, o_json.yosoku);
 			int s_yymm = Buff.s_yymm;
 			int c_yymm = Buff.c_yymm;
 			int actualCnt = Buff.actualCnt;
@@ -1049,13 +1049,14 @@ namespace WebApi_project.hostProc
 			return (target.Day);
 		}
 
-		確定日情報 確定日(int year, int? yosokuCnt)
+		確定日情報 確定日(int year, DateTime d, int? yosokuCnt)
 		{
-			int adjustDayCnt = 7;
+//			int adjustDayCnt = 7;
 
-			DateTime d = DateTime.Today;
+			dayCheck dChk = new dayCheck();
+//			DateTime d = DateTime.Today;
 			int yymm = (d.Year * 100) + d.Month;
-			int OKday = dayChk(yymm, adjustDayCnt);
+			int OKday = dChk.dayChk(yymm);
 			yymm = (d.Day < OKday ? yymmAdd(yymm, -1) : yymmAdd(yymm, 0));      // データ有効月の計算(12日以前は前々月)
 
 			int b_yymm = ((year - 1) * 100) + 10;
@@ -1103,7 +1104,7 @@ namespace WebApi_project.hostProc
 				n_yymm = yymmAdd(c_yymm, 1);
 				n_yy = n_yymm / 100;
 				n_mm = n_yymm % 100;
-				n_dd = dayChk(n_yymm, adjustDayCnt);
+				n_dd = dChk.dayChk(n_yymm);
 
 				Buff = String.Concat(c_yy, "年", c_mm, "月の実績表示は", n_yy, "年", n_mm, "月", n_dd, "日以降です");
 			}
