@@ -84,6 +84,7 @@
     <Content Include="funcProc\部門収支\BASE.xml" />
     <Content Include="Global.asax" />
     <Content Include="funcProc\projectBBS\projectData_XML.xml" />
+    <Content Include="hostProc\memo.txt" />
     <Content Include="_home\manageMenu.html" />
     <Content Include="_home\projectBBS\bbsMain.html" />
     <Content Include="_home\projectBBS\jquery.complete.js" />
@@ -143,6 +144,9 @@
     <Content Include="_home\_Content\_Scripts\promise-7.0.4.min.js" />
     <Content Include="_home\_Content\_Scripts\store.min.js" />
     <Content Include="_home\部門収支\account.css" />
+    <Content Include="_home\部門収支\統括収支計画.html" />
+    <Content Include="_home\部門収支\グループ収支計画.html" />
+    <Content Include="_home\部門収支\部門収支計画.html" />
     <Content Include="_home\部門収支\EMG収支計画.html" />
     <Content Include="_home\部門収支\EMG部門収支.xsl" />
     <Content Include="_home\部門収支\xsl\EMG部門収支.xsl" />
@@ -155,11 +159,8 @@
     <Content Include="_home\部門収支\xsl\部門_リスト_select.xsl" />
     <Content Include="_home\部門収支\xsl\部門収支.xsl" />
     <Content Include="_home\部門収支\xsl\間接部門内訳.xsl" />
-    <Content Include="_home\部門収支\統括収支計画.html" />
     <Content Include="_home\部門収支\部門収支.html" />
     <Content Include="_home\部門収支\部門収支.xsl" />
-    <Content Include="_home\部門収支\グループ収支計画.html" />
-    <Content Include="_home\部門収支\部門収支計画.html" />
     <Content Include="_Func\QOSMIO\a.asp" />
     <Content Include="_Func\部門収支\account.css" />
     <Content Include="_Func\部門収支\EMG.xml" />

@@ -1,0 +1,37 @@
+﻿
+namespace WebApi_project.hostProc
+
+	class hostProc
+		methodList
+	class hostProcEntry
+		Entry
+	class hostProcEntry_json
+		Entry
+
+
+
+    class SqlUtil
+		Parameter(string mode, object value)
+    class DbUtil
+		LongParameter
+		IntParameter
+		SmallIntParameter
+		NVarCharParameter
+		DateTimeParameter
+		TextParameter
+		XmlParameter
+		VarBinaryParameter
+
+	class projectInfo
+		memberInfo(string Json)
+		json_memberInfo(string Json)
+		部門リスト(String Json)
+		json_部門リスト(String Json)
+		json_dayChk(string Json)
+
+	class 部門収支
+		部門収支_XML(String Json)
+
+	class projectBBS
+		projectList(String Json)
+

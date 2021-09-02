@@ -9,10 +9,12 @@
     <script src="../_Content/_Scripts/encoding.js" type="text/javascript"></script>
     <script src="../_Content/_Scripts/jquery.my.frame.js" type="text/javascript"></script>
 
+    <script src="../_Content/_Scripts/jquery.my.webapi.js" type="text/javascript"></script>
     <script src="../_Content/_Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
     <script src="../_Content/debug/jquery.my.debug.js" type="text/javascript"></script>
     <script type="text/javascript">
         var url = "部門収支.html";
+        var o_iframe = null;
         var para = {
             dispCmd: "統括一覧",
             secMode: "開発",
@@ -20,40 +22,67 @@
             fix: 70,
             yosoku: 3
         }
+        var host_name = "http://localhost";
+        host_name = "";
+        var web_api_json = host_name + "/webapi/project/api/json";
+
     </script>
     <script type="text/javascript">
-        window.onload = function () {
-            $(".mainTitle").html("統括収支計画");
+        $(window).on("ready", function () {
+            $("iframe.iframe_content").frame();
+            $("iframe.iframe_content").attr("src", url);                // サブウインドオープン
+            o_iframe = ($("iframe.iframe_content").length == 1 ? $("iframe.iframe_content")[0] : null);
+        });
+
+        $(window).on("load", function () {
+            //var hostInfo = $.window.top.hostInfo;
+            //var pathName = String(location.pathname).split("?")[0];
+            //var name = hostInfo.url.Check(pathName);
+
+            var d = new Date();
+            var yy = d.getFullYear();
+            var mm = d.getMonth()+1;
+            var dd = d.getDate();
+            var yymm = (yy * 100) + mm;
+            var json = { yymm: yymm }
+            var json = $.WebApi_json("GET", web_api_json, "projectInfo/json_dayChk", json);
+            var OKday = json.day;
+            yymm = (parseInt(dd) < parseInt(OKday) ? $.yymmAdd(yymm, -1) : $.yymmAdd(yymm, 0)) 	 // データ有効月の計算(12日以前は前々月)
+
+            yy = parseInt(yymm / 100)
+            mm = yymm % 100
+
+
+            var year = yy + (mm >= 10 ? 1 : 0)			   // 10月以降は次年度を表示
+            para.year = year;
+
+            var fixLevel = $(".level:checked").val();
+            para.fix = fixLevel;
 
 
             loadHTML(para);
-        }
+
+        });
+
         function loadHTML(para) {
             var year = para.year;
             var yymm = ((year - 1) * 100) + 10;
             var dispCnt = 12;
-            //            var fixLevel = $(xmlDoc).find("確度").text();
             var yyyy = parseInt(yymm / 100, 10);
             var subTitle = "(" + $.strMonth(yymm) + "～" + $.strMonth($.yymmAdd(yymm, dispCnt - 1)) + ")";
 
+            $(".mainTitle").html("統括収支計画");
+
             $(".subTitle").html(subTitle);
 
-            var fixLevel = para.fix;
-            $(".level[value='" + fixLevel + "']").attr("checked", true);
-
-            var pObj = new $.ValueCollection(para);
-            var paraStr = pObj.ToString();
-
-            $("iframe.iframe_content").frame();
-            $("iframe.iframe_content").attr("src", "".concat(url, "?", paraStr));                // サブウインドオープン
+            o_iframe.contentWindow.dispData(para);
 
         }
-
     </script>
     <script type="text/javascript">
         $(document).on("click", ".level", function (e) {
             try {
-                $.debug(this.value);
+                //$.debug(this.value);
                 switch (this.value) {
                     case "70":
                         para.fix = 70;
@@ -75,7 +104,7 @@
         });
         $(document).on("click", ".prev, .next", function (e) {
             try {
-                $.debug(this.className);
+                //$.debug(this.className);
                 switch (this.className) {
                     case "prev":
                         para.year -= 1;
@@ -132,25 +161,18 @@
 </head>
 <body>
     <table ALIGN="center" border="0">
-        <caption><SPAN class="mainTitle">aaa</SPAN></caption>
+        <caption><SPAN class="mainTitle"></SPAN></caption>
         <tbody>
             <TR>
                 <TD align="right" width="30%">
                 </TD>
                 <TD align=center width="40%" nowrap>
                     <DIV nowrap>
-                        <SPAN><INPUT type="radio" class="level" name="level" value="70">Ａ</SPAN>
+                        <SPAN><INPUT type="radio" class="level" name="level" value="70" checked>Ａ</SPAN>
                         <SPAN><INPUT type="radio" class="level" name="level" value="50">Ｂ</SPAN>
                         <SPAN><INPUT type="radio" class="level" name="level" value="30">Ｃ</SPAN>
                         <SPAN><INPUT type="radio" class="level" name="level" value="10">Ｄ</SPAN>
                     </DIV>
-                </TD>
-                <TD align="left" width="30%" nowrap>
-                    <fieldset class="yosokuDiv" width="40%" style="display:block">
-                        <legend>予測の期間</legend>
-                        <SPAN><INPUT type="radio" class="yosokuMode" name="yosokuMode" value="3">３ヶ月</SPAN>
-                        <SPAN><INPUT type="radio" class="yosokuMode" name="yosokuMode" value="-1" checked>残り全て</SPAN>
-                    </fieldset>
                 </TD>
             </TR>
             <TR>
@@ -162,6 +184,6 @@
         </tbody>
     </table>
     <br />
-    <iframe class="iframe_content"></iframe>
+    <iframe class="iframe_content" id="abc"></iframe>
 </body>
-</html>
+</html >
