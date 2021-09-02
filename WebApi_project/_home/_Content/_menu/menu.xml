@@ -8,7 +8,7 @@
 		</block>
 		<block name="original xml">
 			<menu>
-				<a style="text-align:left" url="http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp" mode="" test="F_TEST">/Project/部門収支/xml/部門収支_XML.asp</a>
+				<a style="text-align:left" url="http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp" mode="" test="F_TEST1">/Project/部門収支/xml/部門収支_XML.asp</a>
 				<a style="text-align:left" url="http://kansa.in.eandm.co.jp/Project/営業情報/保有リソース/xml/manPower_XML.asp" mode="" test="F_TEST1">/Project/営業情報/保有リソース/xml/manPower_XML.asp</a>
 				<a style="text-align:left" url="http://kansa.in.eandm.co.jp/Project/営業情報/保有リソース/協力会社費用/manPower_XML.asp" mode="" test="F_TEST1">/Project/営業情報/保有リソース/協力会社費用/manPower_XML.asp</a>
 				<a style="text-align:left" url="http://kansa.in.eandm.co.jp/Project/要員情報/要員一覧/xml/要員一覧_XML.asp" mode="">/Project/要員情報/要員一覧/xml/要員一覧_XML.asp</a>
@@ -48,9 +48,6 @@
 	</列>
     <列>
         <block name="収支状況">
-            <menu>
-                <a url="部門収支/部門収支.html" mode="F_TEST">ＥＭＧ収支計画(test)</a>
-            </menu>
             <menu>
                 <a url="部門収支/EMG収支計画.html" mode="F_TEST">ＥＭＧ収支計画</a>
             </menu>
