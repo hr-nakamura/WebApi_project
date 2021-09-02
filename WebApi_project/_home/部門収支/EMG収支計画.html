@@ -94,7 +94,9 @@
                         para.fix = 10;
                         break;
                 }
-                loadHTML(para);
+                var iframe = $("iframe.iframe_content");
+                iframe[0].contentWindow.dispData(para);
+//                loadHTML(para);
             } catch (e) {
                 $.alert(e.message);
             }
@@ -110,7 +112,9 @@
                         para.year += 1;
                         break;
                 }
-                loadHTML(para);
+                var iframe = $("iframe.iframe_content");
+                iframe[0].contentWindow.dispData(para);
+//                loadHTML(para);
             } catch (e) {
                 $.alert(e.message);
             }
@@ -181,6 +185,6 @@
         </tbody>
     </table>
     <br />
-    <iframe class="iframe_content"></iframe>
+    <iframe class="iframe_content" id="abc"></iframe>
 </body>
 </html >
