@@ -110,11 +110,6 @@
     <Content Include="_home\_Content\_menu\menu.txt" />
     <Content Include="_home\_Content\_menu\menu.xml" />
     <Content Include="_home\_Content\_menu\menu.xslt" />
-    <Content Include="_home\_Content\_menu\menu_sub\kansa.png" />
-    <Content Include="_home\_Content\_menu\menu_sub\kansa.xml" />
-    <Content Include="_home\_Content\_menu\sample.txt" />
-    <Content Include="_home\_Content\_menu\test.xslt" />
-    <Content Include="_home\_Content\_menu\work.html" />
     <Content Include="_home\_Content\_Scripts\AuthCheck.js" />
     <Content Include="_home\_Content\_Scripts\bootstrap\bootstrap-select.js" />
     <Content Include="_home\_Content\_Scripts\bootstrap\bootstrap.min.css" />

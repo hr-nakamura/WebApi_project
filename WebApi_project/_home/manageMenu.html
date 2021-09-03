@@ -30,7 +30,8 @@
             try {
                 docWin = new DocumentWindow();
                 var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
-                //hostName = "http://kansa.in.eandm.co.jp";
+                
+                mailPara.mailAddr = $.queryString("mail",mailPara.mailAddr);
 
                 var Url = hostName + WebApi_url_json;
                 memberInfo = $.WebApi_json("GET", Url, "projectInfo/json_memberInfo", mailPara);

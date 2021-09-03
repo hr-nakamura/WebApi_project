@@ -45,13 +45,18 @@ namespace WebApi_project.hostProc
 
         public XmlDocument 要員一覧(String Json)
         {
-            //var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
 
-            object json_data = json_要員一覧(Json);
-            XmlDocument xmlDoc = Json2Xml(json_data);
-            //XmlDocument xmlDoc = new XmlDocument();
+            string url = "http://localhost/Project/要員情報/要員一覧/xml/要員一覧_XML.asp?year=2021";
+            hostWeb h = new hostWeb();
+            string xmlStr = h.GetRequest(url);
+
+            //var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(xmlStr);
 
             //var x = new projectBBS();
+            //object json_data = json_要員一覧(Json);
+            //XmlDocument xmlDoc = Json2Xml(json_data);
             //Dictionary<string, object> Tab = (Dictionary<string, object>)x.projectList_json(Json);
             //object Data = (object) Tab["Data"];
 
