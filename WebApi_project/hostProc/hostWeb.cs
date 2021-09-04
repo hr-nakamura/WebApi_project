@@ -200,29 +200,6 @@ namespace WebApi_project.hostProc
         }
         public string GetRequest(string url)
         {
-            //HTTP Web リクエストの作成
-            HttpWebRequest wreq = (HttpWebRequest)WebRequest.Create(url);
-            WebResponse wrep = wreq.GetResponse();
-            Stream s = wrep.GetResponseStream();
-
-            //読み込むバッファを用意
-            Byte[] buff = new Byte[1024];
-            int iread = 0;
-            StringBuilder sb = new StringBuilder();
-
-            //ストリームから読み込む...
-            while ((iread = s.Read(buff, 0, buff.Length)) > 0)
-            {
-                sb.Append(Encoding.Default.GetString(buff, 0, iread));
-            }
-
-            //クリーンアップ
-            s.Close();
-            wrep.Close();
-            return (sb.ToString());
-        }
-        public string GetRequestX(string url)
-        {
             HttpWebRequest request = null;
             HttpWebResponse response = null;
             StreamReader streamReader = null;
@@ -246,7 +223,7 @@ namespace WebApi_project.hostProc
                     Stream responseStream = response.GetResponseStream();
 
                     // 応答データ受信用StreamReaderを取得
-                    streamReader = new StreamReader(responseStream);
+                    streamReader = new StreamReader(responseStream,System.Text.Encoding.GetEncoding("shift_jis"));
 
                     // 応答データ取得
                     returnBuff = streamReader.ReadToEnd();

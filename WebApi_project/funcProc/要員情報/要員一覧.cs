@@ -33,39 +33,24 @@ namespace WebApi_project.hostProc
             Info.Add("DB_Conn", DB_connectString);
 
             Tab.Add("Info", (object)Info);
-            Tab.Add("Data", (object)Data);
 
-            projectInfo cmn = new projectInfo(); 
-            //var x = cmn.json_部門リスト(Json);
-            //XmlDocument xmlDoc = new XmlDocument();
-            //Tab = dbFunc_A();
+            string url = "http://localhost/Project/要員情報/要員一覧/xml/要員一覧_XML.asp?year=2021";
+            hostWeb h = new hostWeb();
+            string xmlStr = h.GetRequest(url);
+
+            Tab.Add("Data", xmlStr);
 
             return (Tab);
         }
 
         public XmlDocument 要員一覧(String Json)
         {
+            Dictionary<string, dynamic> Tab = (Dictionary<string, dynamic>)json_要員一覧(Json);
 
-            string url = "http://localhost/Project/要員情報/要員一覧/xml/要員一覧_XML.asp?year=2021";
-            hostWeb h = new hostWeb();
-            string xmlStr = h.GetRequest(url);
-
-            //var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
             XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(xmlStr);
-
-            //var x = new projectBBS();
-            //object json_data = json_要員一覧(Json);
-            //XmlDocument xmlDoc = Json2Xml(json_data);
-            //Dictionary<string, object> Tab = (Dictionary<string, object>)x.projectList_json(Json);
-            //object Data = (object) Tab["Data"];
+            xmlDoc.LoadXml(Tab["Data"]);
 
             return (xmlDoc);
-        }
-        class SampleData
-        {
-            public string a { get; set; }
-            public string b { get; set; }
         }
     }
 }
