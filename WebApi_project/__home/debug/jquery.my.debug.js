@@ -11,6 +11,7 @@
     if (typeof (window.debugTab[fileName]) === "undefined") window.debugTab[fileName] = 0;
     //if (typeof (window.debug_mode) === "undefined") window.debug_mode = true;
     var debug_mode = ($.UrlExists(debugUrl) ? true : false);
+
     var methods = {
 
         init: function (options) {
@@ -69,7 +70,7 @@
         log: function () {
             try {
                 if (debug_mode != true) return;
-                var loginMail = $.session("loginMail");
+                var loginMail = "";//$.session("loginMail");
                 var o = this;
                 var fCnt = [window.debugTab[fileName]++];
                 fCnt = ("000".concat(fCnt)).substr(-3);
@@ -120,18 +121,39 @@
             catch (e) {
                 //alert("log error");
             }
+        },
+        json: function () {
+            try {
+                if (debug_mode != true) return;
+                var o = this;
+                var fCnt = [window.debugTab[fileName]++];
+                fCnt = ("000".concat(fCnt)).substr(-3);
+                var work = [];
+                work.push(fCnt);
+                var Cnt = arguments.length;
+                var str = "[" + fileName + "]\t[" + work.join("][") + "]";
+                str += "\n" + "[" + arguments[0] + "]";
+                str += "\n" + JSON.stringify(arguments[1], null, 2);
+                var message = (str);
+ 
+                var sendObj = {
+                    Name: "note",
+                    LogData: message
+                }
+
+                send_PostMessage(sendObj);
+            }
+            catch (e) {
+                //alert("log error");
+            }
         }
+
     };
 
     function send_PostMessage(sendObj) {
         try {
-            if (debug_mode != true) return;
-            sendObj.LogData = sendObj.LogData.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-                //.replace(/"/g, '&quot;')
-                //.replace(/'/g, '&#39;');
-                //.replace(/&/g, '&amp;');
-
-            var stat = "";
+            if (debug_mode == false) return;
+            var stat;
             $.ajax({
                 url: debugUrl,
                 async: false,
@@ -155,7 +177,6 @@
 
     function getFileName() {
         var str = $(location).attr('pathname');
-        var str = decodeURI(str);
         var name = str.slice(str.lastIndexOf("/") + 1);
         return (name);
     }
@@ -176,12 +197,7 @@
         }
     }
     $.debug = function (method) {
-        if ($.window.top.debug_mode != true) return;
-        //return;
-        //$.alert(method, window.location.hostname, window.location.port);
-
-        if (window.location.hostname != "localhost" && window.location.port == "") return;             // デバック以外の時実行しない
-        var x = window.location.pathname.split("/");
+        if (window.location.port == "") return;             // デバック以外の時実行しない
         var work = [];
         var Cnt = arguments.length;
         for (var i = 0; i < Cnt; i++) {
@@ -203,6 +219,9 @@
 
         //return (this);
     };
+    $.debug.json = function () {
+        return methods["json"].apply(this, Array.prototype.slice.call(arguments, 0));
+    }
     $.debug.note = function () {
         return methods["note"].apply(this, Array.prototype.slice.call(arguments, 0));
     }

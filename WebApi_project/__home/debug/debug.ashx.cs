@@ -26,7 +26,11 @@ namespace WebApi_project._home.debug
             {
                 DebugHost.Debug.Write(LogData);
             }
-            else if( name == "log")
+            else if (name == "note")
+            {
+                DebugHost.Debug.Note(LogData);
+            }
+            else if (name == "log")
             {
                 DebugHost.Debug.WriteLog(LogData);
             }

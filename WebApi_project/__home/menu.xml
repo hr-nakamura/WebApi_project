@@ -2,29 +2,11 @@
 <root name="EMG">
 	<menu name="監査" memo="" >
 		<menu name="監査ページ" memo="" mode="url" value="/WebApi/project/_home/manageMenu.html"/>
-		<menu name="要員一覧" memo="" mode="url" value="http://localhost/Project/要員情報/要員一覧/xml/要員一覧_XML.asp?year=2021"/>
 	</menu>
-	<menu name="一覧" memo="" >
-		<menu name="収支(開発・統括一覧)" memo="" mode="url" value="/WebApi/project/_home/部門収支/部門収支.html?secMode=開発&amp;dispCmd=統括一覧"/>
-		<menu name="収支(開発・部門一覧)" memo="" mode="url" value="/WebApi/project/_home/部門収支/部門収支.html?secMode=開発&amp;dispCmd=部門一覧"/>
-		<menu name="収支(開発・課一覧)" memo="" mode="url" value="/WebApi/project/_home/部門収支/部門収支.html?secMode=開発&amp;dispCmd=課一覧&amp;dispName=開発本部/第2開発部"/>
-		<menu name="収支(間接・部門一覧)" memo="" mode="url" value="/WebApi/project/_home/部門収支/部門収支.html?secMode=間接&amp;dispCmd=部門一覧"/>
-		<menu name="収支(間接・課一覧)" memo="" mode="url" value="/WebApi/project/_home/部門収支/部門収支.html?secMode=間接&amp;dispCmd=課一覧&amp;dispName=本社/EMG共通/コンプライアンス委員会"/>
 
-	</menu>
-	<menu name="詳細" memo="" >
-	  <menu name="収支(EMG)" memo="EMG" mode="url" value="/WebApi/project/_home/部門収支/部門収支.html?dispCmd=EMG"/>
-	  <menu name="収支(開発・統括詳細)" memo="開発本部" mode="url" value="/WebApi/project/_home/部門収支/部門収支.html?secMode=開発&amp;dispCmd=統括詳細&amp;dispName=開発本部"/>
-	  <menu name="収支(開発・部門詳細)" memo="=開発本部/第2開発部" mode="url" value="/WebApi/project/_home/部門収支/部門収支.html?secMode=開発&amp;dispCmd=部門詳細&amp;dispName=開発本部/第2開発部"/>
-	  <menu name="収支(開発・課詳細)" memo="開発本部/第2開発部" mode="url" value="/WebApi/project/_home/部門収支/部門収支.html?secMode=開発&amp;dispCmd=課詳細&amp;dispName=開発本部/第2開発部"/>
-	  <menu name="収支(開発・課詳細)" memo="開発本部/第2開発部/第1開発課" mode="url" value="/WebApi/project/_home/部門収支/部門収支.html?secMode=開発&amp;dispCmd=課詳細&amp;dispName=開発本部/第2開発部/第1開発課"/>
-	  <menu name="収支(間接・部門詳細)" memo="本社/管理本部save" mode="url" value="/WebApi/project/_home/部門収支/部門収支.html?secMode=間接&amp;dispCmd=部門詳細&amp;dispName=本社/管理本部"/>
-	  <menu name="収支(間接・課詳細)" memo="本社/管理本部/財務経理課" mode="url" value="/WebApi/project/_home/部門収支/部門収支.html?secMode=間接&amp;dispCmd=課詳細&amp;dispName=本社/管理本部/財務経理課"/>
-  </menu>
   <menu name="TEST" memo="" >
-		<menu name="projectBBS" memo="" mode="url" value="/WebApi/project/_home/projectBBS/test.html"/>
 		  <menu name="QOSMIO" memo="" mode="url" value="/WebApi/project/_Func/QOSMIO/qosmio.html"/>
-		<menu name="viewJson" memo="" mode="url" value="/WebApi/project/_home/Util/viewJson/viewJson.html"/>
+		<menu name="viewJson" memo="" mode="url" value="/WebApi/project/__home/Util/viewJson/viewJson.html"/>
   </menu>
 </root>
 
