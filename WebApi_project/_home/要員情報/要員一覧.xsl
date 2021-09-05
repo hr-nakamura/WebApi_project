@@ -60,7 +60,7 @@
           </xsl:call-template>
         </tr>
       </thead>
-      <tbody class='body'>
+      <tbody class='head'>
         <tr>
           <td class='userType' rowspan="7" align="center">
             <xsl:value-of select="'‘S‘Ì'"/>
@@ -490,7 +490,7 @@
 		</xsl:if>
 	</xsl:template>
 	<!--		-->
-  <!--<xsl:include href="sub_cmn.xsl"/>
-  <xsl:include href="sub_JScript.xsl"/>-->
+  <!--<xsl:include href="sub_cmn.xsl"/>-->
+  <!--<xsl:include href="sub_JScript.xsl"/>-->
 
 </xsl:stylesheet>
