@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Web;
 using System.Xml;
 using System.Reflection;
 using Newtonsoft.Json;
 using System.Text;
 using System.Data.SqlClient;
 using System.Collections.Generic;
-
-using DebugHost;
+using System.Diagnostics;
+using CodingSquareCS;
 
 namespace WebApi_project.hostProc
 {
@@ -15,7 +14,7 @@ namespace WebApi_project.hostProc
     {
         public object json_要員一覧(String Json)
         {
-
+            x();
             Dictionary<string, object> Tab = new Dictionary<string, object>();
             Dictionary<string, object> Info = new Dictionary<string, object>();
             Dictionary<string, object> Data = new Dictionary<string, object>();
@@ -23,7 +22,6 @@ namespace WebApi_project.hostProc
             string classPath = this.GetType().FullName;                                         //クラスパスの取得
             string className = this.GetType().Name;                                             //クラス名の取得
             string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;           //メソッド名の取得
-            Debug.WriteLog(classPath);
 
             string mName = Environment.MachineName;
 
@@ -33,24 +31,202 @@ namespace WebApi_project.hostProc
             Info.Add("DB_Conn", DB_connectString);
 
             Tab.Add("Info", (object)Info);
+            /*
+                        string url = "http://localhost/Project/要員情報/要員一覧/xml/要員一覧_XML.asp?year=2021";
+                        hostWeb h = new hostWeb();
+                        string xmlStr = h.GetRequest(url);
 
-            string url = "http://localhost/Project/要員情報/要員一覧/xml/要員一覧_XML.asp?year=2021";
-            hostWeb h = new hostWeb();
-            string xmlStr = h.GetRequest(url);
-
-            Tab.Add("Data", xmlStr);
-
+                        Tab.Add("Data", xmlStr);
+            */
             return (Tab);
         }
 
         public XmlDocument 要員一覧(String Json)
         {
+
+            var sw = new StopWatch();
+            sw.Start("計測開始"); // 計測開始
+
             Dictionary<string, dynamic> Tab = (Dictionary<string, dynamic>)json_要員一覧(Json);
+            sw.Lap("変換");
 
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(Tab["Data"]);
 
+            sw.Stop();
             return (xmlDoc);
+        }
+        void x()
+        {
+            Dictionary<string, string> Tab = new Dictionary<string, string>();
+            StringBuilder sql = new StringBuilder("");
+
+            string gCode;
+            string gName;
+            List<string> TabX = new List<string>();
+            int year = 2021;
+            int mCnt = 12;
+            int s_yymm = ((year - 1) * 100 + 10);
+            int e_yymm = yymmAdd(s_yymm, mCnt - 1);
+            var yakuStr = "1,2,34,35,37,38,39,40,41,42,43,44,88";
+
+            sql.Clear();
+            sql.Append(" SELECT");
+            sql.Append("       yymm   = DATA.yymm,");
+            sql.Append("      T_name = TM.統括,");
+            sql.Append("      H_name = TM.本部,");
+            sql.Append("      B_name = TM.部門,");
+            sql.Append("      G_name = TM.グループ,");
+            sql.Append("      部署ID = DATA.部署ID,");
+            sql.Append("      役職ID = DATA.役職ID,");
+            sql.Append("      部署名 = (SELECT 部署名 FROM EMG.dbo.部署マスタ WHERE DATA.部署ID=部署コード AND SUBSTRING(CONVERT(char(6),DATA.yymm),1,4) + '/' +SUBSTRING(CONVERT(char(6),DATA.yymm),5,2) + '/01' BETWEEN 開始 and 終了),");
+            sql.Append("      役職名 = (SELECT 役職名 FROM EMG.dbo.役職マスタ WHERE DATA.役職ID=役職コード AND SUBSTRING(CONVERT(char(6),DATA.yymm),1,4) + '/' +SUBSTRING(CONVERT(char(6),DATA.yymm),5,2) + '/01' BETWEEN 開始 and 終了),");
+            sql.Append("      直間   = DATA.直間,");
+            sql.Append("      休職   = DATA.休職,");
+            sql.Append("      社籍   = DATA.社籍,");
+            sql.Append("      区分   = DATA.区分,");
+            sql.Append("      mID    = DATA.memberID,");
+            sql.Append("      名前   = MAST.姓 + MAST.名");
+            sql.Append(" FROM");
+            sql.Append("      要員所属データ DATA");
+            sql.Append("      LEFT JOIN EMG.dbo.社員基礎データ MAST ON DATA.memberID = MAST.社員ID");
+            sql.Append("      LEFT JOIN 統括本部マスタ         TM   ON DATA.部署ID   = TM.部署ID");
+            sql.Append(" WHERE");
+            sql.Append("      (TM.開始 < @e_yymm AND TM.終了 >= @s_yymm");
+            sql.Append("      AND");
+            sql.Append("      DATA.yymm BETWEEN @s_yymm AND @e_yymm");
+            sql.Append("      AND");
+            sql.Append("      DATA.区分 IN(0,1,2,10)");
+            sql.Append("      AND");
+            sql.Append("      ( DATA.直間 <> 2 AND DATA.役職ID NOT IN(@yakuStr)");
+            sql.Append(" GROUP BY");
+            sql.Append("      DATA.yymm,");
+            sql.Append("      TM.統括,");
+            sql.Append("      TM.本部,");
+            sql.Append("      M.部門,");
+            sql.Append("      TM.グループ,");
+            sql.Append("      DATA.memberID,");
+            sql.Append("      DATA.部署ID,");
+            sql.Append("      DATA.役職ID,");
+            sql.Append("      DATA.直間,");
+            sql.Append("      DATA.休職,");
+            sql.Append("      DATA.社籍,");
+            sql.Append("      DATA.区分,");
+            sql.Append("      MAST.姓 + MAST.名,");
+            sql.Append("      MAST.姓よみ + MAST.名よみ");
+            sql.Append(" ORDER BY");
+            sql.Append("      部署ID,");
+            sql.Append("      yymm,");
+            sql.Append("      MAST.姓よみ + MAST.名よみ");
+
+
+            sql.Replace("@s_yymm", SqlUtil.Parameter("number", s_yymm));
+            sql.Replace("@e_yymm", SqlUtil.Parameter("number", e_yymm));
+            sql.Replace("@yakuStr", SqlUtil.Parameter("number", yakuStr));
+
+            string SQL = sql.ToString();
+            SqlConnection DB = new SqlConnection(DB_connectString);
+            DB.Open();
+            SqlDataReader reader = dbRead(DB, SQL);
+            while (reader.Read())
+            {
+                gCode = reader["T_name"].ToString();
+                gName = (string)reader["名前"].ToString();
+                TabX.Add(gName);
+            }
+            reader.Close();
+
+            DB.Close();
+            DB.Dispose();
+
+        }
+        void x2()
+        {
+            Dictionary<string, string> Tab = new Dictionary<string, string>();
+            StringBuilder sql = new StringBuilder("");
+            /*
+                        string grpStr = "71,72";
+
+                        sql.Clear();
+                        sql.Append(" SELECT");
+                        sql.Append("      mode  = BMAST.直間,");
+                        sql.Append("      gName = BMAST.部署名,");
+                        sql.Append("      gCode = BMAST.部署コード");
+                        sql.Append(" FROM");
+                        sql.Append("      EMG.dbo.部署マスタ BMAST");
+                        sql.Append(" WHERE");
+                        sql.Append("      BMAST.部署コード IN(@grrStr)");
+                        sql.Append(" ORDER BY");
+                        sql.Append("       BMAST.終了");
+                        sql.Replace("@grrStr", SqlUtil.Parameter("number", grpStr));
+
+                        string SQL = sql.ToString();
+                        SqlConnection DB = new SqlConnection(DB_connectString);
+                        DB.Open();
+                        SqlDataReader reader = dbRead(DB, SQL);
+                        string gCode;
+                        string gName;
+                        while (reader.Read())
+                        {
+                            //gCode = reader["gCode"].ToString();
+                            //gName = (string)reader["gName"].ToString();
+                            //Tab.Add(gCode, gName);
+                        }
+                        reader.Close();
+
+                        DB.Close();
+                        DB.Dispose();
+            */
+            string gCode;
+            string gName;
+            List<string> TabX = new List<string>();
+            int year = 2021;
+            int mCnt = 12;
+            int s_yymm = ((year - 1) * 100 + 10);
+            int e_yymm = yymmAdd(s_yymm, mCnt - 1);
+            sql.Clear();
+            sql.Append(" SELECT");
+            sql.Append("      S_name = SM.統括+SM.本部+SM.部門,");
+            sql.Append("      T_name = SM.統括,");
+            sql.Append("      B_name = SM.部門,");
+            sql.Append("      G_name = SM.グループ,");
+            sql.Append("      G_code = SM.部署ID");
+            sql.Append(" FROM");
+            sql.Append("      統括本部マスタ SM");
+            sql.Append(" WHERE");
+            sql.Append("      SM.開始 <  @e_yymm");
+            sql.Append("      AND");
+            sql.Append("      SM.終了 >= @s_yymm");
+            sql.Replace("@s_yymm", SqlUtil.Parameter("number", s_yymm));
+            sql.Replace("@e_yymm", SqlUtil.Parameter("number", e_yymm));
+
+            string SQL = sql.ToString();
+            SqlConnection DB = new SqlConnection(DB_connectString);
+            DB.Open();
+            SqlDataReader reader1 = dbRead(DB, SQL);
+            while (reader1.Read())
+            {
+                gCode = reader1["S_name"].ToString();
+                gName = (string)reader1["S_name"].ToString();
+                TabX.Add(gName);
+            }
+            reader1.Close();
+
+            DB.Close();
+            DB.Dispose();
+
+        }
+        int yymmAdd(int yymm, int mCnt)
+        {
+            int yy = yymm / 100;
+            int mm = yymm % 100;
+
+            int ym = (yy * 12) + mm;
+            ym += mCnt;
+            yy = ym / 12;
+            mm = ym % 12;
+            if (mm == 0) { yy--; mm = 12; }
+            return ((yy * 100) + mm);
         }
     }
 }
