@@ -103,7 +103,7 @@ namespace WebApi_project.hostProc
             sql.Append("      DATA.yymm,");
             sql.Append("      TM.統括,");
             sql.Append("      TM.本部,");
-            sql.Append("      M.部門,");
+            sql.Append("      TM.部門,");
             sql.Append("      TM.グループ,");
             sql.Append("      DATA.memberID,");
             sql.Append("      DATA.部署ID,");
