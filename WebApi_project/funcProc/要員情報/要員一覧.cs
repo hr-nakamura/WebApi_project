@@ -92,13 +92,13 @@ namespace WebApi_project.hostProc
             sql.Append("      LEFT JOIN EMG.dbo.社員基礎データ MAST ON DATA.memberID = MAST.社員ID");
             sql.Append("      LEFT JOIN 統括本部マスタ         TM   ON DATA.部署ID   = TM.部署ID");
             sql.Append(" WHERE");
-            sql.Append("      (TM.開始 < @e_yymm AND TM.終了 >= @s_yymm");
+            sql.Append("      TM.開始 < @e_yymm AND TM.終了 >= @s_yymm");
             sql.Append("      AND");
             sql.Append("      DATA.yymm BETWEEN @s_yymm AND @e_yymm");
             sql.Append("      AND");
             sql.Append("      DATA.区分 IN(0,1,2,10)");
             sql.Append("      AND");
-            sql.Append("      ( DATA.直間 <> 2 AND DATA.役職ID NOT IN(@yakuStr)");
+            sql.Append("       DATA.直間 <> 2 AND DATA.役職ID NOT IN(@yakuStr)");
             sql.Append(" GROUP BY");
             sql.Append("      DATA.yymm,");
             sql.Append("      TM.統括,");
