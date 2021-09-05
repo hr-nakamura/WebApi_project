@@ -138,6 +138,13 @@
     <Content Include="_home\_Content\_Scripts\json2.js" />
     <Content Include="_home\_Content\_Scripts\promise-7.0.4.min.js" />
     <Content Include="_home\_Content\_Scripts\store.min.js" />
+    <Content Include="_home\要員情報\back.gif" />
+    <Content Include="_home\要員情報\bg00.gif" />
+    <Content Include="_home\要員情報\main.css" />
+    <Content Include="_home\要員情報\sub_cmn.xsl" />
+    <Content Include="_home\要員情報\sub_jscript.xsl" />
+    <Content Include="_home\要員情報\要員一覧.xsl" />
+    <Content Include="_home\要員情報\要員一覧.html" />
     <Content Include="_home\部門収支\account.css" />
     <Content Include="_home\部門収支\統括収支計画.html" />
     <Content Include="_home\部門収支\グループ収支計画.html" />

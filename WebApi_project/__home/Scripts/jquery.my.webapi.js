@@ -19,7 +19,7 @@
         },
         $.WebApi = function(mode, url, item, json, callback) {
             //WebApi_url = hostName + "/WebApi/project/api/xml";
-            window.status = "call_ajax_api[" + mode + "]";
+            window.status = "WebApi[" + mode + "]";
             var options = {
                 Item: item,
                 Json: JSON.stringify(json)
@@ -38,13 +38,13 @@
             }).fail(function (xhr, status, error) {
                 returnValue = status;
                 window.status = xhr.statusText;
-                $.alert("call_ajax_api error:" + xhr.statusText);
+                $.alert("WebApi error:" + xhr.statusText);
             });
             return (returnValue);
         },
         $.WebApi_json = function(mode, url, item, json, callback) {
             //WebApi_url_json = hostName + "/WebApi/project/api/json";
-            window.status = "call_ajax_api_json[" + mode + "]";
+            window.status = "WebApi_json[" + mode + "]";
             var options = {
                 Item: item,
                 Json: JSON.stringify(json)
@@ -63,13 +63,13 @@
             }).fail(function (xhr, status, error) {
                 returnValue = status;
                 window.status = xhr.statusText;
-                $.alert("call_ajax_api_json error:" + xhr.statusText);
+                $.alert("WebApi_json error:" + xhr.statusText);
             });
             return (returnValue);
         },
         $.WebApi_get = function(url, options) {
             //WebApi_url = hostName + "/WebApi/project/api/xml";
-            window.status = "call_ajax_get";
+            window.status = "WebApi_get";
             var result = $.ajax({
                 url: url,
                 type: "GET",

@@ -5,8 +5,9 @@
 	</menu>
 
   <menu name="TEST" memo="" >
-		  <menu name="QOSMIO" memo="" mode="url" value="/WebApi/project/_Func/QOSMIO/qosmio.html"/>
-		<menu name="viewJson" memo="" mode="url" value="/WebApi/project/__home/Util/viewJson/viewJson.html"/>
+		<menu name="QOSMIO" memo="" mode="url" value="/WebApi/project/_Func/QOSMIO/qosmio.html"/>
+	  <menu name="viewJson" memo="" mode="url" value="/WebApi/project/__home/Util/viewJson/viewJson.html"/>
+	  <menu name="要員一覧" memo="" mode="url" value="/WebApi/project/_home/要員情報/要員一覧.html"/>
   </menu>
 </root>
 

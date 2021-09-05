@@ -1,0 +1,166 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <script src="../_Content/_Scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+
+    <script src="../_Content/_Scripts/encoding.js" type="text/javascript"></script>
+    <script src="../_Content/_Scripts/jquery.my.webapi.js" type="text/javascript"></script>
+    <script src="../_Content/_Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
+    <script src="../_Content/_Scripts/cmn.js" type="text/javascript" charset="Shift_JIS"></script>
+    <LINK rel="stylesheet" href="main.css" type="text/css">
+
+    <script src="../_Content/_debug/jquery.my.debug.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var yymm = "";
+        var manTitle = "";
+        var subTitle = "";
+        var xmlDoc = "";
+        var 部門;
+        var 直間;
+        var secTab = {
+            "EMG": { name: "EMG", title: "ＥＭＧ収支計画" },
+            "統括": { name: "統括一覧", title: "統括収支計画" },
+            "部門": { name: "部門一覧", title: "部門収支計画" },
+            "課": { name: "課一覧", title: "グループ収支計画" }
+        }
+    </script>
+
+    <script type="text/javascript">
+        var para = {
+            dispMode: "全社",
+            dispName:"",
+            year: "2021",
+            browser: ""
+        }
+    </script>
+
+    <script type="text/javascript">
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $(window).on("load", function (e) {
+                dispData(para);
+            });
+
+        });
+    </script>
+
+    <script type="text/javascript">
+        function dispData(para) {
+            var host_name = "http://localhost";
+            host_name = "";
+            var url = host_name + "/webapi/project/api/xml";
+            var json = {
+                year:para.year,
+                dispMode: para.dispMode,
+                dispName:para.dispName
+            };
+            $.debug.json("para",json);
+            xmlDoc = $.WebApi("GET", url, "要員情報/要員一覧", json);
+
+
+            var xsl_name = "要員一覧.xsl";
+            var xslDoc = $.loadXMLDoc(xsl_name);
+
+            var Buff = $.transformNode(xmlDoc, xslDoc);
+            $(".dataG").html(Buff);
+
+            var xd = $(xmlDoc).find("確定日").text();
+            $(".確定日").text(xd);
+            var xd = $(xmlDoc).find("作成日付").text();
+            $(".作成日付").text(xd);
+
+
+            $(".Block_help").css("display", "block");
+
+        }
+
+    </script>
+
+
+    <script type="text/javascript">
+        $(function () {
+        });
+        $(function () {
+            $(document).ready(function () {
+                //alert("onready");
+            });
+
+
+            $(document).on("click mouseenter mouseleave", "#onUriage,#onGenka,#onSales,#onKanriHi,#onCost1,#onCost2,#onKei1,#onKei2,#onKei3", function (e) {
+                try {
+                    switch (e.type) {
+                        case "mouseenter":
+                            this.style.cursor = "pointer";
+                            break;
+                        case "mouseleave":
+                            this.style.cursor = "";
+                            break;
+                        case "click":
+                            var thisId = this.id;
+                            var oBody = this.parentElement.tBodies;
+                            var Cnt = oBody.length;
+                            for (var i = 0; i < Cnt; i++) {
+                                if (oBody[i].id == thisId) oBody[i].style.display = (oBody[i].style.display == "none" ? "" : "none");
+                            }
+                            break;
+                    }
+                } catch (e) {
+                    $.alert(e.message);
+                }
+            });
+        });
+    </script>
+
+    <style>
+        body {
+            background-image: url("../_Content/_images/bg00.gif");
+        }
+
+        .Block_help {
+            display: none;
+            font-size: small;
+            text-align: left;
+        }
+
+        .dataG {
+            font-size: medium;
+        }
+    </style>
+</head>
+
+<body>
+    <table align="center">
+        <tbody>
+            <TR>
+                <TD align="center">
+                    <DIV align="center" class="dataG" ></DIV>
+                </TD>
+            </TR>
+        </tbody>
+        <tbody class="Block_help">
+            <TR>
+                <TD align="right">作成日付(<SPAN class="作成日付"></SPAN>)</TD>
+            </TR>
+            <tr>
+                <td>
+                    <div>
+                        ◎この表について
+                        <ul>
+                            <LI>このデータは<font color='tomato'>社外秘</font>です、取り扱いには十分注意してください。</LI>
+                            <LI>売上は請求書発行データを使用しています。(実際の入金は翌月・翌々月・手形など客先により違います)</LI>
+                            <LI>データの確定はEM・ACEL・PSL３社の経費データがほぼ揃った時点( <SPAN class="確定日"></SPAN> 営業日)で、売上・費用とも確定とします。</LI>
+                            <LI>営業外費用の主な項目として借入金の金利支払いを含みます(借入金の返済は含まれていません)。</LI>
+                            <LI>この表の経常利益は、入金・資金計画などを考慮していません。</LI>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>
