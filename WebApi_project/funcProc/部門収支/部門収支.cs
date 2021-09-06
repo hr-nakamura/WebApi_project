@@ -927,6 +927,7 @@ namespace WebApi_project.hostProc
 			}
 			catch (Exception ex)
 			{
+				DebugHost.Debug.noWrite(ex.Message);
 				if (!Tab.ContainsKey(部門))
 				{
 					Tab.Add(部門, new Dictionary<string, dynamic>());

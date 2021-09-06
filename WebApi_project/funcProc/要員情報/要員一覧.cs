@@ -14,6 +14,7 @@ namespace WebApi_project.hostProc
     {
         public object json_要員一覧(String Json)
         {
+            xxx();
             x();
             Dictionary<string, object> Tab = new Dictionary<string, object>();
             Dictionary<string, object> Info = new Dictionary<string, object>();
@@ -68,7 +69,23 @@ namespace WebApi_project.hostProc
             int mCnt = 12;
             int s_yymm = ((year - 1) * 100 + 10);
             int e_yymm = yymmAdd(s_yymm, mCnt - 1);
-            var yakuStr = "1,2,34,35,37,38,39,40,41,42,43,44,88";
+            string yakuStr = "1,2,34,35,37,38,39,40,41,42,43,44,88";
+            string dispMode = "本部";
+            string dispName = "";
+            string CondStr = "";
+
+            Dictionary<string, string> dict = new Dictionary<string, string>()
+                            {
+                { "統括","TM.統括 = '" + dispName + "'" },
+                { "本部","TM.統括+TM.本部 = '" + dispName + "'" },
+                { "部門","TM.統括+TM.本部+TM.部門 ='" + dispName + "'" },
+                { "グループ","DATA.部署ID = '" + dispName + "'" },
+                { "間接","DATA.直間 = 2" }
+            };
+            if (!dict.TryGetValue(dispMode, out CondStr) ){
+                CondStr = "DATA.直間 = -1";
+            }
+
 
             sql.Clear();
             sql.Append(" SELECT");
@@ -99,6 +116,10 @@ namespace WebApi_project.hostProc
             sql.Append("      DATA.区分 IN(0,1,2,10)");
             sql.Append("      AND");
             sql.Append("       DATA.直間 <> 2 AND DATA.役職ID NOT IN(@yakuStr)");
+            if (dispMode != "")
+            {
+                sql.Append("      AND @CondStr");
+            }
             sql.Append(" GROUP BY");
             sql.Append("      DATA.yymm,");
             sql.Append("      TM.統括,");
@@ -119,10 +140,10 @@ namespace WebApi_project.hostProc
             sql.Append("      yymm,");
             sql.Append("      MAST.姓よみ + MAST.名よみ");
 
-
             sql.Replace("@s_yymm", SqlUtil.Parameter("number", s_yymm));
             sql.Replace("@e_yymm", SqlUtil.Parameter("number", e_yymm));
             sql.Replace("@yakuStr", SqlUtil.Parameter("number", yakuStr));
+            sql.Replace("@CondStr", SqlUtil.Parameter("number", CondStr));
 
             string SQL = sql.ToString();
             SqlConnection DB = new SqlConnection(DB_connectString);
@@ -139,8 +160,60 @@ namespace WebApi_project.hostProc
             DB.Close();
             DB.Dispose();
 
+
         }
-        void x2()
+void xxx()
+        {
+            Dictionary<string, section> xxxTab = new Dictionary<string, section>();
+            List<Info> Info2 = new List<Info>(12);
+
+            Info Info1 = new Info();
+            Info1.休職 = "123";
+            member men = new member();
+            men.名前 = "中村";
+            men.月 = Info2;
+            men.月[0] = Info1;
+            //men.月[0].休職 = "120";
+
+            section sec = new section();
+            sec.名前 = "開発";
+            sec.member = new Dictionary<string, member>();
+            sec.member.Add("451862",men);
+
+            xxxTab.Add("グループコード", sec);
+
+            //xxxTab[secName][種別][大項目][項目][n];
+
+
+        }
+        public class Info
+        {
+            public string 役職ID { get; set; }
+            public string 役職 { get; set; }
+            public string 社員区分 { get; set; }
+            public string 社籍 { get; set; }
+            public string 休職 { get; set; }
+        }
+        public class member
+        {
+            public string 名前 { get; set; }
+            public List<Info> 月 { get; set; }
+        }
+        public class section
+        {
+            public string 名前 { get; set; }
+            public int 直間 { get; set; }
+            public Dictionary<string, member> member { get; set; }
+        }
+/*
+        m = yymmDiff(s_yymm, c_yymm)
+		if( !IsObject(Tab[GrpID]) ) Tab[GrpID] = {名前:gName,直間:直間,member:{}}
+		if( !IsObject(Tab[GrpID].member[mID]) ){
+			Tab[GrpID].member[mID] = {名前:name,月:{}}
+			}
+		Tab[GrpID].member[mID].月[m] = { 役職ID: yaku,役職: yName,社員区分: 区分,社籍: 社籍,休職: 休職}
+*/
+void x2()
         {
             Dictionary<string, string> Tab = new Dictionary<string, string>();
             StringBuilder sql = new StringBuilder("");
