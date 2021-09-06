@@ -14,24 +14,24 @@ namespace WebApi_project.hostProc
     {
         public object json_要員一覧(String Json)
         {
-            xxx();
-            x();
-            Dictionary<string, object> Tab = new Dictionary<string, object>();
-            Dictionary<string, object> Info = new Dictionary<string, object>();
-            Dictionary<string, object> Data = new Dictionary<string, object>();
+            //Dictionary<string, object> Tab = new Dictionary<string, object>();
+            //Dictionary<string, object> Info = new Dictionary<string, object>();
+            //Dictionary<string, object> Data = new Dictionary<string, object>();
 
-            string classPath = this.GetType().FullName;                                         //クラスパスの取得
-            string className = this.GetType().Name;                                             //クラス名の取得
-            string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;           //メソッド名の取得
+            //string classPath = this.GetType().FullName;                                         //クラスパスの取得
+            //string className = this.GetType().Name;                                             //クラス名の取得
+            //string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;           //メソッド名の取得
 
-            string mName = Environment.MachineName;
+            //string mName = Environment.MachineName;
 
-            Info.Add("mName", mName);
-            Info.Add("className", className);
-            Info.Add("methodName", methodName);
-            Info.Add("DB_Conn", DB_connectString);
+            //Info.Add("mName", mName);
+            //Info.Add("className", className);
+            //Info.Add("methodName", methodName);
+            //Info.Add("DB_Conn", DB_connectString);
 
-            Tab.Add("Info", (object)Info);
+            //Tab.Add("Info", (object)Info);
+
+            var Tab = x();
             /*
                         string url = "http://localhost/Project/要員情報/要員一覧/xml/要員一覧_XML.asp?year=2021";
                         hostWeb h = new hostWeb();
@@ -57,7 +57,7 @@ namespace WebApi_project.hostProc
             sw.Stop();
             return (xmlDoc);
         }
-        void x()
+        Dictionary<string, section> x()
         {
             Dictionary<string, string> Tab = new Dictionary<string, string>();
             StringBuilder sql = new StringBuilder("");
@@ -70,8 +70,8 @@ namespace WebApi_project.hostProc
             int s_yymm = ((year - 1) * 100 + 10);
             int e_yymm = yymmAdd(s_yymm, mCnt - 1);
             string yakuStr = "1,2,34,35,37,38,39,40,41,42,43,44,88";
-            string dispMode = "本部";
-            string dispName = "";
+            string dispMode = "グループ";
+            string dispName = "営業本部営業部営業1課";
             string CondStr = "";
 
             Dictionary<string, string> dict = new Dictionary<string, string>()
@@ -79,14 +79,15 @@ namespace WebApi_project.hostProc
                 { "統括","TM.統括 = '" + dispName + "'" },
                 { "本部","TM.統括+TM.本部 = '" + dispName + "'" },
                 { "部門","TM.統括+TM.本部+TM.部門 ='" + dispName + "'" },
-                { "グループ","DATA.部署ID = '" + dispName + "'" },
+                { "グループ","TM.統括+TM.本部+TM.部門+TM.グループ ='" + dispName + "'" },
+                { "コード","DATA.部署ID = '" + dispName + "'" },
                 { "間接","DATA.直間 = 2" }
             };
             if (!dict.TryGetValue(dispMode, out CondStr) ){
                 CondStr = "DATA.直間 = -1";
             }
 
-
+            
             sql.Clear();
             sql.Append(" SELECT");
             sql.Append("       yymm   = DATA.yymm,");
@@ -147,41 +148,52 @@ namespace WebApi_project.hostProc
 
             Dictionary<string, section> xxxTab = new Dictionary<string, section>();
             section sec;
-
+            Info Info;
+            member men;
+            string mID,mName;
             string SQL = sql.ToString();
             SqlConnection DB = new SqlConnection(DB_connectString);
             DB.Open();
             SqlDataReader reader = dbRead(DB, SQL);
             while (reader.Read())
             {
-                gCode = reader["T_name"].ToString();
-                gName = (string)reader["名前"].ToString();
-                TabX.Add(gName);
+                gCode = reader["部署ID"].ToString();
+                gName = (string)reader["部署名"].ToString();
+                mID = (string)reader["mID"].ToString();
+                mName = (string)reader["名前"].ToString();
 
 
-                if( !xxxTab.ContainsKey(gCode))
+                if ( !xxxTab.ContainsKey(gCode))
                 {
                     sec = new section();
                     sec.名前 = gName;
                     sec.member = new Dictionary<string, member>();
                     xxxTab.Add(gCode, sec);
                 }
-/*
-                Info Info = new Info();
-                member men = new member();
-                men.月 = new List<Info>() { Info, Info, Info, Info, Info, Info, Info, Info, Info, Info, Info, Info, };
+                if (!xxxTab[gCode].member.ContainsKey(mID))
+                {
+                    men = new member();
+                    men.名前 = mName;
+                    men.月 = new List<Info>() { new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info() };
+                    xxxTab[gCode].member.Add(mID, men);
+                }
+                xxxTab[gCode].member[mID].月[0].休職 = "123";
+                /*
+                                Info Info = new Info();
+                                member men = new member();
+                                men.月 = new List<Info>() { Info, Info, Info, Info, Info, Info, Info, Info, Info, Info, Info, Info, };
 
 
-                sec.名前 = "開発";
-                sec.member = new Dictionary<string, member>();
-                sec.member.Add("451862", men);
-                sec.member["451862"].名前 = "中村";
-                sec.member["451862"].月[0].休職 = "222";
+                                sec.名前 = "開発";
+                                sec.member = new Dictionary<string, member>();
+                                sec.member.Add("451862", men);
+                                sec.member["451862"].名前 = "中村";
+                                sec.member["451862"].月[0].休職 = "222";
 
-                sec.member.Add("123456", men);
-                sec.member["123456"].名前 = "山田";
-                sec.member["123456"].月[0].休職 = "999";
-*/
+                                sec.member.Add("123456", men);
+                                sec.member["123456"].名前 = "山田";
+                                sec.member["123456"].月[0].休職 = "999";
+                */
 
 
 
@@ -192,7 +204,7 @@ namespace WebApi_project.hostProc
             DB.Close();
             DB.Dispose();
 
-
+            return (xxxTab);
         }
 void xxx()
         {
