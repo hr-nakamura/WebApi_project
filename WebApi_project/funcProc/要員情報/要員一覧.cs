@@ -145,6 +145,9 @@ namespace WebApi_project.hostProc
             sql.Replace("@yakuStr", SqlUtil.Parameter("number", yakuStr));
             sql.Replace("@CondStr", SqlUtil.Parameter("number", CondStr));
 
+            Dictionary<string, section> xxxTab = new Dictionary<string, section>();
+            section sec;
+
             string SQL = sql.ToString();
             SqlConnection DB = new SqlConnection(DB_connectString);
             DB.Open();
@@ -154,6 +157,35 @@ namespace WebApi_project.hostProc
                 gCode = reader["T_name"].ToString();
                 gName = (string)reader["名前"].ToString();
                 TabX.Add(gName);
+
+
+                if( !xxxTab.ContainsKey(gCode))
+                {
+                    sec = new section();
+                    sec.名前 = gName;
+                    sec.member = new Dictionary<string, member>();
+                    xxxTab.Add(gCode, sec);
+                }
+/*
+                Info Info = new Info();
+                member men = new member();
+                men.月 = new List<Info>() { Info, Info, Info, Info, Info, Info, Info, Info, Info, Info, Info, Info, };
+
+
+                sec.名前 = "開発";
+                sec.member = new Dictionary<string, member>();
+                sec.member.Add("451862", men);
+                sec.member["451862"].名前 = "中村";
+                sec.member["451862"].月[0].休職 = "222";
+
+                sec.member.Add("123456", men);
+                sec.member["123456"].名前 = "山田";
+                sec.member["123456"].月[0].休職 = "999";
+*/
+
+
+
+
             }
             reader.Close();
 
