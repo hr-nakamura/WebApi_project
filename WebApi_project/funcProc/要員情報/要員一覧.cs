@@ -48,11 +48,15 @@ namespace WebApi_project.hostProc
             var sw = new StopWatch();
             sw.Start("計測開始"); // 計測開始
 
-            Dictionary<string, dynamic> Tab = (Dictionary<string, dynamic>)json_要員一覧(Json);
+            string url = "http://localhost/Project/要員情報/要員一覧/xml/要員一覧_XML.asp?year=2021";
+            hostWeb h = new hostWeb();
+            string xmlStr = h.GetRequest(url);
+
+            //Dictionary<string, dynamic> Tab = (Dictionary<string, dynamic>)json_要員一覧(Json);
             sw.Lap("変換");
 
             XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(Tab["Data"]);
+            xmlDoc.LoadXml(xmlStr);
 
             sw.Stop();
             return (xmlDoc);
@@ -70,8 +74,8 @@ namespace WebApi_project.hostProc
             int s_yymm = ((year - 1) * 100 + 10);
             int e_yymm = yymmAdd(s_yymm, mCnt - 1);
             string yakuStr = "1,2,34,35,37,38,39,40,41,42,43,44,88";
-            string dispMode = "グループ";
-            string dispName = "営業本部営業部営業1課";
+            string dispMode = "部門";
+            string dispName = "営業本部本社大阪事業所";
             string CondStr = "";
 
             Dictionary<string, string> dict = new Dictionary<string, string>()
@@ -87,7 +91,15 @@ namespace WebApi_project.hostProc
                 CondStr = "DATA.直間 = -1";
             }
 
-            
+            Dictionary<string, section> xxxTab = new Dictionary<string, section>();
+            section sec;
+            member men;
+            string mID;
+            int yymm;
+            //string SQL = sql.ToString();
+            SqlConnection DB = new SqlConnection(DB_connectString);
+            DB.Open();
+
             sql.Clear();
             sql.Append(" SELECT");
             sql.Append("       yymm   = DATA.yymm,");
@@ -101,7 +113,7 @@ namespace WebApi_project.hostProc
             sql.Append("      役職名 = (SELECT 役職名 FROM EMG.dbo.役職マスタ WHERE DATA.役職ID=役職コード AND SUBSTRING(CONVERT(char(6),DATA.yymm),1,4) + '/' +SUBSTRING(CONVERT(char(6),DATA.yymm),5,2) + '/01' BETWEEN 開始 and 終了),");
             sql.Append("      直間   = DATA.直間,");
             sql.Append("      休職   = DATA.休職,");
-            sql.Append("      社籍   = DATA.社籍,");
+            sql.Append("      社籍   = RTRIM(DATA.社籍),");
             sql.Append("      区分   = DATA.区分,");
             sql.Append("      mID    = DATA.memberID,");
             sql.Append("      名前   = MAST.姓 + MAST.名");
@@ -140,60 +152,43 @@ namespace WebApi_project.hostProc
             sql.Append("      部署ID,");
             sql.Append("      yymm,");
             sql.Append("      MAST.姓よみ + MAST.名よみ");
-
             sql.Replace("@s_yymm", SqlUtil.Parameter("number", s_yymm));
             sql.Replace("@e_yymm", SqlUtil.Parameter("number", e_yymm));
             sql.Replace("@yakuStr", SqlUtil.Parameter("number", yakuStr));
             sql.Replace("@CondStr", SqlUtil.Parameter("number", CondStr));
 
-            Dictionary<string, section> xxxTab = new Dictionary<string, section>();
-            section sec;
-            Info Info;
-            member men;
-            string mID,mName;
+
+
             string SQL = sql.ToString();
-            SqlConnection DB = new SqlConnection(DB_connectString);
-            DB.Open();
             SqlDataReader reader = dbRead(DB, SQL);
             while (reader.Read())
             {
                 gCode = reader["部署ID"].ToString();
-                gName = (string)reader["部署名"].ToString();
                 mID = (string)reader["mID"].ToString();
-                mName = (string)reader["名前"].ToString();
 
-
-                if ( !xxxTab.ContainsKey(gCode))
+                if (!xxxTab.ContainsKey(gCode))
                 {
                     sec = new section();
-                    sec.名前 = gName;
+                    sec.名前 = (string)reader["部署名"].ToString();
                     sec.member = new Dictionary<string, member>();
                     xxxTab.Add(gCode, sec);
                 }
                 if (!xxxTab[gCode].member.ContainsKey(mID))
                 {
                     men = new member();
-                    men.名前 = mName;
+                    men.名前 = (string)reader["名前"].ToString();
                     men.月 = new List<Info>() { new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info() };
                     xxxTab[gCode].member.Add(mID, men);
                 }
-                xxxTab[gCode].member[mID].月[0].休職 = "123";
-                /*
-                                Info Info = new Info();
-                                member men = new member();
-                                men.月 = new List<Info>() { Info, Info, Info, Info, Info, Info, Info, Info, Info, Info, Info, Info, };
+                yymm = (int)reader["yymm"];
+                var n = yymmDiff(s_yymm, yymm);
+                Info x = xxxTab[gCode].member[mID].月[n];
+                x.社籍 = (string)reader["社籍"].ToString();
+                x.役職 = (string)reader["役職名"].ToString();
+                x.休職 = (short)reader["休職"];
+                x.役職ID = (short)reader["役職ID"];
+                x.社員区分 = (short)reader["区分"];
 
-
-                                sec.名前 = "開発";
-                                sec.member = new Dictionary<string, member>();
-                                sec.member.Add("451862", men);
-                                sec.member["451862"].名前 = "中村";
-                                sec.member["451862"].月[0].休職 = "222";
-
-                                sec.member.Add("123456", men);
-                                sec.member["123456"].名前 = "山田";
-                                sec.member["123456"].月[0].休職 = "999";
-                */
 
 
 
@@ -201,42 +196,118 @@ namespace WebApi_project.hostProc
             }
             reader.Close();
 
+
+//////////////////////////////////////////////////
+            sql.Clear();
+            sql.Append(" SELECT");
+            sql.Append("       yymm   = DATA.yymm,");
+            sql.Append("      T_name = '本社部門',");
+            sql.Append("      H_name = '',");
+            sql.Append("      B_name = '本社',");
+            sql.Append("      G_name = (SELECT 部署名 FROM EMG.dbo.部署マスタ WHERE DATA.部署ID=部署コード AND SUBSTRING(CONVERT(char(6),DATA.yymm),1,4) + '/' +SUBSTRING(CONVERT(char(6),DATA.yymm),5,2) + '/01' BETWEEN 開始 and 終了),");
+            sql.Append("      部署ID = DATA.部署ID,");
+            sql.Append("      役職ID = DATA.役職ID,");
+            sql.Append("      部署名 = (SELECT 部署名 FROM EMG.dbo.部署マスタ WHERE DATA.部署ID=部署コード AND SUBSTRING(CONVERT(char(6),DATA.yymm),1,4) + '/' +SUBSTRING(CONVERT(char(6),DATA.yymm),5,2) + '/01' BETWEEN 開始 and 終了),");
+            sql.Append("      役職名 = (SELECT 役職名 FROM EMG.dbo.役職マスタ WHERE DATA.役職ID=役職コード AND SUBSTRING(CONVERT(char(6),DATA.yymm),1,4) + '/' +SUBSTRING(CONVERT(char(6),DATA.yymm),5,2) + '/01' BETWEEN 開始 and 終了),");
+            sql.Append("      直間   = DATA.直間,");
+            sql.Append("      休職   = DATA.休職,");
+            sql.Append("      社籍   = RTRIM(DATA.社籍),");
+            sql.Append("      区分   = DATA.区分,");
+            sql.Append("      mID    = DATA.memberID,");
+            sql.Append("      名前   = MAST.姓 + MAST.名");
+            sql.Append(" FROM");
+            sql.Append("      要員所属データ DATA");
+            sql.Append("      LEFT JOIN EMG.dbo.社員基礎データ MAST ON DATA.memberID = MAST.社員ID");
+            sql.Append(" WHERE");
+            sql.Append("      DATA.yymm BETWEEN @s_yymm AND @e_yymm");
+            sql.Append("      AND");
+            sql.Append("      DATA.区分 IN(0,1,2,10)");
+            sql.Append("      AND");
+            sql.Append("      DATA.直間 = 2 OR DATA.役職ID IN(@yakuStr)");
+            sql.Append("      AND (SELECT 部署名 FROM EMG.dbo.部署マスタ WHERE DATA.部署ID=部署コード AND SUBSTRING(CONVERT(char(6),DATA.yymm),1,4) + '/' +SUBSTRING(CONVERT(char(6),DATA.yymm),5,2) + '/01' BETWEEN 開始 and 終了) = @dispName");
+            //if (dispMode != "")
+            //{
+            //    sql.Append("      AND @CondStr");
+            //}
+            sql.Append(" GROUP BY");
+            sql.Append("      DATA.yymm,");
+            sql.Append("      DATA.memberID,");
+            sql.Append("      DATA.部署ID,");
+            sql.Append("      DATA.役職ID,");
+            sql.Append("      DATA.直間,");
+            sql.Append("      DATA.休職,");
+            sql.Append("      DATA.社籍,");
+            sql.Append("      DATA.区分,");
+            sql.Append("      MAST.姓 + MAST.名,");
+            sql.Append("      MAST.姓よみ + MAST.名よみ");
+            sql.Append(" ORDER BY");
+            sql.Append("      部署ID,");
+            sql.Append("      yymm,");
+            sql.Append("      MAST.姓よみ + MAST.名よみ");
+
+
+
+
+
+
+
+
+            sql.Replace("@s_yymm", SqlUtil.Parameter("number", s_yymm));
+            sql.Replace("@e_yymm", SqlUtil.Parameter("number", e_yymm));
+            sql.Replace("@yakuStr", SqlUtil.Parameter("number", yakuStr));
+            sql.Replace("@CondStr", SqlUtil.Parameter("number", CondStr));
+            sql.Replace("@dispName", SqlUtil.Parameter("string", dispName));
+
+            string SQL1 = sql.ToString();
+
+            SqlDataReader reader1 = dbRead(DB, SQL1);
+            while (reader1.Read())
+            {
+                gCode = reader1["部署ID"].ToString();
+                mID = (string)reader1["mID"].ToString();
+
+                if ( !xxxTab.ContainsKey(gCode))
+                {
+                    sec = new section();
+                    sec.名前 = (string)reader1["部署名"].ToString();
+                    sec.member = new Dictionary<string, member>();
+                    xxxTab.Add(gCode, sec);
+                }
+                if (!xxxTab[gCode].member.ContainsKey(mID))
+                {
+                    men = new member();
+                    men.名前 = (string)reader1["名前"].ToString();
+                    men.月 = new List<Info>() { new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info() };
+                    xxxTab[gCode].member.Add(mID, men);
+                }
+                yymm = (int)reader1["yymm"];
+                var n = yymmDiff(s_yymm, yymm);
+                Info x = xxxTab[gCode].member[mID].月[n];
+                x.社籍 = (string)reader1["社籍"].ToString();
+                x.役職 = (string)reader1["役職名"].ToString();
+                x.休職 = (short)reader1["休職"];
+                x.役職ID = (short)reader1["役職ID"];
+                x.社員区分 = (short)reader1["区分"];
+
+
+
+
+
+            }
+            reader1.Close();
+
             DB.Close();
             DB.Dispose();
 
             return (xxxTab);
         }
-void xxx()
-        {
-            Dictionary<string, section> xxxTab = new Dictionary<string, section>();
-            List<Info> Info2 = new List<Info>(12);
-
-            Info Info1 = new Info();
-            Info1.休職 = "123";
-            member men = new member();
-            men.名前 = "中村";
-            men.月 = Info2;
-            men.月[0] = Info1;
-            //men.月[0].休職 = "120";
-
-            section sec = new section();
-            sec.名前 = "開発";
-            sec.member = new Dictionary<string, member>();
-            sec.member.Add("451862",men);
-
-            xxxTab.Add("グループコード", sec);
-
-            //xxxTab[secName][種別][大項目][項目][n];
-
-
-        }
         public class Info
         {
-            public string 役職ID { get; set; }
-            public string 役職 { get; set; }
-            public string 社員区分 { get; set; }
             public string 社籍 { get; set; }
-            public string 休職 { get; set; }
+            public string 役職 { get; set; }
+            public short 役職ID { get; set; }
+            public short 社員区分 { get; set; }
+            public short 休職 { get; set; }
         }
         public class member
         {
@@ -344,6 +415,17 @@ void x2()
             mm = ym % 12;
             if (mm == 0) { yy--; mm = 12; }
             return ((yy * 100) + mm);
+        }
+        int yymmDiff(int base_yymm, int yymm)
+        {
+            int b_yy = base_yymm / 100;
+            int b_mm = base_yymm % 100;
+            int yy = yymm / 100;
+            int mm = yymm % 100;
+
+            mm += (yy - b_yy) * 12;
+            int n = (mm - b_mm);
+            return (n);
         }
     }
 }
