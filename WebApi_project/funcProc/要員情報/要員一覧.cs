@@ -101,6 +101,26 @@ namespace WebApi_project.hostProc
             DB.Open();
 
             sql.Clear();
+            sql.Append(" SELECT ");
+
+            sql.Append("      yymm,");
+            sql.Append("      mID,");
+            sql.Append("      T_name,");
+            sql.Append("      H_name,");
+            sql.Append("      B_name,");
+            sql.Append("      G_name,");
+            sql.Append("      部署ID,");
+            sql.Append("      役職ID,");
+            sql.Append("      部署名,");
+            sql.Append("      役職名,");
+            sql.Append("      直間,");
+            sql.Append("      休職,");
+            sql.Append("      社籍,");
+            sql.Append("      区分,");
+            sql.Append("      名前,");
+            sql.Append("      よみ");
+            sql.Append("      FROM(");
+
             sql.Append(" SELECT");
             sql.Append("       yymm   = DATA.yymm,");
             sql.Append("      T_name = TM.統括,");
@@ -116,7 +136,8 @@ namespace WebApi_project.hostProc
             sql.Append("      社籍   = RTRIM(DATA.社籍),");
             sql.Append("      区分   = DATA.区分,");
             sql.Append("      mID    = DATA.memberID,");
-            sql.Append("      名前   = MAST.姓 + MAST.名");
+            sql.Append("      名前   = MAST.姓 + MAST.名,");
+            sql.Append("      よみ   = MAST.姓よみ + MAST.名よみ");
             sql.Append(" FROM");
             sql.Append("      要員所属データ DATA");
             sql.Append("      LEFT JOIN EMG.dbo.社員基礎データ MAST ON DATA.memberID = MAST.社員ID");
@@ -133,72 +154,76 @@ namespace WebApi_project.hostProc
             {
                 sql.Append("      AND @CondStr");
             }
-            sql.Append(" GROUP BY");
-            sql.Append("      DATA.yymm,");
-            sql.Append("      TM.統括,");
-            sql.Append("      TM.本部,");
-            sql.Append("      TM.部門,");
-            sql.Append("      TM.グループ,");
-            sql.Append("      DATA.memberID,");
-            sql.Append("      DATA.部署ID,");
-            sql.Append("      DATA.役職ID,");
-            sql.Append("      DATA.直間,");
-            sql.Append("      DATA.休職,");
-            sql.Append("      DATA.社籍,");
-            sql.Append("      DATA.区分,");
-            sql.Append("      MAST.姓 + MAST.名,");
-            sql.Append("      MAST.姓よみ + MAST.名よみ");
-            sql.Append(" ORDER BY");
-            sql.Append("      部署ID,");
-            sql.Append("      yymm,");
-            sql.Append("      MAST.姓よみ + MAST.名よみ");
-            sql.Replace("@s_yymm", SqlUtil.Parameter("number", s_yymm));
-            sql.Replace("@e_yymm", SqlUtil.Parameter("number", e_yymm));
-            sql.Replace("@yakuStr", SqlUtil.Parameter("number", yakuStr));
-            sql.Replace("@CondStr", SqlUtil.Parameter("number", CondStr));
+            /*
+                        sql.Append(" GROUP BY");
+                        sql.Append("      DATA.yymm,");
+                        sql.Append("      TM.統括,");
+                        sql.Append("      TM.本部,");
+                        sql.Append("      TM.部門,");
+                        sql.Append("      TM.グループ,");
+                        sql.Append("      DATA.memberID,");
+                        sql.Append("      DATA.部署ID,");
+                        sql.Append("      DATA.役職ID,");
+                        sql.Append("      DATA.直間,");
+                        sql.Append("      DATA.休職,");
+                        sql.Append("      DATA.社籍,");
+                        sql.Append("      DATA.区分,");
+                        sql.Append("      MAST.姓 + MAST.名,");
+                        sql.Append("      MAST.姓よみ + MAST.名よみ");
+                        sql.Append(" ORDER BY");
+                        sql.Append("      部署ID,");
+                        sql.Append("      yymm,");
+                        sql.Append("      MAST.姓よみ + MAST.名よみ");
+                        sql.Replace("@s_yymm", SqlUtil.Parameter("number", s_yymm));
+                        sql.Replace("@e_yymm", SqlUtil.Parameter("number", e_yymm));
+                        sql.Replace("@yakuStr", SqlUtil.Parameter("number", yakuStr));
+                        sql.Replace("@CondStr", SqlUtil.Parameter("number", CondStr));
 
 
 
-            string SQL = sql.ToString();
-            SqlDataReader reader = dbRead(DB, SQL);
-            while (reader.Read())
-            {
-                gCode = reader["部署ID"].ToString();
-                mID = (string)reader["mID"].ToString();
+                        string SQL = sql.ToString();
+                        SqlDataReader reader = dbRead(DB, SQL);
+                        while (reader.Read())
+                        {
+                            gCode = reader["部署ID"].ToString();
+                            mID = (string)reader["mID"].ToString();
 
-                if (!xxxTab.ContainsKey(gCode))
-                {
-                    sec = new section();
-                    sec.名前 = (string)reader["部署名"].ToString();
-                    sec.member = new Dictionary<string, member>();
-                    xxxTab.Add(gCode, sec);
-                }
-                if (!xxxTab[gCode].member.ContainsKey(mID))
-                {
-                    men = new member();
-                    men.名前 = (string)reader["名前"].ToString();
-                    men.月 = new List<Info>() { new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info() };
-                    xxxTab[gCode].member.Add(mID, men);
-                }
-                yymm = (int)reader["yymm"];
-                var n = yymmDiff(s_yymm, yymm);
-                Info x = xxxTab[gCode].member[mID].月[n];
-                x.社籍 = (string)reader["社籍"].ToString();
-                x.役職 = (string)reader["役職名"].ToString();
-                x.休職 = (short)reader["休職"];
-                x.役職ID = (short)reader["役職ID"];
-                x.社員区分 = (short)reader["区分"];
-
-
+                            if (!xxxTab.ContainsKey(gCode))
+                            {
+                                sec = new section();
+                                sec.名前 = (string)reader["部署名"].ToString();
+                                sec.member = new Dictionary<string, member>();
+                                xxxTab.Add(gCode, sec);
+                            }
+                            if (!xxxTab[gCode].member.ContainsKey(mID))
+                            {
+                                men = new member();
+                                men.名前 = (string)reader["名前"].ToString();
+                                men.月 = new List<Info>() { new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info() };
+                                xxxTab[gCode].member.Add(mID, men);
+                            }
+                            yymm = (int)reader["yymm"];
+                            var n = yymmDiff(s_yymm, yymm);
+                            Info x = xxxTab[gCode].member[mID].月[n];
+                            x.社籍 = (string)reader["社籍"].ToString();
+                            x.役職 = (string)reader["役職名"].ToString();
+                            x.休職 = (short)reader["休職"];
+                            x.役職ID = (short)reader["役職ID"];
+                            x.社員区分 = (short)reader["区分"];
 
 
 
-            }
-            reader.Close();
 
 
-//////////////////////////////////////////////////
-            sql.Clear();
+                        }
+                        reader.Close();
+
+
+            //////////////////////////////////////////////////
+                        sql.Clear();
+            */
+            sql.Append(" UNION ALL");
+
             sql.Append(" SELECT");
             sql.Append("       yymm   = DATA.yymm,");
             sql.Append("      T_name = '本社部門',");
@@ -214,7 +239,8 @@ namespace WebApi_project.hostProc
             sql.Append("      社籍   = RTRIM(DATA.社籍),");
             sql.Append("      区分   = DATA.区分,");
             sql.Append("      mID    = DATA.memberID,");
-            sql.Append("      名前   = MAST.姓 + MAST.名");
+            sql.Append("      名前   = MAST.姓 + MAST.名,");
+            sql.Append("      よみ   = MAST.姓よみ + MAST.名よみ");
             sql.Append(" FROM");
             sql.Append("      要員所属データ DATA");
             sql.Append("      LEFT JOIN EMG.dbo.社員基礎データ MAST ON DATA.memberID = MAST.社員ID");
@@ -229,21 +255,31 @@ namespace WebApi_project.hostProc
             //{
             //    sql.Append("      AND @CondStr");
             //}
+
+            sql.Append(" ) as x");
+
+
             sql.Append(" GROUP BY");
-            sql.Append("      DATA.yymm,");
-            sql.Append("      DATA.memberID,");
-            sql.Append("      DATA.部署ID,");
-            sql.Append("      DATA.役職ID,");
-            sql.Append("      DATA.直間,");
-            sql.Append("      DATA.休職,");
-            sql.Append("      DATA.社籍,");
-            sql.Append("      DATA.区分,");
-            sql.Append("      MAST.姓 + MAST.名,");
-            sql.Append("      MAST.姓よみ + MAST.名よみ");
+            sql.Append("      yymm,");
+            sql.Append("      mID,");
+            sql.Append("      T_name,");
+            sql.Append("      H_name,");
+            sql.Append("      B_name,");
+            sql.Append("      G_name,");
+            sql.Append("      部署ID,");
+            sql.Append("      役職ID,");
+            sql.Append("      部署名,");
+            sql.Append("      役職名,");
+            sql.Append("      直間,");
+            sql.Append("      休職,");
+            sql.Append("      社籍,");
+            sql.Append("      区分,");
+            sql.Append("      名前,");
+            sql.Append("      よみ");
             sql.Append(" ORDER BY");
             sql.Append("      部署ID,");
             sql.Append("      yymm,");
-            sql.Append("      MAST.姓よみ + MAST.名よみ");
+            sql.Append("      よみ");
 
 
 
