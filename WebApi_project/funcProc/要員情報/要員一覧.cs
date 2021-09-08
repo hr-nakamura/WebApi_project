@@ -31,6 +31,8 @@ namespace WebApi_project.hostProc
 
             //Tab.Add("Info", (object)Info);
 
+            var sw = new StopWatch();
+            sw.Start("計測開始"); // 計測開始
             var Tab = x();
             /*
                         string url = "http://localhost/Project/要員情報/要員一覧/xml/要員一覧_XML.asp?year=2021";
@@ -39,6 +41,9 @@ namespace WebApi_project.hostProc
 
                         Tab.Add("Data", xmlStr);
             */
+            sw.Lap("変換");
+
+            sw.Stop();
             return (Tab);
         }
 
@@ -52,7 +57,7 @@ namespace WebApi_project.hostProc
             hostWeb h = new hostWeb();
             string xmlStr = h.GetRequest(url);
 
-            //Dictionary<string, dynamic> Tab = (Dictionary<string, dynamic>)json_要員一覧(Json);
+            Dictionary<string, dynamic> Tab = (Dictionary<string, dynamic>)json_要員一覧(Json);
             sw.Lap("変換");
 
             XmlDocument xmlDoc = new XmlDocument();
@@ -74,20 +79,23 @@ namespace WebApi_project.hostProc
             int s_yymm = ((year - 1) * 100 + 10);
             int e_yymm = yymmAdd(s_yymm, mCnt - 1);
             string yakuStr = "1,2,34,35,37,38,39,40,41,42,43,44,88";
-            string dispMode = "部門";
-            string dispName = "営業本部本社大阪事業所";
+            //string dispMode = "グループ";
+            //string dispName = "開発本部//第2開発部/第2開発課";
+            string dispMode = "間接";
+            string dispName = "本社管理部門";
             string CondStr = "";
 
             Dictionary<string, string> dict = new Dictionary<string, string>()
                             {
                 { "統括","TM.統括 = '" + dispName + "'" },
-                { "本部","TM.統括+TM.本部 = '" + dispName + "'" },
-                { "部門","TM.統括+TM.本部+TM.部門 ='" + dispName + "'" },
-                { "グループ","TM.統括+TM.本部+TM.部門+TM.グループ ='" + dispName + "'" },
+                { "本部","TM.統括+'/'+TM.本部 = '" + dispName + "'" },
+                { "部門","TM.統括+'/'+TM.本部+'/'+TM.部門 ='" + dispName + "'" },
+                { "グループ","TM.統括+'/'+TM.本部+'/'+TM.部門+'/'+TM.グループ ='" + dispName + "'" },
                 { "コード","DATA.部署ID = '" + dispName + "'" },
                 { "間接","DATA.直間 = 2" }
             };
-            if (!dict.TryGetValue(dispMode, out CondStr) ){
+            if (!dict.TryGetValue(dispMode, out CondStr))
+            {
                 CondStr = "DATA.直間 = -1";
             }
 
@@ -101,24 +109,24 @@ namespace WebApi_project.hostProc
             DB.Open();
 
             sql.Clear();
-            sql.Append(" SELECT ");
+            sql.Append(" SELECT *");
 
-            sql.Append("      yymm,");
-            sql.Append("      mID,");
-            sql.Append("      T_name,");
-            sql.Append("      H_name,");
-            sql.Append("      B_name,");
-            sql.Append("      G_name,");
-            sql.Append("      部署ID,");
-            sql.Append("      役職ID,");
-            sql.Append("      部署名,");
-            sql.Append("      役職名,");
-            sql.Append("      直間,");
-            sql.Append("      休職,");
-            sql.Append("      社籍,");
-            sql.Append("      区分,");
-            sql.Append("      名前,");
-            sql.Append("      よみ");
+            //sql.Append("      yymm,");
+            //sql.Append("      mID,");
+            //sql.Append("      T_name,");
+            //sql.Append("      H_name,");
+            //sql.Append("      B_name,");
+            //sql.Append("      G_name,");
+            //sql.Append("      部署ID,");
+            //sql.Append("      役職ID,");
+            //sql.Append("      部署名,");
+            //sql.Append("      役職名,");
+            //sql.Append("      直間,");
+            //sql.Append("      休職,");
+            //sql.Append("      社籍,");
+            //sql.Append("      区分,");
+            //sql.Append("      名前,");
+            //sql.Append("      よみ");
             sql.Append("      FROM(");
 
             sql.Append(" SELECT");
@@ -154,74 +162,6 @@ namespace WebApi_project.hostProc
             {
                 sql.Append("      AND @CondStr");
             }
-            /*
-                        sql.Append(" GROUP BY");
-                        sql.Append("      DATA.yymm,");
-                        sql.Append("      TM.統括,");
-                        sql.Append("      TM.本部,");
-                        sql.Append("      TM.部門,");
-                        sql.Append("      TM.グループ,");
-                        sql.Append("      DATA.memberID,");
-                        sql.Append("      DATA.部署ID,");
-                        sql.Append("      DATA.役職ID,");
-                        sql.Append("      DATA.直間,");
-                        sql.Append("      DATA.休職,");
-                        sql.Append("      DATA.社籍,");
-                        sql.Append("      DATA.区分,");
-                        sql.Append("      MAST.姓 + MAST.名,");
-                        sql.Append("      MAST.姓よみ + MAST.名よみ");
-                        sql.Append(" ORDER BY");
-                        sql.Append("      部署ID,");
-                        sql.Append("      yymm,");
-                        sql.Append("      MAST.姓よみ + MAST.名よみ");
-                        sql.Replace("@s_yymm", SqlUtil.Parameter("number", s_yymm));
-                        sql.Replace("@e_yymm", SqlUtil.Parameter("number", e_yymm));
-                        sql.Replace("@yakuStr", SqlUtil.Parameter("number", yakuStr));
-                        sql.Replace("@CondStr", SqlUtil.Parameter("number", CondStr));
-
-
-
-                        string SQL = sql.ToString();
-                        SqlDataReader reader = dbRead(DB, SQL);
-                        while (reader.Read())
-                        {
-                            gCode = reader["部署ID"].ToString();
-                            mID = (string)reader["mID"].ToString();
-
-                            if (!xxxTab.ContainsKey(gCode))
-                            {
-                                sec = new section();
-                                sec.名前 = (string)reader["部署名"].ToString();
-                                sec.member = new Dictionary<string, member>();
-                                xxxTab.Add(gCode, sec);
-                            }
-                            if (!xxxTab[gCode].member.ContainsKey(mID))
-                            {
-                                men = new member();
-                                men.名前 = (string)reader["名前"].ToString();
-                                men.月 = new List<Info>() { new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info() };
-                                xxxTab[gCode].member.Add(mID, men);
-                            }
-                            yymm = (int)reader["yymm"];
-                            var n = yymmDiff(s_yymm, yymm);
-                            Info x = xxxTab[gCode].member[mID].月[n];
-                            x.社籍 = (string)reader["社籍"].ToString();
-                            x.役職 = (string)reader["役職名"].ToString();
-                            x.休職 = (short)reader["休職"];
-                            x.役職ID = (short)reader["役職ID"];
-                            x.社員区分 = (short)reader["区分"];
-
-
-
-
-
-                        }
-                        reader.Close();
-
-
-            //////////////////////////////////////////////////
-                        sql.Clear();
-            */
             sql.Append(" UNION ALL");
 
             sql.Append(" SELECT");
@@ -249,15 +189,14 @@ namespace WebApi_project.hostProc
             sql.Append("      AND");
             sql.Append("      DATA.区分 IN(0,1,2,10)");
             sql.Append("      AND");
-            sql.Append("      DATA.直間 = 2 OR DATA.役職ID IN(@yakuStr)");
+            sql.Append("      (DATA.直間 = 2 OR DATA.役職ID IN(@yakuStr))");
             sql.Append("      AND (SELECT 部署名 FROM EMG.dbo.部署マスタ WHERE DATA.部署ID=部署コード AND SUBSTRING(CONVERT(char(6),DATA.yymm),1,4) + '/' +SUBSTRING(CONVERT(char(6),DATA.yymm),5,2) + '/01' BETWEEN 開始 and 終了) = @dispName");
             //if (dispMode != "")
             //{
             //    sql.Append("      AND @CondStr");
             //}
 
-            sql.Append(" ) as x");
-
+            sql.Append(" ) as temp");
 
             sql.Append(" GROUP BY");
             sql.Append("      yymm,");
@@ -281,56 +220,44 @@ namespace WebApi_project.hostProc
             sql.Append("      yymm,");
             sql.Append("      よみ");
 
-
-
-
-
-
-
-
             sql.Replace("@s_yymm", SqlUtil.Parameter("number", s_yymm));
             sql.Replace("@e_yymm", SqlUtil.Parameter("number", e_yymm));
             sql.Replace("@yakuStr", SqlUtil.Parameter("number", yakuStr));
             sql.Replace("@CondStr", SqlUtil.Parameter("number", CondStr));
             sql.Replace("@dispName", SqlUtil.Parameter("string", dispName));
 
-            string SQL1 = sql.ToString();
+            string SQL = sql.ToString();
 
-            SqlDataReader reader1 = dbRead(DB, SQL1);
-            while (reader1.Read())
+            SqlDataReader reader = dbRead(DB, SQL);
+            while (reader.Read())
             {
-                gCode = reader1["部署ID"].ToString();
-                mID = (string)reader1["mID"].ToString();
+                gCode = reader["部署ID"].ToString();
+                mID = (string)reader["mID"].ToString();
 
-                if ( !xxxTab.ContainsKey(gCode))
+                if (!xxxTab.ContainsKey(gCode))
                 {
                     sec = new section();
-                    sec.名前 = (string)reader1["部署名"].ToString();
+                    sec.名前 = (string)reader["部署名"].ToString();
                     sec.member = new Dictionary<string, member>();
                     xxxTab.Add(gCode, sec);
                 }
                 if (!xxxTab[gCode].member.ContainsKey(mID))
                 {
                     men = new member();
-                    men.名前 = (string)reader1["名前"].ToString();
+                    men.名前 = (string)reader["名前"].ToString();
                     men.月 = new List<Info>() { new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info(), new Info() };
                     xxxTab[gCode].member.Add(mID, men);
                 }
-                yymm = (int)reader1["yymm"];
-                var n = yymmDiff(s_yymm, yymm);
-                Info x = xxxTab[gCode].member[mID].月[n];
-                x.社籍 = (string)reader1["社籍"].ToString();
-                x.役職 = (string)reader1["役職名"].ToString();
-                x.休職 = (short)reader1["休職"];
-                x.役職ID = (short)reader1["役職ID"];
-                x.社員区分 = (short)reader1["区分"];
-
-
-
-
-
+                yymm = (int)reader["yymm"];
+                var m = yymmDiff(s_yymm, yymm);
+                Info Info = xxxTab[gCode].member[mID].月[m];
+                Info.社籍 = (string)reader["社籍"].ToString();
+                Info.役職 = (string)reader["役職名"].ToString();
+                Info.休職 = (short)reader["休職"];
+                Info.役職ID = (short)reader["役職ID"];
+                Info.社員区分 = (short)reader["区分"];
             }
-            reader1.Close();
+            reader.Close();
 
             DB.Close();
             DB.Dispose();
@@ -356,15 +283,15 @@ namespace WebApi_project.hostProc
             public int 直間 { get; set; }
             public Dictionary<string, member> member { get; set; }
         }
-/*
-        m = yymmDiff(s_yymm, c_yymm)
-		if( !IsObject(Tab[GrpID]) ) Tab[GrpID] = {名前:gName,直間:直間,member:{}}
-		if( !IsObject(Tab[GrpID].member[mID]) ){
-			Tab[GrpID].member[mID] = {名前:name,月:{}}
-			}
-		Tab[GrpID].member[mID].月[m] = { 役職ID: yaku,役職: yName,社員区分: 区分,社籍: 社籍,休職: 休職}
-*/
-void x2()
+        /*
+                m = yymmDiff(s_yymm, c_yymm)
+                if( !IsObject(Tab[GrpID]) ) Tab[GrpID] = {名前:gName,直間:直間,member:{}}
+                if( !IsObject(Tab[GrpID].member[mID]) ){
+                    Tab[GrpID].member[mID] = {名前:name,月:{}}
+                    }
+                Tab[GrpID].member[mID].月[m] = { 役職ID: yaku,役職: yName,社員区分: 区分,社籍: 社籍,休職: 休職}
+        */
+        void x2()
         {
             Dictionary<string, string> Tab = new Dictionary<string, string>();
             StringBuilder sql = new StringBuilder("");
