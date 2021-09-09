@@ -94,7 +94,7 @@
         }
     }
     function frame_init(o) {
-        $.debug("frame_init");
+        //$.debug("frame_init");
         //var o2 = $.stopwatch();
         //$(o2).stopwatch("frame_init start");
         var target_name = $(o)[0].className;
@@ -123,7 +123,7 @@
         //$.debug("frame_init", Buff);
     }
     function frame_resize(o) {
-        $.debug.json("frame_resize", o);
+        //$.debug.json("frame_resize", o);
         //var o2 = $.stopwatch();
         //$(o2).stopwatch("frame_resize start");
         var target_name = $(o)[0].className;
@@ -167,7 +167,7 @@
         //$.debug("frame_resize", Buff);
     }
     function iframe_resize(o) {
-        $.debug.json("iframe_resize", o);
+        //$.debug.json("iframe_resize", o);
         //var o2 = $.stopwatch();
         //$(o2).stopwatch("iframe_resize start");
         var target_name = $(o)[0].className;
@@ -208,25 +208,26 @@
         //$.debug("iframe_resize", Buff);
     }
     function table_resize(o) {
-        $.debug.json("table_resize", o);
+        //$.debug.json("table_resize", o);
+        var work = [];
         //var o2 = $.stopwatch();
         //$(o2).stopwatch("table_resize start");
-        if ($targetInfo == null) {
+        //if ($targetInfo == null) {
             //$(o2).stopwatch("$targetInfo");
             $targetInfo = $($this).Info();
-        }
-        if ($theadInfo == null) {
+        //}
+        //if ($theadInfo == null) {
             //$(o2).stopwatch("$theadInfo");
             $theadInfo = $("thead", $this).Info();
-        }
+        //}
 
         var targetHeight = $targetInfo.client.height;
         var tableHeight = 0;
         var theadHeight = 0;
-        // theadの高さ情報
         var thead = $theadInfo;
+        // theadの高さ情報
         theadHeight += thead.margin.top + thead.margin.bottom;
-        theadHeight += thead.border.top + thead.margin.bottom;
+        theadHeight += thead.border.top + thead.border.bottom;
         theadHeight += thead.padding.top + thead.padding.bottom;
         theadHeight += thead.client.height;
         // tbodyの高さ設定
@@ -235,6 +236,10 @@
         $("tbody", o).css("height", bodyHeight);
         //var Buff = $(o2).stopwatch();
         //$.debug("table_resize", Buff);
+        work.push({ "11": thead.client.height });       //33
+        work.push({ "12": targetHeight });
+        work.push({ "15": bodyHeight });
+        //$.debug.json("AAA", work);
     }
 
     $.fn.frame = function (method) {
@@ -261,6 +266,9 @@
         return (false);
     });
     $.fn.Info = function () {
+        var o2 = $.stopwatch();
+        $(o2).stopwatch("1");
+        var a = 1;
         var Info = {
             name: {
                 class: "",
@@ -312,8 +320,8 @@
                 right: 0
             }
         }
+        $(o2).stopwatch("2");
         if ($(this).length > 0) {
-            //$.debug("AAA", $(this)[0].className);
             $.each($(this), function () {
                 var a = 1;
                 Info.position = {
@@ -369,10 +377,18 @@
         else {
             var x = 1;
         }
+        $(o2).stopwatch("3");
+
         //$.debug("ABCDEFG", typeof (Info));
         if (typeof (Info) == "undefined") {
             var a = 1;
         }
+        $(o2).stopwatch("4");
+        var Buff = $(o2).stopwatch();
+        if ($(this).length > 0) {
+            $.debug("Info", $(this)[0].localName, $(this)[0].className, Buff);
+        }
+
         return Info;
     }
 })(window.jQuery);

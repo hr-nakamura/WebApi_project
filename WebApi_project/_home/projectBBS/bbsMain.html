@@ -32,25 +32,26 @@
         $(function () {
             $(window).on("load", function () {
                 try {
-                    //var o1 = $.stopwatch();
+                    var o1 = $.stopwatch();
 
                     $(".target").frame({ border: "1px solid blue" });
                     var Cnt = 0;
 
-                    //$(o1).stopwatch("開始1");
+                    $(o1).stopwatch("開始1");
 
-                    //$(o1).stopwatch("xsl読込1");
+                    $(o1).stopwatch("xsl読込1");
                     xmlDoc = $.str2xml("<root><projectNumList/></root>");
                     xslDoc = $.loadXMLDoc("projectList.xsl");
 
-                    //$(o1).stopwatch("変換1");
+                    $(o1).stopwatch("変換1");
                     var Buff = $(xmlDoc).transformNode(xslDoc);
-                    //$(o1).stopwatch("表示1");
+                    $(o1).stopwatch("表示1");
                     $(".target").frame("html", Buff);
 
-                    // 選択表示(非同期実行)
-                    var webapi_url = "http://localhost/WebApi/project/api/xml";
-                    //var WebApi_url = "/WebApi/project/api/xml";
+                     //選択表示(非同期実行)
+                    //var webapi_url = "http://localhost/WebApi/project/api/xml";
+                    //var webapi_url = "http://kansa.in.eandm.co.jp/WebApi/project/api/xml";
+                    var webapi_url = "/WebApi/project/api/xml";
                     var item = "projectBBS/projectList";
                     para = {
                         limitYear: 2019,
@@ -62,8 +63,8 @@
 //                    var work = $.WebApi("GET", webapi_url, item, func, para, dispProject);
                     var xmlDoc = $.WebApi("GET", webapi_url, item, para);
                     dispProject(xmlDoc);
-                    //var Buff = $(o1).stopwatch();
-                    //$.debug("開始時", Buff);
+                    var Buff = $(o1).stopwatch();
+                    $.debug("開始時", Buff);
 
 
 

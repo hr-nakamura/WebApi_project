@@ -124,7 +124,7 @@ namespace WebApi_project.hostProc
             {
                 Json = @"{beforBBS:'2021/06/30 00:00:00',visitBBS:'2021/07/07 10:12:12',limitYear:2019}";
             }
-            Debug.WriteLog("projectList");
+            //Debug.WriteLog("projectList");
             var o_json = JsonConvert.DeserializeObject<projectPara>(Json);
             var visitBBS = o_json.visitBBS;
             var limitYear = o_json.limitYear;
