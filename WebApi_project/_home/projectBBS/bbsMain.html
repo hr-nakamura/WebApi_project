@@ -30,11 +30,6 @@
         var xslDoc = null;
         var xmlDoc = null;
         $(function () {
-            $(".target").on("inview", function () {
-                //ブラウザの表示域に表示されたときに実行する処理
-                $.debug("inview");
-                test();
-            });
             $(window).on("load", function () {
                 try {
                     //var o1 = $.stopwatch();
@@ -77,7 +72,7 @@
                 }
             });
             function test() {
-                $.debug.log(this, "ABCDEF");
+                //$.debug.log(this, "ABCDEF");
             }
             function dispProject(xmlDoc) {
                 //var o2 = $.stopwatch();
@@ -149,19 +144,28 @@
     </script>
     <script type="text/javascript">
         $(function () {
-
+            $(".target").on("inview", function (event, isInView) {
+                //ブラウザの表示域に表示されたときに実行する処理
+                //if (isInView) {
+                //    //表示領域に入った時
+                //    $.debug("inview IN");
+                //} else {
+                //    //表示領域から出た時
+                //    $.debug("inview OUT");
+                //}
+            });
             $("body").on("DOMSubtreeModified propertychange", ".count", function () {
-                var a = 1;
-                $.debug.json("===========", {
-                    type: event.type,
-                    count: $(".count").text(),
-                    Info: {
-                        tagName: this.tagName,
-                        id: this.id,
-                        name: this.name,
-                        class: this.className
-                    }
-                });
+                //var a = 1;
+                //$.debug.json("===========", {
+                //    type: event.type,
+                //    count: $(".count").text(),
+                //    Info: {
+                //        tagName: this.tagName,
+                //        id: this.id,
+                //        name: this.name,
+                //        class: this.className
+                //    }
+                //});
             });
             $("body").on("focusin focusout", "[name='searcher'],[name='search']", function () {
                 var count = $(".count").text();

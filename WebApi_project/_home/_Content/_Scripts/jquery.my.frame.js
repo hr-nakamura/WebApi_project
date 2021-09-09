@@ -94,6 +94,7 @@
         }
     }
     function frame_init(o) {
+        $.debug("frame_init");
         //var o2 = $.stopwatch();
         //$(o2).stopwatch("frame_init start");
         var target_name = $(o)[0].className;
@@ -122,6 +123,7 @@
         //$.debug("frame_init", Buff);
     }
     function frame_resize(o) {
+        $.debug.json("frame_resize", o);
         //var o2 = $.stopwatch();
         //$(o2).stopwatch("frame_resize start");
         var target_name = $(o)[0].className;
@@ -165,6 +167,7 @@
         //$.debug("frame_resize", Buff);
     }
     function iframe_resize(o) {
+        $.debug.json("iframe_resize", o);
         //var o2 = $.stopwatch();
         //$(o2).stopwatch("iframe_resize start");
         var target_name = $(o)[0].className;
@@ -205,6 +208,7 @@
         //$.debug("iframe_resize", Buff);
     }
     function table_resize(o) {
+        $.debug.json("table_resize", o);
         //var o2 = $.stopwatch();
         //$(o2).stopwatch("table_resize start");
         if ($targetInfo == null) {
