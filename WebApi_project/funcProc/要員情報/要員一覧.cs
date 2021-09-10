@@ -110,23 +110,6 @@ namespace WebApi_project.hostProc
 
             sql.Clear();
             sql.Append(" SELECT *");
-
-            //sql.Append("      yymm,");
-            //sql.Append("      mID,");
-            //sql.Append("      T_name,");
-            //sql.Append("      H_name,");
-            //sql.Append("      B_name,");
-            //sql.Append("      G_name,");
-            //sql.Append("      部署ID,");
-            //sql.Append("      役職ID,");
-            //sql.Append("      部署名,");
-            //sql.Append("      役職名,");
-            //sql.Append("      直間,");
-            //sql.Append("      休職,");
-            //sql.Append("      社籍,");
-            //sql.Append("      区分,");
-            //sql.Append("      名前,");
-            //sql.Append("      よみ");
             sql.Append("      FROM(");
 
             sql.Append(" SELECT");

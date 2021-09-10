@@ -24,14 +24,6 @@
 
                 //$(o2).stopwatch("html load");
                 $($this).html(html);
-                if ($targetInfo == null) {
-                    //$.debug("init $targetInfo");
-                    $targetInfo = $($this).Info();
-                }
-                if ($theadInfo == null) {
-                    //$.debug("init $theadInfo");
-                    $theadInfo = $("thead", $this).Info();
-                }
 
                 //$(o2).stopwatch("table_resize");
                 table_resize($this);
@@ -109,7 +101,7 @@
         // targetまではheaderElemに入れてそれ以降はfooterElemに入れる
         var currentElem = headerElem;
         $(childElem).each(function (i, elem) {
-            var Info = $(elem).Info();
+            var Info = $(elem).Info("name");
             if (Info.name.class == target_name) {
                 currentElem = footerElem;
             }
@@ -129,11 +121,10 @@
         var target_name = $(o)[0].className;
         var parentElem = $(o).parent();
         var targetHeight = window.innerHeight;
-        //var targetHeight = $("html").Info().client.height;
         var childElem = $(parentElem).children();
         var total = 0;
         $(childElem).each(function (i, elem) {
-            var Info = $(elem).Info();
+            var Info = $(elem).Info("name,content,margin,padding,border");
             if ( Info.name.class != target_name ) {
                 var sum = 0;
                 sum += (Info.content.height);
@@ -144,14 +135,14 @@
             }
         });
         // body
-        var body = $("body").Info();
+        var body = $("body").Info("margin,padding,border");
         var body_size = 0;
         body_size += (body.margin.top + body.margin.bottom);
         body_size += (body.padding.top + body.padding.bottom);
         body_size += (body.border.top + body.border.bottom);
 
         // target
-        var target = $(o).Info();           
+        var target = $(o).Info("margin,padding,border");           
         var target_size = 0;
         target_size += (target.margin.top + target.margin.bottom);
         target_size += (target.padding.top + target.padding.bottom);
@@ -173,11 +164,10 @@
         var target_name = $(o)[0].className;
         var parentElem = $(o).parent();
         var targetHeight = window.innerHeight;
-        //var targetHeight = $("html").Info().client.height;
         var x = $(parentElem).children();
         var total = 0;
         $(x).each(function (i, elem) {
-            var Info = $(elem).Info();
+            var Info = $(elem).Info("content,margin,padding,border");
             if ( Info.name.class != target_name ) {
                 var sum = 0;
                 sum += (Info.content.height);
@@ -189,13 +179,13 @@
             }
         });
         // body
-        var bodyInfo = $("body").Info();
+        var bodyInfo = $("body").Info("margin,padding,border");
         var body_size = 0;
         body_size += (bodyInfo.margin.top + bodyInfo.margin.bottom);
         body_size += (bodyInfo.padding.top + bodyInfo.padding.bottom);
         body_size += (bodyInfo.border.top + bodyInfo.border.bottom);
         // target
-        var targetInfo = $(o).Info();
+        var targetInfo = $(o).Info("margin,padding,border");
         var target_size = 0;
         target_size += (targetInfo.margin.top + targetInfo.margin.bottom);
         target_size += (targetInfo.padding.top + targetInfo.padding.bottom);
@@ -214,11 +204,11 @@
         //$(o2).stopwatch("table_resize start");
         //if ($targetInfo == null) {
             //$(o2).stopwatch("$targetInfo");
-            $targetInfo = $($this).Info();
+        $targetInfo = $($this).Info("client");
         //}
         //if ($theadInfo == null) {
             //$(o2).stopwatch("$theadInfo");
-            $theadInfo = $("thead", $this).Info();
+        $theadInfo = $("thead", $this).Info("margin,border,padding,client");
         //}
 
         var targetHeight = $targetInfo.client.height;
@@ -265,130 +255,101 @@
         }
         return (false);
     });
-    $.fn.Info = function () {
-        var o2 = $.stopwatch();
-        $(o2).stopwatch("1");
-        var a = 1;
+
+    $.fn.Info = function (para) {
         var Info = {
-            name: {
-                class: "",
-                tag: ""
-            },
-            position: {
-                top: 0,
-                left: 0
-            },
-            offset: {
-                top: 0,
-                left: 0,
-                width: 0,
-                height: 0
-            },
-            content: {
-                width: 0,
-                height: 0,
-                text: ""
-            },
-            scroll: {
-                top: 0,
-                left: 0,
-                width: 0,
-                height: 0
-            },
-            client: {
-                top: 0,
-                left: 0,
-                width: 0,
-                height: 0
-            },
-            margin: {
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0
-            },
-            border: {
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0
-            },
-            padding: {
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0
-            }
+            name    : { class: "", tag: "" },
+            content : { width: 0, height: 0, text: "" },
+            position: { top: 0, left: 0 },
+            offset  : { top: 0, left: 0, width: 0, height: 0 },
+            scroll  : { top: 0, left: 0, width: 0, height: 0 },
+            client  : { top: 0, left: 0, width: 0, height: 0 },
+            margin  : { top: 0, bottom: 0, left: 0, right: 0 },
+            border  : { top: 0, bottom: 0, left: 0, right: 0 },
+            padding : { top: 0, bottom: 0, left: 0, right: 0 }
         }
-        $(o2).stopwatch("2");
-        if ($(this).length > 0) {
-            $.each($(this), function () {
-                var a = 1;
-                Info.position = {
-                    top: $(this).position().top,
-                    left: $(this).position().left
-                };
-                Info.margin = {
+        var methods = {
+            margin: function () {
+                Info["margin"] = {
                     top: Number($(this).css('margin-top').replace('px', '')),
                     bottom: Number($(this).css('margin-bottom').replace('px', '')),
                     left: Number($(this).css('margin-left').replace('px', '')),
                     right: Number($(this).css('margin-right').replace('px', ''))
-                };
-                Info.border = {
+                }
+            },
+            border: function () {
+                Info["border"] = {
                     top: Number($(this).css('border-top-width').replace('px', '')),
                     bottom: Number($(this).css('border-bottom-width').replace('px', '')),
                     left: Number($(this).css('border-left-width').replace('px', '')),
                     right: Number($(this).css('border-right-width').replace('px', ''))
                 };
-                Info.padding = {
+            },
+            padding: function () {
+                Info["padding"] = {
                     top: Number($(this).css('padding-top').replace('px', '')),
                     bottom: Number($(this).css('padding-bottom').replace('px', '')),
                     left: Number($(this).css('padding-left').replace('px', '')),
                     right: Number($(this).css('padding-right').replace('px', ''))
                 };
-                Info.client = {
+            },
+            position: function () {
+                Info["position"] = {
+                    top: $(this).position().top,
+                    left: $(this).position().left
+                };
+            },
+            client: function () {
+                Info["client"] = {
                     top: Number($(this)[0].clientTop),
                     left: Number($(this)[0].clientLeft),
                     width: Number($(this)[0].clientWidth),
                     height: Number($(this)[0].clientHeight)
                 };
-                Info.scroll = {
+            },
+            scroll: function () {
+                Info["scroll"] = {
                     top: Number($(this)[0].scrollTop),
                     left: Number($(this)[0].scrollLeft),
                     width: Number($(this)[0].scrollWidth),
                     height: Number($(this)[0].scrollHeight)
                 };
-                Info.offset = {
+
+            },
+            offset: function () {
+                Info["offset"] = {
                     top: Number($(this)[0].offsetTop),
                     left: Number($(this)[0].offsetLeft),
                     width: Number($(this)[0].offsetWidth),
                     height: Number($(this)[0].offsetHeight)
                 };
-                Info.content = {
+            },
+            content: function () {
+                Info["content"] = {
                     width: Number($(this).css('width').replace('px', '')),
                     height: Number($(this).css('height').replace('px', ''))
                 };
-                Info.name = {
+            },
+            name: function () {
+                Info["name"] = {
                     class: $(this)[0].className,
                     tag: $(this)[0].tagName
                 };
+            }
+        }
+        if ($(this).length > 0 && !para == false) {
+            var o2 = $.stopwatch();
+            var $this = $(this);
+            var Tab = para.split(",");
+            $.each(Tab, function (i, method) {
+                if (methods[method]) {
+                    $(o2).stopwatch(method);
+                    var x = methods[method].apply($this);
+                }
             });
+            var Buff = $(o2).stopwatch();
+            //$.debug(para,Buff);
         }
-        else {
-            var x = 1;
-        }
-        $(o2).stopwatch("3");
-
-        //$.debug("ABCDEFG", typeof (Info));
-        if (typeof (Info) == "undefined") {
-            var a = 1;
-        }
-        $(o2).stopwatch("4");
-        var Buff = $(o2).stopwatch();
-        if ($(this).length > 0) {
-            $.debug("Info", $(this)[0].localName, $(this)[0].className, Buff);
-        }
-
-        return Info;
+        return (Info);
     }
 })(window.jQuery);
