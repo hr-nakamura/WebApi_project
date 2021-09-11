@@ -17,6 +17,7 @@
     <script src="../_Content/_Scripts/store.min.js" type="text/javascript"></script>
     <script src="../_Content/_debug/jquery.my.debug.js" type="text/javascript"></script>
     <script type="text/javascript">
+        var o1 = $.stopwatch();
         var projectInfo = {
             Timeout_id: null,
             Cancel: false,
@@ -32,20 +33,20 @@
         $(function () {
             $(window).on("load", function () {
                 try {
-                    var o1 = $.stopwatch();
+                    $.debug("bbsMain");
 
                     $(".target").frame({ border: "1px solid blue" });
                     var Cnt = 0;
 
-                    $(o1).stopwatch("開始1");
+                    //$(o1).stopwatch("開始1");
 
-                    $(o1).stopwatch("xsl読込1");
+                    //$(o1).stopwatch("xsl読込1");
                     xmlDoc = $.str2xml("<root><projectNumList/></root>");
                     xslDoc = $.loadXMLDoc("projectList.xsl");
 
-                    $(o1).stopwatch("変換1");
+                    //$(o1).stopwatch("変換1");
                     var Buff = $(xmlDoc).transformNode(xslDoc);
-                    $(o1).stopwatch("表示1");
+                    //$(o1).stopwatch("表示1");
                     $(".target").frame("html", Buff);
 
 
@@ -59,13 +60,15 @@
                         visitBBS : "2021/09/07"
                     }
                     //$.loadXMLDoc("/Project/home/_xml/projectBBS/projectNum.xml", dispProject);
-//                    $.loadXMLDoc("/Project/home/_xml/projectBBS/projectNum_Full.xml", dispProject);
+                    //$.loadXMLDoc("/Project/home/_xml/projectBBS/projectNum_Full.xml", dispProject);
                     //$.loadXMLDoc(hostName + "/Project/home/_xml/projectBBS/projectData_XML.asp", dispProject);
-//                    var work = $.WebApi("GET", webapi_url, item, func, para, dispProject);
+                    //$(o1).stopwatch("xml読込2");
+                    var work = $.WebApi("GET", webapi_url, item, para, dispProject);
                     var xmlDoc = $.WebApi("GET", webapi_url, item, para);
                     dispProject(xmlDoc);
-                    var Buff = $(o1).stopwatch();
-                    $.debug( Buff);
+
+                    //var Buff = $(o1).stopwatch();
+                    //$.debug( Buff);
 
                 } catch (e) {
                     alert(e.message);
@@ -75,23 +78,20 @@
                 //$.debug.log(this, "ABCDEF");
             }
             function dispProject(xmlDoc) {
-                //var o2 = $.stopwatch();
-                //$(o2).stopwatch("プロジェクト一覧 html 変換");
+                $(o1).stopwatch("プロジェクト一覧 html 変換");
                 var Buff = $(xmlDoc).transformNode(xslDoc);
 
-                //$(o2).stopwatch("html 表示");
+                $(o1).stopwatch("html 表示");
                 $(".target").frame("html", Buff);
 
                 //$(o2).stopwatch("クリック");
                 $("input[class='stat'][value='0']").prop("checked", true).trigger("change");
 
-                //$(o2).stopwatch("selectBox作成");
+                $(o1).stopwatch("selectBox作成");
                 if (projectInfo.optionInfo == false) {
                     setOptionInfo();
                     projectInfo.optionInfo = true;
                 }
-                //var Buff = $(o2).stopwatch();
-                //$.debug("dispProject", Buff);
             }
             function setOptionInfo() {
                 //var o2 = $.stopwatch();

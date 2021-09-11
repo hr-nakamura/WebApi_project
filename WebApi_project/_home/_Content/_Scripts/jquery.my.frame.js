@@ -20,25 +20,26 @@
         },
         html: function (html) {
             if ($type == "DIV") {
-                //var o2 = $.stopwatch();
+                var o2 = $.stopwatch();
 
-                //$(o2).stopwatch("html load");
+                $(o2).stopwatch("html load");
                 $($this).html(html);
 
-                //$(o2).stopwatch("table_resize");
+                $(o2).stopwatch("table_resize");
                 table_resize($this);
 
 
-                //$(o2).stopwatch("設定１");
+                $(o2).stopwatch("設定１");
                 //$("table", $this).css("border-collapse", "collapse");
                 //$("table thead", $this).css({ "display": "block", "overflow-y": "hidden" });
                 //$("table tbody", $this).css({ "display": "block", "overflow-y": "scroll" });
                 //$("table th", $this).css("table-layout", "fixed");
                 //$("table td", $this).css("table-layout", "fixed");
+/*
                 var len = $("table th", $this).length;
                 if (len > 0 ) {
                     var total = 0;
-                    //$(o2).stopwatch("設定2-1");
+                    $(o2).stopwatch("設定2-1");
                     if ($headerInfo.length == 0) {
                         $("table th", $this).each(function (i, elem) {
                             //$(o2).stopwatch("設定2-2" + "][" + i + "][" + elem.className + "][" + elem.clientWidth);
@@ -49,12 +50,13 @@
                         total += value;
                     });
 
-                    //$(o2).stopwatch("設定2-3");
+                    $(o2).stopwatch("設定2-3");
                     //total += ($targetInfo.margin.left);    
                     //$($this).css("width", total);
                 }
-                //var Buff = $(o2).stopwatch();
-                //$.debug("html", Buff);
+*/
+                var Buff = $(o2).stopwatch();
+                $.debug("html", Buff);
 
             }
         },
@@ -202,16 +204,12 @@
         var work = [];
         //var o2 = $.stopwatch();
         //$(o2).stopwatch("table_resize start");
-        //if ($targetInfo == null) {
-            //$(o2).stopwatch("$targetInfo");
-        $targetInfo = $($this).Info("client");
-        //}
-        //if ($theadInfo == null) {
-            //$(o2).stopwatch("$theadInfo");
-        $theadInfo = $("thead", $this).Info("margin,border,padding,client");
-        //}
 
+        $targetInfo = $($this).Info("client");
         var targetHeight = $targetInfo.client.height;
+        //var targetHeight = $(o).clientHeight;
+
+        $theadInfo = $("thead", $this).Info("margin,border,padding,client");
         var tableHeight = 0;
         var theadHeight = 0;
         var thead = $theadInfo;
@@ -223,13 +221,14 @@
         // tbodyの高さ設定
         var adjust = 0;
         var bodyHeight = targetHeight - theadHeight - adjust;
+
         $("tbody", o).css("height", bodyHeight);
         //var Buff = $(o2).stopwatch();
         //$.debug("table_resize", Buff);
         work.push({ "11": thead.client.height });       //33
         work.push({ "12": targetHeight });
         work.push({ "15": bodyHeight });
-        //$.debug.json("AAA", work);
+        $.debug.json("table_resize", work);
     }
 
     $.fn.frame = function (method) {
