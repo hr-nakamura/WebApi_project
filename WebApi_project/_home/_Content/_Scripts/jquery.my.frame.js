@@ -22,11 +22,14 @@
             if ($type == "DIV") {
                 var o2 = $.stopwatch();
 
+                var targetInfo = $($this).Info("client");
+                var targetHeight = targetInfo.client.height;
+
                 $(o2).stopwatch("html load");
                 $($this).html(html);
 
                 $(o2).stopwatch("table_resize");
-                table_resize($this);
+                table_resize($this, targetHeight);
 
 
                 $(o2).stopwatch("設定１");
@@ -199,17 +202,19 @@
         //var Buff = $(o2).stopwatch();
         //$.debug("iframe_resize", Buff);
     }
-    function table_resize(o) {
+    function table_resize(o, targetHeight) {
+        
         //$.debug.json("table_resize", o);
         var work = [];
         //var o2 = $.stopwatch();
         //$(o2).stopwatch("table_resize start");
+        if (arguments.length == 1) {
+            $targetInfo = $(o).Info("client");
+            targetHeight = $targetInfo.client.height;
+        }
+        //$.debug("thead",$(o)[0].className);
+        $theadInfo = $("thead", o).Info("border,margin,padding,client");
 
-        $targetInfo = $($this).Info("client");
-        var targetHeight = $targetInfo.client.height;
-        //var targetHeight = $(o).clientHeight;
-
-        $theadInfo = $("thead", $this).Info("margin,border,padding,client");
         var tableHeight = 0;
         var theadHeight = 0;
         var thead = $theadInfo;
@@ -225,10 +230,10 @@
         $("tbody", o).css("height", bodyHeight);
         //var Buff = $(o2).stopwatch();
         //$.debug("table_resize", Buff);
-        work.push({ "11": thead.client.height });       //33
-        work.push({ "12": targetHeight });
-        work.push({ "15": bodyHeight });
-        $.debug.json("table_resize", work);
+        //work.push({ "11": thead.client.height });       //33
+        //work.push({ "12": targetHeight });
+        //work.push({ "15": bodyHeight });
+        //$.debug.json("table_resize", work);
     }
 
     $.fn.frame = function (method) {
@@ -347,7 +352,7 @@
                 }
             });
             var Buff = $(o2).stopwatch();
-            //$.debug(para,Buff);
+            //$.debug("Info",$this.selector,$($this)[0].className,para,Buff);
         }
         return (Info);
     }
