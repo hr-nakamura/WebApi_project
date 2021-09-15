@@ -22,42 +22,13 @@
             if ($type == "DIV") {
                 var o2 = $.stopwatch();
 
-                var targetInfo = $($this).Info("client");
-                var targetHeight = targetInfo.client.height;
-
                 $(o2).stopwatch("html load");
                 $($this).html(html);
 
-                $(o2).stopwatch("table_resize");
-                table_resize($this, targetHeight);
+                //$(o2).stopwatch("table_resize");
+                //table_resize($this);
 
 
-                $(o2).stopwatch("設定１");
-                //$("table", $this).css("border-collapse", "collapse");
-                //$("table thead", $this).css({ "display": "block", "overflow-y": "hidden" });
-                //$("table tbody", $this).css({ "display": "block", "overflow-y": "scroll" });
-                //$("table th", $this).css("table-layout", "fixed");
-                //$("table td", $this).css("table-layout", "fixed");
-/*
-                var len = $("table th", $this).length;
-                if (len > 0 ) {
-                    var total = 0;
-                    $(o2).stopwatch("設定2-1");
-                    if ($headerInfo.length == 0) {
-                        $("table th", $this).each(function (i, elem) {
-                            //$(o2).stopwatch("設定2-2" + "][" + i + "][" + elem.className + "][" + elem.clientWidth);
-                            $headerInfo.push(elem.clientWidth);
-                        });
-                    }
-                    $($headerInfo).each(function (index,value) {
-                        total += value;
-                    });
-
-                    $(o2).stopwatch("設定2-3");
-                    //total += ($targetInfo.margin.left);    
-                    //$($this).css("width", total);
-                }
-*/
                 var Buff = $(o2).stopwatch();
                 $.debug("html", Buff);
 
@@ -202,16 +173,15 @@
         //var Buff = $(o2).stopwatch();
         //$.debug("iframe_resize", Buff);
     }
-    function table_resize(o, targetHeight) {
+    function table_resize(o) {
         
         //$.debug.json("table_resize", o);
         var work = [];
         //var o2 = $.stopwatch();
         //$(o2).stopwatch("table_resize start");
-        if (arguments.length == 1) {
-            $targetInfo = $(o).Info("client");
-            targetHeight = $targetInfo.client.height;
-        }
+        $targetInfo = $(o).Info("client");
+        var targetHeight = $targetInfo.client.height;
+
         //$.debug("thead",$(o)[0].className);
         $theadInfo = $("thead", o).Info("border,margin,padding,client");
 
@@ -230,10 +200,10 @@
         $("tbody", o).css("height", bodyHeight);
         //var Buff = $(o2).stopwatch();
         //$.debug("table_resize", Buff);
-        //work.push({ "11": thead.client.height });       //33
-        //work.push({ "12": targetHeight });
-        //work.push({ "15": bodyHeight });
-        //$.debug.json("table_resize", work);
+        work.push({ "11": thead.client.height });       //33
+        work.push({ "12": targetHeight });
+        work.push({ "15": bodyHeight });
+        $.debug.json("table_resize", work);
     }
 
     $.fn.frame = function (method) {
@@ -262,15 +232,15 @@
 
     $.fn.Info = function (para) {
         var Info = {
-            name    : { class: "", tag: "" },
-            content : { width: 0, height: 0, text: "" },
-            position: { top: 0, left: 0 },
-            offset  : { top: 0, left: 0, width: 0, height: 0 },
-            scroll  : { top: 0, left: 0, width: 0, height: 0 },
-            client  : { top: 0, left: 0, width: 0, height: 0 },
-            margin  : { top: 0, bottom: 0, left: 0, right: 0 },
-            border  : { top: 0, bottom: 0, left: 0, right: 0 },
-            padding : { top: 0, bottom: 0, left: 0, right: 0 }
+            //name    : { class: "", tag: "" },
+            //content : { width: 0, height: 0, text: "" },
+            //position: { top: 0, left: 0 },
+            //offset  : { top: 0, left: 0, width: 0, height: 0 },
+            //scroll  : { top: 0, left: 0, width: 0, height: 0 },
+            //client  : { top: 0, left: 0, width: 0, height: 0 },
+            //margin  : { top: 0, bottom: 0, left: 0, right: 0 },
+            //border  : { top: 0, bottom: 0, left: 0, right: 0 },
+            //padding : { top: 0, bottom: 0, left: 0, right: 0 }
         }
         var methods = {
             margin: function () {
@@ -354,6 +324,14 @@
             var Buff = $(o2).stopwatch();
             //$.debug("Info",$this.selector,$($this)[0].className,para,Buff);
         }
+        var work = [];
+        work.push(this.selector);
+        work.push(para);
+        if (this.length > 0) {
+            work.push($(this)[0].localName);
+            work.push($(this)[0].className);
+        }
+        $.debug.json(work.join("]["), Info);
         return (Info);
     }
 })(window.jQuery);
