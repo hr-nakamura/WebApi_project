@@ -14,8 +14,6 @@
     <html>
       <head>
         <style type="text/css">
-
-
           .table {
           border-collapse:collapse;
           border: 0px solid gray;
@@ -98,10 +96,11 @@
   </xsl:template>
 
   <xsl:template match="root">
-    <xsl:apply-templates select="projectList" />
+    <xsl:value-of select="'ABCDE'"/>
+    <xsl:apply-templates select="projectNumList" />
   </xsl:template>
 
-  <xsl:template match="projectList">
+  <xsl:template match="projectNumList">
     <table class='table'>
       <thead>
         <tr>

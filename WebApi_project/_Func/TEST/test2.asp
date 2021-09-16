@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="shift_jis" />
+    <meta charset="utf-8" />
     <title></title>
 
     <script src="../../__home/Scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
@@ -43,7 +43,7 @@
             var xsl = xsl_name1
             xml_proc.transfor(source, xsl, xsl_func)
 
-            //$.alert(limitYear);
+            $.alert(limitYear);
 
         }
 
@@ -54,9 +54,7 @@
         }
 
         function xsl_func(Buff) {
-            $.alert(Buff);
-
-            dataG.innerHTML = "Buff";
+            dataG.innerHTML = Buff;
 
         }
     </script>
