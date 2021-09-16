@@ -92,18 +92,16 @@
         </style>
       </head>
       <body>
-		  <xsl:value-of select="AAAAAAAAAAAAA"/>
-		  <xsl:value-of select="count(projectNumList)"/>
-		  <xsl:apply-templates select="root" />
+        <xsl:apply-templates select="root" />
       </body>
     </html>
   </xsl:template>
 
   <xsl:template match="root">
-    <xsl:apply-templates select="projectNumList" />
+    <xsl:apply-templates select="projectList" />
   </xsl:template>
 
-  <xsl:template match="projectNumList">
+  <xsl:template match="projectList">
     <table class='table'>
       <thead>
         <tr>
