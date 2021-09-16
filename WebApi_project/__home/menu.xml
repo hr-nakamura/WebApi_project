@@ -4,8 +4,12 @@
 		<menu name="監査ページ" memo="" mode="url" value="/WebApi/project/_home/manageMenu.html"/>
 	</menu>
 
+  <menu name="ASP" memo="" >
+    <menu name="TEST1" memo="" mode="url" value="/WebApi/project/_Func/TEST/test1.html"/>
+    <menu name="TEST2" memo="" mode="url" value="/WebApi/project/_Func/TEST/test2.asp"/>
+  </menu>
   <menu name="TEST" memo="" >
-		<menu name="QOSMIO" memo="" mode="url" value="/WebApi/project/_Func/QOSMIO/qosmio.html"/>
+    <menu name="QOSMIO" memo="" mode="url" value="/WebApi/project/_Func/QOSMIO/qosmio.html"/>
 	  <menu name="viewJson" memo="" mode="url" value="/WebApi/project/__home/Util/viewJson/viewJson.html"/>
 	  <menu name="要員一覧" memo="" mode="url" value="/WebApi/project/_home/要員情報/要員一覧.html"/>
   </menu>

@@ -85,6 +85,8 @@
     <Content Include="Global.asax" />
     <Content Include="funcProc\projectBBS\projectData_XML.xml" />
     <Content Include="hostProc\memo.txt" />
+    <Content Include="_Func\TEST\test1.html" />
+    <Content Include="_Func\TEST\test2.asp" />
     <Content Include="_home\manageMenu.html" />
     <Content Include="_home\projectBBS\bbsMain.html" />
     <Content Include="_home\projectBBS\jquery.complete.js" />
