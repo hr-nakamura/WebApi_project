@@ -14,41 +14,40 @@
     <html>
       <head>
         <style type="text/css">
+			.table {
+			border-collapse:collapse;
+			border: 0px solid gray;
+			padding: 0px;
+			margin: 0px;
+			font-size: smaller;
+			width: 100%;
+			}
 
+			.table thead {
+			display: block;
+			background-color: powderblue;
+			}
 
-          .table {
-          border-collapse:collapse;
-          border: 0px solid gray;
-          padding: 0px;
-          margin: 0px;
-          font-size: smaller;
-          width: 100%;
-          }
+			.table tbody {
+			display: block;
+			overflow: hidden;
+			overflow-y: scroll;
+			background-color: mintcream;
+			*height:600px;
+			}
 
-          .table thead {
-          display: block;
-          background-color: powderblue;
-          }
+			.table th {
+			border-top: none;
+			border-right: 1px solid gray;
+			border-bottom: none;
+			border-left: 1px solid gray;
+			text-align: center;
+			}
 
-          .table tbody {
-          display: block;
-          overflow: hidden;
-          overflow-y: scroll;
-          background-color: mintcream;
-          }
-
-          .table th {
-          border-top: none;
-          border-right: 1px solid gray;
-          border-bottom: none;
-          border-left: 1px solid gray;
-          text-align: center;
-          }
-
-          .table td {
-          border: 1px solid gray;
-          }
-          <!--   ******************* -->
+			.table td {
+			border: 1px solid gray;
+			}
+			<!--   ******************* -->
           .pStat {
           min-width: 30px;
           text-align: center;
@@ -92,18 +91,16 @@
         </style>
       </head>
       <body>
-		  <xsl:value-of select="AAAAAAAAAAAAA"/>
-		  <xsl:value-of select="count(projectNumList)"/>
 		  <xsl:apply-templates select="root" />
       </body>
     </html>
   </xsl:template>
 
   <xsl:template match="root">
-    <xsl:apply-templates select="projectNumList" />
+    <xsl:apply-templates select="projectList" />
   </xsl:template>
 
-  <xsl:template match="projectNumList">
+  <xsl:template match="projectList">
     <table class='table'>
       <thead>
         <tr>

@@ -1,19 +1,24 @@
 function xmlProc()
 	{
 	this.loadXML = function(xmlDoc,xml,execFunc)
-		{
-		xmlDoc = new ActiveXObject("Microsoft.XMLDom");
+	{
+		try {
 
-		// ”ñ“¯Šú‚É‚·‚é
-		xmlDoc.async = false;
-		xmlDoc.onreadystatechange = function (){
-			//alert(xmlDoc.readyState);
-			if( xmlDoc.readyState == 4 ){
-//				var Buff = xmlDoc.xml
-				execFunc(xmlDoc);
+			xmlDoc = new ActiveXObject("Microsoft.XMLDom");
+
+			// ”ñ“¯Šú‚É‚·‚é
+			xmlDoc.async = false;
+			xmlDoc.onreadystatechange = function () {
+				//alert(xmlDoc.readyState);
+				if (xmlDoc.readyState == 4) {
+					//				var Buff = xmlDoc.xml
+					execFunc(xmlDoc);
 				}
 			}
-		var ret = xmlDoc.load(xml);
+			var ret = xmlDoc.load(xml);
+		} catch (e) {
+			alert(e.message);
+        }
 		},
 	this.transfor = function(xmlDoc,xsl,execFunc)
 		{

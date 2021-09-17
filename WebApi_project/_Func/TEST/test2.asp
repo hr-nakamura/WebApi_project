@@ -13,6 +13,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
+    <META http-equiv="X-UA-Compatible" content="IE=5" />
     <title></title>
 
     <script src="../../__home/Scripts/jquery-1.9.1.min.js" type="text/javascript"></script>

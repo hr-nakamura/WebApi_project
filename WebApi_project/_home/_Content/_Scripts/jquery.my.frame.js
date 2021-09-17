@@ -27,7 +27,9 @@
 
                 //$(o2).stopwatch("table_resize");
                 //table_resize($this);
-
+                if ($("table", $this).length > 0) {
+                    table_resize($($this));               //****************
+                }
 
                 var Buff = $(o2).stopwatch();
                 $.debug("html", Buff);
@@ -48,7 +50,9 @@
                 $("body").css("overflow", "hidden");
                 frame_init($this);
                 frame_resize($this);
-                //table_resize($(".target"));
+                if ($("table", ".target").length > 0) {
+                    table_resize($(".target"));               //****************
+                }
 
                 //return ($this);
             }
@@ -77,8 +81,7 @@
         // targetまではheaderElemに入れてそれ以降はfooterElemに入れる
         var currentElem = headerElem;
         $(childElem).each(function (i, elem) {
-            var Info = $(elem).Info("name");
-            if (Info.name.class == target_name) {
+            if (elem.className == target_name) {
                 currentElem = footerElem;
             }
             else {
@@ -100,8 +103,8 @@
         var childElem = $(parentElem).children();
         var total = 0;
         $(childElem).each(function (i, elem) {
-            var Info = $(elem).Info("name,content,margin,padding,border");
-            if ( Info.name.class != target_name ) {
+            if (elem.className != target_name) {
+                var Info = $(elem).Info("name,content,margin,padding,border");
                 var sum = 0;
                 sum += (Info.content.height);
                 sum += (Info.margin.top + Info.margin.bottom);
@@ -143,8 +146,8 @@
         var x = $(parentElem).children();
         var total = 0;
         $(x).each(function (i, elem) {
-            var Info = $(elem).Info("content,margin,padding,border");
-            if ( Info.name.class != target_name ) {
+            if (elem.className != target_name) {
+                var Info = $(elem).Info("content,margin,padding,border");
                 var sum = 0;
                 sum += (Info.content.height);
                 sum += (Info.margin.top + Info.margin.bottom);
@@ -175,24 +178,28 @@
     }
     function table_resize(o) {
         
-        //$.debug.json("table_resize", o);
+        $.debug("table_resize");
+7        //$.debug.json("table_resize", o);
         var work = [];
         //var o2 = $.stopwatch();
         //$(o2).stopwatch("table_resize start");
         $targetInfo = $(o).Info("client");
         var targetHeight = $targetInfo.client.height;
 
-        //$.debug("thead",$(o)[0].className);
-        $theadInfo = $("thead", o).Info("border,margin,padding,client");
-
-        var tableHeight = 0;
         var theadHeight = 0;
-        var thead = $theadInfo;
-        // theadの高さ情報
-        theadHeight += thead.margin.top + thead.margin.bottom;
-        theadHeight += thead.border.top + thead.border.bottom;
-        theadHeight += thead.padding.top + thead.padding.bottom;
-        theadHeight += thead.client.height;
+        if ($("thead", o).length > 0) {
+            //$.debug("thead",$(o)[0].className);
+            $theadInfo = $("thead", o).Info("border,margin,padding,client");
+
+            var tableHeight = 0;
+            var thead = $theadInfo;
+            // theadの高さ情報
+            theadHeight += thead.margin.top + thead.margin.bottom;
+            theadHeight += thead.border.top + thead.border.bottom;
+            theadHeight += thead.padding.top + thead.padding.bottom;
+            theadHeight += thead.client.height;
+            work.push({ "11": thead.client.height });       //33
+        }
         // tbodyの高さ設定
         var adjust = 0;
         var bodyHeight = targetHeight - theadHeight - adjust;
@@ -200,7 +207,6 @@
         $("tbody", o).css("height", bodyHeight);
         //var Buff = $(o2).stopwatch();
         //$.debug("table_resize", Buff);
-        work.push({ "11": thead.client.height });       //33
         work.push({ "12": targetHeight });
         work.push({ "15": bodyHeight });
         $.debug.json("table_resize", work);
@@ -311,8 +317,9 @@
                 };
             }
         }
+        var o2 = $.stopwatch();
+        var Buff = "";
         if ($(this).length > 0 && !para == false) {
-            var o2 = $.stopwatch();
             var $this = $(this);
             var Tab = para.split(",");
             $.each(Tab, function (i, method) {
@@ -321,8 +328,7 @@
                     var x = methods[method].apply($this);
                 }
             });
-            var Buff = $(o2).stopwatch();
-            //$.debug("Info",$this.selector,$($this)[0].className,para,Buff);
+            Buff = $(o2).stopwatch();
         }
         var work = [];
         work.push(this.selector);
@@ -332,6 +338,7 @@
             work.push($(this)[0].className);
         }
         $.debug.json(work.join("]["), Info);
+        $.debug("Info", $this.selector, $(this)[0].localName, $(this)[0].className, para, Buff);
         return (Info);
     }
 })(window.jQuery);
