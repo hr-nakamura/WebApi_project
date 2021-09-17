@@ -88,6 +88,8 @@
     <Content Include="_Func\TEST\cmn.inc" />
     <Content Include="_Func\TEST\dispXML.inc" />
     <Content Include="_Func\TEST\EMG収支計画.asp" />
+    <Content Include="_Func\TEST\new.gif" />
+    <Content Include="_Func\TEST\new7.gif" />
     <Content Include="_Func\TEST\project.xml" />
     <Content Include="_Func\TEST\projectData_XML.xml" />
     <Content Include="_Func\TEST\projectList.xsl" />

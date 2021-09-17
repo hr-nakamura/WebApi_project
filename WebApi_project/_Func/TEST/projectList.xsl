@@ -96,11 +96,10 @@
   </xsl:template>
 
   <xsl:template match="root">
-    <xsl:value-of select="'ABCDE'"/>
-    <xsl:apply-templates select="projectNumList" />
+    <xsl:apply-templates select="projectList" />
   </xsl:template>
 
-  <xsl:template match="projectNumList">
+  <xsl:template match="projectList">
     <table class='table'>
       <thead>
         <tr>

@@ -27,8 +27,8 @@
     <SCRIPT LANGUAGE="JavaScript" src="xmlProc.js"></SCRIPT>
 <SCRIPT LANGUAGE="JavaScript">
     var limitYear = "<%=limitYear%>"
-    var xml_name1 = "project.xml"				// 地域別
-    var xsl_name1 = "projectList.xsl"
+    var xsl_name1 = "projectList.xsl"				// 地域別
+    var xml_name1 = "projectData_XML.xml"
 
     var xml_proc
     var source = "ABC"
@@ -44,7 +44,7 @@
             var xsl = xsl_name1
             xml_proc.transfor(source, xsl, xsl_func)
 
-            $.alert(limitYear);
+            <!--$.alert(limitYear);-->
 
         }
 
