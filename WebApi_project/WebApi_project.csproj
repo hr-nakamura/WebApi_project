@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="_Func\TEST\bbs5.asp" />
+    <Content Include="_Func\TEST\bbsMain5.html" />
     <Content Include="_Func\TEST\bbsMain5.asp" />
     <Content Include="_Func\TEST\projectDataCsv.asp" />
     <Content Include="funcProc\部門収支\BASE.xml" />

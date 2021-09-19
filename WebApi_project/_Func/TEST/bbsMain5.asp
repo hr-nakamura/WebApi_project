@@ -173,7 +173,7 @@ td{
    <PARAM NAME="Filter" VALUE="newFlag > 0">
 	<PARAM NAME="CharSet" VALUE="shift_jis">
 	<PARAM NAME="Language" VALUE="ja">
-	<PARAM NAME="DataURL" VALUE="projectDataCsv.asp">
+	<PARAM NAME="DataURL" VALUE="project.csv">
 </OBJECT>
 
 <SCRIPT LANGUAGE="JavaScript">
