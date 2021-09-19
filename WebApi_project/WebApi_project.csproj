@@ -234,7 +234,6 @@
     <Content Include="__home\Util\viewJson-edge\jquery.json-viewer.js" />
     <Content Include="__home\json.json" />
     <Content Include="__home\Scripts\jquery.my.webapi.js" />
-    <Content Include="_Func\TEST\projectDataCsv.csv" />
     <Content Include="_Func\TEST\project .csv" />
   </ItemGroup>
   <ItemGroup>
