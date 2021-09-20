@@ -1,4 +1,4 @@
-ï»¿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -11,22 +11,45 @@
 
     <script type="text/javascript">
         $(window).on("load", function () {
+try{
             var a = 1;
-            alert($(DB)[0].DataURL);
+            $.alert("onload",$(DB)[0].DataURL);
             //            alert("ABC");
+}catch(e){
+	alert(e.message);
+}
         })
     </script>
     <script type="text/javascript">
         $(function () {
             $(".test").on("click", function () {
+try{
                 DB.Filter = "";
                 DB.DataURL = "projectDataCsv.asp";
                 DB.Reset();
+		$.alert("click");
+}catch(e){
+alert(e.message);
+}
             });
 
         });
     </script>
     <script type="text/javascript">
+	; (function ($) {
+        $.alert = function () {
+            var work = [];
+            var Cnt = arguments.length;
+            for (var i = 0; i < Cnt; i++) {
+                work.push(arguments[i]);
+            }
+            alert(work.join("\n"));
+            return (this);
+        }
+	})(jQuery);
+    </script>
+    <script type="text/javascript">
+
         //DB.ondatasetcomplete = function () {
         //    alert("XXX");
         //}
@@ -35,10 +58,10 @@
             //        alert("XYZ");
             //        //alert(DB.recordset.recordCount)
             //        /*
-            //           ondatasetchanged   â€¦â€¦â€¦ãƒ‡ãƒ¼ã‚¿ã‚»ãƒƒãƒˆãŒå¤‰æ›´ã•ã‚ŒãŸã¨ã
-            //           ondataavailable	  â€¦â€¦â€¦ãƒ¬ã‚³ãƒ¼ãƒ‰ãŒ1ã¤èª­ã¿è¾¼ã¾ã‚ŒãŸã¨ã(ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒãƒ¼ã«æ•°å€¤è¡¨ç¤º)
-            //           ondatasetcomplete  â€¦â€¦â€¦ãƒ‡ãƒ¼ã‚¿ã‚»ãƒƒãƒˆãŒã‚­ãƒ£ãƒƒã‚·ãƒ¥ã«ä¿å­˜ã•ã‚ŒãŸã¨ã
-            //           onreadystatechange â€¦â€¦â€¦
+            //           ondatasetchanged   cccƒf[ƒ^ƒZƒbƒg‚ª•ÏX‚³‚ê‚½‚Æ‚«
+            //           ondataavailable	  cccƒŒƒR[ƒh‚ª1‚Â“Ç‚İ‚Ü‚ê‚½‚Æ‚«(ƒXƒe[ƒ^ƒXƒo[‚É”’l•\¦)
+            //           ondatasetcomplete  cccƒf[ƒ^ƒZƒbƒg‚ªƒLƒƒƒbƒVƒ…‚É•Û‘¶‚³‚ê‚½‚Æ‚«
+            //           onreadystatechange ccc
             //           readyState
             //        */
             //        var Cnt = DB.recordset.recordCount
@@ -52,23 +75,34 @@
     <input type="button" class="test" value="TEST" />
 </body>
 </html>
-<OBJECT ID="DB" classid="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" VIEWASTEXT>
+<OBJECT ID="DB" classid="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83">
     <PARAM NAME="UseHeader" VALUE="true">
     <PARAM NAME="FieldDelim" VALUE=",">
     <PARAM NAME="Sort" VALUE="-pNum">
     <PARAM NAME="Filter" VALUE="newFlag > 0">
     <PARAM NAME="CharSet" VALUE="shift_jis">
     <PARAM NAME="Language" VALUE="ja">
-    <PARAM NAME="DataURL" VALUE="project.csv">
 </OBJECT>
 <SCRIPT FOR="DB" EVENT="ondatasetcomplete()" LANGUAGE="JavaScript">
-var Cnt = DB.recordset.recordCount
-    alert("zzz" + Cnt);
+    alert("zzz");
+//    <PARAM NAME="DataURL" VALUE="project.csv">
 </SCRIPT>
 
 <script type="text/javascript">
     DB.ondatasetcomplete = function () {
-        alert("XXX");
+        var Cnt = DB.recordset.recordCount;
+        alert("XXX" + Cnt);
+    }
+    DB.ondatasetchanged = function () {
+        var Cnt = DB.recordset.recordCount;
+        alert("XXX" + Cnt);
+    }
+    DB.ondataavailable = function () {
+        var Cnt = DB.recordset.recordCount;
+        alert("XXX" + Cnt);
+    }
+    DB.onreadystatechange = function () {
+        var Cnt = DB.recordset.recordCount;
+        alert("XXX" + Cnt);
     }
 </script>
-

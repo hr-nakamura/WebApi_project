@@ -3,8 +3,111 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
+    <style>
+        .content-box1 {
+            box-sizing: content-box;
+            width: 300px;
+            margin: 50px;
+            padding: 50px;
+            border: 1px solid blue;
+        }
+
+        .content-box2 {
+            box-sizing: content-box;
+            width: 300px;
+            margin: 0px;
+            padding: 50px;
+            border: 1px solid blue;
+        }
+        .content-box3 {
+            box-sizing: content-box;
+            width: 300px;
+            margin: 50px;
+            padding: 0px;
+            border: 1px solid blue;
+        }
+
+        .content-box4 {
+            box-sizing: content-box;
+            width: 300px;
+            margin: 0px;
+            padding: 0px;
+            border: 1px solid blue;
+        }
+        .border-box1 {
+            box-sizing: border-box;
+            width: 300px;
+            margin: 50px;
+            padding: 50px;
+            border: 1px solid green;
+        }
+        .border-box2 {
+            box-sizing: border-box;
+            width: 300px;
+            margin: 0px;
+            padding: 0px;
+            border: 1px solid green;
+        }
+        .wrapper {
+    border:1px dashed red;
+    display:inline-block;
+        }
+        .p100{
+            border: 1px solid tomato;
+            background-color: pink;
+            margin: 0px;
+            padding: 0px;
+            width: 100px;
+        }
+        .p300 {
+            border: 1px solid tomato;
+            background-color: pink;
+            margin: 0px;
+            padding: 0px;
+            width: 300px;
+        }
+    </style>
 </head>
 <body>
-test1
+    test1
+    <br />
+    <div class="wrapper">
+        <div class="content-box1">
+            <p class="p100">漢字-m50,p50</p>
+        </div>
+    </div>
+    <br />
+    <div class="wrapper">
+        <div class="content-box2">
+            <p class="p100">漢字-m0,p50</p>
+        </div>
+    </div>
+    <br />
+    <div class="wrapper">
+        <div class="content-box3">
+            <p class="p100">漢字-m50,p0</p>
+        </div>
+    </div>
+    <br />
+    <div class="wrapper">
+        <div class="content-box4">
+            <p class="p100">漢字-m0,p0</p>
+        </div>
+    </div>
+    <br />
+    <div class="wrapper">
+        <div class="border-box1">
+            <p class="p100">漢字</p>
+        </div>
+    </div>
+    <br />
+    <div class="wrapper">
+        <div class="border-box2">
+            <p class="p100">漢字</pclass="p100">
+        </div>
+    </div>
+    <br />
+    <p class="p300">漢字</p>
+
 </body>
 </html>
