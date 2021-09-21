@@ -3,6 +3,64 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
+    <script src="../../__home/Scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+
+    <script src="../../__home/Scripts/json2.js" type="text/javascript"></script>
+    <script src="../../__home/Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
+    <script src="../../__home/debug/jquery.my.debug.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        window.onload = function () {
+            var work = IeVersion();
+            $.debug(navigator.userAgent);
+            $.debug.json("xx", work);
+        }
+        function IeVersion() {
+            //Set defaults
+            var value = {
+                IsIE: false,
+                IsEdge: false,
+                EdgeHtmlVersion: 0,
+                TrueVersion: 0,
+                ActingVersion: 0,
+                CompatibilityMode: false
+            };
+
+            //Try to find the Trident version number
+            var trident = navigator.userAgent.match(/Trident\/(\d+)/);
+            if (trident) {
+                value.IsIE = true;
+                //Convert from the Trident version number to the IE version number
+                value.TrueVersion = parseInt(trident[1], 10) + 4;
+            }
+
+            //Try to find the MSIE number
+            var msie = navigator.userAgent.match(/MSIE (\d+)/);
+            if (msie) {
+                value.IsIE = true;
+                //Find the IE version number from the user agent string
+                value.ActingVersion = parseInt(msie[1]);
+            } else {
+                //Must be IE 11 in "edge" mode
+                value.ActingVersion = value.TrueVersion;
+            }
+
+            //If we have both a Trident and MSIE version number, see if they're different
+            if (value.IsIE && value.TrueVersion > 0 && value.ActingVersion > 0) {
+                //In compatibility mode if the trident number doesn't match up with the MSIE number
+                value.CompatibilityMode = value.TrueVersion != value.ActingVersion;
+            }
+
+            //Try to find Edge and the EdgeHTML vesion number
+            var edge = navigator.userAgent.match(/Edge\/(\d+\.\d+)$/);
+            var edge = navigator.userAgent.match(/Edg\/(\d+)/);
+            if (edge) {
+                value.IsEdge = true;
+                value.EdgeHtmlVersion = edge[1];
+            }
+            return value;
+        }
+    </script>
     <style>
         .content-box1 {
             box-sizing: content-box;
@@ -19,6 +77,7 @@
             padding: 50px;
             border: 1px solid blue;
         }
+
         .content-box3 {
             box-sizing: content-box;
             width: 300px;
@@ -34,6 +93,7 @@
             padding: 0px;
             border: 1px solid blue;
         }
+
         .border-box1 {
             box-sizing: border-box;
             width: 300px;
@@ -41,6 +101,7 @@
             padding: 50px;
             border: 1px solid green;
         }
+
         .border-box2 {
             box-sizing: border-box;
             width: 300px;
@@ -48,17 +109,20 @@
             padding: 0px;
             border: 1px solid green;
         }
+
         .wrapper {
-    border:1px dashed red;
-    display:inline-block;
+            border: 1px dashed red;
+            display: inline-block;
         }
-        .p100{
+
+        .p100 {
             border: 1px solid tomato;
             background-color: pink;
             margin: 0px;
             padding: 0px;
             width: 100px;
         }
+
         .p300 {
             border: 1px solid tomato;
             background-color: pink;
