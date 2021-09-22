@@ -388,23 +388,28 @@
     <style type="text/css">
         body {
             background: url(/Project/home/_images/bg00.gif);
-            padding: 0px;
+            padding: 0px 8px;
             border: 0px solid green;
-            margin: 10px;
+            margin: 0px;
             overflow: auto;
         }
 
         .container {
+            box-sizing: content-box;
             text-align: left;
             border: 0px solid tomato;
             display: table;
             width: 100%;
+            margin:0px;
+            padding:0px;
         }
 
         .headerTable {
             text-align: left;
             border: 0px solid green;
             display: table;
+            margin: 0px;
+            padding: 0px;
             width: 100%;
         }
 
@@ -418,23 +423,24 @@
         }
 
         .flexbox-container {
-            margin: 0px;
-            padding: 4px;
+            box-sizing: content-box;
+            margin: 2px 0px 0px 0px;
+            padding: 0px;
             display: flex;
         }
 
         .flexbox-item {
             border-radius: 5px;
-            margin: 5px;
+            margin: 0px;
             font-size: smaller;
             border: 1px solid;
             border-color: gainsboro;
-            padding: 4px;
+            padding: 0px;
         }
 
             .flexbox-item ul {
                 margin: 0px;
-                padding: 4px;
+                padding: 0px;
                 display: table;
                 position: relative;
                 *background-color: red;

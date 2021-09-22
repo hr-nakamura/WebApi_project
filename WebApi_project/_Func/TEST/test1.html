@@ -99,7 +99,7 @@
             width: 300px;
             margin: 50px;
             padding: 50px;
-            border: 1px solid green;
+            border: 1px solid blue;
         }
 
         .border-box2 {
@@ -107,7 +107,7 @@
             width: 300px;
             margin: 0px;
             padding: 0px;
-            border: 1px solid green;
+            border: 1px solid blue;
         }
 
         .wrapper {
@@ -120,7 +120,7 @@
             background-color: pink;
             margin: 0px;
             padding: 0px;
-            width: 100px;
+            *width: 300px;
         }
 
         .p300 {
@@ -135,29 +135,39 @@
 <body>
     test1
     <br />
+    (content-box) m50,p50
+    <br />
     <div class="wrapper">
         <div class="content-box1">
-            <p class="p100">漢字-m50,p50</p>
+            <p class="p100">漢字</p>
         </div>
     </div>
+    <br />
+    (content-box) m0,p50
     <br />
     <div class="wrapper">
         <div class="content-box2">
-            <p class="p100">漢字-m0,p50</p>
+            <p class="p100">漢字</p>
         </div>
     </div>
+    <br />
+    (content-box) m50,p0
     <br />
     <div class="wrapper">
         <div class="content-box3">
-            <p class="p100">漢字-m50,p0</p>
+            <p class="p100">漢字</p>
         </div>
     </div>
     <br />
+    (content-box) m0,p0
+    <br />
     <div class="wrapper">
         <div class="content-box4">
-            <p class="p100">漢字-m0,p0</p>
+            <p class="p100">漢字</p>
         </div>
     </div>
+    <br />
+    (border-box) m50,p50
     <br />
     <div class="wrapper">
         <div class="border-box1">
@@ -165,9 +175,11 @@
         </div>
     </div>
     <br />
+    (border-box) m0,p0
+    <br />
     <div class="wrapper">
         <div class="border-box2">
-            <p class="p100">漢字</pclass="p100">
+            <p class="p100">漢字</p>
         </div>
     </div>
     <br />

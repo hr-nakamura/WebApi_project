@@ -48,47 +48,55 @@
 			border: 1px solid gray;
 			}
 			<!--   ******************* -->
-          .pStat {
-          min-width: 30px;
-          text-align: center;
-          }
+			.pStat {
+			box-sizing: content-box;
+			min-width: 30px;
+			text-align: center;
+			}
 
-          .pCode {
-          min-width: 60px;
-          text-align: center;
-          }
+			.pCode {
+			box-sizing: content-box;
+			min-width: 60px;
+			text-align: center;
+			}
 
-          .pName {
-          min-width: 400px;
-          text-align: left;
-          }
+			.pName {
+			box-sizing: content-box;
+			min-width: 400px;
+			text-align: left;
+			}
 
-          .pUser {
-          min-width: 400px;
-          text-align: left;
-          }
+			.pUser {
+			box-sizing: content-box;
+			min-width: 400px;
+			text-align: left;
+			}
 
-          .pSales {
-          min-width: 80px;
-          text-align: left;
-          }
+			.pSales {
+			box-sizing: content-box;
+			min-width: 80px;
+			text-align: left;
+			}
 
-          .pUpdate {
-          min-width: 50px;
-          text-align: center;
-          }
+			.pUpdate {
+			box-sizing: content-box;
+			min-width: 50px;
+			text-align: center;
+			}
 
-          .pRegist {
-          min-width: 80px;
-          text-align: left;
-          }
+			.pRegist {
+			box-sizing: content-box;
+			min-width: 80px;
+			text-align: left;
+			}
 
-          .pGroup {
-          width: 100%;
-          min-width: 200px;
-          text-align: left;
-          }
-        </style>
+			.pGroup {
+			box-sizing: content-box;
+			width: 100%;
+			min-width: 200px;
+			text-align: left;
+			}
+		</style>
       </head>
       <body>
 		  <xsl:apply-templates select="root" />
