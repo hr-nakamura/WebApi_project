@@ -35,7 +35,7 @@
                 try {
                     $.debug("bbsMain");
 
-                    $(".target").frame({ border: "1px solid blue" });
+                    $(".target").frame({ "border-top": "1px solid gray", "border-right": "1px solid gray", "border-bottom": "1px solid gray"});
                     var Cnt = 0;
 
                     //$(o1).stopwatch("開始1");
@@ -387,7 +387,7 @@
     </script>
     <style type="text/css">
         body {
-            background: url(/Project/home/_images/bg00.gif);
+            background: url(../_Content/_images/bg00.gif);
             padding: 0px 8px;
             border: 0px solid green;
             margin: 0px;
@@ -414,7 +414,7 @@
         }
 
         .target {
-            border: 1px solid blue;
+            border: 0px solid blue;
             padding: 0px;
             margin: 0px;
             *background-color: snow;
@@ -433,7 +433,7 @@
             border-radius: 5px;
             margin: 0px;
             font-size: smaller;
-            border: 1px solid;
+            border: 0px solid;
             border-color: gainsboro;
             padding: 0px;
         }

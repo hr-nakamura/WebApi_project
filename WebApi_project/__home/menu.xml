@@ -5,10 +5,6 @@
 	</menu>
 
   <menu name="ASP" memo="" >
-	  <menu name="プロジェクト引合" memo="" mode="url" value="/WebApi/project/_Func/TEST/bbs5.asp"/>
-    <menu name="プロジェクト引合(html)" memo="" mode="url" value="/WebApi/project/_Func/TEST/index_X.asp"/>
-    <menu name="プロジェクト引合(csv)" memo="" mode="url" value="/WebApi/project/_Func/TEST/projectDataCsv.asp"/>
-    <menu name="TEST2" memo="" mode="url" value="/WebApi/project/_Func/TEST/test2.asp"/>
     <menu name="TEST2(html)" memo="" mode="url" value="/WebApi/project/_Func/TEST/test1.html"/>
   </menu>
   <menu name="TEST" memo="" >

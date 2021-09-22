@@ -38,14 +38,16 @@
 
 			.table th {
 			border-top: none;
-			border-right: 1px solid gray;
-			border-bottom: none;
+			border-bottom: 1px solid gray;
 			border-left: 1px solid gray;
 			text-align: center;
 			}
 
 			.table td {
-			border: 1px solid gray;
+			border-top: none;
+			border-bottom: 1px solid gray;
+			border-right: 1px solid gray;
+			border-left: 1px solid gray;
 			}
 			<!--   ******************* -->
 			.pStat {

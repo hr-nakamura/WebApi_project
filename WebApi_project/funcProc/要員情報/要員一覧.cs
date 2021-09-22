@@ -53,15 +53,15 @@ namespace WebApi_project.hostProc
             var sw = new StopWatch();
             sw.Start("計測開始"); // 計測開始
 
-            string url = "http://localhost/Project/要員情報/要員一覧/xml/要員一覧_XML.asp?year=2021";
-            hostWeb h = new hostWeb();
-            string xmlStr = h.GetRequest(url);
+            //string url = "http://localhost/Project/要員情報/要員一覧/xml/要員一覧_XML.asp?year=2021";
+            //hostWeb h = new hostWeb();
+            //string xmlStr = h.GetRequest(url);
 
             Dictionary<string, dynamic> Tab = (Dictionary<string, dynamic>)json_要員一覧(Json);
             sw.Lap("変換");
 
             XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(xmlStr);
+            //xmlDoc.LoadXml(xmlStr);
 
             sw.Stop();
             return (xmlDoc);
@@ -72,17 +72,19 @@ namespace WebApi_project.hostProc
             StringBuilder sql = new StringBuilder("");
 
             string gCode;
-            string gName;
+            string T_name,H_name,B_name,G_name;
             List<string> TabX = new List<string>();
             int year = 2021;
             int mCnt = 12;
             int s_yymm = ((year - 1) * 100 + 10);
             int e_yymm = yymmAdd(s_yymm, mCnt - 1);
             string yakuStr = "1,2,34,35,37,38,39,40,41,42,43,44,88";
+            string dispMode = "統括";
+            string dispName = "開発本部";
             //string dispMode = "グループ";
             //string dispName = "開発本部//第2開発部/第2開発課";
-            string dispMode = "間接";
-            string dispName = "本社管理部門";
+            ////string dispMode = "間接";
+            //string dispName = "本社管理部門";
             string CondStr = "";
 
             Dictionary<string, string> dict = new Dictionary<string, string>()
@@ -217,10 +219,15 @@ namespace WebApi_project.hostProc
                 gCode = reader["部署ID"].ToString();
                 mID = (string)reader["mID"].ToString();
 
+                T_name = (string)reader["T_name"].ToString();
+                H_name = (string)reader["H_name"].ToString();
+                B_name = (string)reader["B_name"].ToString();
+                G_name = (string)reader["G_name"].ToString();
+
                 if (!xxxTab.ContainsKey(gCode))
                 {
                     sec = new section();
-                    sec.名前 = (string)reader["部署名"].ToString();
+                    sec.名前 = String.Join("",T_name,'/',H_name, '/', B_name, '/', G_name);
                     sec.member = new Dictionary<string, member>();
                     xxxTab.Add(gCode, sec);
                 }
@@ -320,7 +327,7 @@ namespace WebApi_project.hostProc
             int e_yymm = yymmAdd(s_yymm, mCnt - 1);
             sql.Clear();
             sql.Append(" SELECT");
-            sql.Append("      S_name = SM.統括+SM.本部+SM.部門,");
+            sql.Append("      S_name = SM.統括+'/'+SM.本部+'/'+SM.部門,");
             sql.Append("      T_name = SM.統括,");
             sql.Append("      B_name = SM.部門,");
             sql.Append("      G_name = SM.グループ,");
