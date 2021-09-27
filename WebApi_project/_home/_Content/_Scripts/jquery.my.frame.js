@@ -66,7 +66,7 @@
         }
     }
     function frame_init(o) {
-        //$.debug("frame_init");
+        $.debug("frame_init","====================");
         //var o2 = $.stopwatch();
         //$(o2).stopwatch("frame_init start");
         var target_name = $(o)[0].className;
@@ -75,8 +75,8 @@
         var footerElem = $("<div/>");
         $(headerElem).attr("class", target_name + "_header");
         $(footerElem).attr("class", target_name + "_footer");
-        $(headerElem).css("background", "");
-        $(footerElem).css("background", "");
+        $(headerElem).css("background", "inherit");
+        $(footerElem).css("background", "inherit");
         var childElem = $(parentElem).children();
         // targetまではheaderElemに入れてそれ以降はfooterElemに入れる
         var currentElem = headerElem;
@@ -94,12 +94,25 @@
         //$.debug("frame_init", Buff);
     }
     function frame_resize(o) {
+        $.debug("frame_resize", "====================");
         //$.debug.json("frame_resize", o);
         //var o2 = $.stopwatch();
         //$(o2).stopwatch("frame_resize start");
+        // body
+
+        var $windowInfo = {
+            height: window.innerHeight,
+            width: window.innerWidth
+        };
+        var body = $("body").Info("content,margin,padding,border");
+        var body_size = 0;
+        body_size += (body.margin.top + body.margin.bottom);
+        body_size += (body.padding.top + body.padding.bottom);
+        body_size += (body.border.top + body.border.bottom);
+
+
         var target_name = $(o)[0].className;
         var parentElem = $(o).parent();
-        var targetHeight = window.innerHeight;
         var childElem = $(parentElem).children();
         var total = 0;
         $(childElem).each(function (i, elem) {
@@ -113,12 +126,6 @@
                 total += sum;
             }
         });
-        // body
-        var body = $("body").Info("margin,padding,border");
-        var body_size = 0;
-        body_size += (body.margin.top + body.margin.bottom);
-        body_size += (body.padding.top + body.padding.bottom);
-        body_size += (body.border.top + body.border.bottom);
 
         // target
         var target = $(o).Info("margin,padding,border");           
@@ -127,7 +134,7 @@
         target_size += (target.padding.top + target.padding.bottom);
         target_size += (target.border.top + target.border.bottom);
         var adjust = 1;         //16;
-        var newHeight = targetHeight - ( total + body_size + target_size) - adjust;
+        var newHeight = $windowInfo.height - ( total + body_size + target_size) - adjust;
         $(o).css("height", newHeight);
         $table = $("table", o);
         if ($table.length == 1) {
@@ -142,7 +149,7 @@
         //$(o2).stopwatch("iframe_resize start");
         var target_name = $(o)[0].className;
         var parentElem = $(o).parent();
-        var targetHeight = window.innerHeight;
+        var $WindowHeight = window.innerHeight;
         var x = $(parentElem).children();
         var total = 0;
         $(x).each(function (i, elem) {
@@ -170,20 +177,22 @@
         target_size += (targetInfo.padding.top + targetInfo.padding.bottom);
         target_size += (targetInfo.border.top + targetInfo.border.bottom);
         var adjust = 0;         //30;
-        var newHeight = targetHeight - ( total + body_size + target_size) - adjust;
+        var newHeight = $windowHeight - ( total + body_size + target_size) - adjust;
         var width = bodyInfo.client.width - (targetInfo.border.left + targetInfo.border.right);
         $(o).css("height", newHeight).css("width", width);
         //var Buff = $(o2).stopwatch();
         //$.debug("iframe_resize", Buff);
     }
     function table_resize(o) {
-        
+        $.debug("table_resize", "====================");
+
         $.debug("table_resize");
-7        //$.debug.json("table_resize", o);
+        //$.debug.json("table_resize", o);
         var work = [];
         //var o2 = $.stopwatch();
         //$(o2).stopwatch("table_resize start");
-        $targetInfo = $(o).Info("client");
+        $targetInfo = $(".target").Info("client");
+
         var targetHeight = $targetInfo.client.height;
 
         var theadHeight = 0;
@@ -198,7 +207,7 @@
             theadHeight += thead.border.top + thead.border.bottom;
             theadHeight += thead.padding.top + thead.padding.bottom;
             theadHeight += thead.client.height;
-            work.push({ "11": thead.client.height });       //33
+            //work.push({ "11": thead.client.height });       //33
         }
         // tbodyの高さ設定
         var adjust = 0;
@@ -207,9 +216,9 @@
         $("tbody", o).css("height", bodyHeight);
         //var Buff = $(o2).stopwatch();
         //$.debug("table_resize", Buff);
-        work.push({ "12": targetHeight });
-        work.push({ "15": bodyHeight });
-        $.debug.json("table_resize", work);
+        //work.push({ "12": targetHeight });
+        //work.push({ "15": bodyHeight });
+        //$.debug.json("table_resize", work);
     }
 
     $.fn.frame = function (method) {
@@ -235,10 +244,15 @@
         }
         return (false);
     });
-
+    $.Info = function () {
+        var a = 1;
+    }
     $.fn.Info = function (para) {
         var Info = {
-            //name    : { class: "", tag: "" },
+            name: {
+                tag  : $(this)[0].tagName,
+                class: $(this)[0].className
+            }
             //content : { width: 0, height: 0, text: "" },
             //position: { top: 0, left: 0 },
             //offset  : { top: 0, left: 0, width: 0, height: 0 },
@@ -337,8 +351,8 @@
             work.push($(this)[0].localName);
             work.push($(this)[0].className);
         }
-        $.debug.json(work.join("]["), Info);
-        $.debug("Info", $this.selector, $(this)[0].localName, $(this)[0].className, para, Buff);
+        //$.debug.json(work.join("]["), Info);
+        //$.debug("Info", $this.selector, $(this)[0].localName, $(this)[0].className, para, Buff);
         return (Info);
     }
 })(window.jQuery);
