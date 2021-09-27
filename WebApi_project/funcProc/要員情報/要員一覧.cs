@@ -14,7 +14,7 @@ namespace WebApi_project.hostProc
     {
         public object json_要員一覧(String Json)
         {
-            //Dictionary<string, object> Tab = new Dictionary<string, object>();
+            Dictionary<string, object> Tab = new Dictionary<string, object>();
             //Dictionary<string, object> Info = new Dictionary<string, object>();
             //Dictionary<string, object> Data = new Dictionary<string, object>();
 
@@ -33,14 +33,14 @@ namespace WebApi_project.hostProc
 
             var sw = new StopWatch();
             sw.Start("計測開始"); // 計測開始
-            var Tab = x();
-            /*
-                        string url = "http://localhost/Project/要員情報/要員一覧/xml/要員一覧_XML.asp?year=2021";
-                        hostWeb h = new hostWeb();
-                        string xmlStr = h.GetRequest(url);
+            //var Tab = x();
 
-                        Tab.Add("Data", xmlStr);
-            */
+            string url = "http://localhost/Project/要員情報/要員一覧/xml/要員一覧_XML.asp?year=2021";
+            hostWeb h = new hostWeb();
+            string xmlStr = h.GetRequest(url);
+
+            Tab.Add("Data", xmlStr);
+
             sw.Lap("変換");
 
             sw.Stop();
@@ -53,15 +53,15 @@ namespace WebApi_project.hostProc
             var sw = new StopWatch();
             sw.Start("計測開始"); // 計測開始
 
-            //string url = "http://localhost/Project/要員情報/要員一覧/xml/要員一覧_XML.asp?year=2021";
-            //hostWeb h = new hostWeb();
-            //string xmlStr = h.GetRequest(url);
+            string url = "http://localhost/Project/要員情報/要員一覧/xml/要員一覧_XML.asp?year=2021";
+            hostWeb h = new hostWeb();
+            string xmlStr = h.GetRequest(url);
 
-            Dictionary<string, dynamic> Tab = (Dictionary<string, dynamic>)json_要員一覧(Json);
+            //Dictionary<string, dynamic> Tab = (Dictionary<string, dynamic>)json_要員一覧(Json);
             sw.Lap("変換");
 
             XmlDocument xmlDoc = new XmlDocument();
-            //xmlDoc.LoadXml(xmlStr);
+            xmlDoc.LoadXml(xmlStr);
 
             sw.Stop();
             return (xmlDoc);
@@ -79,8 +79,12 @@ namespace WebApi_project.hostProc
             int s_yymm = ((year - 1) * 100 + 10);
             int e_yymm = yymmAdd(s_yymm, mCnt - 1);
             string yakuStr = "1,2,34,35,37,38,39,40,41,42,43,44,88";
-            string dispMode = "統括";
-            string dispName = "開発本部";
+            //string dispMode = "統括";
+            //string dispName = "開発本部";
+            string dispMode = "本部";
+            string dispName = "開発本部/";
+            //string dispMode = "部門";
+            //string dispName = "開発本部//第2開発部";
             //string dispMode = "グループ";
             //string dispName = "開発本部//第2開発部/第2開発課";
             ////string dispMode = "間接";
