@@ -351,8 +351,8 @@
             work.push($(this)[0].localName);
             work.push($(this)[0].className);
         }
-        //$.debug.json(work.join("]["), Info);
-        //$.debug("Info", $this.selector, $(this)[0].localName, $(this)[0].className, para, Buff);
+        $.debug.json(work.join("]["), Info);
+        $.debug("Info", $this.selector, $(this)[0].localName, $(this)[0].className, para, Buff);
         return (Info);
     }
 })(window.jQuery);
