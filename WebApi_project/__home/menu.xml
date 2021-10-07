@@ -4,6 +4,7 @@
 		<menu name="監査ページ" memo="" mode="url" value="/WebApi/project/_home/manageMenu.html"/>
 	</menu>
 
+	<menu name="TEST" memo="" >
 	<menu name="__home" memo="" >
 		<menu name="viewJson" memo="" mode="url" value="/WebApi/project/__home/Util/viewJson/viewJson.html"/>
 	</menu>
@@ -15,6 +16,8 @@
   <menu name="TEST" memo="" >
 		<menu name="要員一覧" memo="" mode="url" value="/WebApi/project/_home/要員情報/要員一覧.html"/>
   </menu>
+	</menu>
+
 </root>
 
 
