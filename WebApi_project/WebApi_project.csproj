@@ -234,7 +234,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="hostProc\Entry.cs" />
-    <Compile Include="hostProc\Entry_json.cs" />
     <Compile Include="hostProc\hostProc.cs" />
     <Compile Include="hostProc\hostWeb.cs">
       <SubType>ASPXCodeBehind</SubType>
