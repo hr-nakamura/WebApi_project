@@ -165,7 +165,7 @@
             }
         });
         // body
-        var bodyInfo = $("body").Info("margin,padding,border");
+        var bodyInfo = $("body").Info("client,margin,padding,border");
         var body_size = 0;
         body_size += (bodyInfo.margin.top + bodyInfo.margin.bottom);
         body_size += (bodyInfo.padding.top + bodyInfo.padding.bottom);
@@ -177,7 +177,7 @@
         target_size += (targetInfo.padding.top + targetInfo.padding.bottom);
         target_size += (targetInfo.border.top + targetInfo.border.bottom);
         var adjust = 0;         //30;
-        var newHeight = $windowHeight - ( total + body_size + target_size) - adjust;
+        var newHeight = $WindowHeight - ( total + body_size + target_size) - adjust;
         var width = bodyInfo.client.width - (targetInfo.border.left + targetInfo.border.right);
         $(o).css("height", newHeight).css("width", width);
         //var Buff = $(o2).stopwatch();

@@ -6,17 +6,9 @@ using DebugHost;
 
 namespace WebApi_project.hostProc
 {
-    public class hostProcEntry_json
+    partial class hostProcEntry
     {
-        public hostProcEntry_json()
-        {
-            //Debug.WriteLog("hostProcEntry Start");
-        }
-        ~hostProcEntry_json()
-        {
-            //Debug.WriteLog("hostProcEntry End");
-        }
-        public object Entry(String Item, String Json)
+        public object Entry_json(String Item, String Json)
         {
             object o_obj = new object();
             try

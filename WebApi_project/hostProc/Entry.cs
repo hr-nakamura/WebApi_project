@@ -6,7 +6,7 @@ using DebugHost;
 
 namespace WebApi_project.hostProc
 {
-    public class hostProcEntry
+    partial class hostProcEntry
     {
         public  hostProcEntry()
         {

@@ -239,7 +239,7 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="funcProc\projectBBS\projectList.cs" />
-    <Compile Include="funcProc\QOSMIO\test.cs" />
+    <Compile Include="_Func\QOSMIO\test.cs" />
     <Compile Include="funcProc\売上予測\売上予実_分類.cs" />
     <Compile Include="funcProc\売上予測\売上予実_新規.cs" />
     <Compile Include="funcProc\売上予測\売上予実_部門.cs" />
