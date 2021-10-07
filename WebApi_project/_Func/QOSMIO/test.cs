@@ -45,10 +45,11 @@ namespace WebApi_project.hostProc
 
         public object json_projectTest(String Json)
         {
+            Debug.Write("json_projectTest");
             string classPath = this.GetType().FullName;                                         //クラスパスの取得
             string className = this.GetType().Name;                                             //クラス名の取得
             string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;           //メソッド名の取得
-            Debug.WriteLog(classPath);
+            //Debug.WriteLog(classPath);
 
             string mName = Environment.MachineName;
 
@@ -65,8 +66,8 @@ namespace WebApi_project.hostProc
 
         public XmlDocument projectTest(String Json)
         {
+            Debug.Write("projectTest");
 
-            Debug.WriteLog("projectTest");
 
             XmlDocument xmlDoc = new XmlDocument();
 
