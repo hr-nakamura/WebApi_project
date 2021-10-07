@@ -240,5 +240,14 @@
     $.debug.Abandon = function () {
         return methods["Abandon"].apply(this, Array.prototype.slice.call(arguments, 0));
     }
+    $.alert = function () {
+        var work = [];
+        var Cnt = arguments.length;
+        for (var i = 0; i < Cnt; i++) {
+            work.push(arguments[i]);
+        }
+        alert(work.join("\n"));
+        return (this);
+    }
 })(jQuery);
 
