@@ -47,6 +47,10 @@ namespace WebApi_project.hostProc
                     DB_mode = "データベース_naka";
                     basePath = @"D:\GitHub\hr-nakamura\WebApi_project\WebApi_project";
                     break;
+                case "NAKAMURA-RD2":
+                    DB_mode = "データベース_naka";
+                    basePath = @"D:\GitHub\hr-nakamura\WebApi_project\WebApi_project";
+                    break;
                 case "EMG-APSV":
                     DB_mode = "データベース_EMG";
                     break;

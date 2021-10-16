@@ -220,7 +220,7 @@
     <Content Include="__home\Util\viewJson-edge\jquery.json-viewer.js" />
     <Content Include="__home\json.json" />
     <Content Include="__home\Scripts\jquery.my.webapi.js" />
-    <Content Include="__home\WebApi_project.xlsx" />
+    <Content Include="__home\WebApi_project_構成.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Data\iniFile.cs" />
