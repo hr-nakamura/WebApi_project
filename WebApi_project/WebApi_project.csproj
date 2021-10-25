@@ -229,6 +229,7 @@
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\XmlController.cs" />
     <Compile Include="App_Data\StopWatch.cs" />
+    <Compile Include="funcProc\売上予測\売上予実_新規2.cs" />
     <Compile Include="funcProc\部門収支\部門収支_DB.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -245,7 +246,7 @@
     <Compile Include="funcProc\売上予測\売上予実_部門.cs" />
     <Compile Include="funcProc\売上予測\売上目標_部門.cs" />
     <Compile Include="funcProc\要員情報\要員一覧.cs" />
-    <Compile Include="funcProc\費用予測\費用予測.cs" />
+    <Compile Include="funcProc\費用予測\費用状況.cs" />
     <Compile Include="funcProc\部門収支\部門収支.cs" />
     <Compile Include="hostProc_json\dayCheck.cs" />
     <Compile Include="hostProc_json\memberInfo.cs" />

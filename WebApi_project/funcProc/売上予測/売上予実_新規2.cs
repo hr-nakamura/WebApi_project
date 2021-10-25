@@ -12,7 +12,7 @@ namespace WebApi_project.hostProc
 {
     public partial class 売上予測 : hostProc
     {
-        public object json_売上予実_新規(String Json)
+        public object json_売上予実_新規2(String Json)
         {
             Dictionary<string, object> Tab = new Dictionary<string, object>();
             Dictionary<string, object> Info = new Dictionary<string, object>();
@@ -31,18 +31,19 @@ namespace WebApi_project.hostProc
             Info.Add("DB_Conn", DB_connectString);
 
             Tab.Add("Info", (object)Info);
-            string url = "http://localhost/Project/売上予測/xml/売上予実_新規_JSON.asp?year=2021";
+
+            string url = "http://localhost/Project/売上予測/xml/売上予実_新規2_JSON.asp?year=2021";
             hostWeb h = new hostWeb();
             string xmlStr = h.GetRequest(url);
             Tab.Add("Json", JObject.Parse(xmlStr));
 
             return (Tab);
         }
-        public XmlDocument 売上予実_新規(String Json)
+        public XmlDocument 売上予実_新規2(String Json)
         {
             //var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
 
-            object json_data = json_売上予実_新規(Json);
+            object json_data = json_売上予実_新規2(Json);
             XmlDocument xmlDoc = Json2Xml(json_data);
             //XmlDocument xmlDoc = new XmlDocument();
 

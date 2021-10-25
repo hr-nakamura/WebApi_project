@@ -11,7 +11,9 @@
 
     <script src="../_Content/_Scripts/jquery.my.webapi.js" type="text/javascript"></script>
     <script src="../_Content/_Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
-    <script src="../_Content/debug/jquery.my.debug.js" type="text/javascript"></script>
+
+    <script src="../_Content/_Scripts/jquery.stopWatch.js" type="text/javascript"></script>
+    <script src="../_Content/_debug/jquery.my.debug.js" type="text/javascript"></script>
     <script type="text/javascript">
         var url = "部門収支.html";
         var o_iframe = null;
@@ -41,7 +43,7 @@
 
             var d = new Date();
             var yy = d.getFullYear();
-            var mm = d.getMonth()+1;
+            var mm = d.getMonth() + 1;
             var dd = d.getDate();
             var yymm = (yy * 100) + mm;
             var json = { yymm: yymm }

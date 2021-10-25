@@ -5,7 +5,7 @@ using System.Reflection;
 using Newtonsoft.Json;
 using System.Data.SqlClient;
 using System.Collections.Generic;
-
+using Newtonsoft.Json.Linq;
 using DebugHost;
 
 namespace WebApi_project.hostProc
@@ -31,7 +31,11 @@ namespace WebApi_project.hostProc
             Info.Add("DB_Conn", DB_connectString);
 
             Tab.Add("Info", (object)Info);
-            Tab.Add("Data", (object)Data);
+
+            string url = "http://localhost/Project/費用予測/xml/EMG費用状況_JSON.asp?year=2021";
+            hostWeb h = new hostWeb();
+            string xmlStr = h.GetRequest(url);
+            Tab.Add("Json", JObject.Parse(xmlStr));
 
             return (Tab);
         }

@@ -53,7 +53,7 @@ namespace WebApi_project.hostProc
             var sw = new StopWatch();
             sw.Start("計測開始"); // 計測開始
 
-            string url = "http://localhost/Project/要員情報/要員一覧/xml/要員一覧_XML.asp?year=2021";
+            string url = "http://kansa.in.eandm.co.jp/Project/要員情報/要員一覧/xml/要員一覧_XML.asp?year=2021";
             hostWeb h = new hostWeb();
             string xmlStr = h.GetRequest(url);
 

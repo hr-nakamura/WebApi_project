@@ -4,6 +4,7 @@ using System.Xml;
 using Newtonsoft.Json;
 using System.Data.SqlClient;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 using DebugHost;
 
@@ -30,7 +31,11 @@ namespace WebApi_project.hostProc
             Info.Add("DB_Conn", DB_connectString);
 
             Tab.Add("Info", (object)Info);
-            Tab.Add("Data", (object)Data);
+
+            string url = "http://localhost/Project/売上予測/xml/売上予実_分類_JSON.asp?year=2021";
+            hostWeb h = new hostWeb();
+            string xmlStr = h.GetRequest(url);
+            Tab.Add("Json", JObject.Parse(xmlStr));
 
             return (Tab);
         }
