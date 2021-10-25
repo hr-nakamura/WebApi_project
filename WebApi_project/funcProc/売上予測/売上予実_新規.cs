@@ -31,7 +31,7 @@ namespace WebApi_project.hostProc
             Info.Add("DB_Conn", DB_connectString);
 
             Tab.Add("Info", (object)Info);
-            string url = "http://localhost/Project/売上予測/xml/売上予実_新規_JSON.asp?year=2021";
+            string url = "http://kansa.in.eandm.co.jp/Project/売上予測/xml/売上予実_新規_JSON.asp?year=2021";
             hostWeb h = new hostWeb();
             string xmlStr = h.GetRequest(url);
             Tab.Add("Json", JObject.Parse(xmlStr));

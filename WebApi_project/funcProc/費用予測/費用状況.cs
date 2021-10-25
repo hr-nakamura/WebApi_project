@@ -32,7 +32,7 @@ namespace WebApi_project.hostProc
 
             Tab.Add("Info", (object)Info);
 
-            string url = "http://localhost/Project/費用予測/xml/EMG費用状況_JSON.asp?year=2021";
+            string url = "http://kansa.in.eandm.co.jp/Project/費用予測/xml/EMG費用状況_JSON.asp?year=2021";
             hostWeb h = new hostWeb();
             string xmlStr = h.GetRequest(url);
             Tab.Add("Json", JObject.Parse(xmlStr));
