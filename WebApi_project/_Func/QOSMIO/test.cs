@@ -86,13 +86,14 @@ namespace WebApi_project.hostProc
             string jsonStr = h.GetRequest(url);
 
 
-            Tab.Add("root", JObject.Parse(jsonStr));
 
-            object x = JObject.Parse(jsonStr);           // 文字列をJson形式に
+            object x = JObject.Parse(jsonStr);                              // 文字列をJson形式に
             object Json = JsonConvert.DeserializeObject(jsonStr);           // 文字列をJson形式に
+
+            Tab.Add("root", JObject.Parse(jsonStr));
             string jsonStr2 = JsonConvert.SerializeObject(Tab);             // Json形式を文字列に
 
-            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr);
+            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr2);       // Json文字列をXML　objectに
 
         }
         void xxx()
