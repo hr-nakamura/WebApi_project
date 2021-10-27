@@ -41,11 +41,10 @@ namespace WebApi_project.hostProc
         }
         public XmlDocument 売上予実_新規2(String Json)
         {
-            //var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
-
             object json_data = json_売上予実_新規2(Json);
-            XmlDocument xmlDoc = Json2Xml(json_data);
-            //XmlDocument xmlDoc = new XmlDocument();
+            Json = JsonConvert.SerializeObject(json_data);
+            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(Json);
+
 
             return (xmlDoc);
         }

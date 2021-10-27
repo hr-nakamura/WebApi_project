@@ -2,6 +2,8 @@
 using System.Web;
 using System.Xml;
 using Newtonsoft.Json;
+using System.Text;
+
 using System.Data.SqlClient;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
@@ -33,18 +35,18 @@ namespace WebApi_project.hostProc
 
             string url = "http://kansa.in.eandm.co.jp/Project/売上予測/xml/売上目標_部門_JSON.asp?year=2021";
             hostWeb h = new hostWeb();
-            string xmlStr = h.GetRequest(url);
-            Tab.Add("Json", JObject.Parse(xmlStr));
+            string jsonStr = h.GetRequest(url);
+            //Tab.Add("Json", JObject.Parse(jsonStr));
+            //XmlDocument doc = JsonConvert.DeserializeXmlNode(jsonStr);
 
             return (Tab);
         }
         public XmlDocument 売上目標_部門(String Json)
         {
-            //var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
 
             object json_data = json_売上目標_部門(Json);
-            XmlDocument xmlDoc = Json2Xml(json_data);
-            //XmlDocument xmlDoc = new XmlDocument();
+            Json = JsonConvert.SerializeObject(json_data);
+            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(Json);
 
             return (xmlDoc);
         }

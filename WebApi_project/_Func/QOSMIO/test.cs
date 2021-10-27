@@ -8,6 +8,8 @@ using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Json;
+using System.Xml.Linq;
 
 using WebApi_project.Models;
 
@@ -59,7 +61,7 @@ namespace WebApi_project.hostProc
             Tab.Add("methodName", methodName);
             Tab.Add("DB_Conn", DB_connectString);
 
-            xxx();
+            zzz();
 
             return (Tab);
         }
@@ -72,6 +74,17 @@ namespace WebApi_project.hostProc
             XmlDocument xmlDoc = new XmlDocument();
 
             return (xmlDoc);
+        }
+        void zzz()
+        {
+            XmlDocument doc = new XmlDocument();
+            string url = "http://kansa.in.eandm.co.jp/Project/売上予測/xml/売上目標_部門_JSON.asp?year=2021";
+            hostWeb h = new hostWeb();
+            string jsonStr = h.GetRequest(url);
+
+            //string Json = JsonConvert.SerializeObject(jsonStr);
+            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr);
+
         }
         void xxx()
         {
