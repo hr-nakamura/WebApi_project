@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Json;
 using System.Xml.Linq;
+using Newtonsoft.Json.Linq;
 
 using WebApi_project.Models;
 
@@ -77,12 +78,20 @@ namespace WebApi_project.hostProc
         }
         void zzz()
         {
+            Dictionary<string, object> Tab = new Dictionary<string, object>();
+
             XmlDocument doc = new XmlDocument();
             string url = "http://kansa.in.eandm.co.jp/Project/売上予測/xml/売上目標_部門_JSON.asp?year=2021";
             hostWeb h = new hostWeb();
             string jsonStr = h.GetRequest(url);
 
-            //string Json = JsonConvert.SerializeObject(jsonStr);
+
+            Tab.Add("root", JObject.Parse(jsonStr));
+
+            object x = JObject.Parse(jsonStr);           // 文字列をJson形式に
+            object Json = JsonConvert.DeserializeObject(jsonStr);           // 文字列をJson形式に
+            string jsonStr2 = JsonConvert.SerializeObject(Tab);             // Json形式を文字列に
+
             XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr);
 
         }
