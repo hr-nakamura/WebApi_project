@@ -62,9 +62,9 @@ namespace WebApi_project.hostProc
             Tab.Add("methodName", methodName);
             Tab.Add("DB_Conn", DB_connectString);
 
-            aaa();
+            var Tab1 = zzz();
 
-            return (Tab);
+            return (Tab1);
         }
 
         public XmlDocument projectTest(String Json)
@@ -103,18 +103,43 @@ namespace WebApi_project.hostProc
             XmlDocument doc = new XmlDocument();
             string url = "http://kansa.in.eandm.co.jp/Project/売上予測/xml/売上目標_部門_JSON.asp?year=2021";
             hostWeb h = new hostWeb();
-            string jsonStr = h.GetRequest(url);
+            string JsonStr = h.GetRequest(url);
 
 
 
-            object x = JObject.Parse(jsonStr);                              // 文字列をJson形式に
-            object Json = JsonConvert.DeserializeObject(jsonStr);           // 文字列をJson形式に
+            object x = JObject.Parse(JsonStr);                              // 文字列をJson形式に
+            object Json = JsonConvert.DeserializeObject(JsonStr);           // 文字列をJson形式に
 
-            Tab.Add("root", JObject.Parse(jsonStr));
+            Newtonsoft.Json.Linq.JObject elem = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(JsonStr);
+
+            Dictionary<string, object> root = new Dictionary<string, object>();
+            var obj = "{#Name: \"Chris\", \"Address\":{Street:\"My Street\",Number:123}}";
+
+
+            root.Add("element", obj);
+
+/*
+            foreach (var m1 in elem)
+                {
+                Debug.Write("elem", m1.Key);
+                var elem2 = m1.Value;
+                foreach (var m2 in (JObject)elem2)
+                {
+                    if (m2.Key == "名前") continue;
+                    Debug.Write("elem2", m2.Key);
+                    var elem3 = m2.Value;
+                    foreach (var value in elem3)
+                    {
+                        Debug.Write("value", value.ToString());
+                    }
+                }
+            }
+*/
+            Tab.Add("root", JObject.Parse(JsonStr));
             string jsonStr2 = JsonConvert.SerializeObject(Tab);             // Json形式を文字列に
 
             XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr2);       // Json文字列をXML　objectに
-            return (Tab);
+            return (root);
         }
         void xxx()
         {
