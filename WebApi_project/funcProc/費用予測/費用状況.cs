@@ -16,7 +16,6 @@ namespace WebApi_project.hostProc
         {
             Dictionary<string, object> Tab = new Dictionary<string, object>();
             Dictionary<string, object> Info = new Dictionary<string, object>();
-            Dictionary<string, object> Data = new Dictionary<string, object>();
 
             string classPath = this.GetType().FullName;                                         //クラスパスの取得
             string className = this.GetType().Name;                                             //クラス名の取得
@@ -30,24 +29,27 @@ namespace WebApi_project.hostProc
             Info.Add("methodName", methodName);
             Info.Add("DB_Conn", DB_connectString);
 
-            Tab.Add("Info", (object)Info);
 
             string url = "http://kansa.in.eandm.co.jp/Project/費用予測/xml/EMG費用状況_JSON.asp?year=2021";
             hostWeb h = new hostWeb();
-            string xmlStr = h.GetRequest(url);
-            Tab.Add("Json", JObject.Parse(xmlStr));
+            string jsonStr = h.GetRequest(url);
+
+            Tab.Add("Info", (object)Info);
+            Tab.Add("data", JObject.Parse(jsonStr));
 
             return (Tab);
         }
         public XmlDocument 費用状況(String Json)
         {
+            Dictionary<string, object> root = new Dictionary<string, object>();
 
-            SqlCommand cmd = new SqlCommand();
-            //var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
+            object o_json = json_費用状況(Json);
+            root.Add("root", (object)o_json);
 
-            object json_data = json_費用状況(Json);
-            XmlDocument xmlDoc = Json2Xml(json_data);
-            //XmlDocument xmlDoc = new XmlDocument();
+            string JsonStr = JsonConvert.SerializeObject(root);
+
+
+            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(JsonStr);
 
             return (xmlDoc);
         }

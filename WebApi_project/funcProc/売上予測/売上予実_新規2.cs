@@ -16,7 +16,6 @@ namespace WebApi_project.hostProc
         {
             Dictionary<string, object> Tab = new Dictionary<string, object>();
             Dictionary<string, object> Info = new Dictionary<string, object>();
-            Dictionary<string, object> Data = new Dictionary<string, object>();
 
             string classPath = this.GetType().FullName;                                         //クラスパスの取得
             string className = this.GetType().Name;                                             //クラス名の取得
@@ -30,23 +29,29 @@ namespace WebApi_project.hostProc
             Info.Add("methodName", methodName);
             Info.Add("DB_Conn", DB_connectString);
 
-            Tab.Add("Info", (object)Info);
 
             string url = "http://kansa.in.eandm.co.jp/Project/売上予測/xml/売上予実_新規2_JSON.asp?year=2021";
             hostWeb h = new hostWeb();
-            string xmlStr = h.GetRequest(url);
-            Tab.Add("Json", JObject.Parse(xmlStr));
+            string jsonStr = h.GetRequest(url);
+
+            Tab.Add("Info", (object)Info);
+            Tab.Add("data", JObject.Parse(jsonStr));
 
             return (Tab);
         }
         public XmlDocument 売上予実_新規2(String Json)
         {
-            object json_data = json_売上予実_新規2(Json);
-            Json = JsonConvert.SerializeObject(json_data);
-            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(Json);
+            Dictionary<string, object> root = new Dictionary<string, object>();
 
+            object o_json = json_売上予実_新規2(Json);
+            root.Add("root", (object)o_json);
+
+            string JsonStr = JsonConvert.SerializeObject(root);
+
+            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(JsonStr);
 
             return (xmlDoc);
+
         }
     }
 }

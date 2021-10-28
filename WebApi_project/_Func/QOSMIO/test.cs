@@ -62,21 +62,24 @@ namespace WebApi_project.hostProc
             Tab.Add("methodName", methodName);
             Tab.Add("DB_Conn", DB_connectString);
 
-            zzz();
+            var Tab1 = zzz();
 
-            return (Tab);
+            return (Tab1);
         }
 
         public XmlDocument projectTest(String Json)
         {
             Debug.Write("projectTest");
 
+            var Tab = json_projectTest("");
 
-            XmlDocument xmlDoc = new XmlDocument();
+            string jsonStr2 = JsonConvert.SerializeObject(Tab);             // Json形式を文字列に
+
+            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr2);       // Json文字列をXML　objectに
 
             return (xmlDoc);
         }
-        void zzz()
+        Dictionary<string, object> zzz()
         {
             Dictionary<string, object> Tab = new Dictionary<string, object>();
 
@@ -94,7 +97,7 @@ namespace WebApi_project.hostProc
             string jsonStr2 = JsonConvert.SerializeObject(Tab);             // Json形式を文字列に
 
             XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr2);       // Json文字列をXML　objectに
-
+            return (Tab);
         }
         void xxx()
         {
