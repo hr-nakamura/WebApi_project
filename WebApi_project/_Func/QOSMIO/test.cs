@@ -62,9 +62,9 @@ namespace WebApi_project.hostProc
             Tab.Add("methodName", methodName);
             Tab.Add("DB_Conn", DB_connectString);
 
-            var Tab1 = zzz();
+            aaa();
 
-            return (Tab1);
+            return (Tab);
         }
 
         public XmlDocument projectTest(String Json)
@@ -79,6 +79,23 @@ namespace WebApi_project.hostProc
 
             return (xmlDoc);
         }
+
+
+        void aaa()
+        {
+            string xmlStr = "<root><element id='123'>aaa</element></root>";
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(xmlStr);
+
+            string JsonStr = JsonConvert.SerializeXmlNode(xmlDoc);                  // xmlDoc => Json文字列  {"element":{"@id":"123","#text":"aaa"}}
+            XmlDocument xmlDoc1 = JsonConvert.DeserializeXmlNode(JsonStr);          // Json文字列 => xmlDoc
+
+
+
+        }
+
+
+
         Dictionary<string, object> zzz()
         {
             Dictionary<string, object> Tab = new Dictionary<string, object>();
