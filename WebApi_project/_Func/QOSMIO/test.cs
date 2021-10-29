@@ -143,12 +143,12 @@ namespace WebApi_project.hostProc
 
         }
 
-        Dictionary<string, object> zzz()
+        Dictionary<string, object> zzz9()
         {
             Dictionary<string, object> Tab = new Dictionary<string, object>();
 
             XmlDocument doc = new XmlDocument();
-            string url = "http://localhost/Project/Test/Json/test_Json.asp";
+            string url = "http://localhost/Project/費用予測/xml/EMG費用状況_JSON.asp?year=2021";
             hostWeb h = new hostWeb();
             string JsonStr = h.GetRequest(url);
 
@@ -162,12 +162,12 @@ namespace WebApi_project.hostProc
             return (root);
         }
 
-        Dictionary<string, object> zzz9()
+        Dictionary<string, object> zzz()
         {
             Dictionary<string, object> Tab = new Dictionary<string, object>();
 
             XmlDocument doc = new XmlDocument();
-            string url = "http://localhost/Project/Test/Json/test_Json.asp";
+            string url = "http://localhost/Project/費用予測/xml/EMG費用状況_JSON.asp?year=2021";
             hostWeb h = new hostWeb();
             string JsonStr = h.GetRequest(url);
 
@@ -183,23 +183,29 @@ namespace WebApi_project.hostProc
 
             root.Add("root", Json);
 
-            /*
-                        foreach (var m1 in elem)
-                            {
-                            Debug.Write("elem", m1.Key);
-                            var elem2 = m1.Value;
-                            foreach (var m2 in (JObject)elem2)
-                            {
-                                if (m2.Key == "名前") continue;
-                                Debug.Write("elem2", m2.Key);
-                                var elem3 = m2.Value;
-                                foreach (var value in elem3)
-                                {
-                                    Debug.Write("value", value.ToString());
-                                }
-                            }
+
+            foreach (var m1 in elem)
+            {
+                Debug.Write("elem", m1.Key);
+                var elem2 = m1.Value;
+                foreach (var m2 in (JObject)elem2)
+                {
+                    if (m2.Key == "名前") continue;
+                    Debug.Write("elem2", m2.Key);
+                    var elem3 = m2.Value;
+                    foreach (var m3 in (JObject)elem3)
+                    {
+                        Debug.Write("elem3", m3.Key);
+
+                        for (var m = 0; m < m3.Value.Count(); m++)
+                        {
+                            Debug.Write("value", m.ToString(), m3.Value[m].ToString());
+                            var a = 1;
                         }
-            */
+                    }
+                }
+            }
+
             //Tab.Add("root", JObject.Parse(JsonStr));
             string jsonStr2 = JsonConvert.SerializeObject(Tab);             // Json形式を文字列に
 
