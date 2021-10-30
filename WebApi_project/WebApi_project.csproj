@@ -224,6 +224,7 @@
     <Content Include="__home\json.json" />
     <Content Include="__home\Scripts\jquery.my.webapi.js" />
     <Content Include="__home\WebApi_project_構成.xlsx" />
+    <Content Include="_Func\QOSMIO\test.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Data\iniFile.cs" />
@@ -258,6 +259,7 @@
     <Compile Include="Models\common.cs" />
     <Compile Include="Models\group.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="_Func\QOSMIO\test2.cs" />
     <Compile Include="__home\debug\debug.ashx.cs">
       <DependentUpon>debug.ashx</DependentUpon>
     </Compile>

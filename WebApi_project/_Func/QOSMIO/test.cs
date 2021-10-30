@@ -18,7 +18,7 @@ using DebugHost;
 
 namespace WebApi_project.hostProc
 {
-    public class QOSMIO : hostProc
+    partial class QOSMIO : hostProc
     {
         int yymmAdd(int yymm, int mCnt)
         {
