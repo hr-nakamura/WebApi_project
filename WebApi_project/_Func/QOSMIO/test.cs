@@ -63,7 +63,7 @@ namespace WebApi_project.hostProc
             Tab.Add("DB_Conn", DB_connectString);
 
             //aaa();
-            var Tab1 = zzz();
+            var Tab1 = readJson();
 
             return (Tab1);
         }
@@ -81,6 +81,21 @@ namespace WebApi_project.hostProc
             return (xmlDoc);
         }
 
+        Dictionary<string, object> readJson()
+        {
+            Dictionary<string, object> Tab = new Dictionary<string, object>();
+
+            XmlDocument doc = new XmlDocument();
+            string url = "http://localhost/Asp/Test/test_Json.Json";
+            hostWeb h = new hostWeb();
+            string JsonStr = h.GetRequest(url);
+
+
+            object x = JObject.Parse(JsonStr);                              // 文字列をJson形式に
+            object Json = JsonConvert.DeserializeObject(JsonStr);
+            Tab.Add("root", Json);
+            return (Tab);
+        }
 
         void aaa()
         {

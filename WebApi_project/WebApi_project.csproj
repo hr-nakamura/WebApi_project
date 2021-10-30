@@ -225,6 +225,7 @@
     <Content Include="__home\Scripts\jquery.my.webapi.js" />
     <Content Include="__home\WebApi_project_構成.xlsx" />
     <Content Include="_Func\QOSMIO\test.json" />
+    <Content Include="_Func\QOSMIO\test_Json.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Data\iniFile.cs" />

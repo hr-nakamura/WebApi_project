@@ -39,11 +39,11 @@ namespace WebApi_project.hostProc
             Tab.Add("DB_Conn", DB_connectString);
 
             //aaa();
-            var Tab1 = readJson();
+            //var Tab1 = readJson2();
             test();
 
 
-            return (Tab1);
+            return (Tab);
         }
 
         public XmlDocument projectTest2(String Json)
@@ -61,7 +61,7 @@ namespace WebApi_project.hostProc
 
 
 
-        Dictionary<string, object> readJson()
+        Dictionary<string, object> readJson2()
         {
             Dictionary<string, object> Tab = new Dictionary<string, object>();
 
@@ -133,7 +133,38 @@ namespace WebApi_project.hostProc
             lstaaa.Add(aaa2);
 
             string json2 = JsonConvert.SerializeObject(lstaaa);
+
+            element e1 = new element();
+            element e2 = new element();
+            e2.Name = "element2";
+            e1.Name = "element1";
+            e1.Property2 = e2;
+            List<element> Top = new List<element>();
+            Top.Add(e1);
+            //Top.Add(e1);
+
+            string JsonStr = JsonConvert.SerializeObject(e1);
+
+
+            Dictionary<string, object> root = new Dictionary<string, object>();
+            object Json = JsonConvert.DeserializeObject(JsonStr);
+            root.Add("root", Json);
+
+            string rootStr = JsonConvert.SerializeObject(root);
+            XmlDocument xmlDoc1 = JsonConvert.DeserializeXmlNode(rootStr);       // Json文字列をXML　objectに
+
+
             var a = 1;
+
+        }
+        public class element
+        {
+
+            [JsonProperty("element")]
+            public string Name { get; set; }
+
+            [JsonProperty("prop2")]
+            public element Property2 { get; set; }
 
         }
         public class AAA
