@@ -111,7 +111,7 @@ namespace WebApi_project.hostProc
             /*
             {
                 "element":{
-                    "@nme":"ABC",
+                    "@name":"ABC",
 	　　            "element":[
                               {
                               "@name":"XYZ",

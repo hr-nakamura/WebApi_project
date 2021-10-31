@@ -40,10 +40,10 @@ namespace WebApi_project.hostProc
 
             //aaa();
             //var Tab1 = readJson2();
-            test();
+            var Tab1 = test();
 
 
-            return (Tab);
+            return (Tab1);
         }
 
         public XmlDocument projectTest2(String Json)
@@ -113,7 +113,7 @@ namespace WebApi_project.hostProc
             return (root);
         }
 
-        void test()
+        Dictionary<string, object> test()
         {
             AAA aaa = new AAA();
             aaa.Property1 = 100;
@@ -136,14 +136,23 @@ namespace WebApi_project.hostProc
 
             element e1 = new element();
             element e2 = new element();
-            e2.Name = "element2";
-            e1.Name = "element1";
-            e1.Property2 = e2;
+            name n1 = new name();
+            text t1 = new text();
+
+            n1.Name1 = "abc";
+            t1.Text1 = "xyz";
+            //e2.Name = "element2";
+            e1.Name = n1;   // "element1";
+            e1.Text = t1;
+
+            //e1.NameX = "abc";
+            //e1.Property2 = e2;
             List<element> Top = new List<element>();
             Top.Add(e1);
             //Top.Add(e1);
 
             string JsonStr = JsonConvert.SerializeObject(e1);
+            Debug.Write(JsonStr);
 
 
             Dictionary<string, object> root = new Dictionary<string, object>();
@@ -155,16 +164,32 @@ namespace WebApi_project.hostProc
 
 
             var a = 1;
+            return (root);
+
+        }
+        public class name
+        {
+            [JsonProperty("@name")]
+            public string Name1 { get; set; }
+
+        }
+        public class text
+        {
+            [JsonProperty("#text")]
+            public string Text1 { get; set; }
 
         }
         public class element
         {
 
             [JsonProperty("element")]
-            public string Name { get; set; }
+            public name Name { get; set; }
+            public text Text { get; set; }
 
-            [JsonProperty("prop2")]
-            public element Property2 { get; set; }
+            //[JsonProperty("@name")]
+            //public name NameX { get; set; }
+            //[JsonProperty("prop2")]
+            //public element Property2 { get; set; }
 
         }
         public class AAA
