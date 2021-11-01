@@ -62,7 +62,7 @@ namespace WebApi_project.hostProc
             Tab.Add("methodName", methodName);
             Tab.Add("DB_Conn", DB_connectString);
 
-            //aaa();
+            aaa();
             var Tab1 = readJson();
 
             return (Tab1);
@@ -100,8 +100,8 @@ namespace WebApi_project.hostProc
         void aaa()
         {
             string xmlStr = "<root>";
-                xmlStr += "<element name='top1'><element1 name='XYZ'><data m='0'>AAA</data><data m='1'>AAA</data><data m='2'>AAA</data></element1><element1 name='XYZ'><data m='0'>AAA</data><data m='1'>AAA</data><data m='2'>AAA</data></element1><element1 name='XYZ'><data m='0'>AAA</data><data m='1'>AAA</data><data m='2'>AAA</data></element1></element>";
-                xmlStr += "<element name='top2'><element1 name='XYZ'><data m='0'>AAA</data><data m='1'>AAA</data><data m='2'>AAA</data></element1><element1 name='XYZ'><data m='0'>AAA</data><data m='1'>AAA</data><data m='2'>AAA</data></element1><element1 name='XYZ'><data m='0'>AAA</data><data m='1'>AAA</data><data m='2'>AAA</data></element1></element>";
+                xmlStr += "<element name='top1'><element name='月'><data m='0'>AAA</data><data m='1'>AAA</data><data m='2'>AAA</data></element><element name='月'><data m='0'>AAA</data><data m='1'>AAA</data><data m='2'>AAA</data></element><element name='XYZ'><data m='0'>AAA</data><data m='1'>AAA</data><data m='2'>AAA</data></element></element>";
+                xmlStr += "<element name='top2'><element name='月'><data m='0'>AAA</data><data m='1'>AAA</data><data m='2'>AAA</data></element><element name='月'><data m='0'>AAA</data><data m='1'>AAA</data><data m='2'>AAA</data></element><element name='XYZ'><data m='0'>AAA</data><data m='1'>AAA</data><data m='2'>AAA</data></element></element>";
                 xmlStr += "</root>";
 
             XmlDocument xmlDoc = new XmlDocument();

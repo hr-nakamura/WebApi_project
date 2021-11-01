@@ -115,43 +115,65 @@ namespace WebApi_project.hostProc
 
         Dictionary<string, object> test()
         {
-            AAA aaa = new AAA();
-            aaa.Property1 = 100;
-            aaa.Property2 = "xxx";
-            string json1 = JsonConvert.SerializeObject(aaa);
+            //AAA aaa = new AAA();
+            //aaa.Property1 = 100;
+            //aaa.Property2 = "xxx";
+            //string JsonStr1 = JsonConvert.SerializeObject(aaa);
+
+            //Dictionary<string, object> root1 = new Dictionary<string, object>();
+            //object Json1 = JsonConvert.DeserializeObject(JsonStr1);
+            //root1.Add("root", Json1);
+
+            //string rootStr1 = JsonConvert.SerializeObject(root1);
+            //XmlDocument xmlDoc1 = JsonConvert.DeserializeXmlNode(rootStr1);       // Json文字列をXML　objectに
+
+            //====================================
 
             AAA aaa1 = new AAA();
             AAA aaa2 = new AAA();
-            aaa1.Property1 = 100;
-            aaa1.Property2 = "xxx";
-            aaa2.Property1 = 200;
-            aaa2.Property2 = "yyy";
-            aaa1.Property3 = aaa2;
+            //aaa1.Property1 = 100;
+            //aaa1.Property2 = "xxx";
+            //aaa2.Property1 = 200;
+            //aaa2.Property2 = "2-yyy";
+            aaa1.Sub = aaa2;
 
             List<AAA> lstaaa = new List<AAA>();
             lstaaa.Add(aaa1);
-            lstaaa.Add(aaa2);
+            //lstaaa.Add(aaa2);
+            string JsonStr2 = JsonConvert.SerializeObject(lstaaa);
 
-            string json2 = JsonConvert.SerializeObject(lstaaa);
+            Dictionary<string, object> root2 = new Dictionary<string, object>();
+            object Json2 = JsonConvert.DeserializeObject(JsonStr2);
+            root2.Add("root", Json2);
+
+            string rootStr2 = JsonConvert.SerializeObject(root2);
+            XmlDocument xmlDoc2 = JsonConvert.DeserializeXmlNode(rootStr2);       // Json文字列をXML　objectに
+
+
+            //==================================
 
             element e1 = new element();
             element e2 = new element();
             name n1 = new name();
+            name n2 = new name();
             text t1 = new text();
 
-            n1.Name1 = "abc";
-            t1.Text1 = "xyz";
-            //e2.Name = "element2";
-            e1.Name = n1;   // "element1";
-            e1.Text = t1;
+            n1.attr_s = "abc";
+            e1.attr_o = n1;
 
-            //e1.NameX = "abc";
-            //e1.Property2 = e2;
+
+            List<element> l1 = new List<element>() { e2, e2 };
+
+            e1.Elem = new List<element>();
+            e1.Elem.Add(e2);
+
+
+
             List<element> Top = new List<element>();
             Top.Add(e1);
             //Top.Add(e1);
 
-            string JsonStr = JsonConvert.SerializeObject(e1);
+            string JsonStr = JsonConvert.SerializeObject(Top);
             Debug.Write(JsonStr);
 
 
@@ -160,7 +182,7 @@ namespace WebApi_project.hostProc
             root.Add("root", Json);
 
             string rootStr = JsonConvert.SerializeObject(root);
-            XmlDocument xmlDoc1 = JsonConvert.DeserializeXmlNode(rootStr);       // Json文字列をXML　objectに
+            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(rootStr);       // Json文字列をXML　objectに
 
 
             var a = 1;
@@ -170,20 +192,35 @@ namespace WebApi_project.hostProc
         public class name
         {
             [JsonProperty("@name")]
-            public string Name1 { get; set; }
+            public string attr_s { get; set; }
 
         }
         public class text
         {
             [JsonProperty("#text")]
-            public string Text1 { get; set; }
+            public string value { get; set; }
 
         }
         public class element
         {
 
             [JsonProperty("element")]
-            public name Name { get; set; }
+            public name attr_o { get; set; }
+
+            [JsonProperty("element2")]
+            public List<element> Elem { get; set; }
+
+            //[JsonProperty("text")]
+            //public text value { get; set; }
+
+
+
+        }
+        public class d_element
+        {
+
+            [JsonProperty("element")]
+            public name attr { get; set; }
             public text Text { get; set; }
 
             //[JsonProperty("@name")]
@@ -194,16 +231,18 @@ namespace WebApi_project.hostProc
         }
         public class AAA
         {
-            [JsonProperty("prop1")]
-            public int Property1 { get; set; }
-            [JsonProperty("prop2")]
-            public string Property2 { get; set; }
-           [JsonProperty("prop3")]
-            public AAA Property3 { get; set; }
+            //[JsonProperty("prop1")]
+            //public int Property1 { get; set; }
+
+            //[JsonProperty("prop2")]
+            //public string Property2 { get; set; }
+
+            [JsonProperty("element")]
+            public AAA Sub { get; set; }
         }
         public class Data
         {
-            List<string> mData { get; set; }
+               List<string> mData { get; set; }
         }
         public class Sample
         {
@@ -214,7 +253,7 @@ namespace WebApi_project.hostProc
         {
             Sample key { get; set; }
         }
-        public List<Sample> list;
+        public List<Sample> list { get; set; }
 
         public class Info1
         {

@@ -189,11 +189,11 @@
     <Content Include="__home\debug\jquery.my.debug.js" />
     <Content Include="__home\images\bg00.gif" />
     <Content Include="__home\images\EM.png" />
-    <Content Include="__home\index5.html" />
+    <Content Include="__home\work\index5.html" />
     <Content Include="__home\index.html" />
-    <Content Include="__home\index_1.html" />
-    <Content Include="__home\index_2.html" />
-    <Content Include="__home\memo.txt" />
+    <Content Include="__home\work\index_1.html" />
+    <Content Include="__home\work\index_2.html" />
+    <Content Include="__home\work\memo.txt" />
     <Content Include="__home\menu.xml" />
     <Content Include="__home\Scripts\cmn.js" />
     <Content Include="__home\Scripts\encoding.js" />
@@ -219,11 +219,11 @@
     <Content Include="__home\Util\viewXML\viewXmlWindow.js" />
     <Content Include="__home\Util\viewValue.html" />
     <Content Include="__home\debug\debug.ashx" />
-    <Content Include="__home\ajax.xlsx" />
+    <Content Include="__home\work\ajax.xlsx" />
     <Content Include="__home\Util\viewJson-edge\jquery.json-viewer.js" />
-    <Content Include="__home\json.json" />
+    <Content Include="__home\work\json.json" />
     <Content Include="__home\Scripts\jquery.my.webapi.js" />
-    <Content Include="__home\WebApi_project_構成.xlsx" />
+    <Content Include="__home\work\WebApi_project_構成.xlsx" />
     <Content Include="_Func\QOSMIO\test.json" />
     <Content Include="_Func\QOSMIO\test_Json.json" />
   </ItemGroup>
