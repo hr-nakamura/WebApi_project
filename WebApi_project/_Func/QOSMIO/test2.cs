@@ -160,14 +160,15 @@ namespace WebApi_project.hostProc
 
             n1.attr_s = "abc";
             e1.attr_o = n1;
-
-
-            List<element> l1 = new List<element>() { e2, e2 };
+            aaa2.Property1 = 123;
+            e1.Sub = t1;
+/*
+ List<element> l1 = new List<element>() { e2 };
 
             e1.Elem = new List<element>();
             e1.Elem.Add(e2);
 
-
+            */
 
             List<element> Top = new List<element>();
             Top.Add(e1);
@@ -206,9 +207,12 @@ namespace WebApi_project.hostProc
 
             [JsonProperty("element")]
             public name attr_o { get; set; }
-
             [JsonProperty("element2")]
-            public List<element> Elem { get; set; }
+            public text Sub { get; set; }
+
+            //[JsonProperty("element2")]
+            //public List<element> Elem { get; set; }
+
 
             //[JsonProperty("text")]
             //public text value { get; set; }
@@ -231,8 +235,8 @@ namespace WebApi_project.hostProc
         }
         public class AAA
         {
-            //[JsonProperty("prop1")]
-            //public int Property1 { get; set; }
+            [JsonProperty("prop1")]
+            public int Property1 { get; set; }
 
             //[JsonProperty("prop2")]
             //public string Property2 { get; set; }
