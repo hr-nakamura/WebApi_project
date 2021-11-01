@@ -2,7 +2,6 @@
 using System.Web;
 using System.Xml;
 using System.Reflection;
-using Newtonsoft.Json;
 using System.Text;
 using System.Data.SqlClient;
 using System.Collections.Generic;
@@ -10,7 +9,11 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Json;
 using System.Xml.Linq;
+
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 using WebApi_project.Models;
 
@@ -162,6 +165,8 @@ namespace WebApi_project.hostProc
             e1.attr_o = n1;
             //aaa2.Property1 = 123;
             //e1.Sub = t1;
+            //(JSONObject)e1.put("AAA", "XXX");
+            //JsonObject jso = new JsonObject();
 
             /*
              List<element> l1 = new List<element>() { e2 };
@@ -185,12 +190,29 @@ namespace WebApi_project.hostProc
 
             string rootStr = JsonConvert.SerializeObject(root);
             XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(rootStr);       // Json文字列をXML　objectに
+            //=========================================
+            //List<Ramen> ramen = new List<Ramen>();
+            //ramen.Add(new Ramen { Name = "Ramen", Price = 500 });
+            //ramen.Add(new Ramen { Name = "Miso Ramen", Price = 600 });
 
+            //string jsonStrX = System.Text.Json.JsonSerializer.Serialize(ramen);
+
+            //Dictionary<string, object> rootX = new Dictionary<string, object>();
+            //object JsonX = JsonConvert.DeserializeObject(jsonStrX);
+            //rootX.Add("root", JsonX);
+            ////string rootStrX = JsonConvert.SerializeObject(rootX);
+            //XmlDocument xmlDocX1 = JsonConvert.DeserializeXmlNode(jsonStrX);       // Json文字列をXML　objectに
 
             var a = 1;
             return (root);
 
         }
+        class Ramen
+        {
+            [JsonPropertyName("name")] public string Name { get; set; }
+            [JsonPropertyName("price")] public int Price { get; set; }
+        }
+
         public class name
         {
             [JsonProperty("@name")]
