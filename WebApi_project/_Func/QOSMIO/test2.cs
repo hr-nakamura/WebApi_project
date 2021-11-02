@@ -168,16 +168,21 @@ namespace WebApi_project.hostProc
             //(JSONObject)e1.put("AAA", "XXX");
             //JsonObject jso = new JsonObject();
 
-            /*
-             List<element> l1 = new List<element>() { e2 };
 
-                        e1.Elem = new List<element>();
-                        e1.Elem.Add(e2);
+            //List<element> l1 = new List<element>() { e2 };
 
-                        */
+            //e1.Elem = new List<element>();
+            //e1.Elem.Add(e2);
 
-            List<element> Top = new List<element>();
-            Top.Add(e1);
+            JObject o = new JObject{ { "#text", "world" } };
+
+            List<object> Top = new List<object>();
+
+            List<Ramen> ramen = new List<Ramen>();
+            ramen.Add(new Ramen { @Name = "Ramen", Price = 500 });
+            ramen.Add(new Ramen { @Name = "Miso Ramen", Price = 600 });
+            //List<element> Top = new List<element>();
+            Top.Add(ramen);
             //Top.Add(e1);
 
             string JsonStr = JsonConvert.SerializeObject(Top);
@@ -209,8 +214,11 @@ namespace WebApi_project.hostProc
         }
         class Ramen
         {
-            [JsonPropertyName("name")] public string Name { get; set; }
-            [JsonPropertyName("price")] public int Price { get; set; }
+            [JsonPropertyName("@name")]
+            public string Name { get; set; }
+            
+            [JsonPropertyName("price")]
+            public int Price { get; set; }
         }
 
         public class name
