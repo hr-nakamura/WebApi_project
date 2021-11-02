@@ -70,6 +70,8 @@
                 click: menu_click
             });
             $("iframe.iframe_content").frame();
+
+            user_mode = $(".user_mode").value;
         }
         function join_menuData(menu_xml, menu_xml2) {
             var root = $(menu_xml).find("root");
@@ -213,8 +215,8 @@
         <tbody>
             <tr>
                 <td>
-                    <input type="radio" class="user_mode" name="user_mode" value="json" checked>Json
-                    <input type="radio" class="user_mode" name="user_mode" value="xml">XML
+                    <input type="radio" class="user_mode" name="user_mode" value="json" >Json
+                    <input type="radio" class="user_mode" name="user_mode" value="xml" checked>XML
 
                 </td>
             </tr>
