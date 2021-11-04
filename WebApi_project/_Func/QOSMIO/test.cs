@@ -100,8 +100,8 @@ namespace WebApi_project.hostProc
         void aaa()
         {
             string xmlStr = "<root>";
-                xmlStr += "<element name='top1'><element name='月'><data m='0'>AAA</data><data m='1'>AAA</data><data m='2'>AAA</data></element><element name='月'><data m='0'>AAA</data><data m='1'>AAA</data><data m='2'>AAA</data></element><element name='XYZ'><data m='0'>AAA</data><data m='1'>AAA</data><data m='2'>AAA</data></element></element>";
-                xmlStr += "<element name='top2'><element name='月'><data m='0'>AAA</data><data m='1'>AAA</data><data m='2'>AAA</data></element><element name='月'><data m='0'>AAA</data><data m='1'>AAA</data><data m='2'>AAA</data></element><element name='XYZ'><data m='0'>AAA</data><data m='1'>AAA</data><data m='2'>AAA</data></element></element>";
+                xmlStr += "<element name='販管費'><element name='客先１'><element name='月'><data m='0'>AAA</data><data m='1'>AAA</data><data m='2'>AAA</data></element><element name='月'><data m='0'>AAA</data><data m='1'>AAA</data><data m='2'>AAA</data></element><element name='XYZ'><data m='0'>AAA</data><data m='1'>AAA</data><data m='2'>AAA</data></element></element></element>";
+                xmlStr += "<element name='原価'><element name='客先２'><element name='月'><data m='0'>AAA</data><data m='1'>AAA</data><data m='2'>AAA</data></element><element name='月'><data m='0'>AAA</data><data m='1'>AAA</data><data m='2'>AAA</data></element><element name='XYZ'><data m='0'>AAA</data><data m='1'>AAA</data><data m='2'>AAA</data></element></element></element>";
                 xmlStr += "</root>";
 
             XmlDocument xmlDoc = new XmlDocument();

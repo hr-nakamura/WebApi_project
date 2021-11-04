@@ -120,7 +120,7 @@ namespace WebApi_project.hostProc
         }
 
 //        Dictionary<string, object> test()
-            List<object> test()
+        JObject test()
         {
             //AAA aaa = new AAA();
             //aaa.Property1 = 100;
@@ -171,23 +171,36 @@ namespace WebApi_project.hostProc
 
 
 
+            JArray a1 = new JArray { };
 
 
-            JObject o1 = new JObject { { "@text", "world" } };
-            JObject o2 = new JObject { { "#text", "world" } };
+            //JObject o2 = new JObject { { "#text", "world" } };
+            //JObject o2 = new JObject { { "@m", "world" } };
+
+            JArray m2 = new JArray { };
+            for( var x2 = 0; x2 < 4; x2++)
+            {
+                JObject o2 = new JObject { { "@m", x2 } };
+                m2.Add(o2);
+            }
 
             //Dictionary<string, object> Top = new Dictionary<string, object>();
-            List<object> Top = new List<object>();
 
-            List<Ramen> ramen = new List<Ramen>();
-            ramen.Add(new Ramen { @Name = "Ramen", Price = 500 });
-            ramen.Add(new Ramen { @Name = "Miso Ramen", Price = 600 });
-            //List<element> Top = new List<element>();
-            //Top.Add(ramen);
-            Top.Add(o1);
+            //List<Ramen> ramen = new List<Ramen>();
+            //ramen.Add(new Ramen { @Name = "Ramen", Price = 500 });
+            //ramen.Add(new Ramen { @Name = "Miso Ramen", Price = 600 });
 
-            o1.Add("abc",o2);
 
+            JObject o1 = new JObject { { "@name", "world" } };
+            o1.Add("月", m2);
+
+            a1.Add(o1);
+            a1.Add(o1);
+
+            JObject Top = new JObject();
+            Top.Add("element",a1);
+
+            Debug.Write(Top.ToString());
             var a = 1;
             return (Top);
 
