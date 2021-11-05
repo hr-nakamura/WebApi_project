@@ -18,7 +18,7 @@ using DebugHost;
 
 namespace WebApi_project.hostProc
 {
-    partial class QOSMIO : hostProc
+    public class QOSMIO : hostProc
     {
         int yymmAdd(int yymm, int mCnt)
         {
@@ -56,16 +56,16 @@ namespace WebApi_project.hostProc
 
             string mName = Environment.MachineName;
 
-            Dictionary<string, string> Tab = new Dictionary<string, string>();
-            Tab.Add("mName", mName);
-            Tab.Add("className", className);
-            Tab.Add("methodName", methodName);
-            Tab.Add("DB_Conn", DB_connectString);
+            //Dictionary<string, string> Tab = new Dictionary<string, string>();
+            //Tab.Add("mName", mName);
+            //Tab.Add("className", className);
+            //Tab.Add("methodName", methodName);
+            //Tab.Add("DB_Conn", DB_connectString);
 
-            xxx();
             var Tab1 = readJson();
-
             return (Tab1);
+
+
         }
 
         public XmlDocument projectTest(String Json)
@@ -79,7 +79,6 @@ namespace WebApi_project.hostProc
             XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr);       // Json文字列をXML　objectに
 
             return (xmlDoc);
-        }
 
         Dictionary<string, object> readJson()
         {
@@ -92,57 +91,52 @@ namespace WebApi_project.hostProc
 
 
             //object x = JObject.Parse(JsonStr);                              // 文字列をJson形式に
-            object Json = JsonConvert.DeserializeObject(JsonStr);
-            JObject elem1 = (JObject)Json;
-            //========================================
+            object Json1 = JsonConvert.DeserializeObject(JsonStr);
+            //JObject elem = (JObject)Json;
+
 
             JObject O_Top = new JObject();
+            //========================================
 
-            JArray A_elem1 = new JArray { };
-            O_Top.Add("element1", A_elem1);
+            CreateJson(O_Top, (JObject)Json);
 
-            foreach (var m1 in elem1)
-            {
-                JObject O_elem1 = new JObject { { "@name", m1.Key } };
-                A_elem1.Add(O_elem1);
-
-                JArray A_elem2 = new JArray { };
-                O_elem1.Add("elemnt2", A_elem2);
-
-                foreach (var m2 in (JObject)m1.Value)
-                {
-                    JObject O_elem2 = new JObject { { "@name", m2.Key } };
-                    A_elem2.Add(O_elem2);
-
-                    JArray A_elem3 = new JArray { };
-                    O_elem2.Add("elemnt3", A_elem3);
-
-                    foreach (var m3 in (JObject)m2.Value)
-                    {
-                        JObject O_elem3 = new JObject { { "@name", m3.Key } };
-                        A_elem3.Add(O_elem3);
-
-                        JArray A_elem4 = new JArray { };
-                        O_elem3.Add("月", A_elem4);
-
-                        for (var c4 = 0; c4 < m3.Value.Count(); c4++)
-                        {
-                            JObject O_elem4 = new JObject { { "@m", c4 }, { "#text", m3.Value[c4] } };
-                            A_elem4.Add(O_elem4);
-                        }
-
-                    }
-
-                }
-            }
-
-
+            //========================================
 
             JObject Top = new JObject();
             Top.Add("全体", O_Top);
 
             Tab.Add("root", Top);
             return (Tab);
+        }
+        }
+        void CreateJson(JObject O_Top, JObject elem)
+        {
+            JArray A_elem = new JArray { };
+            O_Top.Add("element", A_elem);
+            foreach (var m in (JObject)elem)
+            {
+                JObject O_elem = new JObject { { "@name", m.Key } };
+                A_elem.Add(O_elem);
+                if (m.Value.Type.ToString() == "Object")
+                {
+                    CreateJson(O_elem, (JObject)m.Value);
+                }
+                else
+                {
+                    CreateJson(O_elem, (JArray)m.Value);
+                }
+
+            }
+        }
+        void CreateJson(JObject O_Top, JArray elem)
+        {
+            JArray A_elem = new JArray { };
+            O_Top.Add("月", A_elem);
+            for (var c = 0; c < elem.Count(); c++)
+            {
+                JObject O_elem = new JObject { { "@m", c }, { "#text", elem[c] } };
+                A_elem.Add(O_elem);
+            }
         }
 
     }
