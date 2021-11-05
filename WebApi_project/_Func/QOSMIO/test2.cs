@@ -125,22 +125,22 @@ namespace WebApi_project.hostProc
 
 
 
-            JArray a1 = new JArray { };
+            JArray A_elem1 = new JArray { };
             for( var x1 = 0; x1 < 3; x1++)
             {
-                JArray m2 = new JArray { };
+                JArray A_elem2 = new JArray { };
+                JObject O_elem1 = new JObject { { "@name", "world" + x1 }, { "月", A_elem2 } };
+                A_elem1.Add(O_elem1);
+                //o1.Add("月", A_elem2);
                 for (var x2 = 0; x2 < 4; x2++)
                 {
-                    JObject o2 = new JObject { { "@m", x2 }, { "#text", x2 } };
-                    m2.Add(o2);
+                    JObject O_elem2 = new JObject { { "@m", x2 }, { "#text", x2 } };
+                    A_elem2.Add(O_elem2);
                 }
-                JObject o1 = new JObject { { "@name", "world"+x1 } ,{ "月", m2 }  };
-                a1.Add(o1);
-                //o1.Add("月", m2);
             }
 
             JObject Top = new JObject();
-            Top.Add("element",a1);
+            Top.Add("element", A_elem1);
 
             Debug.Write(Top.ToString());
             var a = 1;

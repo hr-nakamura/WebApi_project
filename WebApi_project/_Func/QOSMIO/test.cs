@@ -62,7 +62,7 @@ namespace WebApi_project.hostProc
             Tab.Add("methodName", methodName);
             Tab.Add("DB_Conn", DB_connectString);
 
-            aaa();
+            xxx();
             var Tab1 = readJson();
 
             return (Tab1);
@@ -86,196 +86,66 @@ namespace WebApi_project.hostProc
             Dictionary<string, object> Tab = new Dictionary<string, object>();
 
             XmlDocument doc = new XmlDocument();
-            string url = "http://localhost/Asp/Test/test_Json.Json";
+            string url = "http://localhost/Asp/Test/test.Json";
             hostWeb h = new hostWeb();
             string JsonStr = h.GetRequest(url);
 
 
-            object x = JObject.Parse(JsonStr);                              // 文字列をJson形式に
+            //object x = JObject.Parse(JsonStr);                              // 文字列をJson形式に
             object Json = JsonConvert.DeserializeObject(JsonStr);
-            Tab.Add("root", Json);
-            return (Tab);
-        }
+            JObject elem1 = (JObject)Json;
+            //========================================
 
-        void aaa()
-        {
-            string xmlStr = "<root>";
-                xmlStr += "<element name='販管費'><element name='客先１'><element name='月'><data m='0'>AAA</data><data m='1'>AAA</data><data m='2'>AAA</data></element><element name='月'><data m='0'>AAA</data><data m='1'>AAA</data><data m='2'>AAA</data></element><element name='XYZ'><data m='0'>AAA</data><data m='1'>AAA</data><data m='2'>AAA</data></element></element></element>";
-                xmlStr += "<element name='原価'><element name='客先２'><element name='月'><data m='0'>AAA</data><data m='1'>AAA</data><data m='2'>AAA</data></element><element name='月'><data m='0'>AAA</data><data m='1'>AAA</data><data m='2'>AAA</data></element><element name='XYZ'><data m='0'>AAA</data><data m='1'>AAA</data><data m='2'>AAA</data></element></element></element>";
-                xmlStr += "</root>";
+            JObject O_Top = new JObject();
 
-            XmlDocument xmlDoc = new XmlDocument();
+            JArray A_elem1 = new JArray { };
+            O_Top.Add("element1", A_elem1);
 
-            xmlDoc.LoadXml(xmlStr);
-
-            /*
+            foreach (var m1 in elem1)
             {
-                "element":{
-                    "@name":"ABC",
-	　　            "element":[
-                              {
-                              "@name":"XYZ",
-			　                "data":[
-                                { "@m":"0","#text":"AAA"},
-				                { "@m":"1","#text":"AAA"},
-				                { "@m":"2","#text":"AAA"}
-                                ]
-			                },
-			                {
-                            "@name":"XYZ",
-			　               "data":[
-                                { "@m":"0","#text":"AAA"},
-				                { "@m":"1","#text":"AAA"},
-				                { "@m":"2","#text":"AAA"}
-                                ]
-			                },
-			                {
-                            "@name":"XYZ",
-			　               "data":[
-                                { "@m":"0","#text":"AAA"},
-				                { "@m":"1","#text":"AAA"},
-				                { "@m":"2","#text":"AAA"}
-                                ]
-		            	    }
-		　　　         ]
-	                }
-            }
-*/
+                JObject O_elem1 = new JObject { { "@name", m1.Key } };
+                A_elem1.Add(O_elem1);
 
-            string JsonStr1 = JsonConvert.SerializeXmlNode(xmlDoc);                  // xmlDoc => Json文字列  {"element":{"@id":"123","#text":"aaa"}}
+                JArray A_elem2 = new JArray { };
+                O_elem1.Add("elemnt2", A_elem2);
 
-            string JsonStr = "";
-            JsonStr += "{'root':{element:";
-            JsonStr += "[";
-            JsonStr += "{'@name':'top1','elem1':[]},";
-            JsonStr += "{'@name':'top2','elem1':[]}";
-            JsonStr += "]";
-            JsonStr += "}}";
-
-            XmlDocument xmlDoc1 = JsonConvert.DeserializeXmlNode(JsonStr);          // Json文字列 => xmlDoc
-
-
-
-        }
-
-        Dictionary<string, object> zzz9()
-        {
-            Dictionary<string, object> Tab = new Dictionary<string, object>();
-
-            XmlDocument doc = new XmlDocument();
-            string url = "http://localhost/Project/費用予測/xml/EMG費用状況_JSON.asp?year=2021";
-            hostWeb h = new hostWeb();
-            string JsonStr = h.GetRequest(url);
-
-            object Json = JsonConvert.DeserializeObject(JsonStr);           // 文字列をJson形式に
-
-            Dictionary<string, object> root = new Dictionary<string, object>();
-
-
-            root.Add("root", Json);
-
-            return (root);
-        }
-
-        Dictionary<string, object> zzz()
-        {
-            Dictionary<string, object> Tab = new Dictionary<string, object>();
-
-            XmlDocument doc = new XmlDocument();
-            string url = "http://localhost/Project/費用予測/xml/EMG費用状況_JSON.asp?year=2021";
-            hostWeb h = new hostWeb();
-            string JsonStr = h.GetRequest(url);
-
-
-
-            object x = JObject.Parse(JsonStr);                              // 文字列をJson形式に
-            object Json = JsonConvert.DeserializeObject(JsonStr);           // 文字列をJson形式に
-
-            Newtonsoft.Json.Linq.JObject elem = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(JsonStr);
-
-            Dictionary<string, object> root = new Dictionary<string, object>();
-
-
-            root.Add("root", Json);
-
-
-            foreach (var m1 in elem)
-            {
-                Debug.Write("elem", m1.Key);
-                var elem2 = m1.Value;
-                foreach (var m2 in (JObject)elem2)
+                foreach (var m2 in (JObject)m1.Value)
                 {
-                    if (m2.Key == "名前") continue;
-                    Debug.Write("elem2", m2.Key);
-                    var elem3 = m2.Value;
-                    foreach (var m3 in (JObject)elem3)
-                    {
-                        Debug.Write("elem3", m3.Key);
+                    JObject O_elem2 = new JObject { { "@name", m2.Key } };
+                    A_elem2.Add(O_elem2);
 
-                        for (var m = 0; m < m3.Value.Count(); m++)
+                    JArray A_elem3 = new JArray { };
+                    O_elem2.Add("elemnt3", A_elem3);
+
+                    foreach (var m3 in (JObject)m2.Value)
+                    {
+                        JObject O_elem3 = new JObject { { "@name", m3.Key } };
+                        A_elem3.Add(O_elem3);
+
+                        JArray A_elem4 = new JArray { };
+                        O_elem3.Add("月", A_elem4);
+
+                        for (var c4 = 0; c4 < m3.Value.Count(); c4++)
                         {
-                            Debug.Write("value", m.ToString(), m3.Value[m].ToString());
-                            var a = 1;
+                            JObject O_elem4 = new JObject { { "@m", c4 }, { "#text", m3.Value[c4] } };
+                            A_elem4.Add(O_elem4);
+                            var z1 = m2.Value.Type.ToString();
+                            var z2 = m3.Value.Type.ToString();
                         }
+
                     }
+
                 }
             }
 
-            //Tab.Add("root", JObject.Parse(JsonStr));
-            string jsonStr2 = JsonConvert.SerializeObject(Tab);             // Json形式を文字列に
 
-            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr2);       // Json文字列をXML　objectに
-            return (root);
+
+            JObject Top = new JObject();
+            Top.Add("全体", O_Top);
+
+            Tab.Add("root", Top);
+            return (Tab);
         }
-        void xxx()
-        {
-            Dictionary<string, section> xxxTab = new Dictionary<string, section>();
-            //List<Info> Info2 = new List<Info>(12);
 
-            Info Info = new Info();
-            member men = new member();
-            men.月 = new List<Info>() { Info,Info, Info, Info, Info, Info, Info, Info, Info, Info, Info, Info, };
-
-
-            section sec = new section();
-            sec.名前 = "開発";
-            sec.member = new Dictionary<string, member>();
-            sec.member.Add("451862", men);
-            sec.member["451862"].名前 = "中村";
-            sec.member["451862"].月[0].休職 = "222";
-
-            sec.member.Add("123456", men);
-            sec.member["123456"].名前 = "山田";
-            sec.member["123456"].月[0].休職 = "999";
-
-
-
-
-            xxxTab.Add("グループコード", sec);
-
-            //xxxTab[グループコード]["123456"].月[0].休職;
-            var a = 1;
-
-
-        }
-        public class Info
-        {
-            public string 役職ID { get; set; }
-            public string 役職 { get; set; }
-            public string 社員区分 { get; set; }
-            public string 社籍 { get; set; }
-            public string 休職 { get; set; }
-        }
-        public class member
-        {
-            public string 名前 { get; set; }
-            public List<Info> 月 { get; set; }
-        }
-        public class section
-        {
-            public string 名前 { get; set; }
-            public int 直間 { get; set; }
-            public Dictionary<string, member> member { get; set; }
-        }
     }
 }

@@ -96,7 +96,6 @@ namespace DebugHost
             }
         }
         public static void Note(params string[] args)
-
         {
             string para = "" + string.Join("\t", args) + "";
             Debug.Write_Notepad(para);
@@ -105,6 +104,10 @@ namespace DebugHost
         public static void Plain(string str)
         {
             Debug.Write_Notepad(str);
+        }
+        public static void Json(object Json)
+        {
+            Debug.Write_Notepad(Json.ToString());
         }
 
 
