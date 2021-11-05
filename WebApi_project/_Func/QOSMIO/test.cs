@@ -129,8 +129,6 @@ namespace WebApi_project.hostProc
                         {
                             JObject O_elem4 = new JObject { { "@m", c4 }, { "#text", m3.Value[c4] } };
                             A_elem4.Add(O_elem4);
-                            var z1 = m2.Value.Type.ToString();
-                            var z2 = m3.Value.Type.ToString();
                         }
 
                     }
