@@ -79,7 +79,7 @@ namespace WebApi_project.hostProc
             XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr);       // Json文字列をXML　objectに
 
             return (xmlDoc);
-
+        }
         Dictionary<string, object> readJson()
         {
             Dictionary<string, object> Tab = new Dictionary<string, object>();
@@ -91,7 +91,7 @@ namespace WebApi_project.hostProc
 
 
             //object x = JObject.Parse(JsonStr);                              // 文字列をJson形式に
-            object Json1 = JsonConvert.DeserializeObject(JsonStr);
+            object Json = JsonConvert.DeserializeObject(JsonStr);
             //JObject elem = (JObject)Json;
 
 
@@ -107,7 +107,6 @@ namespace WebApi_project.hostProc
 
             Tab.Add("root", Top);
             return (Tab);
-        }
         }
         void CreateJson(JObject O_Top, JObject elem)
         {
