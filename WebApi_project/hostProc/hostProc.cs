@@ -6,6 +6,9 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Data;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+
 
 using Util;
 using DebugHost;
@@ -136,73 +139,66 @@ namespace WebApi_project.hostProc
             {
             }
         }
-        public XmlDocument Json2Xml(object Tab)
+        public XmlDocument Json2Xml(object Json)
         {
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.CreateXmlDeclaration("1.0", null, null);
 
-            var xmlMain = xmlDoc.CreateProcessingInstruction("xml", "version='1.0' encoding='Shift_JIS'");
-            XmlElement root = xmlDoc.CreateElement("root");
+            JObject O_Top = new JObject();
+
+            CreateJson(O_Top, (JObject)Json);
+
+            JObject Top = new JObject();
+            Top.Add("全体", O_Top);
+
+            JObject root = new JObject();
+            root.Add("root", Top);
+
+            Debug.Json(root);
+            string jsonStr = JsonConvert.SerializeObject(root);             // Json形式を文字列に
+
+            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr);       // Json文字列をXML　objectに
+
+            //XmlDocument xmlDoc = new XmlDocument();
+            XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
+
+            //var xmlMain = xmlDoc.CreateProcessingInstruction("xml", "version='1.0' encoding='Shift_JIS'");
+            //XmlElement root = xmlDoc.CreateElement("root");
 
             var comment = xmlDoc.CreateComment("json data");
-            xmlDoc.AppendChild(xmlMain);
-            xmlDoc.AppendChild(comment);
-            xmlDoc.AppendChild(root);
-
-            var Tab1 = (Dictionary<string,object>)Tab;
-            var data0 = root;
-            foreach (var x1 in Tab1)
-            {
-                XmlElement data1 = xmlDoc.CreateElement("json");
-                //Debug.Write("x1",(x1.Value).GetType().Name);
-                if( (x1.Value).GetType().Name == "String")
-                {
-                    data1.InnerText = (string)x1.Value;
-                    data1.SetAttribute("name", x1.Key);
-                    data0.AppendChild(data1);
-                }
-                else
-                {
-                    var Tab2 = (Dictionary<string, object>)x1.Value;
-                    data1.SetAttribute("name", x1.Key);
-                    data0.AppendChild(data1);
-                    foreach (var x2 in Tab2)
-                    {
-                        XmlElement data2 = xmlDoc.CreateElement(x1.Key);
-                        //Debug.Write("x2", (x2.Value).GetType().Name);
-                        if ((x2.Value).GetType().Name == "String")
-                        {
-                            data2.InnerText = (string)x2.Value;
-                            data2.SetAttribute("name", x2.Key);
-                            data1.AppendChild(data2);
-                        }
-                        else
-                        {
-                            var Tab3 = (Dictionary<string, object>)x2.Value;
-                            data2.SetAttribute("name", x2.Key);
-                            root.AppendChild(data2);
-                            foreach (var x3 in Tab3)
-                            {
-                                XmlElement data3= xmlDoc.CreateElement(x2.Key);
-                                //Debug.Write("x3", (x3.Value).GetType().Name);
-                                if ((x3.Value).GetType().Name == "String")
-                                {
-                                    data3.InnerText = (string)x3.Value;
-                                    data3.SetAttribute("name", x3.Key);
-                                    data2.AppendChild(data3);
-                                }
-                                else
-                                {
-
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            xmlDoc.PrependChild(comment);
+            xmlDoc.PrependChild(declaration);
 
             return (xmlDoc);
         }
+        void CreateJson(JObject O_Top, JObject elem)
+        {
+            JArray A_elem = new JArray { };
+            O_Top.Add("element", A_elem);
+            foreach (var m in (JObject)elem)
+            {
+                JObject O_elem = new JObject { { "@name", m.Key } };
+                A_elem.Add(O_elem);
+                if (m.Value.Type.ToString() == "Object")
+                {
+                    CreateJson(O_elem, (JObject)m.Value);
+                }
+                else
+                {
+                    CreateJson(O_elem, (JArray)m.Value);
+                }
+
+            }
+        }
+        void CreateJson(JObject O_Top, JArray elem)
+        {
+            JArray A_elem = new JArray { };
+            O_Top.Add("月", A_elem);
+            for (var c = 0; c < elem.Count(); c++)
+            {
+                JObject O_elem = new JObject { { "@m", c }, { "#text", elem[c] } };
+                A_elem.Add(O_elem);
+            }
+        }
+
         public XmlDocument methodList()
         {
             XmlDocument xmlDoc = new XmlDocument();

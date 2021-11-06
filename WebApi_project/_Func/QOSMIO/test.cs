@@ -62,7 +62,7 @@ namespace WebApi_project.hostProc
             //Tab.Add("methodName", methodName);
             //Tab.Add("DB_Conn", DB_connectString);
 
-            var Tab1 = readJson();
+            var Tab1 = readJson("http://localhost/Asp/Test/test.Json");
             return (Tab1);
 
 
@@ -74,68 +74,20 @@ namespace WebApi_project.hostProc
 
             var Tab = json_projectTest("");
 
-            string jsonStr = JsonConvert.SerializeObject(Tab);             // Json形式を文字列に
-
-            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr);       // Json文字列をXML　objectに
+            XmlDocument xmlDoc = Json2Xml(Tab);
 
             return (xmlDoc);
         }
-        Dictionary<string, object> readJson()
+        object readJson(string url)
         {
-            Dictionary<string, object> Tab = new Dictionary<string, object>();
-
-            XmlDocument doc = new XmlDocument();
-            string url = "http://localhost/Asp/Test/test.Json";
+            //string url = "http://localhost/Asp/Test/test.Json";
             hostWeb h = new hostWeb();
             string JsonStr = h.GetRequest(url);
 
-
             //object x = JObject.Parse(JsonStr);                              // 文字列をJson形式に
             object Json = JsonConvert.DeserializeObject(JsonStr);
-            //JObject elem = (JObject)Json;
 
-
-            JObject O_Top = new JObject();
-            //========================================
-
-            CreateJson(O_Top, (JObject)Json);
-
-            //========================================
-
-            JObject Top = new JObject();
-            Top.Add("全体", O_Top);
-
-            Tab.Add("root", Top);
-            return (Tab);
-        }
-        void CreateJson(JObject O_Top, JObject elem)
-        {
-            JArray A_elem = new JArray { };
-            O_Top.Add("element", A_elem);
-            foreach (var m in (JObject)elem)
-            {
-                JObject O_elem = new JObject { { "@name", m.Key } };
-                A_elem.Add(O_elem);
-                if (m.Value.Type.ToString() == "Object")
-                {
-                    CreateJson(O_elem, (JObject)m.Value);
-                }
-                else
-                {
-                    CreateJson(O_elem, (JArray)m.Value);
-                }
-
-            }
-        }
-        void CreateJson(JObject O_Top, JArray elem)
-        {
-            JArray A_elem = new JArray { };
-            O_Top.Add("月", A_elem);
-            for (var c = 0; c < elem.Count(); c++)
-            {
-                JObject O_elem = new JObject { { "@m", c }, { "#text", elem[c] } };
-                A_elem.Add(O_elem);
-            }
+            return (Json);
         }
 
     }
