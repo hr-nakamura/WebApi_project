@@ -74,7 +74,7 @@ namespace WebApi_project.hostProc
 
             var Tab = json_projectTest("");
 
-            XmlDocument xmlDoc = Json2Xml(Tab);
+            XmlDocument xmlDoc = Json2Xml_Tree(Tab);
 
             return (xmlDoc);
         }

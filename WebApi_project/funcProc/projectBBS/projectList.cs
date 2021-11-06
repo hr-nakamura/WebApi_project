@@ -43,7 +43,7 @@ namespace WebApi_project.hostProc
             //var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
 
             object json_data = json_projectEdit(Json);
-            XmlDocument xmlDoc = Json2Xml(json_data);
+            XmlDocument xmlDoc = Json2Xml_Tree(json_data);
             //XmlDocument xmlDoc = new XmlDocument();
 
             //var x = new projectBBS();

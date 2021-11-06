@@ -139,12 +139,11 @@ namespace WebApi_project.hostProc
             {
             }
         }
-        public XmlDocument Json2Xml(object Json)
+        public XmlDocument Json2Xml_Info(object Json)
         {
-
             JObject O_Top = new JObject();
 
-            CreateJson(O_Top, (JObject)Json);
+            CreateJson_Tree(O_Top, (JObject)Json);
 
             JObject Top = new JObject();
             Top.Add("全体", O_Top);
@@ -169,7 +168,37 @@ namespace WebApi_project.hostProc
 
             return (xmlDoc);
         }
-        void CreateJson(JObject O_Top, JObject elem)
+        public XmlDocument Json2Xml_Tree(object Json)
+        {
+
+            JObject O_Top = new JObject();
+
+            CreateJson_Tree(O_Top, (JObject)Json);
+
+            JObject Top = new JObject();
+            Top.Add("全体", O_Top);
+
+            JObject root = new JObject();
+            root.Add("root", Top);
+
+            Debug.Json(root);
+            string jsonStr = JsonConvert.SerializeObject(root);             // Json形式を文字列に
+
+            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr,"root");       // Json文字列をXML　objectに
+
+            //XmlDocument xmlDoc = new XmlDocument();
+            XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
+
+            //var xmlMain = xmlDoc.CreateProcessingInstruction("xml", "version='1.0' encoding='Shift_JIS'");
+            //XmlElement root = xmlDoc.CreateElement("root");
+
+            var comment = xmlDoc.CreateComment("json data");
+            xmlDoc.PrependChild(comment);
+            xmlDoc.PrependChild(declaration);
+
+            return (xmlDoc);
+        }
+        private void CreateJson_Tree(JObject O_Top, JObject elem)
         {
             JArray A_elem = new JArray { };
             O_Top.Add("element", A_elem);
@@ -179,19 +208,19 @@ namespace WebApi_project.hostProc
                 A_elem.Add(O_elem);
                 if (m.Value.Type.ToString() == "Object")
                 {
-                    CreateJson(O_elem, (JObject)m.Value);
+                    CreateJson_Tree(O_elem, (JObject)m.Value);
                 }
                 else
                 {
-                    CreateJson(O_elem, (JArray)m.Value);
+                    CreateJson_Tree(O_elem, (JArray)m.Value);
                 }
 
             }
         }
-        void CreateJson(JObject O_Top, JArray elem)
+        private void CreateJson_Tree(JObject O_Top, JArray elem)
         {
             JArray A_elem = new JArray { };
-            O_Top.Add("月", A_elem);
+            O_Top.Add("data", A_elem);
             for (var c = 0; c < elem.Count(); c++)
             {
                 JObject O_elem = new JObject { { "@m", c }, { "#text", elem[c] } };
