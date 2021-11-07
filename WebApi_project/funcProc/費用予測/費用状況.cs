@@ -30,14 +30,14 @@ namespace WebApi_project.hostProc
             Info.Add("DB_Conn", DB_connectString);
 
 
-            string url = "http://kansa.in.eandm.co.jp/Project/費用予測/xml/EMG費用状況_JSON.asp?year=2021";
+            string url = "http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp?year=2021";
             hostWeb h = new hostWeb();
             string jsonStr = h.GetRequest(url);
 
             Tab.Add("Info", (object)Info);
             Tab.Add("data", JObject.Parse(jsonStr));
 
-            return (Tab);
+            return (JObject.Parse(jsonStr));
         }
         public XmlDocument 費用状況(String Json)
         {
@@ -49,7 +49,8 @@ namespace WebApi_project.hostProc
             string JsonStr = JsonConvert.SerializeObject(root);
 
 
-            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(JsonStr);
+            //XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(JsonStr);
+            XmlDocument xmlDoc = Json2Xml_Tree(o_json);
 
             return (xmlDoc);
         }

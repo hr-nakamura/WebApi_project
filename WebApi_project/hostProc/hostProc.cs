@@ -178,11 +178,11 @@ namespace WebApi_project.hostProc
             JObject Top = new JObject();
             Top.Add("全体", O_Top);
 
-            JObject root = new JObject();
-            root.Add("root", Top);
+            //JObject root = new JObject();
+            //root.Add("root", Top);
 
-            Debug.Json(root);
-            string jsonStr = JsonConvert.SerializeObject(root);             // Json形式を文字列に
+            //Debug.Json(root);
+            string jsonStr = JsonConvert.SerializeObject(Top);             // Json形式を文字列に
 
             XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr,"root");       // Json文字列をXML　objectに
 
@@ -194,6 +194,7 @@ namespace WebApi_project.hostProc
 
             var comment = xmlDoc.CreateComment("json data");
             xmlDoc.PrependChild(comment);
+
             xmlDoc.PrependChild(declaration);
 
             return (xmlDoc);
