@@ -2,10 +2,11 @@
 using System.Web;
 using System.Xml;
 using System.Reflection;
-using Newtonsoft.Json;
 using System.Text;
 using System.Data.SqlClient;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 using DebugHost;
 
@@ -43,7 +44,22 @@ namespace WebApi_project.hostProc
             //var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
 
             object json_data = json_projectEdit(Json);
-            XmlDocument xmlDoc = Json2Xml_Tree(json_data);
+            JObject JTop = Json_Tree(json_data);
+            string jsonStr = JsonConvert.SerializeObject(JTop);             // Json形式を文字列に
+            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr, "root");       // Json文字列をXML　objectに
+
+            ////XmlDocument xmlDoc = new XmlDocument();
+            ////var xmlMain = xmlDoc.CreateProcessingInstruction("xml", "version='1.0' encoding='Shift_JIS'");
+            ////XmlElement root = xmlDoc.CreateElement("root");
+
+            XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
+            var comment = xmlDoc.CreateComment("json data");
+            xmlDoc.PrependChild(comment);
+            xmlDoc.PrependChild(declaration);
+
+
+
+
             //XmlDocument xmlDoc = new XmlDocument();
 
             //var x = new projectBBS();

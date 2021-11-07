@@ -139,7 +139,7 @@ namespace WebApi_project.hostProc
             {
             }
         }
-        public XmlDocument Json2Xml_Info(object Json)
+        public JObject Jsonl_Info(object Json)
         {
             JObject O_Top = new JObject();
 
@@ -166,9 +166,9 @@ namespace WebApi_project.hostProc
             xmlDoc.PrependChild(comment);
             xmlDoc.PrependChild(declaration);
 
-            return (xmlDoc);
+            return (O_Top);
         }
-        public XmlDocument Json2Xml_Tree(object Json)
+        public JObject Json_Tree(object Json)
         {
 
             JObject O_Top = new JObject();
@@ -178,26 +178,7 @@ namespace WebApi_project.hostProc
             JObject Top = new JObject();
             Top.Add("全体", O_Top);
 
-            //JObject root = new JObject();
-            //root.Add("root", Top);
-
-            //Debug.Json(root);
-            string jsonStr = JsonConvert.SerializeObject(Top);             // Json形式を文字列に
-
-            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr,"root");       // Json文字列をXML　objectに
-
-            //XmlDocument xmlDoc = new XmlDocument();
-            XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
-
-            //var xmlMain = xmlDoc.CreateProcessingInstruction("xml", "version='1.0' encoding='Shift_JIS'");
-            //XmlElement root = xmlDoc.CreateElement("root");
-
-            var comment = xmlDoc.CreateComment("json data");
-            xmlDoc.PrependChild(comment);
-
-            xmlDoc.PrependChild(declaration);
-
-            return (xmlDoc);
+            return (O_Top);
         }
         private void CreateJson_Tree(JObject O_Top, JObject elem)
         {

@@ -62,7 +62,8 @@ namespace WebApi_project.hostProc
             //Tab.Add("methodName", methodName);
             //Tab.Add("DB_Conn", DB_connectString);
 
-            var Tab1 = readJson("http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp");
+            //var Tab1 = readJson("http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp");
+            var Tab1 = readJson("http://localhost/Asp/Test/test.json");
             return (Tab1);
 
 
@@ -74,13 +75,32 @@ namespace WebApi_project.hostProc
 
             var Tab = json_projectTest("");
 
-            XmlDocument xmlDoc = Json2Xml_Tree(Tab);
+            JObject O_Top = Json_Tree(Tab);
+
+            JObject O_Inf = new JObject();
+
+            JObject Top = new JObject();
+            Top.Add("情報", O_Inf);
+            Top.Add("全体", O_Top);
+
+
+            string jsonStr = JsonConvert.SerializeObject(Top);             // Json形式を文字列に
+            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr, "root");       // Json文字列をXML　objectに
+
+            ////XmlDocument xmlDoc = new XmlDocument();
+            ////var xmlMain = xmlDoc.CreateProcessingInstruction("xml", "version='1.0' encoding='Shift_JIS'");
+            ////XmlElement root = xmlDoc.CreateElement("root");
+
+            XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
+            var comment = xmlDoc.CreateComment("json data");
+            xmlDoc.PrependChild(comment);
+            xmlDoc.PrependChild(declaration);
 
             return (xmlDoc);
         }
         object readJson(string url)
         {
-            //string url = "http://localhost/Asp/Test/test.Json";
+            //string url = "http://localhost/Asp/Test/test.json";
             hostWeb h = new hostWeb();
             string JsonStr = h.GetRequest(url);
 
