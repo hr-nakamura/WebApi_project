@@ -62,8 +62,8 @@ namespace WebApi_project.hostProc
             //Tab.Add("methodName", methodName);
             //Tab.Add("DB_Conn", DB_connectString);
 
-            //var Tab1 = readJson("http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp");
-            var Tab1 = readJson("http://localhost/Asp/Test/test.json");
+            var Tab1 = readJson("http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp");
+            //var Tab1 = readJson("http://localhost/Asp/Test/test.json");
             return (Tab1);
 
 
