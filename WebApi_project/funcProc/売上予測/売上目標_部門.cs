@@ -31,25 +31,25 @@ namespace WebApi_project.hostProc
             Info.Add("DB_Conn", DB_connectString);
 
 
-            string url = "http://kansa.in.eandm.co.jp/Project/売上予測/xml/売上目標_部門_JSON.asp?year=2021";
+            string url = "http://kansa.in.eandm.co.jp/Project/売上予測/json/売上目標_部門_JSON.asp?year=2021";
             hostWeb h = new hostWeb();
             string jsonStr = h.GetRequest(url);
 
-            Tab.Add("Info", (object)Info);
-            Tab.Add("data", JObject.Parse(jsonStr));
-
-            return (Tab);
+            return (JObject.Parse(jsonStr));
         }
         public XmlDocument 売上目標_部門(String Json)
         {
-            Dictionary<string, object> root = new Dictionary<string, object>();
-
             object o_json = json_売上目標_部門(Json);
-            root.Add("root", (object)o_json);
 
-            string JsonStr = JsonConvert.SerializeObject(root);
+            JObject O_Top = Json_Tree(o_json);
+            JObject O_Inf = getStat();
 
-            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(JsonStr);
+            JObject Top = new JObject();
+            Top.Add("Info", O_Inf);
+            Top.Add("Data", O_Top);
+
+            string JsonStr = JsonConvert.SerializeObject(Top);
+            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(JsonStr,"root");
 
             return (xmlDoc);
         }

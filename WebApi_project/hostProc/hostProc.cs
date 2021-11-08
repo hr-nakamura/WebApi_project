@@ -8,6 +8,7 @@ using System.Data;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using System.Runtime.CompilerServices;
 
 
 using Util;
@@ -186,17 +187,28 @@ namespace WebApi_project.hostProc
             O_Top.Add("element", A_elem);
             foreach (var m in (JObject)elem)
             {
+                if (m.Value.Type.ToString() == "String") continue;
                 JObject O_elem = new JObject { { "@name", m.Key } };
+                /*
+                JObject O_elem;
+                if (m.Value.Type.ToString() == "String")
+                {
+                    O_elem = new JObject { { "@name", m.Key }, { "#text", m.Value } };
+                }
+                else
+                {
+                    O_elem = new JObject { { "@name", m.Key } };
+                }
+                */
                 A_elem.Add(O_elem);
                 if (m.Value.Type.ToString() == "Object")
                 {
                     CreateJson_Tree(O_elem, (JObject)m.Value);
                 }
-                else
+                else if (m.Value.Type.ToString() == "Array")
                 {
                     CreateJson_Tree(O_elem, (JArray)m.Value);
                 }
-
             }
         }
         private void CreateJson_Tree(JObject O_Top, JArray elem)
@@ -209,7 +221,27 @@ namespace WebApi_project.hostProc
                 A_elem.Add(O_elem);
             }
         }
+        public JObject getStat(
+            [CallerMemberName] string callerMemberName = "",
+            [CallerFilePath] string callerFilePath = "",
+            [CallerLineNumber] int callerLineNumber = 0)
+        {
+            JObject Info = new JObject();
 
+            string classPath = this.GetType().FullName;                                         //クラスパスの取得
+            string className = this.GetType().Name;                                             //クラス名の取得
+            string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;           //メソッド名の取得
+            string mName = Environment.MachineName;
+
+
+            Info.Add("MachineName", mName);
+            Info.Add("className", className);
+            Info.Add("methodName", callerMemberName);
+            //Info.Add("pathName", callerFilePath);
+            //Info.Add("lineNumber", callerLineNumber);
+            //Info.Add("DB_Conn", DB_connectString);
+            return (Info);
+        }
         public XmlDocument methodList()
         {
             XmlDocument xmlDoc = new XmlDocument();

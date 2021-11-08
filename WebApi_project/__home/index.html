@@ -25,7 +25,7 @@
     <script type="text/javascript">
         var debug_mode = true;
         var superfish;
-        var user_mode = "json";
+        var user_mode = "xml";
         var WebApi_url = "/WebApi/project/api/xml";
         var WebApi_url_json = "/WebApi/project/api/json";
         var mailPara = {
@@ -37,9 +37,44 @@
     </script>
 
     <script type="text/javascript">
+        $(function () {
+            $(document).on("load", function () {
+                alert("X");
+                var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
+                var x = window.location.pathname.split("/");
+                //hostName = "http://kansa.in.eandm.co.jp";
+                WebApi_url = hostName + "/WebApi/project/api/xml";
+                WebApi_url_json = hostName + "/WebApi/project/api/json";
+                WebApi_url_test = hostName + "/WebApi/project/api/test";
+                WebApi_url_xml = hostName + "/WebApi/project/api/xml";
 
-        window.onload = function () {
-            $.debug("StartX");
+                //var xmlDoc = $.WebApi_get(WebApi_url_xml);
+                //var x = $.xml2str(xmlDoc);
+
+                //$.alert.json(memberInfo);
+                //var memberInfo = $.WebApi_json( "GET",WebApi_url_json, "projectInfo/json_memberInfo",mailPara);
+                //            $.alert.json(memberInfo);
+
+                // methodListの取得
+                var methodList = $.WebApi("GET", WebApi_url);
+                var menu_Xml = methodList;
+
+                var menu_data = $.loadXMLDoc("menu.xml");
+
+                menu_Xml = join_menuData(menu_Xml, menu_data);
+
+                $(".menuBlock_content").mymenu(menu_Xml, {
+                    color_menu_base: "cornflowerblue",
+                    color_menu_select: "royalblue",
+                    click: menu_click
+                });
+                $("iframe.iframe_content").frame();
+
+                user_mode = $(".user_mode").value;
+            });
+        });
+        window.onload1 = function () {
+            $.debug("StartXX");
 
             var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
             var x = window.location.pathname.split("/");
@@ -72,6 +107,7 @@
             $("iframe.iframe_content").frame();
 
             user_mode = $(".user_mode").value;
+            alert(user_mode);
         }
         function join_menuData(menu_xml, menu_xml2) {
             var root = $(menu_xml).find("root");

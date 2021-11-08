@@ -32,40 +32,30 @@ namespace WebApi_project.hostProc
 
 
             string url = "http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp?year=2021";
-            url = "http://localhost/Asp/Test/test.json";
 
             hostWeb h = new hostWeb();
             string jsonStr = h.GetRequest(url);
-
-            //Tab.Add("Info", (object)Info);
-            //Tab.Add("data", JObject.Parse(jsonStr));
 
             return (JObject.Parse(jsonStr));
         }
         public XmlDocument 費用状況(String Json)
         {
-            Dictionary<string, object> root = new Dictionary<string, object>();
-
             object o_json = json_費用状況(Json);
-            root.Add("root", (object)o_json);
 
-            //string JsonStr = JsonConvert.SerializeObject(root);
-            JObject JTop = Json_Tree(o_json);
-            string jsonStr = JsonConvert.SerializeObject(JTop);             // Json形式を文字列に
+            JObject O_Top = Json_Tree(o_json);
+            JObject O_Inf = getStat();
+
+            JObject Top = new JObject();
+            Top.Add("Info", O_Inf);
+            Top.Add("Data", O_Top);
+
+            string jsonStr = JsonConvert.SerializeObject(Top);             // Json形式を文字列に
             XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr, "root");       // Json文字列をXML　objectに
-
-            ////XmlDocument xmlDoc = new XmlDocument();
-            ////var xmlMain = xmlDoc.CreateProcessingInstruction("xml", "version='1.0' encoding='Shift_JIS'");
-            ////XmlElement root = xmlDoc.CreateElement("root");
 
             XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
             var comment = xmlDoc.CreateComment("json data");
             xmlDoc.PrependChild(comment);
             xmlDoc.PrependChild(declaration);
-
-
-            //XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(JsonStr);
-            //XmlDocument xmlDoc = Json2Xml_Tree(o_json);
 
             return (xmlDoc);
         }
