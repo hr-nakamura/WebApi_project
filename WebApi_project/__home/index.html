@@ -38,8 +38,7 @@
 
     <script type="text/javascript">
         $(function () {
-            $(document).on("load", function () {
-                alert("X");
+            $(window).on("load", function () {
                 var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
                 var x = window.location.pathname.split("/");
                 //hostName = "http://kansa.in.eandm.co.jp";
@@ -70,7 +69,7 @@
                 });
                 $("iframe.iframe_content").frame();
 
-                user_mode = $(".user_mode").value;
+                user_mode = $(".user_mode:checked").val();
             });
         });
         window.onload1 = function () {
@@ -106,8 +105,7 @@
             });
             $("iframe.iframe_content").frame();
 
-            user_mode = $(".user_mode").value;
-            alert(user_mode);
+            user_mode = $(".user_mode:checked").val();
         }
         function join_menuData(menu_xml, menu_xml2) {
             var root = $(menu_xml).find("root");
