@@ -13,7 +13,7 @@ namespace WebApi_project.hostProc
 {
     public partial class projectCostProc : hostProc
     {
-        public object json_projectCostProc1(String Json)
+        public object json_projectCostProc2(String Json)
         {
             Dictionary<string, object> Tab = new Dictionary<string, object>();
             Dictionary<string, object> Info = new Dictionary<string, object>();
@@ -33,14 +33,15 @@ namespace WebApi_project.hostProc
             string url = "";
             url = "http://kansa.in.eandm.co.jp/Project/projectCostProc/json/projectInfoList_JSON.asp?pNum=20212329";
             url = "http://kansa.in.eandm.co.jp/Project/projectCostProc/json/projectInfoDetail_JSON.asp?pNum=20212329";
+            url = "http://localhost/Asp/projectCostProc/test2.json";
             hostWeb h = new hostWeb();
             string jsonStr = h.GetRequest(url);
 
             return (JObject.Parse(jsonStr));
         }
-        public XmlDocument projectCostProc1(String Json)
+        public XmlDocument projectCostProc2(String Json)
         {
-            object o_json = json_projectCostProc1(Json);
+            object o_json = json_projectCostProc2(Json);
 
             JObject O_Top = Json_Tree(o_json);
             JObject O_Inf = getStat();

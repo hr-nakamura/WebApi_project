@@ -187,17 +187,14 @@ namespace WebApi_project.hostProc
             O_Top.Add("element", A_elem);
             foreach (var m in (JObject)elem)
             {
-                //if (m.Value.Type.ToString() == "String") continue;
-                //JObject O_elem = new JObject { { "@name", m.Key } };
-
                 JObject O_elem;
                 if (m.Value.Type.ToString() == "String")
                 {
-                    O_elem = new JObject { { "@name", m.Key }, { "#text", m.Value } };
+                    O_elem = new JObject { { "@string_name", m.Key }, { "#text", m.Value } };
                 }
                 else if (m.Value.Type.ToString() == "Integer")
                 {
-                    O_elem = new JObject { { "@name", m.Key }, { "#text", m.Value } };
+                    O_elem = new JObject { { "@integer_name", m.Key }, { "#text", m.Value } };
                 }
                 else
                 {
@@ -213,16 +210,16 @@ namespace WebApi_project.hostProc
                 {
                     CreateJson_Tree(O_elem, (JArray)m.Value);
                 }
-                else if (m.Value.Type.ToString() == "Integer")
-                {
-                    CreateJson_Integer(O_elem, m.Value.ToString());
-                }
+                //else if (m.Value.Type.ToString() == "Integer")
+                //{
+                //    CreateJson_Integer(O_elem, m.Value.ToString());
+                //}
             }
         }
         private void CreateJson_Tree(JObject O_Top, JArray elem)
         {
             JArray A_elem = new JArray { };
-            O_Top.Add("data", A_elem);
+            O_Top.Add("array", A_elem);
             for (var c = 0; c < elem.Count(); c++)
             {
                 JObject O_elem = new JObject { { "@m", c }, { "#text", elem[c] } };
@@ -232,7 +229,12 @@ namespace WebApi_project.hostProc
         private void CreateJson_Integer(JObject O_Top, string elem)
         {
             JArray A_elem = new JArray { };
-            O_Top.Add("data", A_elem);
+            //O_Top.Add("string", new JObject { { "#text", elem } });
+        }
+        private void CreateJson_IntegerX(JObject O_Top, string elem)
+        {
+            JArray A_elem = new JArray { };
+            O_Top.Add("string", A_elem);
             for (var c = 0; c < elem.Count(); c++)
             {
                 JObject O_elem = new JObject { { "@m", c }, { "#text", elem[c] } };

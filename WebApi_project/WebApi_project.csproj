@@ -269,6 +269,7 @@
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\XmlController.cs" />
     <Compile Include="App_Data\StopWatch.cs" />
+    <Compile Include="funcProc\projectCostProc\test2.cs" />
     <Compile Include="funcProc\売上予測\売上予実_新規2.cs" />
     <Compile Include="funcProc\部門収支\部門収支_DB.cs" />
     <Compile Include="Global.asax.cs">
@@ -284,7 +285,7 @@
     <Compile Include="funcProc\売上予測\売上予実_分類.cs" />
     <Compile Include="funcProc\売上予測\売上予実_新規.cs" />
     <Compile Include="funcProc\売上予測\売上予実_部門.cs" />
-    <Compile Include="funcProc\projectCostProc\test.cs" />
+    <Compile Include="funcProc\projectCostProc\test1.cs" />
     <Compile Include="funcProc\要員情報\要員一覧.cs" />
     <Compile Include="funcProc\費用予測\費用状況.cs" />
     <Compile Include="funcProc\部門収支\部門収支.cs" />
