@@ -38,8 +38,8 @@
 
     <script type="text/javascript">
         $(function () {
-            $(document).on("load", function () {
-                alert("X");
+            $(window).on("load", function () {
+                //alert("X");
                 var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
                 var x = window.location.pathname.split("/");
                 //hostName = "http://kansa.in.eandm.co.jp";
@@ -70,10 +70,10 @@
                 });
                 $("iframe.iframe_content").frame();
 
-                user_mode = $(".user_mode").value;
+                user_mode = $(".user_mode:checked").val();
             });
         });
-        window.onload1 = function () {
+        window.onload = function () {
             $.debug("StartXX");
 
             var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
@@ -106,8 +106,8 @@
             });
             $("iframe.iframe_content").frame();
 
-            user_mode = $(".user_mode").value;
-            alert(user_mode);
+            user_mode = $(".user_mode:checked").val();
+            //alert(user_mode);
         }
         function join_menuData(menu_xml, menu_xml2) {
             var root = $(menu_xml).find("root");

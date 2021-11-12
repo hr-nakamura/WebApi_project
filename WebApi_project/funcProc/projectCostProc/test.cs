@@ -11,9 +11,9 @@ using DebugHost;
 
 namespace WebApi_project.hostProc
 {
-    public partial class 売上予測 : hostProc
+    public partial class projectCostProc : hostProc
     {
-        public object json_売上目標_部門(String Json)
+        public object json_projectCostProc1(String Json)
         {
             Dictionary<string, object> Tab = new Dictionary<string, object>();
             Dictionary<string, object> Info = new Dictionary<string, object>();
@@ -30,16 +30,17 @@ namespace WebApi_project.hostProc
             Info.Add("methodName", methodName);
             Info.Add("DB_Conn", DB_connectString);
 
-
-            string url = "http://kansa.in.eandm.co.jp/Project/売上予測/json/売上目標_部門_JSON.asp?year=2021";
+            string url = "";
+            url = "http://kansa.in.eandm.co.jp/Project/projectCostProc/json/projectInfoList_JSON.asp?pNum=20212329";
+            url = "http://kansa.in.eandm.co.jp/Project/projectCostProc/json/projectInfoDetail_JSON.asp?pNum=20212329";
             hostWeb h = new hostWeb();
             string jsonStr = h.GetRequest(url);
 
             return (JObject.Parse(jsonStr));
         }
-        public XmlDocument 売上目標_部門(String Json)
+        public XmlDocument projectCostProc1(String Json)
         {
-            object o_json = json_売上目標_部門(Json);
+            object o_json = json_projectCostProc1(Json);
 
             JObject O_Top = Json_Tree(o_json);
             JObject O_Inf = getStat();

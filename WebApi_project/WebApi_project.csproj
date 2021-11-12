@@ -211,6 +211,8 @@
     <Content Include="_home\_Content\_Scripts\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="_home\_Content\_Scripts\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="_home\_Content\_Scripts\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="funcProc\projectCostProc\test1.json" />
+    <Content Include="funcProc\projectCostProc\test2.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -282,7 +284,7 @@
     <Compile Include="funcProc\売上予測\売上予実_分類.cs" />
     <Compile Include="funcProc\売上予測\売上予実_新規.cs" />
     <Compile Include="funcProc\売上予測\売上予実_部門.cs" />
-    <Compile Include="funcProc\売上予測\売上目標_部門.cs" />
+    <Compile Include="funcProc\projectCostProc\test.cs" />
     <Compile Include="funcProc\要員情報\要員一覧.cs" />
     <Compile Include="funcProc\費用予測\費用状況.cs" />
     <Compile Include="funcProc\部門収支\部門収支.cs" />
@@ -329,7 +331,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>65383</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44308/WebApi/project</IISUrl>
+          <IISUrl>https://localhost:44308/WebApi_project</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>http://kansa.in.eandm.co.jp/WebApi/project</CustomServerUrl>

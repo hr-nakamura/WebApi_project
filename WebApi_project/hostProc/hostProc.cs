@@ -187,11 +187,15 @@ namespace WebApi_project.hostProc
             O_Top.Add("element", A_elem);
             foreach (var m in (JObject)elem)
             {
-                if (m.Value.Type.ToString() == "String") continue;
-                JObject O_elem = new JObject { { "@name", m.Key } };
-                /*
+                //if (m.Value.Type.ToString() == "String") continue;
+                //JObject O_elem = new JObject { { "@name", m.Key } };
+
                 JObject O_elem;
                 if (m.Value.Type.ToString() == "String")
+                {
+                    O_elem = new JObject { { "@name", m.Key }, { "#text", m.Value } };
+                }
+                else if (m.Value.Type.ToString() == "Integer")
                 {
                     O_elem = new JObject { { "@name", m.Key }, { "#text", m.Value } };
                 }
@@ -199,7 +203,7 @@ namespace WebApi_project.hostProc
                 {
                     O_elem = new JObject { { "@name", m.Key } };
                 }
-                */
+
                 A_elem.Add(O_elem);
                 if (m.Value.Type.ToString() == "Object")
                 {
@@ -209,9 +213,23 @@ namespace WebApi_project.hostProc
                 {
                     CreateJson_Tree(O_elem, (JArray)m.Value);
                 }
+                else if (m.Value.Type.ToString() == "Integer")
+                {
+                    CreateJson_Integer(O_elem, m.Value.ToString());
+                }
             }
         }
         private void CreateJson_Tree(JObject O_Top, JArray elem)
+        {
+            JArray A_elem = new JArray { };
+            O_Top.Add("data", A_elem);
+            for (var c = 0; c < elem.Count(); c++)
+            {
+                JObject O_elem = new JObject { { "@m", c }, { "#text", elem[c] } };
+                A_elem.Add(O_elem);
+            }
+        }
+        private void CreateJson_Integer(JObject O_Top, string elem)
         {
             JArray A_elem = new JArray { };
             O_Top.Add("data", A_elem);
