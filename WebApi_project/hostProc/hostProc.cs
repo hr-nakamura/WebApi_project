@@ -226,21 +226,21 @@ namespace WebApi_project.hostProc
                 A_elem.Add(O_elem);
             }
         }
-        private void CreateJson_Integer(JObject O_Top, string elem)
-        {
-            JArray A_elem = new JArray { };
-            //O_Top.Add("string", new JObject { { "#text", elem } });
-        }
-        private void CreateJson_IntegerX(JObject O_Top, string elem)
-        {
-            JArray A_elem = new JArray { };
-            O_Top.Add("string", A_elem);
-            for (var c = 0; c < elem.Count(); c++)
-            {
-                JObject O_elem = new JObject { { "@m", c }, { "#text", elem[c] } };
-                A_elem.Add(O_elem);
-            }
-        }
+        //private void CreateJson_Integer(JObject O_Top, string elem)
+        //{
+        //    JArray A_elem = new JArray { };
+        //    //O_Top.Add("string", new JObject { { "#text", elem } });
+        //}
+        //private void CreateJson_IntegerX(JObject O_Top, string elem)
+        //{
+        //    JArray A_elem = new JArray { };
+        //    O_Top.Add("string", A_elem);
+        //    for (var c = 0; c < elem.Count(); c++)
+        //    {
+        //        JObject O_elem = new JObject { { "@m", c }, { "#text", elem[c] } };
+        //        A_elem.Add(O_elem);
+        //    }
+        //}
         public JObject getStat(
             [CallerMemberName] string callerMemberName = "",
             [CallerFilePath] string callerFilePath = "",
