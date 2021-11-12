@@ -77,11 +77,11 @@ namespace WebApi_project.hostProc
 
             JObject O_Top = Json_Tree(Tab);
 
-            JObject O_Inf = new JObject();
+            JObject O_Inf = getStat();
 
             JObject Top = new JObject();
-            Top.Add("情報", O_Inf);
-            Top.Add("全体", O_Top);
+            Top.Add("Info", O_Inf);
+            Top.Add("Data", O_Top);
 
 
             string jsonStr = JsonConvert.SerializeObject(Top);             // Json形式を文字列に
@@ -98,9 +98,9 @@ namespace WebApi_project.hostProc
 
             return (xmlDoc);
         }
-        object readJson(string url)
+        object readJson(string url1)
         {
-            //string url = "http://localhost/Asp/Test/test.json";
+            string url = "http://localhost/Asp/Test/test.json";
             hostWeb h = new hostWeb();
             string JsonStr = h.GetRequest(url);
 
