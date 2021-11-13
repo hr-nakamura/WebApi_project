@@ -112,6 +112,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="funcProc\projectCostProc\projectInfoDetail.xml" />
+    <Content Include="funcProc\projectCostProc\projectInfoList.xml" />
     <Content Include="funcProc\部門収支\BASE.xml" />
     <Content Include="Global.asax" />
     <Content Include="funcProc\projectBBS\projectData_XML.xml" />
@@ -211,8 +213,8 @@
     <Content Include="_home\_Content\_Scripts\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="_home\_Content\_Scripts\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="_home\_Content\_Scripts\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="funcProc\projectCostProc\test1.json" />
-    <Content Include="funcProc\projectCostProc\test2.json" />
+    <Content Include="funcProc\projectCostProc\projectInfoDetail.json" />
+    <Content Include="funcProc\projectCostProc\projectInfoList.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
