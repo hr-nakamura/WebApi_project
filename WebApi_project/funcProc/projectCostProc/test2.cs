@@ -61,6 +61,7 @@ namespace WebApi_project.hostProc
             XmlDocument xmlDoc = new XmlDocument();
 
             var url = "http://localhost/Asp/projectCostProc/projectInfoDetail.xml";
+            url = "http://kansa.in.eandm.co.jp/Project/projectCostProc/xml/projectInfo_XML_Detail.asp?pNum=20212329";
             xmlDoc.Load(url);
             return (xmlDoc);
         }
