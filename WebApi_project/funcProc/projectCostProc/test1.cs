@@ -33,7 +33,7 @@ namespace WebApi_project.hostProc
             string url = "";
             //url = "http://kansa.in.eandm.co.jp/Project/projectCostProc/json/projectInfoList_JSON.asp?pNum=20212329";
             //url = "http://kansa.in.eandm.co.jp/Project/projectCostProc/json/projectInfoDetail_JSON.asp?pNum=20212329";
-            url = "http://localhost/Asp/Test/projectCostProc/projectInfoList.json";
+            url = "http://localhost/Asp/projectCostProc/projectInfoList.json";
             hostWeb h = new hostWeb();
             string jsonStr = h.GetRequest(url);
 
@@ -51,8 +51,16 @@ namespace WebApi_project.hostProc
             Top.Add("Data", O_Top);
 
             string JsonStr = JsonConvert.SerializeObject(Top);
-            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(JsonStr,"root");
+            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(JsonStr, "root");
 
+            return (xmlDoc);
+        }
+        public XmlDocument projectInfoList_xml(String Json)
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+
+            var url = "http://localhost/Asp/projectCostProc/projectInfoList.xml";
+            xmlDoc.Load(url);
             return (xmlDoc);
         }
     }

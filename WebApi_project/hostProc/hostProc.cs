@@ -148,7 +148,7 @@ namespace WebApi_project.hostProc
         {
             JObject O_Top = new JObject();
 
-            CreateJson_Tree(O_Top, (JObject)Json);
+            //CreateJson_Tree(O_Top, (JObject)Json);
 
             JObject Top = new JObject();
             Top.Add("全体", O_Top);
@@ -178,21 +178,22 @@ namespace WebApi_project.hostProc
 
             JObject O_Top = new JObject();
 
-            CreateJson_Tree(O_Top, (JObject)Json);
+            var x = new ArrayList();
+            x.Add(0);
+            CreateJson_Tree(x, O_Top, (JObject)Json);
 
-            JObject Top = new JObject();
-            Top.Add("全体", O_Top);
+            //JObject Top = new JObject();
+            //Top.Add("全体", O_Top);
 
             return (O_Top);
         }
-        private void CreateJson_Tree(JObject O_Top, JObject elem)
+        private void CreateJson_Tree(ArrayList x, JObject O_Top, JObject elem)
         {
-            var x = new ArrayList();
+            x[0] = (int)x[0] + 1;
             JArray A_elem = new JArray { };
-//            O_Top.Add("element", A_elem);
+            O_Top.Add("element" + x[0], A_elem);
             foreach (var m in (JObject)elem)
             {
-                x.Add(m.Value.Type.ToString());
                 JObject O_elem;
                 if (m.Value.Type.ToString() == "String")
                 {
@@ -210,20 +211,20 @@ namespace WebApi_project.hostProc
                 A_elem.Add(O_elem);
                 if (m.Value.Type.ToString() == "Object")
                 {
-                    CreateJson_Tree(O_elem, (JObject)m.Value);
+                    CreateJson_Tree(x, O_elem, (JObject)m.Value);
                 }
                 else if (m.Value.Type.ToString() == "Array")
                 {
-                    CreateJson_Tree(O_elem, (JArray)m.Value);
+                    CreateJson_Tree(x, O_elem, (JArray)m.Value);
                 }
                 //else if (m.Value.Type.ToString() == "Integer")
                 //{
                 //    CreateJson_Integer(O_elem, m.Value.ToString());
                 //}
             }
-            O_Top.Add("element", A_elem);
+            x[0] = (int)x[0] - 1;
         }
-        private void CreateJson_Tree(JObject O_Top, JArray elem)
+        private void CreateJson_Tree(ArrayList x, JObject O_Top, JArray elem)
         {
             JArray A_elem = new JArray { };
             O_Top.Add("array", A_elem);
