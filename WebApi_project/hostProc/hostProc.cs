@@ -11,6 +11,10 @@ using Newtonsoft.Json;
 using System.Runtime.CompilerServices;
 
 
+using System.Collections;
+
+
+
 using Util;
 using DebugHost;
 
@@ -183,10 +187,12 @@ namespace WebApi_project.hostProc
         }
         private void CreateJson_Tree(JObject O_Top, JObject elem)
         {
+            var x = new ArrayList();
             JArray A_elem = new JArray { };
-            O_Top.Add("element", A_elem);
+//            O_Top.Add("element", A_elem);
             foreach (var m in (JObject)elem)
             {
+                x.Add(m.Value.Type.ToString());
                 JObject O_elem;
                 if (m.Value.Type.ToString() == "String")
                 {
@@ -215,6 +221,7 @@ namespace WebApi_project.hostProc
                 //    CreateJson_Integer(O_elem, m.Value.ToString());
                 //}
             }
+            O_Top.Add("element", A_elem);
         }
         private void CreateJson_Tree(JObject O_Top, JArray elem)
         {
