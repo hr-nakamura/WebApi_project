@@ -22,8 +22,9 @@
             if ($type == "DIV") {
                 var o2 = $.stopwatch();
 
-                $(o2).stopwatch("html load");
+                $(o2).stopwatch("html load1:" +  $("table tbody tr", $this).length);
                 $($this).html(html);
+                $(o2).stopwatch("html load9:" + $("table tbody tr", $this).length);
 
                 //$(o2).stopwatch("table_resize");
                 //table_resize($this);
@@ -144,6 +145,7 @@
         //$.debug("frame_resize", Buff);
     }
     function iframe_resize(o) {
+        $.debug("iframe_resize", "====================");
         //$.debug.json("iframe_resize", o);
         //var o2 = $.stopwatch();
         //$(o2).stopwatch("iframe_resize start");
@@ -186,7 +188,7 @@
     function table_resize(o) {
         $.debug("table_resize", "====================");
 
-        $.debug("table_resize");
+        //$.debug("table_resize");
         //$.debug.json("table_resize", o);
         var work = [];
         //var o2 = $.stopwatch();
@@ -351,8 +353,8 @@
             work.push($(this)[0].localName);
             work.push($(this)[0].className);
         }
-        $.debug.json(work.join("]["), Info);
-        $.debug("Info", $this.selector, $(this)[0].localName, $(this)[0].className, para, Buff);
+        //$.debug.json(work.join("]["), Info);
+        //$.debug("Info", $this.selector, $(this)[0].localName, $(this)[0].className, para, Buff);
         return (Info);
     }
 })(window.jQuery);

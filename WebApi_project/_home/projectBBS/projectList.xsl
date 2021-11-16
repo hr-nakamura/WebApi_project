@@ -14,6 +14,9 @@
     <html>
       <head>
         <style type="text/css">
+			.pNumLine{
+                display:none;
+            }
 			.table {
 			border-collapse:collapse;
 			border: 0px solid gray;
