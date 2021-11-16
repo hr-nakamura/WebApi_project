@@ -40,15 +40,15 @@
                     $(".target").frame({ "border-top": "1px solid gray", "border-right": "1px solid gray", "border-bottom": "1px solid gray" });
                     var Cnt = 0;
 
-                    $(o1).stopwatch("開始1");
+                    //$(o1).stopwatch("開始1");
 
-                    $(o1).stopwatch("xsl読込1");
+                    //$(o1).stopwatch("xsl読込1");
                     xmlDoc = $.str2xml("<root><projectList/></root>");
                     xslDoc = $.loadXMLDoc("projectList.xsl");
 
-                    $(o1).stopwatch("変換1");
+                    //$(o1).stopwatch("変換1");
                     var Buff = $(xmlDoc).transformNode(xslDoc);
-                    $(o1).stopwatch("表示1");
+                    //$(o1).stopwatch("表示1");
                     $(".target").frame("html", Buff);
 
 
@@ -64,11 +64,11 @@
                     //$.loadXMLDoc("/Project/home/_xml/projectBBS/projectNum.xml", dispProject);
                     //$.loadXMLDoc("/Project/home/_xml/projectBBS/projectNum_Full.xml", dispProject);
                     //$.loadXMLDoc(hostName + "/Project/home/_xml/projectBBS/projectData_XML.asp", dispProject);
-                    $(o1).stopwatch("xml読込2");
+                    //$(o1).stopwatch("xml読込2");
                     var work = $.WebApi("GET", webapi_url, item, para, dispProject);
                     var xmlDoc = $.WebApi("GET", webapi_url, item, para);
 
-                    $(o1).stopwatch("xml表示2");
+                    //$(o1).stopwatch("xml表示2");
                     dispProject(xmlDoc);
 
                     var Buff = $(o1).stopwatch();
@@ -82,14 +82,14 @@
                 //$.debug.log(this, "ABCDEF");
             }
             function dispProject(xmlDoc) {
-                $(o1).stopwatch("プロジェクト一覧 html 変換");
+                //$(o1).stopwatch("プロジェクト一覧 html 変換");
                 var Buff = $(xmlDoc).transformNode(xslDoc);
 
-                $(o1).stopwatch("html 表示");
+                //$(o1).stopwatch("html 表示");
                 $(".target").frame("html", Buff);
 
                 //$(o2).stopwatch("クリック");
-                $("input[class='stat'][value='0']").prop("checked", true).trigger("change");
+                $("input[class='stat'][value='0']").prop("checked", true).trigger("change");        /// 新規を選択
 
                 $(o1).stopwatch("selectBox作成");
                 if (projectInfo.optionInfo == false) {

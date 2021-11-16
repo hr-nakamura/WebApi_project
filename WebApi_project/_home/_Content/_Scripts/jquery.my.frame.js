@@ -22,9 +22,9 @@
             if ($type == "DIV") {
                 var o2 = $.stopwatch();
 
-                $(o2).stopwatch("html load1:" +  $("table tbody tr", $this).length);
+                $(o2).stopwatch("html load start:" +  $("table tbody tr", $this).length);
                 $($this).html(html);
-                $(o2).stopwatch("html load9:" + $("table tbody tr", $this).length);
+                $(o2).stopwatch("html load end:" + $("table tbody tr", $this).length);
 
                 //$(o2).stopwatch("table_resize");
                 //table_resize($this);
