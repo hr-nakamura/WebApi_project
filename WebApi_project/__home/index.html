@@ -25,7 +25,7 @@
     <script type="text/javascript">
         var debug_mode = true;
         var superfish;
-        var user_mode = "xml";
+        var user_mode = "json";
         var WebApi_url = "/WebApi/project/api/xml";
         var WebApi_url_json = "/WebApi/project/api/json";
         var mailPara = {
@@ -39,7 +39,7 @@
     <script type="text/javascript">
         $(function () {
             $(window).on("load", function () {
-                //$(".user_mode").val();
+                $(".user_mode[value='" + user_mode + "']").click();
                 //alert("X");
                 var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
                 var x = window.location.pathname.split("/");
@@ -71,11 +71,12 @@
                 });
                 $("iframe.iframe_content").frame();
 
-                user_mode = $(".user_mode:checked").val();
+                //user_mode = $(".user_mode:checked").val();
             });
         });
-        window.onload = function () {
+        window.onload1 = function () {
             $.debug("StartXX");
+            $(".user_mode[value='" + user_mode + "']").click();
 
             var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
             var x = window.location.pathname.split("/");
@@ -107,7 +108,7 @@
             });
             $("iframe.iframe_content").frame();
 
-            user_mode = $(".user_mode:checked").val();
+            //user_mode = $(".user_mode:checked").val();
             //alert(user_mode);
         }
         function join_menuData(menu_xml, menu_xml2) {
