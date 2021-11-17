@@ -23,7 +23,7 @@ namespace WebApi_project.hostProc
 
         public object json_projectTest2(String Json)
         {
-            Debug.Write("json_projectTest");
+            Debug.Write("json_projectTest2");
             string classPath = this.GetType().FullName;                                         //クラスパスの取得
             string className = this.GetType().Name;                                             //クラス名の取得
             string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;           //メソッド名の取得

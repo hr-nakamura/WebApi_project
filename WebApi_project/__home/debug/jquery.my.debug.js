@@ -154,6 +154,8 @@
         try {
             if (debug_mode == false) return;
             var stat;
+            //$.alert(sendObj.LogData);
+
             $.ajax({
                 url: debugUrl,
                 async: false,
