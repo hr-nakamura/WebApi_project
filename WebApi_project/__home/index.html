@@ -40,14 +40,17 @@
         $(function () {
             $(window).on("load", function () {
                 $(".user_mode[value='" + user_mode + "']").click();
+
+
                 //alert("X");
                 var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
                 var x = window.location.pathname.split("/");
+                var path_name = "/" + window.location.pathname.split('/')[1];
                 //hostName = "http://kansa.in.eandm.co.jp";
-                WebApi_url = hostName + "/WebApi/project/api/xml";
-                WebApi_url_json = hostName + "/WebApi/project/api/json";
-                WebApi_url_test = hostName + "/WebApi/project/api/test";
-                WebApi_url_xml = hostName + "/WebApi/project/api/xml";
+                WebApi_url = hostName + path_name + "/api/xml";
+                WebApi_url_json = hostName + path_name + "/api/json";
+                WebApi_url_test = hostName + path_name + "/api/test";
+                WebApi_url_xml = hostName + path_name + "/api/xml";
 
                 //var xmlDoc = $.WebApi_get(WebApi_url_xml);
                 //var x = $.xml2str(xmlDoc);

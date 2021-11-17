@@ -38,7 +38,7 @@
             }).fail(function (xhr, status, error) {
                 returnValue = status;
                 window.status = xhr.statusText;
-                $.alert("WebApi error:" + xhr.statusText);
+                $.alert("X_WebApi error:" + xhr.statusText);
             });
             return (returnValue);
         },
