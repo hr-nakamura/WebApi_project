@@ -334,7 +334,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>65383</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44308/WebApi_project</IISUrl>
+          <IISUrl>https://localhost:44308/WebApi/project</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>http://kansa.in.eandm.co.jp/WebApi/project</CustomServerUrl>
