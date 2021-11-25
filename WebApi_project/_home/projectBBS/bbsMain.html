@@ -91,60 +91,15 @@
                 //$(o2).stopwatch("クリック");
                 $("input[class='stat'][value='0']").prop("checked", true).trigger("change");        /// 新規を選択
 
-                $(o1).stopwatch("selectBox作成");
-                if (projectInfo.optionInfo == false) {
-                    setOptionInfo();
-                    projectInfo.optionInfo = true;
-                }
+                //$(o1).stopwatch("selectBox作成");
+                //if (projectInfo.optionInfo == false) {
+                //    setOptionInfo();
+                //    projectInfo.optionInfo = true;
+                //}
             }
-            function setOptionInfo() {
-                //var o2 = $.stopwatch();
 
-                //$(o2).stopwatch("setOptionInfo 開始");
-
-                var disp = $(".target").find("tbody > tr");
-
-                //$(o2).stopwatch("データ数 表示");
-                $(".spanTotal").text(disp.length);
-
-                var Tab = {
-                    select_group: { set: new Set(), name: [] },
-                    select_user: { set: new Set(), name: [] },
-                    select_regist: { set: new Set(), name: [] },
-                };
-
-
-                //$(o2).stopwatch("データ取得");
-                $(disp).each(function (index, elem) {
-                    Tab.select_group.set.add($(elem).attr("group"));
-                    Tab.select_user.set.add($(elem).attr("user"));
-                    Tab.select_regist.set.add($(elem).attr("regist"));
-
-                });
-                //======================================
-                //$(o2).stopwatch("option 設定");
-                for (var name in Tab) {
-                    var select_value = $("#" + name + " option:selected").val();
-                    Tab[name].set.forEach(function (value) {
-                        Tab[name].name.push(value);
-                    });
-                    Tab[name].name.sort();
-
-                    //$("option", "#" + name).remove();
-                    $("#" + name).html("");
-                    $("#" + name).append($("<option id='op'>").val('').text(''));
-                    Tab[name].name.forEach(function (value) {
-                        $("#" + name).append($("<option>").val(value).text(value));
-                    });
-                    if (select_value != "") {
-                        $("option:eq(1)", "#" + name).prop('selected', true);
-                    }
-                }
-                //var Buff = $(o2).stopwatch();
-                //$.debug("setOptionInfo", Buff);
-
-            }
         });
+
     </script>
     <script type="text/javascript">
         $(function () {
@@ -239,7 +194,7 @@
                     var disp = null;
                     var searchValue = para.value;
                     var className = para.name;
-                    $.debug("searchExec 開始", searchValue);
+                    $.debug("searchExec 開始", className,searchValue);
                     var options = {
                         itemSelector: ".table>tbody>tr",
                         textSelector: "td.pName",
@@ -270,11 +225,13 @@
                         //$(o2).stopwatch("開始4 filter");
                         disp = $(options.textSelector).filter(function () {
                             containsText = this.textContent.match(regex);
+                            $.debug(containsText);
                             $(this).parent().css("display", containsText ? "table-row" : "none");
                             return (containsText);
                         })
                     }
                     $(".count").text(disp.length);
+                    $.debug("==",containsText, disp.length);
                     //$(".target").focus();
                 } catch (e) {
                     $.debug("cancel発生", e.message);
@@ -347,14 +304,66 @@
                         disp = $(".target").find("tbody > tr" + selector).css("display", "table-row");
                     }
                     $(".count").text(disp.length);
+
+                    $(o2).stopwatch("selectBox作成");
+                    //if (projectInfo.optionInfo == false) {
+                        setOptionInfo(disp);
+                        //projectInfo.optionInfo = true;
+                    //}
                 } catch (e) {
                     $.debug("error", e.message);
                 } finally {
                     var Buff = $(o2).stopwatch();
-                    $.debug("selectProject", selector, disp.length, Buff);
+                    $.debug("selectProject 終了", selector, disp.length, Buff);
                     projectInfo.Do = false;
                     //$.debug("selectProject 終了");
                 }
+
+            }
+            function setOptionInfo(disp) {
+                //var o2 = $.stopwatch();
+
+                //$(o2).stopwatch("setOptionInfo 開始");
+
+                //var disp = $(".target").find("tbody > tr");
+
+                //$(o2).stopwatch("データ数 表示");
+                $(".spanTotal").text(disp.length);
+
+                var Tab = {
+                    select_group: { set: new Set(), name: [] },
+                    select_user: { set: new Set(), name: [] },
+                    select_regist: { set: new Set(), name: [] },
+                };
+
+
+                //$(o2).stopwatch("データ取得");
+                $(disp).each(function (index, elem) {
+                    Tab.select_group.set.add($(elem).attr("group"));
+                    Tab.select_user.set.add($(elem).attr("user"));
+                    Tab.select_regist.set.add($(elem).attr("regist"));
+                });
+                //======================================
+                //$(o2).stopwatch("option 設定");
+                for (var name in Tab) {
+                    var select_value = $("#" + name + " option:selected").val();        // 選択している場合選択名を保存
+                    Tab[name].set.forEach(function (value) {
+                        Tab[name].name.push(value);
+                    });
+                    Tab[name].name.sort();
+
+                    //$("option", "#" + name).remove();
+                    $("#" + name).html("");                                             // select内をクリア
+                    $("#" + name).append($("<option id='op'>").val('').text(''));       // 一行目をブランク
+                    Tab[name].name.forEach(function (value) {
+                        $("#" + name).append($("<option>").val(value).text(value));     // 二行目から設定
+                    });
+                    if (select_value != "") {
+                        $("option:eq(1)", "#" + name).prop('selected', true);           // 選択している場合選択名をselect状態にする
+                    }
+                }
+                //var Buff = $(o2).stopwatch();
+                //$.debug("setOptionInfo", Buff);
 
             }
             $("body").on("mouseenter mouseleave click", "td.pRegist, td.pGroup", function () {

@@ -45,12 +45,12 @@
                 //alert("X");
                 var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
                 var work = window.location.pathname.split("/");
-                var path_name = string.concat("/",work[1],"/",work[2]);
+                var path_name = "".concat("/",work[1]);
                 //hostName = "http://kansa.in.eandm.co.jp";
-                WebApi_url = hostName + path_name + "/api/xml";
-                WebApi_url_json = hostName + path_name + "/api/json";
-                WebApi_url_test = hostName + path_name + "/api/test";
-                WebApi_url_xml = hostName + path_name + "/api/xml";
+                WebApi_url = hostName + path_name + "/project/api/xml";
+                WebApi_url_json = hostName + path_name + "/project/api/json";
+                WebApi_url_test = hostName + path_name + "/project/api/test";
+                WebApi_url_xml = hostName + path_name + "/project/api/xml";
 
                 //var xmlDoc = $.WebApi_get(WebApi_url_xml);
                 //var x = $.xml2str(xmlDoc);
