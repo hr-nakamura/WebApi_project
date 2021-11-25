@@ -32,8 +32,8 @@ namespace WebApi_project.hostProc
 
             string url = "";
             //url = "http://kansa.in.eandm.co.jp/Project/projectCostProc/json/projectInfoList_JSON.asp?pNum=20212329";
-            //url = "http://kansa.in.eandm.co.jp/Project/projectCostProc/json/projectInfoDetail_JSON.asp?pNum=20212329";
-            url = "http://localhost/Asp/projectCostProc/projectInfoList.json";
+            url = "http://kansa.in.eandm.co.jp/Project/projectCostProc/json/projectInfoDetail_JSON.asp?pNum=20212329";
+            //url = "http://localhost/Asp/projectCostProc/projectInfoList.json";
             hostWeb h = new hostWeb();
             string jsonStr = h.GetRequest(url);
 
