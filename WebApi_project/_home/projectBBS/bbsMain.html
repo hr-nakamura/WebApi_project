@@ -374,7 +374,21 @@
                     var pNum = $(this).parent().attr("pNum");
                     var name = this.className;
                     $.debug(name, event.type,  pNum);
-                    $.alert(name, event.type,  pNum);
+                    $.alert(name, event.type, pNum);
+                    var tm = new Date()
+                    var TimeStamp = String(parseInt(Date.UTC(tm) / 1000000))
+
+                    var URL = "bbsMain.html"
+                    URL += "?TimeStamp=" + TimeStamp
+
+                    var Buff = new Object
+                    var windowOption
+                    var value
+                    Buff.pNum = pNum
+                    windowOption = "dialogWidth:750px;dialogHeight:650px;"
+                    windowOption += "status:no;scroll:yes;"
+                    value = window.showModalDialog(URL, Buff, windowOption)
+
 
                     return (false);
                 }

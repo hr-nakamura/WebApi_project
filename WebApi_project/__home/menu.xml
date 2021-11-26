@@ -13,10 +13,13 @@
 		<menu name="TEST2(html)" memo="" mode="url" value="/WebApi/project/_Func/TEST/test1.html"/>
 		<menu name="QOSMIO" memo="" mode="url" value="/WebApi/project/_Func/QOSMIO/qosmio.html"/>
 	</menu>
-  <menu name="TEST" memo="" >
-		<menu name="要員一覧" memo="" mode="url" value="/WebApi/project/_home/要員情報/要員一覧.html"/>
+    <menu name="TEST" memo="" >
+      <menu name="要員一覧" memo="" mode="url" value="/WebApi/project/_home/要員情報/要員一覧.html"/>
+    </menu>
+    <menu name="TEST" memo="" >
+      <menu name="editProject" memo="" mode="url" value="http://kansa.in.eandm.co.jp/Project/projectBBS/editProject.asp"/>
+    </menu>
   </menu>
-	</menu>
 
 </root>
 

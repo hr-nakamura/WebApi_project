@@ -126,6 +126,7 @@
     <Content Include="_Func\TEST\test1.html" />
     <Content Include="_home\manageMenu.html" />
     <Content Include="_home\projectBBS\bbsMain.html" />
+    <Content Include="_home\projectBBS\editProject.asp" />
     <Content Include="_home\projectBBS\jquery.complete.js" />
     <Content Include="_home\projectBBS\new.gif" />
     <Content Include="_home\projectBBS\new7.gif" />
