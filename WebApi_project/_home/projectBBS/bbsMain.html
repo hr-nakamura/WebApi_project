@@ -34,68 +34,64 @@
             $(window).on("load", function () {
                 try {
                     $.debug("bbsMain");
-
+                    //alert($.fn.jquery);
                     o1 = $.stopwatch();
 
                     $(".target").frame({ "border-top": "1px solid gray", "border-right": "1px solid gray", "border-bottom": "1px solid gray" });
                     var Cnt = 0;
 
-                    //$(o1).stopwatch("開始1");
+                    $(o1).stopwatch("開始1");
 
-                    //$(o1).stopwatch("xsl読込1");
+                    $(o1).stopwatch("xsl読込1");
                     xmlDoc = $.str2xml("<root><projectList/></root>");
-                    xslDoc = $.loadXMLDoc("projectList.xsl");
+                    xslDoc = $.loadXMLDoc("xsl/projectList.xsl");
 
-                    //$(o1).stopwatch("変換1");
+                    $(o1).stopwatch("変換1");
                     var Buff = $(xmlDoc).transformNode(xslDoc);
-                    //$(o1).stopwatch("表示1");
+                    $(o1).stopwatch("表示1");
                     $(".target").frame("html", Buff);
 
 
-                     //選択表示(非同期実行)
-                    //var webapi_url = "http://localhost/WebApi/project/api/xml";
-                    //var webapi_url = "http://kansa.in.eandm.co.jp/WebApi/project/api/xml";
-                    var webapi_url = "/WebApi/project/api/xml";
+                    //選択表示(非同期実行)
+
+                    var webapi_url = (window.location.hostname == "localhost" ? "/WebApi/project/api/xml" : "http://kansa.in.eandm.co.jp/WebApi/project/api/xml");
                     var item = "projectBBS/projectList";
-                    para = {
+
+                    var para = {
                         limitYear: 2019,
-                        visitBBS : "2021/09/07"
+                        visitBBS: "2021/11/25"
                     }
-                    //$.loadXMLDoc("/Project/home/_xml/projectBBS/projectNum.xml", dispProject);
-                    //$.loadXMLDoc("/Project/home/_xml/projectBBS/projectNum_Full.xml", dispProject);
-                    //$.loadXMLDoc(hostName + "/Project/home/_xml/projectBBS/projectData_XML.asp", dispProject);
-                    //$(o1).stopwatch("xml読込2");
-                    var work = $.WebApi("GET", webapi_url, item, para, dispProject);
+                    $(o1).stopwatch("xml読込2");
+                    //var work = $.WebApi("GET", webapi_url, item, para, dispProject);
                     var xmlDoc = $.WebApi("GET", webapi_url, item, para);
 
-                    //$(o1).stopwatch("xml表示2");
+                    $(o1).stopwatch("xml表示2");
                     dispProject(xmlDoc);
 
                     var Buff = $(o1).stopwatch();
-                    $.debug( Buff);
+                    $.debug("終了", webapi_url,Buff);
 
                 } catch (e) {
-                    alert(e.message);
+                    $.alert("ERROR",e.message);
                 }
             });
             function test() {
                 //$.debug.log(this, "ABCDEF");
             }
             function dispProject(xmlDoc) {
-                //$(o1).stopwatch("プロジェクト一覧 html 変換");
+                $(o1).stopwatch("プロジェクト一覧 html 変換");
                 var Buff = $(xmlDoc).transformNode(xslDoc);
 
-                //$(o1).stopwatch("html 表示");
+                $(o1).stopwatch("html 表示");
                 $(".target").frame("html", Buff);
 
-                //$(o2).stopwatch("クリック");
+                $(o1).stopwatch("html カウント");
+                var disp = $(".target").find("tbody > tr");
+                $(".spanTotal").text(disp.length);
+
+                $(o1).stopwatch("新規をクリック");
                 $("input[class='stat'][value='0']").prop("checked", true).trigger("change");        /// 新規を選択
 
-                //$(o1).stopwatch("selectBox作成");
-                //if (projectInfo.optionInfo == false) {
-                //    setOptionInfo();
-                //    projectInfo.optionInfo = true;
-                //}
             }
 
         });
@@ -194,7 +190,7 @@
                     var disp = null;
                     var searchValue = para.value;
                     var className = para.name;
-                    $.debug("searchExec 開始", className,searchValue);
+                    $.debug("searchExec 開始", className, searchValue);
                     var options = {
                         itemSelector: ".table>tbody>tr",
                         textSelector: "td.pName",
@@ -231,7 +227,7 @@
                         })
                     }
                     $(".count").text(disp.length);
-                    $.debug("==",containsText, disp.length);
+                    $.debug("==", containsText, disp.length);
                     //$(".target").focus();
                 } catch (e) {
                     $.debug("cancel発生", e.message);
@@ -307,8 +303,8 @@
 
                     $(o2).stopwatch("selectBox作成");
                     //if (projectInfo.optionInfo == false) {
-                        setOptionInfo(disp);
-                        //projectInfo.optionInfo = true;
+                    setOptionInfo(disp);
+                    //projectInfo.optionInfo = true;
                     //}
                 } catch (e) {
                     $.debug("error", e.message);
@@ -328,7 +324,7 @@
                 //var disp = $(".target").find("tbody > tr");
 
                 //$(o2).stopwatch("データ数 表示");
-                $(".spanTotal").text(disp.length);
+                //$(".spanTotal").text(disp.length);
 
                 var Tab = {
                     select_group: { set: new Set(), name: [] },
@@ -366,6 +362,7 @@
                 //$.debug("setOptionInfo", Buff);
 
             }
+            // 登録者/グループ名選択
             $("body").on("mouseenter mouseleave click", "td.pRegist, td.pGroup", function () {
                 if (event.type == "mouseover") {
                     $(this).css("color", "blue").css("textDecoration", "underline");
@@ -376,22 +373,30 @@
                 else {
                     var pNum = $(this).parent().attr("pNum");
                     var name = this.className;
-                    $.debug("pNum", event.type, name, pNum);
+                    $.debug(name, event.type,  pNum);
+                    $.alert(name, event.type,  pNum);
+
                     return (false);
                 }
             });
-            $("body").on("click", ".pNumLine", function () {
-                var pNum = $(this).attr("pNum");
-                $.debug("tr pNum", pNum);
-                var a = 1;
-            });
-            $("body").on("mouseenter mouseleave", ".pNumLine", function () {
+            //=============================
+            // プロジェクト選択
+            $("body").on("mouseenter mouseleave　click", ".pNumLine", function () {
                 //$.debug("mouse", event.type);
                 if (event.type == "mouseover") {
                     $(this).css("background-color", "pink").css("cursor", "pointer");
                 }
-                else {
+                else if (event.type == "mouseout") {
+
                     $(this).css("background-color", "").css("cursor", "");
+                }
+                else {
+                    var pNum = $(this).attr("pNum");
+                    var name = this.className;
+                    $.debug(name, event.type, pNum);
+                    $.alert(name, event.type, pNum);
+
+                    return (false);
                 }
                 var a = 1;
             });
@@ -413,8 +418,8 @@
             border: 0px solid tomato;
             display: table;
             width: 100%;
-            margin:0px;
-            padding:0px;
+            margin: 0px;
+            padding: 0px;
         }
 
         .headerTable {

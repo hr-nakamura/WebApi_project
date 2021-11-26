@@ -14,129 +14,14 @@ namespace WebApi_project.hostProc
 {
     public class projectBBS : hostProc
     {
-        public object json_projectEdit(String Json)
-        {
-            Dictionary<string, object> Tab = new Dictionary<string, object>();
-            Dictionary<string, object> Info = new Dictionary<string, object>();
-            Dictionary<string, object> Data = new Dictionary<string, object>();
-
-            string classPath = this.GetType().FullName;                                         //クラスパスの取得
-            string className = this.GetType().Name;                                             //クラス名の取得
-            string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;           //メソッド名の取得
-            Debug.WriteLog(classPath);
-
-            string mName = Environment.MachineName;
-
-            Info.Add("mName", mName);
-            Info.Add("className", className);
-            Info.Add("methodName", methodName);
-            Info.Add("DB_Conn", DB_connectString);
-
-            Tab.Add("Info", (object)Info);
-            Tab.Add("Data", (object)Data);
-
-            //XmlDocument xmlDoc = new XmlDocument();
-            return (Tab);
-        }
-
-        public XmlDocument projectEdit(String Json)
-        {
-            //var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
-
-            object json_data = json_projectEdit(Json);
-            JObject JTop = Json_Tree(json_data);
-            string jsonStr = JsonConvert.SerializeObject(JTop);             // Json形式を文字列に
-            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr, "root");       // Json文字列をXML　objectに
-
-            ////XmlDocument xmlDoc = new XmlDocument();
-            ////var xmlMain = xmlDoc.CreateProcessingInstruction("xml", "version='1.0' encoding='Shift_JIS'");
-            ////XmlElement root = xmlDoc.CreateElement("root");
-
-            XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
-            var comment = xmlDoc.CreateComment("json data");
-            xmlDoc.PrependChild(comment);
-            xmlDoc.PrependChild(declaration);
-
-
-
-
-            //XmlDocument xmlDoc = new XmlDocument();
-
-            //var x = new projectBBS();
-            //Dictionary<string, object> Tab = (Dictionary<string, object>)x.projectList_json(Json);
-            //object Data = (object) Tab["Data"];
-
-
-            return (xmlDoc);
-        }
-
-
-        Dictionary<string, object> dbFunc_A()
-        {
-            SqlConnection DB;
-            string pNum = "";
-            string pName = "";
-            Dictionary<string, object> Tab = new Dictionary<string, object>();
-
-            try
-            {
-                DB = new SqlConnection(DB_connectString);
-                DB.Open();
-                Debug.noWrite("DB Open", DB_connectString);
-
-                StringBuilder sql = new StringBuilder("");
-                sql.Append(" SELECT");
-                sql.Append("    pNum  = MAST.id,");
-                sql.Append("    pName = MAST.mail");
-                sql.Append(" FROM");
-                sql.Append("    ログデータ MAST");
-                //sql.Append(" WHERE");
-                //sql.Append("    MAST.pName IS NOT NULL");
-
-
-                SqlDataReader reader = dbRead(DB, sql.ToString());
-                Debug.noWrite("reader Start");
-
-                int i = 10;
-                while (reader.Read())
-                {
-                    pNum = (string)reader["pNum"].ToString();
-                    pName = (string)reader["pName"];
-                    Debug.noWrite(pNum, pName);
-                    if (!Tab.ContainsKey(pNum))
-                    {
-                        Tab.Add(pNum, pName);
-                    }
-                    if (i-- == 0) break;
-                }
-
-                Debug.noWrite("reader Close");
-                reader.Close();
-
-                Debug.noWrite("DB Close");
-                DB.Close();
-                Debug.noWrite("DB Dispose");
-                DB.Dispose();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLog(ex.Message);
-            }
-            finally
-            {
-                Debug.noWrite("DB null");
-                DB = null;
-            }
-            return (Tab);
-        }
         public XmlDocument projectList(String Json)
         {
 
-     // <item name="limitYear"> 2019 </item>
-     // <item name="yymm"> 202107 </item>
-     // <item name="beforBBS">2021/06/30 00:00:00</item>
-     // <item name="visitBBS">2021/07/07 10:12:12</item>
-            if( Json == "{}")
+            // <item name="limitYear"> 2019 </item>
+            // <item name="yymm"> 202107 </item>
+            // <item name="beforBBS">2021/06/30 00:00:00</item>
+            // <item name="visitBBS">2021/07/07 10:12:12</item>
+            if (Json == "{}")
             {
                 Json = @"{beforBBS:'2021/06/30 00:00:00',visitBBS:'2021/07/07 10:12:12',limitYear:2019}";
             }
@@ -145,7 +30,7 @@ namespace WebApi_project.hostProc
             var visitBBS = o_json.visitBBS;
             var limitYear = o_json.limitYear;
 
-            Dictionary<string,object>Tab = (Dictionary<string, object>) projectList_json(Json);
+            Dictionary<string, object> Tab = (Dictionary<string, object>)json_projectList(Json);
             List<DB_projectNum> Data = (List<DB_projectNum>)Tab["Data"];
 
             XmlDocument xmlDoc = new XmlDocument();
@@ -176,7 +61,7 @@ namespace WebApi_project.hostProc
                 projectNode.SetAttribute("Title", project.Title);
                 projectNode.SetAttribute("営業", work[3]);
                 projectNode.SetAttribute("更新日", project.editDate.Substring(5, 5));
-                projectNode.SetAttribute("newFlag", Check_newFlag(project.editDate, visitBBS) );
+                projectNode.SetAttribute("newFlag", Check_newFlag(project.editDate, visitBBS));
                 //Title[0] : 客先会社名
                 //Title[1] : 客先部署
                 //Title[2] : 客先担当者
@@ -189,6 +74,12 @@ namespace WebApi_project.hostProc
             root.AppendChild(projectHead);
             root.AppendChild(projectList);
             return (xmlDoc);
+        }
+        public object json_projectList(String Json)
+        {
+            Dictionary<string, object> Tab;
+            Tab = json_Get_projectData(Json);
+            return (Tab);
         }
         string Check_newFlag(string s_editDate, string s_visitDate)
         {
@@ -205,12 +96,6 @@ namespace WebApi_project.hostProc
                 mode = "2";
             }
             return (mode);
-        } 
-        public object projectList_json(String Json)
-        {
-            Dictionary<string, object> Tab;
-            Tab = json_Get_projectData(Json);
-            return (Tab);
         }
         Dictionary<string, object> json_Get_projectData(String Json)
         {
@@ -221,7 +106,7 @@ namespace WebApi_project.hostProc
 
             var o_json = JsonConvert.DeserializeObject<projectPara>(Json);
             var visitBBS = o_json.visitBBS;
-            var limitYear = ( o_json.limitYear == null ? "2019" : o_json.limitYear);
+            var limitYear = (o_json.limitYear == null ? "2019" : o_json.limitYear);
             var i_limitYear = int.Parse(limitYear);
             string limitNum = (i_limitYear * 10000).ToString();
 
@@ -312,6 +197,69 @@ namespace WebApi_project.hostProc
             }
             return (Tab);
         }
+
+
+
+        Dictionary<string, object> dbFunc_A()
+        {
+            SqlConnection DB;
+            string pNum = "";
+            string pName = "";
+            Dictionary<string, object> Tab = new Dictionary<string, object>();
+
+            try
+            {
+                DB = new SqlConnection(DB_connectString);
+                DB.Open();
+                Debug.noWrite("DB Open", DB_connectString);
+
+                StringBuilder sql = new StringBuilder("");
+                sql.Append(" SELECT");
+                sql.Append("    pNum  = MAST.id,");
+                sql.Append("    pName = MAST.mail");
+                sql.Append(" FROM");
+                sql.Append("    ログデータ MAST");
+                //sql.Append(" WHERE");
+                //sql.Append("    MAST.pName IS NOT NULL");
+
+
+                SqlDataReader reader = dbRead(DB, sql.ToString());
+                Debug.noWrite("reader Start");
+
+                int i = 10;
+                while (reader.Read())
+                {
+                    pNum = (string)reader["pNum"].ToString();
+                    pName = (string)reader["pName"];
+                    Debug.noWrite(pNum, pName);
+                    if (!Tab.ContainsKey(pNum))
+                    {
+                        Tab.Add(pNum, pName);
+                    }
+                    if (i-- == 0) break;
+                }
+
+                Debug.noWrite("reader Close");
+                reader.Close();
+
+                Debug.noWrite("DB Close");
+                DB.Close();
+                Debug.noWrite("DB Dispose");
+                DB.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLog(ex.Message);
+            }
+            finally
+            {
+                Debug.noWrite("DB null");
+                DB = null;
+            }
+            return (Tab);
+        }
+
+
 
         class DB_projectNum
         {

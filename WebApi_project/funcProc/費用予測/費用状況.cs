@@ -42,7 +42,7 @@ namespace WebApi_project.hostProc
         {
             object o_json = json_費用状況(Json);
 
-            JObject O_Top = Json_Tree(o_json);
+            JObject O_Top = Jsonl_Info(o_json);
             JObject O_Inf = getStat();
 
             JObject Top = new JObject();

@@ -129,7 +129,7 @@
     <Content Include="_home\projectBBS\jquery.complete.js" />
     <Content Include="_home\projectBBS\new.gif" />
     <Content Include="_home\projectBBS\new7.gif" />
-    <Content Include="_home\projectBBS\projectList.xsl" />
+    <Content Include="_home\projectBBS\xsl\projectList.xsl" />
     <Content Include="_home\_Content\_debug\jquery.my.debug.js" />
     <Content Include="_home\_Content\_images\alert.png" />
     <Content Include="_home\_Content\_images\arrow_l1.gif" />
