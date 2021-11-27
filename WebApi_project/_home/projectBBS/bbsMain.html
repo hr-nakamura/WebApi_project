@@ -377,8 +377,8 @@
                     $.alert(name, event.type, pNum);
                     var tm = new Date()
                     var TimeStamp = String(parseInt(Date.UTC(tm) / 1000000))
-
-                    var URL = "http://kansa.in.eandm.co.jp/Project/projectBBS/editProject.html"
+                    URL = "http://kansa.in.eandm.co.jp/Project/projectBBS/";
+                    URL += (name == "pRegist" ? "editProject.html" : "editGroup.html");
                     URL += "?TimeStamp=" + TimeStamp
 
                     var Buff = new Object
@@ -409,6 +409,18 @@
                     var name = this.className;
                     $.debug(name, event.type, pNum);
                     $.alert(name, event.type, pNum);
+                    var tm = new Date();
+                    var TimeStamp = String(parseInt(Date.UTC(tm) / 1000000));
+                    URL = "http://kansa.in.eandm.co.jp/Project/projectBBS/viewProjectX.asp";
+                    URL += "?TimeStamp=" + TimeStamp
+
+                    var Buff = new Object;
+                    var windowOption;
+                    var value;
+                    Buff.pNum = pNum;
+                    windowOption = "dialogWidth:750px;dialogHeight:650px;";
+                    windowOption += "status:no;scroll:yes;";
+                    value = window.showModalDialog(URL, Buff, windowOption);
 
                     return (false);
                 }
