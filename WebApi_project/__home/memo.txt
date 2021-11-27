@@ -1,0 +1,8 @@
+﻿index.html
+	「mode」が「method」の時、実行した後
+	$.strage("viewStr")に入っているデータが
+		Json:viewJson.html
+		xml:viewXML.html
+	を実行する
+
+	「mode」が「url」の時、urlを呼ぶ

@@ -149,7 +149,7 @@ namespace DebugHost
                 if (lnghWnd == IntPtr.Zero)
                 {
                     // メモ帳が見つからなかったとき「pipe」で送信
-                    //pipe_Client(str);
+                    pipe_Client(str);
                     return;
                 }
             }

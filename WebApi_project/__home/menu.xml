@@ -6,8 +6,9 @@
 
 	<menu name="TEST" memo="" >
 	<menu name="__home" memo="" >
-		<menu name="viewJson" memo="" mode="url" value="/WebApi/project/__home/Util/viewJson/viewJson.html"/>
-	</menu>
+    <menu name="viewJson" memo="" mode="url" value="/WebApi/project/__home/Util/viewJson/viewJson.html"/>
+    <menu name="viewXML" memo="" mode="url" value="/WebApi/project/__home/Util/viewXML/viewXML.html"/>
+  </menu>
 
 	<menu name="_Func" memo="" >
 		<menu name="TEST2(html)" memo="" mode="url" value="/WebApi/project/_Func/TEST/test1.html"/>
