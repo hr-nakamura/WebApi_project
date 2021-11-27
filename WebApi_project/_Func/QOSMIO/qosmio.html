@@ -17,9 +17,29 @@
             limitYear : 2019
         }
         window.onload = function () {
-            $.debug.json("qosmio",para);
+            $.debug.json("qosmio", para);
+            test();
+        }
+        function test() {
+
+            var tm = new Date();
+            var TimeStamp = String(parseInt(Date.UTC(tm) / 1000000));
+
+            var URL = "editProject.asp";
+            URL += "?TimeStamp=" + TimeStamp;
+
+            var Buff = new Object;
+            var windowOption;
+            var value;
+            Buff.pNum = "pNum";
+            windowOption = "dialogWidth:750px;dialogHeight:650px;";
+            windowOption += "status:no;scroll:yes;";
+            value = window.showModalDialog(URL, Buff, windowOption);
+            alert(value);
         }
         $(function () {
+
+
         });
     </script>
 

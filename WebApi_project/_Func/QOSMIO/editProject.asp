@@ -1,6 +1,4 @@
 <%@ Language=JScript %>
-<!--#include virtual="/Project/Auth/projectLog.inc"-->
-<!--#include file="cmn.inc"-->
 <HTML>
 <HEAD>
 <META http-equiv="Content-Type" content="text/html; charset=SHIFT_JIS">
@@ -8,8 +6,8 @@
 
 		<TITLE>プロジェクト登録</TITLE>
 <%
-   var userName = Session("userName");
-   EMGLog.debug("projectBBS.txt","Start")
+   //var userName = Session("userName");
+   //EMGLog.debug("projectBBS.txt","Start")
    
 %>
 <%

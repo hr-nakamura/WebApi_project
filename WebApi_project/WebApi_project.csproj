@@ -120,13 +120,14 @@
     <Content Include="hostProc\memo.txt" />
     <Content Include="Scripts\json2.js" />
     <Content Include="Scripts\json2.min.js" />
+    <Content Include="_Func\QOSMIO\test.html" />
     <Content Include="_Func\TEST\ACEL.mdb" />
     <Content Include="_Func\TEST\EM.mdb" />
     <Content Include="_Func\TEST\PSL.mdb" />
     <Content Include="_Func\TEST\test1.html" />
     <Content Include="_home\manageMenu.html" />
     <Content Include="_home\projectBBS\bbsMain.html" />
-    <Content Include="_home\projectBBS\editProject.asp" />
+    <Content Include="_Func\QOSMIO\editProject.asp" />
     <Content Include="_home\projectBBS\jquery.complete.js" />
     <Content Include="_home\projectBBS\new.gif" />
     <Content Include="_home\projectBBS\new7.gif" />
