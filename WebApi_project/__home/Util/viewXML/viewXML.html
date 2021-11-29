@@ -16,7 +16,7 @@
         });
     </script>
     <script language="javascript">
-        var xmlSave = "";
+        var xmlSave = "<root></root>";
         window.onload = function () {
             viewXmlWindowInit();
         }
@@ -81,7 +81,7 @@
     <script language="javascript">
         function viewXML(xmlStr){
             try {
-                $("#simpleBase").empty().simpleXML({ xmlString: xmlStr });
+                $("#simpleBase").empty().simpleXML({ xmlString: xmlSave });
             } catch (e) {
                 $("#simpleBase").empty().append("Exception caught running plugin : " + e);
                 alert(e);
@@ -91,7 +91,7 @@
                 try {
                     $("#dynamicXML-output").empty();
                     var xml = $("#dynamicXML").val();
-                    $("#dynamicXML-output").simpleXML({ xmlString: xmlStr });
+                    $("#dynamicXML-output").simpleXML({ xmlString: xmlSave });
 
                 } catch (ex) {
                     alert("Unable to process XML: " + ex);

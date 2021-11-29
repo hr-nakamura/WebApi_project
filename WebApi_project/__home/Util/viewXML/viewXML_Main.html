@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script type="text/javascript" src="/WebApi/project/_home/_Content/_Scripts/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="/WebApi/project/_home/_Content/_Scripts/jquery.kansa.Query.js"></script>
+    <script type="text/javascript">
+        var Buff = "<root></root)";
+        window.onload = function () {
+            var h = window.innerHeight-16;
+            $(".iFBox").css("height",h);
+            var xmlDoc = $.loadXMLDoc("menu.xml");
+            var elem = $(".iFBox")[0];
+            var doc = elem.contentWindow;
+            doc.viewEntry("set", xmlDoc.xml);
+
+        }
+    </script>
+
+</head>
+<body>
+    <iframe class="iFBox" style="width:100%;border:none;vertical-align:top;"src="/WebApi/project/__home/Util/viewXML/viewXML.html"></iframe>
+</body>
+</html>

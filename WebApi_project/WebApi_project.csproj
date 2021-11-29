@@ -120,7 +120,10 @@
     <Content Include="hostProc\memo.txt" />
     <Content Include="Scripts\json2.js" />
     <Content Include="Scripts\json2.min.js" />
+    <Content Include="_Func\Dialog\demo.css" />
+    <Content Include="_Func\Dialog\test.html" />
     <Content Include="_Func\QOSMIO\test.html" />
+    <Content Include="_Func\Dialog\dialog.html" />
     <Content Include="_Func\TEST\ACEL.mdb" />
     <Content Include="_Func\TEST\EM.mdb" />
     <Content Include="_Func\TEST\PSL.mdb" />
@@ -162,8 +165,16 @@
     <Content Include="_home\_Content\_Scripts\easySelectbox.js" />
     <Content Include="_home\_Content\_Scripts\easySelectbox.min.js" />
     <Content Include="_home\_Content\_Scripts\encoding.js" />
+    <Content Include="_home\_Content\_Scripts\images\ui-icons_444444_256x240.png" />
+    <Content Include="_home\_Content\_Scripts\images\ui-icons_555555_256x240.png" />
+    <Content Include="_home\_Content\_Scripts\images\ui-icons_777620_256x240.png" />
+    <Content Include="_home\_Content\_Scripts\images\ui-icons_777777_256x240.png" />
+    <Content Include="_home\_Content\_Scripts\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="_home\_Content\_Scripts\images\ui-icons_ffffff_256x240.png" />
     <Content Include="_home\_Content\_Scripts\jquery-1.12.4.js" />
     <Content Include="_home\_Content\_Scripts\jquery-1.9.1.min.js" />
+    <Content Include="_home\_Content\_Scripts\jquery-ui.css" />
+    <Content Include="_home\_Content\_Scripts\jquery-ui.js" />
     <Content Include="_home\_Content\_Scripts\jquery.complete.js" />
     <Content Include="_home\_Content\_Scripts\jquery.complete2.js" />
     <Content Include="_home\_Content\_Scripts\jquery.inView.js" />
@@ -229,6 +240,8 @@
     <Content Include="__home\images\bg00.gif" />
     <Content Include="__home\images\EM.png" />
     <Content Include="__home\memo.txt" />
+    <Content Include="__home\Util\viewXML\menu.xml" />
+    <Content Include="__home\Util\viewXML\viewXML_Main.html" />
     <Content Include="__home\work\index5.html" />
     <Content Include="__home\index.html" />
     <Content Include="__home\work\index_1.html" />
@@ -266,6 +279,8 @@
     <Content Include="__home\work\WebApi_project_構成.xlsx" />
     <Content Include="_Func\QOSMIO\test.json" />
     <Content Include="_Func\QOSMIO\test_Json.json" />
+    <Content Include="_home\_Content\_Scripts\jquery-3.6.0.min.js" />
+    <Content Include="_home\_Content\_Scripts\jquery-3.6.0.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Data\iniFile.cs" />
