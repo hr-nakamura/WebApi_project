@@ -3,17 +3,39 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
+    <script src="/WebApi/project/_home/_Content/_Scripts/jquery-3.6.0.js"></script>
+    <script src="/WebApi/project/_home/_Content/_Scripts/jquery-1.13.0-ui.js"></script>
+    <script src="/WebApi/project/_home/_Content/_Scripts/jquery.kansa.Query.js"></script>
+
     <script type="text/javascript">
-        window.onload = function () {
-            alert("onload");
-        }
-        window.onunload = function () {
-            alert("close");
-        }
+        //$.alert("xx", window.location.href);
+        //alert($.fn.jquery);
+        $(document).ready(function () {
+            var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
+
+            var mailAddr = $.queryString("mail", "mailPara.mailAddr");
+            $.alert(mailAddr);
+        });
+        $(function () {
+            $(window).on("load", function (e) {
+                $.alert("onload");
+            });
+        });
+        $(function () {
+            $(window).on("unload", function () {
+                $.alert("onunload");
+            });
+            $(".Regist").on("click", function () {
+                $.alert("Regist_test");
+            });
+            $(".Cancel").on("click", function () {
+                $.alert("Cancel_test");
+            });
+        });
     </script>
 </head>
 <body>
-    <div id="dialog-form" title="Create new user">
+    <div>
         <p class="validateTips">All form fields are required.</p>
 
         <form>

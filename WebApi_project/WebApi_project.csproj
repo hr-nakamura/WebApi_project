@@ -121,6 +121,7 @@
     <Content Include="Scripts\json2.js" />
     <Content Include="Scripts\json2.min.js" />
     <Content Include="_Func\Dialog\demo.css" />
+    <Content Include="_Func\Dialog\dialog - コピー.html" />
     <Content Include="_Func\Dialog\test.html" />
     <Content Include="_Func\QOSMIO\test.html" />
     <Content Include="_Func\Dialog\dialog.html" />
@@ -173,8 +174,8 @@
     <Content Include="_home\_Content\_Scripts\images\ui-icons_ffffff_256x240.png" />
     <Content Include="_home\_Content\_Scripts\jquery-1.12.4.js" />
     <Content Include="_home\_Content\_Scripts\jquery-1.9.1.min.js" />
-    <Content Include="_home\_Content\_Scripts\jquery-ui.css" />
-    <Content Include="_home\_Content\_Scripts\jquery-ui.js" />
+    <Content Include="_home\_Content\_Scripts\jquery-1.13.0-ui.css" />
+    <Content Include="_home\_Content\_Scripts\jquery-1.13.0-ui.js" />
     <Content Include="_home\_Content\_Scripts\jquery.complete.js" />
     <Content Include="_home\_Content\_Scripts\jquery.complete2.js" />
     <Content Include="_home\_Content\_Scripts\jquery.inView.js" />

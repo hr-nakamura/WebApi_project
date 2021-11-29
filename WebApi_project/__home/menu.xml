@@ -4,20 +4,21 @@
 		<menu name="監査ページ" memo="" mode="url" value="/WebApi/project/_home/manageMenu.html"/>
 	</menu>
 
-	<menu name="TEST" memo="" >
 	<menu name="__home" memo="" >
     <menu name="viewJson" memo="" mode="url" value="/WebApi/project/__home/Util/viewJson/viewJson.html"/>
     <menu name="viewXML" memo="" mode="url" value="/WebApi/project/__home/Util/viewXML/viewXML_Main.html"/>
   </menu>
 
+	<menu name="_Func/Dialog" memo="" >
+    <menu name="dialog" memo="" mode="url" value="/WebApi/project/_Func/Dialog/dialog.html"/>
+    <menu name="test" memo="" mode="url" value="/WebApi/project/_Func/Dialog/test.html"/>
+  </menu>
 	<menu name="_Func" memo="" >
-    <menu name="Dialog" memo="" mode="url" value="/WebApi/project/_Func/Dialog/dialog.html"/>
     <menu name="QOSMIO" memo="" mode="url" value="/WebApi/project/_Func/QOSMIO/qosmio.html"/>
     <menu name="TEST2(html)" memo="" mode="url" value="/WebApi/project/_Func/TEST/test.html"/>
   </menu>
-    <menu name="TEST" memo="" >
-      <menu name="要員一覧" memo="" mode="url" value="/WebApi/project/_home/要員情報/要員一覧.html"/>
-    </menu>
+  <menu name="TEST" memo="" >
+    <menu name="要員一覧" memo="" mode="url" value="/WebApi/project/_home/要員情報/要員一覧.html"/>
   </menu>
 
 </root>
