@@ -8,28 +8,28 @@
     <script src="/WebApi/project/_home/_Content/_Scripts/jquery.kansa.Query.js"></script>
 
     <script type="text/javascript">
-        //$.alert("xx", window.location.href);
-        //alert($.fn.jquery);
+        $(window).on("load", function (e) {
+            //$.alert("onload");
+            //$.alert("xx", $.fn.jquery, window.location.href);
+            //var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
+            var pNum = $.queryString("pNum", "projectNum");
+            $.alert(pNum);
+        });
         $(document).ready(function () {
-            var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
 
-            var mailAddr = $.queryString("mail", "mailPara.mailAddr");
-            $.alert(mailAddr);
+        });
+
+        $(function () {
+
         });
         $(function () {
-            $(window).on("load", function (e) {
-                $.alert("onload");
-            });
-        });
-        $(function () {
-            $(window).on("unload", function () {
-                $.alert("onunload");
-            });
             $(".Regist").on("click", function () {
                 $.alert("Regist_test");
+                window.parent["fineDialog"]("regist");
             });
             $(".Cancel").on("click", function () {
                 $.alert("Cancel_test");
+                window.parent["fineDialog"]("calcel");
             });
         });
     </script>

@@ -60,17 +60,21 @@
     <script src="/WebApi/project/_home/_Content/_Scripts/jquery-1.13.0-ui.js"></script>
     <script src="/WebApi/project/_home/_Content/_Scripts/jquery.kansa.Query.js"></script>
     <script>
+        function fineDialog(para) {
+            $.alert("fineDialog",para);
+            $(".iFBox").dialog('close');
+            //$(".iFBox").dialog('destroy');
+            
+
+        }
         $(function () {
 
 
             $(".test").on("click", function () {
                 //$('<div></div>').dialog({
 
-                $("<iframe src='test.html?mail=ABC@COM'></iframe>").dialog({
-
-                    //open: function () {
-                    //    $(this).load('test.html');
-                    //},
+                $("<iframe class='iFBox'></iframe>").dialog({
+                    autoOpen: true,
                     title: 'タイトル',
                     height: 400,
                     width: 350,
@@ -81,21 +85,21 @@
                     //        $(this).dialog('close');
                     //    }
                     //},
-
+                    open: function () {
+                        //$.alert("onloadX");
+                        //$(this).attr("src", "test.html?pNum=20211234");
+                        $(this).attr({ "src": "test.html?pNum=20211234" });
+                    },
                     close: function () {
-                        var val = $(".Regist").val();
-                        $.alert("XXX", val);
-                        $(this).dialog('close');
+                        //$.alert("close");
+                        $(this).dialog('destroy');
                     }
                 });
-                function addTest() {
-                    $.alert("addTest");
-                    $(this).dialog('close');
-                }
+
             });
 
             $(".Regist").on("click", function () {
-                $.alert("Regist");
+                $.alert("Regist",$(".iFBox").length);
             });
             $(".Cancel").on("click", function () {
                 $.alert("Cancel");
