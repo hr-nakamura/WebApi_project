@@ -61,57 +61,107 @@
     <script src="/WebApi/project/_home/_Content/_Scripts/jquery.kansa.Query.js"></script>
     <script>
         function fineDialog(para) {
-            $.alert("fineDialog",para);
+            $.alert("fineDialog", para);
             $(".iFBox").dialog('close');
             //$(".iFBox").dialog('destroy');
-            
-
         }
         $(function () {
 
+            $(".test1").on("click", function () {
 
-            $(".test").on("click", function () {
-                //$('<div></div>').dialog({
+                var work = showDialog2("fineDialog");
 
+            });
+
+
+            function showDialog2(returnFunction) {
+                var x = 1;
                 $("<iframe class='iFBox'></iframe>").dialog({
                     autoOpen: true,
                     title: 'タイトル',
                     height: 400,
                     width: 350,
-                    
-                    //buttons: {
-                    //    "登録": addTest,
-                    //    '取消': function () {
-                    //        $(this).dialog('close');
-                    //    }
-                    //},
                     open: function () {
-                        //$.alert("onloadX");
+                        //$.alert("openX");
                         //$(this).attr("src", "test.html?pNum=20211234");
-                        $(this).attr({ "src": "test.html?pNum=20211234" });
+                        $(this).attr({ "src": "test.html?pNum=20211234&return_functionName=fineDialog" });
                     },
                     close: function () {
-                        //$.alert("close");
+                        //$.alert("closeX");
                         $(this).dialog('destroy');
+
                     }
+
                 });
+                function fineDialog(para) {
+                    $.alert("fineDialog", para);
+                    $(".iFBox").dialog('close');
+                    //$(".iFBox").dialog('destroy');
+                }
+            }
+        });
 
-            });
-
+        $(function () {
             $(".Regist").on("click", function () {
-                $.alert("Regist",$(".iFBox").length);
+                $.alert("Regist", $(".iFBox").length);
             });
             $(".Cancel").on("click", function () {
                 $.alert("Cancel");
             });
         });
 
+        $(function () {
+            $(".test2").on("click", function () {
 
+                var work = showDialog(fineDialog);
+                $.alert(work);
+                function fineDialog(para) {
+                    $.alert("fineDialog", para);
+                    $(".iFBox").dialog('close');
+                    //$(".iFBox").dialog('destroy');
+                }
+            });
+
+            function showDialog(returnFunction) {
+                var retVal = "789";
+                $('<div><input class="inputValue" type="text"></input></div>').dialog({
+                    autoOpen: true,
+                    title: 'タイトル',
+                    height: 400,
+                    width: 350,
+                    buttons: {
+                        "登録": function () {
+                            retVal = $(".inputValue").val();
+                            //$.alert("登録", $(".inputValue").val());
+                            $(this).dialog('close');
+                            //returnFunction($(".inputValue").val());
+                        },
+                        '取消': function () {
+                            retVal = "";
+                            //$.alert("取消");
+                            $(this).dialog('close');
+                            //returnFunction ("");
+                        }
+                    },
+                    open: function () {
+                        //$.alert("openX");
+                    },
+                    close: function () {
+                        //$.alert("closeX");
+                        $(this).dialog('destroy');
+                        returnFunction(retVal);
+                    }
+                });
+                return ("123");
+            }
+
+        });
 
     </script>
 </head>
 <body>
-    <button class="test">ABCDEF</button>
+    <button class="test1">iFrame</button><br/>
+    <button class="test2">div</button>
 
     <div class="resultDataX">
         <button class="Regist">登録</button>

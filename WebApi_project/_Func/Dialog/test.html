@@ -8,12 +8,14 @@
     <script src="/WebApi/project/_home/_Content/_Scripts/jquery.kansa.Query.js"></script>
 
     <script type="text/javascript">
+        var return_functionName = "";
+        var pNum;
         $(window).on("load", function (e) {
             //$.alert("onload");
             //$.alert("xx", $.fn.jquery, window.location.href);
             //var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
-            var pNum = $.queryString("pNum", "projectNum");
-            $.alert(pNum);
+            pNum = $.queryString("pNum", "projectNum");
+            return_functionName = $.queryString("return_functionName")
         });
         $(document).ready(function () {
 
@@ -24,12 +26,12 @@
         });
         $(function () {
             $(".Regist").on("click", function () {
-                $.alert("Regist_test");
-                window.parent["fineDialog"]("regist");
+                //$.alert("Regist_test");
+                window.parent[return_functionName]("regist");
             });
             $(".Cancel").on("click", function () {
-                $.alert("Cancel_test");
-                window.parent["fineDialog"]("calcel");
+                //$.alert("Cancel_test");
+                window.parent[return_functionName]("calcel");
             });
         });
     </script>
