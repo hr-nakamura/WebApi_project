@@ -12,6 +12,8 @@
 	<menu name="_Func/Dialog" memo="" >
     <menu name="dialog" memo="" mode="url" value="/WebApi/project/_Func/Dialog/dialog.html"/>
     <menu name="test" memo="" mode="url" value="/WebApi/project/_Func/Dialog/test.html"/>
+    <menu name="test2-1" memo="" mode="url" value="/WebApi/project/_Func/test2/dialog.html"/>
+    <menu name="test2-2" memo="" mode="url" value="/WebApi/project/_Func/test2/test.html"/>
   </menu>
 	<menu name="_Func" memo="" >
     <menu name="QOSMIO" memo="" mode="url" value="/WebApi/project/_Func/QOSMIO/qosmio.html"/>

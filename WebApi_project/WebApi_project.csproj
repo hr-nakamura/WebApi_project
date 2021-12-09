@@ -125,6 +125,8 @@
     <Content Include="_Func\Dialog\test.html" />
     <Content Include="_Func\QOSMIO\test.html" />
     <Content Include="_Func\Dialog\dialog.html" />
+    <Content Include="_Func\test2\dialog.html" />
+    <Content Include="_Func\test2\test.html" />
     <Content Include="_Func\TEST\ACEL.mdb" />
     <Content Include="_Func\TEST\EM.mdb" />
     <Content Include="_Func\TEST\PSL.mdb" />

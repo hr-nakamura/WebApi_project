@@ -60,22 +60,28 @@
     <script src="/WebApi/project/_home/_Content/_Scripts/jquery-1.13.0-ui.js"></script>
     <script src="/WebApi/project/_home/_Content/_Scripts/jquery.kansa.Query.js"></script>
     <script>
-        function fineDialog(para) {
-            $.alert("fineDialog", para);
-            $(".iFBox").dialog('close');
-            //$(".iFBox").dialog('destroy');
-        }
+        $(window).on("load", function () {
+            //alert("onload");
+            //$.alert(typeof (fineDialog));
+        });
+
+        var dialog;
+        // 終了後の処理
+        var fineDialog;
+
+
         $(function () {
 
+
+        });
+        $(function () {
             $(".test1").on("click", function () {
 
                 var work = showDialog2("fineDialog");
-
             });
 
-
             function showDialog2(returnFunction) {
-                var x = 1;
+                if ($(".iFBox").dialog("isOpen") == true) return;
                 $("<iframe class='iFBox'></iframe>").dialog({
                     autoOpen: true,
                     title: 'タイトル',
@@ -87,26 +93,42 @@
                         $(this).attr({ "src": "test.html?pNum=20211234&return_functionName=fineDialog" });
                     },
                     close: function () {
-                        //$.alert("closeX");
+                        //$.alert("closeX", $(this).attr("status"));
                         $(this).dialog('destroy');
 
                     }
-
                 });
-                function fineDialog(para) {
-                    $.alert("fineDialog", para);
+                // 終了時の処理を記述する
+                fineDialog = function (para) {
                     $(".iFBox").dialog('close');
-                    //$(".iFBox").dialog('destroy');
+                    if (para == "regist") {
+                        $.alert("****fineDialog*****", para);
+                    }
+                    else {
+                        $.alert("****fineDialog*****", para);
+                    }
                 }
             }
         });
 
         $(function () {
             $(".Regist").on("click", function () {
-                $.alert("Regist", $(".iFBox").length);
+                $.alert("Regist", "iframe:"+$(".iFBox").length, "div:"+$(".div_Box").length);
             });
             $(".Cancel").on("click", function () {
                 $.alert("Cancel");
+
+            });
+            $(".test").on("click", function () {
+                try {
+                    var win = $(".iFBox")[0].contentWindow;
+                    win.abcd("ABCD");
+                    var doc = $(".iFBox").contents();
+                    var x = doc.find("[id='email']").val();
+                    alert(x);
+                    var a = 1;
+
+                } catch (e) { alert(e.message) };
             });
         });
 
@@ -114,17 +136,19 @@
             $(".test2").on("click", function () {
 
                 var work = showDialog(fineDialog);
-                $.alert(work);
+                //$.alert(work);
+
+                // 終了後の処理
                 function fineDialog(para) {
                     $.alert("fineDialog", para);
-                    $(".iFBox").dialog('close');
                     //$(".iFBox").dialog('destroy');
                 }
             });
 
             function showDialog(returnFunction) {
+                if ($(".iFBox").dialog("isOpen") == true) return;
                 var retVal = "789";
-                $('<div><input class="inputValue" type="text"></input></div>').dialog({
+                $('<div class="iFBox"><input class="inputValue" type="text"></input></div>').dialog({
                     autoOpen: true,
                     title: 'タイトル',
                     height: 400,
@@ -154,7 +178,6 @@
                 });
                 return ("123");
             }
-
         });
 
     </script>
@@ -166,6 +189,7 @@
     <div class="resultDataX">
         <button class="Regist">登録</button>
         <button class="Cancel">取消</button>
+        <button class="test">test</button>
     </div>
     <hr />
 

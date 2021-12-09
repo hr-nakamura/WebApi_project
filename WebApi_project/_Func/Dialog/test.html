@@ -17,21 +17,35 @@
             pNum = $.queryString("pNum", "projectNum");
             return_functionName = $.queryString("return_functionName")
         });
+        function abcd(para) {
+            $.alert("XXX",para);
+        }
         $(document).ready(function () {
 
         });
 
         $(function () {
-
+            function abcdX() {
+                alert("XXX");
+            }
         });
         $(function () {
             $(".Regist").on("click", function () {
                 //$.alert("Regist_test");
+                //var work = $(".iFBox", window.parent.document);
+                //$(work).attr("status", "regist");
                 window.parent[return_functionName]("regist");
             });
             $(".Cancel").on("click", function () {
-                //$.alert("Cancel_test");
-                window.parent[return_functionName]("calcel");
+                try {
+                    //$.alert("Cancel_test");
+                    //var work = $(".iFBox", window.parent.document);
+                    //$(work).attr("status", "cancel");
+                    window.parent[return_functionName]("cancel");
+
+                } catch (e) {
+                    alert(e.message);
+                }
             });
         });
     </script>

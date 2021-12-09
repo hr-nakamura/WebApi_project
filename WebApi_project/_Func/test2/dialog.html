@@ -1,0 +1,129 @@
+﻿
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>jQuery UI Dialog - Modal form</title>
+
+    <style>
+        label, input {
+            display: block;
+        }
+
+            input.text {
+                margin-bottom: 12px;
+                width: 95%;
+                padding: .4em;
+            }
+
+        fieldset {
+            padding: 0;
+            border: 0;
+            margin-top: 25px;
+        }
+
+        h1 {
+            font-size: 1.2em;
+            margin: .6em 0;
+        }
+
+        div#users-contain {
+            width: 350px;
+            margin: 20px 0;
+        }
+
+            div#users-contain table {
+                margin: 1em 0;
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+                div#users-contain table td, div#users-contain table th {
+                    border: 1px solid #eee;
+                    padding: .6em 10px;
+                    text-align: left;
+                }
+
+        .ui-dialog .ui-state-error {
+            padding: .3em;
+        }
+
+        .validateTips {
+            border: 1px solid transparent;
+            padding: 0.3em;
+        }
+    </style>
+
+    <script src="/WebApi/project/_home/_Content/_Scripts/jquery-3.6.0.js"></script>
+    <script src="/WebApi/project/_home/_Content/_Scripts/jquery-1.13.0-ui.js"></script>
+    <script src="/WebApi/project/_home/_Content/_Scripts/jquery.kansa.Query.js"></script>
+    <script language="JavaScript">
+<!--
+        jQuery(function ($) {
+
+            // 「検索」ボタンを押した時の処理
+            $("#kensaku")
+                .attr("type", "button")
+                .val("名前検索")
+                .click(function () {
+
+                    $("#dialog-iframe").dialog({
+                        title: "名前検索",
+                        width: 1050,
+                        modal: true,
+                        open: function (event, ui) {
+
+                            //ここでalertを入れないとcontents()～が動作しない
+                            alert("ダイアログオープン");
+                            $("#iframe_win").contents().find("[name=maxSelection]").val("1");
+
+                        },
+                        buttons: {
+                            "選択": function (event) {
+
+                                //検索画面の「選択」ボタン押下時のメソッドを実行
+                                document.getElementById("iframe_win").contentWindow.add();
+
+                                //検索画面で選択された姓＋名を親画面にセット
+                                $("#namae").val($("#iframe_win").contents().find("[name=selectSei]").val() +
+                                    $("#iframe_win").contents().find("[name=selectMei]").val());
+
+                                //ダイアログを閉じる
+                                $(this).dialog("close");
+                            },
+                            "キャンセル": function () { $(this).dialog("close"); }
+                        },
+                        close: function () { $(this).dialog("destroy"); }
+                    });
+                });
+        })
+        // -->
+    </script>
+    </head>
+
+<body class="test">
+
+    <html:form action="/AAA" method="post" onsubmit="return func()">
+
+        <!--ダイアログの内容-->
+        <div id="dialog-iframe" title="" style='display:none;'>
+            <iframe src="test.html?action="
+                    name="iframe_win"
+                    id="iframe_win"
+                    frameborder="0"
+                    scrolling="auto"
+                    width="1000"
+                    height="550"
+                    style=''></iframe>
+        </div>
+
+        <!--子画面からの返却値をセットするテキストボックス-->
+        <html:text name="AAAForm" property="seimei" styleId="namae" size="80" />
+
+        <!--検索ダイアログを呼び出す検索ボタン-->
+        <input id="kensaku">
+
+        </html:form>
+</body>
+</html>
