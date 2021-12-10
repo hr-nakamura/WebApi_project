@@ -59,7 +59,11 @@
                 if ($(".iFBox").dialog("isOpen") == true) return;
                 var url = "editProject.html";
                 url = "test.html";
-                var src_str = url.concat("?","pNum=20214927","&","return_functionName=fineDialog");
+                var Buff = [];
+                Buff.push("pNum=20214927");
+                Buff.push("return_functionName=fineDialog");
+
+                var src_str = url.concat("?",Buff.join("&"));
                 $("<iframe class='iFBox'></iframe>").dialog({
                     dialogClass: "wkDialogClass",
                     closeOnEscape: false,
