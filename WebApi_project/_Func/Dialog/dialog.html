@@ -6,72 +6,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>jQuery UI Dialog - Modal form</title>
     <link rel="stylesheet" href="/WebApi/project/_home/_Content/_Scripts/jquery-1.13.0-ui.css">
-
     <style>
-        label, input {
-            display: block;
+        <!--
+        .wkDialogClass {
+            background-color: darkgray;
+            padding: 0px;
         }
 
-            input.text {
-                margin-bottom: 12px;
-                width: 95%;
-                padding: .4em;
+            .wkDialogClass .ui-dialog-titlebar {
+                color: purple;
+                background: plum;
             }
 
-        fieldset {
-            padding: 0;
-            border: 0;
-            margin-top: 25px;
-        }
+            .wkDialogClass .ui-dialog-content {
+                background: skyblue;
+                padding: 0px;
 
-        h1 {
-            font-size: 1.2em;
-            margin: .6em 0;
-        }
-
-        div#users-contain {
-            width: 350px;
-            margin: 20px 0;
-        }
-
-            div#users-contain table {
-                margin: 1em 0;
-                border-collapse: collapse;
-                width: 100%;
             }
 
-                div#users-contain table td, div#users-contain table th {
-                    border: 1px solid #eee;
-                    padding: .6em 10px;
-                    text-align: left;
-                }
 
-        .ui-dialog .ui-state-error {
-            padding: .3em;
-        }
+        -->
 
-        .validateTips {
-            border: 1px solid transparent;
-            padding: 0.3em;
-        }
     </style>
 
-    <script src="/WebApi/project/_home/_Content/_Scripts/jquery-3.6.0.js"></script>
+
+
+    <script src="/WebApi/project/_home/_Content/_Scripts/jquery-3.6.0.min.js"></script>
     <script src="/WebApi/project/_home/_Content/_Scripts/jquery-1.13.0-ui.js"></script>
     <script src="/WebApi/project/_home/_Content/_Scripts/jquery.kansa.Query.js"></script>
     <script>
+        var fineDialog;
+        window.onload = function () {
+            //alert($.fn.jquery);
+        }
         $(window).on("load", function () {
             //alert("onload");
             //$.alert(typeof (fineDialog));
         });
 
-        var dialog;
-        // 終了後の処理
-        var fineDialog;
 
 
         $(function () {
-
 
         });
         $(function () {
@@ -82,18 +57,27 @@
 
             function showDialog2(returnFunction) {
                 if ($(".iFBox").dialog("isOpen") == true) return;
+                var url = "editProject.html";
+                //url = "test.html";
+                var src_str = url.concat("?","pNum=20214927","&","return_functionName=fineDialog");
                 $("<iframe class='iFBox'></iframe>").dialog({
+                    dialogClass: "wkDialogClass",
+                    closeOnEscape: false,
+                    modal: true,
+                    minHeight: 650,
+                    //maxHeight: 650,
+                    minWidth: 650,
+                    //maxWidth: 650,
+                    //height: 'auto',
+                    //width: 'auto',
                     autoOpen: true,
                     title: 'タイトル',
-                    height: 400,
-                    width: 350,
+                    //height: 650,
+                    //width: 650,
                     open: function () {
-                        //$.alert("openX");
-                        //$(this).attr("src", "test.html?pNum=20211234");
-                        $(this).attr({ "src": "test.html?pNum=20211234&return_functionName=fineDialog" });
+                        $(this).attr({ "src":  src_str });
                     },
                     close: function () {
-                        //$.alert("closeX", $(this).attr("status"));
                         $(this).dialog('destroy');
 
                     }
@@ -113,7 +97,7 @@
 
         $(function () {
             $(".Regist").on("click", function () {
-                $.alert("Regist", "iframe:"+$(".iFBox").length, "div:"+$(".div_Box").length);
+                $.alert("Regist", "iframe:" + $(".iFBox").length, "div:" + $(".div_Box").length);
             });
             $(".Cancel").on("click", function () {
                 $.alert("Cancel");

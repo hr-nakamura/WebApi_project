@@ -120,8 +120,10 @@
     <Content Include="hostProc\memo.txt" />
     <Content Include="Scripts\json2.js" />
     <Content Include="Scripts\json2.min.js" />
+    <Content Include="_Func\Dialog\back.gif" />
     <Content Include="_Func\Dialog\demo.css" />
     <Content Include="_Func\Dialog\dialog - コピー.html" />
+    <Content Include="_Func\Dialog\editProject.html" />
     <Content Include="_Func\Dialog\test.html" />
     <Content Include="_Func\QOSMIO\test.html" />
     <Content Include="_Func\Dialog\dialog.html" />
