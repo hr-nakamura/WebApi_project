@@ -58,7 +58,7 @@
             function showDialog2(returnFunction) {
                 if ($(".iFBox").dialog("isOpen") == true) return;
                 var url = "editProject.html";
-                url = "test.html";
+                //url = "test.html";
                 var Buff = [];
                 Buff.push("pNum=20214927");
                 Buff.push("return_functionName=fineDialog");
@@ -68,18 +68,19 @@
                     dialogClass: "wkDialogClass",
                     closeOnEscape: false,
                     modal: true,
-                    minHeight: 650,
+                    //minHeight: 650,
                     //maxHeight: 650,
-                    minWidth: 650,
+                    //minWidth: 650,
                     //maxWidth: 650,
                     //height: 'auto',
                     //width: 'auto',
                     autoOpen: true,
                     title: 'タイトル',
-                    //height: 650,
-                    //width: 650,
+                    height: 850,
+                    width: 850,
                     open: function () {
                         $(this).attr({ "src":  src_str });
+                        $(this).css("width", "100%");
                     },
                     close: function () {
                         $(this).dialog('destroy');
