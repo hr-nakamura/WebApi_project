@@ -6,14 +6,15 @@
 	<TITLE>ÉvÉçÉWÉFÉNÉgìoò^</TITLE>
 
 	<LINK rel="stylesheet" type="text/css" href="dialog1.css">
-	<link rel="stylesheet" href="/WebApi/project/_home/_Content/_Scripts/jquery-1.13.0-ui.css">
+	<link rel="stylesheet" href="/project/_home/_Content/_Scripts/jquery-1.13.0-ui.css">
 
-	<script src="/WebApi/project/_home/_Content/_Scripts/jquery-3.6.0.min.js"></script>
-	<script src="/WebApi/project/_home/_Content/_Scripts/jquery-1.13.0-ui.js"></script>
-	<script src="/WebApi/project/_home/_Content/_Scripts/jquery.kansa.Query.js"></script>
+	<script src="/project/_home/_Content/_Scripts/jquery-3.6.0.min.js"></script>
+	<script src="/project/_home/_Content/_Scripts/jquery-1.13.0-ui.js"></script>
+	<script src="/project/_home/_Content/_Scripts/jquery.kansa.Query.js"></script>
+	<script src="/project/_home/_Content/_Scripts/json.js"></script>
 	<style>
 		body {
-			border: solid red 1px;
+			border: solid red 0px;
 			padding: 0;
 		}
 	</style>
@@ -44,16 +45,13 @@
 			} catch (e) {
 				alert(e.message);
 			}
-
-
 		});
 		$(function () {
-			$(".Regist").on("click", function () {
+			$(".regist").on("click", function () {
 				try {
-
 					result = regist_data();
-					$.alert("Regist_test", return_functionName, result);
-					var func = (result ? "regist" : "cansel");
+					//$.alert("Regist_test", return_functionName, result);
+					var func = (result ? "regist" : "cancel");
 					window.parent[return_functionName](func);
 					// êVãKÇÃéûpNumÇÕÅH
 				} catch (e) {
@@ -61,11 +59,42 @@
 				}
 
 			});
+			$(".new").on("click", function () {
+				try {
+					alert("new");
+					pNum = 0
+					InitData()
+				} catch (e) {
+					alert(e.message);
+				}
+			});
+			$(".reset").on("click", function () {
+				try {
+					alert("reset");
+					InitData()
+				} catch (e) {
+					alert(e.message);
+				}
+			});
+			$(".exit").on("click", function () {
+				try {
+					alert("exit");
+					window.parent[return_functionName]("cancel");
+				} catch (e) {
+					alert(e.message);
+				}
+			});
 		});
+
+		(function ($) {
+			$.jsonOut = function (json) {
+                alert(JSON.stringify(json, null, 2));
+            }
+        })(jQuery);
 	</script>
 	<SCRIPT FOR="NEW" EVENT="onclick" LANGUAGE="JavaScript">
-		pNum = 0
-		InitData()
+		//pNum = 0
+		//InitData()
 	</SCRIPT>
 	<SCRIPT FOR="window" EVENT="onload_X" LANGUAGE="JavaScript">
 		try {
@@ -314,7 +343,7 @@
 
 				TitleName.innerHTML = "ÉvÉçÉWÉFÉNÉgì‡óeèCê≥"
 				TitleCode.innerHTML = Tab.pCode
-				TitleGuide.innerHTML = "<INPUT type='button' value='êVãKçÏê¨' ID='NEW' title='ì‡óeÇåpè≥ÇµÇƒçÏê¨ÇµÇ‹Ç∑'>"
+				TitleGuide.innerHTML = "<INPUT type='button' value='êVãKçÏê¨' class='new' ID='NEW_X' title='ì‡óeÇåpè≥ÇµÇƒçÏê¨ÇµÇ‹Ç∑'>"
 				groupBox.innerHTML = "<SPAN ID='GrpSEL' gID='" + Tab.gID + "' Tab=''></SPAN>" + Tab.gName
 			}
 			pName.value = Tab.pName
@@ -526,6 +555,21 @@
 				alert("â∫ãLÇÃçÄñ⁄Çê›íËÇµÇƒÇ≠ÇæÇ≥Ç¢\n\n" + "[" + Buff.join("]\n[") + "]")
 				return
 			}
+            var json = {
+                P_pNum: P_pNum,
+                P_pName: P_pName,
+                P_corpName: P_corpName,
+                P_Title: P_Title,
+                P_Content: P_Content,
+                P_Stat: P_Stat,
+                P_salesManID: P_salesManID,
+                P_kind: P_kind,
+                P_kindNew: P_kindNew,
+                P_kindCategory1: P_kindCategory1,
+                P_kindCategory2: P_kindCategory2,
+                P_fixLevel: P_fixLevel
+            }
+            $.jsonOut(json);
 			/*
 			var cObj
 			var aspObj = RSGetASPObject("bbsDB.asp")
@@ -571,14 +615,15 @@
 				//		alert("ìoò^Ç≈Ç´Ç‹ÇπÇÒÇ≈ÇµÇΩÅB")
 			}
 			*/
+
 			return (result);
 		}
 	</SCRIPT>
 	<SCRIPT FOR='reset' EVENT='onclick()' LANGUAGE='JavaScript'>
-		InitData()
+		//InitData()
 	</SCRIPT>
 	<SCRIPT FOR='exit' EVENT='onclick()' LANGUAGE='JavaScript'>
-		window.close()
+		//window.close()
 	</SCRIPT>
 
 	<SCRIPT LANGUAGE="JavaScript" src="cmn1.js"></SCRIPT>
@@ -594,27 +639,24 @@
 <BODY background="back.gif">
 	<TABLE ALIGN="center" border="0" cellPadding="2" cellSpacing="0" WIDTH="80%">
 		<THEAD>
-			<!--
-					<TR>
-						<TD COLSPAN="3" ALIGN="RIGHT" ID="userName"></TD>
-					</TR>
-			//-->
-			<TR>
-				<TD COLSPAN="3" ALIGN="middle" ID="TitleName" class="prgEntry">&nbsp;</TD>
-			</TR>
-			<TR>
-				<TD COLSPAN="3" ALIGN="middle" ID="TitleCode" class="PROJECT-NAME">&nbsp;</TD>
-			</TR>
-		<TD COLSPAN="3" ALIGN="middle" ID="TitleGuide">&nbsp;</TD>
 		<TR>
-		</TR>
-		<TD COLSPAN="3" ALIGN="middle"><hr></TD>
-		<TR>
+			<TD COLSPAN="3" ALIGN="center" ID="TitleName" class="prgEntry">&nbsp;</TD>
 		</TR>
 		<TR>
-			<TD COLSPAN="2"><INPUT type="button" value="ìoò^" class="Regist" ID="regist_X"></TD>
+			<TD COLSPAN="3" ALIGN="center" ID="TitleCode" class="PROJECT-NAME">&nbsp;</TD>
+		</TR>
+		<TR>
+			<TD COLSPAN="3" ALIGN="center" ID="TitleGuide">&nbsp;</TD>
+		</TR>
+		<TR>
+			<TD COLSPAN="3" ALIGN="center"><hr></TD>
+		</TR>
+		<TR>
+			<TD COLSPAN="2">
+				<INPUT type="button" value="ìoò^" class="regist" ID="regist_X">
+			</TD>
 			<TD align='right' WIDTH="1%" nowrap>
-				<INPUT type="button" value="ÿæØƒ" ID="reset"> <INPUT type="button" value="èIóπ" ID="exit">
+				<INPUT type="button" value="ÿæØƒ" class="reset" ID="reset_X"> <INPUT type="button" value="èIóπ" class="exit" ID="exit_X">
 			</TD>
 		</TR>
 		</THEAD>

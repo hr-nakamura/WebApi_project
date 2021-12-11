@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>jQuery UI Dialog - Modal form</title>
-    <link rel="stylesheet" href="/WebApi/project/_home/_Content/_Scripts/jquery-1.13.0-ui.css">
+    <link rel="stylesheet" href="/project/_home/_Content/_Scripts/jquery-1.13.0-ui.css">
     <style>
         <!--
         .wkDialogClass {
@@ -31,9 +31,9 @@
 
 
 
-    <script src="/WebApi/project/_home/_Content/_Scripts/jquery-3.6.0.min.js"></script>
-    <script src="/WebApi/project/_home/_Content/_Scripts/jquery-1.13.0-ui.js"></script>
-    <script src="/WebApi/project/_home/_Content/_Scripts/jquery.kansa.Query.js"></script>
+    <script src="/project/_home/_Content/_Scripts/jquery-3.6.0.min.js"></script>
+    <script src="/project/_home/_Content/_Scripts/jquery-1.13.0-ui.js"></script>
+    <script src="/project/_home/_Content/_Scripts/jquery.kansa.Query.js"></script>
     <script>
         var fineDialog;
         window.onload = function () {
@@ -58,12 +58,8 @@
             function showDialog2(returnFunction) {
                 if ($(".iFBox").dialog("isOpen") == true) return;
                 var url = "editProject.html";
-                url = "test.html";
-                var Buff = [];
-                Buff.push("pNum=20214927");
-                Buff.push("return_functionName=fineDialog");
-
-                var src_str = url.concat("?",Buff.join("&"));
+                //url = "test.html";
+                var src_str = url.concat("?","pNum=20214927","&","return_functionName=fineDialog");
                 $("<iframe class='iFBox'></iframe>").dialog({
                     dialogClass: "wkDialogClass",
                     closeOnEscape: false,
@@ -76,9 +72,10 @@
                     //width: 'auto',
                     autoOpen: true,
                     title: 'タイトル',
-                    //height: 650,
-                    //width: 650,
+                    height: 650,
+                    width: 650,
                     open: function () {
+                        $(this).css("width", "100%");
                         $(this).attr({ "src":  src_str });
                     },
                     close: function () {
