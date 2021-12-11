@@ -5,11 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>jQuery UI Dialog - Modal form</title>
-    <link rel="stylesheet" href="/project/_home/_Content/_Scripts/jquery-1.13.0-ui.css">
     <style>
         <!--
-        .wkDialogClass {
-            background-color: darkgray;
+        .wkDialogClass{
+            background-color: black;
             padding: 0px;
         }
 
@@ -20,8 +19,8 @@
 
             .wkDialogClass .ui-dialog-content {
                 background: skyblue;
+                border:solid 1px red;
                 padding: 0px;
-
             }
 
 
@@ -31,9 +30,10 @@
 
 
 
-    <script src="/project/_home/_Content/_Scripts/jquery-3.6.0.min.js"></script>
-    <script src="/project/_home/_Content/_Scripts/jquery-1.13.0-ui.js"></script>
-    <script src="/project/_home/_Content/_Scripts/jquery.kansa.Query.js"></script>
+    <link href="/WebApi/project/_home/_Content/_Scripts/jquery-1.13.0-ui.css" rel="stylesheet">
+    <script src="/WebApi/project/_home/_Content/_Scripts/jquery-3.6.0.min.js"></script>
+    <script src="/WebApi/project/_home/_Content/_Scripts/jquery-1.13.0-ui.js"></script>
+    <script src="/WebApi/project/_home/_Content/_Scripts/jquery.kansa.Query.js"></script>
     <script>
         var fineDialog;
         window.onload = function () {
@@ -59,24 +59,25 @@
                 if ($(".iFBox").dialog("isOpen") == true) return;
                 var url = "editProject.html";
                 //url = "test.html";
-                var src_str = url.concat("?","pNum=20214927","&","return_functionName=fineDialog");
+                var src_str = url.concat("?", "pNum=20214927", "&", "return_functionName=fineDialog");
                 $("<iframe class='iFBox'></iframe>").dialog({
                     dialogClass: "wkDialogClass",
                     closeOnEscape: false,
                     modal: true,
-                    minHeight: 650,
+                    minHeight: 660,
                     //maxHeight: 650,
-                    minWidth: 650,
+                    minWidth: 660,
                     //maxWidth: 650,
                     //height: 'auto',
                     //width: 'auto',
                     autoOpen: true,
                     title: 'タイトル',
-                    height: 650,
-                    width: 650,
+                    height: 660,
+                    width: 660,
                     open: function () {
                         $(this).css("width", "100%");
-                        $(this).attr({ "src":  src_str });
+                        $(this).css("padding", "0px");
+                        $(this).attr({ "src": src_str });
                     },
                     close: function () {
                         $(this).dialog('destroy');
@@ -120,27 +121,26 @@
         $(function () {
             $(".test2").on("click", function () {
 
-                var work = showDialog(fineDialog);
+                showDialog(fineDialog);
                 //$.alert(work);
 
                 // 終了後の処理
                 function fineDialog(para) {
                     $.alert("fineDialog", para);
-                    //$(".iFBox").dialog('destroy');
                 }
             });
 
             function showDialog(returnFunction) {
                 if ($(".iFBox").dialog("isOpen") == true) return;
                 var retVal = "789";
-                $('<div class="iFBox"><input class="inputValue" type="text"></input></div>').dialog({
+                $('<div class="iFBox"></div>').dialog({
                     autoOpen: true,
                     title: 'タイトル',
-                    height: 400,
-                    width: 350,
+                    height: 150,
+                    width: 300,
                     buttons: {
                         "登録": function () {
-                            retVal = $(".inputValue").val();
+                            retVal = $(".text",$(this)).val();
                             //$.alert("登録", $(".inputValue").val());
                             $(this).dialog('close');
                             //returnFunction($(".inputValue").val());
@@ -153,15 +153,16 @@
                         }
                     },
                     open: function () {
+                        $(this).load("input.html");
                         //$.alert("openX");
                     },
                     close: function () {
                         //$.alert("closeX");
                         $(this).dialog('destroy');
+                        // 終了処理を実行
                         returnFunction(retVal);
                     }
                 });
-                return ("123");
             }
         });
 
