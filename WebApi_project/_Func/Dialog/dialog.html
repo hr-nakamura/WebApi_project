@@ -18,8 +18,17 @@
             }
 
             .wkDialogClass .ui-dialog-content {
-                background: url("/WebApi/_home/_Content/_images/bg01.gif");
-                border:solid 1px red;
+                *background: url("/WebApi/_home/_Content/_images/bg01.gif");
+                background-color: green;
+                border: solid 1px red;
+                padding: 0px;
+            }
+        .wkDialogClass .ui-widget {
+            background: yellow;
+        }
+            .wkDialogClass .ui-widget-content {
+                background: red;
+                border: solid 10px blue;
                 padding: 0px;
             }
 
@@ -107,6 +116,7 @@
             });
             $(".test").on("click", function () {
                 try {
+                    $(".iFBox").prev(".ui-dialog-titlebar").css({ "background": "#47669E", "color": "white", "font-size": "13px", "font-weight": "normal" });
                     $(".iFBox").dialog("option", "title", "Dialog Title");
                     //var win = $(".iFBox")[0].contentWindow;
                     //win.abcd("ABCD");
@@ -126,7 +136,7 @@
 
                 // 終了後の処理
                 function fineDialog(para) {
-                    $.alert("fineDialog", para);
+                    //$.alert("fineDialog", para);
                 }
             });
             function showDialog(returnFunction) {
@@ -155,7 +165,9 @@
                         }
                     },
                     open: function () {
-                        //$(this).css("background-color", "red");
+                        $(this).prev(".ui-dialog-titlebar").css({ "background": "green", "color": "white", "font-size": "13px", "font-weight": "normal" });
+                        $(this).prev(".ui-dialog-content").css({ "background": "green", "color": "white", "font-size": "13px", "font-weight": "normal" });
+                        //$(this).css("background-color", "pink");
                         //$(this).load("input.txt");
                         var option = $(this).dialog("option");
                         //var a = 1;
