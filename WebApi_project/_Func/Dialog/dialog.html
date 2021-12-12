@@ -18,7 +18,7 @@
             }
 
             .wkDialogClass .ui-dialog-content {
-                background: skyblue;
+                background: url("/WebApi/_home/_Content/_images/bg01.gif");
                 border:solid 1px red;
                 padding: 0px;
             }
@@ -107,12 +107,13 @@
             });
             $(".test").on("click", function () {
                 try {
-                    var win = $(".iFBox")[0].contentWindow;
-                    win.abcd("ABCD");
-                    var doc = $(".iFBox").contents();
-                    var x = doc.find("[id='email']").val();
-                    alert(x);
-                    var a = 1;
+                    $(".iFBox").dialog("option", "title", "Dialog Title");
+                    //var win = $(".iFBox")[0].contentWindow;
+                    //win.abcd("ABCD");
+                    //var doc = $(".iFBox").contents();
+                    //var x = doc.find("[id='email']").val();
+                    //alert(x);
+                    //var a = 1;
 
                 } catch (e) { alert(e.message) };
             });
@@ -122,42 +123,44 @@
             $(".test2").on("click", function () {
 
                 showDialog(fineDialog);
-                //$.alert(work);
 
                 // 終了後の処理
                 function fineDialog(para) {
                     $.alert("fineDialog", para);
                 }
             });
-
             function showDialog(returnFunction) {
                 if ($(".iFBox").dialog("isOpen") == true) return;
+                var Buff = [];
+                Buff.push("会社名を設定してください");
+                Buff.push("<input type='text' class='text' value='ABCDEF12345' />");
+                Buff.push("====");
+                Buff = Buff.join("<br>");
+                var Work = "".concat("<div class='iFBox'>", Buff, "</div>");
                 var retVal = "789";
-                $('<div class="iFBox"></div>').dialog({
+                $(Work).dialog({
+                    dialogClass: "wkDialogClass",
                     autoOpen: true,
                     title: 'タイトル',
-                    height: 150,
-                    width: 300,
+                    height: "auto",
+                    width: "auto",
                     buttons: {
                         "登録": function () {
                             retVal = $(".text",$(this)).val();
-                            //$.alert("登録", $(".inputValue").val());
                             $(this).dialog('close');
-                            //returnFunction($(".inputValue").val());
                         },
                         '取消': function () {
                             retVal = "";
-                            //$.alert("取消");
                             $(this).dialog('close');
-                            //returnFunction ("");
                         }
                     },
                     open: function () {
-                        $(this).load("input.html");
-                        //$.alert("openX");
+                        //$(this).css("background-color", "red");
+                        //$(this).load("input.txt");
+                        var option = $(this).dialog("option");
+                        //var a = 1;
                     },
                     close: function () {
-                        //$.alert("closeX");
                         $(this).dialog('destroy');
                         // 終了処理を実行
                         returnFunction(retVal);

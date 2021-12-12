@@ -124,7 +124,7 @@
     <Content Include="_Func\Dialog\demo.css" />
     <Content Include="_Func\Dialog\dialog - コピー.html" />
     <Content Include="_Func\Dialog\editProject.html" />
-    <Content Include="_Func\Dialog\input.html" />
+    <Content Include="_Func\Dialog\input.txt" />
     <Content Include="_Func\Dialog\test.html" />
     <Content Include="_Func\QOSMIO\test.html" />
     <Content Include="_Func\Dialog\dialog.html" />
