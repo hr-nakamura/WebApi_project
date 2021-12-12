@@ -97,11 +97,11 @@
                                 }
                             }],
                         open: function () {
-                            $(".iFBox").html(Buff);
+                            $(this).html(Buff);
+                            //$(this).load("input.txt");
                             //$(this).prev(".ui-dialog-titlebar").css({ "background": "green", "color": "white", "font-size": "13px", "font-weight": "normal" });
                             //$(this).prev(".ui-dialog-content").css({ "background": "green", "color": "white", "font-size": "13px", "font-weight": "normal" });
                             //$(this).css("background-color", "pink");
-                            //$(this).load("input.txt");
                             var option = $(this).dialog("option");
                             //var a = 1;
                         },
