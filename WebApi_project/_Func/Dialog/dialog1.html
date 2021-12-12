@@ -1,0 +1,622 @@
+﻿<!DOCTYPE html>
+<html lang="ja"
+      prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <title>jQuery【 jQuery UI 】dialog css ダイアログのデザイン | プログラマカレッジ</title>
+    <link rel="stylesheet" href="https://programmercollege.jp/wp/wp-content/themes/internous/style.css">
+    <link rel="stylesheet" href="https://programmercollege.jp/wp/wp-content/themes/internous/css/sp.css">
+    <link rel="stylesheet" href="https://programmercollege.jp/wp/wp-content/themes/internous/slick.css">
+    <!-- Google Tag Manager -->
+    <script>
+    (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-566TSC5');</script>
+    <!-- End Google Tag Manager -->
+    <meta name='robots' content='max-image-preview:large' />
+
+    <!-- All in One SEO Pack 2.12 by Michael Torbert of Semper Fi Web Design[220,279] -->
+    <meta name="description" content="jQuery UI の CSS を設定すると、メッセージ等を表示するダイアログのデザインをカスタマイズすることができます。 今回は、jQuery UI の CSS 設定で ダイアログのデザインを指定するサンプルを紹介します。 なお、ダイアログの作成方法や位置指定等については、以下のページもご参照下さい。 jQuery【" />
+
+    <meta name="keywords" content="jquery入門,itコラム,jquery" />
+
+    <link rel="canonical" href="https://programmercollege.jp/column/11135/" />
+    <meta property="og:title" content="jQuery【 jQuery UI 】dialog css ダイアログのデザイン | プログラマカレッジ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://programmercollege.jp/column/11135/" />
+    <meta property="og:image" content="https://programmercollege.jp/wp/wp-content/uploads/2018/07/colmun_main11135.jpg" />
+    <meta property="og:site_name" content="プログラマカレッジ" />
+    <meta property="og:description" content="jQuery UI の CSS を設定すると、メッセージ等を表示するダイアログのデザインをカスタマイズすることができます。 今回は、jQuery UI の CSS 設定で ダイアログのデザインを指定するサンプルを紹介します。 なお、ダイアログの作成方法や位置指定等については、以下のページもご参照下さい。 jQuery【 jQuery UI 】dialog で様々なダイアログを作成するサンプル jQuery【 jQuery UI 】dialog position ダイアログの位置を指定 目次 1. theme によるダイアログの種類 2. CSS でダイアログの色を指定 1. theme によるダイアログの種類 CSS でデザインをカスタマイズする前に、theme（ テーマ ）の設定によっても、ダイアログの見た目を変えることができます。 theme は、次のように読み込んで設定します。" />
+    <meta property="article:published_time" content="2018-07-18T23:50:03Z" />
+    <meta property="article:modified_time" content="2021-10-09T05:17:03Z" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@programmer_cg" />
+    <meta name="twitter:domain" content="programmercollege.jp" />
+    <meta name="twitter:title" content="jQuery【 jQuery UI 】dialog css ダイアログのデザイン | プログラマカレッジ" />
+    <meta name="twitter:description" content="jQuery UI の CSS を設定すると、メッセージ等を表示するダイアログのデザインをカスタマイズすることができます。 今回は、jQuery UI の CSS 設定で ダイアログのデザインを指定するサンプルを紹介します。 なお、ダイアログの作成方法や位置指定等については、以下のページもご参照下さい。 jQuery【 jQuery UI 】dialog で様々なダイアログを作成するサンプル jQuery【 jQuery UI 】dialog position ダイアログの位置を指定 目次 1. theme によるダイアログの種類 2. CSS でダイアログの色を指定 1. theme によるダイアログの種類 CSS でデザインをカスタマイズする前に、theme（ テーマ ）の設定によっても、ダイアログの見た目を変えることができます。 theme は、次のように読み込んで設定します。" />
+    <meta name="twitter:image" content="https://programmercollege.jp/wp/wp-content/uploads/2018/07/colmun_main11135.jpg" />
+    <meta itemprop="image" content="https://programmercollege.jp/wp/wp-content/uploads/2018/07/colmun_main11135.jpg" />
+    <!-- /all in one seo pack -->
+    <link rel='dns-prefetch' href='//s.w.org' />
+    <link rel="alternate" type="application/rss+xml" title="プログラマカレッジ &raquo; jQuery【 jQuery UI 】dialog css ダイアログのデザイン のコメントのフィード" href="https://programmercollege.jp/column/11135/feed/" />
+    <script type="text/javascript">
+        window._wpemojiSettings = { "baseUrl": "https:\/\/s.w.org\/images\/core\/emoji\/13.0.1\/72x72\/", "ext": ".png", "svgUrl": "https:\/\/s.w.org\/images\/core\/emoji\/13.0.1\/svg\/", "svgExt": ".svg", "source": { "concatemoji": "https:\/\/programmercollege.jp\/wp\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.7.4" } };
+        !function (e, a, t) { var n, r, o, i = a.createElement("canvas"), p = i.getContext && i.getContext("2d"); function s(e, t) { var a = String.fromCharCode; p.clearRect(0, 0, i.width, i.height), p.fillText(a.apply(this, e), 0, 0); e = i.toDataURL(); return p.clearRect(0, 0, i.width, i.height), p.fillText(a.apply(this, t), 0, 0), e === i.toDataURL() } function c(e) { var t = a.createElement("script"); t.src = e, t.defer = t.type = "text/javascript", a.getElementsByTagName("head")[0].appendChild(t) } for (o = Array("flag", "emoji"), t.supports = { everything: !0, everythingExceptFlag: !0 }, r = 0; r < o.length; r++)t.supports[o[r]] = function (e) { if (!p || !p.fillText) return !1; switch (p.textBaseline = "top", p.font = "600 32px Arial", e) { case "flag": return s([127987, 65039, 8205, 9895, 65039], [127987, 65039, 8203, 9895, 65039]) ? !1 : !s([55356, 56826, 55356, 56819], [55356, 56826, 8203, 55356, 56819]) && !s([55356, 57332, 56128, 56423, 56128, 56418, 56128, 56421, 56128, 56430, 56128, 56423, 56128, 56447], [55356, 57332, 8203, 56128, 56423, 8203, 56128, 56418, 8203, 56128, 56421, 8203, 56128, 56430, 8203, 56128, 56423, 8203, 56128, 56447]); case "emoji": return !s([55357, 56424, 8205, 55356, 57212], [55357, 56424, 8203, 55356, 57212]) }return !1 }(o[r]), t.supports.everything = t.supports.everything && t.supports[o[r]], "flag" !== o[r] && (t.supports.everythingExceptFlag = t.supports.everythingExceptFlag && t.supports[o[r]]); t.supports.everythingExceptFlag = t.supports.everythingExceptFlag && !t.supports.flag, t.DOMReady = !1, t.readyCallback = function () { t.DOMReady = !0 }, t.supports.everything || (n = function () { t.readyCallback() }, a.addEventListener ? (a.addEventListener("DOMContentLoaded", n, !1), e.addEventListener("load", n, !1)) : (e.attachEvent("onload", n), a.attachEvent("onreadystatechange", function () { "complete" === a.readyState && t.readyCallback() })), (n = t.source || {}).concatemoji ? c(n.concatemoji) : n.wpemoji && n.twemoji && (c(n.twemoji), c(n.wpemoji))) }(window, document, window._wpemojiSettings);
+    </script>
+    <style type="text/css">
+        img.wp-smiley,
+        img.emoji {
+            display: inline !important;
+            border: none !important;
+            box-shadow: none !important;
+            height: 1em !important;
+            width: 1em !important;
+            margin: 0 .07em !important;
+            vertical-align: -0.1em !important;
+            background: none !important;
+            padding: 0 !important;
+        }
+    </style>
+    <link rel='stylesheet' id='wp-block-library-css' href='https://programmercollege.jp/wp/wp-includes/css/dist/block-library/style.min.css?ver=5.7.4' type='text/css' media='all' />
+    <link rel='stylesheet' id='pz-linkcard-css' href='//programmercollege.jp/wp/wp-content/uploads/pz-linkcard/style.css?ver=5.7.4' type='text/css' media='all' />
+    <link rel="https://api.w.org/" href="https://programmercollege.jp/wp-json/" />
+    <link rel="alternate" type="application/json" href="https://programmercollege.jp/wp-json/wp/v2/posts/11135" />
+    <link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://programmercollege.jp/wp/xmlrpc.php?rsd" />
+    <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://programmercollege.jp/wp/wp-includes/wlwmanifest.xml" />
+    <meta name="generator" content="WordPress 5.7.4" />
+    <link rel='shortlink' href='https://programmercollege.jp/?p=11135' />
+    <link rel="alternate" type="application/json+oembed" href="https://programmercollege.jp/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fprogrammercollege.jp%2Fcolumn%2F11135%2F" />
+    <link rel="alternate" type="text/xml+oembed" href="https://programmercollege.jp/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fprogrammercollege.jp%2Fcolumn%2F11135%2F&#038;format=xml" />
+</head>
+
+<body class="post-template-default single single-post postid-11135 single-format-standard">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-566TSC5"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <header>
+        <div class="headPoint">
+            <p class="logo"><a href="https://programmercollege.jp/"><img src="https://programmercollege.jp/wp/wp-content/themes/internous/img/logo.svg" alt="logo"></a></p>
+            <div class="contactBox">
+                <p class="contactBtn"><a href="https://programmercollege.jp/contact/">お問い合わせ</a></p>
+            </div>
+            <div id="nav_toggle">
+                <div>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <ul id="top-menu">
+                <li class="home"><a href="https://programmercollege.jp/">HOME</a></li>
+                <li><a href="https://programmercollege.jp/about/">プログラマカレッジの特徴</a></li>
+                <li><a href="https://programmercollege.jp/curriculum/">カリキュラム</a></li>
+                <li><a href="https://programmercollege.jp/guide/">転職サポートガイド</a></li>
+                <li class="subIcon">
+                    <a href="https://programmercollege.jp/column/">ITコラム</a>
+                    <ul class="sub-menu">
+                        <li><a href="https://programmercollege.jp/column/html_css/">HTML・CSS</a></li>
+                        <li><a href="https://programmercollege.jp/column/jquery/">jQuery</a></li>
+                        <li><a href="https://programmercollege.jp/column/javascript/">JavaScript</a></li>
+                        <li><a href="https://programmercollege.jp/column/php/">PHP</a></li>
+                        <li><a href="https://programmercollege.jp/column/java/">Java</a></li>
+                        <li><a href="https://programmercollege.jp/column/skill_up/">スキルアップ</a></li>
+                        <li><a href="https://programmercollege.jp/column/programmer_huck/">プログラマハック</a></li>
+                    </ul>
+                </li>
+                <li class="subIcon">
+                    <a href="https://programmercollege.jp/interview/">インタビュー</a>
+                    <ul class="sub-menu">
+                        <li><a href="https://programmercollege.jp/interview/company/">企業インタビュー</a></li>
+                        <li><a href="https://programmercollege.jp/interview/graduate/">卒業生インタビュー</a></li>
+                        <li><a href="https://programmercollege.jp/interview/other/">その他</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+
+
+    <div class="secondHead column">
+        <h1>ITコラム</h1>
+    </div>
+
+    <div class="breadCrumb"><ul><li><a href="https://programmercollege.jp"><span>HOME</span></a></li><li><a href="https://programmercollege.jp/column/"><span>ITコラム</span></a></li><li><a href="https://programmercollege.jp/column/jquery/"><span>jQuery</span></a></li><li><span>jQuery【 jQuery UI 】dialog css ダイアログのデザイン</span></li></ul></div>
+    <section class="singleBox">
+        <div class="con_l">
+            <div class="thumb">
+                <img width="700" height="491" src="https://programmercollege.jp/wp/wp-content/uploads/2018/07/colmun_main11135.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="jquery ui dialog css" loading="lazy" srcset="https://programmercollege.jp/wp/wp-content/uploads/2018/07/colmun_main11135.jpg 700w, https://programmercollege.jp/wp/wp-content/uploads/2018/07/colmun_main11135-300x210.jpg 300w" sizes="(max-width: 700px) 100vw, 700px" />
+            </div>
+        </div>
+        <div class="singleCon">
+            <div class="singleHead">
+                <div class="articleCat">
+                    <p>
+                        jQuery
+                    </p>
+                </div>
+                <p class="date">2018.07.19</p>
+            </div>
+            <div class="con_s">
+                <h1>jQuery【 jQuery UI 】dialog css ダイアログのデザイン</h1>
+
+                <p>
+                    jQuery UI の CSS を設定すると、メッセージ等を表示するダイアログのデザインをカスタマイズすることができます。<br />
+                    今回は、jQuery UI の CSS 設定で ダイアログのデザインを指定するサンプルを紹介します。
+                </p>
+                <p>
+                    なお、ダイアログの作成方法や位置指定等については、以下のページもご参照下さい。<br />
+                    <a href="https://programmercollege.jp/column/9937" target="_blank" rel="noopener noreferrer">jQuery【 jQuery UI 】dialog で様々なダイアログを作成するサンプル</a><br />
+                    <a href="https://programmercollege.jp/column/11072" target="_blank" rel="noopener noreferrer">jQuery【 jQuery UI 】dialog position ダイアログの位置を指定</a>
+                </p>
+                <style>
+                    pre {
+                        white-space: pre-wrap; /* CSS3 */
+                        white-space: -moz-pre-wrap; /* Mozilla */
+                        white-space: -pre-wrap; /* Opera 4-6 */
+                        white-space: -o-pre-wrap; /* Opera 7 */
+                        word-wrap: break-word; /* IE 5.5+ */
+                    }
+                </style>
+                <h2><a id="section000"></a>目次</h2>
+                <p>
+                    <a href="#section100">1. theme によるダイアログの種類</a><br />
+                    <a href="#section200">2. CSS でダイアログの色を指定</a>
+                </p>
+                <h2><a id="section100"></a>1. theme によるダイアログの種類</h2>
+                <p>
+                    <br />
+                    CSS でデザインをカスタマイズする前に、theme（ テーマ ）の設定によっても、ダイアログの見た目を変えることができます。
+                </p>
+                <p>theme は、次のように読み込んで設定します。</p>
+<pre>&lt;link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"&gt;</pre>
+                <p>
+                    上記は、theme に「 base 」を設定したサンプルです。<br />
+                    <br />
+                    theme の設定によって、ダイアログの雰囲気が変わります。
+                </p>
+                <h3>theme に「 base 」を設定</h3>
+                <p><img loading="lazy" src="https://programmercollege.jp/wp/wp-content/uploads/2018/07/colmun_image11135_01.jpg" alt="" width="303" height="201" class="alignnone size-full wp-image-11156" srcset="https://programmercollege.jp/wp/wp-content/uploads/2018/07/colmun_image11135_01.jpg 303w, https://programmercollege.jp/wp/wp-content/uploads/2018/07/colmun_image11135_01-300x200.jpg 300w" sizes="(max-width: 303px) 100vw, 303px" /></p>
+                <h3>theme に「 ui-lightness 」を設定</h3>
+                <p><img loading="lazy" src="https://programmercollege.jp/wp/wp-content/uploads/2018/07/colmun_image11135_02.jpg" alt="" width="301" height="244" class="size-full wp-image-11146" srcset="https://programmercollege.jp/wp/wp-content/uploads/2018/07/colmun_image11135_02.jpg 301w, https://programmercollege.jp/wp/wp-content/uploads/2018/07/colmun_image11135_02-300x243.jpg 300w" sizes="(max-width: 301px) 100vw, 301px" /></p>
+                <h3>theme に「 sunny 」を設定</h3>
+                <p><img loading="lazy" src="https://programmercollege.jp/wp/wp-content/uploads/2018/07/colmun_image11135_03.jpg" alt="" width="302" height="245" class="alignnone size-full wp-image-11147" srcset="https://programmercollege.jp/wp/wp-content/uploads/2018/07/colmun_image11135_03.jpg 302w, https://programmercollege.jp/wp/wp-content/uploads/2018/07/colmun_image11135_03-300x243.jpg 300w" sizes="(max-width: 302px) 100vw, 302px" /></p>
+                <h3>theme に「 le-frog 」を設定</h3>
+                <p><img loading="lazy" src="https://programmercollege.jp/wp/wp-content/uploads/2018/07/colmun_image11135_04.jpg" alt="" width="303" height="246" class="alignnone size-full wp-image-11148" srcset="https://programmercollege.jp/wp/wp-content/uploads/2018/07/colmun_image11135_04.jpg 303w, https://programmercollege.jp/wp/wp-content/uploads/2018/07/colmun_image11135_04-300x244.jpg 300w" sizes="(max-width: 303px) 100vw, 303px" /></p>
+                <h3>theme に「 hot-sneaks 」を設定</h3>
+                <p><img loading="lazy" src="https://programmercollege.jp/wp/wp-content/uploads/2018/07/colmun_image11135_05.jpg" alt="" width="304" height="265" class="size-full wp-image-11149" srcset="https://programmercollege.jp/wp/wp-content/uploads/2018/07/colmun_image11135_05.jpg 304w, https://programmercollege.jp/wp/wp-content/uploads/2018/07/colmun_image11135_05-300x262.jpg 300w" sizes="(max-width: 304px) 100vw, 304px" /></p>
+                <h3>theme に「 swanky-purse 」を設定</h3>
+                <p>
+                    <img loading="lazy" src="https://programmercollege.jp/wp/wp-content/uploads/2018/07/colmun_image11135_06.jpg" alt="" width="302" height="265" class="alignnone size-full wp-image-11150" srcset="https://programmercollege.jp/wp/wp-content/uploads/2018/07/colmun_image11135_06.jpg 302w, https://programmercollege.jp/wp/wp-content/uploads/2018/07/colmun_image11135_06-300x263.jpg 300w" sizes="(max-width: 302px) 100vw, 302px" /><br />
+                    <br />
+                    theme は、ページ全体のデザインを統一的に設定するものですので、ダイアログ以外の見た目も変化してしまう点は要注意です。
+                </p>
+                <p>theme については<a href="https://programmercollege.jp/column/9788#section102" target="_blank" rel="noopener noreferrer">テーマを選択</a>をご参照下さい。</p>
+                <p style="text-align: right;"><a href="#section000">▲目次へ戻る</a></p>
+                <p>　</p>
+                <h2><a id="section200"></a>2. CSS でダイアログの色を指定</h2>
+                <p>
+                    <br />
+                    jQuery UI の CSS を設定して、ダイアログの色を指定します。<br />
+                    確認ボタンをクリックしてみて下さい。<br />
+                    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script><br />
+                    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+                    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+                <p>
+                    <script type="text/javascript">
+<!--
+                        jQuery(function ($) {
+                            $("#btn").click(function () {
+                                $("#dl").dialog({
+                                    dialogClass: "wkDialogClass",
+                                    modal: true,
+                                    title: "確認画面",
+                                    buttons: [
+                                        {
+                                            text: "ＯＫ",
+                                            class: "wkBtnOk",
+                                            click: function () {
+                                                $(this).dialog("close");
+                                            }
+                                        },
+                                        {
+                                            text: "キャンセル",
+                                            class: "wkBtnNg",
+                                            click: function () {
+                                                $(this).dialog("close");
+                                            }
+                                        }]
+                                });
+                            });
+                        });
+                        //-->
+                    </script>
+                </p>
+                <style>
+                    <!--
+                    .wkDialogClass {
+                        background-color: black;
+                    }
+
+                        .wkDialogClass .ui-dialog-titlebar {
+                            color: purple;
+                            background: plum;
+                        }
+
+                        .wkDialogClass .ui-dialog-content {
+                            color: navy;
+                            background: skyblue;
+                        }
+
+                        .wkDialogClass .ui-dialog-buttonpane {
+                            background-color: pink;
+                        }
+
+                    .wkBtnOk {
+                        color: red;
+                        background-color: yellow;
+                    }
+
+                    .wkBtnNg {
+                        color: blue;
+                        background-color: greenyellow;
+                    }
+                    -->
+                </style>
+                <div id="dl" style="display:none;">
+                    <span class="ui-helper-hidden-accessible"><input type="image" /></span></p>
+                    <p>この内容でよろしいでしょうか？</p>
+                </div>
+                <div style="background-color:#CCC; padding : 20px;">
+                    <input type="button" id="btn" value="確認">
+                </div>
+                <p>
+                    <br />
+                    上のサンプルのソースコードは次の通りです。
+                </p>
+<pre><code>&lt;script src="https://code.jquery.com/jquery-3.3.1.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"&gt;&lt;/script&gt;
+&lt;link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"&gt;
+
+&lt;script type="text/javascript"&gt;
+&lt;!--
+$(function() {
+  $("#btn").click(function() {
+    $("#dl").dialog({
+      dialogClass:"wkDialogClass",
+      modal:true,
+      title:"確認画面",
+      buttons:[
+       {text: "ＯＫ",
+        class:"wkBtnOk",
+        click: function() {$(this).dialog("close");}
+       },
+       {text: "キャンセル",
+        class:"wkBtnNg",
+        click: function() {$(this).dialog("close");}
+       }]
+    });
+  });
+});
+//--&gt;
+&lt;/script&gt;
+
+&lt;style&gt;
+&lt;!--
+.wkDialogClass {
+    background-color: darkgray;
+}
+
+.wkDialogClass .ui-dialog-titlebar {
+  color:purple;
+  background:plum;
+}
+
+.wkDialogClass .ui-dialog-content {
+  color:navy;
+  background:skyblue;
+}
+
+.wkDialogClass .ui-dialog-buttonpane {
+    background-color: pink;
+}
+
+.wkBtnOk {
+    color: red;
+    background-color: yellow;
+}
+
+.wkBtnNg {
+    color: blue;
+    background-color: greenyellow;
+}
+--&gt;
+&lt;/style&gt;
+
+&lt;div id="dl" style="display:none;"&gt;
+  &lt;span class="ui-helper-hidden-accessible"&gt;&lt;input type="image"/&gt;&lt;/span&gt;
+  &lt;p&gt;この内容でよろしいでしょうか？&lt;/p&gt;
+&lt;/div&gt;
+&lt;div style="background-color:#CCC; padding : 20px;"&gt;
+  &lt;input type="button" id="btn" value="確認"&gt;
+&lt;/div&gt;
+</code></pre>
+                <p>見た目に違和感のあるダイアログですが、領域別に背景色を設定しています。</p>
+                <div style="padding: 5px; margin-bottom: 20px; border: 1px solid #333333; border-radius: 5px;">
+                    <img loading="lazy" src="https://programmercollege.jp/wp/wp-content/uploads/2018/07/colmun_image11135_07.jpg" alt="" width="298" height="194" class="alignnone size-full wp-image-11217" /><br />
+                    ・黒：ダイアログ全体（.wkDialogClass）</p>
+                    <p>・紫：ダイアログのタイトル領域（.wkDialogClass　.ui-dialog-titlebar）</p>
+                    <p>・ブルー：ダイアログのボディ領域（.wkDialogClass　.ui-dialog-content）</p>
+                    <p>・ピンク：ダイアログのボタン領域（.wkDialogClass　.ui-dialog-buttonpane）</p>
+                    <p>・黄・黄緑：ダイアログ内のボタン（.wkBtnOk　/　.wkBtnNg）</p>
+                    <p style="color: blue; font-size: small; text-align: right;">※カッコ内は、上のサンプルで CSS を設定する際に使用したクラス名です。</p>
+                </div>
+                <p>
+                    「.ui-dialog-titlebar」、「.ui-dialog-content」、「.ui-dialog-buttonpane」は、jQuery UI で用意されているクラスです。<br />
+                    ダイアログに関する他のクラス等については、<a href="http://api.jqueryui.com/dialog/" target="_blank" rel="noopener noreferrer">jQuery UI の Dialog Widget</a>をご参照下さい。<br />
+                    <br />
+                    jQuery UI の導入については<a href="https://programmercollege.jp/column/9788" target="_blank" rel="noopener noreferrer">jQuery【 jQuery UI 】UI の導入と使用方法</a>をご参照下さい。
+                </p>
+                <p style="text-align: right;"><a href="#section000">▲目次へ戻る</a></p>
+
+            </div>
+
+        </div>
+
+        <!-- 記事下部固定ウィジェットエリア -->
+        <div class="post-bottom-wiget">
+            <div class="post-bottom-wiget__item post-bottom-wiget__item--widget_media_image post-bottom-wiget__item--media_image-2"><a href="/lp4/?utm_source=column&#038;utm_medium=bnr"><img width="778" height="191" src="https://programmercollege.jp/wp/wp-content/uploads/2021/09/lp_banner_naka.png" class="image wp-image-35921  attachment-full size-full" alt="" loading="lazy" style="max-width: 100%; height: auto;" srcset="https://programmercollege.jp/wp/wp-content/uploads/2021/09/lp_banner_naka.png 778w, https://programmercollege.jp/wp/wp-content/uploads/2021/09/lp_banner_naka-300x74.png 300w, https://programmercollege.jp/wp/wp-content/uploads/2021/09/lp_banner_naka-768x189.png 768w, https://programmercollege.jp/wp/wp-content/uploads/2021/09/lp_banner_naka-718x176.png 718w" sizes="(max-width: 778px) 100vw, 778px" /></a></div>
+        </div>
+
+
+        <div class="share">
+            <h2>SHARE</h2>
+            <ul>
+                <li><a href="//twitter.com/intent/tweet?text=jQuery%E3%80%90+jQuery+UI+%E3%80%91dialog+css+%E3%83%80%E3%82%A4%E3%82%A2%E3%83%AD%E3%82%B0%E3%81%AE%E3%83%87%E3%82%B6%E3%82%A4%E3%83%B3&https%3A%2F%2Fprogrammercollege.jp%2Fcolumn%2F11135%2F&url=https%3A%2F%2Fprogrammercollege.jp%2Fcolumn%2F11135%2F" target="_blank" title="Twitterでシェアする" onclick="javascript:window.open(this.href, '_blank', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600');return false;"><img src="https://programmercollege.jp/wp/wp-content/themes/internous/img/twitter.svg" alt="twitter"></a></li>
+                <li><a href="//www.facebook.com/sharer.php?src=bm&u=&t=" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"><img src="https://programmercollege.jp/wp/wp-content/themes/internous/img/facebook.svg" alt="facebook"></a></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- おすすめ記事 -->
+    <!-- おすすめおわり -->
+    <!-- 最新記事 -->
+    <section class="article archive">
+        <h2 class="mrgTop30 mrgBtm20">最新記事</h2>
+        <div class="bgGray padTop40 padBtm40">
+            <div class="con_m">
+                <article>
+                    <a href="https://programmercollege.jp/column/26978/">
+                        <div class="articleThumb">
+                            <img width="1080" height="802" src="https://programmercollege.jp/wp/wp-content/uploads/2021/06/column_main_26978.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="column_main_26978" loading="lazy" srcset="https://programmercollege.jp/wp/wp-content/uploads/2021/06/column_main_26978.jpg 1080w, https://programmercollege.jp/wp/wp-content/uploads/2021/06/column_main_26978-300x223.jpg 300w, https://programmercollege.jp/wp/wp-content/uploads/2021/06/column_main_26978-1024x760.jpg 1024w, https://programmercollege.jp/wp/wp-content/uploads/2021/06/column_main_26978-768x570.jpg 768w, https://programmercollege.jp/wp/wp-content/uploads/2021/06/column_main_26978-718x533.jpg 718w" sizes="(max-width: 1080px) 100vw, 1080px" />
+                        </div>
+                        <div class="articleBox">
+                            <div class="articleCat"><p>スキルアップ</p></div>
+                            <p class="date">2021.11.17</p>
+                        </div>
+
+                        <h3 class="articleTtl">Webエンジニアにおすすめの資格｜就職・転職に有利！【未経験者向け】</h3>
+                        <p class="articleTxt">「Webエンジニアになるために資格は必要？」「持っていた方が有利？」「どんな資格がおすすめなの？」といった疑問にお答えします！HTML5プロフェッショナル認定試験や基本情報技術者など、プログラミングに必要なスキルを身につ [&hellip;]</p>
+                        <p class="articleBtn"><img src="https://programmercollege.jp/wp/wp-content/themes/internous/img/articleBtn.svg" alt="続きを見る"></p>
+                    </a>
+                </article>
+
+                <article>
+                    <a href="https://programmercollege.jp/column/37897/">
+                        <div class="articleThumb">
+                            <img width="1080" height="720" src="https://programmercollege.jp/wp/wp-content/uploads/2021/11/column_main37897.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="column_main37897" loading="lazy" srcset="https://programmercollege.jp/wp/wp-content/uploads/2021/11/column_main37897.jpg 1080w, https://programmercollege.jp/wp/wp-content/uploads/2021/11/column_main37897-300x200.jpg 300w, https://programmercollege.jp/wp/wp-content/uploads/2021/11/column_main37897-1024x683.jpg 1024w, https://programmercollege.jp/wp/wp-content/uploads/2021/11/column_main37897-768x512.jpg 768w, https://programmercollege.jp/wp/wp-content/uploads/2021/11/column_main37897-718x479.jpg 718w" sizes="(max-width: 1080px) 100vw, 1080px" />
+                        </div>
+                        <div class="articleBox">
+                            <div class="articleCat"><p>スキルアップ</p></div>
+                            <p class="date">2021.11.17</p>
+                        </div>
+
+                        <h3 class="articleTtl">プログラミングで稼げない人の特徴をプロが解説！稼ぐにはどうする？</h3>
+                        <p class="articleTxt">プログラミングの仕事や副業を考えているけれど「プログラミングは稼げない」と言われて不安を感じている方もいますよね。そんな方のために、稼げないと言われる理由と稼げるようになるためのスキルや経験の身につけ方を紹介します。さら [&hellip;]</p>
+                        <p class="articleBtn"><img src="https://programmercollege.jp/wp/wp-content/themes/internous/img/articleBtn.svg" alt="続きを見る"></p>
+                    </a>
+                </article>
+
+                <article>
+                    <a href="https://programmercollege.jp/column/37944/">
+                        <div class="articleThumb">
+                            <img width="1080" height="719" src="https://programmercollege.jp/wp/wp-content/uploads/2021/11/column_main37944.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="column_main37944" loading="lazy" srcset="https://programmercollege.jp/wp/wp-content/uploads/2021/11/column_main37944.jpg 1080w, https://programmercollege.jp/wp/wp-content/uploads/2021/11/column_main37944-300x200.jpg 300w, https://programmercollege.jp/wp/wp-content/uploads/2021/11/column_main37944-1024x682.jpg 1024w, https://programmercollege.jp/wp/wp-content/uploads/2021/11/column_main37944-768x511.jpg 768w, https://programmercollege.jp/wp/wp-content/uploads/2021/11/column_main37944-718x478.jpg 718w" sizes="(max-width: 1080px) 100vw, 1080px" />
+                        </div>
+                        <div class="articleBox">
+                            <div class="articleCat"><p>スキルアップ</p></div>
+                            <p class="date">2021.11.17</p>
+                        </div>
+
+                        <h3 class="articleTtl">プログラマーの仕事内容を具体的にわかりやすく！やりがいや魅力は？【初心者向け】</h3>
+                        <p class="articleTxt">プログラマーの仕事内容を具体的にわかりやすく解説します。やりがいや魅力、年収、システムエンジニアとの違いまでみなさんの疑問を一挙解決！これからプログラミングを学ぶ予定の方、IT業界やプログラマーの仕事に興味がある方はぜひ [&hellip;]</p>
+                        <p class="articleBtn"><img src="https://programmercollege.jp/wp/wp-content/themes/internous/img/articleBtn.svg" alt="続きを見る"></p>
+                    </a>
+                </article>
+
+                <article>
+                    <a href="https://programmercollege.jp/column/30144/">
+                        <div class="articleThumb">
+                            <img width="1080" height="720" src="https://programmercollege.jp/wp/wp-content/uploads/2021/11/column_main30144.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="column_main30144" loading="lazy" srcset="https://programmercollege.jp/wp/wp-content/uploads/2021/11/column_main30144.jpg 1080w, https://programmercollege.jp/wp/wp-content/uploads/2021/11/column_main30144-300x200.jpg 300w, https://programmercollege.jp/wp/wp-content/uploads/2021/11/column_main30144-1024x683.jpg 1024w, https://programmercollege.jp/wp/wp-content/uploads/2021/11/column_main30144-768x512.jpg 768w, https://programmercollege.jp/wp/wp-content/uploads/2021/11/column_main30144-718x479.jpg 718w" sizes="(max-width: 1080px) 100vw, 1080px" />
+                        </div>
+                        <div class="articleBox">
+                            <div class="articleCat"><p>スキルアップ</p></div>
+                            <p class="date">2021.11.12</p>
+                        </div>
+
+                        <h3 class="articleTtl">プログラミングスクール27校の料金相場を比較！受講料が高い理由や安く通う方法も紹介</h3>
+                        <p class="articleTxt">本記事では、プログラミングスクール27校の料金相場を一覧表で徹底比較。各スクールの最安値コースを調査し、受講料金が安い順のランキング形式にまとめました。受講料の平均価格のほか、受講費用が高い理由や安く通う方法も紹介。初心 [&hellip;]</p>
+                        <p class="articleBtn"><img src="https://programmercollege.jp/wp/wp-content/themes/internous/img/articleBtn.svg" alt="続きを見る"></p>
+                    </a>
+                </article>
+
+                <article>
+                    <a href="https://programmercollege.jp/column/37757/">
+                        <div class="articleThumb">
+                            <img width="1080" height="719" src="https://programmercollege.jp/wp/wp-content/uploads/2021/11/column_main37757.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="column_main37757" loading="lazy" srcset="https://programmercollege.jp/wp/wp-content/uploads/2021/11/column_main37757.jpg 1080w, https://programmercollege.jp/wp/wp-content/uploads/2021/11/column_main37757-300x200.jpg 300w, https://programmercollege.jp/wp/wp-content/uploads/2021/11/column_main37757-1024x682.jpg 1024w, https://programmercollege.jp/wp/wp-content/uploads/2021/11/column_main37757-768x511.jpg 768w, https://programmercollege.jp/wp/wp-content/uploads/2021/11/column_main37757-718x478.jpg 718w" sizes="(max-width: 1080px) 100vw, 1080px" />
+                        </div>
+                        <div class="articleBox">
+                            <div class="articleCat"><p>スキルアップ</p></div>
+                            <p class="date">2021.11.10</p>
+                        </div>
+
+                        <h3 class="articleTtl">プログラミングが楽しい理由とは？楽しく学べるコツも解説します！</h3>
+                        <p class="articleTxt">この記事では、プログラミングの楽しさや魅力についてお伝えします。プログラミングに興味はあるけど、未経験から始めるのはなんだか難しそうで不安、と思っていても大丈夫。初心者でも楽しくプログラミング学習できる方法をプログラマカ [&hellip;]</p>
+                        <p class="articleBtn"><img src="https://programmercollege.jp/wp/wp-content/themes/internous/img/articleBtn.svg" alt="続きを見る"></p>
+                    </a>
+                </article>
+
+                <article>
+                    <a href="https://programmercollege.jp/column/19515/">
+                        <div class="articleThumb">
+                            <img width="1000" height="632" src="https://programmercollege.jp/wp/wp-content/uploads/2021/10/column_main19515.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="column_main19515" loading="lazy" srcset="https://programmercollege.jp/wp/wp-content/uploads/2021/10/column_main19515.jpg 1000w, https://programmercollege.jp/wp/wp-content/uploads/2021/10/column_main19515-300x190.jpg 300w, https://programmercollege.jp/wp/wp-content/uploads/2021/10/column_main19515-768x485.jpg 768w, https://programmercollege.jp/wp/wp-content/uploads/2021/10/column_main19515-718x454.jpg 718w" sizes="(max-width: 1000px) 100vw, 1000px" />
+                        </div>
+                        <div class="articleBox">
+                            <div class="articleCat"><p>スキルアップ</p></div>
+                            <p class="date">2021.11.08</p>
+                        </div>
+
+                        <h3 class="articleTtl">【無料あり】初心者におすすめな東京のプログラミングスクール17校｜目的別の選び方も解説</h3>
+                        <p class="articleTxt">本記事では、プログラミング未経験者や初心者でも安心して学べる東京都内の優良プログラミングスクール17校を一覧比較！「プログラミングスクールの数がありすぎて選び方がわからない」「目的や年代別のおすすめスクールも知りたい」と [&hellip;]</p>
+                        <p class="articleBtn"><img src="https://programmercollege.jp/wp/wp-content/themes/internous/img/articleBtn.svg" alt="続きを見る"></p>
+                    </a>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+
+
+    <div class="toContact">
+        <p class="btn toContact"><a href="https://programmercollege.jp/contact/">無料相談する</a></p>
+    </div>
+
+    <footer>
+        <p class="gotoTop"><a href="#"><img src="https://programmercollege.jp/wp/wp-content/themes/internous/img/gotoTop.svg" alt="gototop"></a></p>
+
+        <div class="footerIn">
+            <p><a href="https://programmercollege.jp/"><img src="https://programmercollege.jp/wp/wp-content/themes/internous/img/logo.svg" alt="logo"></a></p>
+            <ul>
+                <li><a href="https://programmercollege.jp/about/">プログラマカレッジの特徴</a></li>
+                <li><a href="https://programmercollege.jp/curriculum/">カリキュラム内容</a></li>
+            </ul>
+            <ul>
+                <li><a href="https://programmercollege.jp/guide/">転職サポート</a></li>
+                <li>
+                    <a href="https://programmercollege.jp/interview/">インタビュー</a>
+                    <ul>
+                        <li><a href="https://programmercollege.jp/interview/graduate/">卒業生</a></li>
+                        <li><a href="https://programmercollege.jp/interview/company/">企業</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <a href="https://programmercollege.jp/column/">ITコラム</a>
+                    <ul>
+                        <li><a href="https://programmercollege.jp/column/skill_up/">スキルアップ</a></li>
+                        <li><a href="https://programmercollege.jp/column/programmer_huck/">プログラマハック</a></li>
+                        <li><a href="https://programmercollege.jp/column/html_css/">HTML・CSS</a></li>
+                        <li><a href="https://programmercollege.jp/column/javascript/">JavaScript</a></li>
+                        <li><a href="https://programmercollege.jp/column/php/">PHP</a></li>
+                        <!-- <li><a href="https://programmercollege.jp/column/java/">JAVA</a></li> -->
+                        <li><a href="https://programmercollege.jp/column/jquery/">jQuery</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul>
+                <!-- <li><a href="https://programmercollege.jp/info/">お知らせ</a></li> -->
+                <li><a href="https://programmercollege.jp/faq/">よくあるご質問</a></li>
+                <li><a href="https://programmercollege.jp/companyinfo/">運営会社</a></li>
+                <li><a href="https://programmercollege.jp/privacypolicy">プライバシーポリシー</a></li>
+                <li><a href="https://programmercollege.jp/access">アクセス</a></li>
+                <li class="forcompany"><a href="https://programmercollege.jp/companycontact/">企業の方へ</a></li>
+            </ul>
+        </div>
+    </footer>
+    <p class="copy">INTERNOUS,inc. All rights reserved.</p>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script>
+        $(function () {
+            $("ul#top-menu > li.subIcon").hover(function () {
+                $("ul:not(:animated)", this).slideDown()
+            },
+                function () {
+                    $("ul", this).slideUp();
+                })
+        })
+    </script>
+    <script type="text/javascript" src="https://programmercollege.jp/wp/wp-content/themes/internous/js/slick.min.js"></script>
+    <script>
+        $('.slideBoxIn').slick({
+            // centerMode: true,
+            //  centerPadding: '0',
+            dots: true,
+            autoplay: true,
+            fade: true,
+            autoplaySpeed: 5000,
+            speed: 500,
+            cssEase: 'linear',
+            arrows: false
+        });
+
+        $('.aboutSlide').slick({
+            dots: true,
+            autoplay: true,
+            autoplaySpeed: 5000,
+        });
+    </script>
+    <script>
+        $(function () {
+            $('#nav_toggle').click(function () {
+                $("header").toggleClass('open');
+                $("nav").slideToggle(500);
+            });
+
+        });
+    </script>
+
+    <script>
+        $(function () {
+            var appear = false;
+            var pagetop = $('.gotoTop');
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 100) {  //100pxスクロールしたら
+                    if (appear == false) {
+                        appear = true;
+                        pagetop.stop().animate({
+                            'right': '1em' //右から0pxの位置に
+                        }, 300); //0.3秒かけて現れる
+                    }
+                } else {
+                    if (appear) {
+                        appear = false;
+                        pagetop.stop().animate({
+                            'right': '-80px' //右から-50pxの位置に
+                        }, 300); //0.3秒かけて隠れる
+                    }
+                }
+            });
+            pagetop.click(function () {
+                $('body, html').animate({ scrollTop: 0 }, 500); //0.5秒かけてトップへ戻る
+                return false;
+            });
+        });
+    </script>
+
+    <script type='text/javascript' src='https://programmercollege.jp/wp/wp-includes/js/wp-embed.min.js?ver=5.7.4' id='wp-embed-js'></script>
+
+</body>
+</html>

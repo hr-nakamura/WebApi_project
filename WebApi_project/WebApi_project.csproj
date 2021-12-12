@@ -122,7 +122,7 @@
     <Content Include="Scripts\json2.min.js" />
     <Content Include="_Func\Dialog\back.gif" />
     <Content Include="_Func\Dialog\demo.css" />
-    <Content Include="_Func\Dialog\dialog - コピー.html" />
+    <Content Include="_Func\Dialog\dialog1.html" />
     <Content Include="_Func\Dialog\editProject.html" />
     <Content Include="_Func\Dialog\input.txt" />
     <Content Include="_Func\Dialog\test.html" />

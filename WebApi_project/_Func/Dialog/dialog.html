@@ -6,10 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>jQuery UI Dialog - Modal form</title>
     <style>
-        <!--
-        .wkDialogClass{
+
+        .wkDialogClass {
             background-color: black;
-            padding: 0px;
         }
 
             .wkDialogClass .ui-dialog-titlebar {
@@ -18,23 +17,23 @@
             }
 
             .wkDialogClass .ui-dialog-content {
-                *background: url("/WebApi/_home/_Content/_images/bg01.gif");
-                background-color: green;
-                border: solid 1px red;
-                padding: 0px;
+                color: red;
+                background: green;
             }
-        .wkDialogClass .ui-widget {
-            background: yellow;
+
+            .wkDialogClass .ui-dialog-buttonpane {
+                background-color: pink;
+            }
+
+        .wkBtnOk {
+            color: red;
+            background-color: yellow;
         }
-            .wkDialogClass .ui-widget-content {
-                background: red;
-                border: solid 10px blue;
-                padding: 0px;
-            }
 
-
-        -->
-
+        .wkBtnNg {
+            color: blue;
+            background-color: greenyellow;
+        }
     </style>
 
 
@@ -56,6 +55,65 @@
 
 
         $(function () {
+            $(function () {
+                $(".test2").on("click", function () {
+
+                    showDialog(fineDialog);
+
+                    // 終了後の処理
+                    function fineDialog(para) {
+                        //$.alert("fineDialog", para);
+                    }
+                });
+                function showDialog(returnFunction) {
+                    if ($(".iFBox").dialog("isOpen") == true) return;
+                    var Buff = [];
+                    Buff.push("会社名を設定してください");
+                    Buff.push("<input type='text' class='text' value='ABCDEF12345' />");
+                    Buff.push("====");
+                    Buff = Buff.join("<br>");
+                    var retVal = "789";
+                    $("<div class='iFBox'></div>").dialog({
+                        dialogClass: "wkDialogClass",
+                        autoOpen: true,
+                        title: 'タイトル',
+                        height: "auto",
+                        width: "auto",
+                        buttons: [
+                            {
+                                text: "登録",
+                                class: "wkBtnOk",
+                                click: function () {
+                                    retVal = $(".text", $(this)).val();
+                                    $(this).dialog("close");
+                                }
+                            },
+                            {
+                                text: "取消",
+                                class: "wkBtnNg",
+                                click: function () {
+                                    retVal = "";
+                                    $(this).dialog("close");
+                                }
+                            }],
+                        open: function () {
+                            $(".iFBox").html(Buff);
+                            //$(this).prev(".ui-dialog-titlebar").css({ "background": "green", "color": "white", "font-size": "13px", "font-weight": "normal" });
+                            //$(this).prev(".ui-dialog-content").css({ "background": "green", "color": "white", "font-size": "13px", "font-weight": "normal" });
+                            //$(this).css("background-color", "pink");
+                            //$(this).load("input.txt");
+                            var option = $(this).dialog("option");
+                            //var a = 1;
+                        },
+                        close: function () {
+                            $(this).dialog('destroy');
+                            // 終了処理を実行
+                            returnFunction(retVal);
+                        }
+                    });
+                }
+            });
+
 
         });
         $(function () {
@@ -116,8 +174,8 @@
             });
             $(".test").on("click", function () {
                 try {
-                    $(".iFBox").prev(".ui-dialog-titlebar").css({ "background": "#47669E", "color": "white", "font-size": "13px", "font-weight": "normal" });
-                    $(".iFBox").dialog("option", "title", "Dialog Title");
+                    //$(".iFBox").prev(".ui-dialog-titlebar").css({ "background": "#47669E", "color": "white", "font-size": "13px", "font-weight": "normal" });
+                    //$(".iFBox").dialog("option", "title", "Dialog Title");
                     //var win = $(".iFBox")[0].contentWindow;
                     //win.abcd("ABCD");
                     //var doc = $(".iFBox").contents();
@@ -127,58 +185,6 @@
 
                 } catch (e) { alert(e.message) };
             });
-        });
-
-        $(function () {
-            $(".test2").on("click", function () {
-
-                showDialog(fineDialog);
-
-                // 終了後の処理
-                function fineDialog(para) {
-                    //$.alert("fineDialog", para);
-                }
-            });
-            function showDialog(returnFunction) {
-                if ($(".iFBox").dialog("isOpen") == true) return;
-                var Buff = [];
-                Buff.push("会社名を設定してください");
-                Buff.push("<input type='text' class='text' value='ABCDEF12345' />");
-                Buff.push("====");
-                Buff = Buff.join("<br>");
-                var Work = "".concat("<div class='iFBox'>", Buff, "</div>");
-                var retVal = "789";
-                $(Work).dialog({
-                    dialogClass: "wkDialogClass",
-                    autoOpen: true,
-                    title: 'タイトル',
-                    height: "auto",
-                    width: "auto",
-                    buttons: {
-                        "登録": function () {
-                            retVal = $(".text",$(this)).val();
-                            $(this).dialog('close');
-                        },
-                        '取消': function () {
-                            retVal = "";
-                            $(this).dialog('close');
-                        }
-                    },
-                    open: function () {
-                        $(this).prev(".ui-dialog-titlebar").css({ "background": "green", "color": "white", "font-size": "13px", "font-weight": "normal" });
-                        $(this).prev(".ui-dialog-content").css({ "background": "green", "color": "white", "font-size": "13px", "font-weight": "normal" });
-                        //$(this).css("background-color", "pink");
-                        //$(this).load("input.txt");
-                        var option = $(this).dialog("option");
-                        //var a = 1;
-                    },
-                    close: function () {
-                        $(this).dialog('destroy');
-                        // 終了処理を実行
-                        returnFunction(retVal);
-                    }
-                });
-            }
         });
 
     </script>
