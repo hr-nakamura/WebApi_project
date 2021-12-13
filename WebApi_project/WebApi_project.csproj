@@ -112,29 +112,29 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="funcProc\projectCostProc\projectInfoDetail.xml" />
-    <Content Include="funcProc\projectCostProc\projectInfoList.xml" />
-    <Content Include="funcProc\部門収支\BASE.xml" />
+    <Content Include="Api_Proc\funcProc\projectCostProc\projectInfoDetail.xml" />
+    <Content Include="Api_Proc\funcProc\projectCostProc\projectInfoList.xml" />
+    <Content Include="Api_Proc\funcProc\部門収支\BASE.xml" />
     <Content Include="Global.asax" />
-    <Content Include="funcProc\projectBBS\projectData_XML.xml" />
-    <Content Include="hostProc\memo.txt" />
+    <Content Include="Api_Proc\funcProc\projectBBS\projectData_XML.xml" />
+    <Content Include="Api_Proc\hostProc\memo.txt" />
     <Content Include="Scripts\json2.js" />
     <Content Include="Scripts\json2.min.js" />
-    <Content Include="_Func\Dialog\back.gif" />
-    <Content Include="_Func\Dialog\demo.css" />
-    <Content Include="_Func\Dialog\dialog1.html" />
-    <Content Include="_Func\Dialog\editProject.html" />
-    <Content Include="_Func\Dialog\input.txt" />
-    <Content Include="_Func\Dialog\test.html" />
-    <Content Include="_Func\QOSMIO\test.html" />
-    <Content Include="_Func\Dialog\dialog.html" />
-    <Content Include="_Func\TEST\ACEL.mdb" />
-    <Content Include="_Func\TEST\EM.mdb" />
-    <Content Include="_Func\TEST\PSL.mdb" />
-    <Content Include="_Func\TEST\test1.html" />
+    <Content Include="_Test\Dialog\back.gif" />
+    <Content Include="_Test\Dialog\demo.css" />
+    <Content Include="_Test\Dialog\dialog1.html" />
+    <Content Include="_Test\Dialog\editProject.html" />
+    <Content Include="_Test\Dialog\input.txt" />
+    <Content Include="_Test\Dialog\test.html" />
+    <Content Include="_Test\QOSMIO\test.html" />
+    <Content Include="_Test\Dialog\dialog.html" />
+    <Content Include="_Test\TEST\ACEL.mdb" />
+    <Content Include="_Test\TEST\EM.mdb" />
+    <Content Include="_Test\TEST\PSL.mdb" />
+    <Content Include="_Test\TEST\test1.html" />
     <Content Include="_home\manageMenu.html" />
     <Content Include="_home\projectBBS\bbsMain.html" />
-    <Content Include="_Func\QOSMIO\editProject.asp" />
+    <Content Include="_Test\QOSMIO\editProject.asp" />
     <Content Include="_home\projectBBS\jquery.complete.js" />
     <Content Include="_home\projectBBS\new.gif" />
     <Content Include="_home\projectBBS\new7.gif" />
@@ -230,8 +230,8 @@
     <Content Include="_home\_Content\_Scripts\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="_home\_Content\_Scripts\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="_home\_Content\_Scripts\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="funcProc\projectCostProc\projectInfoDetail.json" />
-    <Content Include="funcProc\projectCostProc\projectInfoList.json" />
+    <Content Include="Api_Proc\funcProc\projectCostProc\projectInfoDetail.json" />
+    <Content Include="Api_Proc\funcProc\projectCostProc\projectInfoList.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -239,7 +239,7 @@
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config" />
-    <Content Include="_Func\QOSMIO\qosmio.html" />
+    <Content Include="_Test\QOSMIO\qosmio.html" />
     <Content Include="__home\debug\jquery.my.debug.js" />
     <Content Include="__home\images\bg00.gif" />
     <Content Include="__home\images\EM.png" />
@@ -281,8 +281,8 @@
     <Content Include="__home\work\json.json" />
     <Content Include="__home\Scripts\jquery.my.webapi.js" />
     <Content Include="__home\work\WebApi_project_構成.xlsx" />
-    <Content Include="_Func\QOSMIO\test.json" />
-    <Content Include="_Func\QOSMIO\test_Json.json" />
+    <Content Include="_Test\QOSMIO\test.json" />
+    <Content Include="_Test\QOSMIO\test_Json.json" />
     <Content Include="_home\_Content\_Scripts\jquery-3.6.0.min.js" />
     <Content Include="_home\_Content\_Scripts\jquery-3.6.0.js" />
   </ItemGroup>
@@ -293,34 +293,34 @@
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\XmlController.cs" />
     <Compile Include="App_Data\StopWatch.cs" />
-    <Compile Include="funcProc\projectCostProc\test2.cs" />
-    <Compile Include="funcProc\売上予測\売上予実_新規2.cs" />
-    <Compile Include="funcProc\部門収支\部門収支_DB.cs" />
+    <Compile Include="Api_Proc\funcProc\projectCostProc\test2.cs" />
+    <Compile Include="Api_Proc\funcProc\売上予測\売上予実_新規2.cs" />
+    <Compile Include="Api_Proc\funcProc\部門収支\部門収支_DB.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="hostProc\Entry.cs" />
-    <Compile Include="hostProc\hostProc.cs" />
-    <Compile Include="hostProc\hostWeb.cs">
+    <Compile Include="Api_Proc\hostProc\Entry.cs" />
+    <Compile Include="Api_Proc\hostProc\hostProc.cs" />
+    <Compile Include="Api_Proc\hostProc\hostWeb.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="funcProc\projectBBS\projectList.cs" />
-    <Compile Include="_Func\QOSMIO\test.cs" />
-    <Compile Include="funcProc\売上予測\売上予実_分類.cs" />
-    <Compile Include="funcProc\売上予測\売上予実_新規.cs" />
-    <Compile Include="funcProc\売上予測\売上予実_部門.cs" />
-    <Compile Include="funcProc\projectCostProc\test1.cs" />
-    <Compile Include="funcProc\要員情報\要員一覧.cs" />
-    <Compile Include="funcProc\費用予測\費用状況.cs" />
-    <Compile Include="funcProc\部門収支\部門収支.cs" />
-    <Compile Include="hostProc_json\dayCheck.cs" />
-    <Compile Include="hostProc_json\memberInfo.cs" />
-    <Compile Include="hostProc_json\部門リスト.cs" />
+    <Compile Include="Api_Proc\funcProc\projectBBS\projectList.cs" />
+    <Compile Include="_Test\QOSMIO\test.cs" />
+    <Compile Include="Api_Proc\funcProc\売上予測\売上予実_分類.cs" />
+    <Compile Include="Api_Proc\funcProc\売上予測\売上予実_新規.cs" />
+    <Compile Include="Api_Proc\funcProc\売上予測\売上予実_部門.cs" />
+    <Compile Include="Api_Proc\funcProc\projectCostProc\test1.cs" />
+    <Compile Include="Api_Proc\funcProc\要員情報\要員一覧.cs" />
+    <Compile Include="Api_Proc\funcProc\費用予測\費用状況.cs" />
+    <Compile Include="Api_Proc\funcProc\部門収支\部門収支.cs" />
+    <Compile Include="Api_Proc\hostProc_json\dayCheck.cs" />
+    <Compile Include="Api_Proc\hostProc_json\memberInfo.cs" />
+    <Compile Include="Api_Proc\hostProc_json\部門リスト.cs" />
     <Compile Include="Models\accountInfo.cs" />
     <Compile Include="Models\common.cs" />
     <Compile Include="Models\group.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="_Func\QOSMIO\test2.cs" />
+    <Compile Include="_Test\QOSMIO\test2.cs" />
     <Compile Include="__home\debug\debug.ashx.cs">
       <DependentUpon>debug.ashx</DependentUpon>
     </Compile>
