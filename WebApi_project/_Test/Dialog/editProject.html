@@ -13,12 +13,12 @@
 	<script src="/WebApi/project/_home/_Content/_Scripts/jquery.kansa.Query.js"></script>
 	<script src="/WebApi/project/_home/_Content/_Scripts/json.js"></script>
 	<style>
-        body {
-            background :url("back.gif");
+		body {
+			background: url("back.gif");
 			border: solid blue 0px;
-            padding: 5px;
-            margin: 0px;
-        }
+			padding: 5px;
+			margin: 0px;
+		}
 	</style>
 
 
@@ -34,6 +34,84 @@
 
 	</SCRIPT>
 	<script type="text/javascript">
+		(function ($) {
+			$.jsonOut = function (json) {
+				alert(JSON.stringify(json, null, 2));
+			}
+
+            $.showModalDialog = function ( Buff, callBack){
+                if ($(".iFBox").dialog("isOpen") == true) return;
+                var Work = [];
+                Work.push(Buff.HEAD);
+                Work.push("<input type='text' class='text' value='" + Buff.VALUE + "' />");
+                Work = Work.join("<br>");
+                var retVal = "789";
+                $("<div class='iFBox'></div>").dialog({
+                    dialogClass: "wkDialogClass",
+                    autoOpen: true,
+                    title: Buff.TITLE,
+                    height: "auto",
+                    width: "auto",
+                    buttons: [
+                        {
+                            text: "登録",
+                            class: "wkBtnOk",
+                            click: function () {
+                                retVal = $(".text", $(this)).val();
+                                $(this).dialog("close");
+                            }
+                        },
+                        {
+                            text: "取消",
+                            class: "wkBtnNg",
+                            click: function () {
+                                retVal = "";
+                                $(this).dialog("close");
+                            }
+                        }],
+                    open: function () {
+                        $(this).html(Work);
+                        //$(this).load("input.txt");
+                        //$(this).prev(".ui-dialog-titlebar").css({ "background": "green", "color": "white", "font-size": "13px", "font-weight": "normal" });
+                        //$(this).prev(".ui-dialog-content").css({ "background": "green", "color": "white", "font-size": "13px", "font-weight": "normal" });
+                        //$(this).css("background-color", "pink");
+                        var option = $(this).dialog("option");
+                        //var a = 1;
+                    },
+                    close: function () {
+                        $(this).dialog('destroy');
+                        // 終了処理を実行
+                        callBack(retVal);
+                    }
+                });
+            }
+		})(jQuery);
+	</script>
+	<script type="text/javascript">
+		RSGetASPObject = function () {
+			var Obj = {};
+			Obj.getProjectInfo = function () {
+				var cObj = {};
+				cObj.return_value = $.loadJSONDoc("project.json");
+				return (cObj);
+			}
+			Obj.getCorpList = function () {
+				var cObj = {};
+				cObj.return_value = { a: 1, b: 2 };
+				return (cObj);
+			}
+			Obj.getKindList = function () {
+				var cObj = {};
+				cObj.return_value = { a: 1, b: 2 };
+				return (cObj);
+			}
+			Obj.getMemberList = function () {
+				var cObj = {};
+				cObj.return_value = { a: 1, b: 2 };
+				return (cObj);
+			}
+			return (Obj);
+		}
 		$(window).on("load", function (e) {
 			try {
 				//$.alert("xx", $.fn.jquery, window.location.href);
@@ -88,17 +166,12 @@
 			});
 		});
 
-		(function ($) {
-			$.jsonOut = function (json) {
-                alert(JSON.stringify(json, null, 2));
-            }
-        })(jQuery);
 	</script>
-	<SCRIPT FOR="NEW" EVENT="onclick" LANGUAGE="JavaScript">
+	<SCRIPT FOR="X_NEW" EVENT="onclick" LANGUAGE="JavaScript">
 		//pNum = 0
 		//InitData()
 	</SCRIPT>
-	<SCRIPT FOR="window" EVENT="onload_X" LANGUAGE="JavaScript">
+	<SCRIPT FOR="X_window" EVENT="onload" LANGUAGE="JavaScript">
 		try {
 			//pNum = window.dialogArguments.pNum
 			//InitData()
@@ -108,7 +181,7 @@
 		}
 
 	</SCRIPT>
-	<SCRIPT FOR="window" EVENT="onunload_X" LANGUAGE="JavaScript">
+	<SCRIPT FOR="X_window" EVENT="onunload" LANGUAGE="JavaScript">
 		//alert("onunload");
 		//window.dialogArguments.pNum = pNum
 		//window.returnValue = result
@@ -141,7 +214,7 @@
 				n++
 			}
 		}
-		function inputCorp() {
+        function inputCorp() {
 			var Buff = new Object
 			Buff["TITLE"] = "会社名設定"
 			Buff["HEAD"] = "会社名を入力してください"
@@ -153,7 +226,7 @@
 			windowOption = "dialogTop:" + posX + "px;dialogLeft:" + posY + "px;"
 			windowOption += "dialogWidth:0px;dialogHeight:0px;"
 			windowOption += "status:no;scroll:no;"
-			value = window.showModalDialog("inputText.asp", Buff, windowOption)
+            value = window.showModalDialog("inputText.asp", Buff, windowOption)
 			return (value)
 		}
 
@@ -184,7 +257,7 @@
 				n++
 			}
 		}
-		function inputCategory() {
+        function inputCategory() {
 			var Buff = new Object
 			Buff["TITLE"] = "カテゴリー名設定"
 			Buff["HEAD"] = "カテゴリー名を入力してください"
@@ -196,17 +269,119 @@
 			windowOption = "dialogTop:" + posX + "px;dialogLeft:" + posY + "px;"
 			windowOption += "dialogWidth:0px;dialogHeight:0px;"
 			windowOption += "status:no;scroll:no;"
-			value = window.showModalDialog("inputText.asp", Buff, windowOption)
+            value = window.showModalDialog("inputText.asp", Buff, windowOption)
 			return (value)
 		}
 
 
 	</SCRIPT>
-	<SCRIPT FOR="corpSEL" EVENT="onchange" LANGUAGE="JavaScript">
+	<script type="text/javascript">
+		(function ($) {
+            $.inputCorp = function (callBack) {
+                var Buff = new Object
+                Buff["TITLE"] = "会社名設定"
+                Buff["HEAD"] = "会社名を入力してください"
+                Buff["VALUE"] = corpSEL.newValue
+
+                value = $.showModalDialog( Buff, callBack)
+                return (value)
+            }
+
+            $.inputCategory = function (callBack) {
+                var Buff = new Object
+                Buff["TITLE"] = "カテゴリー名設定"
+                Buff["HEAD"] = "カテゴリー名を入力してください"
+                Buff["VALUE"] = categorySEL1.newValue
+                value = $.showModalDialog( Buff, callBack)
+                return (value)
+            }
+		})(jQuery);
+		$(function () {
+			$(".corpSEL").on("change", function () {
+				var callBack = function (value) {
+					//$.alert("corpSEL", value);
+                    if (value != "") {
+						this.newValue = value;
+						$("#T0").val = value;
+                    }
+					corpInit(GrpSEL.Tab, T0.value);
+                }
+				var selPos = this.selectedIndex
+                var value
+                if (this.options[selPos].value == "新規") {
+                    value = $.inputCorp(callBack)
+                    //if (value != "") {
+                    //    this.newValue = value
+                    //    T0.value = value
+                    //}
+                    //corpInit(GrpSEL.Tab, T0.value)
+                }
+                else if (selPos == 0) {
+                    T0.value = ""
+                }
+                else {
+                    T0.value = this.options[selPos].text
+                }
+            })
+			$(".categorySEL1").on("change", function () {
+                var callBack = function (value) {
+					$.alert("categorySEL1", value);
+                    if (value != "") {
+                        this.newValue = value
+						T_kindCategory1.value = value;
+                    }
+					categoryInit(CategoryTab1, this, T_kindCategory1.value);
+                }
+                var selPos = this.selectedIndex
+                var value
+                if (this.options[selPos].value == "新規") {
+                    value = $.inputCategory(callBack)
+     //               if (value != "") {
+					//	this.newValue = value;
+					//	T_kindCategory1.value = value;
+     //               }
+					//categoryInit(CategoryTab1, this, T_kindCategory1.value);
+                }
+                else if (selPos == 0) {
+                    T_kindCategory1.value = ""
+                }
+                else {
+                    T_kindCategory1.value = this.options[selPos].text
+                }
+            })
+            $(".categorySEL2").on("change", function () {
+                var callBack = function (value) {
+                    $.alert("categorySEL2", value);
+                    if (value != "") {
+						this.newValue = value;
+						T_kindCategory2.value = value;
+                    }
+					categoryInit(CategoryTab2, this, T_kindCategory2.value);
+				}
+				var selPos = this.selectedIndex
+                var value
+                if (this.options[selPos].value == "新規") {
+                    value = $.inputCategory(callBack)
+                    //if (value != "") {
+                    //    this.newValue = value
+                    //    T_kindCategory2.value = value
+                    //}
+                    //categoryInit(CategoryTab2, this, T_kindCategory2.value)
+                }
+                else if (selPos == 0) {
+                    T_kindCategory2.value = ""
+                }
+                else {
+                    T_kindCategory2.value = this.options[selPos].text
+                }
+            })
+		});
+	</script>
+	<SCRIPT FOR="X_corpSEL" EVENT="onchange" LANGUAGE="JavaScript">
 		var selPos = this.selectedIndex
 		var value
 		if (this.options[selPos].value == "新規") {
-			value = inputCorp()
+            value = inputCorp()
 			if (value != "") {
 				this.newValue = value
 				T0.value = value
@@ -220,7 +395,7 @@
 			T0.value = this.options[selPos].text
 		}
 	</SCRIPT>
-	<SCRIPT FOR="categorySEL1" EVENT="onchange" LANGUAGE="JavaScript">
+	<SCRIPT FOR="X_categorySEL1" EVENT="onchange" LANGUAGE="JavaScript">
 		var selPos = this.selectedIndex
 		var value
 		if (this.options[selPos].value == "新規") {
@@ -239,7 +414,7 @@
 		}
 	</SCRIPT>
 
-	<SCRIPT FOR="categorySEL2" EVENT="onchange" LANGUAGE="JavaScript">
+	<SCRIPT FOR="X_categorySEL2" EVENT="onchange" LANGUAGE="JavaScript">
 		var selPos = this.selectedIndex
 		var value
 		if (this.options[selPos].value == "新規") {
@@ -557,21 +732,21 @@
 				alert("下記の項目を設定してください\n\n" + "[" + Buff.join("]\n[") + "]")
 				return
 			}
-            var json = {
-                P_pNum: P_pNum,
-                P_pName: P_pName,
-                P_corpName: P_corpName,
-                P_Title: P_Title,
-                P_Content: P_Content,
-                P_Stat: P_Stat,
-                P_salesManID: P_salesManID,
-                P_kind: P_kind,
-                P_kindNew: P_kindNew,
-                P_kindCategory1: P_kindCategory1,
-                P_kindCategory2: P_kindCategory2,
-                P_fixLevel: P_fixLevel
-            }
-            $.jsonOut(json);
+			var json = {
+				P_pNum: P_pNum,
+				P_pName: P_pName,
+				P_corpName: P_corpName,
+				P_Title: P_Title,
+				P_Content: P_Content,
+				P_Stat: P_Stat,
+				P_salesManID: P_salesManID,
+				P_kind: P_kind,
+				P_kindNew: P_kindNew,
+				P_kindCategory1: P_kindCategory1,
+				P_kindCategory2: P_kindCategory2,
+				P_fixLevel: P_fixLevel
+			}
+			$.jsonOut(json);
 			/*
 			var cObj
 			var aspObj = RSGetASPObject("bbsDB.asp")
@@ -676,7 +851,7 @@
 				<TD nowrap class='textName'>会社名</TD>
 				<TD>
 					<INPUT type='hidden' ID="T0">
-					<SELECT ID='corpSEL' newValue='' style='width:100%'>
+					<SELECT ID='corpSEL' class='corpSEL' newValue='' style='width:100%'>
 						<OPTION selected>　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　</OPTION>
 					</SELECT>
 				</TD>
@@ -748,7 +923,7 @@
 				<TD nowrap class='textName'>カテゴリー名1</TD>
 				<TD>
 					<INPUT type='hidden' ID="T_kindCategory1">
-					<SELECT ID='categorySEL1' newValue='' style='width:100%'>
+					<SELECT ID='categorySEL1' class='categorySEL1' newValue='' style='width:100%'>
 						<OPTION selected>　　　</OPTION>
 					</SELECT>
 				</TD>
@@ -757,7 +932,7 @@
 				<TD nowrap class='textName'>カテゴリー名2</TD>
 				<TD>
 					<INPUT type='hidden' ID="T_kindCategory2">
-					<SELECT ID='categorySEL2' newValue='' style='width:100%'>
+					<SELECT ID='categorySEL2'class='categorySEL2'  newValue='' style='width:100%'>
 						<OPTION selected>　　　</OPTION>
 					</SELECT>
 				</TD>
