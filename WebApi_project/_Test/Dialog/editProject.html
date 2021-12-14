@@ -97,17 +97,17 @@
 			}
 			Obj.getCorpList = function () {
 				var cObj = {};
-				cObj.return_value = { a: 1, b: 2 };
+                cObj.return_value = $.loadJSONDoc("corp.json");
 				return (cObj);
 			}
 			Obj.getKindList = function () {
 				var cObj = {};
-				cObj.return_value = { a: 1, b: 2 };
+                cObj.return_value = $.loadJSONDoc("bunrui.json");
 				return (cObj);
 			}
 			Obj.getMemberList = function () {
 				var cObj = {};
-				cObj.return_value = { a: 1, b: 2 };
+                cObj.return_value = $.loadJSONDoc("member.json");
 				return (cObj);
 			}
 			return (Obj);
