@@ -84,7 +84,8 @@
                         callBack(retVal);
                     }
                 });
-            }
+                return ("showModalDialog");
+			}
 		})(jQuery);
 	</script>
 	<script type="text/javascript">
@@ -277,39 +278,61 @@
 	</SCRIPT>
 	<script type="text/javascript">
 		(function ($) {
-            $.inputCorp = function (callBack) {
+            $.inputCorp = function ($this, callBack) {
+                if ($this.newValue == "undefined") $this.newValue = "";
                 var Buff = new Object
                 Buff["TITLE"] = "âÔé–ñºê›íË"
                 Buff["HEAD"] = "âÔé–ñºÇì¸óÕÇµÇƒÇ≠ÇæÇ≥Ç¢"
-                Buff["VALUE"] = corpSEL.newValue
+                Buff["VALUE"] = $this.newValue
 
                 value = $.showModalDialog( Buff, callBack)
                 return (value)
             }
 
-            $.inputCategory = function (callBack) {
+			$.inputCategory = function ($this,callBack) {
+                if ($this.newValue == "undefined") $this.newValue = "";
                 var Buff = new Object
                 Buff["TITLE"] = "ÉJÉeÉSÉäÅ[ñºê›íË"
                 Buff["HEAD"] = "ÉJÉeÉSÉäÅ[ñºÇì¸óÕÇµÇƒÇ≠ÇæÇ≥Ç¢"
-                Buff["VALUE"] = categorySEL1.newValue
+                Buff["VALUE"] = $this.newValue
                 value = $.showModalDialog( Buff, callBack)
                 return (value)
             }
 		})(jQuery);
 		$(function () {
-			$(".corpSEL").on("change", function () {
+            $("X_#corpSEL").on("change", function () {
+				var selPos = this.selectedIndex
+                var value
+                if (this.options[selPos].value == "êVãK") {
+                    value = inputCorp()
+                    if (value != "") {
+                        this.newValue = value
+                        T0.value = value
+                    }
+                    corpInit(GrpSEL.Tab, T0.value)
+                }
+                else if (selPos == 0) {
+                    T0.value = ""
+                }
+                else {
+                    T0.value = this.options[selPos].text
+                }			})
+            $(".corpSEL").on("change", function () {
+                var $this = $(".corpSEL")[0];
 				var callBack = function (value) {
 					//$.alert("corpSEL", value);
                     if (value != "") {
-						this.newValue = value;
-						$("#T0").val = value;
+                        $this.newValue = value;
+						//this.newValue = value;
+						T0.value = value;
                     }
 					corpInit(GrpSEL.Tab, T0.value);
                 }
 				var selPos = this.selectedIndex
+                //$.alert(selPos, this.options[selPos].value);
                 var value
                 if (this.options[selPos].value == "êVãK") {
-                    value = $.inputCorp(callBack)
+                    value = $.inputCorp($this,callBack);
                     //if (value != "") {
                     //    this.newValue = value
                     //    T0.value = value
@@ -324,18 +347,20 @@
                 }
             })
 			$(".categorySEL1").on("change", function () {
+                var $this = $(".categorySEL1")[0];
                 var callBack = function (value) {
-					$.alert("categorySEL1", value);
-                    if (value != "") {
-                        this.newValue = value
+					//$.alert("categorySEL1", value);
+					if (value != "") {
+                        $this.newValue = value;
+                        //this.newValue = value
 						T_kindCategory1.value = value;
                     }
-					categoryInit(CategoryTab1, this, T_kindCategory1.value);
+                    categoryInit(CategoryTab1, $this , T_kindCategory1.value);
                 }
                 var selPos = this.selectedIndex
                 var value
                 if (this.options[selPos].value == "êVãK") {
-                    value = $.inputCategory(callBack)
+                    value = $.inputCategory($this,callBack)
      //               if (value != "") {
 					//	this.newValue = value;
 					//	T_kindCategory1.value = value;
@@ -350,18 +375,20 @@
                 }
             })
             $(".categorySEL2").on("change", function () {
-                var callBack = function (value) {
-                    $.alert("categorySEL2", value);
+                var $this = $(".categorySEL2")[0];
+				var callBack = function (value) {
+                    //$.alert("categorySEL2", value);
                     if (value != "") {
-						this.newValue = value;
+                        $this.newValue = value;
+						//this.newValue = value;
 						T_kindCategory2.value = value;
                     }
-					categoryInit(CategoryTab2, this, T_kindCategory2.value);
+                    categoryInit(CategoryTab2, $this, T_kindCategory2.value);
 				}
 				var selPos = this.selectedIndex
                 var value
                 if (this.options[selPos].value == "êVãK") {
-                    value = $.inputCategory(callBack)
+                    value = $.inputCategory($this,callBack)
                     //if (value != "") {
                     //    this.newValue = value
                     //    T_kindCategory2.value = value
