@@ -125,6 +125,7 @@
     <Content Include="_Test\Dialog\dialog1.html" />
     <Content Include="_Test\Dialog\editProject.html" />
     <Content Include="_Test\Dialog\input.txt" />
+    <Content Include="_Test\Dialog\inputText.asp" />
     <Content Include="_Test\Dialog\new.json" />
     <Content Include="_Test\Dialog\bunrui.json" />
     <Content Include="_Test\Dialog\member.json" />
