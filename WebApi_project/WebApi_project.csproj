@@ -125,6 +125,7 @@
     <Content Include="_Test\Dialog\dialog1.html" />
     <Content Include="_Test\Dialog\editProject.html" />
     <Content Include="_Test\Dialog\input.txt" />
+    <None Include="_Test\Dialog\xx.json" />
     <Content Include="_Test\Dialog\test.html" />
     <Content Include="_Test\QOSMIO\test.html" />
     <Content Include="_Test\Dialog\dialog.html" />

@@ -10,7 +10,12 @@
     <script type="text/javascript">
         var return_functionName = "";
         var pNum;
+        window.onload = function () {
+            var x = $.loadJSONDoc("xx.json");
+            var a = 1;
+        }
         $(window).on("load", function (e) {
+
             //$.alert("onload");
             //$.alert("xx", $.fn.jquery, window.location.href);
             //var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
@@ -58,7 +63,7 @@
         }
         .xxx {
             border: 1px green solid;
-            background-color: green;
+            background-color: pink;
         }
     </style>
 </head>
