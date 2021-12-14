@@ -721,8 +721,21 @@
 			if (pNum <= 0) {
 				P_gID = getGroupValue() 				   // 新規作成のとき
 			}
-
-
+            var json = {
+                P_pNum: P_pNum,
+                P_pName: P_pName,
+                P_corpName: P_corpName,
+                P_Title: unescape(P_Title),
+                P_Content: unescape(P_Content),
+                P_Stat: P_Stat,
+                P_salesManID: P_salesManID,
+                P_kind: P_kind,
+                P_kindNew: P_kindNew,
+                P_kindCategory1: P_kindCategory1,
+                P_kindCategory2: P_kindCategory2,
+                P_fixLevel: P_fixLevel
+            }
+            $.jsonOut(json);
 			var Buff = []
 			if (P_pName.length == 0) Buff.push("プロジェクト名")
 			if (P_corpName.length == 0) Buff.push("客先名")
@@ -732,21 +745,8 @@
 				alert("下記の項目を設定してください\n\n" + "[" + Buff.join("]\n[") + "]")
 				return
 			}
-			var json = {
-				P_pNum: P_pNum,
-				P_pName: P_pName,
-				P_corpName: P_corpName,
-				P_Title: P_Title,
-				P_Content: P_Content,
-				P_Stat: P_Stat,
-				P_salesManID: P_salesManID,
-				P_kind: P_kind,
-				P_kindNew: P_kindNew,
-				P_kindCategory1: P_kindCategory1,
-				P_kindCategory2: P_kindCategory2,
-				P_fixLevel: P_fixLevel
-			}
-			$.jsonOut(json);
+
+
 			/*
 			var cObj
 			var aspObj = RSGetASPObject("bbsDB.asp")
