@@ -6,22 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>jQuery UI Dialog - Modal form</title>
     <style>
-
-        .wkDialogClass {
+        .testX {
+            border: solid 1px red;
+            background-color: red;
+        }
+        body {
+            background: url("back1.gif");
+            border: solid blue 1px;
+            padding: 5px;
+            margin: 10px;
+        }
+        .wkDialogClassMain {
             background-color: black;
         }
 
-            .wkDialogClass .ui-dialog-titlebar {
-                color: purple;
-                background: plum;
+            .wkDialogClassMain .ui-dialog-titlebar {
+                color: white;
+                background-color: royalblue ;
             }
 
-            .wkDialogClass .ui-dialog-content {
+            .wkDialogClassMain .ui-dialog-content {
                 color: red;
                 background: green;
             }
 
-            .wkDialogClass .ui-dialog-buttonpane {
+            .wkDialogClassMain .ui-dialog-buttonpane {
                 background-color: pink;
             }
 
@@ -55,6 +64,54 @@
 
 
         $(function () {
+            $(".test1").on("click", function () {
+
+                var work = showDialog2("fineDialog");
+            });
+
+            function showDialog2(returnFunction) {
+                if ($(".iFBox").dialog("isOpen") == true) return;
+                var url = "editProject.html";
+                //url = "test.html";
+                var src_str = url.concat("?", "pNum=20214927", "&", "return_functionName=fineDialog");
+                $("<iframe class='iFBox'></iframe>").dialog({
+                    dialogClass: "wkDialogClassMain",
+                    closeOnEscape: true,
+                    modal: true,
+                    minHeight: 660,
+                    //maxHeight: 650,
+                    minWidth: 660,
+                    //maxWidth: 650,
+                    //height: 'auto',
+                    //width: 'auto',
+                    autoOpen: true,
+                    title: 'タイトル',
+                    height: 660,
+                    width: 660,
+                    open: function () {
+                        $(this).css("width", "100%");
+                        $(this).css("padding", "0px");
+                        $(this).attr({ "src": src_str });
+                    },
+                    close: function () {
+                        $(this).dialog('destroy');
+
+                    }
+                });
+                // 終了時の処理を記述する
+                fineDialog = function (para) {
+                    $(".iFBox").dialog('close');
+                    if (para == "regist") {
+                        $.alert("****fineDialog*****", para);
+                    }
+                    else {
+                        $.alert("****fineDialog*****", para);
+                    }
+                }
+            }
+        });
+
+        $(function () {
             $(function () {
                 $(".test2").on("click", function () {
 
@@ -74,7 +131,7 @@
                     Buff = Buff.join("<br>");
                     var retVal = "789";
                     $("<div class='iFBox'></div>").dialog({
-                        dialogClass: "wkDialogClass",
+                        dialogClass: "wkDialogClassMain",
                         autoOpen: true,
                         title: 'タイトル',
                         height: "auto",
@@ -117,54 +174,6 @@
 
         });
         $(function () {
-            $(".test1").on("click", function () {
-
-                var work = showDialog2("fineDialog");
-            });
-
-            function showDialog2(returnFunction) {
-                if ($(".iFBox").dialog("isOpen") == true) return;
-                var url = "editProject.html";
-                //url = "test.html";
-                var src_str = url.concat("?", "pNum=20214927", "&", "return_functionName=fineDialog");
-                $("<iframe class='iFBox'></iframe>").dialog({
-                    dialogClass: "wkDialogClass",
-                    closeOnEscape: false,
-                    modal: true,
-                    minHeight: 660,
-                    //maxHeight: 650,
-                    minWidth: 660,
-                    //maxWidth: 650,
-                    //height: 'auto',
-                    //width: 'auto',
-                    autoOpen: true,
-                    title: 'タイトル',
-                    height: 660,
-                    width: 660,
-                    open: function () {
-                        $(this).css("width", "100%");
-                        $(this).css("padding", "0px");
-                        $(this).attr({ "src": src_str });
-                    },
-                    close: function () {
-                        $(this).dialog('destroy');
-
-                    }
-                });
-                // 終了時の処理を記述する
-                fineDialog = function (para) {
-                    $(".iFBox").dialog('close');
-                    if (para == "regist") {
-                        $.alert("****fineDialog*****", para);
-                    }
-                    else {
-                        $.alert("****fineDialog*****", para);
-                    }
-                }
-            }
-        });
-
-        $(function () {
             $(".Regist").on("click", function () {
                 $.alert("Regist", "iframe:" + $(".iFBox").length, "div:" + $(".div_Box").length);
             });
@@ -190,7 +199,7 @@
     </script>
 </head>
 <body>
-    <button class="test1">iFrame</button><br/>
+    <button class="test1">iFrame</button><br />
     <button class="test2">div</button>
 
     <div class="resultDataX">
@@ -200,5 +209,43 @@
     </div>
     <hr />
 
+    <div class="testX">
+        <div tabindex="-1"
+             class="ui-dialog ui-corner-all ui-widget ui-widget-content ui-front wkDialogClass ui-dialog-buttons ui-draggable ui-resizable"
+             role="dialog" aria-describedby="ui-id-3" aria-labelledby="ui-id-4"
+             style="left: 242.2px; top: 222.5px; width: auto; height: auto; display: none; position: absolute; z-index: 101;border:solid 1px red;">
+
+
+            <div class="ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix ui-draggable-handle">
+                <span class="ui-dialog-title" id="ui-id-4">カテゴリー名設定</span>
+                <button title="Close" class="ui-button ui-corner-all ui-widget ui-button-icon-only ui-dialog-titlebar-close" type="button">
+                    <span class="ui-button-icon ui-icon ui-icon-closethick"></span>
+                    <span class="ui-button-icon-space"> </span>Close
+                </button>
+            </div>
+
+            <div class="iFBox1 ui-dialog-content ui-widget-content" id="ui-id-3" style="width: auto; height: auto; min-height: 18.19px; max-height: none;">
+                カテゴリー名を入力してください<br>
+                <input class="inputText" type="text" value="">
+            </div>
+
+            <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+                <div class="ui-dialog-buttonset">
+                    <button class="wkBtnOk ui-button ui-corner-all ui-widget" type="button">登録</button>
+                    <button class="wkBtnNg ui-button ui-corner-all ui-widget" type="button">取消</button>
+                </div>
+            </div>
+            <div class="ui-resizable-handle ui-resizable-n" style="z-index: 90;"></div>
+            <div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
+            <div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;">
+            </div><div class="ui-resizable-handle ui-resizable-w" style="z-index: 90;">
+            </div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;">
+            </div><div class="ui-resizable-handle ui-resizable-sw" style="z-index: 90;"></div>
+            <div class="ui-resizable-handle ui-resizable-ne" style="z-index: 90;"></div>
+            <div class="ui-resizable-handle ui-resizable-nw" style="z-index: 90;"></div>
+        </div>
+    </div>
+
+    <hr />
 </body>
 </html>

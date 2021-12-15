@@ -5,7 +5,7 @@
 
 	<TITLE>プロジェクト登録</TITLE>
 
-	<LINK rel="stylesheet" type="text/css" href="dialog1.css">
+	<LINK rel="stylesheet" type="text/css" href="dialog.css">
 	<link rel="stylesheet" href="/WebApi/project/_home/_Content/_Scripts/jquery-1.13.0-ui.css">
 
 	<script src="/WebApi/project/_home/_Content/_Scripts/jquery-3.6.0.min.js"></script>
@@ -13,12 +13,57 @@
 	<script src="/WebApi/project/_home/_Content/_Scripts/jquery.kansa.Query.js"></script>
 	<script src="/WebApi/project/_home/_Content/_Scripts/json.js"></script>
 	<style>
-		body {
-			background: url("back.gif");
-			border: solid blue 0px;
-			padding: 5px;
-			margin: 0px;
-		}
+        body {
+            background-color: silver;
+            *background: url("back.gif");
+            border: solid blue 1px;
+            padding: 5px;
+            margin: 0px;
+        }
+        .wkDialogClass {
+            *background: url("bg09.jpg");
+            border: 1px solid red;
+            *background-color: silver;
+        }
+
+            .wkDialogClass .ui-dialog-titlebar {
+                color: purple;
+                background: plum;
+                background: url("bg09.jpg");
+            }
+
+            .wkDialogClass .ui-dialog-content {
+                color: navy;
+                background: skyblue;
+                background: url("bg09.jpg");
+            }
+
+            .wkDialogClass .ui-dialog-buttonpane {
+                text-align: right;
+                background: url("bg09.jpg");
+                background-color: pink;
+            }
+        .ui-dialog-buttonset {
+            width: 100%;
+            display: flex;
+            display: -webkit-flex;
+            text-align: center;
+            justify-content: space-around;
+            -webkit-justify-content: space-around;
+        }
+
+        .wkBtnOk {
+            color: red;
+            background-color: yellow;
+        }
+
+        .wkBtnNg {
+            color: blue;
+            background-color: greenyellow;
+        }
+        .inputText {
+            width: 250px;
+        }
 	</style>
 
 
@@ -43,12 +88,14 @@
                 if ($(".iFBox").dialog("isOpen") == true) return;
                 var Work = [];
                 Work.push(Buff.HEAD);
-                Work.push("<input type='text' class='text' value='" + Buff.VALUE + "' />");
+                Work.push("<input type='text' class='inputText' value='" + Buff.VALUE + "' />");
                 Work = Work.join("<br>");
-                var retVal = "789";
+                var retVal = "";
                 $("<div class='iFBox'></div>").dialog({
-                    dialogClass: "wkDialogClass",
-                    autoOpen: true,
+					dialogClass: "wkDialogClass",
+                    closeOnEscape: false,
+					autoOpen: true,
+					modal: true,
                     title: Buff.TITLE,
                     height: "auto",
                     width: "auto",
@@ -57,7 +104,7 @@
                             text: "登録",
                             class: "wkBtnOk",
                             click: function () {
-                                retVal = $(".text", $(this)).val();
+                                retVal = $(".inputText", $(this)).val();
                                 $(this).dialog("close");
                             }
                         },
@@ -279,7 +326,7 @@
 	<script type="text/javascript">
 		(function ($) {
             $.inputCorp = function ($this, callBack) {
-                if ($this.newValue == "undefined") $this.newValue = "";
+                if ($this.newValue == undefined ) $this.newValue = "";
                 var Buff = new Object
                 Buff["TITLE"] = "会社名設定"
                 Buff["HEAD"] = "会社名を入力してください"
@@ -290,7 +337,7 @@
             }
 
 			$.inputCategory = function ($this,callBack) {
-                if ($this.newValue == "undefined") $this.newValue = "";
+                if ($this.newValue == undefined ) $this.newValue = "";
                 var Buff = new Object
                 Buff["TITLE"] = "カテゴリー名設定"
                 Buff["HEAD"] = "カテゴリー名を入力してください"
@@ -829,9 +876,6 @@
 	<SCRIPT FOR='exit' EVENT='onclick()' LANGUAGE='JavaScript'>
 		//window.close()
 	</SCRIPT>
-
-	<SCRIPT LANGUAGE="JavaScript" src="cmn1.js"></SCRIPT>
-	<SCRIPT LANGUAGE="VBScript" src="cmn1.vbs"></SCRIPT>
 
 	<!--
 	<SCRIPT LANGUAGE="JavaScript" src="/_ScriptLibrary/RS_AJAX.Js"></SCRIPT>
