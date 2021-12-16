@@ -40,12 +40,6 @@
             color: blue;
             background-color: greenyellow;
         }
-        .iFBox{
-            width:100%;
-            height:100%;
-            padding:0px;
-            margin:0px;
-        }
     </style>
 
 
@@ -63,19 +57,41 @@
             //alert("onload");
         });
 
+        //$(".iFBoxDummy").on("click", function (e) {
+
+        //    $.alert("XX", $(this).attr("status"));
+        //    //fineDialog($(this).attr("status"));
+        //});
+
 
         $(function () {
             $(".test1").on("click", function () {
 
-                var work = showDialog2();
+                var work = showDialog2("fineDialog");
             });
 
+            // 終了処理
+            function fineProc() {
+                $('body').append("<button class='iFBoxDummy' style='display:none'>iFBoxDummy</button>");
+                $('.iFBoxDummy').on('click', function () {
+                    var para = $(this).attr("status")
+                    $(".iFBox").dialog('close');
+                    if (para == "regist") {
+                        $.alert("****fineDialog*****", para);
+                    }
+                    else {
+                        $.alert("****fineDialog*****", para);
+                    }
+                    $('.iFBoxDummy').remove();
+                });
 
-            function showDialog2() {
+            }
+            function showDialog2(returnFunction) {
                 if ($(".iFBox").dialog("isOpen") == true) return;
+                fineProc();
                 var url = "editProject.html";
                 //url = "test.html";
-                var src_str = url.concat("?", "pNum=20214927", "&", "return_elementName=iFBox");
+                var src_str = url.concat("?", "pNum=20214927", "&", "return_elementName=iFBoxDummy");
                 $("<iframe class='iFBox'></iframe>").dialog({
                     dialogClass: "wkDialogClassMain",
                     closeOnEscape: true,
@@ -87,7 +103,6 @@
                     height: 660,
                     width: 660,
                     open: function () {
-                        set_returnProc(this);
                         $(this).css("width", "100%");
                         $(this).css("padding", "0px");
                         $(this).attr({ "src": src_str });
@@ -97,26 +112,72 @@
 
                     }
                 });
-                // 終了処理
-                function set_returnProc($this) {
-                    $($this).append("<span />");
-                    $($this).on("click", function () {
-                        var para = $($this).attr("status");
-                        if (para == "regist") {
-                            $.alert("****fineDialog*****", para);
-                        }
-                        else {
-                            $.alert("****fineDialog*****", para);
-                        }
-                        $($this).dialog('close');
-                    });
 
-                }
             }
         });
 
+        $(function () {
+            $(function () {
+                $(".test2").on("click", function () {
+                    $("body").after("<button class='iFBoxDummy'></button>");
+                    showDialog(fineDialog);
+
+                    // 終了後の処理
+                    function fineDialog(para) {
+                        //$.alert("fineDialog", para);
+                    }
+                });
+                function showDialog(returnFunction) {
+                    if ($(".iFBox").dialog("isOpen") == true) return;
+                    var Buff = [];
+                    Buff.push("会社名を設定してください");
+                    Buff.push("<input type='text' class='text' value='ABCDEF12345' />");
+                    Buff.push("====");
+                    Buff = Buff.join("<br>");
+                    var retVal = "789";
+                    $("<div class='iFBox'></div>").dialog({
+                        dialogClass: "wkDialogClassMain",
+                        autoOpen: true,
+                        title: 'タイトル',
+                        height: "auto",
+                        width: "auto",
+                        buttons: [
+                            {
+                                text: "登録",
+                                class: "wkBtnOk",
+                                click: function () {
+                                    retVal = $(".text", $(this)).val();
+                                    $(this).dialog("close");
+                                }
+                            },
+                            {
+                                text: "取消",
+                                class: "wkBtnNg",
+                                click: function () {
+                                    retVal = "";
+                                    $(this).dialog("close");
+                                }
+                            }],
+                        open: function () {
+                            $(this).html(Buff);
+                            //$(this).load("input.txt");
+                            //$(this).prev(".ui-dialog-titlebar").css({ "background": "green", "color": "white", "font-size": "13px", "font-weight": "normal" });
+                            //$(this).prev(".ui-dialog-content").css({ "background": "green", "color": "white", "font-size": "13px", "font-weight": "normal" });
+                            //$(this).css("background-color", "pink");
+                            var option = $(this).dialog("option");
+                            //var a = 1;
+                        },
+                        close: function () {
+                            $(this).dialog('destroy');
+                            // 終了処理を実行
+                            returnFunction(retVal);
+                        }
+                    });
+                }
+            });
 
 
+        });
         $(function () {
             $(".Regist").on("click", function () {
                 $.alert("Regist", "iframe:" + $(".iFBox").length, "div:" + $(".div_Box").length);
@@ -127,6 +188,9 @@
             });
             $(".test").on("click", function () {
                 try {
+                    $.alert($(".iFBox").length, $(".iFBoxDummy").length);
+                    //$(".iDummy").trigger("click");
+
                 } catch (e) { alert(e.message) };
             });
         });
