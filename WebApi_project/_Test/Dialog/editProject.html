@@ -14,52 +14,47 @@
 	<script src="/WebApi/project/_home/_Content/_Scripts/json.js"></script>
 	<style>
         body {
-            background-color: silver;
-            *background: url("back.gif");
-            border: solid blue 1px;
+            border: solid blue 0px;
             padding: 5px;
             margin: 0px;
+            background: url("back.gif");
+            background-color: black;
         }
         .wkDialogClass {
-            *background: url("bg09.jpg");
             border: 1px solid red;
-            *background-color: silver;
+            background: url("back.gif");
+            background-color: silver;
         }
 
             .wkDialogClass .ui-dialog-titlebar {
-                color: purple;
-                background: plum;
-                background: url("bg09.jpg");
+                color: white;
+                background-color: teal ;
+                *background: url("bg09.jpg");
             }
 
             .wkDialogClass .ui-dialog-content {
+                border: solid 0px red;
                 color: navy;
-                background: skyblue;
-                background: url("bg09.jpg");
+                background: url("back.gif");
+                background-color: silver;
             }
 
             .wkDialogClass .ui-dialog-buttonpane {
-                text-align: right;
-                background: url("bg09.jpg");
-                background-color: pink;
+                border: solid 0px red;
+                background: url("back.gif");
+                background-color: silver;
             }
-        .ui-dialog-buttonset {
-            width: 100%;
-            display: flex;
-            display: -webkit-flex;
-            text-align: center;
-            justify-content: space-around;
-            -webkit-justify-content: space-around;
-        }
 
         .wkBtnOk {
-            color: red;
-            background-color: yellow;
+            border: solid gray 1px;
+            margin-left: 60px !important;
+            font-size: 0.9em !important;
         }
 
         .wkBtnNg {
-            color: blue;
-            background-color: greenyellow;
+            border: solid gray 1px;
+            margin-right: 60px !important;
+            font-size: .9em !important;
         }
         .inputText {
             width: 250px;
@@ -117,16 +112,17 @@
                             }
                         }],
                     open: function () {
-                        $(this).html(Work);
+						$(this).html(Work);
+						$(".inputText").focus();
                         //$(this).load("input.txt");
                         //$(this).prev(".ui-dialog-titlebar").css({ "background": "green", "color": "white", "font-size": "13px", "font-weight": "normal" });
                         //$(this).prev(".ui-dialog-content").css({ "background": "green", "color": "white", "font-size": "13px", "font-weight": "normal" });
                         //$(this).css("background-color", "pink");
-                        var option = $(this).dialog("option");
                         //var a = 1;
                     },
                     close: function () {
                         $(this).dialog('destroy');
+
                         // 終了処理を実行
                         callBack(retVal);
                     }
@@ -166,7 +162,7 @@
 				var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
 
 				pNum = $.queryString("pNum", "projectNum");
-				return_functionName = $.queryString("return_functionName");
+                return_elementName = "".concat("." , $.queryString("return_elementName"));
 
 				//alert(return_functionName);
 				InitData()
@@ -180,7 +176,8 @@
 					result = regist_data();
 					//$.alert("Regist_test", return_functionName, result);
 					var func = (result ? "regist" : "cancel");
-					window.parent[return_functionName](func);
+                    window.parent.$(return_elementName).attr("status",func);
+                    window.parent.$(return_elementName).trigger("click");
 					// 新規の時pNumは？
 				} catch (e) {
 					alert(e.message);
@@ -206,8 +203,9 @@
 			});
 			$(".exit").on("click", function () {
 				try {
-					alert("exit");
-					window.parent[return_functionName]("cancel");
+                    //$.alert("exit", window.parent.$(".iFBoxDummy").length);
+                    window.parent.$(return_elementName).attr("status", "cancel");
+                    window.parent.$(return_elementName).trigger("click");
 				} catch (e) {
 					alert(e.message);
 				}

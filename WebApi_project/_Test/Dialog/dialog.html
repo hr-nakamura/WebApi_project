@@ -11,8 +11,8 @@
             background-color: red;
         }
         body {
-            background: url("back1.gif");
-            border: solid blue 1px;
+            background: url("back.gif");
+            border: solid blue 0px;
             padding: 5px;
             margin: 10px;
         }
@@ -30,9 +30,6 @@
                 background: green;
             }
 
-            .wkDialogClassMain .ui-dialog-buttonpane {
-                background-color: pink;
-            }
 
         .wkBtnOk {
             color: red;
@@ -58,9 +55,13 @@
         }
         $(window).on("load", function () {
             //alert("onload");
-            //$.alert(typeof (fineDialog));
         });
 
+        //$(".iFBoxDummy").on("click", function (e) {
+
+        //    $.alert("XX", $(this).attr("status"));
+        //    //fineDialog($(this).attr("status"));
+        //});
 
 
         $(function () {
@@ -69,21 +70,34 @@
                 var work = showDialog2("fineDialog");
             });
 
+            // 終了処理
+            function fineProc() {
+                $('body').append("<button class='iFBoxDummy' style='display:none'>iFBoxDummy</button>");
+                $('.iFBoxDummy').on('click', function () {
+                    var para = $(this).attr("status")
+                    $(".iFBox").dialog('close');
+                    if (para == "regist") {
+                        $.alert("****fineDialog*****", para);
+                    }
+                    else {
+                        $.alert("****fineDialog*****", para);
+                    }
+                    $('.iFBoxDummy').remove();
+                });
+
+            }
             function showDialog2(returnFunction) {
                 if ($(".iFBox").dialog("isOpen") == true) return;
+                fineProc();
                 var url = "editProject.html";
                 //url = "test.html";
-                var src_str = url.concat("?", "pNum=20214927", "&", "return_functionName=fineDialog");
+                var src_str = url.concat("?", "pNum=20214927", "&", "return_elementName=iFBoxDummy");
                 $("<iframe class='iFBox'></iframe>").dialog({
                     dialogClass: "wkDialogClassMain",
                     closeOnEscape: true,
-                    modal: true,
+                    modal: false,
                     minHeight: 660,
-                    //maxHeight: 650,
                     minWidth: 660,
-                    //maxWidth: 650,
-                    //height: 'auto',
-                    //width: 'auto',
                     autoOpen: true,
                     title: 'タイトル',
                     height: 660,
@@ -98,23 +112,14 @@
 
                     }
                 });
-                // 終了時の処理を記述する
-                fineDialog = function (para) {
-                    $(".iFBox").dialog('close');
-                    if (para == "regist") {
-                        $.alert("****fineDialog*****", para);
-                    }
-                    else {
-                        $.alert("****fineDialog*****", para);
-                    }
-                }
+
             }
         });
 
         $(function () {
             $(function () {
                 $(".test2").on("click", function () {
-
+                    $("body").after("<button class='iFBoxDummy'></button>");
                     showDialog(fineDialog);
 
                     // 終了後の処理
@@ -183,14 +188,8 @@
             });
             $(".test").on("click", function () {
                 try {
-                    //$(".iFBox").prev(".ui-dialog-titlebar").css({ "background": "#47669E", "color": "white", "font-size": "13px", "font-weight": "normal" });
-                    //$(".iFBox").dialog("option", "title", "Dialog Title");
-                    //var win = $(".iFBox")[0].contentWindow;
-                    //win.abcd("ABCD");
-                    //var doc = $(".iFBox").contents();
-                    //var x = doc.find("[id='email']").val();
-                    //alert(x);
-                    //var a = 1;
+                    $.alert($(".iFBox").length, $(".iFBoxDummy").length);
+                    //$(".iDummy").trigger("click");
 
                 } catch (e) { alert(e.message) };
             });
