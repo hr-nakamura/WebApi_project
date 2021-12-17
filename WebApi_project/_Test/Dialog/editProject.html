@@ -18,8 +18,22 @@
             padding: 5px;
             margin: 0px;
             background: url("back.gif");
-            background-color: black;
+            background-color: white;
         }
+		select>option{
+			padding:0px;
+		}
+        .mainTable {
+            border: 0px solid red;
+        }
+            .mainTable > thead > tr > td {
+                border: 0px solid green;
+                padding: 1px;
+            }
+            .mainTable > tbody > tr > td {
+                border: 0px solid blue;
+                padding: 1px;
+            }
         .wkDialogClass {
             border: 1px solid red;
             background: url("back.gif");
@@ -114,11 +128,6 @@
                     open: function () {
 						$(this).html(Work);
 						$(".inputText").focus();
-                        //$(this).load("input.txt");
-                        //$(this).prev(".ui-dialog-titlebar").css({ "background": "green", "color": "white", "font-size": "13px", "font-weight": "normal" });
-                        //$(this).prev(".ui-dialog-content").css({ "background": "green", "color": "white", "font-size": "13px", "font-weight": "normal" });
-                        //$(this).css("background-color", "pink");
-                        //var a = 1;
                     },
                     close: function () {
                         $(this).dialog('destroy');
@@ -127,7 +136,6 @@
                         callBack(retVal);
                     }
                 });
-                return ("showModalDialog");
 			}
 		})(jQuery);
 	</script>
@@ -165,7 +173,7 @@
                 return_elementName = "".concat("." , $.queryString("return_elementName"));
 
 				//alert(return_functionName);
-				InitData()
+				InitData(pNum)
 			} catch (e) {
 				alert(e.message);
 			}
@@ -174,10 +182,15 @@
 			$(".regist").on("click", function () {
 				try {
 					result = regist_data();
-					//$.alert("Regist_test", return_functionName, result);
-					var func = (result ? "regist" : "cancel");
-                    window.parent.$(return_elementName).attr("status",func);
-                    window.parent.$(return_elementName).trigger("click");
+                    var func = (result ? "regist" : "cancel");
+					var ret = {
+                        stat: func,
+						Info: {
+							a: "ABC",
+							b:"XYZ"
+                        }
+					};
+					returnProc(ret);
 					// 新規の時pNumは？
 				} catch (e) {
 					alert(e.message);
@@ -188,7 +201,7 @@
 				try {
 					alert("new");
 					pNum = 0
-					InitData()
+					InitData(pNum)
 				} catch (e) {
 					alert(e.message);
 				}
@@ -196,20 +209,30 @@
 			$(".reset").on("click", function () {
 				try {
 					alert("reset");
-					InitData()
+					InitData(pNum)
 				} catch (e) {
 					alert(e.message);
 				}
 			});
 			$(".exit").on("click", function () {
 				try {
-                    //$.alert("exit", window.parent.$(".iFBoxDummy").length);
-                    window.parent.$(return_elementName).attr("status", "cancel");
-                    window.parent.$(return_elementName).trigger("click");
+                    var ret = {
+                        stat: "calcel",
+                        Info: {
+                            a: "ABC",
+                            b: "XYZ"
+                        }
+                    };
+                    returnProc(ret);
 				} catch (e) {
 					alert(e.message);
 				}
 			});
+			function returnProc(ret) {
+                window.parent.$(return_elementName).text(JSON.stringify(ret));
+                window.parent.$(return_elementName).attr("status", ret.stat);
+                window.parent.$(return_elementName).trigger("click");
+            }
 		});
 
 	</script>
@@ -534,7 +557,7 @@
 	</SCRIPT>
 
 	<SCRIPT LANGUAGE='JavaScript'>
-		function InitData() {
+		function InitData(pNum) {
 			var toDay = new Date()
 			var yymm = (toDay.getFullYear() * 100) + (toDay.getMonth() + 1)
 			if (pNum == 0) {
@@ -793,7 +816,8 @@
 			if (pNum <= 0) {
 				P_gID = getGroupValue() 				   // 新規作成のとき
 			}
-            var json = {
+/*
+				var json = {
                 P_pNum: P_pNum,
                 P_pName: P_pName,
                 P_corpName: P_corpName,
@@ -808,6 +832,7 @@
                 P_fixLevel: P_fixLevel
             }
             $.jsonOut(json);
+*/
 			var Buff = []
 			if (P_pName.length == 0) Buff.push("プロジェクト名")
 			if (P_corpName.length == 0) Buff.push("客先名")
@@ -883,7 +908,7 @@
 	<!-- ここまで -->
 </HEAD>
 <BODY>
-	<TABLE ALIGN="center" border="0" cellPadding="2" cellSpacing="0" WIDTH="80%">
+	<TABLE class="mainTable" ALIGN="center" border="0" cellPadding="2" cellSpacing="0" WIDTH="100%">
 		<THEAD>
 		<TR>
 			<TD COLSPAN="3" ALIGN="center" ID="TitleName" class="prgEntry">&nbsp;</TD>
@@ -901,7 +926,7 @@
 			<TD COLSPAN="2">
 				<INPUT type="button" value="登録" class="regist" ID="regist_X">
 			</TD>
-			<TD align='right' WIDTH="1%" nowrap>
+			<TD align='center' WIDTH="1%" nowrap>
 				<INPUT type="button" value="ﾘｾｯﾄ" class="reset" ID="reset_X"> <INPUT type="button" value="終了" class="exit" ID="exit_X">
 			</TD>
 		</TR>
@@ -909,12 +934,13 @@
 		<TBODY>
 			<TR>
 				<TD nowrap class='textName'>ﾌﾟﾛｼﾞｪｸﾄ名</TD>
-				<TD><INPUT class='textFont' ID="pName" size='60' maxlength="30"></TD>
+				<TD><INPUT class='textFont' ID="pName" size='60' maxlength="30" style='width:100%'></TD>
 				<TD></TD>
 			</TR>
 			<TR>
 				<TD nowrap class='textName' valign=top>開発担当グループ</TD>
 				<TD class='textFont' ALIGN='left' ID="groupBox"></TD>
+				<TD></TD>
 			</TR>
 			<TR>
 				<TD nowrap class='textName'>会社名</TD>
@@ -925,7 +951,7 @@
 					</SELECT>
 				</TD>
 				<TD ROWSPAN="8" WIDTH="30%" ALIGN="right" VALIGN="top">
-					<TABLE border="0" cellPadding="0" cellSpacing="10" class='thingList'>
+					<TABLE border="0" cellPadding="0" cellSpacing="10" class='thingList' align="center">
 						<THEAD>
 							<TR>
 								<TH class='listHead' COLSPAN="2" nowrap>
@@ -1019,10 +1045,11 @@
 					<SPAN ID="salesManBox" width="100%"></SPAN><BR>
 					<INPUT class='textFont' ID="T3" size='45' maxlength="20" style="display:none">
 				</TD>
+				<TD></TD>
 			</TR>
 			<TR>
 				<TD class='textName' nowrap valign='top'>業務内容及び条件</TD>
-				<TD colspan="2"><TEXTAREA class='textFont' ID="Content" rows="10" cols="55" WIDTH="100%" style="font-family:arial"></TEXTAREA></TD>
+				<TD colspan="2"><TEXTAREA class='textFont' ID="Content" rows="10" cols="55" style="font-family:arial;width:100%"></TEXTAREA></TD>
 			</TR>
 		</TBODY>
 	</TABLE>

@@ -17,7 +17,7 @@
             margin: 10px;
         }
         .wkDialogClassMain {
-            background-color: black;
+            background-color: silver;
         }
 
             .wkDialogClassMain .ui-dialog-titlebar {
@@ -66,26 +66,34 @@
 
         $(function () {
             $(".test1").on("click", function () {
-
-                var work = showDialog2();
+                function callBack(ret) {
+                    if (ret.stat == "regist") {
+                        $.alert("****fineDialog*****", ret.stat, ret.Info.b);
+                    }
+                    else {
+                        $.alert("****fineDialog*****", ret.stat, ret.Info.a);
+                    }
+                }
+                $.showDialog("editProject.html", "pNum=20214927", callBack);
             });
 
 
-            function showDialog2() {
+            $.showDialog = function(url,para,callBack) {
                 if ($(".iFBox").dialog("isOpen") == true) return;
-                var url = "editProject.html";
-                //url = "test.html";
-                var src_str = url.concat("?", "pNum=20214927", "&", "return_elementName=iFBox");
+                var work = [];
+                work.push("return_elementName=iFBox");
+                work.push(para);
+                var src_str = "".concat(url,"?", work.join("&"));
                 $("<iframe class='iFBox'></iframe>").dialog({
                     dialogClass: "wkDialogClassMain",
                     closeOnEscape: true,
-                    modal: false,
+                    modal: true,
                     minHeight: 660,
-                    minWidth: 660,
+                    minWidth: 640,
                     autoOpen: true,
                     title: 'タイトル',
                     height: 660,
-                    width: 660,
+                    width: 640,
                     open: function () {
                         set_returnProc(this);
                         $(this).css("width", "100%");
@@ -99,15 +107,12 @@
                 });
                 // 終了処理
                 function set_returnProc($this) {
-                    $($this).append("<span />");
+                    //$($this).append("<span />");
                     $($this).on("click", function () {
+                        var ret = JSON.parse($($this).text());
                         var para = $($this).attr("status");
-                        if (para == "regist") {
-                            $.alert("****fineDialog*****", para);
-                        }
-                        else {
-                            $.alert("****fineDialog*****", para);
-                        }
+                        callBack(ret);
+
                         $($this).dialog('close');
                     });
 
@@ -144,43 +149,6 @@
     </div>
     <hr />
 
-    <div class="testX">
-        <div tabindex="-1"
-             class="ui-dialog ui-corner-all ui-widget ui-widget-content ui-front wkDialogClass ui-dialog-buttons ui-draggable ui-resizable"
-             role="dialog" aria-describedby="ui-id-3" aria-labelledby="ui-id-4"
-             style="left: 242.2px; top: 222.5px; width: auto; height: auto; display: none; position: absolute; z-index: 101;border:solid 1px red;">
 
-
-            <div class="ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix ui-draggable-handle">
-                <span class="ui-dialog-title" id="ui-id-4">カテゴリー名設定</span>
-                <button title="Close" class="ui-button ui-corner-all ui-widget ui-button-icon-only ui-dialog-titlebar-close" type="button">
-                    <span class="ui-button-icon ui-icon ui-icon-closethick"></span>
-                    <span class="ui-button-icon-space"> </span>Close
-                </button>
-            </div>
-
-            <div class="iFBox1 ui-dialog-content ui-widget-content" id="ui-id-3" style="width: auto; height: auto; min-height: 18.19px; max-height: none;">
-                カテゴリー名を入力してください<br>
-                <input class="inputText" type="text" value="">
-            </div>
-
-            <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-                <div class="ui-dialog-buttonset">
-                    <button class="wkBtnOk ui-button ui-corner-all ui-widget" type="button">登録</button>
-                    <button class="wkBtnNg ui-button ui-corner-all ui-widget" type="button">取消</button>
-                </div>
-            </div>
-            <div class="ui-resizable-handle ui-resizable-n" style="z-index: 90;"></div>
-            <div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
-            <div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;">
-            </div><div class="ui-resizable-handle ui-resizable-w" style="z-index: 90;">
-            </div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;">
-            </div><div class="ui-resizable-handle ui-resizable-sw" style="z-index: 90;"></div>
-            <div class="ui-resizable-handle ui-resizable-ne" style="z-index: 90;"></div>
-            <div class="ui-resizable-handle ui-resizable-nw" style="z-index: 90;"></div>
-        </div>
-    </div>
-
-    <hr />
 </body>
 </html>
