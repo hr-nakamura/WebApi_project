@@ -91,6 +91,20 @@
                 $.showModalDialog("editProject.html", "pNum=20214927", callBack);
             });
 
+            $(".test2").on("click", function () {
+                function callBack(ret) {
+                    $.jsonOut(ret);
+                    //    if (ret.stat == "regist") {
+
+                    //        $.alert("****fineDialog*****", ret.stat, ret.Info.b);
+                    //    }
+                    //    else {
+                    //        $.alert("****fineDialog*****", ret.stat, ret.Info.a);
+                    //    }
+                }
+                $.showModalDialog("editGroup.html", "pNum=20214927", callBack);
+            });
+
 
         });
 
@@ -113,8 +127,8 @@
     </script>
 </head>
 <body>
-    <button class="test1">iFrame</button><br />
-    <button class="test2">div</button>
+    <button class="test1">editProject</button><br />
+    <button class="test2">editGroup</button>
 
     <div class="resultDataX">
         <button class="Regist">登録</button>
