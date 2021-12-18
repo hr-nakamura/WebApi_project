@@ -134,9 +134,9 @@
     <Content Include="_Test\Dialog\bunrui.json" />
     <Content Include="_Test\Dialog\member.json" />
     <Content Include="_Test\Dialog\corp.json" />
-    <Content Include="_Test\Dialog\group.json" />
+    <Content Include="_Test\Dialog\sales.json" />
     <None Include="_Test\Dialog\project.json" />
-    <None Include="_Test\Dialog\sales.json" />
+    <None Include="_Test\Dialog\group.json" />
     <Content Include="_Test\Dialog\showModalDialog.js" />
     <Content Include="_Test\Dialog\test.html" />
     <Content Include="_Test\QOSMIO\test.html" />
