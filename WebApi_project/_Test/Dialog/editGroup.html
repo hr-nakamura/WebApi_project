@@ -53,12 +53,12 @@
 			}
 			Obj.getHistoryInfo = function () {
 				var cObj = {};
-				cObj.return_value = $.loadJSONDoc("member.json");
+				cObj.return_value = $.loadJSONDoc("group.json");
 				return (cObj);
 			}
 			Obj.getSalesInfo = function () {
 				var cObj = {};
-				cObj.return_value = $.loadJSONDoc("member.json");
+				cObj.return_value = $.loadJSONDoc("sales.json");
 				return (cObj);
 			}
 			return (Obj);
@@ -67,10 +67,50 @@
 	<script type="text/javascript">
 		window.onload = function () {
 			alert("X");
+            try {
+                //pNum = window.dialogArguments.pNum
+                var pNum = "";
+                FUNC1.style.display = "block"
+                FUNC2.style.display = "none"
+
+                var o = RSGetASPObject("bbsDB.asp")
+                var cObj = o.getProjectInfo(pNum)
+                var projectInfo = cObj.return_value
+                var pBuff = dispProject(projectInfo)
+
+                var cObj = o.getHistoryInfo(pNum)
+                var HistoryInfo = cObj.return_value
+                var hBuff = dispHistory(HistoryInfo)
+
+                var cObj = o.getSalesInfo(pNum)
+                var SalesInfo = cObj.return_value
+                var sBuff = dispSales(SalesInfo)
+
+                var len = HistoryInfo.length
+                //var yymm = HistoryInfo[len - 1].s
+                //var gCode = HistoryInfo[len - 1].gID
+
+                //======================================================
+
+                projectBox.innerHTML = pBuff
+                historyBox.innerHTML = hBuff
+                salesBox.innerHTML = sBuff
+                //var sDate 		   = projectInfo.makeDate
+                //yymmBox.innerHTML    = makeMonth(sDate,yymm)
+                //groupBox.innerHTML   = makeGrp(gCode,yymm)
+
+                CANCEL.style.display = "inline"
+                DEL.style.display = "none"
+                ADD.style.display = "none"
+                EDIT.style.display = "none"
+
+            } catch (e) {
+                alert("[" + e.message);
+            }
 		}
 	</script>
 
-	<SCRIPT FOR="window" EVENT="onload">
+	<SCRIPT FOR="window" EVENT="onload1">
 		try {
 			//pNum = window.dialogArguments.pNum
 			var pNum = "";
@@ -91,8 +131,8 @@
 			var sBuff = dispSales(SalesInfo)
 
 			var len = HistoryInfo.length
-			var yymm = HistoryInfo[len - 1].s
-			var gCode = HistoryInfo[len - 1].gID
+			//var yymm = HistoryInfo[len - 1].s
+			//var gCode = HistoryInfo[len - 1].gID
 
 			//======================================================
 
@@ -109,12 +149,13 @@
 			EDIT.style.display = "none"
 
 		} catch (e) {
-			alert(e.message);
+			alert("["+e.message);
 		}
 	</SCRIPT>
 
 
 	<SCRIPT FOR="window" EVENT="onunload" LANGUAGE="JavaScript">
+/*
 		var o = RSGetASPObject("bbsDB.asp")
 		var cObj = o.getHistoryInfo(pNum)
 		var HistoryInfo = cObj.return_value
@@ -128,6 +169,7 @@
 		window.dialogArguments.gName = gName
 
 		window.returnValue = result
+*/
 	</SCRIPT>
 
 
