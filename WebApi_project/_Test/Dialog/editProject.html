@@ -107,22 +107,22 @@
 			var Obj = {};
 			Obj.getProjectInfo = function () {
 				var cObj = {};
-				cObj.return_value = $.loadJSONDoc("project.json");
+				cObj.return_value = $.loadJSONDoc("data/project.json");
 				return (cObj);
 			}
 			Obj.getCorpList = function () {
 				var cObj = {};
-				cObj.return_value = $.loadJSONDoc("corp.json");
+                cObj.return_value = $.loadJSONDoc("data/corp.json");
 				return (cObj);
 			}
 			Obj.getKindList = function () {
 				var cObj = {};
-				cObj.return_value = $.loadJSONDoc("bunrui.json");
+                cObj.return_value = $.loadJSONDoc("data/bunrui.json");
 				return (cObj);
 			}
 			Obj.getMemberList = function () {
 				var cObj = {};
-				cObj.return_value = $.loadJSONDoc("member.json");
+                cObj.return_value = $.loadJSONDoc("data/member.json");
 				return (cObj);
 			}
 			return (Obj);

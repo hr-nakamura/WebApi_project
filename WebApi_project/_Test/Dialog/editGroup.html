@@ -27,46 +27,48 @@
 			var i = 1234;
 			var str = i.toString();
 			return (str);
-        }
+		}
 
 		RSGetASPObject = function () {
 			var Obj = {};
 			Obj.getProjectInfo = function () {
 				var cObj = {};
-				cObj.return_value = $.loadJSONDoc("project.json");
+				cObj.return_value = $.loadJSONDoc("data/project.json");
 				return (cObj);
 			}
 			Obj.getCorpList = function () {
 				var cObj = {};
-				cObj.return_value = $.loadJSONDoc("corp.json");
+				cObj.return_value = $.loadJSONDoc("data/corp.json");
 				return (cObj);
 			}
 			Obj.getKindList = function () {
 				var cObj = {};
-				cObj.return_value = $.loadJSONDoc("bunrui.json");
+				cObj.return_value = $.loadJSONDoc("data/bunrui.json");
 				return (cObj);
 			}
 			Obj.getMemberList = function () {
 				var cObj = {};
-				cObj.return_value = $.loadJSONDoc("member.json");
+				cObj.return_value = $.loadJSONDoc("data/member.json");
 				return (cObj);
 			}
 			Obj.getHistoryInfo = function () {
 				var cObj = {};
-				cObj.return_value = $.loadJSONDoc("group.json");
+				cObj.return_value = $.loadJSONDoc("data/group.json");
 				return (cObj);
 			}
 			Obj.getSalesInfo = function () {
 				var cObj = {};
-				cObj.return_value = $.loadJSONDoc("sales.json");
+				cObj.return_value = $.loadJSONDoc("data/sales.json");
 				return (cObj);
 			}
 			return (Obj);
 		}
 	</script>
 	<script type="text/javascript">
-		window.onload = function () {
-			alert("X");
+		(function ($) {
+
+		})(jQuery);
+        $(window).on("load", function () {
             try {
                 //pNum = window.dialogArguments.pNum
                 var pNum = "";
@@ -85,7 +87,6 @@
                 var cObj = o.getSalesInfo(pNum)
                 var SalesInfo = cObj.return_value
                 var sBuff = dispSales(SalesInfo)
-
                 var len = HistoryInfo.length
                 var yymm = HistoryInfo[len - 1].s
                 var gCode = HistoryInfo[len - 1].gID
@@ -107,7 +108,70 @@
             } catch (e) {
                 alert("[" + e.message);
             }
-		}
+        });
+	</script>
+	<script type="text/javascript">
+		$(function () {
+            $(".yymmSel").on("change", function () {
+			});
+			$(".edit").on("click", function () {
+                alert("edit");
+                var key_yymm = pNumRow[selPos].s_yymm				// Key
+                var key_pNum = pNum
+                var obj = GrpSel
+                var n = obj.selectedIndex
+                var new_Code = obj.options[n].value
+                var new_gName = obj.options[n].text
+                var obj = yymmSel
+                var n = obj.selectedIndex
+                var new_yymm = obj.options[n].value
+
+                var o = RSGetASPObject("bbsDB.asp")
+                var cObj = o.regGrpEdit(key_pNum, key_yymm, new_Code, new_yymm)
+                var value = cObj.return_value
+
+                if (cObj.status == -1) {
+                    alert("開始日付が同じレコードがあります、登録できませんでした。")
+                    result = false
+                }
+                else {
+                    result = true
+                }
+
+                var cObj = o.getHistoryInfo(pNum)
+                var HistoryInfo = cObj.return_value
+                var hBuff = dispHistory(HistoryInfo)
+                historyBox.innerHTML = hBuff
+
+                pNumRow[selPos].style.backgroundColor = selColor
+
+                var cObj = o.getSalesInfo(pNum)
+                var SalesInfo = cObj.return_value
+                var sBuff = dispSales(SalesInfo)
+                salesBox.innerHTML = sBuff
+            });
+			$(".del").on("click", function () {
+				alert("del");
+            });
+            $(".add").on("click", function () {
+                alert("add");
+            });
+            $(".cancel").on("click", function () {
+                alert("cancel");
+            });
+            $(".pNumRow").on("click", function () {
+                alert("pNumRow");
+            });
+            $(".pNumRow").on("mouseover", function () {
+            });
+            $(".pNumRow").on("mouseleave", function () {
+            });
+            $(".selecter").on("click", function () {
+            });
+
+		});
+	</script>
+	<script type="text/javascript">
 	</script>
 
 	<SCRIPT FOR="window" EVENT="onload1">
@@ -149,27 +213,27 @@
 			EDIT.style.display = "none"
 
 		} catch (e) {
-			alert("["+e.message);
+			alert("[" + e.message);
 		}
 	</SCRIPT>
 
 
 	<SCRIPT FOR="window" EVENT="onunload" LANGUAGE="JavaScript">
-/*
-		var o = RSGetASPObject("bbsDB.asp")
-		var cObj = o.getHistoryInfo(pNum)
-		var HistoryInfo = cObj.return_value
-		var len = HistoryInfo.length
-		var yymm = HistoryInfo[len - 1].s
-		var gCode = HistoryInfo[len - 1].gID
-		var gName = HistoryInfo[len - 1].gName
+		/*
+				var o = RSGetASPObject("bbsDB.asp")
+				var cObj = o.getHistoryInfo(pNum)
+				var HistoryInfo = cObj.return_value
+				var len = HistoryInfo.length
+				var yymm = HistoryInfo[len - 1].s
+				var gCode = HistoryInfo[len - 1].gID
+				var gName = HistoryInfo[len - 1].gName
 
-		window.dialogArguments.yymm = yymm
-		window.dialogArguments.gCode = gCode
-		window.dialogArguments.gName = gName
+				window.dialogArguments.yymm = yymm
+				window.dialogArguments.gCode = gCode
+				window.dialogArguments.gName = gName
 
-		window.returnValue = result
-*/
+				window.returnValue = result
+		*/
 	</SCRIPT>
 
 
@@ -241,6 +305,7 @@
 
 
 	<SCRIPT FOR="EDIT" EVENT="onclick">
+        alert("XX");
 		var key_yymm = pNumRow[selPos].s_yymm				// Key
 		var key_pNum = pNum
 		var obj = GrpSel
@@ -430,14 +495,14 @@
 
 
 			for (var n in Tab) {
-				table.RowBegin("ID='pNumRow' s_yymm='" + Tab[n].s + "'" + " gCode='" + Tab[n].gID + "'")
+                table.RowBegin("class='edit' ID='pNumRow' s_yymm='" + Tab[n].s + "'" + " gCode='" + Tab[n].gID + "'")
 				table.DataCell("ALIGN='CENTER' nowrap", strMonth(Tab[n].s))
 				//table.DataCell("ALIGN='CENTER' nowrap",strMonth(Tab[n].e))		//グループ別のプロジェクトの終了年月
 				table.DataCell("ALIGN='LEFT' nowrap", Tab[n].gName)
 				table.RowEnd()
 			}
 
-			table.RowBegin("ID='pNumRow' s_yymm='0' gCode='0'")
+            table.RowBegin("class='add' ID='pNumRow' s_yymm='0' gCode='0'")
 			table.DataCell("ALIGN='CENTER' nowrap colspan='3' class='newLine-comment'", "追加の場合はこの行を指定して下さい。")
 			table.RowEnd()
 
@@ -597,10 +662,10 @@
 			</TR>
 			<TR>
 				<TD ALIGN="center" nowrap>
-					<INPUT type='button' value='更新' ID='EDIT' NAME="EDIT" style="display:none">
-					<INPUT type='button' value='削除' ID='DEL' NAME="DEL" style="display:none">
-					<INPUT type='button' value='追加' ID='ADD' NAME="ADD" style="display:none">
-					<INPUT type='button' value='戻る' ID='CANCEL' NAME="CANCEL" style="display:none">
+					<INPUT type='button' value='更新' ID='EDIT' NAME="EDIT" class="edit" style="display:none">
+					<INPUT type='button' value='削除' ID='DEL' NAME="DEL" class="del" style="display:none">
+					<INPUT type='button' value='追加' ID='ADD' NAME="ADD" class="add" style="display:none">
+					<INPUT type='button' value='戻る' ID='CANCEL' NAME="CANCEL" class="cancel" style="display:none">
 				</TD>
 			</TR>
 			<TR>
