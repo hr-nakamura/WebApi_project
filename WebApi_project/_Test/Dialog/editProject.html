@@ -12,67 +12,74 @@
 	<script src="/WebApi/project/_home/_Content/_Scripts/jquery-1.13.0-ui.js"></script>
 	<script src="/WebApi/project/_home/_Content/_Scripts/jquery.kansa.Query.js"></script>
 	<script src="/WebApi/project/_home/_Content/_Scripts/json.js"></script>
+	<script src="showModalDialog.js"></script>
 	<style>
-        body {
-            border: solid blue 0px;
-            padding: 5px;
-            margin: 0px;
-            background: url("back.gif");
-            background-color: white;
-        }
-		select>option{
-			padding:0px;
+		body {
+			border: solid blue 0px;
+			padding: 5px;
+			margin: 0px;
+			background: url("back.gif");
+			background-color: white;
 		}
-        .mainTable {
-            border: 0px solid red;
-        }
-            .mainTable > thead > tr > td {
-                border: 0px solid green;
-                padding: 1px;
-            }
-            .mainTable > tbody > tr > td {
-                border: 0px solid blue;
-                padding: 1px;
-            }
-        .wkDialogClass {
-            border: 1px solid red;
-            background: url("back.gif");
-            background-color: silver;
-        }
 
-            .wkDialogClass .ui-dialog-titlebar {
-                color: white;
-                background-color: teal ;
-                *background: url("bg09.jpg");
-            }
+		select > option {
+			padding: 0px;
+		}
 
-            .wkDialogClass .ui-dialog-content {
-                border: solid 0px red;
-                color: navy;
-                background: url("back.gif");
-                background-color: silver;
-            }
+		.mainTable {
+			border: 0px solid red;
+		}
 
-            .wkDialogClass .ui-dialog-buttonpane {
-                border: solid 0px red;
-                background: url("back.gif");
-                background-color: silver;
-            }
+			.mainTable > thead > tr > td {
+				border: 0px solid green;
+				padding: 1px;
+			}
 
-        .wkBtnOk {
-            border: solid gray 1px;
-            margin-left: 60px !important;
-            font-size: 0.9em !important;
-        }
+			.mainTable > tbody > tr > td {
+				border: 0px solid blue;
+				padding: 1px;
+			}
 
-        .wkBtnNg {
-            border: solid gray 1px;
-            margin-right: 60px !important;
-            font-size: .9em !important;
-        }
-        .inputText {
-            width: 250px;
-        }
+		.wkDialogClass {
+			border: 1px solid red;
+			background: url("back.gif");
+			background-color: silver;
+		}
+
+			.wkDialogClass .ui-dialog-titlebar {
+				color: white;
+				background-color: teal;
+				*background: url("bg09.jpg");
+			}
+
+			.wkDialogClass .ui-dialog-content {
+				border: solid 0px red;
+				color: navy;
+				background: url("back.gif");
+				background-color: silver;
+			}
+
+			.wkDialogClass .ui-dialog-buttonpane {
+				border: solid 0px red;
+				background: url("back.gif");
+				background-color: silver;
+			}
+
+		.wkBtnOk {
+			border: solid gray 1px;
+			margin-left: 60px !important;
+			font-size: 0.9em !important;
+		}
+
+		.wkBtnNg {
+			border: solid gray 1px;
+			margin-right: 60px !important;
+			font-size: .9em !important;
+		}
+
+		.inputText {
+			width: 250px;
+		}
 	</style>
 
 
@@ -93,50 +100,6 @@
 				alert(JSON.stringify(json, null, 2));
 			}
 
-            $.showModalDialog = function ( Buff, callBack){
-                if ($(".iFBox").dialog("isOpen") == true) return;
-                var Work = [];
-                Work.push(Buff.HEAD);
-                Work.push("<input type='text' class='inputText' value='" + Buff.VALUE + "' />");
-                Work = Work.join("<br>");
-                var retVal = "";
-                $("<div class='iFBox'></div>").dialog({
-					dialogClass: "wkDialogClass",
-                    closeOnEscape: false,
-					autoOpen: true,
-					modal: true,
-                    title: Buff.TITLE,
-                    height: "auto",
-                    width: "auto",
-                    buttons: [
-                        {
-                            text: "ìoò^",
-                            class: "wkBtnOk",
-                            click: function () {
-                                retVal = $(".inputText", $(this)).val();
-                                $(this).dialog("close");
-                            }
-                        },
-                        {
-                            text: "éÊè¡",
-                            class: "wkBtnNg",
-                            click: function () {
-                                retVal = "";
-                                $(this).dialog("close");
-                            }
-                        }],
-                    open: function () {
-						$(this).html(Work);
-						$(".inputText").focus();
-                    },
-                    close: function () {
-                        $(this).dialog('destroy');
-
-                        // èIóπèàóùÇé¿çs
-                        callBack(retVal);
-                    }
-                });
-			}
 		})(jQuery);
 	</script>
 	<script type="text/javascript">
@@ -149,17 +112,17 @@
 			}
 			Obj.getCorpList = function () {
 				var cObj = {};
-                cObj.return_value = $.loadJSONDoc("corp.json");
+				cObj.return_value = $.loadJSONDoc("corp.json");
 				return (cObj);
 			}
 			Obj.getKindList = function () {
 				var cObj = {};
-                cObj.return_value = $.loadJSONDoc("bunrui.json");
+				cObj.return_value = $.loadJSONDoc("bunrui.json");
 				return (cObj);
 			}
 			Obj.getMemberList = function () {
 				var cObj = {};
-                cObj.return_value = $.loadJSONDoc("member.json");
+				cObj.return_value = $.loadJSONDoc("member.json");
 				return (cObj);
 			}
 			return (Obj);
@@ -170,7 +133,7 @@
 				var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
 
 				pNum = $.queryString("pNum", "projectNum");
-                return_elementName = "".concat("." , $.queryString("return_elementName"));
+				return_elementName = "".concat(".", $.queryString("return_elementName"));
 
 				//alert(return_functionName);
 				InitData(pNum)
@@ -182,15 +145,7 @@
 			$(".regist").on("click", function () {
 				try {
 					result = regist_data();
-                    var func = (result ? "regist" : "cancel");
-					var ret = {
-                        stat: func,
-						Info: {
-							a: "ABC",
-							b:"XYZ"
-                        }
-					};
-					returnProc(ret);
+                    returnProc(result);
 					// êVãKÇÃéûpNumÇÕÅH
 				} catch (e) {
 					alert(e.message);
@@ -216,23 +171,23 @@
 			});
 			$(".exit").on("click", function () {
 				try {
-                    var ret = {
-                        stat: "calcel",
-                        Info: {
-                            a: "ABC",
-                            b: "XYZ"
-                        }
-                    };
-                    returnProc(ret);
+					var ret = {
+						stat: "calcel",
+						Info: {
+							a: "ABC",
+							b: "XYZ"
+						}
+					};
+					returnProc(ret);
 				} catch (e) {
 					alert(e.message);
 				}
 			});
 			function returnProc(ret) {
-                window.parent.$(return_elementName).text(JSON.stringify(ret));
-                window.parent.$(return_elementName).attr("status", ret.stat);
-                window.parent.$(return_elementName).trigger("click");
-            }
+				window.parent.$(return_elementName).text(JSON.stringify(ret));
+				window.parent.$(return_elementName).attr("status", ret.stat);
+				window.parent.$(return_elementName).trigger("click");
+			}
 		});
 
 	</script>
@@ -283,7 +238,7 @@
 				n++
 			}
 		}
-        function inputCorp() {
+		function inputCorp() {
 			var Buff = new Object
 			Buff["TITLE"] = "âÔé–ñºê›íË"
 			Buff["HEAD"] = "âÔé–ñºÇì¸óÕÇµÇƒÇ≠ÇæÇ≥Ç¢"
@@ -295,7 +250,7 @@
 			windowOption = "dialogTop:" + posX + "px;dialogLeft:" + posY + "px;"
 			windowOption += "dialogWidth:0px;dialogHeight:0px;"
 			windowOption += "status:no;scroll:no;"
-            value = window.showModalDialog("inputText.asp", Buff, windowOption)
+			value = window.showModalDialog("inputText.asp", Buff, windowOption)
 			return (value)
 		}
 
@@ -326,7 +281,7 @@
 				n++
 			}
 		}
-        function inputCategory() {
+		function inputCategory() {
 			var Buff = new Object
 			Buff["TITLE"] = "ÉJÉeÉSÉäÅ[ñºê›íË"
 			Buff["HEAD"] = "ÉJÉeÉSÉäÅ[ñºÇì¸óÕÇµÇƒÇ≠ÇæÇ≥Ç¢"
@@ -338,7 +293,7 @@
 			windowOption = "dialogTop:" + posX + "px;dialogLeft:" + posY + "px;"
 			windowOption += "dialogWidth:0px;dialogHeight:0px;"
 			windowOption += "status:no;scroll:no;"
-            value = window.showModalDialog("inputText.asp", Buff, windowOption)
+			value = window.showModalDialog("inputText.asp", Buff, windowOption)
 			return (value)
 		}
 
@@ -346,137 +301,136 @@
 	</SCRIPT>
 	<script type="text/javascript">
 		(function ($) {
-            $.inputCorp = function ($this, callBack) {
-                if ($this.newValue == undefined ) $this.newValue = "";
-                var Buff = new Object
-                Buff["TITLE"] = "âÔé–ñºê›íË"
-                Buff["HEAD"] = "âÔé–ñºÇì¸óÕÇµÇƒÇ≠ÇæÇ≥Ç¢"
-                Buff["VALUE"] = $this.newValue
+			$.inputCorp = function ($this, callBack) {
+				if ($this.newValue == undefined) $this.newValue = "";
+				var Buff = new Object
+				Buff["TITLE"] = "âÔé–ñºê›íË"
+				Buff["HEAD"] = "âÔé–ñºÇì¸óÕÇµÇƒÇ≠ÇæÇ≥Ç¢"
+				Buff["VALUE"] = $this.newValue
 
-                value = $.showModalDialog( Buff, callBack)
-                return (value)
-            }
+				$.showModalDialog(Buff, callBack)
+			}
 
-			$.inputCategory = function ($this,callBack) {
-                if ($this.newValue == undefined ) $this.newValue = "";
-                var Buff = new Object
-                Buff["TITLE"] = "ÉJÉeÉSÉäÅ[ñºê›íË"
-                Buff["HEAD"] = "ÉJÉeÉSÉäÅ[ñºÇì¸óÕÇµÇƒÇ≠ÇæÇ≥Ç¢"
-                Buff["VALUE"] = $this.newValue
-                value = $.showModalDialog( Buff, callBack)
-                return (value)
-            }
+			$.inputCategory = function ($this, callBack) {
+				if ($this.newValue == undefined) $this.newValue = "";
+				var Buff = new Object
+				Buff["TITLE"] = "ÉJÉeÉSÉäÅ[ñºê›íË"
+				Buff["HEAD"] = "ÉJÉeÉSÉäÅ[ñºÇì¸óÕÇµÇƒÇ≠ÇæÇ≥Ç¢"
+				Buff["VALUE"] = $this.newValue
+				$.showModalDialog(Buff, callBack)
+			}
 		})(jQuery);
 		$(function () {
-            $("X_#corpSEL").on("change", function () {
+			$("X_#corpSEL").on("change", function () {
 				var selPos = this.selectedIndex
-                var value
-                if (this.options[selPos].value == "êVãK") {
-                    value = inputCorp()
-                    if (value != "") {
-                        this.newValue = value
-                        T0.value = value
-                    }
-                    corpInit(GrpSEL.Tab, T0.value)
-                }
-                else if (selPos == 0) {
-                    T0.value = ""
-                }
-                else {
-                    T0.value = this.options[selPos].text
-                }			})
-            $(".corpSEL").on("change", function () {
-                var $this = $(".corpSEL")[0];
+				var value
+				if (this.options[selPos].value == "êVãK") {
+					value = inputCorp()
+					if (value != "") {
+						this.newValue = value
+						T0.value = value
+					}
+					corpInit(GrpSEL.Tab, T0.value)
+				}
+				else if (selPos == 0) {
+					T0.value = ""
+				}
+				else {
+					T0.value = this.options[selPos].text
+				}
+			})
+			$(".corpSEL").on("change", function () {
+				var $this = $(".corpSEL")[0];
 				var callBack = function (value) {
 					//$.alert("corpSEL", value);
-                    if (value != "") {
-                        $this.newValue = value;
+					if (value != "") {
+						$this.newValue = value;
 						//this.newValue = value;
 						T0.value = value;
-                    }
+					}
 					corpInit(GrpSEL.Tab, T0.value);
-                }
-				var selPos = this.selectedIndex
-                //$.alert(selPos, this.options[selPos].value);
-                var value
-                if (this.options[selPos].value == "êVãK") {
-                    value = $.inputCorp($this,callBack);
-                    //if (value != "") {
-                    //    this.newValue = value
-                    //    T0.value = value
-                    //}
-                    //corpInit(GrpSEL.Tab, T0.value)
-                }
-                else if (selPos == 0) {
-                    T0.value = ""
-                }
-                else {
-                    T0.value = this.options[selPos].text
-                }
-            })
-			$(".categorySEL1").on("change", function () {
-                var $this = $(".categorySEL1")[0];
-                var callBack = function (value) {
-					//$.alert("categorySEL1", value);
-					if (value != "") {
-                        $this.newValue = value;
-                        //this.newValue = value
-						T_kindCategory1.value = value;
-                    }
-                    categoryInit(CategoryTab1, $this , T_kindCategory1.value);
-                }
-                var selPos = this.selectedIndex
-                var value
-                if (this.options[selPos].value == "êVãK") {
-                    value = $.inputCategory($this,callBack)
-     //               if (value != "") {
-					//	this.newValue = value;
-					//	T_kindCategory1.value = value;
-     //               }
-					//categoryInit(CategoryTab1, this, T_kindCategory1.value);
-                }
-                else if (selPos == 0) {
-                    T_kindCategory1.value = ""
-                }
-                else {
-                    T_kindCategory1.value = this.options[selPos].text
-                }
-            })
-            $(".categorySEL2").on("change", function () {
-                var $this = $(".categorySEL2")[0];
-				var callBack = function (value) {
-                    //$.alert("categorySEL2", value);
-                    if (value != "") {
-                        $this.newValue = value;
-						//this.newValue = value;
-						T_kindCategory2.value = value;
-                    }
-                    categoryInit(CategoryTab2, $this, T_kindCategory2.value);
 				}
 				var selPos = this.selectedIndex
-                var value
-                if (this.options[selPos].value == "êVãK") {
-                    value = $.inputCategory($this,callBack)
-                    //if (value != "") {
-                    //    this.newValue = value
-                    //    T_kindCategory2.value = value
-                    //}
-                    //categoryInit(CategoryTab2, this, T_kindCategory2.value)
-                }
-                else if (selPos == 0) {
-                    T_kindCategory2.value = ""
-                }
-                else {
-                    T_kindCategory2.value = this.options[selPos].text
-                }
-            })
+				//$.alert(selPos, this.options[selPos].value);
+				var value
+				if (this.options[selPos].value == "êVãK") {
+					value = $.inputCorp($this, callBack);
+					//if (value != "") {
+					//    this.newValue = value
+					//    T0.value = value
+					//}
+					//corpInit(GrpSEL.Tab, T0.value)
+				}
+				else if (selPos == 0) {
+					T0.value = ""
+				}
+				else {
+					T0.value = this.options[selPos].text
+				}
+			})
+			$(".categorySEL1").on("change", function () {
+				var $this = $(".categorySEL1")[0];
+				var callBack = function (value) {
+					//$.alert("categorySEL1", value);
+					if (value != "") {
+						$this.newValue = value;
+						//this.newValue = value
+						T_kindCategory1.value = value;
+					}
+					categoryInit(CategoryTab1, $this, T_kindCategory1.value);
+				}
+				var selPos = this.selectedIndex
+				var value
+				if (this.options[selPos].value == "êVãK") {
+					value = $.inputCategory($this, callBack)
+					//               if (value != "") {
+					//	this.newValue = value;
+					//	T_kindCategory1.value = value;
+					//               }
+					//categoryInit(CategoryTab1, this, T_kindCategory1.value);
+				}
+				else if (selPos == 0) {
+					T_kindCategory1.value = ""
+				}
+				else {
+					T_kindCategory1.value = this.options[selPos].text
+				}
+			})
+			$(".categorySEL2").on("change", function () {
+				var $this = $(".categorySEL2")[0];
+				var callBack = function (value) {
+					//$.alert("categorySEL2", value);
+					if (value != "") {
+						$this.newValue = value;
+						//this.newValue = value;
+						T_kindCategory2.value = value;
+					}
+					categoryInit(CategoryTab2, $this, T_kindCategory2.value);
+				}
+				var selPos = this.selectedIndex
+				var value
+				if (this.options[selPos].value == "êVãK") {
+					value = $.inputCategory($this, callBack)
+					//if (value != "") {
+					//    this.newValue = value
+					//    T_kindCategory2.value = value
+					//}
+					//categoryInit(CategoryTab2, this, T_kindCategory2.value)
+				}
+				else if (selPos == 0) {
+					T_kindCategory2.value = ""
+				}
+				else {
+					T_kindCategory2.value = this.options[selPos].text
+				}
+			})
 		});
 	</script>
 	<SCRIPT FOR="X_corpSEL" EVENT="onchange" LANGUAGE="JavaScript">
 		var selPos = this.selectedIndex
 		var value
 		if (this.options[selPos].value == "êVãK") {
-            value = inputCorp()
+			value = inputCorp()
 			if (value != "") {
 				this.newValue = value
 				T0.value = value
@@ -816,23 +770,23 @@
 			if (pNum <= 0) {
 				P_gID = getGroupValue() 				   // êVãKçÏê¨ÇÃÇ∆Ç´
 			}
-/*
-				var json = {
-                P_pNum: P_pNum,
-                P_pName: P_pName,
-                P_corpName: P_corpName,
-                P_Title: unescape(P_Title),
-                P_Content: unescape(P_Content),
-                P_Stat: P_Stat,
-                P_salesManID: P_salesManID,
-                P_kind: P_kind,
-                P_kindNew: P_kindNew,
-                P_kindCategory1: P_kindCategory1,
-                P_kindCategory2: P_kindCategory2,
-                P_fixLevel: P_fixLevel
-            }
-            $.jsonOut(json);
-*/
+			
+			var json = {
+				P_pNum: P_pNum,
+				P_pName: P_pName,
+				P_corpName: P_corpName,
+				P_Title: unescape(P_Title),
+				P_Content: unescape(P_Content),
+				P_Stat: P_Stat,
+				P_salesManID: P_salesManID,
+				P_kind: P_kind,
+				P_kindNew: P_kindNew,
+				P_kindCategory1: P_kindCategory1,
+				P_kindCategory2: P_kindCategory2,
+				P_fixLevel: P_fixLevel
+				}
+			//$.jsonOut(json);
+			
 			var Buff = []
 			if (P_pName.length == 0) Buff.push("ÉvÉçÉWÉFÉNÉgñº")
 			if (P_corpName.length == 0) Buff.push("ãqêÊñº")
@@ -890,7 +844,7 @@
 			}
 			*/
 
-			return (result);
+			return (json);
 		}
 	</SCRIPT>
 	<SCRIPT FOR='reset' EVENT='onclick()' LANGUAGE='JavaScript'>
@@ -1049,7 +1003,8 @@
 			</TR>
 			<TR>
 				<TD class='textName' nowrap valign='top'>ã∆ñ±ì‡óeãyÇ—èåè</TD>
-				<TD colspan="2"><TEXTAREA class='textFont' ID="Content" rows="10" cols="55" style="font-family:arial;width:100%"></TEXTAREA></TD>
+				<TD ><TEXTAREA class='textFont' ID="Content" rows="10" cols="55" style="font-family:arial;width:100%"></TEXTAREA></TD>
+				<TD></TD>
 			</TR>
 		</TBODY>
 	</TABLE>

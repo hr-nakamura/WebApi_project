@@ -10,19 +10,21 @@
             border: solid 1px red;
             background-color: red;
         }
+
         body {
             background: url("back.gif");
             border: solid blue 0px;
             padding: 5px;
             margin: 10px;
         }
+
         .wkDialogClassMain {
             background-color: silver;
         }
 
             .wkDialogClassMain .ui-dialog-titlebar {
                 color: white;
-                background-color: royalblue ;
+                background-color: royalblue;
             }
 
             .wkDialogClassMain .ui-dialog-content {
@@ -40,11 +42,12 @@
             color: blue;
             background-color: greenyellow;
         }
-        .iFBox{
-            width:100%;
-            height:100%;
-            padding:0px;
-            margin:0px;
+
+        .iFBox {
+            width: 100%;
+            height: 100%;
+            padding: 0px;
+            margin: 0px;
         }
     </style>
 
@@ -54,6 +57,15 @@
     <script src="/WebApi/project/_home/_Content/_Scripts/jquery-3.6.0.min.js"></script>
     <script src="/WebApi/project/_home/_Content/_Scripts/jquery-1.13.0-ui.js"></script>
     <script src="/WebApi/project/_home/_Content/_Scripts/jquery.kansa.Query.js"></script>
+    <script src="showModalDialog.js"></script>
+    <script type="text/javascript">
+        (function ($) {
+            $.jsonOut = function (json) {
+                alert(JSON.stringify(json, null, 2));
+            }
+
+        })(jQuery);
+    </script>
     <script>
         var fineDialog;
         window.onload = function () {
@@ -67,57 +79,19 @@
         $(function () {
             $(".test1").on("click", function () {
                 function callBack(ret) {
-                    if (ret.stat == "regist") {
-                        $.alert("****fineDialog*****", ret.stat, ret.Info.b);
-                    }
-                    else {
-                        $.alert("****fineDialog*****", ret.stat, ret.Info.a);
-                    }
+                    $.jsonOut(ret);
+                    //    if (ret.stat == "regist") {
+
+                    //        $.alert("****fineDialog*****", ret.stat, ret.Info.b);
+                    //    }
+                    //    else {
+                    //        $.alert("****fineDialog*****", ret.stat, ret.Info.a);
+                    //    }
                 }
-                $.showDialog("editProject.html", "pNum=20214927", callBack);
+                $.showModalDialog("editProject.html", "pNum=20214927", callBack);
             });
 
 
-            $.showDialog = function(url,para,callBack) {
-                if ($(".iFBox").dialog("isOpen") == true) return;
-                var work = [];
-                work.push("return_elementName=iFBox");
-                work.push(para);
-                var src_str = "".concat(url,"?", work.join("&"));
-                $("<iframe class='iFBox'></iframe>").dialog({
-                    dialogClass: "wkDialogClassMain",
-                    closeOnEscape: true,
-                    modal: true,
-                    minHeight: 660,
-                    minWidth: 640,
-                    autoOpen: true,
-                    title: 'タイトル',
-                    height: 660,
-                    width: 640,
-                    open: function () {
-                        set_returnProc(this);
-                        $(this).css("width", "100%");
-                        $(this).css("padding", "0px");
-                        $(this).attr({ "src": src_str });
-                    },
-                    close: function () {
-                        $(this).dialog('destroy');
-
-                    }
-                });
-                // 終了処理
-                function set_returnProc($this) {
-                    //$($this).append("<span />");
-                    $($this).on("click", function () {
-                        var ret = JSON.parse($($this).text());
-                        var para = $($this).attr("status");
-                        callBack(ret);
-
-                        $($this).dialog('close');
-                    });
-
-                }
-            }
         });
 
 
