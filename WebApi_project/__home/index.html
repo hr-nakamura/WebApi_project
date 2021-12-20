@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
-    <script src="Scripts/jquery-3.6.0.min.js" type="text/javascript"></script>
+    <script src="Scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
 
     <script src="Scripts/json2.js" type="text/javascript"></script>
     <script src="Scripts/jquery.my.webapi.js" type="text/javascript"></script>
@@ -37,13 +37,10 @@
     </script>
 
     <script type="text/javascript">
-        window.onload = function () {
-            alert($.fn.jquery);
-        }
         $(window).on("load", function () {
             try {
 
-                $.alert("XX", $.fn.jquery, window.location.hostname);
+                $.alert("XX", $.fn.jquery, window.location);
                 $(".user_mode[value='" + user_mode + "']").click();
 
 
