@@ -257,6 +257,8 @@
     <Content Include="__home\images\bg00.gif" />
     <Content Include="__home\images\EM.png" />
     <Content Include="__home\memo.txt" />
+    <Content Include="__home\Scripts\jquery-3.6.0.js" />
+    <Content Include="__home\Scripts\jquery-3.6.0.min.js" />
     <Content Include="__home\Util\viewXML\menu.xml" />
     <Content Include="__home\Util\viewXML\viewXML_Main.html" />
     <Content Include="__home\work\index5.html" />
