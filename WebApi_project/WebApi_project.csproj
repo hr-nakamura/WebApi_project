@@ -121,6 +121,7 @@
     <Content Include="Scripts\json2.js" />
     <Content Include="Scripts\json2.min.js" />
     <Content Include="_Test\Dialog\back.gif" />
+    <Content Include="_Test\Dialog\bbsDB.asp" />
     <Content Include="_Test\Dialog\bg01.gif" />
     <Content Include="_Test\Dialog\bg09.jpg" />
     <Content Include="_Test\Dialog\cmn.js" />
@@ -356,6 +357,7 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
