@@ -12,6 +12,7 @@
 	<script src="/WebApi/project/_home/_Content/_Scripts/jquery-1.13.0-ui.js"></script>
 	<script src="/WebApi/project/_home/_Content/_Scripts/jquery.kansa.Query.js"></script>
 	<script src="/WebApi/project/_home/_Content/_Scripts/json.js"></script>
+	<script src="/WebApi/project/_home/_Content/_debug/jquery.my.debug.js"></script>
 	<script src="showModalDialog.js"></script>
 	<style>
 		body {
@@ -112,23 +113,31 @@
 			}
 			Obj.getCorpList = function () {
 				var cObj = {};
-                cObj.return_value = $.loadJSONDoc("data/corp.json");
+				cObj.return_value = $.loadJSONDoc("data/corp.json");
 				return (cObj);
 			}
 			Obj.getKindList = function () {
 				var cObj = {};
-                cObj.return_value = $.loadJSONDoc("data/bunrui.json");
+				cObj.return_value = $.loadJSONDoc("data/bunrui.json");
 				return (cObj);
 			}
-			Obj.getMemberList = function () {
-				var cObj = {};
+            Obj.getMemberList = function () {
+                var cObj = {};
                 cObj.return_value = $.loadJSONDoc("data/member.json");
-				return (cObj);
+                return (cObj);
 			}
+			Obj.getGroupList = function () {
+                var cObj = {};
+                cObj.return_value = $.loadJSONDoc("data/member.json");
+                return (cObj);
+            }
 			return (Obj);
+
+            
 		}
 		$(window).on("load", function (e) {
 			try {
+				$.debug("onload");
 				//$.alert("xx", $.fn.jquery, window.location.href);
 				var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
 
@@ -145,7 +154,7 @@
 			$(".regist").on("click", function () {
 				try {
 					result = regist_data();
-                    returnProc(result);
+					returnProc(result);
 					// 新規の時pNumは？
 				} catch (e) {
 					alert(e.message);
@@ -321,6 +330,24 @@
 			}
 		})(jQuery);
 		$(function () {
+            $("#kindSEL").on("change", function () {
+                $.debug(this.id, this.selectedIndex);
+			});
+			$("#kindNewSEL").on("change", function () {
+                $.debug(this.id, this.selectedIndex);
+			});
+			$("#fixLevelSEL").on("change", function () {
+                $.debug(this.id, this.selectedIndex);
+			});
+
+			$("#salesManSEL").on("change", function () {
+                $.debug(this.id, this.selectedIndex);
+			});
+
+            $("#GrpSEL").on("change", function () {
+                $.debug(this.id, this.selectedIndex);
+            });
+
 			$("X_#corpSEL").on("change", function () {
 				var selPos = this.selectedIndex
 				var value
@@ -570,7 +597,7 @@
 				TitleName.innerHTML = "プロジェクト内容修正"
 				TitleCode.innerHTML = Tab.pCode
 				TitleGuide.innerHTML = "<INPUT type='button' value='新規作成' class='new' ID='NEW_X' title='内容を継承して作成します'>"
-				groupBox.innerHTML = "<SPAN ID='GrpSEL' gID='" + Tab.gID + "' Tab=''></SPAN>" + Tab.gName
+                groupBox.innerHTML = "<SPAN class='GrpSEL' ID='GrpSEL' gID='" + Tab.gID + "' Tab=''></SPAN>" + Tab.gName
 			}
 			pName.value = Tab.pName
 			T0.value = Tab.corpName
@@ -637,7 +664,7 @@
 			var Tab = cObj.return_value
 			var Buff = ""
 			var Code, Name
-			Buff += "<SELECT ID='" + IDName + "' style='width:100%'>"
+			Buff += "<SELECT class='" + IDName + "' ID='" + IDName + "' style='width:100%'>"
 			for (var n in Tab) {
 				Name = Tab[n]
 				Buff += "<OPTION VALUE='" + Name + "'"
@@ -657,7 +684,7 @@
 			var cObj = aspObj.getMemberList("営業", mName)
 			var Tab = cObj.return_value
 			var Buff = ""
-			Buff += "<SELECT id='salesManSEL' style='width:100%'>"
+			Buff += "<SELECT class='salesManSEL' id='salesManSEL' style='width:100%'>"
 			Buff += "<OPTION value=''>選択してください</OPTION>"
 			var name, code
 			for (var gID in Tab) {
@@ -681,7 +708,7 @@
 
 			var Buff = ""
 			var Code, Name
-			Buff += "<SELECT ID='" + IDName + "' gID='" + gCode + "' style='width:100%'>"
+			Buff += "<SELECT class='" + IDName + "' ID='" + IDName + "' gID='" + gCode + "' style='width:100%'>"
 			Buff += "<OPTGROUP LABEL='開発・営業'>"
 			for (var n in Tab) {
 				Mode = Tab[n].mode
@@ -770,7 +797,7 @@
 			if (pNum <= 0) {
 				P_gID = getGroupValue() 				   // 新規作成のとき
 			}
-			
+
 			var json = {
 				P_pNum: P_pNum,
 				P_pName: P_pName,
@@ -784,9 +811,9 @@
 				P_kindCategory1: P_kindCategory1,
 				P_kindCategory2: P_kindCategory2,
 				P_fixLevel: P_fixLevel
-				}
+			}
 			//$.jsonOut(json);
-			
+
 			var Buff = []
 			if (P_pName.length == 0) Buff.push("プロジェクト名")
 			if (P_corpName.length == 0) Buff.push("客先名")

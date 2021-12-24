@@ -40,20 +40,20 @@
         $(window).on("load", function () {
             try {
 
-                //$.alert("XX", $.fn.jquery, window.location);
+                //$.alert("XX", $.fn.jquery, window.location, window.location.protocol,window.location.port);
                 $(".user_mode[value='" + user_mode + "']").click();
 
+                var work = window.location.href.split("/");
+                work.length = 3;
+                var url = work.join("/");
+                url = (location.protocol == "https:" && window.location.port != "" ? "" : url)
 
-                //alert("X");
-                var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
-                var work = window.location.pathname.split("/");
-                var path_name = "".concat("/", work[1]);
                 //hostName = "http://kansa.in.eandm.co.jp";
-                WebApi_url = hostName + path_name + "/project/api/xml";
-                WebApi_url_json = hostName + path_name + "/project/api/json";
-                WebApi_url_test = hostName + path_name + "/project/api/test";
-                WebApi_url_xml = hostName + path_name + "/project/api/xml";
-
+                WebApi_url = url + "/WebApi/project/api/xml";
+                WebApi_url_json = url + "/WebApi/project/api/json";
+                WebApi_url_test = url + "/WebApi/project/api/test";
+                WebApi_url_xml = url + "/WebApi/project/api/xml";
+                //$.alert(url);
                 //var xmlDoc = $.WebApi_get(WebApi_url_xml);
                 //var x = $.xml2str(xmlDoc);
 
@@ -84,43 +84,7 @@
         $(function () {
 
         });
-        window.onload1 = function () {
-            $.debug("StartXX");
-            $(".user_mode[value='" + user_mode + "']").click();
 
-            var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
-            var x = window.location.pathname.split("/");
-            //hostName = "http://kansa.in.eandm.co.jp";
-            WebApi_url = hostName + "/WebApi/project/api/xml";
-            WebApi_url_json = hostName + "/WebApi/project/api/json";
-            WebApi_url_test = hostName + "/WebApi/project/api/test";
-            WebApi_url_xml = hostName + "/WebApi/project/api/xml";
-
-            //var xmlDoc = $.WebApi_get(WebApi_url_xml);
-            //var x = $.xml2str(xmlDoc);
-
-            //$.alert.json(memberInfo);
-            //var memberInfo = $.WebApi_json( "GET",WebApi_url_json, "projectInfo/json_memberInfo",mailPara);
-            //            $.alert.json(memberInfo);
-
-            // methodListの取得
-            var methodList = $.WebApi("GET", WebApi_url);
-            var menu_Xml = methodList;
-
-            var menu_data = $.loadXMLDoc("menu.xml");
-
-            menu_Xml = join_menuData(menu_Xml, menu_data);
-
-            $(".menuBlock_content").mymenu(menu_Xml, {
-                color_menu_base: "cornflowerblue",
-                color_menu_select: "royalblue",
-                click: menu_click
-            });
-            $("iframe.iframe_content").frame();
-
-            //user_mode = $(".user_mode:checked").val();
-            //alert(user_mode);
-        }
         function join_menuData(menu_xml, menu_xml2) {
             var root = $(menu_xml).find("root");
             var menu = $(menu_xml2).find("root>menu");
