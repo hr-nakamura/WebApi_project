@@ -9,7 +9,8 @@ using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Runtime.CompilerServices;
-
+using System.IO;
+using System.Text;
 
 using System.Collections;
 
@@ -69,7 +70,6 @@ namespace WebApi_project.hostProc
                     break;
             }
 
-            DB_comment = mName;
             HttpContext context = HttpContext.Current;
             LogPath = context.Server.MapPath("/Log");
 
@@ -94,6 +94,33 @@ namespace WebApi_project.hostProc
             //Debug.Write("database connect", DB_connectString);
 
             //IP_Chech(_DataSource);
+
+
+            try
+            {
+                Encoding Encode = Encoding.GetEncoding("Shift_JIS");
+                // 書き込む文字列
+                string text = "書き込むテキスト１行目\n書き込むテキスト２行目\n";
+                LogPath = @"E:\test\test.txt";
+                if (Directory.Exists(LogPath))
+                {
+                    string a = "1";
+                }
+
+                    // テキストファイルのパス
+                    // StreamWriterオブジェクトのインスタンスを生成
+                    StreamWriter Writer = new StreamWriter(LogPath, true, Encoding.GetEncoding("Shift_JIS"));
+                // Writeメソッドで文字列データを書き込む
+                Writer.Write(text);
+                // StreamWriterオブジェクトを閉じる
+                Writer.Close();
+
+            }
+            catch (Exception ex)
+            {
+                string a = ex.Message;
+            }
+
 
 
         }
