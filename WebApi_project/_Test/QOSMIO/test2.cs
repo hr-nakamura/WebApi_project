@@ -20,7 +20,19 @@ namespace WebApi_project.hostProc
 {
     partial class QOSMIO : hostProc
     {
+        public XmlDocument projectTest2(String Json)
+        {
+            Debug.Write("projectTest2");
 
+            //var Tab = json_projectTest2("");
+
+            //string jsonStr = JsonConvert.SerializeObject(Tab);             // Json形式を文字列に
+
+            //XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr);       // Json文字列をXML　objectに
+
+            XmlDocument xmlDoc = new XmlDocument();
+            return (xmlDoc);
+        }
         public object json_projectTest2(String Json)
         {
             Debug.Write("json_projectTest2");
@@ -37,24 +49,13 @@ namespace WebApi_project.hostProc
             Tab.Add("methodName", methodName);
             Tab.Add("DB_Conn", DB_connectString);
 
-            var Tab1 = readJson2();
-            return (Tab1);
+            //var Tab1 = readJson2();
+            return (Tab);
 
 
         }
 
-        public XmlDocument projectTest2(String Json)
-        {
-            Debug.Write("projectTest2");
 
-            var Tab = json_projectTest2("");
-
-            string jsonStr = JsonConvert.SerializeObject(Tab);             // Json形式を文字列に
-
-            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr);       // Json文字列をXML　objectに
-
-            return (xmlDoc);
-        }
         Dictionary<string, object> readJson2()
         {
             Dictionary<string, object> Tab = new Dictionary<string, object>();

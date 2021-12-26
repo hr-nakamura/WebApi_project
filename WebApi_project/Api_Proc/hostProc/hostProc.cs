@@ -28,6 +28,8 @@ namespace WebApi_project.hostProc
         public Boolean DB_status = true;
         public string DB_result;
         public SqlConnectionStringBuilder DB_builder = new SqlConnectionStringBuilder();
+        public string DB_comment = "123";
+        public string LogPath = "";
 
         HttpContext context = HttpContext.Current;
         public hostProc()
@@ -59,7 +61,7 @@ namespace WebApi_project.hostProc
                     DB_mode = "データベース_naka";
                     basePath = @"D:\GitHub\hr-nakamura\WebApi_project\WebApi_project";
                     break;
-                case "EMG-APSV":
+                case "EMG-APSV":                            /// kansa Web サーバ
                     DB_mode = "データベース_EMG";
                     break;
                 default:
@@ -67,8 +69,10 @@ namespace WebApi_project.hostProc
                     break;
             }
 
-
+            DB_comment = mName;
             HttpContext context = HttpContext.Current;
+            LogPath = context.Server.MapPath("/Log");
+
             string AppPath = context.Request.ApplicationPath;
             string iFile = context.Server.MapPath(AppPath + "/App_Data/system.ini");
             IniFile ini = new IniFile(iFile);
