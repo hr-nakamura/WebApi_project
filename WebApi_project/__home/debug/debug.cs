@@ -10,7 +10,7 @@ namespace DebugHost
 {
     //public partial class Log : System.Web.UI.Page
 
-    public class Debug
+    public class Debug 
     {
         // ステータス
         static Boolean debugMode = true;
@@ -38,7 +38,7 @@ namespace DebugHost
 
                 string timeStatusStr = "[" + DateTime.Now.ToString("MM/dd HH:mm:ss.fff") + "]";
                 string outStr = timeStatusStr + "\t" + work;
-                Debug.Write_Notepad(outStr);
+                Debug.Write_LogFile(outStr);
             }
             catch (Exception ex)
             {
@@ -63,7 +63,7 @@ namespace DebugHost
                 string timeStatusStr = "[" + DateTime.Now.ToString("MM/dd HH:mm:ss.fff") + "]";
                 string outStr = timeStatusStr + "\t" + work;
 
-                Debug.Write_Notepad(outStr);
+                Debug.Write_LogFile(outStr);
             }
             catch (Exception ex)
             {
@@ -98,19 +98,53 @@ namespace DebugHost
         public static void Note(params string[] args)
         {
             string para = "" + string.Join("\t", args) + "";
-            Debug.Write_Notepad(para);
+            Debug.Write_LogFile(para);
         }
 
         public static void Plain(string str)
         {
-            Debug.Write_Notepad(str);
+            Debug.Write_LogFile(str);
         }
         public static void Json(object Json)
         {
-            Debug.Write_Notepad(Json.ToString());
+            Debug.Write_LogFile(Json.ToString());
         }
+        public static void Write_LogFile(string str)
+        {
+            if (Debugger.IsAttached)
+            {
+                Debug.Write_Notepad(str);
+            }
+            else
+            {
+                string LogPath = System.Web.Hosting.HostingEnvironment.MapPath("/Log");
+                Debug.WriteTextFile(LogPath, str);
+            }
+
+        }
+        static void WriteTextFile(string LogPath, string str)
+        {
+            try
+            {
 
 
+                if (Directory.Exists(LogPath))
+                {
+                    LogPath += @"\debug.txt";
+                    // テキストファイルのパス
+                    // StreamWriterオブジェクトのインスタンスを生成
+                    StreamWriter Writer = new StreamWriter(LogPath, true, Encoding.GetEncoding("Shift_JIS"));
+                    // Writeメソッドで文字列データを書き込む
+                    Writer.Write(str + "\n");
+                    // StreamWriterオブジェクトを閉じる
+                    Writer.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                string a = ex.Message;
+            }
+        }
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         private static extern IntPtr FindWindowEx(IntPtr hWnd, IntPtr hwndChildAfter, String lpszClass, String lpszWindow);
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
@@ -121,6 +155,7 @@ namespace DebugHost
 
         private static void Write_Notepad(string str)
         {
+
             if (debugMode == false) return;
             //IntPtr wParam;
             const int EM_REPLACESEL = 0x00C2;
@@ -138,67 +173,5 @@ namespace DebugHost
 
             SendMessage(lnghWndTarget, EM_REPLACESEL, 1, String.Concat(str, "\x0d"));
         }
-        private static void Write_Notepad_OLD(string str)
-        {
-            IntPtr wParam;
-
-            IntPtr lnghWnd = FindWindowEx(IntPtr.Zero, IntPtr.Zero, "Notepad", "*無題 - メモ帳");
-            if (lnghWnd == IntPtr.Zero)
-            {
-                lnghWnd = FindWindowEx(IntPtr.Zero, IntPtr.Zero, "Notepad", "無題 - メモ帳");
-                if (lnghWnd == IntPtr.Zero)
-                {
-                    // メモ帳が見つからなかったとき「pipe」で送信
-                    pipe_Client(str);
-                    return;
-                }
-            }
-            IntPtr lnghWndTarget = FindWindowEx(lnghWnd, IntPtr.Zero, "Edit", "");           // '子ウィンドウのEdit
-
-            byte[] b1 = Encoding.GetEncoding("utf-16").GetBytes(str);
-            int iChar;
-            for (int i = 0; i < b1.Length; i += 2)
-            {
-                iChar = BitConverter.ToInt16(b1, i);
-                wParam = (IntPtr)iChar;
-                PostMessage(lnghWndTarget, WM_CHAR, wParam, IntPtr.Zero);
-            }
-            wParam = (IntPtr)0x0d;
-            PostMessage(lnghWndTarget, WM_CHAR, wParam, IntPtr.Zero);
-
-        }
-        private static async void pipe_Client(String message)
-        {
-            using (var pipeClient = new NamedPipeClientStream("debug_pipe"))
-            {
-                try
-                {
-                    // サーバに接続(1秒タイムアウト)
-                    await pipeClient.ConnectAsync(1000);
-
-                    // メッセージを送信（書き込み）
-                    using (var writer = new StreamWriter(pipeClient))
-                    {
-                        //var message = "test";
-
-                        await writer.WriteLineAsync(message);
-                        //Console.WriteLine($"Sent: {message}");
-                    }
-                }
-                catch (TimeoutException ex)
-                {
-                    Debug.Write(ex.Message);
-                    // タイムアウト時の処理
-                    //Console.WriteLine($"TimeOut: {ex.Message}");
-                }
-                catch (Exception ex)
-                {
-                    Debug.Write(ex.Message);
-                    // その他のエラー
-                    //Console.WriteLine($"Error: {ex.Message}");
-                }
-            }
-        }
-
     }
 }

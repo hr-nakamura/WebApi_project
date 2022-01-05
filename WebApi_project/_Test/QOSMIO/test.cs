@@ -11,6 +11,7 @@ using System.Linq;
 using System.Runtime.Serialization.Json;
 using System.Xml.Linq;
 using Newtonsoft.Json.Linq;
+//using System.Diagnostics;
 
 using WebApi_project.Models;
 
@@ -65,6 +66,7 @@ namespace WebApi_project.hostProc
             Tab.Add("methodName", methodName);
             Tab.Add("DB_Conn", DB_connectString);
             Tab.Add("LogPath", LogPath);
+            Tab.Add("Debugger", (System.Diagnostics.Debugger.IsAttached ? "YES":"NO"));
 
             //            var Tab1 = readJson("http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp");
             //var Tab1 = readJson("http://localhost/Asp/Test/test.json");
