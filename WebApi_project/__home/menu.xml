@@ -11,6 +11,7 @@
   </menu>
 
 	<menu name="_Test" memo="" >
+    <menu name="History" memo="" mode="url" value="/WebApi/project/_Test/History/History.html"/>
     <menu name="QOSMIO" memo="" mode="url" value="/WebApi/project/_Test/QOSMIO/qosmio.html"/>
     <menu name="TEST2(html)" memo="" mode="url" value="/WebApi/project/_Test/TEST/test.html"/>
   </menu>

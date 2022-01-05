@@ -117,7 +117,7 @@ namespace DebugHost
             }
             else
             {
-                string LogPath = System.Web.Hosting.HostingEnvironment.MapPath("/Log");
+                string LogPath = System.Web.Hosting.HostingEnvironment.MapPath("/Log/Web");
                 Debug.WriteTextFile(LogPath, str);
             }
 
@@ -126,11 +126,11 @@ namespace DebugHost
         {
             try
             {
-
-
+                DateTime dt = DateTime.Now;
+                string fileName = string.Concat(@"\",dt.ToString("yyyy-MM-dd"),"_debug.txt");
                 if (Directory.Exists(LogPath))
                 {
-                    LogPath += @"\debug.txt";
+                    LogPath += fileName;
                     // テキストファイルのパス
                     // StreamWriterオブジェクトのインスタンスを生成
                     StreamWriter Writer = new StreamWriter(LogPath, true, Encoding.GetEncoding("Shift_JIS"));
