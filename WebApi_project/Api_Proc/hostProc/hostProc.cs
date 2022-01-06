@@ -41,7 +41,6 @@ namespace WebApi_project.hostProc
             //MyCookieColl = HttpContext.Current.Request.Cookies;
             //String[] arr1 = MyCookieColl.AllKeys;
 
-
             string mName = Environment.MachineName;
             //Debug.Write("hostProc Start", mName);
             string DB_mode = "データベース";
@@ -262,6 +261,7 @@ namespace WebApi_project.hostProc
         }
         public XmlDocument methodList()
         {
+            //Debug.Write("methodList");
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.CreateXmlDeclaration("1.0", null, null);
 
@@ -293,7 +293,7 @@ namespace WebApi_project.hostProc
         public Dictionary<string, List<string>> methodList_json()
         {
             //object o_obj = new object();
-            //String nameSpace = "WebApi_project.hostProc";
+            String nameSpace = "WebApi_project.hostProc";
 
             Dictionary<string, List<string>> Tab = new Dictionary<string, List<string>>();
             Dictionary<string, object> work = new Dictionary<string, object>();
@@ -306,9 +306,10 @@ namespace WebApi_project.hostProc
 
             // 指定した名前空間のクラスをすべて取得
             var types = assm.GetTypes()
-                .Where(p => p.Namespace == "WebApi_project.hostProc")
+                .Where(p => p.Namespace == nameSpace)
                 .OrderBy(o => o.Name)
                 .Select(s => s);
+
             foreach (Type t in types)
             {
                 //Debug.Write("====",t.Name);

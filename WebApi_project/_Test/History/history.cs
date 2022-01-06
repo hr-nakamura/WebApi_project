@@ -17,15 +17,15 @@ using WebApi_project.Models;
 
 using DebugHost;
 
-namespace WebApi_project.hostProc
+namespace WebApi_project.History
 {
-    partial class History : hostProc
+    partial class History : hostProc.hostProc
     {
         public XmlDocument projectTest(String Json)
         {
             Debug.Write("projectTest");
 
-            var Tab = historyInfo("");
+            //var Tab = historyInfo("");
 
 
 
@@ -127,7 +127,7 @@ namespace WebApi_project.hostProc
                 sql.Append(" ORDER BY");
                 sql.Append("    date");
 
-                sql.Replace("@date", SqlUtil.Parameter("string", "2022-01-01"));
+                sql.Replace("@date", hostProc.SqlUtil.Parameter("string", "2022-01-01"));
 
                 SqlDataReader reader = dbRead(DB, sql.ToString());
 
