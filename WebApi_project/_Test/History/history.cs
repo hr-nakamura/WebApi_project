@@ -17,9 +17,9 @@ using WebApi_project.Models;
 
 using DebugHost;
 
-namespace WebApi_project.History
+namespace WebApi_project.hostProc
 {
-    partial class History : hostProc.hostProc
+    partial class History : hostProc
     {
         public XmlDocument projectTest(String Json)
         {
@@ -65,7 +65,7 @@ namespace WebApi_project.History
             Tab.Add("LogPath", LogPath);
             Tab.Add("Debugger", (System.Diagnostics.Debugger.IsAttached ? "YES":"NO"));
 
-            return (Tab);
+            return (Tab1);
 
 
         }
@@ -101,9 +101,8 @@ namespace WebApi_project.History
         {
             SqlConnection DB;
             DB = new SqlConnection(DB_connectString);
-            string url0, url1, url2, url3, asp, date, name;
-            Dictionary<string, Dictionary<string,object>> Tab = new Dictionary<string, Dictionary<string, object>>();
-
+            string url_0, url_1, url_2, url_3, asp, date, name;
+            s_url Tab = new s_url();
             try
             {
                 Debug.noWrite("DB Open", DB_connectString);
@@ -127,37 +126,41 @@ namespace WebApi_project.History
                 sql.Append(" ORDER BY");
                 sql.Append("    date");
 
-                sql.Replace("@date", hostProc.SqlUtil.Parameter("string", "2022-01-01"));
+                sql.Replace("@date", SqlUtil.Parameter("string", "2015-07-30"));
 
                 SqlDataReader reader = dbRead(DB, sql.ToString());
 
                 while (reader.Read())
                 {
 
-                    url0 = (string)reader["url0"].ToString();
-                    url1 = (string)reader["url1"].ToString();
-                    url2 = (string)reader["url2"].ToString();
-                    url3 = (string)reader["url3"].ToString();
+                    url_0 = (string)reader["url0"].ToString();
+                    url_1 = (string)reader["url1"].ToString();
+                    url_2 = (string)reader["url2"].ToString();
+                    url_3 = (string)reader["url3"].ToString();
                     asp = (string)reader["asp"].ToString();
                     date = (string)reader["date"].ToString();
                     name = (string)reader["name"].ToString();
                     //Debug.Write(url0,url1,url2,url3,date,name);
-                    if (!Tab.ContainsKey(url0))
+                    if (!Tab.Url.ContainsKey(url_0))
                     {
-                        Tab.Add(url0, new Dictionary<string, object>());
+                        Tab.Url.Add(url_0, new s_url());
+                        Tab.Cnt+=1;
                     }
-                    if (url1 != "" && !Tab[url0].ContainsKey(url1))
+                    if (url_1 != "" && !Tab.Url[url_0].Url.ContainsKey(url_1))
                     {
-                        Tab[url0].Add(url1, new Dictionary<string, object>());
+                        Tab.Url[url_0].Url.Add(url_1, new s_url());
+                        Tab.Url[url_0].Cnt += 1;
                     }
-                    //if (url2 != "" && !Tab[url0][url1].ContainsKey(url2))
-                    //{
-                    //    Tab[url0][url1].Add(url2, new Dictionary<string, object>());
-                    //}
-                    //if (url3 != "" && !Tab[url0][url1][url2].ContainsKey(url3))
-                    //{
-                    //    Tab[url0][url1][url2].Add(url3, new Dictionary<string, object>());
-                    //}
+                    if (url_2 != "" && !Tab.Url[url_0].Url[url_1].Url.ContainsKey(url_2))
+                    {
+                        Tab.Url[url_0].Url[url_1].Url.Add(url_2, new s_url());
+                    }
+                    if (url_3 != "" && !Tab.Url[url_0].Url[url_1].Url[url_2].Url.ContainsKey(url_3))
+                    {
+                        Tab.Url[url_0].Url[url_1].Url[url_2].Url.Add(url_3, new s_url());
+                    }
+                    //Tab.Url[url_0].Url[url_1].Url[url_2].Url[url_3].Cnt++;
+
 
                 }
 
@@ -178,15 +181,25 @@ namespace WebApi_project.History
                 Debug.noWrite("DB null");
                 DB = null;
             }
-            return ("");
+            return (Tab);
         }
-        //class s_url
-        //{
-        //    public Dictionary<s_url,string> url { get; set; }
-        //    public s_url()
-        //    {
-        //        this.url = new Dictionary<string,object>();
-        //    }
-        //}
+
+    }
+
+    class s_url
+    {
+        public int Cnt { get; set; }
+        // 許可情報
+        public Dictionary<string ,s_url> Url { get; set; }
+        public s_url()
+        {
+            this.Url = new Dictionary<string,s_url>();
+        }
+    }
+    class s_asp
+    {
+        public int Cnt { get; set; }
+        public List<string> Asp { get; set; }
     }
 }
+
