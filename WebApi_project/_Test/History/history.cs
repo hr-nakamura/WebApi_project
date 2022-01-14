@@ -12,6 +12,7 @@ using System.Runtime.Serialization.Json;
 using System.Xml.Linq;
 using Newtonsoft.Json.Linq;
 //using System.Diagnostics;
+using System.Collections;
 
 using WebApi_project.Models;
 
@@ -132,6 +133,7 @@ namespace WebApi_project.hostProc
 
                 while (reader.Read())
                 {
+                    var myarray = new ArrayList() { };
 
                     url_0 = (string)reader["url0"].ToString();
                     url_1 = (string)reader["url1"].ToString();
@@ -140,25 +142,51 @@ namespace WebApi_project.hostProc
                     asp = (string)reader["asp"].ToString();
                     date = (string)reader["date"].ToString();
                     name = (string)reader["name"].ToString();
-                    //Debug.Write(url0,url1,url2,url3,date,name);
+                    //Debug.Write(url_0, url_1, url_2, url_3, asp,date, name);
                     if (!Tab.Url.ContainsKey(url_0))
                     {
                         Tab.Url.Add(url_0, new s_url());
-                        Tab.Cnt+=1;
+                        Tab.Cnt += 1;
+
+                    }
+                    else
+                    {
+                        myarray.Add(asp);
                     }
                     if (url_1 != "" && !Tab.Url[url_0].Url.ContainsKey(url_1))
                     {
                         Tab.Url[url_0].Url.Add(url_1, new s_url());
                         Tab.Url[url_0].Cnt += 1;
+
+                    }
+                    else
+                    {
+                        myarray.Add(asp);
                     }
                     if (url_2 != "" && !Tab.Url[url_0].Url[url_1].Url.ContainsKey(url_2))
                     {
                         Tab.Url[url_0].Url[url_1].Url.Add(url_2, new s_url());
+                        Tab.Url[url_0].Url[url_1].Cnt += 1;
+
+                    }
+                    else
+                    {
+                        myarray.Add(asp);
+
                     }
                     if (url_3 != "" && !Tab.Url[url_0].Url[url_1].Url[url_2].Url.ContainsKey(url_3))
                     {
                         Tab.Url[url_0].Url[url_1].Url[url_2].Url.Add(url_3, new s_url());
+                        Tab.Url[url_0].Url[url_1].Url[url_2].Cnt += 1;
                     }
+                    else
+                    {
+                        myarray.Add(asp);
+                    }
+
+                    //Debug.Write(url_0, url_1, url_2, url_3, asp);
+                    var a = 1;
+
                     //Tab.Url[url_0].Url[url_1].Url[url_2].Url[url_3].Cnt++;
 
 
