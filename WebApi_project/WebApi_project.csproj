@@ -296,6 +296,8 @@
     <Content Include="__home\Util\viewJson-edge\jquery.json-viewer.js" />
     <Content Include="__home\work\json.json" />
     <Content Include="__home\Scripts\jquery.my.webapi.js" />
+    <Content Include="__home\work\projectInfoXML.xml" />
+    <Content Include="__home\work\projectInfoXML.xsl" />
     <Content Include="__home\work\WebApi_project_構成.xlsx" />
     <Content Include="_Test\QOSMIO\test.json" />
     <Content Include="_Test\QOSMIO\test_Json.json" />
