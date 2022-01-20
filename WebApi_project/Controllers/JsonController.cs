@@ -37,7 +37,7 @@ namespace WebApi_project.Controllers
         {
             paraOut("GET", Item, Json);
 
-            var hProc = new hostProcEntry();
+            var hProc = new entryProc.entryProcEntry();
             object Obj = hProc.Entry_json(Item, Json);
 
             HttpResponseMessage response = response_conv(JsonConvert.SerializeObject(Obj));
@@ -55,7 +55,7 @@ namespace WebApi_project.Controllers
             var Json = para.Json;
             paraOut("POST", Item, Json);
 
-            var hProc = new hostProcEntry();
+            var hProc = new entryProc.entryProcEntry();
             object Obj = hProc.Entry_json(Item, Json);
 
             HttpResponseMessage response = response_conv(JsonConvert.SerializeObject(Obj));
@@ -70,7 +70,7 @@ namespace WebApi_project.Controllers
             var Json = para.Json;
             paraOut("PUT", Item, Json);
 
-            var hProc = new hostProcEntry();
+            var hProc = new entryProc.entryProcEntry();
             object Obj = hProc.Entry_json(Item, Json);
 
             HttpResponseMessage response = response_conv(JsonConvert.SerializeObject(Obj));
@@ -84,7 +84,7 @@ namespace WebApi_project.Controllers
             var Json = para.Json;
             paraOut("Delete", Item, Json);
 
-            var hProc = new hostProcEntry();
+            var hProc = new entryProc.entryProcEntry();
             object Obj = hProc.Entry_json(Item, Json);
 
             var response = response_conv(JsonConvert.SerializeObject(Obj));

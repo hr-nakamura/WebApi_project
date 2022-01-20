@@ -31,7 +31,7 @@ namespace WebApi_project.Controllers
         {
             paraOut("GET", Item, Json);
 
-            var hProc = new hostProcEntry();
+            var hProc = new entryProc.entryProcEntry();
 
             XmlDocument xmlDoc = hProc.Entry(Item, Json);
 
@@ -54,7 +54,7 @@ namespace WebApi_project.Controllers
             var Json = para.Json;
             paraOut("POST", Item, Json);
 
-            var hProc = new hostProcEntry();
+            var hProc = new entryProc.entryProcEntry();
             XmlDocument xmlDoc = hProc.Entry(Item, Json);
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
@@ -69,7 +69,7 @@ namespace WebApi_project.Controllers
             var Json = para.Json;
             paraOut("PUT", Item, Json);
 
-            var hProc = new hostProcEntry();
+            var hProc = new entryProc.entryProcEntry();
             XmlDocument xmlDoc = hProc.Entry(Item, Json);
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
@@ -83,7 +83,7 @@ namespace WebApi_project.Controllers
             var Json = para.Json;
             paraOut("Delete", Item, Json);
 
-            var hProc = new hostProcEntry();
+            var hProc = new entryProc.entryProcEntry();
             XmlDocument xmlDoc = hProc.Entry(Item, Json);
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
