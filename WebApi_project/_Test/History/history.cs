@@ -185,7 +185,6 @@ namespace WebApi_project.hostProc
                     }
 
                     //Debug.Write(url_0, url_1, url_2, url_3, asp);
-                    var a = 1;
 
                     //Tab.Url[url_0].Url[url_1].Url[url_2].Url[url_3].Cnt++;
 

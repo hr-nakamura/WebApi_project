@@ -5,15 +5,15 @@ using System.Collections.Generic;
 
 using DebugHost;
 
-namespace WebApi_project.hostProc
+namespace WebApi_project.entryProc
 {
-    partial class hostProcEntry
+    partial class entryProcEntry
     {
-        public  hostProcEntry()
+        public  entryProcEntry()
         {
             //Debug.WriteLog("hostProcEntry Start");
         }
-        ~hostProcEntry()
+        ~entryProcEntry()
         {
             //Debug.WriteLog("hostProcEntry End");
         }
