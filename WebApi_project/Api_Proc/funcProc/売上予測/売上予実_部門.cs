@@ -20,7 +20,7 @@ namespace WebApi_project.hostProc
             string classPath = this.GetType().FullName;                                         //クラスパスの取得
             string className = this.GetType().Name;                                             //クラス名の取得
             string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;           //メソッド名の取得
-            Debug.WriteLog(classPath);
+            //Debug.WriteLog(classPath);
 
             string mName = Environment.MachineName;
 

@@ -39,7 +39,6 @@
     <script type="text/javascript">
         $(window).on("load", function () {
             try {
-
                 //$.alert("XX", $.fn.jquery, window.location, window.location.protocol,window.location.port);
                 $(".user_mode[value='" + user_mode + "']").click();
 
@@ -105,7 +104,9 @@
             var mode = o.mode;
             var item = o.item;
             var func = o.func;
+            var value = o.value;
             if (mode == "method") {
+                $.debug("click", mode, item + "/" + func);
                 //Send_Option.visitBBS = "2019/07/01 10:10:00";
                 //Send_Option.limitYear = "2019";
 
@@ -126,7 +127,7 @@
                 }
             }
             else if (mode == "url") {
-                var value = o.value;
+                $.debug("click", mode, value);
                 $("iframe.iframe_content").attr("src", value);
             }
         }

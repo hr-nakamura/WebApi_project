@@ -29,6 +29,7 @@
                 viewXML(viewStr);
             }
             else {
+                $.debug("データはありません");
                 $("#jsonBase_text").show();
                 $("#jsonBase_text").text("\nデータはありません");
             }
@@ -36,6 +37,7 @@
 
         }
         function viewJson(str) {
+            $.debug("viewJson Start");
             if ($.Browser.name == "msie") {
                 $("#jsonBase").JSONView(str, { collapsed: true });
                 //$("#jsonBase_text").text(str);
@@ -56,6 +58,7 @@
                 $("#jsonBase").jsonViewer(input, options);
 
             }
+            //$.debug("viewJson End");
         }
         function viewXML(xmlStr) {
             $.debug("viewXML Start");
@@ -76,7 +79,7 @@
                     alert("Unable to process XML: " + ex);
                 }
             });
-            $.debug("viewXML End");
+            //$.debug("viewXML End");
 
         }
         $(function () {

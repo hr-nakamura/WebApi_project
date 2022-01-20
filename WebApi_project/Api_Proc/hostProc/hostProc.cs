@@ -158,7 +158,7 @@ namespace WebApi_project.hostProc
             JObject root = new JObject();
             root.Add("root", Top);
 
-            Debug.Json(root);
+            //Debug.Json(root);
             string jsonStr = JsonConvert.SerializeObject(root);             // Json形式を文字列に
 
             XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr);       // Json文字列をXML　objectに
