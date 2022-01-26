@@ -5,6 +5,7 @@
 	</menu>
 
   <menu name="_Test-Dialog" memo="" >
+    <menu name="editGroup" memo="" mode="url" value="/WebApi/project/_Test/Dialog/editGroup.html"/>
     <menu name="dialog" memo="" mode="url" value="/WebApi/project/_Test/Dialog/dialog.html"/>
     <menu name="dialog1" memo="" mode="url" value="/WebApi/project/_Test/Dialog/dialog1.html"/>
     <menu name="test" memo="" mode="url" value="/WebApi/project/_Test/Dialog/test.html"/>
