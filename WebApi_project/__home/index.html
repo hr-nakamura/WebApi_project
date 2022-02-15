@@ -86,7 +86,7 @@
 
         function join_menuData(menu_xml, menu_xml2) {
             var root = $(menu_xml).find("root");
-            var menu = $(menu_xml2).find("root>menu");
+            var menu = $(menu_xml2).find("/root>menu");
             root.prepend(menu);
             return (menu_xml);
         }
