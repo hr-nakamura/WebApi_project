@@ -25,6 +25,9 @@
     <menu name="viewXML" memo="" mode="url" value="/WebApi/project/__home/Util/viewXML/viewXML_Main.html"/>
   </menu>
 
+  <menu name="関数呼出" memo="" >
+  </menu>
+
 </root>
 
 

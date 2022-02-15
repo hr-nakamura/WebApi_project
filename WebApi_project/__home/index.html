@@ -62,11 +62,11 @@
 
                 // methodListの取得
                 var methodList = $.WebApi("GET", WebApi_url);
-                var menu_Xml = methodList;
+//                var menu_Xml = methodList;
 
                 var menu_data = $.loadXMLDoc("menu.xml");
 
-                menu_Xml = join_menuData(menu_Xml, menu_data);
+                menu_Xml = join_menuData(menu_data, methodList);
 
                 $(".menuBlock_content").mymenu(menu_Xml, {
                     color_menu_base: "cornflowerblue",
@@ -84,10 +84,10 @@
 
         });
 
-        function join_menuData(menu_xml, menu_xml2) {
-            var root = $(menu_xml).find("root");
-            var menu = $(menu_xml2).find("/root>menu");
-            root.prepend(menu);
+        function join_menuData(menu_xml, methodList) {
+            var menus = $(methodList).find("root>menu");
+            var methodTop = $(menu_xml).find("menu[name='関数呼出']");
+            methodTop.prepend(menus);
             return (menu_xml);
         }
     </script>
