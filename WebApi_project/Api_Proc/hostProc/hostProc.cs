@@ -146,6 +146,7 @@ namespace WebApi_project.hostProc
             {
             }
         }
+
         public JObject Jsonl_Info(object Json)
         {
             JObject O_Top = new JObject();
@@ -296,10 +297,18 @@ namespace WebApi_project.hostProc
             String nameSpace = "WebApi_project.hostProc";
 
             Dictionary<string, List<string>> Tab = new Dictionary<string, List<string>>();
+            Dictionary<string, List<string>> Tab_xml = new Dictionary<string, List<string>>();
+            Dictionary<string, List<string>> Tab_json = new Dictionary<string, List<string>>();
             Dictionary<string, object> work = new Dictionary<string, object>();
+            work.Add("xml", new Dictionary<string, List<string>>());
+            work.Add("json", new Dictionary<string, List<string>>());
             Assembly assm = Assembly.GetExecutingAssembly();
 
-            List<string> methdList_X = new List<string>()
+            List<string> className_X = new List<string>()
+                {
+                "hostWeb"
+                };
+            List<string> methdName_X = new List<string>()
                 {
                 "Entry","Json2Xml","methodList"
                 };
@@ -319,20 +328,39 @@ namespace WebApi_project.hostProc
                 foreach (var m in mList)
                 {
                     string methodName = m.Name;
-                    //Debug.Write(className,methodName, m.ReturnType.ToString());
-                    if (!methdList_X.Contains(methodName))
+                    //Debug.Write(className, methodName, m.ReturnType.ToString());
+                    if (!className_X.Contains(className) && !methdName_X.Contains(methodName))
                     {
+                        if (m.ReturnType == typeof(Object) || m.ReturnType == typeof(XmlDocument))
+                        {
+                            //Debug.Write(className, methodName, m.ReturnType.ToString());
+                        }
+
+                        //Debug.Write(className, methodName, m.ReturnType.ToString());
                         if (m.ReturnType == typeof(XmlDocument))
                         {
-                            if (!Tab.ContainsKey(className))
+                            if (!Tab_xml.ContainsKey(className))
                             {
                                 var methodTab = new List<string>();
-                                Tab.Add(className, methodTab);
+                                Tab_xml.Add(className, methodTab);
                             }
                             //Type classType = Type.GetType(nameSpace + "." + className);
                             //var obj = Activator.CreateInstance(classType);
 
-                            Tab[className].Add(methodName);
+                            Tab_xml[className].Add(methodName);
+                            //Debug.Write(className, methodName, m.ReturnType.ToString());
+                        }
+                        else if (m.ReturnType == typeof(Object))
+                        {
+                            if (!Tab_json.ContainsKey(className))
+                            {
+                                var methodTab = new List<string>();
+                                Tab_json.Add(className, methodTab);
+                            }
+                            //Type classType = Type.GetType(nameSpace + "." + className);
+                            //var obj = Activator.CreateInstance(classType);
+
+                            Tab_json[className].Add(methodName);
                             //Debug.Write(className, methodName, m.ReturnType.ToString());
                         }
                     }
@@ -342,7 +370,7 @@ namespace WebApi_project.hostProc
                     }
                 }
             }
-            return (Tab);
+            return (Tab_xml);
         }
     }
 }

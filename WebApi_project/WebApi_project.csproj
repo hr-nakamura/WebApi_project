@@ -118,6 +118,7 @@
     <Content Include="Global.asax" />
     <Content Include="Api_Proc\funcProc\projectBBS\projectData_XML.xml" />
     <Content Include="Api_Proc\hostProc\memo.txt" />
+    <Content Include="index.html" />
     <Content Include="Scripts\json2.js" />
     <Content Include="Scripts\json2.min.js" />
     <Content Include="_Test\Dialog\back.gif" />
