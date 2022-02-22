@@ -50,7 +50,6 @@
                 //hostName = "http://kansa.in.eandm.co.jp";
                 WebApi_url = url + "/WebApi/project/api/xml";
                 WebApi_url_json = url + "/WebApi/project/api/json";
-                WebApi_url_test = url + "/WebApi/project/api/test";
                 WebApi_url_xml = url + "/WebApi/project/api/xml";
                 //$.alert(url);
                 //var xmlDoc = $.WebApi_get(WebApi_url_xml);
@@ -104,6 +103,7 @@
     </script>
     <script type="text/javascript">
         function menu_click(o) {
+            var m_type = o.type;
             var mode = o.mode;
             var item = o.item;
             var func = o.func;
@@ -113,8 +113,8 @@
                 //Send_Option.visitBBS = "2019/07/01 10:10:00";
                 //Send_Option.limitYear = "2019";
 
-                if (user_mode == "json") {
-                    var value = item + "/json_" + func;
+                if (m_type == "json") {
+                    var value = item + "/" + func;
                     var Str = $.WebApi_json("GET", WebApi_url_json, value, Send_Option);
                     //$.alert.json(Str);
                     $.storage("viewStr", JSON.stringify(Str, null, 2));
@@ -134,6 +134,19 @@
                 $("iframe.iframe_content").attr("src", value);
             }
         }
+
+        function isJSON(arg) {
+            arg = (typeof arg === "function") ? arg() : arg;
+            if (typeof arg !== "string") {
+                return false;
+            }
+            try {
+                arg = (!JSON) ? eval("(" + arg + ")") : JSON.parse(arg);
+                return true;
+            } catch (e) {
+                return false;
+            }
+        };
     </script>
     <script type="text/javascript">
         $(function () {
