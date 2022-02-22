@@ -85,9 +85,12 @@
         });
 
         function join_menuData(menu_xml, methodList) {
-            var menus = $(methodList).find("root>menu");
-            var methodTop = $(menu_xml).find("menu[name='関数呼出']");
-            methodTop.prepend(menus);
+            var xml_menus = $(methodList).find("root>xml>menu");
+            var xml_methodTop = $(menu_xml).find("menu[name='Method_XML']");
+            xml_methodTop.prepend(xml_menus);
+            var json_menus = $(methodList).find("root>json>menu");
+            var json_methodTop = $(menu_xml).find("menu[name='Method_JSON']");
+            json_methodTop.prepend(json_menus);
             return (menu_xml);
         }
     </script>

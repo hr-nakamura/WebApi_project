@@ -272,13 +272,37 @@ namespace WebApi_project.hostProc
             root.SetAttribute("name", "EMG");
             xmlDoc.AppendChild(root);
 
-            Dictionary<string, List<string>> list = methodList_json();
-            foreach (var x1 in list)
+            XmlElement root_xml = xmlDoc.CreateElement("xml");
+            XmlElement root_json = xmlDoc.CreateElement("json");
+            root.AppendChild(root_xml);
+            root.AppendChild(root_json);
+
+            Dictionary<string, object> list = methodList_xml_json();
+            Dictionary<string, List<string>> Tab_xml =(Dictionary<string, List<string>>) list["xml"];
+            Dictionary<string, List<string>> Tab_json = (Dictionary<string, List<string>>)list["json"];
+
+            foreach (var x1 in Tab_xml)
             {
                 XmlElement node1 = xmlDoc.CreateElement("menu");
                 string className = x1.Key;
                 node1.SetAttribute("name", className);
-                root.AppendChild(node1);
+                root_xml.AppendChild(node1);
+                foreach (var methodName in x1.Value)
+                {
+                    XmlElement node2 = xmlDoc.CreateElement("menu");
+                    node2.SetAttribute("name", methodName);
+                    node2.SetAttribute("mode", "method");
+                    node2.SetAttribute("item", className);
+                    node2.SetAttribute("func", methodName);
+                    node1.AppendChild(node2);
+                }
+            }
+            foreach (var x1 in Tab_json)
+            {
+                XmlElement node1 = xmlDoc.CreateElement("menu");
+                string className = x1.Key;
+                node1.SetAttribute("name", className);
+                root_json.AppendChild(node1);
                 foreach (var methodName in x1.Value)
                 {
                     XmlElement node2 = xmlDoc.CreateElement("menu");
@@ -291,17 +315,17 @@ namespace WebApi_project.hostProc
             }
             return (xmlDoc);
         }
-        public Dictionary<string, List<string>> methodList_json()
+        public Dictionary<string, object> methodList_xml_json()
         {
             //object o_obj = new object();
             String nameSpace = "WebApi_project.hostProc";
 
-            Dictionary<string, List<string>> Tab = new Dictionary<string, List<string>>();
+            Dictionary<string, List<string>> xTab = new Dictionary<string, List<string>>();
             Dictionary<string, List<string>> Tab_xml = new Dictionary<string, List<string>>();
             Dictionary<string, List<string>> Tab_json = new Dictionary<string, List<string>>();
-            Dictionary<string, object> work = new Dictionary<string, object>();
-            work.Add("xml", new Dictionary<string, List<string>>());
-            work.Add("json", new Dictionary<string, List<string>>());
+            Dictionary<string, object> Tab = new Dictionary<string, object>();
+            Tab.Add("xml", Tab_xml);
+            Tab.Add("json", Tab_json);
             Assembly assm = Assembly.GetExecutingAssembly();
 
             List<string> className_X = new List<string>()
@@ -370,7 +394,7 @@ namespace WebApi_project.hostProc
                     }
                 }
             }
-            return (Tab_xml);
+            return (Tab);
         }
     }
 }

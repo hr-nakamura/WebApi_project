@@ -18,7 +18,7 @@ namespace WebApi_project.Controllers
         public HttpResponseMessage Get()
         {
             var hProc = new hostProc.hostProc();
-            object Tab = hProc.methodList_json();
+            object Tab = hProc.methodList_xml_json();
 
             HttpResponseMessage response = response_conv(JsonConvert.SerializeObject(Tab));
             return (response);

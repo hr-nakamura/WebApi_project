@@ -17,7 +17,7 @@ namespace WebApi_project.hostProc
 			public int yymm { get; set; }
 			public int day { get; set; }
 		}
-	public object json_dayChk(string Json)
+		public object json_dayChk(string Json)
         {
             var o_json = JsonConvert.DeserializeObject<para_dayChk>(Json);
 			o_json.day = dayChk(o_json.yymm);
