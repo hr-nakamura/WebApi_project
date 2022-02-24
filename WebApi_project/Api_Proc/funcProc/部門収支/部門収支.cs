@@ -47,9 +47,6 @@ namespace WebApi_project.hostProc
 				//Json = "{dispCmd:'統括一覧',year:'2021', yosoku:'3', fix:'70' }";
 				//Json = "{dispCmd:'詳細',統括:'営業本部',year:'2021', yosoku:'3', fix:'70' }";
 			}
-			string sJson = @"{'Info':" + Json + "}";
-			XmlDocument InfoDoc = (XmlDocument)JsonConvert.DeserializeXmlNode(sJson);
-
 
 			Dictionary<string, dynamic> Tab = (Dictionary<string, dynamic>)json_部門収支_XML(Json);
 			Dictionary<string, dynamic> dataTab = Tab["data"];
@@ -102,11 +99,11 @@ namespace WebApi_project.hostProc
 			foreach (XmlElement elem in NodeList) elem.RemoveAttribute("target");
 
 
-			XmlNode Info = xmlDoc.ImportNode(InfoDoc.SelectSingleNode("Info"), true);
-            //xmlDoc.DocumentElement.PrependChild(Info);
-            xmlDoc.SelectSingleNode("//root").PrependChild(Info);
+			Join_Para(xmlDoc, Json);
+
 			return (xmlDoc);
 		}
+
 		XmlDocument makeBaseXML(Dictionary<string, dynamic> Tab)
         {
 			cmd_部門収支 cmd = Tab["Info"];

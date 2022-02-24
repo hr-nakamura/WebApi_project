@@ -146,7 +146,15 @@ namespace WebApi_project.hostProc
             {
             }
         }
+        // ドキュメントの先頭にJsonパラメータ情報を接続
+        public void Join_Para(XmlDocument xmlDoc, string Json)
+        {
+            string sJson = @"{'Info':" + Json + "}";
+            XmlDocument InfoDoc = (XmlDocument)JsonConvert.DeserializeXmlNode(sJson);
 
+            XmlNode Info = xmlDoc.ImportNode(InfoDoc.DocumentElement, true);
+            xmlDoc.DocumentElement.PrependChild(Info);
+        }
         public JObject Jsonl_Info(object Json)
         {
             JObject O_Top = new JObject();
