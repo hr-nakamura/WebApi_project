@@ -22,7 +22,6 @@ namespace WebApi_project.Controllers
         {
             var hProc = new hostProc.hostProc();
             XmlDocument xmlDoc = hProc.methodList();
-            XmlNode xmlElem = xmlDoc.SelectSingleNode("/root/xml");
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
             return (response);

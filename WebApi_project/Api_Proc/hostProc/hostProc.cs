@@ -150,8 +150,9 @@ namespace WebApi_project.hostProc
         public JObject Jsonl_Info(object Json)
         {
             JObject O_Top = new JObject();
-
-            //CreateJson_Tree(O_Top, (JObject)Json);
+            ArrayList x = new ArrayList();
+            x[0] = (int)0;
+            CreateJson_Tree(x, O_Top, (JObject)Json);
 
             JObject Top = new JObject();
             Top.Add("全体", O_Top);

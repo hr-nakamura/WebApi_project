@@ -34,9 +34,6 @@ namespace WebApi_project.hostProc
 			DateTime eDate = sDate.AddMonths(mCnt).AddDays(-1);
 
 			string work = "";
-			SqlConnection DB = new SqlConnection(DB_connectString);
-			DB.Open();
-			Debug.noWrite("DB Open", DB_connectString);
 			string 大項目, 項目, 種別, S_name, secName;
 			int yymm, n, 直間;
 			double amount;
@@ -99,85 +96,90 @@ namespace WebApi_project.hostProc
 				SQLTab.Add(work);
 			}
 
-			string SQL = string.Join(" UNION ALL ", SQLTab);
+			if(SQLTab.Count > 0)
+            {
+				string SQL = string.Join(" UNION ALL ", SQLTab);
 
-			SqlDataReader reader = dbRead(DB, SQL);
-			Debug.noWrite("reader Start");
+				SqlConnection DB = new SqlConnection(DB_connectString);
+				DB.Open();
+				Debug.noWrite("DB Open", DB_connectString);
+				SqlDataReader reader = dbRead(DB, SQL);
+				Debug.noWrite("reader Start");
 
-			while (reader.Read())
-			{
-				S_name = (string)reader["S_name"].ToString();
-				大項目 = (string)reader["大項目"].ToString();
-				項目 = (string)reader["項目"].ToString();
-				種別 = (string)reader["種別"].ToString();
-				直間 = (byte)reader["直間"];
-				yymm = (int)reader["yymm"];
-				amount = Convert.ToDouble(reader["amount"]);
-
-				n = yymmDiff(s_yymm, yymm);
-
-				if (S_name == null)
+				while (reader.Read())
 				{
-					secName = "不明";
-				}
-				else if (dispMode == "全社")
-				{
-					secName = "全社";
-				}
-				else if (dispMode == "本社")
-				{
-					secName = (直間 == 2 ? "本社" : "直接");
-				}
-				else
-				{
-					secName = S_name;
-				}
+					S_name = (string)reader["S_name"].ToString();
+					大項目 = (string)reader["大項目"].ToString();
+					項目 = (string)reader["項目"].ToString();
+					種別 = (string)reader["種別"].ToString();
+					直間 = (byte)reader["直間"];
+					yymm = (int)reader["yymm"];
+					amount = Convert.ToDouble(reader["amount"]);
 
-				checkArray(Tab, secName, 種別, 大項目, 項目);
+					n = yymmDiff(s_yymm, yymm);
 
-				if (大項目 == "売上付替" && 項目 == "支出") amount = -amount;
-				if (大項目 == "費用付替" && 項目 == "支出") amount = -amount;
-				if (大項目 == "売上原価" && 項目 == "期末棚卸") amount = -amount;
-
-				// 売上予測は別のところで集計
-				if (!(種別 == "予測" && 項目 == "売上"))
-				{
-					if (大項目 == "要員数")
+					if (S_name == null)
 					{
-						Tab[secName][種別][大項目][項目][n] += amount;
+						secName = "不明";
 					}
-					else if (大項目 == "売上原価" && 種別 == "予測" && (項目 == "期末棚卸" || 項目 == "期首棚卸"))
+					else if (dispMode == "全社")
 					{
-						Tab[secName]["予測"][大項目][項目][n] += amount * 1000;
-						Tab[secName]["実績"][大項目][項目][n] += amount * 1000;
+						secName = "全社";
+					}
+					else if (dispMode == "本社")
+					{
+						secName = (直間 == 2 ? "本社" : "直接");
 					}
 					else
 					{
-						Tab[secName][種別][大項目][項目][n] += amount * 1000;
+						secName = S_name;
 					}
+
+					checkArray(Tab, secName, 種別, 大項目, 項目);
+
+					if (大項目 == "売上付替" && 項目 == "支出") amount = -amount;
+					if (大項目 == "費用付替" && 項目 == "支出") amount = -amount;
+					if (大項目 == "売上原価" && 項目 == "期末棚卸") amount = -amount;
+
+					// 売上予測は別のところで集計
+					if (!(種別 == "予測" && 項目 == "売上"))
+					{
+						if (大項目 == "要員数")
+						{
+							Tab[secName][種別][大項目][項目][n] += amount;
+						}
+						else if (大項目 == "売上原価" && 種別 == "予測" && (項目 == "期末棚卸" || 項目 == "期首棚卸"))
+						{
+							Tab[secName]["予測"][大項目][項目][n] += amount * 1000;
+							Tab[secName]["実績"][大項目][項目][n] += amount * 1000;
+						}
+						else
+						{
+							Tab[secName][種別][大項目][項目][n] += amount * 1000;
+						}
+					}
+
+
+					//db_account data = new db_account()
+					//{
+					//	名前 = (string)reader["S_name"].ToString(),
+					//	大項目 = (string)reader["大項目"].ToString(),
+					//	項目 = (string)reader["項目"].ToString(),
+					//	種別 = (string)reader["種別"].ToString(),
+					//	直間 = (byte)reader["直間"],
+					//	yymm = (int)reader["yymm"],
+					//	amount = (int)reader["amount"]
+					//};
+					//dataTab.Add(data);
 				}
+				Debug.noWrite("reader Close");
+				reader.Close();
 
-
-				//db_account data = new db_account()
-				//{
-				//	名前 = (string)reader["S_name"].ToString(),
-				//	大項目 = (string)reader["大項目"].ToString(),
-				//	項目 = (string)reader["項目"].ToString(),
-				//	種別 = (string)reader["種別"].ToString(),
-				//	直間 = (byte)reader["直間"],
-				//	yymm = (int)reader["yymm"],
-				//	amount = (int)reader["amount"]
-				//};
-				//dataTab.Add(data);
+				Debug.noWrite("DB Close");
+				DB.Close();
+				Debug.noWrite("DB Dispose");
+				DB.Dispose();
 			}
-			Debug.noWrite("reader Close");
-			reader.Close();
-
-			Debug.noWrite("DB Close");
-			DB.Close();
-			Debug.noWrite("DB Dispose");
-			DB.Dispose();
-
 			return (dataTab);
 		}
 
@@ -202,9 +204,6 @@ namespace WebApi_project.hostProc
 
 			string work = "";
 			//Dictionary<string, dynamic> Tab = initTab(Json);
-			SqlConnection DB = new SqlConnection(DB_connectString);
-			DB.Open();
-			Debug.noWrite("DB Open", DB_connectString);
 
 			string S_name, secName, codes, mode;
 			int yymm, n, level, 直間;
@@ -270,8 +269,13 @@ namespace WebApi_project.hostProc
 				SQLTab.Add(work);
 			}
 
-			string SQL = string.Join(" UNION ALL ", SQLTab);
+			if (SQLTab.Count > 0)
+			{
+				string SQL = string.Join(" UNION ALL ", SQLTab);
 
+				SqlConnection DB = new SqlConnection(DB_connectString);
+			DB.Open();
+			Debug.noWrite("DB Open", DB_connectString);
 			SqlDataReader reader = dbRead(DB, SQL);
 			Debug.noWrite("reader Start");
 
@@ -334,6 +338,7 @@ namespace WebApi_project.hostProc
 			Debug.noWrite("DB Dispose");
 			DB.Dispose();
 
+			}
 			return (dataTab);
 		}
 
@@ -358,9 +363,6 @@ namespace WebApi_project.hostProc
 
 			string work = "";
 			//Dictionary<string, dynamic> Tab = initTab(Json);
-			SqlConnection DB = new SqlConnection(DB_connectString);
-			DB.Open();
-			Debug.noWrite("DB Open", DB_connectString);
 
 			string S_name, secName, codes, mode;
 			int yymm, n, 直間;
@@ -420,8 +422,13 @@ namespace WebApi_project.hostProc
 				SQLTab.Add(work);
 			}
 
+			if (SQLTab.Count > 0)
+			{
 			string SQL = string.Join(" UNION ALL ", SQLTab);
 
+			SqlConnection DB = new SqlConnection(DB_connectString);
+			DB.Open();
+			Debug.noWrite("DB Open", DB_connectString);
 			SqlDataReader reader = dbRead(DB, SQL);
 			Debug.noWrite("reader Start");
 
@@ -463,6 +470,7 @@ namespace WebApi_project.hostProc
 			Debug.noWrite("DB Dispose");
 			DB.Dispose();
 
+			}
 			return (dataTab);
 		}
 
@@ -487,9 +495,6 @@ namespace WebApi_project.hostProc
 
 			string work = "";
 			//Dictionary<string, dynamic> Tab = initTab(Json);
-			SqlConnection DB = new SqlConnection(DB_connectString);
-			DB.Open();
-			Debug.noWrite("DB Open", DB_connectString);
 
 			string S_name, secName, codes, mode;
 			string 大項目, 分類, 科目, EMG;
@@ -601,8 +606,12 @@ namespace WebApi_project.hostProc
 				SQLTab.Add(work);
 			}
 
-			string SQL = string.Join(" UNION ALL ", SQLTab);
-
+			if (SQLTab.Count > 0)
+			{
+				string SQL = string.Join(" UNION ALL ", SQLTab);
+				SqlConnection DB = new SqlConnection(DB_connectString);
+			DB.Open();
+			Debug.noWrite("DB Open", DB_connectString);
 			SqlDataReader reader = dbRead(DB, SQL);
 			Debug.noWrite("reader Start");
 			while (reader.Read())
@@ -658,6 +667,8 @@ namespace WebApi_project.hostProc
 			Debug.noWrite("DB Dispose");
 			DB.Dispose();
 
+			}
+
 			return (dataTab);
 		}
 
@@ -683,9 +694,6 @@ namespace WebApi_project.hostProc
 
 			string work = "";
 			//Dictionary<string, dynamic> Tab = initTab(Json);
-			SqlConnection DB = new SqlConnection(DB_connectString);
-			DB.Open();
-			Debug.noWrite("DB Open", DB_connectString);
 
 			string S_name, secName, codes, mode;
 			int yymm, n, 直間;
@@ -777,10 +785,14 @@ namespace WebApi_project.hostProc
 
 			}
 
-			string SQL = string.Join(" UNION ALL ", SQLTab);
-
-			string payMode;
+			if (SQLTab.Count > 0)
+			{
+				string SQL = string.Join(" UNION ALL ", SQLTab);
+				string payMode;
 			double cost;
+			SqlConnection DB = new SqlConnection(DB_connectString);
+			DB.Open();
+			Debug.noWrite("DB Open", DB_connectString);
 			SqlDataReader reader = dbRead(DB, SQL);
 			Debug.noWrite("reader Start");
 			while (reader.Read())
@@ -833,6 +845,7 @@ namespace WebApi_project.hostProc
 			Debug.noWrite("DB Dispose");
 			DB.Dispose();
 
+			}
 			return (dataTab);
 		}
 
@@ -857,9 +870,6 @@ namespace WebApi_project.hostProc
 
 			string work = "";
 			//Dictionary<string, dynamic> Tab = initTab(Json);
-			SqlConnection DB = new SqlConnection(DB_connectString);
-			DB.Open();
-			Debug.noWrite("DB Open", DB_connectString);
 
 			string S_name, secName, codes, mode;
 			StringBuilder sql = new StringBuilder("");
@@ -920,8 +930,13 @@ namespace WebApi_project.hostProc
 				SQLTab.Add(work);
 			}
 
-			string SQL = string.Join(" UNION ALL ", SQLTab);
+			if (SQLTab.Count > 0)
+			{
+				string SQL = string.Join(" UNION ALL ", SQLTab);
 
+				SqlConnection DB = new SqlConnection(DB_connectString);
+			DB.Open();
+			Debug.noWrite("DB Open", DB_connectString);
 			SqlDataReader reader = dbRead(DB, SQL);
 			Debug.noWrite("reader Start");
 			int 付替;
@@ -968,6 +983,7 @@ namespace WebApi_project.hostProc
 			Debug.noWrite("DB Dispose");
 			DB.Dispose();
 
+			}
 			return (dataTab);
 		}
 
@@ -992,9 +1008,6 @@ namespace WebApi_project.hostProc
 
 			string work = "";
 			//Dictionary<string, dynamic> Tab = initTab(Json);
-			SqlConnection DB = new SqlConnection(DB_connectString);
-			DB.Open();
-			Debug.noWrite("DB Open", DB_connectString);
 
 			string S_name, secName, codes, mode;
 			StringBuilder sql = new StringBuilder("");
@@ -1108,8 +1121,12 @@ namespace WebApi_project.hostProc
 
 			}
 
-			string SQL = string.Join(" UNION ALL ", SQLTab);
-
+			if (SQLTab.Count > 0)
+			{
+				string SQL = string.Join(" UNION ALL ", SQLTab);
+				SqlConnection DB = new SqlConnection(DB_connectString);
+			DB.Open();
+			Debug.noWrite("DB Open", DB_connectString);
 			SqlDataReader reader = dbRead(DB, SQL);
 			Debug.noWrite("reader Start");
 			int yymm, n, 直間;
@@ -1157,6 +1174,7 @@ namespace WebApi_project.hostProc
 			Debug.noWrite("DB Dispose");
 			DB.Dispose();
 
+            }
 			return (dataTab);
 		}
 	}

@@ -3,15 +3,20 @@ using System.Web;
 using System.Xml;
 using System.Text;
 using System.Reflection;
-using Newtonsoft.Json;
 using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics;
 
+using System.Xml.Serialization;
+using System.IO;
+
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 using WebApi_project.Models;
 using CodingSquareCS;
-
+using System.Runtime.Serialization.Json;
 using DebugHost;
 
 
@@ -31,16 +36,19 @@ EMG		dispCmd=EMG														&year=2021		&fix=70		&yosoku=3]
 
 namespace WebApi_project.hostProc
 {
+
 	partial class 部門収支 : hostProc
     {
 		public XmlDocument 部門収支_XML(String Json)
 		{
 			if (Json == "{}")
 			{
-				//Json = "{dispCmd:'EMG',year:'2021', yosoku:'3', fix:'70' }";
-				Json = "{dispCmd:'統括一覧',year:'2021', yosoku:'3', fix:'70' }";
+				Json = "{dispCmd:'EMG',year:'2021', yosoku:'3', fix:'70' }";
+				//Json = "{dispCmd:'統括一覧',year:'2021', yosoku:'3', fix:'70' }";
 				//Json = "{dispCmd:'詳細',統括:'営業本部',year:'2021', yosoku:'3', fix:'70' }";
 			}
+			string sJson = @"{'Info':" + Json + "}";
+			XmlDocument InfoDoc = (XmlDocument)JsonConvert.DeserializeXmlNode(sJson);
 
 
 			Dictionary<string, dynamic> Tab = (Dictionary<string, dynamic>)json_部門収支_XML(Json);
@@ -93,6 +101,10 @@ namespace WebApi_project.hostProc
 			var NodeList = xmlDoc.SelectNodes("//グループ");
 			foreach (XmlElement elem in NodeList) elem.RemoveAttribute("target");
 
+
+			XmlNode Info = xmlDoc.ImportNode(InfoDoc.SelectSingleNode("Info"), true);
+            //xmlDoc.DocumentElement.PrependChild(Info);
+            xmlDoc.SelectSingleNode("//root").PrependChild(Info);
 			return (xmlDoc);
 		}
 		XmlDocument makeBaseXML(Dictionary<string, dynamic> Tab)
@@ -101,7 +113,7 @@ namespace WebApi_project.hostProc
 
 			Dictionary<string, dynamic> dataTab = Tab["data"];
 
-			string fName = getAbsoluteFileName("/funcProc/部門収支/BASE.xml");
+			string fName = getAbsoluteFileName("/Api_Proc/funcProc/部門収支/BASE.xml");
 			var xmlDoc = new XmlDocument();
 			xmlDoc.Load(fName);
 			XmlNode topNode = xmlDoc.SelectSingleNode("//全体");
@@ -196,7 +208,7 @@ namespace WebApi_project.hostProc
             {
 				Json = "{dispCmd:'EMG',secMode:'',dispName:'',year:'2021',yosoku:'3', fix:'70'}";
 			}
-            var sw = new StopWatch();
+			var sw = new StopWatch();
             sw.Start("計測開始"); // 計測開始
 
             var cmd = InitCmd(Json);
@@ -661,10 +673,10 @@ namespace WebApi_project.hostProc
 			Dictionary<string, object> Data = new Dictionary<string, object>();
 			projectInfo jProc = new projectInfo();
 
-			//Json = "{year:'2020',secMode:'開発',dispMode:'グループ'}";
-			//var o_json = JsonConvert.DeserializeObject<cmd_部門収支>(Json);
+            //string Json = "{year:'2020',secMode:'開発',dispMode:'グループ'}";
+            //var o_json = JsonConvert.DeserializeObject<cmd_部門収支>(Json);
 
-		try
+            try
 		{
 			Dictionary<string, group> secTab = jProc.json_部門リスト_sub(o_json);
 			string dispName = "";

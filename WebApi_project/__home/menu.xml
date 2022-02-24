@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root name="EMG">
 	<menu name="監査" memo="" >
-    <menu name="監査ページ" memo="" mode="url" value="/Project"/>
+    <menu name="監査ページ" memo="" mode="url" value="http://kansa.in.eandm.co.jp/Project"/>
     <menu name="監査ページ(NEW)" memo="" mode="url" value="/WebApi/project/_home/manageMenu.html"/>
   </menu>
 
