@@ -47,8 +47,11 @@ namespace WebApi_project.hostProc
 				//Json = "{dispCmd:'統括一覧',year:'2021', yosoku:'3', fix:'70' }";
 				//Json = "{dispCmd:'詳細',統括:'営業本部',year:'2021', yosoku:'3', fix:'70' }";
 			}
+            Json = @"{dispCmd:'EMG',year:'2022', yosoku:'4', fix:'70' }";
+            //Json = @"{'dispCmd': '統括一覧','secMode':'開発','year':'2022','yosoku':'3','fix':'70'}";
+            //Json = @"{'dispCmd': '部門一覧','secMode':'開発','year':'2022','yosoku':'3','fix':'70'}";
 
-			Dictionary<string, dynamic> Tab = (Dictionary<string, dynamic>)json_部門収支_XML(Json);
+            Dictionary<string, dynamic> Tab = (Dictionary<string, dynamic>)json_部門収支_XML(Json);
 			Dictionary<string, dynamic> dataTab = Tab["data"];
 
             // dataTabの「表示」以外の要素を削除
@@ -99,7 +102,7 @@ namespace WebApi_project.hostProc
 			foreach (XmlElement elem in NodeList) elem.RemoveAttribute("target");
 
 
-			Join_Para(xmlDoc, Json);
+			Apppend_Para(xmlDoc, Json);
 
 			return (xmlDoc);
 		}
