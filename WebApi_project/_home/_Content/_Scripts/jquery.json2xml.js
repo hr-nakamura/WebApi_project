@@ -25,7 +25,8 @@
 		}
 		config.datetimeAccessFormPaths = config.datetimeAccessFormPaths || [];
 	}	
-	function startTag(jsonObj, element, attrList, closed) {
+		 function startTag(jsonObj, element, attrList, closed) {
+			 element = ($.isNumeric(element) ? "X-" + element : element);
 		var resultStr = "<"+ ( (jsonObj!=null && jsonObj.__prefix!=null)? (jsonObj.__prefix+":"):"") + element;
 		if(attrList!=null) {
 			for(var aidx = 0; aidx < attrList.length; aidx++) {
@@ -43,7 +44,8 @@
 		return resultStr;
 	}
 	
-	function endTag(jsonObj,elementName) {
+		 function endTag(jsonObj, elementName) {
+			 elementName = ($.isNumeric(elementName) ? "X-" + elementName : elementName);
 		return "</"+ (jsonObj.__prefix!=null? (jsonObj.__prefix+":"):"")+elementName+">";
 	}
 	
