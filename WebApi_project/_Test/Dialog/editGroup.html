@@ -11,7 +11,7 @@
 	<script src="/WebApi/project/_home/_Content/_Scripts/jquery-1.13.0-ui.js"></script>
 	<script src="/WebApi/project/_home/_Content/_Scripts/jquery.kansa.Query.js"></script>
 	<script src="/WebApi/project/_home/_Content/_Scripts/json.js"></script>
-	<script src="/WebApi/project/_home/_Content/_Scripts/json2xml.js"></script>
+	<script src="/WebApi/project/_home/_Content/_Scripts/jquery.json2xml.js"></script>
 	<script src="showModalDialog.js"></script>
 	<script src="cmn.js"></script>
 
@@ -608,8 +608,13 @@
 
 		// îÑè„óöó
 		function dispSales(Tab) {
-            var Json = JSON.stringify(Tab);
-            var xml = $.json2xml(Tab);
+			//var Json = JSON.stringify(Tab);
+            Json = {root:Tab };
+
+			var xml = $.json2xml(Json);
+            var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+			xmlDoc.load("<root>aa</root>");
+
 
 			var table = new makeTable()
 

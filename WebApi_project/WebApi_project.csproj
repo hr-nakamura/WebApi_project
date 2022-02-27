@@ -137,6 +137,7 @@
     <Content Include="_Test\Dialog\data\member.json" />
     <Content Include="_Test\Dialog\data\corp.json" />
     <Content Include="_Test\Dialog\data\sales.json" />
+    <Content Include="_home\_Content\_Scripts\jquery.json2xml.js" />
     <None Include="_Test\Dialog\data\project.json" />
     <None Include="_Test\Dialog\data\group.json" />
     <Content Include="_Test\Dialog\showModalDialog.js" />
