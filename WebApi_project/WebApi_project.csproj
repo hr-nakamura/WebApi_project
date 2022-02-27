@@ -121,6 +121,7 @@
     <Content Include="index.html" />
     <Content Include="Scripts\json2.js" />
     <Content Include="Scripts\json2.min.js" />
+    <Content Include="_home\_Content\_Scripts\json2xml.js" />
     <Content Include="_Test\Dialog\back.gif" />
     <Content Include="_Test\Dialog\bg01.gif" />
     <Content Include="_Test\Dialog\bg09.jpg" />

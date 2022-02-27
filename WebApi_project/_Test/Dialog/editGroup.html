@@ -11,6 +11,7 @@
 	<script src="/WebApi/project/_home/_Content/_Scripts/jquery-1.13.0-ui.js"></script>
 	<script src="/WebApi/project/_home/_Content/_Scripts/jquery.kansa.Query.js"></script>
 	<script src="/WebApi/project/_home/_Content/_Scripts/json.js"></script>
+	<script src="/WebApi/project/_home/_Content/_Scripts/json2xml.js"></script>
 	<script src="showModalDialog.js"></script>
 	<script src="cmn.js"></script>
 
@@ -23,14 +24,14 @@
 		function JsIsNumeric(num) {
 			return (true);
 		}
-        function formatNum(num,mode) {
-            return num.toString().split(".")
-                .map(function (value, i) {
-                    if (i) return value;
-                    return value.replace(/([0-9]+?)(?=(?:[0-9]{3})+$)/g, "$1,");
-                })
-                .join(".");
-        };
+		function formatNum(num, mode) {
+			return num.toString().split(".")
+				.map(function (value, i) {
+					if (i) return value;
+					return value.replace(/([0-9]+?)(?=(?:[0-9]{3})+$)/g, "$1,");
+				})
+				.join(".");
+		};
 
 		RSGetASPObject = function () {
 			var Obj = {};
@@ -71,107 +72,107 @@
 		(function ($) {
 
 		})(jQuery);
-        $(window).on("load", function () {
-            try {
-                //pNum = window.dialogArguments.pNum
-                var pNum = "";
-                FUNC1.style.display = "block"
-                FUNC2.style.display = "none"
+	$(window).on("load", function () {
+		try {
+			//pNum = window.dialogArguments.pNum
+			var pNum = "";
+			FUNC1.style.display = "block"
+			FUNC2.style.display = "none"
 
-                var o = RSGetASPObject("bbsDB.asp")
-                var cObj = o.getProjectInfo(pNum)
-                var projectInfo = cObj.return_value
-                var pBuff = dispProject(projectInfo)
+			var o = RSGetASPObject("bbsDB.asp")
+			var cObj = o.getProjectInfo(pNum)
+			var projectInfo = cObj.return_value
+			var pBuff = dispProject(projectInfo)
 
-                var cObj = o.getHistoryInfo(pNum)
-                var HistoryInfo = cObj.return_value
-                var hBuff = dispHistory(HistoryInfo)
+			var cObj = o.getHistoryInfo(pNum)
+			var HistoryInfo = cObj.return_value
+			var hBuff = dispHistory(HistoryInfo)
 
-                var cObj = o.getSalesInfo(pNum)
-                var SalesInfo = cObj.return_value
-                var sBuff = dispSales(SalesInfo)
-                var len = HistoryInfo.length
-                var yymm = HistoryInfo[len - 1].s
-                var gCode = HistoryInfo[len - 1].gID
+			var cObj = o.getSalesInfo(pNum)
+			var SalesInfo = cObj.return_value
+			var sBuff = dispSales(SalesInfo)
+			var len = HistoryInfo.length
+			var yymm = HistoryInfo[len - 1].s
+			var gCode = HistoryInfo[len - 1].gID
 
-                //======================================================
+			//======================================================
 
-                projectBox.innerHTML = pBuff
-                historyBox.innerHTML = hBuff
-                salesBox.innerHTML = sBuff
-                //var sDate 		   = projectInfo.makeDate
-                //yymmBox.innerHTML    = makeMonth(sDate,yymm)
-                //groupBox.innerHTML   = makeGrp(gCode,yymm)
+			projectBox.innerHTML = pBuff
+			historyBox.innerHTML = hBuff
+			salesBox.innerHTML = sBuff
+			//var sDate 		   = projectInfo.makeDate
+			//yymmBox.innerHTML    = makeMonth(sDate,yymm)
+			//groupBox.innerHTML   = makeGrp(gCode,yymm)
 
-                CANCEL.style.display = "inline"
-                DEL.style.display = "none"
-                ADD.style.display = "none"
-                EDIT.style.display = "none"
+			CANCEL.style.display = "inline"
+			DEL.style.display = "none"
+			ADD.style.display = "none"
+			EDIT.style.display = "none"
 
-            } catch (e) {
-                alert("[" + e.message);
-            }
-        });
+		} catch (e) {
+			alert("[" + e.message);
+		}
+	});
 	</script>
 	<script type="text/javascript">
 		$(function () {
-            $(".yymmSel").on("change", function () {
+			$(".yymmSel").on("change", function () {
 			});
 			$(".edit").on("click", function () {
-                alert("edit");
-                var key_yymm = pNumRow[selPos].s_yymm				// Key
-                var key_pNum = pNum
-                var obj = GrpSel
-                var n = obj.selectedIndex
-                var new_Code = obj.options[n].value
-                var new_gName = obj.options[n].text
-                var obj = yymmSel
-                var n = obj.selectedIndex
-                var new_yymm = obj.options[n].value
+				alert("edit");
+				var key_yymm = pNumRow[selPos].s_yymm				// Key
+				var key_pNum = pNum
+				var obj = GrpSel
+				var n = obj.selectedIndex
+				var new_Code = obj.options[n].value
+				var new_gName = obj.options[n].text
+				var obj = yymmSel
+				var n = obj.selectedIndex
+				var new_yymm = obj.options[n].value
 
-                var o = RSGetASPObject("bbsDB.asp")
-                var cObj = o.regGrpEdit(key_pNum, key_yymm, new_Code, new_yymm)
-                var value = cObj.return_value
+				var o = RSGetASPObject("bbsDB.asp")
+				var cObj = o.regGrpEdit(key_pNum, key_yymm, new_Code, new_yymm)
+				var value = cObj.return_value
 
-                if (cObj.status == -1) {
-                    alert("開始日付が同じレコードがあります、登録できませんでした。")
-                    result = false
-                }
-                else {
-                    result = true
-                }
+				if (cObj.status == -1) {
+					alert("開始日付が同じレコードがあります、登録できませんでした。")
+					result = false
+				}
+				else {
+					result = true
+				}
 				// 所属グループ履歴
-                var cObj = o.getHistoryInfo(pNum)
-                var HistoryInfo = cObj.return_value
-                var hBuff = dispHistory(HistoryInfo)
-                historyBox.innerHTML = hBuff
+				var cObj = o.getHistoryInfo(pNum)
+				var HistoryInfo = cObj.return_value
+				var hBuff = dispHistory(HistoryInfo)
+				historyBox.innerHTML = hBuff
 
-                pNumRow[selPos].style.backgroundColor = selColor
+				pNumRow[selPos].style.backgroundColor = selColor
 
 				// 売上履歴
 				var cObj = o.getSalesInfo(pNum)
-                var SalesInfo = cObj.return_value
-                var sBuff = dispSales(SalesInfo)
-                salesBox.innerHTML = sBuff
-            });
+				var SalesInfo = cObj.return_value
+				var sBuff = dispSales(SalesInfo)
+				salesBox.innerHTML = sBuff
+			});
 			$(".del").on("click", function () {
 				alert("del");
-            });
-            $(".add").on("click", function () {
-                alert("add");
-            });
-            $(".cancel").on("click", function () {
-                alert("cancel");
-            });
-            $(".pNumRow").on("click", function () {
-                alert("pNumRow");
-            });
-            $(".pNumRow").on("mouseover", function () {
-            });
-            $(".pNumRow").on("mouseleave", function () {
-            });
-            $(".selecter").on("click", function () {
-            });
+			});
+			$(".add").on("click", function () {
+				alert("add");
+			});
+			$(".cancel").on("click", function () {
+				alert("cancel");
+			});
+			$(".pNumRow").on("click", function () {
+				alert("pNumRow");
+			});
+			$(".pNumRow").on("mouseover", function () {
+			});
+			$(".pNumRow").on("mouseleave", function () {
+			});
+			$(".selecter").on("click", function () {
+			});
 
 		});
 	</script>
@@ -309,7 +310,7 @@
 
 
 	<SCRIPT FOR="EDIT" EVENT="onclick">
-        alert("XX");
+		alert("XX");
 		var key_yymm = pNumRow[selPos].s_yymm				// Key
 		var key_pNum = pNum
 		var obj = GrpSel
@@ -440,7 +441,90 @@
 
 
 	<SCRIPT LANGUAGE="JavaScript">
+        function json2xml(json) {
+            var a = JSON.parse(json)
+            var c = document.createElement("root");
+            var t = function (v) {
+                return {}.toString.call(v).split(' ')[1].slice(0, -1).toLowerCase();
+            };
+            var f = function (f, c, a, s) {
+                c.setAttribute("type", t(a));
+                if (t(a) != "array" && t(a) != "object") {
+                    if (t(a) != "null") {
+                        c.appendChild(document.createTextNode(a));
+                    }
+                } else {
+                    for (var k in a) {
+                        var v = a[k];
+                        if (k == "__type" && t(a) == "object") {
+                            c.setAttribute("__type", v);
+                        } else {
+                            if (t(v) == "object") {
+                                var ch = c.appendChild(document.createElementNS(null, s ? "item" : k));
+                                f(f, ch, v);
+                            } else if (t(v) == "array") {
+                                var ch = c.appendChild(document.createElementNS(null, s ? "item" : k));
+                                f(f, ch, v, true);
+                            } else {
+                                var va = document.createElementNS(null, s ? "item" : k);
+                                if (t(v) != "null") {
+                                    va.appendChild(document.createTextNode(v));
+                                }
+                                var ch = c.appendChild(va);
+                                ch.setAttribute("type", t(v));
+                            }
+                        }
+                    }
+                }
+            };
+            f(f, c, a, t(a) == "array");
+            return c.outerHTML;
+		}
+        function xml2json(xml) {
+            var dom = window.ActiveXObject ? (new ActiveXObject("Microsoft.XMLDOM")) : null;
+            dom = dom ? dom : document.implementation.createDocument(null, "body");
+            dom.firstChild.innerHTML = xml;
+            var a = dom.firstChild.firstChild;
+            var t = function (v) {
+                return v.getAttribute ? v.getAttribute("type") : "null";
+            };
+            var f = function (f, a) {
+                var c = undefined;
+                if (t(a) == "null") {
+                    c = null;
+                } else if (t(a) == "boolean") {
+                    var b = a.textContent.toLowerCase().substr(0, 1);
+                    c = ['1', 't'].indexOf(b) != -1;
+                } else if (t(a) == "number") {
+                    c = Number(a.textContent);
+                } else if (t(a) == "string") {
+                    c = a.textContent;
+                } else if (t(a) == "object") {
+                    c = {};
+                    if (a.getAttribute("__type")) {
+                        c["__type"] = a.getAttribute("__type");
+                    }
+                    for (var i = 0; i < a.childNodes.length; i++) {
+                        var v = a.childNodes[i];
+                        c[v.nodeName] = f(f, v);
+                    }
+                } else if (t(a) == "array") {
+                    c = [];
+                    for (var i = 0; i < a.childNodes.length; i++) {
+                        var v = a.childNodes[i];
+                        c[i] = f(f, v);
+                    }
+                }
+                return c;
+            };
+            var c = f(f, a);
+            return JSON.stringify(c);
+        }
+
 		function dispProject(Info) {
+			var Json = JSON.stringify(Info);
+            var xml = json2xml(Json);
+
 			var table = new makeTable()
 
 			table.Begin("class='insideFrame' ALIGN='CENTER' border='0' cellpadding='0' cellspacing='0'");
@@ -481,6 +565,9 @@
 
 		// 所属グループ履歴
 		function dispHistory(Tab) {
+            var Json = JSON.stringify(Tab);
+			var xml = json2xml(Json);
+
 			var table = new makeTable()
 
 			table.Begin("class='insideFrameColor' ALIGN='CENTER' WIDTH='100%'");
@@ -500,14 +587,14 @@
 
 
 			for (var n in Tab) {
-                table.RowBegin("class='edit' ID='pNumRow' s_yymm='" + Tab[n].s + "'" + " gCode='" + Tab[n].gID + "'")
+				table.RowBegin("class='edit' ID='pNumRow' s_yymm='" + Tab[n].s + "'" + " gCode='" + Tab[n].gID + "'")
 				table.DataCell("ALIGN='CENTER' nowrap", strMonth(Tab[n].s))
 				//table.DataCell("ALIGN='CENTER' nowrap",strMonth(Tab[n].e))		//グループ別のプロジェクトの終了年月
 				table.DataCell("ALIGN='LEFT' nowrap", Tab[n].gName)
 				table.RowEnd()
 			}
 
-            table.RowBegin("class='add' ID='pNumRow' s_yymm='0' gCode='0'")
+			table.RowBegin("class='add' ID='pNumRow' s_yymm='0' gCode='0'")
 			table.DataCell("ALIGN='CENTER' nowrap colspan='3' class='newLine-comment'", "追加の場合はこの行を指定して下さい。")
 			table.RowEnd()
 
@@ -521,9 +608,12 @@
 
 		// 売上履歴
 		function dispSales(Tab) {
+            var Json = JSON.stringify(Tab);
+            var xml = $.json2xml(Tab);
+
 			var table = new makeTable()
 
-            table.Begin("class='insideFrameColor' ALIGN='CENTER' WIDTH='100%'");
+			table.Begin("class='insideFrameColor' ALIGN='CENTER' WIDTH='100%'");
 			table.Caption("class='SUB'", "売上履歴");
 
 			table.HeadBegin("");
