@@ -612,8 +612,10 @@
             Json = {root:Tab };
 
 			var xml = $.json2xml(Json);
-            var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
-			xmlDoc.load("<root>aa</root>");
+			var x = "<root><x202112><gName>第1開発本部第2開発部第1開発課</gName><plan>5485000</plan><actual>0</actual></x202112><x202203><gName>第1開発本部第2開発部第1開発課</gName><plan>9745000</plan><actual>0</actual></x202203></root> ";
+			
+			var xmlDoc = $.parseXML(x);
+			var a = $(xmlDoc).find("gName");
 
 
 			var table = new makeTable()
