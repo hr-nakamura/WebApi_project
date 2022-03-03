@@ -609,12 +609,12 @@
 		// 売上履歴
 		function dispSales(Tab) {
 			//var Json = JSON.stringify(Tab);
+
             Json = {root:Tab };
 
-			var xml = $.json2xml(Json);
-			var x = "<root><x202112><gName>第1開発本部第2開発部第1開発課</gName><plan>5485000</plan><actual>0</actual></x202112><x202203><gName>第1開発本部第2開発部第1開発課</gName><plan>9745000</plan><actual>0</actual></x202203></root> ";
-			
-			var xmlDoc = $.parseXML(x);
+            var xml = $.json2xml(Tab);
+		
+			var xmlDoc = $.parseXML(xml);
 			var a = $(xmlDoc).find("gName");
 
 

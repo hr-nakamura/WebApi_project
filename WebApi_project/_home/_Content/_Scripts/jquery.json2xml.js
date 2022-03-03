@@ -1,10 +1,11 @@
 ﻿ $.extend({ 
   // converts xml documents and xml text to json object
-  json2xml: function(jsonObj,config) {
+ json2xml: function (jsonObj, config) {
+	var JsonObj = (typeof (jsonObj["root"]) == "undefined" ? { root: jsonObj } : jsonObj);
 	config = config || {};
 	initConfigDefaults();
 	
-	var out = parseJSONObject(jsonObj);
+	var out = parseJSONObject(JsonObj);
 	return out;
 	function initConfigDefaults() {
 		if(config.escapeMode === undefined) {
@@ -13,6 +14,8 @@
 		config.attributePrefix = config.attributePrefix || "_";
 		config.arrayAccessForm = config.arrayAccessForm || "none";
 		config.emptyNodeForm = config.emptyNodeForm || "text";
+		config.arrayTagName = config.arrayTagName || "Array";
+		config.arrayValueName = config.arrayValueName || "num";
 		if(config.enableToStringFunc === undefined) {
 			config.enableToStringFunc = true; 
 		}
@@ -26,7 +29,7 @@
 		config.datetimeAccessFormPaths = config.datetimeAccessFormPaths || [];
 	}	
 		 function startTag(jsonObj, element, attrList, closed) {
-			 element = ($.isNumeric(element) ? "X-" + element : element);
+			 element = ($.isNumeric(element) ? config.arrayTagName.concat(" ",config.arrayValueName,"='",element,"'") : element);
 		var resultStr = "<"+ ( (jsonObj!=null && jsonObj.__prefix!=null)? (jsonObj.__prefix+":"):"") + element;
 		if(attrList!=null) {
 			for(var aidx = 0; aidx < attrList.length; aidx++) {
@@ -45,7 +48,7 @@
 	}
 	
 		 function endTag(jsonObj, elementName) {
-			 elementName = ($.isNumeric(elementName) ? "X-" + elementName : elementName);
+			 elementName = ($.isNumeric(elementName) ? config.arrayTagName : elementName);
 		return "</"+ (jsonObj.__prefix!=null? (jsonObj.__prefix+":"):"")+elementName+">";
 	}
 	
