@@ -87,7 +87,7 @@
         },
 
         //====================================================================
-        $.fn.transformNode1 = function (xslDoc) {
+        $.fn.transformNode = function (xslDoc) {
             try {
                 if (arguments.length === 2) {
                     if (typeof (arguments[1].params) == "object") {

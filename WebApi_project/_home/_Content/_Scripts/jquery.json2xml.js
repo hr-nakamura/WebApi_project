@@ -1,7 +1,7 @@
 ﻿ $.extend({ 
   // converts xml documents and xml text to json object
  json2xml: function (jsonObj, config) {
-	var JsonObj = (typeof (jsonObj["root"]) == "undefined" ? { root: jsonObj } : jsonObj);
+	var JsonObj = (jsonObj["root"] === undefined ? { root: jsonObj } : jsonObj);
 	config = config || {};
 	initConfigDefaults();
 	

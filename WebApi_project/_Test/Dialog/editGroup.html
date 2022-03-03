@@ -610,11 +610,10 @@
 		function dispSales(Tab) {
 			//var Json = JSON.stringify(Tab);
 
-            Json = {root:Tab };
-
-            var xml = $.json2xml(Tab);
-		
-			var xmlDoc = $.parseXML(xml);
+			var xml = $.json2xml(Tab);
+			var xsl = $.loadXMLDoc("xx.xsl");
+            var xmlDoc = $.parseXML(xml);
+            var xx = $.transformNode(xmlDoc,xsl);
 			var a = $(xmlDoc).find("gName");
 
 

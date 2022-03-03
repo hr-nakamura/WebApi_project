@@ -142,6 +142,7 @@
     <None Include="_Test\Dialog\data\group.json" />
     <Content Include="_Test\Dialog\showModalDialog.js" />
     <Content Include="_Test\Dialog\test.html" />
+    <Content Include="_Test\Dialog\xx.xsl" />
     <Content Include="_Test\History\HIstory.html" />
     <Content Include="_Test\QOSMIO\test.html" />
     <Content Include="_Test\Dialog\dialog.html" />
