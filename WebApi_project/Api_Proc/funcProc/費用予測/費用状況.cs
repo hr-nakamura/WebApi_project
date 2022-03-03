@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 
+using System.IO;
+using System.Text.Json;
+
 using DebugHost;
 
 namespace WebApi_project.hostProc
@@ -40,9 +43,9 @@ namespace WebApi_project.hostProc
         }
         public XmlDocument 費用状況(String Json)
         {
-            object o_json = json_費用状況(Json);
-
+            var o_json = json_費用状況(Json);
             JObject O_Top = Jsonl_Info(o_json);
+            //XmlDocument doc = JsonSerializer.Serialize(o_json, new JsonSerializerOptions { WriteIndented = true });
             JObject O_Inf = getStat();
 
             JObject Top = new JObject();

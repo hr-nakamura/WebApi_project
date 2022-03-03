@@ -159,8 +159,7 @@ namespace WebApi_project.hostProc
         {
             JObject O_Top = new JObject();
             ArrayList x = new ArrayList();
-            x[0] = (int)0;
-            CreateJson_Tree(x, O_Top, (JObject)Json);
+            //CreateJson_Tree(x, O_Top, (JObject)Json);
 
             JObject Top = new JObject();
             Top.Add("全体", O_Top);

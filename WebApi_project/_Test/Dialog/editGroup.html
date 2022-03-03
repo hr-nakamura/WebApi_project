@@ -613,7 +613,7 @@
 			var xml = $.json2xml(Tab);
 			var xsl = $.loadXMLDoc("xx.xsl");
             var xmlDoc = $.parseXML(xml);
-            var xx = $.transformNode(xmlDoc,xsl);
+            var xx = $(xmlDoc).transformNode(xsl);
 			var a = $(xmlDoc).find("gName");
 
 
