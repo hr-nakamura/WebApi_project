@@ -1,0 +1,52 @@
+﻿
+            JObject jsonObj = new JObject
+            {
+                ["root"] = (JObject)o_json
+            };
+            JObject ox1 = new JObject
+            {
+                ["root"] = new JObject
+                {
+                    ["abc"] = new JObject
+                    {
+                        ["xyz"] = new JObject
+                        {
+                            ["過去"] = new JArray
+                            {
+                                1,2,3
+                            }
+                ,
+                            ["現在"] = new JArray {
+                                7,8,9
+                            }
+
+                        }
+                    }
+                }
+
+            };
+            JObject ox2 = new JObject
+            {
+                ["root"] = new JObject
+                {
+                            ["過去"] = new JArray
+                            {
+                                1,2,3
+                            }  
+                            ,
+                            ["現在"] = new JArray {
+                                7,8,9
+                            }
+    
+                        }
+
+            };
+            string s_json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj);       // jsonをjson文字列に変換
+            //object j_json = Newtonsoft.Json.JsonConvert.DeserializeObject(s_json);      // json文字列をjsonへ変換
+
+            XmlDocument x = Newtonsoft.Json.JsonConvert.DeserializeXmlNode(s_json);     // json文字列をxmlへ変換
+
+
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(x.OuterXml);
+            string jsonText = JsonConvert.SerializeXmlNode(doc);

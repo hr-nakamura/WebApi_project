@@ -44,16 +44,13 @@ namespace WebApi_project.hostProc
         public XmlDocument 費用状況(String Json)
         {
             object o_json = json_費用状況(Json);
-            string s_json = Newtonsoft.Json.JsonConvert.SerializeObject(o_json);       // jsonをjson文字列に変換
-            object j_json = Newtonsoft.Json.JsonConvert.DeserializeObject(s_json);      // json文字列をjsonへ変換
-            XmlDocument x = Newtonsoft.Json.JsonConvert.DeserializeXmlNode(s_json);     // json文字列をxmlへ変換
 
-            JObject O_Top = Jsonl_Info(o_json);
+            //JObject O_Top = Jsonl_Info(o_json);
             JObject O_Inf = getStat();
 
             JObject Top = new JObject();
             Top.Add("Info", O_Inf);
-            Top.Add("Data", O_Top);
+            Top.Add("Data", (JObject)o_json);
 
             string jsonStr = JsonConvert.SerializeObject(Top);             // Json形式を文字列に
             XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr, "root");       // Json文字列をXML　objectに
