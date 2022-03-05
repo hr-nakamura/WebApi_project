@@ -45,7 +45,7 @@
             //object j_json = Newtonsoft.Json.JsonConvert.DeserializeObject(s_json);      // json文字列をjsonへ変換
 
             XmlDocument x = Newtonsoft.Json.JsonConvert.DeserializeXmlNode(s_json);     // json文字列をxmlへ変換
-
+            string jsonText = JsonConvert.SerializeXmlNode(doc);
 
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(x.OuterXml);

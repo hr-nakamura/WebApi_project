@@ -39,6 +39,11 @@ namespace WebApi_project.hostProc
             hostWeb h = new hostWeb();
             string xmlStr = h.GetRequest(url);
 
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xmlStr);
+            string jsonText = JsonConvert.SerializeXmlNode(doc);
+            object j_json = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonText);      // json文字列をjsonへ変換
+
             Tab.Add("Data", xmlStr);
 
             sw.Lap("変換");

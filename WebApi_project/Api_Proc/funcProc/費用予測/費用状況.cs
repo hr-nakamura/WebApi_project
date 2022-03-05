@@ -45,12 +45,12 @@ namespace WebApi_project.hostProc
         {
             object o_json = json_費用状況(Json);
 
-            //JObject O_Top = Jsonl_Info(o_json);
+            JObject O_Top = (JObject)o_json;
             JObject O_Inf = getStat();
 
             JObject Top = new JObject();
             Top.Add("Info", O_Inf);
-            Top.Add("Data", (JObject)o_json);
+            Top.Add("Data", O_Top);
 
             string jsonStr = JsonConvert.SerializeObject(Top);             // Json形式を文字列に
             XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr, "root");       // Json文字列をXML　objectに
