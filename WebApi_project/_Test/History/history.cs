@@ -95,6 +95,7 @@ namespace WebApi_project.hostProc
             DB = new SqlConnection(DB_connectString);
             string url_0, url_1, url_2, url_3, asp, date, name;
             s_url Tab = new s_url();
+            Dictionary<string, s_url> Tab1 = new Dictionary<string, s_url>();
             try
             {
                 Debug.noWrite("DB Open", DB_connectString);
@@ -122,60 +123,74 @@ namespace WebApi_project.hostProc
 
                 SqlDataReader reader = dbRead(DB, sql.ToString());
 
+                var myarray = new ArrayList() { };
                 while (reader.Read())
                 {
-                    var myarray = new ArrayList() { };
+                    var myarray1 = new ArrayList() { };
+
 
                     url_0 = (string)reader["url0"].ToString();
                     url_1 = (string)reader["url1"].ToString();
                     url_2 = (string)reader["url2"].ToString();
                     url_3 = (string)reader["url3"].ToString();
-                    asp = (string)reader["asp"].ToString();
+                    asp = (string)reader["asp"].ToString().Trim('\r');
                     date = (string)reader["date"].ToString();
                     name = (string)reader["name"].ToString();
+                    var work = new[] { url_0, url_1, url_2, url_3, asp };
+                    List<string> list = new List<string>(work);
+
+                    // 空要素(null)を削除
+                    list.RemoveAll(item => item == "");
+
+                    //asp = string.Join("/", list);
+
                     //Debug.Write(url_0, url_1, url_2, url_3, asp,date, name);
                     if (!Tab.Url.ContainsKey(url_0))
                     {
                         Tab.Url.Add(url_0, new s_url());
-                        Tab.Cnt += 1;
+                        //Tab.Cnt += 1;
 
                     }
                     else
                     {
                         myarray.Add(asp);
+                        //Debug.Write(url_0, url_1, url_2, url_3, myarray.Count.ToString(), asp);
                     }
                     if (url_1 != "" && !Tab.Url[url_0].Url.ContainsKey(url_1))
                     {
                         Tab.Url[url_0].Url.Add(url_1, new s_url());
-                        Tab.Url[url_0].Cnt += 1;
+                        //Tab.Url[url_0].Cnt += 1;
 
                     }
                     else
                     {
                         myarray.Add(asp);
+                        //Debug.Write(url_0, url_1, url_2, url_3, myarray.Count.ToString(), asp);
                     }
                     if (url_2 != "" && !Tab.Url[url_0].Url[url_1].Url.ContainsKey(url_2))
                     {
                         Tab.Url[url_0].Url[url_1].Url.Add(url_2, new s_url());
-                        Tab.Url[url_0].Url[url_1].Cnt += 1;
+                        //Tab.Url[url_0].Url[url_1].Cnt += 1;
 
                     }
                     else
                     {
                         myarray.Add(asp);
+                        //Debug.Write(url_0, url_1, url_2, url_3, myarray.Count.ToString(), asp);
 
                     }
                     if (url_3 != "" && !Tab.Url[url_0].Url[url_1].Url[url_2].Url.ContainsKey(url_3))
                     {
                         Tab.Url[url_0].Url[url_1].Url[url_2].Url.Add(url_3, new s_url());
-                        Tab.Url[url_0].Url[url_1].Url[url_2].Cnt += 1;
+                        //Tab.Url[url_0].Url[url_1].Url[url_2].Cnt += 1;
                     }
                     else
                     {
                         myarray.Add(asp);
+                        //Debug.Write(url_0, url_1, url_2, url_3, myarray.Count.ToString(), asp);
                     }
 
-                    Debug.Write(url_0, url_1, url_2, url_3, asp);
+                    //Debug.Write(asp, myarray.Count.ToString() );
 
                     //Tab.Url[url_0].Url[url_1].Url[url_2].Url[url_3].Cnt++;
 
@@ -206,7 +221,7 @@ namespace WebApi_project.hostProc
 
     class s_url
     {
-        public int Cnt { get; set; }
+        //public int Cnt { get; set; }
         // 許可情報
         public Dictionary<string ,s_url> Url { get; set; }
         public s_url()
