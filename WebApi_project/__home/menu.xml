@@ -26,9 +26,9 @@
     <menu name="viewXML" memo="" mode="url" value="/WebApi/project/__home/Util/viewXML/viewXML_Main.html"/>
   </menu>
 
-  <menu name="Method_XML" memo="" >
+  <menu name="関数(XML)" memo="" >
   </menu>
-  <menu name="Method_JSON" memo="" >
+  <menu name="関数(JSON)" memo="" >
   </menu>
 
 </root>
