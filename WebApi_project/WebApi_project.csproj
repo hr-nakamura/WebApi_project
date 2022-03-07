@@ -144,7 +144,7 @@
     <Content Include="_Test\Dialog\showModalDialog.js" />
     <Content Include="_Test\Dialog\test.html" />
     <Content Include="_Test\Dialog\xx.xsl" />
-    <Content Include="_Test\History\HIstory.html" />
+    <Content Include="Api_Proc\funcProc\History\HIstory.html" />
     <Content Include="_Test\QOSMIO\test.html" />
     <Content Include="_Test\Dialog\dialog.html" />
     <Content Include="_Test\TEST\ACEL.mdb" />
@@ -329,7 +329,7 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Api_Proc\funcProc\projectBBS\projectList.cs" />
-    <Compile Include="_Test\History\history.cs" />
+    <Compile Include="Api_Proc\funcProc\History\history.cs" />
     <Compile Include="_Test\QOSMIO\test.cs" />
     <Compile Include="Api_Proc\funcProc\売上予測\売上予実_分類.cs" />
     <Compile Include="Api_Proc\funcProc\売上予測\売上予実_新規.cs" />

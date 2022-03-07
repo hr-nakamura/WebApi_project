@@ -22,34 +22,25 @@ namespace WebApi_project.hostProc
 {
     partial class History : hostProc
     {
-        public XmlDocument projectTest(String Json)
+        public XmlDocument projectHistory(String Json)
         {
             Debug.Write("projectTest");
 
-            //var Tab = historyInfo("");
+            var o_json = json_projectHistory("");
 
 
+            string s_json = Newtonsoft.Json.JsonConvert.SerializeObject(o_json);       // jsonをjson文字列に変換
+           //object j_json = Newtonsoft.Json.JsonConvert.DeserializeObject(s_json);      // json文字列をjsonへ変換
+            XmlDocument doc = Newtonsoft.Json.JsonConvert.DeserializeXmlNode(s_json,"root");     // json文字列をxmlへ変換
 
 
-            //string jsonStr = JsonConvert.SerializeObject(Tab);             // Json形式を文字列に
-            //XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr, "root");       // Json文字列をXML　objectに
-
-            XmlDocument xmlDoc = new XmlDocument();
-            ////var xmlMain = xmlDoc.CreateProcessingInstruction("xml", "version='1.0' encoding='Shift_JIS'");
-            ////XmlElement root = xmlDoc.CreateElement("root");
-
-            XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
-            var comment = xmlDoc.CreateComment("json data");
-            xmlDoc.PrependChild(comment);
-            xmlDoc.PrependChild(declaration);
-
-            return (xmlDoc);
+            return (doc);
         }
-        public object json_projectTest(String Json)
+        public object json_projectHistory(String Json)
         {
             Debug.Write("json_projectTest");
 
-            var Tab1 = historyInfo("");
+            var historyTab = historyInfo("");
 
             string classPath = this.GetType().FullName;                                         //クラスパスの取得
             string className = this.GetType().Name;                                             //クラス名の取得
@@ -66,7 +57,7 @@ namespace WebApi_project.hostProc
             Tab.Add("LogPath", LogPath);
             Tab.Add("Debugger", (System.Diagnostics.Debugger.IsAttached ? "YES":"NO"));
 
-            return (Tab1);
+            return (historyTab);
 
 
         }
@@ -184,7 +175,7 @@ namespace WebApi_project.hostProc
                         myarray.Add(asp);
                     }
 
-                    //Debug.Write(url_0, url_1, url_2, url_3, asp);
+                    Debug.Write(url_0, url_1, url_2, url_3, asp);
 
                     //Tab.Url[url_0].Url[url_1].Url[url_2].Url[url_3].Cnt++;
 
