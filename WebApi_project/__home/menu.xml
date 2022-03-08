@@ -5,6 +5,11 @@
     <menu name="監査ページ(NEW)" memo="" mode="url" value="/WebApi/project/_home/manageMenu.html"/>
   </menu>
 
+  <menu name="関数(XML)" memo="" >
+  </menu>
+  <menu name="関数(JSON)" memo="" >
+  </menu>
+  
   <menu name="_Test-Dialog" memo="" >
     <menu name="editGroup" memo="" mode="url" value="/WebApi/project/_Test/Dialog/editGroup.html"/>
     <menu name="dialog" memo="" mode="url" value="/WebApi/project/_Test/Dialog/dialog.html"/>
@@ -26,10 +31,7 @@
     <menu name="viewXML" memo="" mode="url" value="/WebApi/project/__home/Util/viewXML/viewXML_Main.html"/>
   </menu>
 
-  <menu name="関数(XML)" memo="" >
-  </menu>
-  <menu name="関数(JSON)" memo="" >
-  </menu>
+
 
 </root>
 
