@@ -69,12 +69,11 @@ namespace WebApi_project.hostProc
             Tab.Add("Debugger", (System.Diagnostics.Debugger.IsAttached ? "YES" : "NO"));
 
             //            var Tab1 = readJson("http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp");
-            var Tab1 = readJson("http://localhost/Asp/Test/test.json");
-            //var Tab1 = readJson("test1.json");
+            object Tab1 = readJson("http://localhost/Asp/Test/test.json");
 
 
 
-            string js = LoadJsonText();
+            string js = LoadJsonText(Tab1);
             string s_json = Newtonsoft.Json.JsonConvert.SerializeObject(js);       // jsonをjson文字列に変換
 
             XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(js, "root");       // Json文字列をXML　objectに
@@ -83,26 +82,32 @@ namespace WebApi_project.hostProc
             object jj = JsonConvert.DeserializeObject(js);
 
 
-            return (Tab1);
+            return (jj);
 
 
         }
 
-    private string LoadJsonText()
+    private string LoadJsonText(object oJ)
     {
+    foreach(var xx1 in (JObject)oJ)
+            {
+                foreach (var xx2 in xx1.Key)
+                {
+                    var aa = 1;
+                }
+            }
 
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load("<root><yymm yymm = '202001'>abc</yymm><yymm yymm = '202002'>abc</yymm><yymm yymm = '202003'>abc</yymm></root> ");
-            string s = JsonConvert.SerializeXmlNode(xmlDoc);
-
-            StringBuilder json = new StringBuilder();
+        StringBuilder json = new StringBuilder();
         json.AppendLine("{");
-            json.AppendLine(" 'yymm': [");
-            json.AppendLine(" {'_yymm':111,'__text':'123456'},");
-            json.AppendLine(" {'_yymm':222,'__text':'123456'},");
-            json.AppendLine(" {'_yymm':333,'__text':'123456'}");
-            json.AppendLine(" ]");
-            json.AppendLine("}");
+        json.AppendLine(" 'yymm': [");
+        for( var i = 0; i < 12; i++)
+        {
+            json.AppendLine(" {'@yymm':111,'#text':'123456'},");
+            json.AppendLine(" {'@yymm':222,'#text':'123456'},");
+            json.AppendLine(" {'@yymm':333,'#text':'123456'}");
+        }
+        json.AppendLine(" ]");
+        json.AppendLine("}");
 
         return json.ToString();
 
