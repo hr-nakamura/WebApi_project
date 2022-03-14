@@ -97,19 +97,19 @@ namespace WebApi_project.hostProc
                 }
             }
 
-        StringBuilder json = new StringBuilder();
-        json.AppendLine("{");
-        json.AppendLine(" 'yymm': [");
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine("{");
+        sb.AppendLine(" 'yymm': [");
         for( var i = 0; i < 12; i++)
         {
-            json.AppendLine(" {'@yymm':111,'#text':'123456'},");
-            json.AppendLine(" {'@yymm':222,'#text':'123456'},");
-            json.AppendLine(" {'@yymm':333,'#text':'123456'}");
+            sb.AppendLine(" {'@yymm':111,'#text':'123456'},");
+            sb.AppendLine(" {'@yymm':222,'#text':'123456'},");
+            sb.AppendLine(" {'@yymm':333,'#text':'123456'}");
         }
-        json.AppendLine(" ]");
-        json.AppendLine("}");
+        sb.AppendLine(" ]");
+        sb.AppendLine("}");
 
-        return json.ToString();
+        return sb.ToString();
 
     }
     int yymmAdd(int yymm, int mCnt)
