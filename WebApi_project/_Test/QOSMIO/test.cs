@@ -27,16 +27,16 @@ namespace WebApi_project.hostProc
 
             var Tab = json_projectTest("");
 
-            JObject O_Top = Jsonl_Info(Tab);            // hostProc
+            //JObject O_Top = Jsonl_Info(Tab);            // hostProc
 
-            JObject O_Inf = getStat();
+            //JObject O_Inf = getStat();
 
-            JObject Top = new JObject();
-            Top.Add("Info", O_Inf);
-            Top.Add("Data", O_Top);
+            //JObject Top = new JObject();
+            //Top.Add("Info", O_Inf);
+            //Top.Add("Data", O_Top);
 
 
-            string jsonStr = JsonConvert.SerializeObject(Top);             // Json形式を文字列に
+            string jsonStr = JsonConvert.SerializeObject(Tab);             // Json形式を文字列に
             XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr, "root");       // Json文字列をXML　objectに
 
             ////XmlDocument xmlDoc = new XmlDocument();
@@ -66,15 +66,44 @@ namespace WebApi_project.hostProc
             Tab.Add("methodName", methodName);
             Tab.Add("DB_Conn", DB_connectString);
             Tab.Add("LogPath", LogPath);
-            Tab.Add("Debugger", (System.Diagnostics.Debugger.IsAttached ? "YES":"NO"));
+            Tab.Add("Debugger", (System.Diagnostics.Debugger.IsAttached ? "YES" : "NO"));
 
             //            var Tab1 = readJson("http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp");
-            //var Tab1 = readJson("http://localhost/Asp/Test/test.json");
-            return (Tab);
+            var Tab1 = readJson("http://localhost/Asp/Test/test.json");
+            //var Tab1 = readJson("test1.json");
+
+
+
+            string js = LoadJsonText();
+            string s_json = Newtonsoft.Json.JsonConvert.SerializeObject(js);       // jsonをjson文字列に変換
+
+            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(js, "root");       // Json文字列をXML　objectに
+            XmlDocument doc = Newtonsoft.Json.JsonConvert.DeserializeXmlNode(js, "root");     // json文字列をxmlへ変換
+
+            object jj = JsonConvert.DeserializeObject(js);
+
+
+            return (Tab1);
 
 
         }
-        int yymmAdd(int yymm, int mCnt)
+
+
+    private string LoadJsonText()
+    {
+        StringBuilder json = new StringBuilder();
+        json.AppendLine("{");
+            json.AppendLine(" 'yymm': [");
+            json.AppendLine(" {'_yymm':111,'__text':'123456'},");
+            json.AppendLine(" {'_yymm':222,'__text':'123456'},");
+            json.AppendLine(" {'_yymm':333,'__text':'123456'}");
+            json.AppendLine(" ]");
+            json.AppendLine("}");
+
+        return json.ToString();
+
+    }
+    int yymmAdd(int yymm, int mCnt)
         {
             int yy = yymm / 100;
             int mm = yymm % 100;
