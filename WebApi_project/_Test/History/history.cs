@@ -61,6 +61,7 @@ namespace WebApi_project.hostProc
 
 
         }
+  
         int yymmAdd(int yymm, int mCnt)
         {
             int yy = yymm / 100;

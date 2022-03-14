@@ -88,10 +88,14 @@ namespace WebApi_project.hostProc
 
         }
 
-
     private string LoadJsonText()
     {
-        StringBuilder json = new StringBuilder();
+
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load("<root><yymm yymm = '202001'>abc</yymm><yymm yymm = '202002'>abc</yymm><yymm yymm = '202003'>abc</yymm></root> ");
+            string s = JsonConvert.SerializeXmlNode(xmlDoc);
+
+            StringBuilder json = new StringBuilder();
         json.AppendLine("{");
             json.AppendLine(" 'yymm': [");
             json.AppendLine(" {'_yymm':111,'__text':'123456'},");
