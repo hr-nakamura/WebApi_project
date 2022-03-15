@@ -72,42 +72,42 @@ namespace WebApi_project.hostProc
             JObject Tab1 = readJson("http://localhost/Asp/Test/test.json");
 
 
-            var oJ = Tab1["販管費"]["EMG間費用"]["過去"];
-            string js = LoadJsonText(oJ);
+            object oJ = Tab1["販管費"]["EMG間費用"]["過去"];
+            object js = LoadJsonText(oJ,"yymm");
 
+            Tab1["販管費"]["EMG間費用"]["過去"] = Tab1["販管費"]["その他"];
 
             string s_json = Newtonsoft.Json.JsonConvert.SerializeObject(js);       // jsonをjson文字列に変換
 
-            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(js, "root");       // Json文字列をXML　objectに
-            XmlDocument doc = Newtonsoft.Json.JsonConvert.DeserializeXmlNode(js, "root");     // json文字列をxmlへ変換
+            //XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(js, "root");       // Json文字列をXML　objectに
+            //XmlDocument doc = Newtonsoft.Json.JsonConvert.DeserializeXmlNode(js, "root");     // json文字列をxmlへ変換
 
-            object jj = JsonConvert.DeserializeObject(js);
+            //object jj = JsonConvert.DeserializeObject(js);
 
 
-            return (jj);
+            return (Tab1);
 
             
         }
 
-    private string LoadJsonText(object oJ)
+    private object LoadJsonText(object oJ,string tag)
     {
-            string item = "yymm";
             List<string> work = new List<string>();
             int i = 0;
             foreach (var value in (JArray)oJ)
             {
-                work.Add(" {'@"+item+"':"+ i++.ToString()+",'#text':'"+ value.ToString()+"'}");
+                work.Add(" {'@"+ tag + "':"+ i++.ToString()+",'#text':'"+ value.ToString()+"'}");
             }
 
 
             StringBuilder sb = new StringBuilder();
         sb.AppendLine("{");
-        sb.AppendLine(" '"+item+"': [");
+        sb.AppendLine(" '"+ tag + "': [");
         sb.AppendLine(String.Join(",",work));
         sb.AppendLine(" ]");
         sb.AppendLine("}");
 
-        return sb.ToString();
+        return JsonConvert.DeserializeObject(sb.ToString());
 
     }
     int yymmAdd(int yymm, int mCnt)
