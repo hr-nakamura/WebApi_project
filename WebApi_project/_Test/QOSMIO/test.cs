@@ -69,11 +69,13 @@ namespace WebApi_project.hostProc
             Tab.Add("Debugger", (System.Diagnostics.Debugger.IsAttached ? "YES" : "NO"));
 
             //            var Tab1 = readJson("http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp");
-            object Tab1 = readJson("http://localhost/Asp/Test/test.json");
+            JObject Tab1 = readJson("http://localhost/Asp/Test/test.json");
 
 
+            var oJ = Tab1["販管費"]["EMG間費用"]["過去"];
+            string js = LoadJsonText(oJ);
 
-            string js = LoadJsonText(Tab1);
+
             string s_json = Newtonsoft.Json.JsonConvert.SerializeObject(js);       // jsonをjson文字列に変換
 
             XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(js, "root");       // Json文字列をXML　objectに
@@ -84,28 +86,24 @@ namespace WebApi_project.hostProc
 
             return (jj);
 
-
+            
         }
 
     private string LoadJsonText(object oJ)
     {
-    foreach(var xx1 in (JObject)oJ)
+            string item = "yymm";
+            List<string> work = new List<string>();
+            int i = 0;
+            foreach (var value in (JArray)oJ)
             {
-                foreach (var xx2 in xx1.Key)
-                {
-                    var aa = 1;
-                }
+                work.Add(" {'@"+item+"':"+ i++.ToString()+",'#text':'"+ value.ToString()+"'}");
             }
 
-        StringBuilder sb = new StringBuilder();
+
+            StringBuilder sb = new StringBuilder();
         sb.AppendLine("{");
-        sb.AppendLine(" 'yymm': [");
-        for( var i = 0; i < 12; i++)
-        {
-            sb.AppendLine(" {'@yymm':111,'#text':'123456'},");
-            sb.AppendLine(" {'@yymm':222,'#text':'123456'},");
-            sb.AppendLine(" {'@yymm':333,'#text':'123456'}");
-        }
+        sb.AppendLine(" '"+item+"': [");
+        sb.AppendLine(String.Join(",",work));
         sb.AppendLine(" ]");
         sb.AppendLine("}");
 
@@ -139,14 +137,14 @@ namespace WebApi_project.hostProc
 
 
 
-        object readJson(string url1)
+        JObject readJson(string url1)
         {
             //string url = "http://localhost/Asp/Test/test.json";
             hostWeb h = new hostWeb();
             string JsonStr = h.GetRequest(url1);
 
-            //object x = JObject.Parse(JsonStr);                              // 文字列をJson形式に
-            object Json = JsonConvert.DeserializeObject(JsonStr);
+            JObject Json = JObject.Parse(JsonStr);                              // 文字列をJson形式に
+            //JObject Json = JsonConvert.DeserializeObject(JsonStr);
 
             return (Json);
         }
