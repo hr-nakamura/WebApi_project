@@ -69,15 +69,37 @@ namespace WebApi_project.hostProc
             Tab.Add("Debugger", (System.Diagnostics.Debugger.IsAttached ? "YES" : "NO"));
 
             //            var Tab1 = readJson("http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp");
-            JObject Tab1 = readJson("http://localhost/Asp/Test/test.json");
+            JObject oJson = readJson("http://localhost/Asp/Test/test.json");
+            string s_json = Newtonsoft.Json.JsonConvert.SerializeObject(oJson);       // jsonをjson文字列に変換
 
 
-            object oJ = Tab1["販管費"]["EMG間費用"]["過去"];
-            object js = LoadJsonText(oJ,"yymm");
+            foreach ( var x1 in oJson)
+            {
+                var Key1 = x1.Key;
+                JObject Value1 = (JObject)x1.Value;
+                foreach (var x2 in Value1)
+                {
+                    var Key2 = x2.Key;
+                    JObject Value2 = (JObject)x2.Value;
 
-            Tab1["販管費"]["EMG間費用"]["過去"] = Tab1["販管費"]["その他"];
+                    foreach (var x3 in (JObject)Value2)
+                    {
+                        var Key3 = x3.Key;
+                        var Value3 = x3.Value;
+                        JObject Value4 = (JObject)JsonArrayConvert(Value3, "月", "m");
+                        oJson[Key1][Key2][Key3] = Value4;
 
-            string s_json = Newtonsoft.Json.JsonConvert.SerializeObject(js);       // jsonをjson文字列に変換
+                    }
+                }
+            }
+
+
+            //object oJ = oJson["販管費"]["EMG間費用"]["過去"];
+            //JObject js = JsonArrayConvert(oJ,"月","m");
+
+            //oJson["販管費"]["EMG間費用"]["過去"] = js;
+
+            //string s_json = Newtonsoft.Json.JsonConvert.SerializeObject(js);       // jsonをjson文字列に変換
 
             //XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(js, "root");       // Json文字列をXML　objectに
             //XmlDocument doc = Newtonsoft.Json.JsonConvert.DeserializeXmlNode(js, "root");     // json文字列をxmlへ変換
@@ -85,29 +107,30 @@ namespace WebApi_project.hostProc
             //object jj = JsonConvert.DeserializeObject(js);
 
 
-            return (Tab1);
+            return (oJson);
 
             
         }
 
-    private object LoadJsonText(object oJ,string tag)
+    private JObject JsonArrayConvert(object oJ,string tagName,string atrName)
     {
-            List<string> work = new List<string>();
-            int i = 0;
-            foreach (var value in (JArray)oJ)
-            {
-                work.Add(" {'@"+ tag + "':"+ i++.ToString()+",'#text':'"+ value.ToString()+"'}");
-            }
+        List<string> work = new List<string>();
+        int i = 0;
+        foreach (var value in (JArray)oJ)
+        {
+            work.Add(" {'@"+ atrName + "':"+ i++.ToString()+",'#text':'"+ value.ToString()+"'}");
+        }
 
-
-            StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         sb.AppendLine("{");
-        sb.AppendLine(" '"+ tag + "': [");
+        sb.AppendLine(" '"+ tagName + "': [");
         sb.AppendLine(String.Join(",",work));
         sb.AppendLine(" ]");
         sb.AppendLine("}");
 
-        return JsonConvert.DeserializeObject(sb.ToString());
+        JObject Json = (JObject)JsonConvert.DeserializeObject(sb.ToString());
+
+        return (Json);
 
     }
     int yymmAdd(int yymm, int mCnt)
