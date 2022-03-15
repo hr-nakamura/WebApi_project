@@ -167,8 +167,8 @@ namespace WebApi_project.hostProc
             string JsonStr = h.GetRequest(url1);
 
             string path = @"E:\GitHub\hr-nakamura\WebApi_project\WebApi_project\_Test\QOSMIO\";
-            path = @"D:\GitHub\hr-nakamura\WebApi_project\WebApi_project\_Test\QOSMIO\";
-            string url = path + "test.json";
+            //path = @"D:\GitHub\hr-nakamura\WebApi_project\WebApi_project\_Test\QOSMIO\";
+            string url = path + "sales.json";
              JsonStr = System.IO.File.ReadAllText(url);
 
             JObject Json = JObject.Parse(JsonStr);                              // 文字列をJson形式に
