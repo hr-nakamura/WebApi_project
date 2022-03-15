@@ -166,6 +166,10 @@ namespace WebApi_project.hostProc
             hostWeb h = new hostWeb();
             string JsonStr = h.GetRequest(url1);
 
+            string path = @"E:\GitHub\hr-nakamura\WebApi_project\WebApi_project\_Test\QOSMIO\";
+            string url = path + "test.json";
+            string jsonStr = System.IO.File.ReadAllText(url);
+
             JObject Json = JObject.Parse(JsonStr);                              // 文字列をJson形式に
             //JObject Json = JsonConvert.DeserializeObject(JsonStr);
 
