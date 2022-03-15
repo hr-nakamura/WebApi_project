@@ -310,6 +310,7 @@
     <Content Include="_home\_Content\_Scripts\jquery-3.6.0.js" />
     <Content Include="_Test\Dialog\data\sales - コピー.json" />
     <Content Include="_Test\QOSMIO\test1.json" />
+    <Content Include="_Test\QOSMIO\sales.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Data\iniFile.cs" />
