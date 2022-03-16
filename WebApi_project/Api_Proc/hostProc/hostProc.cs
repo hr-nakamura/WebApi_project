@@ -344,7 +344,7 @@ namespace WebApi_project.hostProc
                 };
             List<string> methdName_X = new List<string>()
                 {
-                "Entry","Json2Xml","methodList"
+                "Entry","Json2Xml","JsonToXml","methodList"
                 };
 
             // 指定した名前空間のクラスをすべて取得
