@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Text.RegularExpressions;
 
-namespace WebApi_project._home.debug
+namespace WebApi_project.__menu.debug
 {
     /// <summary>
     /// debug の概要の説明です

@@ -5,7 +5,7 @@
         http.send();
         return http.status != 404;
     }
-    var debugUrl = "/WebApi/project/__home/debug/debug.ashx";     // + para.join("&");
+    var debugUrl = "/WebApi/project/__menu/debug/debug.ashx";     // + para.join("&");
     var fileName = getFileName();
     if (typeof (window.debugTab) === "undefined") window.debugTab = {};
     if (typeof (window.debugTab[fileName]) === "undefined") window.debugTab[fileName] = 0;

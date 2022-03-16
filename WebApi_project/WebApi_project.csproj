@@ -140,21 +140,12 @@
     <Content Include="_Test\Dialog\data\corp.json" />
     <Content Include="_Test\Dialog\data\sales.json" />
     <Content Include="_home\_Content\_Scripts\jquery.json2xml.js" />
-    <Content Include="__home\Util\viewJson-edge\jquery.json-viewer.css" />
-    <Content Include="__home\Util\viewJson-edge\jquery.json-viewer.js" />
-    <Content Include="__home\Util\viewJson-edge\viewJson.html" />
-    <Content Include="__home\Util\viewJson\jquery.jsonview.css" />
-    <Content Include="__home\Util\viewJson\jquery.jsonview.js" />
-    <Content Include="__home\Util\viewJson\viewJson.html" />
-    <Content Include="__home\Util\viewValue.html" />
-    <Content Include="__home\Util\viewXML\menu.xml" />
-    <Content Include="__home\Util\viewXML\simpleXML.css" />
-    <Content Include="__home\Util\viewXML\simpleXML.js" />
-    <Content Include="__home\Util\viewXML\viewXML.html" />
-    <Content Include="__home\Util\viewXML\viewXmlWindow.js" />
-    <Content Include="__home\Util\viewXML\viewXML_Main.html" />
+    <Content Include="__menu\debug\jquery.my.debug.js" />
     <Content Include="__menu\images\bg00.gif" />
     <Content Include="__menu\images\EM.png" />
+    <Content Include="__menu\index.html" />
+    <Content Include="__menu\memo.txt" />
+    <Content Include="__menu\menu.xml" />
     <Content Include="__menu\Scripts\cmn.js" />
     <Content Include="__menu\Scripts\encoding.js" />
     <Content Include="__menu\Scripts\jquery-1.9.1.min.js" />
@@ -292,31 +283,12 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config" />
     <Content Include="_Test\QOSMIO\qosmio.html" />
-    <Content Include="__home\debug\jquery.my.debug.js" />
-    <Content Include="__home\memo.txt" />
-    <Content Include="__home\Scripts\jquery-3.6.0.js" />
-    <Content Include="__home\Scripts\jquery-3.6.0.min.js" />
     <Content Include="__menu\Util\viewXML\menu.xml" />
     <Content Include="__menu\Util\viewXML\viewXML_Main.html" />
     <Content Include="__menu\work\index5.html" />
-    <Content Include="__home\index.html" />
     <Content Include="__menu\work\index_1.html" />
     <Content Include="__menu\work\index_2.html" />
     <Content Include="__menu\work\memo.txt" />
-    <Content Include="__home\menu.xml" />
-    <Content Include="__home\Scripts\cmn.js" />
-    <Content Include="__home\Scripts\encoding.js" />
-    <Content Include="__home\Scripts\jquery-1.9.1.min.js" />
-    <Content Include="__home\Scripts\jquery.Cookie.js" />
-    <Content Include="__home\Scripts\jquery.kansa.Query.js" />
-    <Content Include="__home\Scripts\jquery.mnmenu.js" />
-    <Content Include="__home\Scripts\jquery.my.frame.js" />
-    <Content Include="__home\Scripts\jquery.my.mnmenu.js" />
-    <Content Include="__home\Scripts\jquery.my.mymenu.js" />
-    <Content Include="__home\Scripts\json2.js" />
-    <Content Include="__home\Scripts\my.mnmenu.css" />
-    <Content Include="__home\Scripts\superfish.css" />
-    <Content Include="__home\Scripts\superfish.js" />
     <Content Include="__menu\Util\viewJson-edge\jquery.json-viewer.css" />
     <Content Include="__menu\Util\viewJson-edge\viewJson.html" />
     <Content Include="__menu\Util\viewJson\viewJson.html" />
@@ -327,11 +299,9 @@
     <Content Include="__menu\Util\viewXML\viewXML.html" />
     <Content Include="__menu\Util\viewXML\viewXmlWindow.js" />
     <Content Include="__menu\Util\viewValue.html" />
-    <Content Include="__home\debug\debug.ashx" />
     <Content Include="__menu\work\ajax.xlsx" />
     <Content Include="__menu\Util\viewJson-edge\jquery.json-viewer.js" />
     <Content Include="__menu\work\json.json" />
-    <Content Include="__home\Scripts\jquery.my.webapi.js" />
     <Content Include="__menu\work\projectInfoXML.xml" />
     <Content Include="__menu\work\projectInfoXML.xsl" />
     <Content Include="__menu\work\WebApi_project_構成.xlsx" />
@@ -342,6 +312,7 @@
     <Content Include="_Test\Dialog\data\sales - コピー.json" />
     <Content Include="_Test\QOSMIO\test1.json" />
     <Content Include="_Test\QOSMIO\sales.json" />
+    <Content Include="__menu\debug\debug.ashx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Data\iniFile.cs" />
@@ -379,10 +350,10 @@
     <Compile Include="Models\group.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="_Test\QOSMIO\test2.cs" />
-    <Compile Include="__home\debug\debug.ashx.cs">
+    <Compile Include="__menu\debug\debug.ashx.cs">
       <DependentUpon>debug.ashx</DependentUpon>
     </Compile>
-    <Compile Include="__home\debug\debug.cs" />
+    <Compile Include="__menu\debug\debug.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\system.ini" />
