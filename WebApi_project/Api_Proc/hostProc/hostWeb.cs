@@ -200,10 +200,20 @@ namespace WebApi_project.hostProc
         }
         public string GetRequest(string url)
         {
+            return (GetRequest(url, "utf-8"));          // 指定がないときは「utf-8」
+        }
+        public string GetRequest(string url, string encode)
+        {
             HttpWebRequest request = null;
             HttpWebResponse response = null;
             StreamReader streamReader = null;
             string returnBuff = null;
+            Encoding Encode = Encoding.GetEncoding("utf-8");
+            if (encode != null)
+            {
+                Encode = System.Text.Encoding.GetEncoding(encode);
+            }
+
             try
             {
                 // WebRequest作成
@@ -223,7 +233,7 @@ namespace WebApi_project.hostProc
                     Stream responseStream = response.GetResponseStream();
 
                     // 応答データ受信用StreamReaderを取得
-                    streamReader = new StreamReader(responseStream,System.Text.Encoding.GetEncoding("shift_jis"));
+                    streamReader = new StreamReader(responseStream,Encode);
 
                     // 応答データ取得
                     returnBuff = streamReader.ReadToEnd();

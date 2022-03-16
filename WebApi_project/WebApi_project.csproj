@@ -32,6 +32,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -145,6 +146,7 @@
     <Content Include="_Test\Dialog\test.html" />
     <Content Include="_Test\Dialog\xx.xsl" />
     <Content Include="_Test\History\HIstory.html" />
+    <Content Include="_Test\QOSMIO\memo.txt" />
     <Content Include="_Test\QOSMIO\test.html" />
     <Content Include="_Test\Dialog\dialog.html" />
     <Content Include="_Test\TEST\ACEL.mdb" />

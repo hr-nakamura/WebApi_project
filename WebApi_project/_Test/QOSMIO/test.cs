@@ -27,21 +27,8 @@ namespace WebApi_project.hostProc
 
             var Tab = json_projectTest("");
 
-            //JObject O_Top = Jsonl_Info(Tab);            // hostProc
-
-            //JObject O_Inf = getStat();
-
-            //JObject Top = new JObject();
-            //Top.Add("Info", O_Inf);
-            //Top.Add("Data", O_Top);
-
-
             string jsonStr = JsonConvert.SerializeObject(Tab);             // Json形式を文字列に
             XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr, "root");       // Json文字列をXML　objectに
-
-            ////XmlDocument xmlDoc = new XmlDocument();
-            ////var xmlMain = xmlDoc.CreateProcessingInstruction("xml", "version='1.0' encoding='Shift_JIS'");
-            ////XmlElement root = xmlDoc.CreateElement("root");
 
             XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
             var comment = xmlDoc.CreateComment("json data");
@@ -53,70 +40,41 @@ namespace WebApi_project.hostProc
         public object json_projectTest(String Json)
         {
             Debug.Write("json_projectTest");
-            string classPath = this.GetType().FullName;                                         //クラスパスの取得
-            string className = this.GetType().Name;                                             //クラス名の取得
-            string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;           //メソッド名の取得
-            //Debug.WriteLog(classPath);
-
-            string mName = Environment.MachineName;
-
-            Dictionary<string, string> Tab = new Dictionary<string, string>();
-            Tab.Add("mName", mName);
-            Tab.Add("className", className);
-            Tab.Add("methodName", methodName);
-            Tab.Add("DB_Conn", DB_connectString);
-            Tab.Add("LogPath", LogPath);
-            Tab.Add("Debugger", (System.Diagnostics.Debugger.IsAttached ? "YES" : "NO"));
 
             //            var Tab1 = readJson("http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp");
             JObject oJson = readJson("http://localhost/Asp/Test/test.json");
             string s_json = Newtonsoft.Json.JsonConvert.SerializeObject(oJson);       // jsonをjson文字列に変換
 
-
-            foreach ( var x1 in oJson)
-            {
-                var Key1 = x1.Key;
-                JObject Value1 = (JObject)x1.Value;
-                foreach (var x2 in Value1)
-                {
-                    var Key2 = x2.Key;
-                    JObject Value2 = (JObject)x2.Value;
-
-                    foreach (var x3 in (JObject)Value2)
-                    {
-                        var Key3 = x3.Key;
-                        var Value3 = x3.Value;
-                        JObject Value4 = (JObject)JsonArrayConvert(Value3, "月", "m");
-                        oJson[Key1][Key2][Key3] = Value4;
-
-                    }
-                }
-            }
-
-
-            //object oJ = oJson["販管費"]["EMG間費用"]["過去"];
-            //JObject js = JsonArrayConvert(oJ,"月","m");
-
-            //oJson["販管費"]["EMG間費用"]["過去"] = js;
-
-            //string s_json = Newtonsoft.Json.JsonConvert.SerializeObject(js);       // jsonをjson文字列に変換
-
-            //XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(js, "root");       // Json文字列をXML　objectに
-            //XmlDocument doc = Newtonsoft.Json.JsonConvert.DeserializeXmlNode(js, "root");     // json文字列をxmlへ変換
-
-            //object jj = JsonConvert.DeserializeObject(js);
-
+            ArrayConvert(ref oJson, "月", "m");
 
             return (oJson);
-
-            
         }
 
-    private JObject JsonArrayConvert(object oJ,string tagName,string atrName)
-    {
-        List<string> work = new List<string>();
+    public void ArrayConvert(ref JObject oJ, string tagName, string atrName)
+        {
+            foreach (var x in (JObject)oJ)
+            {
+                var Key = x.Key;
+                var Value = x.Value;
+                if( Value.Type.ToString() == "Object")
+                {
+                    var target_Value = (JObject)oJ[Key];
+                    ArrayConvert(ref target_Value, tagName, atrName);
+                }
+                else if(Value.Type.ToString() == "Array")
+                {
+                    oJ[Key] = (JObject)JsonArrayConvert(Value, tagName, atrName);
+                }
+                else
+                {
+                }
+            }
+        }
+    private JObject JsonArrayConvert(object oJ, string tagName, string atrName)
+        {
+            List<string> work = new List<string>();
         int i = 0;
-        foreach (var value in (JArray)oJ)
+        foreach (var value in (JArray) oJ)
         {
             work.Add(" {'@"+ atrName + "':"+ i++.ToString()+",'#text':'"+ value.ToString()+"'}");
         }
@@ -129,7 +87,6 @@ namespace WebApi_project.hostProc
         sb.AppendLine("}");
 
         JObject Json = (JObject)JsonConvert.DeserializeObject(sb.ToString());
-
         return (Json);
 
     }
@@ -169,7 +126,7 @@ namespace WebApi_project.hostProc
             string path = @"E:\GitHub\hr-nakamura\WebApi_project\WebApi_project\_Test\QOSMIO\";
             //path = @"D:\GitHub\hr-nakamura\WebApi_project\WebApi_project\_Test\QOSMIO\";
             string url = path + "sales.json";
-             JsonStr = System.IO.File.ReadAllText(url);
+             //JsonStr = System.IO.File.ReadAllText(url);
 
             JObject Json = JObject.Parse(JsonStr);                              // 文字列をJson形式に
             //JObject Json = JsonConvert.DeserializeObject(JsonStr);
