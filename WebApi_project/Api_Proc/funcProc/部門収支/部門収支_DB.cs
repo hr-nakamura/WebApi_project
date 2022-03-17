@@ -17,7 +17,7 @@ namespace WebApi_project.hostProc
 {
 	partial class 部門収支
 	{
-		public object json_groupPlan(cmd_部門収支 cmd, Dictionary<string, dynamic> Tab)
+		private object json_groupPlan(cmd_部門収支 cmd, Dictionary<string, dynamic> Tab)
 		{
 			List<db_account> dataTab = new List<db_account>();
 
@@ -183,7 +183,7 @@ namespace WebApi_project.hostProc
 			return (dataTab);
 		}
 
-		public object json_uriageYosoku(cmd_部門収支 cmd, Dictionary<string, dynamic> Tab)
+		private object json_uriageYosoku(cmd_部門収支 cmd, Dictionary<string, dynamic> Tab)
 		{
 			List<db_account> dataTab = new List<db_account>();
 
@@ -342,7 +342,7 @@ namespace WebApi_project.hostProc
 			return (dataTab);
 		}
 
-		public object json_uriageActual(cmd_部門収支 cmd, Dictionary<string, dynamic> Tab)
+		private object json_uriageActual(cmd_部門収支 cmd, Dictionary<string, dynamic> Tab)
 		{
 			List<db_account> dataTab = new List<db_account>();
 
@@ -474,7 +474,7 @@ namespace WebApi_project.hostProc
 			return (dataTab);
 		}
 
-		public object json_accountActual(cmd_部門収支 cmd, Dictionary<string, dynamic> Tab)
+		private object json_accountActual(cmd_部門収支 cmd, Dictionary<string, dynamic> Tab)
 		{
 			List<db_account> dataTab = new List<db_account>();
 
@@ -673,7 +673,7 @@ namespace WebApi_project.hostProc
 		}
 
 
-		public object json_accountCost(cmd_部門収支 cmd, Dictionary<string, dynamic> Tab)
+		private object json_accountCost(cmd_部門収支 cmd, Dictionary<string, dynamic> Tab)
 		{
 			List<db_account> dataTab = new List<db_account>();
 
@@ -849,7 +849,7 @@ namespace WebApi_project.hostProc
 			return (dataTab);
 		}
 
-		public object json_salesCost(cmd_部門収支 cmd, Dictionary<string, dynamic> Tab)
+		private object json_salesCost(cmd_部門収支 cmd, Dictionary<string, dynamic> Tab)
 		{
 			List<db_account> dataTab = new List<db_account>();
 
@@ -987,7 +987,7 @@ namespace WebApi_project.hostProc
 			return (dataTab);
 		}
 
-		public object json_groupCost(cmd_部門収支 cmd, Dictionary<string, dynamic> Tab)
+		private object json_groupCost(cmd_部門収支 cmd, Dictionary<string, dynamic> Tab)
 		{
 			List<db_account> dataTab = new List<db_account>();
 

@@ -39,7 +39,7 @@ namespace WebApi_project.hostProc
 
 	partial class 部門収支 : hostProc
     {
-		public XmlDocument 部門収支_XML(String Json)
+		private XmlDocument 部門収支_XML(String Json)
 		{
 			if (Json == "{}")
 			{
@@ -200,7 +200,7 @@ namespace WebApi_project.hostProc
             }
 			return (xmlDoc);
 		}
-		public object json_部門収支_XML(String Json)
+		private object json_部門収支_XML(String Json)
 		{
 
 			Dictionary<string, dynamic> Tab = new Dictionary<string, dynamic>();
