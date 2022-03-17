@@ -35,16 +35,16 @@ namespace WebApi_project.hostProc
             sw.Start("計測開始"); // 計測開始
             //var Tab = x();
 
-            string url = "http://localhost/Project/要員情報/要員一覧/xml/要員一覧_XML.asp?year=2021";
+            string url = "http://kansa.in.eandm.co.jp/Project/要員情報/要員一覧/xml/要員一覧_XML.asp?year=2022";
             hostWeb h = new hostWeb();
-            string xmlStr = h.GetRequest(url);
+            string xmlStr = h.GetRequest(url, "Shift_JIS");
 
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(xmlStr);
             string jsonText = JsonConvert.SerializeXmlNode(doc);
             object j_json = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonText);      // json文字列をjsonへ変換
 
-            Tab.Add("Data", xmlStr);
+            Tab.Add("Data", j_json);
 
             sw.Lap("変換");
 
@@ -58,9 +58,9 @@ namespace WebApi_project.hostProc
             var sw = new StopWatch();
             sw.Start("計測開始"); // 計測開始
 
-            string url = "http://kansa.in.eandm.co.jp/Project/要員情報/要員一覧/xml/要員一覧_XML.asp?year=2021";
+            string url = "http://kansa.in.eandm.co.jp/Project/要員情報/要員一覧/xml/要員一覧_XML.asp?year=2022";
             hostWeb h = new hostWeb();
-            string xmlStr = h.GetRequest(url);
+            string xmlStr = h.GetRequest(url,"Shift_JIS");
 
             //Dictionary<string, dynamic> Tab = (Dictionary<string, dynamic>)json_要員一覧(Json);
             sw.Lap("変換");

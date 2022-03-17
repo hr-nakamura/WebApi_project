@@ -37,7 +37,7 @@ namespace WebApi_project.hostProc
             string url = "http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp?year=2021";
 
             hostWeb h = new hostWeb();
-            string jsonStr = h.GetRequest(url);
+            string jsonStr = h.GetRequest(url,"Shift_JIS");
 
             return (JObject.Parse(jsonStr));
         }

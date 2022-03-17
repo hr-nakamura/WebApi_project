@@ -10,7 +10,7 @@ using DebugHost;
 
 namespace WebApi_project.hostProc
 {
-    public partial class 売上予測 : hostProc
+    public partial class 売上予測 : hostProc 
     {
         public object json_売上予実_新規(String Json)
         {
@@ -32,15 +32,17 @@ namespace WebApi_project.hostProc
 
             string url = "http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_新規_JSON.asp?year=2021";
             hostWeb h = new hostWeb();
-            string jsonStr = h.GetRequest(url);
+            string jsonStr = h.GetRequest(url, "Shift_JIS");
 
             return (JObject.Parse(jsonStr));
         }
         public XmlDocument 売上予実_新規(String Json)
         {
-            object o_json = json_売上予実_新規(Json);
+            JObject oJson = (JObject)json_売上予実_新規(Json);
 
-            JObject O_Top = Jsonl_Info(o_json);
+            ArrayConvert(ref oJson, "月", "m");
+
+            JObject O_Top = oJson;
             JObject O_Inf = getStat();
 
             JObject Top = new JObject();

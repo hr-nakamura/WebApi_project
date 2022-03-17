@@ -32,7 +32,7 @@ namespace WebApi_project.hostProc
 
             string url = "http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_部門_JSON.asp?year=2021";
             hostWeb h = new hostWeb();
-            string jsonStr = h.GetRequest(url);
+            string jsonStr = h.GetRequest(url, "Shift_JIS");
 
             return (JObject.Parse(jsonStr));
         }
