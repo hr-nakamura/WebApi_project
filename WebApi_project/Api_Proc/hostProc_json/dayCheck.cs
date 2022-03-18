@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace WebApi_project.hostProc
 {
-	partial class projectInfo : hostProc
+	partial class hostProc
 	{
 		class para_dayChk
         {

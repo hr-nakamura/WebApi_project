@@ -1009,7 +1009,7 @@ namespace WebApi_project.hostProc
 			int n = (mm - b_mm);
 			return (n);
 		}
-		int dayChk(int yymm, int adjustDayCnt)
+		int dayChkX(int yymm, int adjustDayCnt)
 		{
 
 			int yy = yymm / 100;

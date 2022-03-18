@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 
 namespace WebApi_project.hostProc
 {
-    public partial class hostProc : projectInfo
+    public partial class hostProc 
     {
         public void ArrayConvert(ref JObject oJ, string tagName, string atrName)
         {

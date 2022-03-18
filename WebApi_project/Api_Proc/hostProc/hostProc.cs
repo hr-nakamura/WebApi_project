@@ -21,7 +21,7 @@ using DebugHost;
 
 namespace WebApi_project.hostProc
 {
-    public class hostProc
+    public partial class hostProc 
     {
         // DBコネクション
         public string basePath = "";
