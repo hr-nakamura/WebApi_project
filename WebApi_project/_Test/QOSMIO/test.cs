@@ -26,13 +26,14 @@ namespace WebApi_project.hostProc
         {
             Debug.Write("projectTest");
 
-            var Tab = json_projectTest("");
+            var oJson = (JObject)json_projectTest("");
 
-            string jsonStr = JsonConvert.SerializeObject(Tab);             // Json形式を文字列に
+            //JObject oJson = JsonConvert.SerializeObject(Tab);             // Json形式を文字列に
 
-            jsonStr = Regex.Replace(jsonStr, "・", "·");
+            //jsonStr = Regex.Replace(jsonStr, "・", "·");
 
-            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr, "root");       // Json文字列をXML　objectに
+            XmlDocument xmlDoc = JsonToXml(oJson);
+
 
             XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
             var comment = xmlDoc.CreateComment("json data");
@@ -41,7 +42,7 @@ namespace WebApi_project.hostProc
 
             return (xmlDoc);
         }
-        public object json_projectTest(String Json)
+        public JObject json_projectTest(String Json)
         {
             Debug.Write("json_projectTest");
 
@@ -50,6 +51,7 @@ namespace WebApi_project.hostProc
             //string s_json = Newtonsoft.Json.JsonConvert.SerializeObject(oJson);       // jsonをjson文字列に変換
 
             ArrayConvert(ref oJson, "月", "m");
+
 
             return (oJson);
         }

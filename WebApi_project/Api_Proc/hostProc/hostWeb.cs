@@ -37,78 +37,93 @@ namespace WebApi_project.hostProc
         public hostWeb()
         {
 		}
-        //public XmlDocument Entry(XmlDocument paraDoc)
-        //{
-        //    XmlDocument xmlDoc = null;
-
-        //    XmlElement root = (XmlElement)paraDoc.SelectSingleNode("root");
-        //    XmlElement optionNode = (XmlElement)root.SelectSingleNode("option");
-        //    String func = optionNode.GetAttribute("func");
-        //    string work = "";
-        //    switch (func)
-        //    {
-        //        case "abcde":
-        //            xmlDoc = test(paraDoc);
-        //            break;
-        //        default:
-        //            break;
-
-        //    }
-        //    return (xmlDoc);
-
-        //}
-
-        //private async Task<string> sendRequest(string url, string json)
-//        private XmlDocument test(XmlDocument paraDoc)
-//        {
-//            Host host = new Host();
-//            XmlElement root = (XmlElement)paraDoc.SelectSingleNode("root");
-//            XmlElement optionNode = (XmlElement)root.SelectSingleNode("option");
-//            String url = optionNode.GetAttribute("url");
 
 
-//            string work = GetRequest(url);
-
-
-//            //string work = PostRequest(url,paraDoc);
-//            XmlDocument xmlDoc = new XmlDocument();
-//            //            xmlDoc = SeparateDoc(paraDoc);
-//            XmlElement rootNode = xmlDoc.CreateElement("root");
-//            XmlElement Node = xmlDoc.CreateElement("data");
-//            rootNode.AppendChild(Node);
-
-//            XmlCDataSection cData = xmlDoc.CreateCDataSection(work);
-////            XmlText Text = xmlDoc.CreateTextNode(work);
-//            Node.AppendChild(cData);
-//            rootNode.AppendChild(Node);
-//            xmlDoc.AppendChild(rootNode);
-
-//            return (xmlDoc);
-//        }
-        /// <summary>
-        /// クライアントで作成されたxmlDocumentをxmlDocumentにロードしなおして戻す。
-        /// </summary>
-        ///
-        private XmlDocument SeparateDoc(XmlDocument paraDoc)
+        public string GetRequest(string url)
         {
-            XmlDocument xmlDocNew = new XmlDocument();
-            if (paraDoc.SelectSingleNode("//document") != null)
+            return (GetRequest(url, "utf-8"));          // 指定がないときは「utf-8」
+        }
+        public string GetRequest(string url, string encode)
+        {
+            HttpWebRequest request = null;
+            HttpWebResponse response = null;
+            StreamReader streamReader = null;
+            string returnBuff = null;
+            Encoding Encode = Encoding.GetEncoding("utf-8");
+            if (encode != null)
             {
-                XmlCDataSection cDataNode = (XmlCDataSection)(paraDoc.SelectSingleNode("//document").FirstChild);
-                if (cDataNode != null)
+                Encode = System.Text.Encoding.GetEncoding(encode);
+            }
+
+            try
+            {
+                // WebRequest作成
+                request = (HttpWebRequest)WebRequest.Create(url);
+
+                // タイムアウト設定
+                request.Timeout = REQUEST_TIME_OUT;
+
+                // メソッドにGETを指定
+                request.Method = "GET";
+
+                // サーバーからの応答を受信するためのWebResponseを取得
+                response = (HttpWebResponse)request.GetResponse();
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    string cDataString = HttpUtility.UrlDecode(cDataNode.Data);                  // 文字コードを戻す
-                    //string cDataString = Regex.Replace(work, "╋", "+");              // 「+」を誤変換するので「╋」にしたので戻す
-                    xmlDocNew.LoadXml(cDataString);
+                    // 応答データを受信するためのStreamを取得
+                    Stream responseStream = response.GetResponseStream();
+
+                    // 応答データ受信用StreamReaderを取得
+                    streamReader = new StreamReader(responseStream, Encode);
+
+                    // 応答データ取得
+                    returnBuff = streamReader.ReadToEnd();
+                }
+                else
+                {
+                    returnBuff = null;
+                }
+                if (NetErrorCount > MAX_SHOW_ERROR)
+                {
+                    Debug.Write(Debug.LOG_OK, "ネットワーク回復 GetRequest(" + url + ")[ErrCount = " + NetErrorCount + "]");
+                }
+                NetErrorCount = 0;
+            }
+            catch (OutOfMemoryException ex)
+            {
+                returnBuff = null;
+                Debug.Write(Debug.LOG_NG, "GetRequest(" + url + ")[" + ex.Message + "]");
+            }
+            catch (Exception ex)
+            {
+                returnBuff = null;
+                if (NetErrorCount++ < MAX_SHOW_ERROR)
+                {
+                    Debug.Write(Debug.LOG_NG, "GetRequest(" + url + ")[" + ex.Message + "]");
                 }
             }
-            else
+            finally
             {
-                xmlDocNew = paraDoc;
+                if (streamReader != null)
+                {
+                    streamReader.Close();
+                    streamReader = null;
+                }
+                if (response != null)
+                {
+                    response.Close();
+                    response = null;
+                }
+                if (request != null)
+                {
+                    request.Abort();
+                    request = null;
+                }
             }
-
-            return (xmlDocNew);
+            return returnBuff;
         }
+
+
         // HTTPリクエスト(POST):XMLデータ
         public string PostRequest(string url, XmlDocument postDataXML)
         {
@@ -198,89 +213,54 @@ namespace WebApi_project.hostProc
             }
             return returnBuff;
         }
-        public string GetRequest(string url)
+        /// <summary>
+        /// クライアントで作成されたxmlDocumentをxmlDocumentにロードしなおして戻す。
+        /// </summary>
+        ///
+        private XmlDocument SeparateDoc(XmlDocument paraDoc)
         {
-            return (GetRequest(url, "utf-8"));          // 指定がないときは「utf-8」
-        }
-        public string GetRequest(string url, string encode)
-        {
-            HttpWebRequest request = null;
-            HttpWebResponse response = null;
-            StreamReader streamReader = null;
-            string returnBuff = null;
-            Encoding Encode = Encoding.GetEncoding("utf-8");
-            if (encode != null)
+            XmlDocument xmlDocNew = new XmlDocument();
+            if (paraDoc.SelectSingleNode("//document") != null)
             {
-                Encode = System.Text.Encoding.GetEncoding(encode);
-            }
-
-            try
-            {
-                // WebRequest作成
-                request = (HttpWebRequest)WebRequest.Create(url);
-
-                // タイムアウト設定
-                request.Timeout = REQUEST_TIME_OUT;
-
-                // メソッドにGETを指定
-                request.Method = "GET";
-
-                // サーバーからの応答を受信するためのWebResponseを取得
-                response = (HttpWebResponse)request.GetResponse();
-                if (response.StatusCode == HttpStatusCode.OK)
+                XmlCDataSection cDataNode = (XmlCDataSection)(paraDoc.SelectSingleNode("//document").FirstChild);
+                if (cDataNode != null)
                 {
-                    // 応答データを受信するためのStreamを取得
-                    Stream responseStream = response.GetResponseStream();
-
-                    // 応答データ受信用StreamReaderを取得
-                    streamReader = new StreamReader(responseStream,Encode);
-
-                    // 応答データ取得
-                    returnBuff = streamReader.ReadToEnd();
-                }
-                else
-                {
-                    returnBuff = null;
-                }
-                if (NetErrorCount > MAX_SHOW_ERROR)
-                {
-                    Debug.Write(Debug.LOG_OK, "ネットワーク回復 GetRequest(" + url + ")[ErrCount = " + NetErrorCount + "]");
-                }
-                NetErrorCount = 0;
-            }
-            catch (OutOfMemoryException ex)
-            {
-                returnBuff = null;
-                Debug.Write(Debug.LOG_NG, "GetRequest(" + url + ")[" + ex.Message + "]");
-            }
-            catch (Exception ex)
-            {
-                returnBuff = null;
-                if (NetErrorCount++ < MAX_SHOW_ERROR)
-                {
-                    Debug.Write(Debug.LOG_NG, "GetRequest(" + url + ")[" + ex.Message + "]");
+                    string cDataString = HttpUtility.UrlDecode(cDataNode.Data);                  // 文字コードを戻す
+                    //string cDataString = Regex.Replace(work, "╋", "+");              // 「+」を誤変換するので「╋」にしたので戻す
+                    xmlDocNew.LoadXml(cDataString);
                 }
             }
-            finally
+            else
             {
-                if (streamReader != null)
-                {
-                    streamReader.Close();
-                    streamReader = null;
-                }
-                if (response != null)
-                {
-                    response.Close();
-                    response = null;
-                }
-                if (request != null)
-                {
-                    request.Abort();
-                    request = null;
-                }
+                xmlDocNew = paraDoc;
             }
-            return returnBuff;
-        }
 
+            return (xmlDocNew);
+        }        //private async Task<string> sendRequest(string url, string json)
+        //        private XmlDocument test(XmlDocument paraDoc)
+        //        {
+        //            Host host = new Host();
+        //            XmlElement root = (XmlElement)paraDoc.SelectSingleNode("root");
+        //            XmlElement optionNode = (XmlElement)root.SelectSingleNode("option");
+        //            String url = optionNode.GetAttribute("url");
+
+
+        //            string work = GetRequest(url);
+
+
+        //            //string work = PostRequest(url,paraDoc);
+        //            XmlDocument xmlDoc = new XmlDocument();
+        //            //            xmlDoc = SeparateDoc(paraDoc);
+        //            XmlElement rootNode = xmlDoc.CreateElement("root");
+        //            XmlElement Node = xmlDoc.CreateElement("data");
+        //            rootNode.AppendChild(Node);
+
+        //            XmlCDataSection cData = xmlDoc.CreateCDataSection(work);
+        ////            XmlText Text = xmlDoc.CreateTextNode(work);
+        //            Node.AppendChild(cData);
+        //            rootNode.AppendChild(Node);
+        //            xmlDoc.AppendChild(rootNode);
+
+        //            return (xmlDoc);
     }
 }

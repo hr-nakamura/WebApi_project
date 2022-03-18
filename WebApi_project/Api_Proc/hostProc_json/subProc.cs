@@ -1,14 +1,29 @@
 ﻿using System;
 using System.Text;
 using System.Collections.Generic;
+using System.Xml;
+using System.Text.RegularExpressions;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace WebApi_project.hostProc
 {
-    public partial class hostProc 
+    public partial class hostProc
     {
+        public XmlDocument JsonToXml(JObject oJson)
+        {
+
+            string jsonStr = JsonConvert.SerializeObject(oJson);             // Json形式を文字列に
+
+            jsonStr = Regex.Replace(jsonStr, "・", "·");
+
+            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr, "root");       // Json文字列をXML　objectに
+
+            return (xmlDoc);
+        }
+
+
         public void ArrayConvert(ref JObject oJ, string tagName, string atrName)
         {
             foreach (var x in (JObject)oJ)
@@ -49,6 +64,5 @@ namespace WebApi_project.hostProc
             return (Json);
 
         }
-
     }
 }

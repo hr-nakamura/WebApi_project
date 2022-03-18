@@ -43,12 +43,12 @@ namespace WebApi_project.hostProc
         {
             object o_json = json_projectInfoList(Json);
 
-            JObject O_Top = Jsonl_Info(o_json);
+            //JObject O_Top = Jsonl_Info(o_json);
             JObject O_Inf = getStat();
 
             JObject Top = new JObject();
             Top.Add("Info", O_Inf);
-            Top.Add("Data", O_Top);
+            //Top.Add("Data", O_Top);
 
             string JsonStr = JsonConvert.SerializeObject(Top);
             XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(JsonStr, "root");

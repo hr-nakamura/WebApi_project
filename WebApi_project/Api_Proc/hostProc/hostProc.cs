@@ -155,98 +155,6 @@ namespace WebApi_project.hostProc
             XmlNode Info = xmlDoc.ImportNode(InfoDoc.DocumentElement, true);
             xmlDoc.DocumentElement.PrependChild(Info);
         }
-        public JObject Jsonl_Info(object Json)
-        {
-            JObject O_Top = new JObject();
-            ArrayList x = new ArrayList();
-            //CreateJson_Tree(x, O_Top, (JObject)Json);
-
-            JObject Top = new JObject();
-            Top.Add("全体", O_Top);
-
-            JObject root = new JObject();
-            root.Add("root", Top);
-
-            //Debug.Json(root);
-            string jsonStr = JsonConvert.SerializeObject(root);             // Json形式を文字列に
-
-            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr);       // Json文字列をXML　objectに
-
-            //XmlDocument xmlDoc = new XmlDocument();
-            XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
-
-            //var xmlMain = xmlDoc.CreateProcessingInstruction("xml", "version='1.0' encoding='Shift_JIS'");
-            //XmlElement root = xmlDoc.CreateElement("root");
-
-            var comment = xmlDoc.CreateComment("json data");
-            xmlDoc.PrependChild(comment);
-            xmlDoc.PrependChild(declaration);
-
-            return (O_Top);
-        }
-
-        private void CreateJson_Tree(ArrayList x, JObject O_Top, JObject elem)
-        {
-            x[0] = (int)x[0] + 1;
-            JArray A_elem = new JArray { };
-            O_Top.Add("element" + x[0], A_elem);
-            foreach (var m in (JObject)elem)
-            {
-                JObject O_elem;
-                if (m.Value.Type.ToString() == "String")
-                {
-                    O_elem = new JObject { { "@string_name", m.Key }, { "#text", m.Value } };
-                }
-                else if (m.Value.Type.ToString() == "Integer")
-                {
-                    O_elem = new JObject { { "@integer_name", m.Key }, { "#text", m.Value } };
-                }
-                else
-                {
-                    O_elem = new JObject { { "@name", m.Key } };
-                }
-
-                A_elem.Add(O_elem);
-                if (m.Value.Type.ToString() == "Object")
-                {
-                    CreateJson_Tree(x, O_elem, (JObject)m.Value);
-                }
-                else if (m.Value.Type.ToString() == "Array")
-                {
-                    CreateJson_Tree(x, O_elem, (JArray)m.Value);
-                }
-                //else if (m.Value.Type.ToString() == "Integer")
-                //{
-                //    CreateJson_Integer(O_elem, m.Value.ToString());
-                //}
-            }
-            x[0] = (int)x[0] - 1;
-        }
-        private void CreateJson_Tree(ArrayList x, JObject O_Top, JArray elem)
-        {
-            JArray A_elem = new JArray { };
-            O_Top.Add("array", A_elem);
-            for (var c = 0; c < elem.Count(); c++)
-            {
-                JObject O_elem = new JObject { { "@m", c }, { "#text", elem[c] } };
-                A_elem.Add(O_elem);
-            }
-        }
-        //private void CreateJson_Integer(JObject O_Top, string elem)
-        //{
-        //    JArray A_elem = new JArray { };
-        //    //O_Top.Add("string", new JObject { { "#text", elem } });
-        //}
-        //private void CreateJson_IntegerX(JObject O_Top, string elem)
-        //{
-        //    JArray A_elem = new JArray { };
-        //    O_Top.Add("string", A_elem);
-        //    for (var c = 0; c < elem.Count(); c++)
-        //    {
-        //        JObject O_elem = new JObject { { "@m", c }, { "#text", elem[c] } };
-        //        A_elem.Add(O_elem);
-        //    }
-        //}
         public JObject getStat(
             [CallerMemberName] string callerMemberName = "",
             [CallerFilePath] string callerFilePath = "",
@@ -344,7 +252,7 @@ namespace WebApi_project.hostProc
                 };
             List<string> methdName_X = new List<string>()
                 {
-                "Entry","Json2Xml","JsonToXml","methodList"
+                "Entry","Json2Xml","JsonToXml","methodList","getStat"
                 };
 
             // 指定した名前空間のクラスをすべて取得
@@ -384,7 +292,7 @@ namespace WebApi_project.hostProc
                             Tab_xml[className].Add(methodName);
                             //Debug.Write(className, methodName, m.ReturnType.ToString());
                         }
-                        else if (m.ReturnType == typeof(Object))
+                        else if (m.ReturnType == typeof(JObject))
                         {
                             if (!Tab_json.ContainsKey(className))
                             {

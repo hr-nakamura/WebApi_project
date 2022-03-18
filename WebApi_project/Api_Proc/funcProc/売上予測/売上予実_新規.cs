@@ -12,7 +12,7 @@ namespace WebApi_project.hostProc
 {
     public partial class 売上予測 : hostProc 
     {
-        public object json_売上予実_新規(String Json)
+        public JObject json_売上予実_新規(String Json)
         {
             Dictionary<string, object> Tab = new Dictionary<string, object>();
             Dictionary<string, object> Info = new Dictionary<string, object>();

@@ -12,7 +12,7 @@ namespace WebApi_project.hostProc
 {
     public partial class 売上予測 : hostProc
     {
-        public object json_売上予実_新規2(String Json)
+        public JObject json_売上予実_新規2(String Json)
         {
             Dictionary<string, object> Tab = new Dictionary<string, object>();
             Dictionary<string, object> Info = new Dictionary<string, object>();
@@ -40,12 +40,12 @@ namespace WebApi_project.hostProc
         {
             object o_json = json_売上予実_新規2(Json);
 
-            JObject O_Top = Jsonl_Info(o_json);
+            //JObject O_Top = Jsonl_Info(o_json);
             JObject O_Inf = getStat();
 
             JObject Top = new JObject();
             Top.Add("Info", O_Inf);
-            Top.Add("Data", O_Top);
+            //Top.Add("Data", O_Top);
 
             string JsonStr = JsonConvert.SerializeObject(Top);
             XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(JsonStr, "root");
