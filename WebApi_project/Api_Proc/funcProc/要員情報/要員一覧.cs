@@ -12,64 +12,22 @@ namespace WebApi_project.hostProc
 {
     public class 要員情報 : hostProc
     {
-        public object json_要員一覧(String Json)
-        {
-            Dictionary<string, object> Tab = new Dictionary<string, object>();
-            //Dictionary<string, object> Info = new Dictionary<string, object>();
-            //Dictionary<string, object> Data = new Dictionary<string, object>();
-
-            //string classPath = this.GetType().FullName;                                         //クラスパスの取得
-            //string className = this.GetType().Name;                                             //クラス名の取得
-            //string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;           //メソッド名の取得
-
-            //string mName = Environment.MachineName;
-
-            //Info.Add("mName", mName);
-            //Info.Add("className", className);
-            //Info.Add("methodName", methodName);
-            //Info.Add("DB_Conn", DB_connectString);
-
-            //Tab.Add("Info", (object)Info);
-
-            var sw = new StopWatch();
-            sw.Start("計測開始"); // 計測開始
-            //var Tab = x();
-
-            string url = "http://kansa.in.eandm.co.jp/Project/要員情報/要員一覧/xml/要員一覧_XML.asp?year=2022";
-            hostWeb h = new hostWeb();
-            string xmlStr = h.GetRequest(url, "Shift_JIS");
-
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(xmlStr);
-            string jsonText = JsonConvert.SerializeXmlNode(doc);
-            object j_json = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonText);      // json文字列をjsonへ変換
-
-            Tab.Add("Data", j_json);
-
-            sw.Lap("変換");
-
-            sw.Stop();
-            return (Tab);
-        }
-
         public XmlDocument 要員一覧(String Json)
         {
 
-            var sw = new StopWatch();
-            sw.Start("計測開始"); // 計測開始
-
-            string url = "http://kansa.in.eandm.co.jp/Project/要員情報/要員一覧/xml/要員一覧_XML.asp?year=2022";
-            hostWeb h = new hostWeb();
-            string xmlStr = h.GetRequest(url,"Shift_JIS");
-
-            //Dictionary<string, dynamic> Tab = (Dictionary<string, dynamic>)json_要員一覧(Json);
-            sw.Lap("変換");
+            string xmlStr = xml_要員一覧(Json);
 
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(xmlStr);
 
-            sw.Stop();
             return (xmlDoc);
+        }
+        string xml_要員一覧(String Json)
+        {
+            string url = "http://kansa.in.eandm.co.jp/Project/要員情報/要員一覧/xml/要員一覧_XML.asp?year=2022";
+            hostWeb h = new hostWeb();
+            string xmlStr = h.GetRequest(url, "Shift_JIS");
+            return (xmlStr);
         }
         Dictionary<string, section> xxx()
         {
