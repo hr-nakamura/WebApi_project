@@ -16,7 +16,7 @@ namespace WebApi_project.hostProc
 {
     public partial class 費用予測 : hostProc
     {
-        public object json_費用状況(String Json)
+        public JObject json_費用状況(String Json)
         {
             Dictionary<string, object> Tab = new Dictionary<string, object>();
             Dictionary<string, object> Info = new Dictionary<string, object>();
@@ -43,7 +43,9 @@ namespace WebApi_project.hostProc
         }
         public XmlDocument 費用状況(String Json)
         {
-            object o_json = json_費用状況(Json);
+            JObject o_json = json_費用状況(Json);
+
+            ArrayConvert(ref o_json, "月", "m");
 
             JObject O_Top = (JObject)o_json;
             JObject O_Inf = getStat();
@@ -53,7 +55,7 @@ namespace WebApi_project.hostProc
             Top.Add("Data", O_Top);
 
             string jsonStr = JsonConvert.SerializeObject(Top);             // Json形式を文字列に
-            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr, "root");       // Json文字列をXML　objectに
+            XmlDocument xmlDoc = JsonToXml(Top);       // Json文字列をXML　objectに
 
             XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
             var comment = xmlDoc.CreateComment("json data");
