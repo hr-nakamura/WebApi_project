@@ -36,8 +36,9 @@ namespace WebApi_project.hostProc
 
 
             XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
-            var comment = xmlDoc.CreateComment("json data");
-            xmlDoc.PrependChild(comment);
+            //var comment = xmlDoc.CreateComment("json data");
+            //xmlDoc.PrependChild(comment);
+            AddComment(xmlDoc, "json data1");
             xmlDoc.PrependChild(declaration);
 
             return (xmlDoc);
