@@ -334,6 +334,7 @@
     </Compile>
     <Compile Include="Api_Proc\funcProc\projectBBS\projectList.cs" />
     <Compile Include="Models\common.cs" />
+    <Compile Include="Models\json.cs" />
     <Compile Include="_Test\History\history.cs" />
     <Compile Include="_Test\QOSMIO\test.cs" />
     <Compile Include="Api_Proc\funcProc\売上予測\売上予実_分類.cs" />

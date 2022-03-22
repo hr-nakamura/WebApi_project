@@ -22,7 +22,7 @@ namespace WebApi_project.hostProc
     {
         public XmlDocument projectTest2(String Json)
         {
-            Debug.Write("projectTest2");
+            MyDebug.Write("projectTest2");
 
             //var Tab = json_projectTest2("");
 
@@ -35,7 +35,7 @@ namespace WebApi_project.hostProc
         }
         public object json_projectTest2(String Json)
         {
-            Debug.Write("json_projectTest2");
+            MyDebug.Write("json_projectTest2");
             string classPath = this.GetType().FullName;                                         //クラスパスの取得
             string className = this.GetType().Name;                                             //クラス名の取得
             string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;           //メソッド名の取得

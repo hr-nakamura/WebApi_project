@@ -50,7 +50,7 @@ namespace WebApi_project.hostProc
 
             try
             {
-                Debug.noWrite("DB Open", DB_connectString);
+                MyDebug.noWrite("DB Open", DB_connectString);
                 DB.Open();
 
                 StringBuilder sql = new StringBuilder("");
@@ -107,21 +107,21 @@ namespace WebApi_project.hostProc
                     }
                 }
                 memberInfo.兼務 = sub;
-                Debug.noWrite("reader Close");
+                MyDebug.noWrite("reader Close");
                 reader.Close();
 
-                Debug.noWrite("DB Close");
+                MyDebug.noWrite("DB Close");
                 DB.Close();
-                Debug.noWrite("DB Dispose");
+                MyDebug.noWrite("DB Dispose");
                 DB.Dispose();
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLog(ex.Message);
+                MyDebug.WriteLog(ex.Message);
                 }
                 finally
                 {
-                    Debug.noWrite("DB null");
+                MyDebug.noWrite("DB null");
                     DB = null;
                  }
             return (memberInfo);
@@ -133,7 +133,7 @@ namespace WebApi_project.hostProc
             DB = new SqlConnection(DB_connectString);
             try
             {
-                Debug.noWrite("DB Open", DB_connectString);
+                MyDebug.noWrite("DB Open", DB_connectString);
                 DB.Open();
                 StringBuilder sql = new StringBuilder("");
 
@@ -191,21 +191,21 @@ namespace WebApi_project.hostProc
                     }
                 }
 
-                Debug.noWrite("reader Close");
+                MyDebug.noWrite("reader Close");
                 reader.Close();
 
-                Debug.noWrite("DB Close");
+                MyDebug.noWrite("DB Close");
                 DB.Close();
-                Debug.noWrite("DB Dispose");
+                MyDebug.noWrite("DB Dispose");
                 DB.Dispose();
             }
             catch (Exception ex)
             {
-                Debug.WriteLog(ex.Message);
+                MyDebug.WriteLog(ex.Message);
             }
             finally
             {
-                Debug.noWrite("DB null");
+                MyDebug.noWrite("DB null");
                 DB = null;
             }
             List<string> xTab = new List<string>();

@@ -85,21 +85,21 @@ namespace WebApi_project.hostProc
                 }
                 if (NetErrorCount > MAX_SHOW_ERROR)
                 {
-                    Debug.Write(Debug.LOG_OK, "ネットワーク回復 GetRequest(" + url + ")[ErrCount = " + NetErrorCount + "]");
+                    MyDebug.Write(MyDebug.LOG_OK, "ネットワーク回復 GetRequest(" + url + ")[ErrCount = " + NetErrorCount + "]");
                 }
                 NetErrorCount = 0;
             }
             catch (OutOfMemoryException ex)
             {
                 returnBuff = null;
-                Debug.Write(Debug.LOG_NG, "GetRequest(" + url + ")[" + ex.Message + "]");
+                MyDebug.Write(MyDebug.LOG_NG, "GetRequest(" + url + ")[" + ex.Message + "]");
             }
             catch (Exception ex)
             {
                 returnBuff = null;
                 if (NetErrorCount++ < MAX_SHOW_ERROR)
                 {
-                    Debug.Write(Debug.LOG_NG, "GetRequest(" + url + ")[" + ex.Message + "]");
+                    MyDebug.Write(MyDebug.LOG_NG, "GetRequest(" + url + ")[" + ex.Message + "]");
                 }
             }
             finally
@@ -168,7 +168,7 @@ namespace WebApi_project.hostProc
                     Stream responseStream = response.GetResponseStream();
 
                     // 応答データ受信用StreamReaderを取得
-                    streamReader = new StreamReader(responseStream, Debug.Encode);
+                    streamReader = new StreamReader(responseStream, MyDebug.Encode);
 
                     // 応答データ取得
                     returnBuff = streamReader.ReadToEnd();
@@ -181,11 +181,11 @@ namespace WebApi_project.hostProc
             catch (OutOfMemoryException ex)
             {
                 returnBuff = null;
-                Debug.Write(Debug.LOG_NG, "PostRequest(" + url + ", postDataXML)[" + ex.Message + "]");
+                MyDebug.Write(MyDebug.LOG_NG, "PostRequest(" + url + ", postDataXML)[" + ex.Message + "]");
             }
             catch (Exception ex)
             {
-                Debug.Write(ex.Message);
+                MyDebug.Write(ex.Message);
                 returnBuff = null;
             }
             finally

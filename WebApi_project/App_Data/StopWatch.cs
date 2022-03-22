@@ -87,7 +87,7 @@ namespace CodingSquareCS
 				work.Add($"===================< 計測終了 >===================");
 
 				string output = string.Join(Environment.NewLine, work.ToArray());
-                DebugHost.Debug.Write(output);
+                DebugHost.MyDebug.Write(output);
             }
 
 			// 前回経過時間として今回の経過時間を退避

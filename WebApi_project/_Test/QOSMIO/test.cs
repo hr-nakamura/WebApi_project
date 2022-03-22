@@ -15,6 +15,7 @@ using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
 
 using WebApi_project.hostProc;
+using WebApi_project.Models;
 
 using DebugHost;
 
@@ -24,7 +25,7 @@ namespace WebApi_project.hostProc
     {
         public XmlDocument projectTest(String Json)
         {
-            Debug.Write("projectTest");
+            MyDebug.Write("projectTest");
 
             var oJson = (JObject)json_projectTest("");
 
@@ -45,7 +46,12 @@ namespace WebApi_project.hostProc
         }
         public JObject json_projectTest(String Json)
         {
-            Debug.Write("json_projectTest");
+            MyDebug.Write("json_projectTest");
+
+
+            var data = new JsonOption.projectPara();
+            int yymm = data.yymm;
+
 
             //JObject oJson = readJson("http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp", "Shift_JIS");
             JObject oJson = readJson("http://localhost/Asp/Test/test.json", "utf-8");

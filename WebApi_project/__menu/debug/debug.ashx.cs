@@ -24,19 +24,19 @@ namespace WebApi_project.__menu.debug
             string name= context.Request.Form["Name"];
             if( name == "debug")
             {
-                DebugHost.Debug.Write(LogData);
+                DebugHost.MyDebug.Write(LogData);
             }
             else if (name == "note")
             {
-                DebugHost.Debug.Note(LogData);
+                DebugHost.MyDebug.Note(LogData);
             }
             else if (name == "log")
             {
-                DebugHost.Debug.WriteLog(LogData);
+                DebugHost.MyDebug.WriteLog(LogData);
             }
             else
             {
-                DebugHost.Debug.WriteErr(LogData);
+                DebugHost.MyDebug.WriteErr(LogData);
             }
         }
 

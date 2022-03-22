@@ -116,7 +116,7 @@ namespace WebApi_project.hostProc
 
                 DB = new SqlConnection(DB_connectString);
                 DB.Open();
-                Debug.noWrite("DB Open", DB_connectString);
+                MyDebug.noWrite("DB Open", DB_connectString);
 
                 StringBuilder sql = new StringBuilder("");
 
@@ -148,7 +148,7 @@ namespace WebApi_project.hostProc
                 sql.Append("    projectNum.pNum DESC");
 
 
-                Debug.noWrite("reader Start");
+                MyDebug.noWrite("reader Start");
                 SqlDataReader reader = dbRead(DB, sql.ToString());
                 int Cnt = 0;
                 while (reader.Read())
@@ -177,22 +177,22 @@ namespace WebApi_project.hostProc
 
                 Tab.Add("Info", (object)Info);
                 Tab.Add("Data", (object)Data);
-                Debug.noWrite("reader Close");
+                MyDebug.noWrite("reader Close");
                 reader.Close();
 
-                Debug.noWrite("DB Close");
+                MyDebug.noWrite("DB Close");
                 DB.Close();
-                Debug.noWrite("DB Dispose");
+                MyDebug.noWrite("DB Dispose");
                 DB.Dispose();
             }
             catch (Exception ex)
             {
-                Debug.WriteLog(ex.Message);
+                MyDebug.WriteLog(ex.Message);
                 //Tab.Add("== ERROR ==", ex.Message);
             }
             finally
             {
-                //Debug.noWrite("DB null");
+                //MyDebug.noWrite("DB null");
                 DB = null;
             }
             return (Tab);
@@ -211,7 +211,7 @@ namespace WebApi_project.hostProc
             {
                 DB = new SqlConnection(DB_connectString);
                 DB.Open();
-                Debug.noWrite("DB Open", DB_connectString);
+                MyDebug.noWrite("DB Open", DB_connectString);
 
                 StringBuilder sql = new StringBuilder("");
                 sql.Append(" SELECT");
@@ -224,14 +224,14 @@ namespace WebApi_project.hostProc
 
 
                 SqlDataReader reader = dbRead(DB, sql.ToString());
-                Debug.noWrite("reader Start");
+                MyDebug.noWrite("reader Start");
 
                 int i = 10;
                 while (reader.Read())
                 {
                     pNum = (string)reader["pNum"].ToString();
                     pName = (string)reader["pName"];
-                    Debug.noWrite(pNum, pName);
+                    MyDebug.noWrite(pNum, pName);
                     if (!Tab.ContainsKey(pNum))
                     {
                         Tab.Add(pNum, pName);
@@ -239,21 +239,21 @@ namespace WebApi_project.hostProc
                     if (i-- == 0) break;
                 }
 
-                Debug.noWrite("reader Close");
+                MyDebug.noWrite("reader Close");
                 reader.Close();
 
-                Debug.noWrite("DB Close");
+                MyDebug.noWrite("DB Close");
                 DB.Close();
-                Debug.noWrite("DB Dispose");
+                MyDebug.noWrite("DB Dispose");
                 DB.Dispose();
             }
             catch (Exception ex)
             {
-                Debug.WriteLog(ex.Message);
+                MyDebug.WriteLog(ex.Message);
             }
             finally
             {
-                Debug.noWrite("DB null");
+                MyDebug.noWrite("DB null");
                 DB = null;
             }
             return (Tab);

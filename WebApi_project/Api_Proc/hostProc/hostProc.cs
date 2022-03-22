@@ -107,19 +107,19 @@ namespace WebApi_project.hostProc
             SqlCommand cmd = null;
             try
             {
-                Debug.noWrite("cmd Start");
+                MyDebug.noWrite("cmd Start");
                 cmd = new SqlCommand(sql, DB);
                 SqlDataReader reader = cmd.ExecuteReader();
                 return (reader);
             }
             catch (Exception ex)
             {
-                Debug.WriteLog(ex.Message);
+                MyDebug.WriteLog(ex.Message);
                 return (null);
             }
             finally
             {
-                Debug.noWrite("cmd Dispose");
+                MyDebug.noWrite("cmd Dispose");
                 cmd.Dispose();
                 cmd = null;
             }

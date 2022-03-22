@@ -10,7 +10,7 @@ namespace DebugHost
 {
     //public partial class Log : System.Web.UI.Page
 
-    public class Debug 
+    public class MyDebug 
     {
         // ステータス
         static Boolean debugMode = true;
@@ -38,7 +38,7 @@ namespace DebugHost
 
                 string timeStatusStr = "[" + DateTime.Now.ToString("MM/dd HH:mm:ss.fff") + "]";
                 string outStr = timeStatusStr + "\t" + work;
-                Debug.Write_LogFile(outStr);
+                MyDebug.Write_LogFile(outStr);
             }
             catch (Exception ex)
             {
@@ -63,7 +63,7 @@ namespace DebugHost
                 string timeStatusStr = "[" + DateTime.Now.ToString("MM/dd HH:mm:ss.fff") + "]";
                 string outStr = timeStatusStr + "\t" + work;
 
-                Debug.Write_LogFile(outStr);
+                MyDebug.Write_LogFile(outStr);
             }
             catch (Exception ex)
             {
@@ -88,7 +88,7 @@ namespace DebugHost
                 string timeStatusStr = "[" + DateTime.Now.ToString("MM/dd HH:mm:ss.fff") + "]";
                 string outStr = timeStatusStr + "\t" + work;
 
-                Debug.Note(outStr);
+                MyDebug.Note(outStr);
             }
             catch (Exception ex)
             {
@@ -98,27 +98,27 @@ namespace DebugHost
         public static void Note(params string[] args)
         {
             string para = "" + string.Join("\t", args) + "";
-            Debug.Write_LogFile(para);
+            MyDebug.Write_LogFile(para);
         }
 
         public static void Plain(string str)
         {
-            Debug.Write_LogFile(str);
+            MyDebug.Write_LogFile(str);
         }
         public static void Json(object Json)
         {
-            Debug.Write_LogFile(Json.ToString());
+            MyDebug.Write_LogFile(Json.ToString());
         }
         public static void Write_LogFile(string str)
         {
             if (Debugger.IsAttached)
             {
-                Debug.Write_Notepad(str);
+                MyDebug.Write_Notepad(str);
             }
             else
             {
                 string LogPath = System.Web.Hosting.HostingEnvironment.MapPath("/Log/Web");
-                Debug.WriteTextFile(LogPath, str);
+                MyDebug.WriteTextFile(LogPath, str);
             }
 
         }
