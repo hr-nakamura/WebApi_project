@@ -51,9 +51,20 @@ namespace WebApi_project.hostProc
 
             var para = new JsonOption.projectPara();
             var xx = JsonConvert.SerializeObject(para);
-            var jsonString = new JavaScriptSerializer();
-            //Use of Serialize() method
-            var jsonStringResult = jsonString.Serialize(xx);
+            //var jsonString = new JavaScriptSerializer();
+            ////Use of Serialize() method
+            //var jsonStringResult = jsonString.Serialize(xx);
+            ////var s = System.Text.Json.JsonSerializer.Serialize(para);
+
+            var js = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, object >>(xx);
+
+            List<string> work = new List<string>();
+            foreach (var item in js)
+            {
+                work.Add(item.Key + "=" + item.Value.ToString());
+            }
+            string xxx = String.Join("&",work);
+            MyDebug.Write(xxx);
 
 
             //JObject oJson = readJson("http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp", "Shift_JIS");

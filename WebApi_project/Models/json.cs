@@ -26,7 +26,7 @@ namespace WebApi_project.Models
             public int actual { get; set; } = 3;
 
             [JsonProperty("dispMode")]
-            public string dispMode { get; set; } = "";
+            public string dispMode { get; set; } = "123";
         }
     }
 }
