@@ -20,10 +20,13 @@ namespace WebApi_project.Models
             public int year { get; set; } = DateTime.Now.Year;
 
             [JsonProperty("fix")]
-            public int actual { get; set; } = 3;
+            public int fix { get; set; } = 70;
 
             [JsonProperty("actual")]
-            public int fix { get; set; } = 70;
+            public int actual { get; set; } = 3;
+
+            [JsonProperty("dispMode")]
+            public string dispMode { get; set; } = "";
         }
     }
 }

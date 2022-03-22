@@ -16,7 +16,7 @@ using System.Text.RegularExpressions;
 
 using WebApi_project.hostProc;
 using WebApi_project.Models;
-
+using System.Web.Script.Serialization;
 using DebugHost;
 
 namespace WebApi_project.hostProc
@@ -49,8 +49,11 @@ namespace WebApi_project.hostProc
             MyDebug.Write("json_projectTest");
 
 
-            var data = new JsonOption.projectPara();
-            int yymm = data.yymm;
+            var para = new JsonOption.projectPara();
+            var xx = JsonConvert.SerializeObject(para);
+            var jsonString = new JavaScriptSerializer();
+            //Use of Serialize() method
+            var jsonStringResult = jsonString.Serialize(xx);
 
 
             //JObject oJson = readJson("http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp", "Shift_JIS");
