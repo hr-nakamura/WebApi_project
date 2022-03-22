@@ -12,8 +12,18 @@ namespace WebApi_project.Models
         {
             [JsonProperty("yymm")]
             public int yymm { get; set; } = (DateTime.Now.Year * 100) + DateTime.Now.Month;
+
             [JsonProperty("mCnt")]
             public int mCnt { get; set; } = 12;
+
+            [JsonProperty("year")]
+            public int year { get; set; } = DateTime.Now.Year;
+
+            [JsonProperty("fix")]
+            public int actual { get; set; } = 3;
+
+            [JsonProperty("actual")]
+            public int fix { get; set; } = 70;
         }
     }
 }

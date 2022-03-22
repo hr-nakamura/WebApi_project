@@ -1,40 +1,54 @@
-﻿EMG費用状況_JSON.asp
-	year : 2022	（指定ない時はNow	10月以降は次年度を表示）
+﻿/Project/費用予測/json/EMG費用状況_JSON.asp
+	year : 2022	（指定ない時は	10月以降は次年度を表示）
 	mCnt : 12
 
 
-売上目標_部門_JSON.asp
-	year : Now	（指定ない時はNow	10月以降は次年度を表示）
-	mCnt : 12
-	fix:70
-
-
-売上予実_新規_JSON.asp
-	year : Now	（指定ない時はNow	10月以降は次年度を表示）
+/Project/売上予測/json/売上目標_部門_JSON.asp
+	year : 2022	（指定ない時は	10月以降は次年度を表示）
 	mCnt : 12
 	fix:70
-	actual:			(実績月数)
 
 
-
-売上予実_新規2_JSON.asp
-	year : Now	（指定ない時はNow	10月以降は次年度を表示）
+/Project/売上予測/json/売上予実_新規_JSON.asp
+	year : 2022	（指定ない時は	10月以降は次年度を表示）
 	mCnt : 12
 	fix:70
 	actual:			(実績月数)
 
 
 
-
-売上予実_部門_JSON.asp
-	year : Now	（指定ない時はNow	10月以降は次年度を表示）
+/Project/売上予測/json/売上予実_新規2_JSON.asp
+	year : 2022	（指定ない時は	10月以降は次年度を表示）
 	mCnt : 12
 	fix:70
 	actual:			(実績月数)
 
-売上予実_分類_JSON.asp
-	year : Now	（指定ない時はNow	10月以降は次年度を表示）
+
+
+
+/Project/売上予測/json/売上予実_部門_JSON.asp
+	year : 2022	（指定ない時は	10月以降は次年度を表示）
 	mCnt : 12
 	fix:70
 	actual:			(実績月数)
+
+/Project/売上予測/json/売上予実_分類_JSON.asp
+	year : 2022	（指定ない時は	10月以降は次年度を表示）
+	mCnt : 12
+	fix:70
+	actual:			(実績月数)
+
+/Project/要員情報/要員一覧/xml/要員一覧_XML.asp
+	year : 2022	（指定ない時は	10月以降は次年度を表示）
+	dispMode :"
+	dispMode : "統括"
+	dispMode : "本部"
+	dispMode : "部門"
+	dispMode : "グループ
+	dispMode : "間接"
+
+projectList.cs
+	limitYear : 表示する開始年度
+	beforBBS : 前回訪問した日付
+	visitBBS	: 現在の日付
 
