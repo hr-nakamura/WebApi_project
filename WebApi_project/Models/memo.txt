@@ -1,0 +1,40 @@
+﻿EMG費用状況_JSON.asp
+	year : 2022	（指定ない時はNow	10月以降は次年度を表示）
+	mCnt : 12
+
+
+売上目標_部門_JSON.asp
+	year : Now	（指定ない時はNow	10月以降は次年度を表示）
+	mCnt : 12
+	fix:70
+
+
+売上予実_新規_JSON.asp
+	year : Now	（指定ない時はNow	10月以降は次年度を表示）
+	mCnt : 12
+	fix:70
+	actual:			(実績月数)
+
+
+
+売上予実_新規2_JSON.asp
+	year : Now	（指定ない時はNow	10月以降は次年度を表示）
+	mCnt : 12
+	fix:70
+	actual:			(実績月数)
+
+
+
+
+売上予実_部門_JSON.asp
+	year : Now	（指定ない時はNow	10月以降は次年度を表示）
+	mCnt : 12
+	fix:70
+	actual:			(実績月数)
+
+売上予実_分類_JSON.asp
+	year : Now	（指定ない時はNow	10月以降は次年度を表示）
+	mCnt : 12
+	fix:70
+	actual:			(実績月数)
+

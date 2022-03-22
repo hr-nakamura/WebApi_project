@@ -121,6 +121,7 @@
     <Content Include="Api_Proc\funcProc\projectBBS\projectData_XML.xml" />
     <Content Include="Api_Proc\hostProc\memo.txt" />
     <Content Include="index.html" />
+    <Content Include="Models\memo.txt" />
     <Content Include="Scripts\json2.js" />
     <Content Include="Scripts\json2.min.js" />
     <Content Include="_home\_Content\_Scripts\json2xml.js" />
