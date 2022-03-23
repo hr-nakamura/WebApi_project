@@ -25,6 +25,9 @@ namespace WebApi_project.Models
             [JsonProperty("actual")]
             public int actual { get; set; } = 3;
 
+            [JsonProperty("dispCnt")]
+            public int dispCnt { get; set; } = 12;
+
             [JsonProperty("dispMode")]
             public string dispMode { get; set; } = "漢字の変換";
         }

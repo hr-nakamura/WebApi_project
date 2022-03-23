@@ -45,7 +45,11 @@ namespace WebApi_project.hostProc
         {
             string sJson = JsonConvert.SerializeObject(oJson);             // Json形式を文字列に
 
-            sJson = Regex.Replace(sJson, "・", "·");
+            //sJson = Regex.Replace(sJson, "・", "·");_x30FB_
+            //sJson = Regex.Replace(sJson, "-", "―");_x002D_
+            //sJson = Regex.Replace(sJson, "（", "(");_xFF08_
+            //sJson = Regex.Replace(sJson, "）", ")");_xFF09_
+            //sJson = Regex.Replace(sJson, " ", "　");_x0020_
 
             XmlDocument xmlDoc = JsonToXml(sJson);
 

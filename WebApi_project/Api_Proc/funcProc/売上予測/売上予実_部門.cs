@@ -6,13 +6,16 @@ using System.Data.SqlClient;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 
+using WebApi_project.hostProc;
+using WebApi_project.Models;
+
 using DebugHost;
 
 namespace WebApi_project.hostProc
 {
     public partial class 売上予測 : hostProc
     {
-        public JObject json_売上予実_部門(String Json)
+        public JObject json_売上予実_部門(String opt_Json)
         {
             Dictionary<string, object> Tab = new Dictionary<string, object>();
             Dictionary<string, object> Info = new Dictionary<string, object>();
@@ -29,26 +32,34 @@ namespace WebApi_project.hostProc
             Info.Add("methodName", methodName);
             Info.Add("DB_Conn", DB_connectString);
 
-
-            string url = "http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_部門_JSON.asp?year=2021";
+            var option = JObject.Parse(opt_Json);
+            
+            string url = "http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_部門_JSON.asp" + makeOption(option,"?");
             hostWeb h = new hostWeb();
             string jsonStr = h.GetRequest(url, "Shift_JIS");
+            JObject oJson = JObject.Parse(jsonStr);
+            ArrayConvert(ref oJson, "月", "m");
 
-            return (JObject.Parse(jsonStr));
+            return (oJson);
         }
-        public XmlDocument 売上予実_部門(String Json)
+        public XmlDocument 売上予実_部門(String opt_Json)
         {
-            object o_json = json_売上予実_部門(Json);
+            var para = new JsonOption.projectPara();
+            para.actual = 5;
+            var str_para = JsonConvert.SerializeObject(para);
+            var o_para = JObject.Parse(str_para);
+            var o_src = JObject.Parse(opt_Json);
+            var option = JsonMarge(o_para, o_src);
+            
+            string str_Json = JsonConvert.SerializeObject(option);
 
-            //JObject O_Top = Jsonl_Info(o_json);
-            JObject O_Inf = getStat();
+            var oJson = (JObject)json_売上予実_部門(str_Json);
 
-            JObject Top = new JObject();
-            Top.Add("Info", O_Inf);
-            //Top.Add("Data", O_Top);
+            XmlDocument xmlDoc = JsonToXml(oJson);
 
-            string JsonStr = JsonConvert.SerializeObject(Top);
-            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(JsonStr, "root");
+            XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
+            AddComment(xmlDoc, str_Json);
+            xmlDoc.PrependChild(declaration);
 
             return (xmlDoc);
         }
