@@ -27,10 +27,10 @@ namespace WebApi_project.hostProc
             string result = head + String.Join("&", work);
             return (result);
         }
-        public JObject JsonMarge(string dst,string src)
+        public JObject JsonMarge(JObject o_dst, JObject o_src )
         {
-            var o_src = JObject.Parse(src);
-            var o_dst = JObject.Parse(dst);
+//            var o_src = (src == "" ? new JObject() : JObject.Parse(src) );
+//            var o_dst = JObject.Parse(dst);
             o_dst.Merge(o_src);
             return (o_dst);
         }

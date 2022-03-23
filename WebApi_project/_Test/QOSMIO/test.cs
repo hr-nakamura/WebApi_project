@@ -23,23 +23,23 @@ namespace WebApi_project.hostProc
 {
     partial class projectInfo : hostProc 
     {
-        public XmlDocument projectTest(String Json)
+        public XmlDocument projectTest(String opt_Json)
         {
             MyDebug.Write("projectTest");
 
-            var oJson = (JObject)json_projectTest("");
-
-            //JObject oJson = JsonConvert.SerializeObject(Tab);             // Json形式を文字列に
-
-            //jsonStr = Regex.Replace(jsonStr, "・", "·");
+            var para = new JsonOption.projectPara();
+            var str_para = JsonConvert.SerializeObject(para);
+            var o_para = JObject.Parse(str_para);
+            var o_src = JObject.Parse(opt_Json);
+            var option = JsonMarge(o_para, o_src);
+            string str_Json = JsonConvert.SerializeObject(option);
+            
+            var oJson = (JObject)json_projectTest(str_Json);
 
             XmlDocument xmlDoc = JsonToXml(oJson);
 
-
             XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
-            //var comment = xmlDoc.CreateComment("json data");
-            //xmlDoc.PrependChild(comment);
-            AddComment(xmlDoc, "json data1");
+            AddComment(xmlDoc, str_Json);
             xmlDoc.PrependChild(declaration);
 
             return (xmlDoc);
@@ -49,26 +49,7 @@ namespace WebApi_project.hostProc
         {
             MyDebug.Write("json_projectTest");
 
-
-            var para = new JsonOption.projectPara();
-//            var para2 = new JsonOption.SampleData();
-            var para2 = new JsonOption.SampleData
-            {
-                Description = "サンプル",
-                Data = new System.Collections.Generic.Dictionary<string, object>
-                          {
-                            {"1", 123 }, { "2", "データ2"}
-                          }
-                       };
-            para2.Description = "";
-            para.fix = -999;
-            para.yymm = -999;
-
-            var str_obj1 = JsonConvert.SerializeObject(para);
-            var str_obj2 = JsonConvert.SerializeObject(para2);
-
-            var option = JsonMarge(str_obj1, opt_Json);
-            string a = JsonConvert.SerializeObject(option);
+            var option = JObject.Parse(opt_Json);
 
             string xxx = makeOption(option, "?");
             MyDebug.Write(xxx);
