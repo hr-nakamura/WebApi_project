@@ -26,7 +26,14 @@ namespace WebApi_project.Models
             public int actual { get; set; } = 3;
 
             [JsonProperty("dispMode")]
-            public string dispMode { get; set; } = "123";
+            public string dispMode { get; set; } = "漢字の変換";
+        }
+
+        public class SampleData
+        {
+            public string Description { get; set; }
+            public DateTimeOffset UpdateDate { get; set; }
+            public System.Collections.Generic.Dictionary<string, object> Data { get; set; }
         }
     }
 }

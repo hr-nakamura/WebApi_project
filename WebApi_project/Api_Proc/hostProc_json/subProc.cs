@@ -11,6 +11,29 @@ namespace WebApi_project.hostProc
 {
     public partial class hostProc
     {
+
+        public string makeOption(JObject opt, string head = "")
+        {
+            var str_opt = JsonConvert.SerializeObject(opt);
+
+            var js = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, object>>(str_opt);
+
+            List<string> work = new List<string>();
+            foreach (var item in js)
+            {
+                if (item.Value.ToString() == "" || item.Value.ToString() == "-999") continue;
+                work.Add(item.Key + "=" + item.Value.ToString());
+            }
+            string result = head + String.Join("&", work);
+            return (result);
+        }
+        public JObject JsonMarge(string dst,string src)
+        {
+            var o_src = JObject.Parse(src);
+            var o_dst = JObject.Parse(dst);
+            o_dst.Merge(o_src);
+            return (o_dst);
+        }
         public XmlDocument AddComment(XmlDocument xmlDoc, string comment)
         {
             var comment_node = xmlDoc.CreateComment(comment);
@@ -37,10 +60,10 @@ namespace WebApi_project.hostProc
 
         public void ArrayConvert(ref JObject oJson, string tag_name, string atr_name)
         {
-            foreach (var x in (JObject)oJson)
+            foreach (var item in (JObject)oJson)
             {
-                var Key = x.Key;
-                var Value = x.Value;
+                var Key = item.Key;
+                var Value = item.Value;
                 if (Value.Type.ToString() == "Object")
                 {
                     var target_Value = (JObject)oJson[Key];

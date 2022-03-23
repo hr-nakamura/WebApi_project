@@ -44,31 +44,38 @@ namespace WebApi_project.hostProc
 
             return (xmlDoc);
         }
-        public JObject json_projectTest(String Json)
+
+        public JObject json_projectTest(String opt_Json)
         {
             MyDebug.Write("json_projectTest");
 
 
             var para = new JsonOption.projectPara();
-            var xx = JsonConvert.SerializeObject(para);
-            //var jsonString = new JavaScriptSerializer();
-            ////Use of Serialize() method
-            //var jsonStringResult = jsonString.Serialize(xx);
-            ////var s = System.Text.Json.JsonSerializer.Serialize(para);
-
-            var js = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, object >>(xx);
-
-            List<string> work = new List<string>();
-            foreach (var item in js)
+//            var para2 = new JsonOption.SampleData();
+            var para2 = new JsonOption.SampleData
             {
-                work.Add(item.Key + "=" + item.Value.ToString());
-            }
-            string xxx = String.Join("&",work);
+                Description = "サンプル",
+                Data = new System.Collections.Generic.Dictionary<string, object>
+                          {
+                            {"1", 123 }, { "2", "データ2"}
+                          }
+                       };
+            para2.Description = "";
+            para.fix = -999;
+            para.yymm = -999;
+
+            var str_obj1 = JsonConvert.SerializeObject(para);
+            var str_obj2 = JsonConvert.SerializeObject(para2);
+
+            var option = JsonMarge(str_obj1, opt_Json);
+            string a = JsonConvert.SerializeObject(option);
+
+            string xxx = makeOption(option, "?");
             MyDebug.Write(xxx);
 
 
-            //JObject oJson = readJson("http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp", "Shift_JIS");
-            JObject oJson = readJson("http://localhost/Asp/Test/test.json", "utf-8");
+            JObject oJson = readJson("http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp" + makeOption(option, "?"), "Shift_JIS");
+            //JObject oJson = readJson("http://localhost/Asp/Test/test.json", "utf-8");
             //string s_json = Newtonsoft.Json.JsonConvert.SerializeObject(oJson);       // jsonをjson文字列に変換
 
             ArrayConvert(ref oJson, "月", "m");
