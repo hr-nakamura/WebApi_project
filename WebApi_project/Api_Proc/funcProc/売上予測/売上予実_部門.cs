@@ -15,26 +15,9 @@ namespace WebApi_project.hostProc
 {
     public partial class 売上予測 : hostProc
     {
-        public JObject json_売上予実_部門(String opt_Json)
+        public JObject json_売上予実_部門(String s_option)
         {
-            Dictionary<string, object> Tab = new Dictionary<string, object>();
-            Dictionary<string, object> Info = new Dictionary<string, object>();
-
-            string classPath = this.GetType().FullName;                                         //クラスパスの取得
-            string className = this.GetType().Name;                                             //クラス名の取得
-            string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;           //メソッド名の取得
-            //Debug.WriteLog(classPath);
-
-            string mName = Environment.MachineName;
-
-            Info.Add("mName", mName);
-            Info.Add("className", className);
-            Info.Add("methodName", methodName);
-            Info.Add("DB_Conn", DB_connectString);
-
-            var option = JObject.Parse(opt_Json);
-            
-            string url = "http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_部門_JSON.asp" + makeOption(option,"?");
+            string url = "http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_部門_JSON.asp" + makeOption(s_option,"?");
             hostWeb h = new hostWeb();
             string jsonStr = h.GetRequest(url, "Shift_JIS");
             JObject oJson = JObject.Parse(jsonStr);
@@ -42,23 +25,20 @@ namespace WebApi_project.hostProc
 
             return (oJson);
         }
-        public XmlDocument 売上予実_部門(String opt_Json)
+        public XmlDocument 売上予実_部門(String s_option)
         {
             var para = new JsonOption.projectPara();
             para.actual = 5;
-            var str_para = JsonConvert.SerializeObject(para);
-            var o_para = JObject.Parse(str_para);
-            var o_src = JObject.Parse(opt_Json);
-            var option = JsonMarge(o_para, o_src);
-            
-            string str_Json = JsonConvert.SerializeObject(option);
+            var s_para = JsonConvert.SerializeObject(para);
 
-            var oJson = (JObject)json_売上予実_部門(str_Json);
+            var option = JsonMarge(s_para, s_option);
+
+            var oJson = (JObject)json_売上予実_部門(option);
 
             XmlDocument xmlDoc = JsonToXml(oJson);
 
             XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
-            AddComment(xmlDoc, str_Json);
+            AddComment(xmlDoc, option);
             xmlDoc.PrependChild(declaration);
 
             return (xmlDoc);

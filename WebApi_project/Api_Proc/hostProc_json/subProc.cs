@@ -12,14 +12,19 @@ namespace WebApi_project.hostProc
     public partial class hostProc
     {
 
-        public string makeOption(JObject opt, string head = "")
+        public string makeOption(JObject o_opt, string head = "")
         {
-            var str_opt = JsonConvert.SerializeObject(opt);
+            var s_opt = JsonConvert.SerializeObject(o_opt);
+            return (makeOption(s_opt, head ));
+        }
 
-            var js = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, object>>(str_opt);
+        public string makeOption(string s_opt, string head = "")
+        {
+
+            var o_opt = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, object>>(s_opt);
 
             List<string> work = new List<string>();
-            foreach (var item in js)
+            foreach (var item in o_opt)
             {
                 if (item.Value.ToString() == "" || item.Value.ToString() == "-999") continue;
                 work.Add(item.Key + "=" + item.Value.ToString());
@@ -27,12 +32,29 @@ namespace WebApi_project.hostProc
             string result = head + String.Join("&", work);
             return (result);
         }
-        public JObject JsonMarge(JObject o_dst, JObject o_src )
+        public JObject JsonMarge(JObject o_dst, JObject o_src)
         {
-//            var o_src = (src == "" ? new JObject() : JObject.Parse(src) );
-//            var o_dst = JObject.Parse(dst);
+
             o_dst.Merge(o_src);
+
+            //foreach (var item in o_dst)
+            //{
+            //    if (item.Value.ToString() == "" || item.Value.ToString() == "-999") {
+            //        o_dst.Remove(item.Key);
+            //        continue;
+            //    }
+            //}
+
+
             return (o_dst);
+        }
+        public string JsonMarge(string s_dst, string s_src)
+        {
+            var o_src = (s_src == "" ? new JObject() : JObject.Parse(s_src));
+            var o_dst = JObject.Parse(s_dst);
+            o_dst = JsonMarge(o_dst,o_src);
+
+            return ( JsonConvert.SerializeObject(o_dst) );
         }
         public XmlDocument AddComment(XmlDocument xmlDoc, string comment)
         {
@@ -44,15 +66,7 @@ namespace WebApi_project.hostProc
         public XmlDocument JsonToXml(JObject oJson)
         {
             string sJson = JsonConvert.SerializeObject(oJson);             // Json形式を文字列に
-
-            //sJson = Regex.Replace(sJson, "・", "·");_x30FB_
-            //sJson = Regex.Replace(sJson, "-", "―");_x002D_
-            //sJson = Regex.Replace(sJson, "（", "(");_xFF08_
-            //sJson = Regex.Replace(sJson, "）", ")");_xFF09_
-            //sJson = Regex.Replace(sJson, " ", "　");_x0020_
-
             XmlDocument xmlDoc = JsonToXml(sJson);
-
             return (xmlDoc);
         }
         public XmlDocument JsonToXml(string sJson)
@@ -70,7 +84,7 @@ namespace WebApi_project.hostProc
                 var Value = item.Value;
                 if (Value.Type.ToString() == "Object")
                 {
-                    Value.First.AddBeforeSelf(new JProperty("@name", Key));
+                    if( Value.First != null) Value.First.AddBeforeSelf(new JProperty("@name", Key));
                     var target_Value = (JObject)oJson[Key];
                     ArrayConvert(ref target_Value, tag_name, atr_name);
                 }
