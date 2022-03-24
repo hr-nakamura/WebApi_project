@@ -70,6 +70,7 @@ namespace WebApi_project.hostProc
                 var Value = item.Value;
                 if (Value.Type.ToString() == "Object")
                 {
+                    Value.First.AddBeforeSelf(new JProperty("@name", Key));
                     var target_Value = (JObject)oJson[Key];
                     ArrayConvert(ref target_Value, tag_name, atr_name);
                 }

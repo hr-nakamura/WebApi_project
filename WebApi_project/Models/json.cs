@@ -29,7 +29,7 @@ namespace WebApi_project.Models
             public int dispCnt { get; set; } = 12;
 
             [JsonProperty("dispMode")]
-            public string dispMode { get; set; } = "漢字の変換";
+            public string dispMode { get; set; } = "";
         }
 
         public class SampleData
