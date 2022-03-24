@@ -10,9 +10,9 @@ using DebugHost;
 
 namespace WebApi_project.hostProc
 {
-    public partial class 売上予測 : hostProc
+    class 売上予測1 : hostProc
     {
-        public JObject json_売上予実_新規2(String Json)
+        private JObject json_売上予実_新規2(String Json)
         {
             Dictionary<string, object> Tab = new Dictionary<string, object>();
             Dictionary<string, object> Info = new Dictionary<string, object>();
@@ -36,7 +36,7 @@ namespace WebApi_project.hostProc
 
             return (JObject.Parse(jsonStr));
         }
-        public XmlDocument 売上予実_新規2(String Json)
+        private XmlDocument 売上予実_新規2(String Json)
         {
             object o_json = json_売上予実_新規2(Json);
 

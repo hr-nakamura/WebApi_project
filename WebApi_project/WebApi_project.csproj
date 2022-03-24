@@ -316,6 +316,7 @@
     <Content Include="__menu\debug\debug.ashx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api_Proc\funcProc\売上予測\売上予測.cs" />
     <Compile Include="Api_Proc\hostProc_json\subProc.cs" />
     <Compile Include="App_Data\iniFile.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -324,7 +325,6 @@
     <Compile Include="Controllers\XmlController.cs" />
     <Compile Include="App_Data\StopWatch.cs" />
     <Compile Include="Api_Proc\funcProc\projectCostProc\test2.cs" />
-    <Compile Include="Api_Proc\funcProc\売上予測\売上予実_新規2.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -338,9 +338,6 @@
     <Compile Include="Models\json.cs" />
     <Compile Include="_Test\History\history.cs" />
     <Compile Include="_Test\_Test\test.cs" />
-    <Compile Include="Api_Proc\funcProc\売上予測\売上予実_分類.cs" />
-    <Compile Include="Api_Proc\funcProc\売上予測\売上予実_新規.cs" />
-    <Compile Include="Api_Proc\funcProc\売上予測\売上予実_部門.cs" />
     <Compile Include="Api_Proc\funcProc\projectCostProc\test1.cs" />
     <Compile Include="Api_Proc\funcProc\要員情報\要員一覧.cs" />
     <Compile Include="Api_Proc\funcProc\費用予測\費用状況.cs" />

@@ -13,9 +13,9 @@ using DebugHost;
 
 namespace WebApi_project.hostProc
 {
-    public partial class 売上予測 : hostProc
+    class 売上予測1 : hostProc
     {
-        public JObject json_売上予実_部門(String s_option)
+        private JObject json_売上予実_部門(String s_option)
         {
             string url = "http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_部門_JSON.asp" + makeOption(s_option,"?");
             hostWeb h = new hostWeb();
@@ -25,10 +25,11 @@ namespace WebApi_project.hostProc
 
             return (oJson);
         }
-        public XmlDocument 売上予実_部門(String s_option)
+        private XmlDocument 売上予実_部門(String s_option)
         {
             var para = new JsonOption.projectPara();
             para.actual = 5;
+            para.yymm = -999;
             var s_para = JsonConvert.SerializeObject(para);
 
             var option = JsonMarge(s_para, s_option);
@@ -38,7 +39,7 @@ namespace WebApi_project.hostProc
             XmlDocument xmlDoc = JsonToXml(oJson);
 
             XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
-            AddComment(xmlDoc, option);
+            AddComment(xmlDoc, makeOption(option));
             xmlDoc.PrependChild(declaration);
 
             return (xmlDoc);
