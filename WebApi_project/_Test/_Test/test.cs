@@ -39,7 +39,7 @@ namespace WebApi_project.hostProc
             XmlDocument xmlDoc = JsonToXml(oJson);
 
             XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
-            AddComment(xmlDoc, str_Json);
+            AddComment(xmlDoc, makeOption(str_Json));
             xmlDoc.PrependChild(declaration);
 
             return (xmlDoc);

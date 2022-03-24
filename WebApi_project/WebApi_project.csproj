@@ -169,8 +169,8 @@
     <Content Include="_Test\Dialog\test.html" />
     <Content Include="_Test\Dialog\xx.xsl" />
     <Content Include="_Test\History\HIstory.html" />
-    <Content Include="_Test\QOSMIO\memo.txt" />
-    <Content Include="_Test\QOSMIO\test.html" />
+    <Content Include="_Test\_Test\memo.txt" />
+    <Content Include="_Test\_Test\test.html" />
     <Content Include="_Test\Dialog\dialog.html" />
     <Content Include="_Test\TEST\ACEL.mdb" />
     <Content Include="_Test\TEST\EM.mdb" />
@@ -178,7 +178,7 @@
     <Content Include="_Test\TEST\test1.html" />
     <Content Include="_home\manageMenu.html" />
     <Content Include="_home\projectBBS\bbsMain.html" />
-    <Content Include="_Test\QOSMIO\editProject.asp" />
+    <Content Include="_Test\_Test\editProject.asp" />
     <Content Include="_home\projectBBS\jquery.complete.js" />
     <Content Include="_home\projectBBS\new.gif" />
     <Content Include="_home\projectBBS\new7.gif" />
@@ -283,7 +283,7 @@
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config" />
-    <Content Include="_Test\QOSMIO\qosmio.html" />
+    <Content Include="_Test\_Test\qosmio.html" />
     <Content Include="__menu\Util\viewXML\menu.xml" />
     <Content Include="__menu\Util\viewXML\viewXML_Main.html" />
     <Content Include="__menu\work\index5.html" />
@@ -306,13 +306,13 @@
     <Content Include="__menu\work\projectInfoXML.xml" />
     <Content Include="__menu\work\projectInfoXML.xsl" />
     <Content Include="__menu\work\WebApi_project_構成.xlsx" />
-    <Content Include="_Test\QOSMIO\test.json" />
-    <Content Include="_Test\QOSMIO\test_Json.json" />
+    <Content Include="_Test\_Test\test.json" />
+    <Content Include="_Test\_Test\test_Json.json" />
     <Content Include="_home\_Content\_Scripts\jquery-3.6.0.min.js" />
     <Content Include="_home\_Content\_Scripts\jquery-3.6.0.js" />
     <Content Include="_Test\Dialog\data\sales - コピー.json" />
-    <Content Include="_Test\QOSMIO\test1.json" />
-    <Content Include="_Test\QOSMIO\sales.json" />
+    <Content Include="_Test\_Test\test1.json" />
+    <Content Include="_Test\_Test\sales.json" />
     <Content Include="__menu\debug\debug.ashx" />
   </ItemGroup>
   <ItemGroup>
@@ -337,7 +337,7 @@
     <Compile Include="Models\common.cs" />
     <Compile Include="Models\json.cs" />
     <Compile Include="_Test\History\history.cs" />
-    <Compile Include="_Test\QOSMIO\test.cs" />
+    <Compile Include="_Test\_Test\test.cs" />
     <Compile Include="Api_Proc\funcProc\売上予測\売上予実_分類.cs" />
     <Compile Include="Api_Proc\funcProc\売上予測\売上予実_新規.cs" />
     <Compile Include="Api_Proc\funcProc\売上予測\売上予実_部門.cs" />
@@ -347,7 +347,7 @@
     <Compile Include="Api_Proc\hostProc_json\dayCheck.cs" />
     <Compile Include="Api_Proc\hostProc_json\memberInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="_Test\QOSMIO\test2.cs" />
+    <Compile Include="_Test\_Test\test2.cs" />
     <Compile Include="__menu\debug\debug.ashx.cs">
       <DependentUpon>debug.ashx</DependentUpon>
     </Compile>

@@ -32,22 +32,7 @@ namespace WebApi_project.hostProc
             string result = head + String.Join("&", work);
             return (result);
         }
-        public JObject JsonMarge(JObject o_dst, JObject o_src)
-        {
 
-            o_dst.Merge(o_src);
-
-            //foreach (var item in o_dst)
-            //{
-            //    if (item.Value.ToString() == "" || item.Value.ToString() == "-999") {
-            //        o_dst.Remove(item.Key);
-            //        continue;
-            //    }
-            //}
-
-
-            return (o_dst);
-        }
         public string JsonMarge(string s_dst, string s_src)
         {
             var o_src = (s_src == "" ? new JObject() : JObject.Parse(s_src));
@@ -55,6 +40,11 @@ namespace WebApi_project.hostProc
             o_dst = JsonMarge(o_dst,o_src);
 
             return ( JsonConvert.SerializeObject(o_dst) );
+        }
+        public JObject JsonMarge(JObject o_dst, JObject o_src)
+        {
+            o_dst.Merge(o_src);
+            return (o_dst);
         }
         public XmlDocument AddComment(XmlDocument xmlDoc, string comment)
         {
