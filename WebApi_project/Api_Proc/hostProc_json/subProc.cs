@@ -40,6 +40,13 @@ namespace WebApi_project.hostProc
             }
             AddComment(xmlDoc, name);
             AddComment(xmlDoc, makeOption(option));
+            //AddComment(xmlDoc, option);
+            if (xmlDoc.InnerText == "")
+            {
+                AddComment(xmlDoc, url);
+                XmlElement root = xmlDoc.DocumentElement;
+                root.SetAttribute("memo", "データなし");
+            }
 
             return (xmlDoc);
         }
@@ -49,17 +56,22 @@ namespace WebApi_project.hostProc
             hostWeb h = new hostWeb();
             string xmlStr = h.GetRequest(url, "Shift_JIS");
             XmlDocument xmlDoc = new XmlDocument();
+            if (xmlStr == null) xmlStr = "<root/>";
             xmlDoc.LoadXml(xmlStr);
+
             return (xmlDoc);
         }
         private JObject LoadJson(string url, string s_option)
         {
+            JObject oJson = new JObject();
             url += makeOption(s_option, "?");
             hostWeb h = new hostWeb();
             string jsonStr = h.GetRequest(url, "Shift_JIS");
-            JObject oJson = JObject.Parse(jsonStr);
-            ArrayConvert(ref oJson, "月", "m");
-
+            if(jsonStr != null)
+            {
+                oJson = JObject.Parse(jsonStr);
+                ArrayConvert(ref oJson, "月", "m");
+            }
             return (oJson);
         }
         public string makeOption(JObject o_opt, string head = "")
