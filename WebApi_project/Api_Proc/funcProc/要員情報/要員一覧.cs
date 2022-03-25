@@ -14,17 +14,8 @@ namespace WebApi_project.hostProc
     {
         public XmlDocument 要員一覧(String s_option)
         {
-            XmlDocument xmlDoc = new XmlDocument();
-
-            var Tab = funcTab["要員一覧"];
-            var mode = Tab["mode"];
-            var url = Tab["url"];
-            var opt = Tab["option"];
-
-            //var option = JsonMerge(opt, s_option);
-            //var xmlDoc = LoadXml(url,s_option);
-
-           return (xmlDoc);
+            XmlDocument xmlDoc = LoadAsp("要員一覧", s_option);
+            return (xmlDoc);
         }
 
         Dictionary<string, section> xxx()

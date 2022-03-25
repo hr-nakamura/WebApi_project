@@ -31,10 +31,16 @@ namespace WebApi_project.hostProc
             {
                 xmlDoc = LoadXml(url, option);
             }
-            XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
+            var Declaration = xmlDoc.FirstChild.GetType().ToString();
+
+            if( Declaration != "System.Xml.XmlDeclaration")
+            {
+                XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
+                xmlDoc.PrependChild(declaration);
+            }
+            AddComment(xmlDoc, name);
             AddComment(xmlDoc, makeOption(option));
-            xmlDoc.PrependChild(declaration);
-            
+
             return (xmlDoc);
         }
         private XmlDocument LoadXml(string url, string s_option)
@@ -93,7 +99,8 @@ namespace WebApi_project.hostProc
         public XmlDocument AddComment(XmlDocument xmlDoc, string comment)
         {
             var comment_node = xmlDoc.CreateComment(comment);
-            xmlDoc.PrependChild(comment_node);
+            var root = xmlDoc.SelectSingleNode("/root");
+            xmlDoc.InsertBefore(comment_node, root);
 
             return (xmlDoc);
         }

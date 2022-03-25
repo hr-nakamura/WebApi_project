@@ -19,24 +19,7 @@ namespace WebApi_project.hostProc
     {
         public XmlDocument 費用状況(String s_option)
         {
-            XmlDocument xmlDoc = new XmlDocument();
-            var Tab = funcTab["費用状況"];
-            var mode = Tab["mode"];
-            var url = Tab["url"];
-            var opt = Tab["option"];
-
-            var option = JsonMerge(opt, s_option);
-
-            if (mode == "json")
-            {
-                //var oJson = (JObject)LoadJson(url, option);
-                //xmlDoc = JsonToXml(oJson);
-            }
-
-            XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
-            AddComment(xmlDoc, makeOption(option));
-            xmlDoc.PrependChild(declaration);
-
+            XmlDocument xmlDoc = LoadAsp("費用状況", s_option);
             return (xmlDoc);
         }
     }
