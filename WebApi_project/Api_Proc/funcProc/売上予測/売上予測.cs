@@ -17,45 +17,41 @@ namespace WebApi_project.hostProc
         {
             XmlDocument xmlDoc = new XmlDocument();
             //var Tab  = hostProc.funcTab["売上予実_部門"];
-            var h = new hostProc();
-            var Tab  = funcTab["売上予実_部門"];
-            var mode = Tab["mode"];
-            var url  = Tab["url"];
-            var opt  = Tab["option"];
+            //var h = new hostProc();
+            //var Tab  = funcTab["売上予実_部門"];
+            //var mode = Tab["mode"];
+            //var url  = Tab["url"];
+            //var opt  = Tab["option"];
 
-            var option = JsonMerge(opt, s_option);
+            //var option = JsonMerge(opt, s_option);
 
-            if( mode == "json")
-            {
-                var oJson = (JObject)LoadJson(url, option);
-                xmlDoc = JsonToXml(oJson);
-            }
-
-            XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
-            AddComment(xmlDoc, makeOption(option));
-            xmlDoc.PrependChild(declaration);
+            //if( mode == "json")
+            //{
+            //    var oJson = (JObject)LoadJson(url, option);
+            //    xmlDoc = JsonToXml(oJson);
+            //}
+            xmlDoc = LoadAsp("売上予実_部門", s_option);
+            //XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
+            //AddComment(xmlDoc, makeOption(option));
+            //xmlDoc.PrependChild(declaration);
 
             return (xmlDoc);
         }
         public XmlDocument 売上予実_分類(String s_option)
         {
             XmlDocument xmlDoc = new XmlDocument();
-            var Tab  = funcTab["売上予実_分類"];
-            var mode = Tab["mode"];
-            var url  = Tab["url"];
-            var opt  = Tab["option"];
+            //var Tab  = funcTab["売上予実_分類"];
+            //var mode = Tab["mode"];
+            //var url  = Tab["url"];
+            //var opt  = Tab["option"];
 
-            var option = JsonMerge(opt, s_option);
+            //var option = JsonMerge(opt, s_option);
 
-            if (mode == "json")
-            {
-                var oJson = (JObject)LoadJson(url, option);
-                xmlDoc = JsonToXml(oJson);
-            }
+            xmlDoc = LoadAsp("売上予実_分類", s_option);
 
-            XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
-            AddComment(xmlDoc, makeOption(option));
-            xmlDoc.PrependChild(declaration);
+            //XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
+            //AddComment(xmlDoc, makeOption(option));
+            //xmlDoc.PrependChild(declaration);
 
             return (xmlDoc);
         }
@@ -71,8 +67,8 @@ namespace WebApi_project.hostProc
 
             if (mode == "json")
             {
-                var oJson = (JObject)LoadJson(url, option);
-                xmlDoc = JsonToXml(oJson);
+                //var oJson = (JObject)LoadJson(url, option);
+                //xmlDoc = JsonToXml(oJson);
             }
 
             XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
@@ -93,8 +89,8 @@ namespace WebApi_project.hostProc
 
             if (mode == "json")
             {
-                var oJson = (JObject)LoadJson(url, option);
-                xmlDoc = JsonToXml(oJson);
+                //var oJson = (JObject)LoadJson(url, option);
+                //xmlDoc = JsonToXml(oJson);
             }
 
             XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);

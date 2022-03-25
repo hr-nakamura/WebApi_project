@@ -11,7 +11,33 @@ namespace WebApi_project.hostProc
 {
     public partial class hostProc
     {
-        public XmlDocument LoadXml(string url, string s_option)
+
+        public XmlDocument LoadAsp(string name, string s_option)
+        {
+
+            XmlDocument xmlDoc = new XmlDocument();
+            var Tab = funcTab[name];
+            var mode = Tab["mode"];
+            var url = Tab["url"];
+            var opt = Tab["option"];
+            var option = JsonMerge(opt, s_option);
+
+            if (mode == "json")
+            {
+                var oJson = (JObject)LoadJson(url, option);
+                xmlDoc = JsonToXml(oJson);
+            }
+            else
+            {
+                xmlDoc = LoadXml(url, option);
+            }
+            XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
+            AddComment(xmlDoc, makeOption(option));
+            xmlDoc.PrependChild(declaration);
+            
+            return (xmlDoc);
+        }
+        private XmlDocument LoadXml(string url, string s_option)
         {
             url += makeOption(s_option, "?");
             hostWeb h = new hostWeb();
@@ -20,7 +46,7 @@ namespace WebApi_project.hostProc
             xmlDoc.LoadXml(xmlStr);
             return (xmlDoc);
         }
-        public JObject LoadJson(string url, string s_option)
+        private JObject LoadJson(string url, string s_option)
         {
             url += makeOption(s_option, "?");
             hostWeb h = new hostWeb();

@@ -29,8 +29,8 @@ namespace WebApi_project.hostProc
 
             if (mode == "json")
             {
-                var oJson = (JObject)LoadJson(url, option);
-                xmlDoc = JsonToXml(oJson);
+                //var oJson = (JObject)LoadJson(url, option);
+                //xmlDoc = JsonToXml(oJson);
             }
 
             XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
