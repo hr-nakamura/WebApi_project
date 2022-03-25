@@ -11,22 +11,22 @@ namespace WebApi_project.Models
         public class projectPara
         {
             [JsonProperty("yymm")]
-            public int yymm { get; set; } = (DateTime.Now.Year * 100) + DateTime.Now.Month;
+            public string yymm { get; set; } = ((DateTime.Now.Year * 100) + DateTime.Now.Month).ToString();
 
             [JsonProperty("mCnt")]
-            public int mCnt { get; set; } = 12;
+            public string mCnt { get; set; } = 12.ToString();
 
             [JsonProperty("year")]
-            public int year { get; set; } = DateTime.Now.Year;
+            public string year { get; set; } = (DateTime.Now.Year).ToString();
 
             [JsonProperty("fix")]
-            public int fix { get; set; } = 70;
+            public string fix { get; set; } = 70.ToString();
 
             [JsonProperty("actual")]
-            public int actual { get; set; } = 3;
+            public string actual { get; set; } = 3.ToString();
 
             [JsonProperty("dispCnt")]
-            public int dispCnt { get; set; } = 12;
+            public string dispCnt { get; set; } = 12.ToString();
 
             [JsonProperty("dispMode")]
             public string dispMode { get; set; } = "";

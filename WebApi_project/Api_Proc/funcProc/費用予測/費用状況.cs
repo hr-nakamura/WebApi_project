@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 
 using System.IO;
 using System.Text.Json;
+using WebApi_project.Models;
 
 using DebugHost;
 
@@ -16,9 +17,9 @@ namespace WebApi_project.hostProc
 {
     public partial class 費用予測 : hostProc
     {
+
         public JObject json_費用状況(String Json)
         {
-            Dictionary<string, object> Tab = new Dictionary<string, object>();
             Dictionary<string, object> Info = new Dictionary<string, object>();
 
             string classPath = this.GetType().FullName;                                         //クラスパスの取得

@@ -33,15 +33,15 @@ namespace WebApi_project.hostProc
             return (result);
         }
 
-        public string JsonMarge(string s_dst, string s_src)
+        public string JsonMerge(string s_dst, string s_src)
         {
             var o_src = (s_src == "" ? new JObject() : JObject.Parse(s_src));
             var o_dst = JObject.Parse(s_dst);
-            o_dst = JsonMarge(o_dst,o_src);
+            o_dst = JsonMerge(o_dst,o_src);
 
             return ( JsonConvert.SerializeObject(o_dst) );
         }
-        public JObject JsonMarge(JObject o_dst, JObject o_src)
+        public JObject JsonMerge(JObject o_dst, JObject o_src)
         {
             o_dst.Merge(o_src);
             return (o_dst);

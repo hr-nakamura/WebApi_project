@@ -31,7 +31,7 @@ namespace WebApi_project.hostProc
             var str_para = JsonConvert.SerializeObject(para);
             var o_para = JObject.Parse(str_para);
             var o_src = JObject.Parse(opt_Json);
-            var option = JsonMarge(o_para, o_src);
+            var option = JsonMerge(o_para, o_src);
             string str_Json = JsonConvert.SerializeObject(option);
             
             var oJson = (JObject)json_projectTest(str_Json);
