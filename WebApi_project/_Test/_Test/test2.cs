@@ -21,18 +21,18 @@ namespace WebApi_project.hostProc
 {
     partial class _Test_Json : hostProc
     {
-        Dictionary<string, Dictionary<string, string>> funcTab = new Dictionary<string, Dictionary<string, string>>() {
-            { "ABC",new Dictionary<string, string>(){
-                { "mode", "xml" },
-                { "url", "/Project/aaa/abc.asp" },
-                { "option", "{year:2022,mCnt:1}" }
-            } },
-            { "XYZ",new Dictionary<string, string>(){
-                { "mode", "json" },
-                { "url", "/Project/aaa/abc.asp" },
-                { "option", "{year:2021,mCnt:5}" }
-            } }
-        };
+        //Dictionary<string, Dictionary<string, string>> funcTab = new Dictionary<string, Dictionary<string, string>>() {
+        //    { "ABC",new Dictionary<string, string>(){
+        //        { "mode", "xml" },
+        //        { "url", "/Project/aaa/abc.asp" },
+        //        { "option", "{year:2022,mCnt:1}" }
+        //    } },
+        //    { "XYZ",new Dictionary<string, string>(){
+        //        { "mode", "json" },
+        //        { "url", "/Project/aaa/abc.asp" },
+        //        { "option", "{year:2021,mCnt:5}" }
+        //    } }
+        //};
         public XmlDocument projectTest2(String Json)
         {
             MyDebug.Write("projectTest2");

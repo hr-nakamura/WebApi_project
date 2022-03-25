@@ -316,6 +316,7 @@
     <Content Include="__menu\debug\debug.ashx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api_Proc\funcProc\funcTab.cs" />
     <Compile Include="Api_Proc\funcProc\売上予測\売上予測.cs" />
     <Compile Include="Api_Proc\hostProc_json\subProc.cs" />
     <Compile Include="App_Data\iniFile.cs" />

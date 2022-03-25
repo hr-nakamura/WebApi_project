@@ -11,7 +11,25 @@ namespace WebApi_project.hostProc
 {
     public partial class hostProc
     {
+        public XmlDocument LoadXml(string url, string s_option)
+        {
+            url += makeOption(s_option, "?");
+            hostWeb h = new hostWeb();
+            string xmlStr = h.GetRequest(url, "Shift_JIS");
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(xmlStr);
+            return (xmlDoc);
+        }
+        public JObject LoadJson(string url, string s_option)
+        {
+            url += makeOption(s_option, "?");
+            hostWeb h = new hostWeb();
+            string jsonStr = h.GetRequest(url, "Shift_JIS");
+            JObject oJson = JObject.Parse(jsonStr);
+            ArrayConvert(ref oJson, "月", "m");
 
+            return (oJson);
+        }
         public string makeOption(JObject o_opt, string head = "")
         {
             var s_opt = JsonConvert.SerializeObject(o_opt);

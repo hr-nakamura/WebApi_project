@@ -17,58 +17,27 @@ namespace WebApi_project.hostProc
 {
     public partial class 費用予測 : hostProc
     {
-
-        public JObject json_費用状況(String Json)
+        public XmlDocument 費用状況(String s_option)
         {
-            Dictionary<string, object> Info = new Dictionary<string, object>();
+            XmlDocument xmlDoc = new XmlDocument();
+            var Tab = funcTab["費用状況"];
+            var mode = Tab["mode"];
+            var url = Tab["url"];
+            var opt = Tab["option"];
 
-            string classPath = this.GetType().FullName;                                         //クラスパスの取得
-            string className = this.GetType().Name;                                             //クラス名の取得
-            string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;           //メソッド名の取得
-            //Debug.WriteLog(classPath);
+            var option = JsonMerge(opt, s_option);
 
-            string mName = Environment.MachineName;
-
-            Info.Add("mName", mName);
-            Info.Add("className", className);
-            Info.Add("methodName", methodName);
-            Info.Add("DB_Conn", DB_connectString);
-
-
-            string url = "http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp?year=2021";
-
-            hostWeb h = new hostWeb();
-            string jsonStr = h.GetRequest(url,"Shift_JIS");
-
-            return (JObject.Parse(jsonStr));
-        }
-        public XmlDocument 費用状況(String Json)
-        {
-            JObject o_json = json_費用状況(Json);
-
-            ArrayConvert(ref o_json, "月", "m");
-
-            JObject O_Top = (JObject)o_json;
-            JObject O_Inf = getStat();
-
-            JObject Top = new JObject();
-            Top.Add("Info", O_Inf);
-            Top.Add("Data", O_Top);
-
-            string jsonStr = JsonConvert.SerializeObject(Top);             // Json形式を文字列に
-            XmlDocument xmlDoc = JsonToXml(Top);       // Json文字列をXML　objectに
+            if (mode == "json")
+            {
+                var oJson = (JObject)LoadJson(url, option);
+                xmlDoc = JsonToXml(oJson);
+            }
 
             XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
-            var comment = xmlDoc.CreateComment("json data");
-            xmlDoc.PrependChild(comment);
+            AddComment(xmlDoc, makeOption(option));
             xmlDoc.PrependChild(declaration);
 
             return (xmlDoc);
-        }
-        class SampleData
-        {
-            public string a { get; set; }
-            public string b { get; set; }
         }
     }
 }

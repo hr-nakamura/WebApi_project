@@ -12,23 +12,19 @@ namespace WebApi_project.hostProc
 {
     public class 要員情報 : hostProc
     {
-        public XmlDocument 要員一覧(String Json)
+        public XmlDocument 要員一覧(String s_option)
         {
+            var Tab = funcTab["要員一覧"];
+            var mode = Tab["mode"];
+            var url = Tab["url"];
+            var opt = Tab["option"];
 
-            string xmlStr = xml_要員一覧(Json);
+            var option = JsonMerge(opt, s_option);
+            var xmlDoc = LoadXml(url,s_option);
 
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(xmlStr);
-
-            return (xmlDoc);
+           return (xmlDoc);
         }
-        string xml_要員一覧(String Json)
-        {
-            string url = "http://kansa.in.eandm.co.jp/Project/要員情報/要員一覧/xml/要員一覧_XML.asp?year=2022";
-            hostWeb h = new hostWeb();
-            string xmlStr = h.GetRequest(url, "Shift_JIS");
-            return (xmlStr);
-        }
+
         Dictionary<string, section> xxx()
         {
             Dictionary<string, string> Tab = new Dictionary<string, string>();
