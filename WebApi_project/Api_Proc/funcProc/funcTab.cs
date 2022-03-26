@@ -7,6 +7,11 @@ namespace WebApi_project.hostProc
     public partial class hostProc
     {
         public Dictionary<string, Dictionary<string, string>> funcTab = new Dictionary<string, Dictionary<string, string>>() {
+            { "XX",new Dictionary<string, string>(){
+                { "mode", "method" },
+                { "url", "hostProc/TestX" },
+                { "option", "{year:2022,actual:5}" }
+            } },
             { "売上予実_部門",new Dictionary<string, string>(){
                 { "mode", "json" },
                 { "url", "http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_部門_JSON.asp" },

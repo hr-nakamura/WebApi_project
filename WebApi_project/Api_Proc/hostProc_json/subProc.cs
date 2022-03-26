@@ -3,6 +3,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.Xml;
 using System.Text.RegularExpressions;
+using System.Reflection;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -27,9 +28,13 @@ namespace WebApi_project.hostProc
                 var oJson = (JObject)LoadJson(url, option);
                 xmlDoc = JsonToXml(oJson);
             }
-            else
+            else if(mode == "xml")
             {
                 xmlDoc = LoadXml(url, option);
+            }
+            else if( mode == "method")
+            {
+                xmlDoc = LoadMethod(url, option);
             }
             var Declaration = xmlDoc.FirstChild.GetType().ToString();
 
@@ -45,10 +50,56 @@ namespace WebApi_project.hostProc
             {
                 AddComment(xmlDoc, url);
                 XmlElement root = xmlDoc.DocumentElement;
-                root.SetAttribute("memo", "データなし");
+                root.SetAttribute("memo", "データは見つかりませんでした");
             }
 
             return (xmlDoc);
+
+        }
+        public XmlDocument TestX(string url, string s_option)
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            return (xmlDoc);
+        }
+        private XmlDocument LoadMethod(string url, string s_option)
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            try
+            { 
+                string[] ItemWork = url.Split('/');
+                if (ItemWork.Length != 2) throw new Exception("引数[" + s_option + "]が不明です");
+
+                string className = ItemWork[0];
+                string methodName = ItemWork[1];
+
+                String nameSpace = "WebApi_project.hostProc";
+
+                Type classType = Type.GetType(string.Concat(nameSpace, ".", className));
+                if (classType == null) throw new Exception("calss名[" + className + "]が不明です");
+                var obj = Activator.CreateInstance(classType);
+                MethodInfo method = classType.GetMethod(methodName);
+                if (method == null) throw new Exception("method名[" + methodName + "]が不明です");
+                xmlDoc = (XmlDocument)method.Invoke(obj, new object[] { url, s_option });
+                if (xmlDoc.InnerText == "") xmlDoc.LoadXml("<root/>");
+                return (xmlDoc);
+            }
+            catch (Exception ex)
+            {
+                xmlDoc.CreateXmlDeclaration("1.0", null, null);
+
+                var xmlMain = xmlDoc.CreateProcessingInstruction("xml", "version='1.0' encoding='Shift_JIS'");
+                XmlElement error = xmlDoc.CreateElement("error");
+                var comment = xmlDoc.CreateComment(ex.Message);
+
+                //xmlDoc.AppendChild(xmlMain);
+                xmlDoc.AppendChild(error);
+                error.AppendChild(comment);
+                return (xmlDoc);
+            }
+            finally
+            {
+                //Debug.WriteErr("finally");
+            }
         }
         private XmlDocument LoadXml(string url, string s_option)
         {
