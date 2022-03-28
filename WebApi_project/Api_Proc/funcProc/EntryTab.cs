@@ -5,6 +5,7 @@ using System.Xml;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Linq;
+using DebugHost;
 
 namespace WebApi_project.hostProc
 {
@@ -36,29 +37,51 @@ namespace WebApi_project.hostProc
 
             return (xmlDoc);
         }
-        JObject makeMenu(string name, object item)
+        JObject makeMenu(string name, Dictionary<string, string>item)
         {
             string[] x = name.Split('/');
             if( x.Length > 1)
             {
+                //MyDebug.Write("next",x[0]);
                 int indexToRemove = 0;
                 x = x.Where((source, index) => index != indexToRemove).ToArray();
                 string xx = String.Join("/", x);
                 makeMenu(xx, item);
+            }
+            else
+            {
+                MyDebug.Write("=======",name);
+                foreach (KeyValuePair<string, string> kvp in item)
+                {
+                    string key = kvp.Key;
+                    string nameX = kvp.Value;
+                    if( key == "func") MyDebug.Write(key,nameX);
+                }
+
             }
             JObject Json = new JObject();
             return (Json);
         }
 
         public Dictionary<string, Dictionary<string, string>> xmlEntryTab = new Dictionary<string, Dictionary<string, string>>() {
-            { "ABC/TestX",new Dictionary<string, string>(){
+            { "ABC/機能",new Dictionary<string, string>(){
                 { "mode", "method" },
-                { "func", "hostProc/TestX" },
+                { "func", "hostProc/TestA" },
+                { "option", "{year:2022,actual:5}" }
+            } },
+            { "ABC/機能/xyz",new Dictionary<string, string>(){
+                { "mode", "method" },
+                { "func", "hostProc/TestB" },
+                { "option", "{year:2022,actual:5}" }
+            } },            
+            { "ABC/機能/zzz",new Dictionary<string, string>(){
+                { "mode", "method" },
+                { "func", "hostProc/TestC" },
                 { "option", "{year:2022,actual:5}" }
             } },
             { "ABC",new Dictionary<string, string>(){
                 { "mode", "method" },
-                { "func", "hostProc/TestX" },
+                { "func", "hostProc/TestD" },
                 { "option", "{year:2022,actual:5}" }
             } },
             { "売上予実_部門",new Dictionary<string, string>(){

@@ -32,6 +32,20 @@
   </menu>
 
 
+  <menu name="機能1" memo="" >
+    <menu name="機能2-1" memo="" mode="url" value="/WebApi/project/__menu/Util/viewJson/viewJson.html"/>
+    <menu name="機能2-2" memo="" mode="url" value="/WebApi/project/__menu/Util/viewXML/viewXML_Main.html"/>
+    <menu name="機能2" memo="" >
+      <menu name="viewJson" memo="" mode="url" value="/WebApi/project/__menu/Util/viewJson/viewJson.html"/>
+      <menu name="viewXML" memo="" mode="url" value="/WebApi/project/__menu/Util/viewXML/viewXML_Main.html"/>
+      <menu name="機能3" memo="" >
+        <menu name="viewJson" memo="" mode="url" value="/WebApi/project/__menu/Util/viewJson/viewJson.html"/>
+        <menu name="viewXML" memo="" mode="url" value="/WebApi/project/__menu/Util/viewXML/viewXML_Main.html"/>
+      </menu>
+    </menu>
+  </menu>
+
+
 
 </root>
 
