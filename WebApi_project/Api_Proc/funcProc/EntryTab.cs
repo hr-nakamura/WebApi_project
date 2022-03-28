@@ -11,7 +11,44 @@ namespace WebApi_project.hostProc
 {
     public partial class hostProc
     {
-        public XmlDocument EntryList()
+        XmlDocument methodList1()
+        {
+            //Debug.Write("methodList");
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.CreateXmlDeclaration("1.0", null, null);
+
+            var xmlMain = xmlDoc.CreateProcessingInstruction("xml", "version='1.0' encoding='Shift_JIS'");
+            XmlElement root = xmlDoc.CreateElement("root");
+            xmlDoc.AppendChild(xmlMain);
+            root.SetAttribute("name", "EMG");
+            xmlDoc.AppendChild(root);
+
+            XmlElement root_xml = xmlDoc.CreateElement("xml");
+            root.AppendChild(root_xml);
+
+            Dictionary<string, object> list = (Dictionary<string, object>)EntryList();
+            Dictionary<string, List<string>> Tab_xml = (Dictionary<string, List<string>>)list["xml"];
+
+            foreach (var x1 in Tab_xml)
+            {
+                XmlElement node1 = xmlDoc.CreateElement("menu");
+                string className = x1.Key;
+                node1.SetAttribute("name", className);
+                root_xml.AppendChild(node1);
+                foreach (var methodName in x1.Value)
+                {
+                    XmlElement node2 = xmlDoc.CreateElement("menu");
+                    node2.SetAttribute("type", "xml");
+                    node2.SetAttribute("name", methodName);
+                    node2.SetAttribute("mode", "method");
+                    node2.SetAttribute("item", className);
+                    node2.SetAttribute("func", methodName);
+                    node1.AppendChild(node2);
+                }
+            }
+            return (xmlDoc);
+        }
+        public object EntryList()
         {
             XmlDocument xmlDoc = new XmlDocument();
             //xmlDoc.CreateXmlDeclaration("1.0", null, null);
@@ -31,18 +68,18 @@ namespace WebApi_project.hostProc
                 makeMenu(item.Key,item.Value);
             }
             string jsonStr = JsonConvert.SerializeObject(xmlEntryTab);             // Json形式を文字列に
+            var jo = JsonConvert.DeserializeObject(jsonStr);
+            //            xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr, "root");       // Json文字列をXML　objectに
 
-            xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr, "root");       // Json文字列をXML　objectに
 
-
-            return (xmlDoc);
+            return (jo);
         }
         JObject makeMenu(string name, Dictionary<string, string>item)
         {
             string[] x = name.Split('/');
-            if( x.Length > 1)
+            if ( x.Length > 2)
             {
-                //MyDebug.Write("next",x[0]);
+                MyDebug.Write(">>>", x.Length.ToString(), name);
                 int indexToRemove = 0;
                 x = x.Where((source, index) => index != indexToRemove).ToArray();
                 string xx = String.Join("/", x);
@@ -50,12 +87,12 @@ namespace WebApi_project.hostProc
             }
             else
             {
-                MyDebug.Write("=======",name);
+                //MyDebug.Write("=======",name);
                 foreach (KeyValuePair<string, string> kvp in item)
                 {
                     string key = kvp.Key;
                     string nameX = kvp.Value;
-                    if( key == "func") MyDebug.Write(key,nameX);
+                    if( key == "func") MyDebug.Write("実行", "=======", name,nameX);
                 }
 
             }
