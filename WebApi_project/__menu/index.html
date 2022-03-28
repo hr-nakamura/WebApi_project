@@ -105,7 +105,24 @@
                 //Send_Option.visitBBS = "2019/07/01 10:10:00";
                 //Send_Option.limitYear = "2019";
 
-                if (m_type == "json") {
+
+                if (m_type == "method") {
+                    var value = item + "/" + func;
+                    var xmlDoc = $.WebApi("GET", WebApi_url_test, value, Send_Option);
+                    var Str = $.xml2str(xmlDoc);
+                    //StrOut(Str);
+                    $.storage("viewStr", Str);
+                    $("iframe.iframe_content").attr("src", "Util/viewValue.html");
+                }
+                if (m_type == "xml") {
+                    var value = item + "/" + func;
+                    var xmlDoc = $.WebApi("GET", WebApi_url, value, Send_Option);
+                    var Str = $.xml2str(xmlDoc);
+                    //StrOut(Str);
+                    $.storage("viewStr", Str);
+                    $("iframe.iframe_content").attr("src", "Util/viewValue.html");
+                }
+                else if (m_type == "json") {
                     var value = item + "/" + func;
                     var Str = $.WebApi_json("GET", WebApi_url_json, value, Send_Option);
                     //$.alert.json(Str);
@@ -113,12 +130,6 @@
                     $("iframe.iframe_content").attr("src", "Util/viewValue.html");
                 }
                 else {
-                    var value = item + "/" + func;
-                    var xmlDoc = $.WebApi("GET", WebApi_url, value, Send_Option);
-                    var Str = $.xml2str(xmlDoc);
-                    //StrOut(Str);
-                    $.storage("viewStr", Str);
-                    $("iframe.iframe_content").attr("src", "Util/viewValue.html");
                 }
             }
             else if (mode == "url") {

@@ -60,7 +60,7 @@ namespace WebApi_project.hostProc
             //string s_json = Newtonsoft.Json.JsonConvert.SerializeObject(oJson);       // jsonをjson文字列に変換
 
 
-            ArrayConvert(ref oJson, "月", "m");
+            JsonArrayConvert(ref oJson, "月", "m");
 
 
             return (oJson);

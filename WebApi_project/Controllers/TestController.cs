@@ -3,76 +3,91 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
+
 using System.Xml;
 using Newtonsoft.Json;
+using WebApi_project.Models;
+using WebApi_project.hostProc;
+
+using DebugHost;
 
 namespace WebApi_project.Controllers
 {
     public class TestController : ApiController
     {
-        // GET api/<controller>
         public HttpResponseMessage Get()
         {
-            HttpResponseMessage returnValue;
-
-            XmlDocument xmlDoc = new XmlDocument();
+            // 呼び出せるリストを戻す
             var hProc = new hostProc.hostProc();
+            XmlDocument xmlDoc = hProc.EntryList();
 
-            string mName = Environment.MachineName;
+            HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
+            return (response);
 
-            Dictionary<string, string> Tab = new Dictionary<string, string>();
-            //Tab[nameof(mName)] = mName;
-            Tab.Add("mName", mName);
-            Tab.Add("DB_Conn", hProc.DB_connectString);
-            Tab.Add("DB_status", (hProc.DB_status ? "OK" : "NG"));
-            Tab.Add("DB_result", hProc.DB_result);
+        }
+        public HttpResponseMessage Get(string Item, string Json)
+        {
+            paraOut("GET", Item, Json);
 
-            xmlDoc = makeXmlDoc(Tab);
-            returnValue = response_conv(xmlDoc.OuterXml);
-            return (returnValue);
+            var hProc = new entryProc.entryProcEntry();
+
+            XmlDocument xmlDoc = hProc.Entry(Item, Json);
+
+            HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
+            return (response);
         }
 
-        // GET api/<controller>/5
-        public HttpResponseMessage Get(String mode)
+        // POST api/<controller>
+        public HttpResponseMessage Post([FromBody] ProjectJson para)
         {
-            HttpResponseMessage returnValue;
-            if ( mode == "json")
-            {
-                var hProc = new hostProc.hostProc();
 
-                string mName = Environment.MachineName;
+            HttpContext context = HttpContext.Current;
+            var Request = context.Request;
+            var work1 = Request.UrlReferrer.Host;
+            var work2 = Request.UrlReferrer.LocalPath;
+            var work3 = Request.UrlReferrer.Port;
+            ////Debug.Write(work);
 
-                Dictionary<string, string> Tab = new Dictionary<string, string>();
-                //Tab[nameof(mName)] = mName;
-                Tab.Add("mName", mName);
-                Tab.Add("DB_Conn", hProc.DB_connectString);
-                Tab.Add("DB_status", (hProc.DB_status ? "OK" : "NG"));
-                Tab.Add("DB_result", hProc.DB_result);
+            var Item = para.Item;
+            var Json = para.Json;
+            paraOut("POST", Item, Json);
 
-                returnValue = response_conv(JsonConvert.SerializeObject(Tab));
+            var hProc = new entryProc.entryProcEntry();
+            XmlDocument xmlDoc = hProc.Entry(Item, Json);
 
-            }
-            else if( mode == "xml")
-            {
-                XmlDocument xmlDoc = new XmlDocument();
-                var hProc = new hostProc.hostProc();
-                string mName = Environment.MachineName;
-                Dictionary<string, string> Tab = new Dictionary<string, string>();
-                Tab.Add("mName", mName);
-                Tab.Add("DB_Conn", hProc.DB_connectString);
-                Tab.Add("DB_status", (hProc.DB_status ? "OK" : "NG"));
-                Tab.Add("DB_result", hProc.DB_result);
+            HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
+            return (response);
+        }
 
-                xmlDoc = makeXmlDoc(Tab);
-                returnValue = response_conv(xmlDoc.OuterXml);
-            }
-            else
-            {
-                returnValue = response_conv("漢字の\n変換\nabcd\n12345");
 
-            }
-            return (returnValue);
+        // PUT api/<controller>/5
+        public HttpResponseMessage Put([FromBody] ProjectJson para)
+        {
+            var Item = para.Item;
+            var Json = para.Json;
+            paraOut("PUT", Item, Json);
+
+            var hProc = new entryProc.entryProcEntry();
+            XmlDocument xmlDoc = hProc.Entry(Item, Json);
+
+            HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
+            return (response);
+        }
+
+        // DELETE api/<controller>/5
+        public HttpResponseMessage Delete([FromBody] ProjectJson para)
+        {
+            var Item = para.Item;
+            var Json = para.Json;
+            paraOut("Delete", Item, Json);
+
+            var hProc = new entryProc.entryProcEntry();
+            XmlDocument xmlDoc = hProc.Entry(Item, Json);
+
+            HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
+            return (response);
         }
         HttpResponseMessage response_conv(string value)
         {
@@ -80,43 +95,15 @@ namespace WebApi_project.Controllers
             response.Content = new StringContent(value);
             return (response);
         }
-        // POST api/<controller>
-        public void Post([FromBody] string value)
+        void paraOut(String Mode, String Item, String Json)
         {
-        }
-
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
-        }
-
-        XmlDocument makeXmlDoc(Dictionary<string, string> Tab)
-        {
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.CreateXmlDeclaration("1.0", null, null);
-
-            var xmlMain = xmlDoc.CreateProcessingInstruction("xml", "version='1.0' encoding='Shift_JIS'");
-            XmlElement root = xmlDoc.CreateElement("root");
-
-            var comment = xmlDoc.CreateComment("json data");
-            xmlDoc.AppendChild(xmlMain);
-            xmlDoc.AppendChild(comment);
-            xmlDoc.AppendChild(root);
-
-            foreach (var x in Tab)
-            {
-                XmlElement data = xmlDoc.CreateElement("json");
-                data.InnerText = x.Value;
-                data.SetAttribute("name", x.Key);
-                root.AppendChild(data);
-            }
-
-            return (xmlDoc);
+            string[] ItemWork = Item.Split('/');
+            var work = new List<string>();
+            work.Add(Mode);
+            work.Add(ItemWork[0]);
+            work.Add(ItemWork[1]);
+            work.Add(Json);
+            //Debug.WriteLog("[" + string.Join("][", work) + "]");
         }
 
     }

@@ -2,7 +2,6 @@
 using System.Web;
 using System.Xml;
 using System.Reflection;
-using Newtonsoft.Json;
 using System.Text;
 using System.Data.SqlClient;
 using System.Collections.Generic;
@@ -10,7 +9,9 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Json;
 using System.Xml.Linq;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+
 using System.Text.Json;
 
 using WebApi_project.Models;
@@ -37,14 +38,8 @@ namespace WebApi_project.hostProc
         {
             MyDebug.Write("projectTest2");
 
-            var Tab = json_projectTest2("");
+            var Tab = EntryList();
 
-            var mode = funcTab["ABC"]["mode"];
-            var url = funcTab["ABC"]["url"];
-            var opt = JObject.Parse(funcTab["ABC"]["option"]);
-            var para = new JsonOption.projectPara();
-
-            var xopt = JsonMerge(JsonConvert.SerializeObject(para), funcTab["ABC"]["option"]);
 
 
             string jsonStr = JsonConvert.SerializeObject(Tab);             // Json形式を文字列に

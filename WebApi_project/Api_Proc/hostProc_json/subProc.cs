@@ -13,28 +13,28 @@ namespace WebApi_project.hostProc
     public partial class hostProc
     {
 
+
         public XmlDocument LoadAsp(string name, string s_option)
         {
-
             XmlDocument xmlDoc = new XmlDocument();
-            var Tab = funcTab[name];
+            var Tab = xmlEntryTab[name];
             var mode = Tab["mode"];
-            var url = Tab["url"];
+            var func = Tab["func"];
             var opt = Tab["option"];
             var option = JsonMerge(opt, s_option);
 
             if (mode == "json")
             {
-                var oJson = (JObject)LoadJson(url, option);
+                var oJson = (JObject)LoadJson(func, option);
                 xmlDoc = JsonToXml(oJson);
             }
             else if(mode == "xml")
             {
-                xmlDoc = LoadXml(url, option);
+                xmlDoc = LoadXml(func, option);
             }
             else if( mode == "method")
             {
-                xmlDoc = LoadMethod(url, option);
+                xmlDoc = LoadMethod(func, option);
             }
             var Declaration = xmlDoc.FirstChild.GetType().ToString();
 
@@ -48,7 +48,7 @@ namespace WebApi_project.hostProc
             //AddComment(xmlDoc, option);
             if (xmlDoc.InnerText == "")
             {
-                AddComment(xmlDoc, url);
+                AddComment(xmlDoc, func);
                 XmlElement root = xmlDoc.DocumentElement;
                 root.SetAttribute("memo", "データは見つかりませんでした");
             }
@@ -59,6 +59,7 @@ namespace WebApi_project.hostProc
         public XmlDocument TestX(string url, string s_option)
         {
             XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml("<root name='TestX'><TestX>TestX</TestX></root>");
             return (xmlDoc);
         }
         private XmlDocument LoadMethod(string url, string s_option)
@@ -121,7 +122,7 @@ namespace WebApi_project.hostProc
             if(jsonStr != null)
             {
                 oJson = JObject.Parse(jsonStr);
-                ArrayConvert(ref oJson, "月", "m");
+                JsonArrayConvert(ref oJson, "月", "m");
             }
             return (oJson);
         }
@@ -139,7 +140,7 @@ namespace WebApi_project.hostProc
             List<string> work = new List<string>();
             foreach (var item in o_opt)
             {
-                if (item.Value.ToString() == "" || item.Value.ToString() == "-999") continue;
+                if (item.Value.ToString() == "") continue;
                 work.Add(item.Key + "=" + item.Value.ToString());
             }
             string result = head + String.Join("&", work);
@@ -180,7 +181,7 @@ namespace WebApi_project.hostProc
         }
 
 
-        public void ArrayConvert(ref JObject oJson, string tag_name, string atr_name)
+        public void JsonArrayConvert(ref JObject oJson, string tag_name, string atr_name)
         {
             foreach (var item in (JObject)oJson)
             {
@@ -190,18 +191,18 @@ namespace WebApi_project.hostProc
                 {
                     if( Value.First != null) Value.First.AddBeforeSelf(new JProperty("@name", Key));
                     var target_Value = (JObject)oJson[Key];
-                    ArrayConvert(ref target_Value, tag_name, atr_name);
+                    JsonArrayConvert(ref target_Value, tag_name, atr_name);
                 }
                 else if (Value.Type.ToString() == "Array")
                 {
-                    oJson[Key] = (JObject)JsonArrayConvert(Value, tag_name, atr_name);
+                    oJson[Key] = (JObject)ArrayConvert(Value, tag_name, atr_name);
                 }
                 else
                 {
                 }
             }
         }
-        private JObject JsonArrayConvert(object oJson, string tag_name, string atr_name)
+        private JObject ArrayConvert(object oJson, string tag_name, string atr_name)
         {
             List<string> work = new List<string>();
             int i = 0;
