@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Xml;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Linq;
 
 namespace WebApi_project.hostProc
 {
@@ -12,9 +13,21 @@ namespace WebApi_project.hostProc
         public XmlDocument EntryList()
         {
             XmlDocument xmlDoc = new XmlDocument();
-            foreach(var item in xmlEntryTab)
-            {
+            //xmlDoc.CreateXmlDeclaration("1.0", null, null);
 
+            //var xmlMain = xmlDoc.CreateProcessingInstruction("xml", "version='1.0' encoding='Shift_JIS'");
+            //XmlElement root = xmlDoc.CreateElement("root");
+            //xmlDoc.AppendChild(xmlMain);
+            //root.SetAttribute("name", "EMG");
+            //xmlDoc.AppendChild(root);
+
+            //XmlElement root_xml = xmlDoc.CreateElement("xml");
+            //XmlElement root_json = xmlDoc.CreateElement("json");
+            //root.AppendChild(root_xml);
+            //root.AppendChild(root_json);
+            foreach (var item in xmlEntryTab)
+            {
+                makeMenu(item.Key,item.Value);
             }
             string jsonStr = JsonConvert.SerializeObject(xmlEntryTab);             // Json形式を文字列に
 
@@ -23,8 +36,27 @@ namespace WebApi_project.hostProc
 
             return (xmlDoc);
         }
+        JObject makeMenu(string name, object item)
+        {
+            string[] x = name.Split('/');
+            if( x.Length > 1)
+            {
+                int indexToRemove = 0;
+                x = x.Where((source, index) => index != indexToRemove).ToArray();
+                string xx = String.Join("/", x);
+                makeMenu(xx, item);
+            }
+            JObject Json = new JObject();
+            return (Json);
+        }
+
         public Dictionary<string, Dictionary<string, string>> xmlEntryTab = new Dictionary<string, Dictionary<string, string>>() {
-            { "/ABC/TestX",new Dictionary<string, string>(){
+            { "ABC/TestX",new Dictionary<string, string>(){
+                { "mode", "method" },
+                { "func", "hostProc/TestX" },
+                { "option", "{year:2022,actual:5}" }
+            } },
+            { "ABC",new Dictionary<string, string>(){
                 { "mode", "method" },
                 { "func", "hostProc/TestX" },
                 { "option", "{year:2022,actual:5}" }

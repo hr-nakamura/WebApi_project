@@ -27,6 +27,7 @@
         var superfish;
         var WebApi_url = "/WebApi/project/api/xml";
         var WebApi_url_json = "/WebApi/project/api/json";
+        var WebApi_url_test = "/WebApi/project/api/test";
         var mailPara = {
             mailAddr: "azuma@psl-em.co.jp"
         };
@@ -48,15 +49,17 @@
                 //hostName = "http://kansa.in.eandm.co.jp";
                 WebApi_url_json = url + "/WebApi/project/api/json";
                 WebApi_url_xml = url + "/WebApi/project/api/xml";
-
-                //$.alert.json(memberInfo);
-                //var memberInfo = $.WebApi_json( "GET",WebApi_url_json, "projectInfo/json_memberInfo",mailPara);
-                //            $.alert.json(memberInfo);
+                WebApi_url_test = url + "/WebApi/project/api/test";
 
                 // methodListの取得
                 var methodList = $.WebApi("GET", WebApi_url_xml);
 
                 var menu_data = $.loadXMLDoc("menu.xml");
+
+                // methodListの取得
+                //var methodList = $.WebApi("GET", WebApi_url_test);
+
+                //var menu_data = $.loadXMLDoc("menu.xml");
 
                 menu_Xml = menuData_Join(menu_data, methodList);
 
@@ -79,6 +82,7 @@
             var xml_menus = $(methodList).find("root>xml>menu");
             var xml_methodTop = $(menu_xml).find("menu[name='関数(XML)']");
             xml_methodTop.prepend(xml_menus);
+
             var json_menus = $(methodList).find("root>json>menu");
             var json_methodTop = $(menu_xml).find("menu[name='関数(JSON)']");
             json_methodTop.prepend(json_menus);
