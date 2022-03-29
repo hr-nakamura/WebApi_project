@@ -53,12 +53,10 @@
 
                 // methodListの取得
                 var methodList = $.WebApi("GET", WebApi_url_xml);
-
                 var menu_data = $.loadXMLDoc("menu.xml");
 
                 // methodListの取得
                 //var methodList = $.WebApi("GET", WebApi_url_test);
-
                 //var menu_data = $.loadXMLDoc("menu.xml");
 
                 menu_Xml = menuData_Join(menu_data, methodList);

@@ -21,8 +21,8 @@ namespace WebApi_project.Controllers
         {
             // 呼び出せるリストを戻す
             var hProc = new hostProc.hostProc();
-            //XmlDocument xmlDoc = hProc.EntryList();
-            XmlDocument xmlDoc = new XmlDocument();
+            XmlDocument xmlDoc = hProc.EntryList();
+            //XmlDocument xmlDoc = new XmlDocument();
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
             return (response);

@@ -38,13 +38,13 @@ namespace WebApi_project.hostProc
         {
             MyDebug.Write("projectTest2");
 
-            var Tab = EntryList();
+            var xmlDoc = EntryList();
 
 
 
-            string jsonStr = JsonConvert.SerializeObject(Tab);             // Json形式を文字列に
+            //string jsonStr = JsonConvert.SerializeObject(Tab);             // Json形式を文字列に
 
-            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr,"root");       // Json文字列をXML　objectに
+            //XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr,"root");       // Json文字列をXML　objectに
 
             //XmlDocument xmlDoc = new XmlDocument();
             return (xmlDoc);
