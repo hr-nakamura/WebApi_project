@@ -93,6 +93,9 @@ namespace WebApi_project.hostProc
             {
                 //menu.SetAttribute("memo", "実行" + item["func"]);
                 menu.SetAttribute("name", name);
+                menu.SetAttribute("func", item["func"]);
+                menu.SetAttribute("mode", item["mode"]);
+                menu.SetAttribute("option", item["option"]);
                 //menu.SetAttribute("memo", x.Length.ToString());
             }
             //JObject Json = new JObject();

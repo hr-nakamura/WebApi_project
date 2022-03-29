@@ -52,12 +52,12 @@
                 WebApi_url_test = url + "/WebApi/project/api/test";
 
                 // methodListの取得
-                var methodList = $.WebApi("GET", WebApi_url_xml);
-                var menu_data = $.loadXMLDoc("menu.xml");
+                //var methodList = $.WebApi("GET", WebApi_url_xml);
+                //var menu_data = $.loadXMLDoc("menu.xml");
 
                 // methodListの取得
-                //var methodList = $.WebApi("GET", WebApi_url_test);
-                //var menu_data = $.loadXMLDoc("menu.xml");
+                var methodList = $.WebApi("GET", WebApi_url_test);
+                var menu_data = $.loadXMLDoc("menu.xml");
 
                 menu_Xml = menuData_Join(menu_data, methodList);
 
@@ -97,10 +97,16 @@
     </script>
     <script type="text/javascript">
         function menu_click(o) {
+            var mode = o.mode;          // method,xml,json
+            var func = o.func;          // url , method
+            var value = o.text;      // parameter
+        }
+        function menu_clickX(o) {
             var m_type = o.type;
             var mode = o.mode;
             var item = o.item;
             var func = o.func;
+            var option = o.option;
             var value = o.value;
             if (mode == "method") {
                 $.debug("click", mode, item + "/" + func);
