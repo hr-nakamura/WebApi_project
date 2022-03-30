@@ -52,14 +52,15 @@
                 WebApi_url_test = url + "/WebApi/project/api/test";
 
                 // methodListの取得
-                //var methodList = $.WebApi("GET", WebApi_url_xml);
-                //var menu_data = $.loadXMLDoc("menu.xml");
-
-                // methodListの取得
-                var methodList = $.WebApi("GET", WebApi_url_test);
+                var methodList = $.WebApi("GET", WebApi_url_xml);
                 var menu_data = $.loadXMLDoc("menu.xml");
 
-                menu_Xml = menuData_Join(menu_data, methodList);
+                // methodListの取得
+                var methodList2 = $.loadXMLDoc("menu2.xml");
+                //var methodList2 = $.WebApi("GET", WebApi_url_test);
+                var menu_data = $.loadXMLDoc("menu.xml");
+
+                menu_Xml = menuData_Join(menu_data, methodList,methodList2);
 
                 $(".menuBlock_content").mymenu(menu_Xml, {
                     color_menu_base: "cornflowerblue",
@@ -76,7 +77,7 @@
 
         });
 
-        function menuData_Join(menu_xml, methodList) {
+        function menuData_Join(menu_xml, methodList,methodList2) {
             var xml_menus = $(methodList).find("root>xml>menu");
             var xml_methodTop = $(menu_xml).find("menu[name='関数(XML)']");
             xml_methodTop.prepend(xml_menus);
@@ -84,6 +85,11 @@
             var json_menus = $(methodList).find("root>json>menu");
             var json_methodTop = $(menu_xml).find("menu[name='関数(JSON)']");
             json_methodTop.prepend(json_menus);
+
+            var test_menus = $(methodList2).find("root>test>menu");
+            var test_methodTop = $(menu_xml).find("menu[name='関数(TEST)']");
+            test_methodTop.prepend(test_menus);
+
             return (menu_xml);
         }
     </script>
@@ -96,12 +102,12 @@
 
     </script>
     <script type="text/javascript">
-        function menu_click(o) {
+        function menu_clickX(o) {
             var mode = o.mode;          // method,xml,json
             var func = o.func;          // url , method
             var value = o.text;      // parameter
         }
-        function menu_clickX(o) {
+        function menu_click(o) {
             var m_type = o.type;
             var mode = o.mode;
             var item = o.item;

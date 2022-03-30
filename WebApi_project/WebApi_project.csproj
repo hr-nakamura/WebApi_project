@@ -147,6 +147,7 @@
     <Content Include="__menu\index.html" />
     <Content Include="__menu\memo.txt" />
     <Content Include="__menu\menu.xml" />
+    <Content Include="__menu\menu2.xml" />
     <Content Include="__menu\Scripts\cmn.js" />
     <Content Include="__menu\Scripts\encoding.js" />
     <Content Include="__menu\Scripts\jquery-1.9.1.min.js" />

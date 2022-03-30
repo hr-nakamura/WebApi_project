@@ -1,0 +1,24 @@
+﻿<root>
+  <test>
+  <menu option="{year:2022,actual:5}" func="hostProc/TestD" mode="method" name="ABC"/>
+  <menu name="ABC">
+    <menu option="{year:2022,actual:5}" func="hostProc/TestA" mode="method" name="機能"/>
+    <menu name="機能">
+      <menu option="{year:2022,actual:5}" func="hostProc/TestB" mode="method" name="xyz"/>
+      <menu option="{year:2022,actual:5}" func="hostProc/TestC" mode="method" name="zzz"/>
+　 </menu>
+  </menu>
+  <menu name="売上予測">
+    <menu option="{year:2022,actual:5}" func="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_部門_JSON.asp" mode="json" name="売上予実_部門"/>
+    <menu option="{year:2022,actual:5}" func="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_分類_JSON.asp" mode="json" name="売上予実_分類"/>
+    <menu option="{year:2022,actual:5}" func="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_新規_JSON.asp" mode="json" name="売上予実_新規"/>
+    <menu option="{year:2022,actual:5}" func="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_新規2_JSON.asp" mode="json" name="売上予実_新規2"/>
+  </menu>
+  <menu name="費用予測">
+    <menu option="{year:2022,actual:5}" func="http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp" mode="json" name="費用状況"/>
+  </menu>
+  <menu name="要員情報">
+    <menu option="{year:2022,actual:5}" func="http://kansa.in.eandm.co.jp/Project/要員情報/要員一覧/xml/要員一覧_XML.asp" mode="xml" name="要員一覧"/>
+  </menu>
+</test>
+</root> 

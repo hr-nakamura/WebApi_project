@@ -59,43 +59,95 @@ namespace WebApi_project.hostProc
             root.SetAttribute("name", "EMG");
             xmlDoc.AppendChild(root);
 
-            XmlElement root_xml = xmlDoc.CreateElement("xml");
-//            XmlElement main_menu = xmlDoc.CreateElement("menu");
+            XmlElement new_menu = null;
+            XmlElement root_xml = xmlDoc.CreateElement("test");
             root.AppendChild(root_xml);
-//            root_xml.AppendChild(main_menu);
+            int i = 0;
             foreach (var item in xmlEntryTab)
             {
-                XmlElement menu = makeMenu(xmlDoc,item.Key,item.Value);
-                root_xml.AppendChild(menu);
+                string[] x = item.Key.Split('/');
+                XmlElement menu = (XmlElement)root_xml.SelectSingleNode("menu");
+                //MyDebug.Write(menu.OuterXml);
+                if (menu == null)
+                {
+                    MyDebug.Write(item.Key, "null");
+                }
+                else
+                {
+                    MyDebug.Write(item.Key, menu.OuterXml);
+                }
+                if (menu == null)
+                {
+                    new_menu = xmlDoc.CreateElement("menu");
+                    new_menu.SetAttribute("aaa", i.ToString());
+                }
+                else if (menu.HasAttribute("mode"))
+                {
+                    new_menu = xmlDoc.CreateElement("menu");
+                    new_menu.SetAttribute("xxx", i.ToString());
+                }
+                else
+                {
+                    new_menu = xmlDoc.CreateElement("menu");
+                    new_menu.SetAttribute("zzz", i.ToString());
+
+                }
+                i++;
+                XmlElement s_menu = makeMenu(new_menu, item.Key, item.Value);
+                root_xml.AppendChild(s_menu);
             }
-            string jsonStr = JsonConvert.SerializeObject(xmlEntryTab);             // Json形式を文字列に
-            var jo = JsonConvert.DeserializeObject(jsonStr);
-            //            xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr, "root");       // Json文字列をXML　objectに
-
-
+            //string jsonStr = JsonConvert.SerializeObject(xmlEntryTab);             // Json形式を文字列に
+            //var jo = JsonConvert.DeserializeObject(jsonStr);
+            //xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr, "root");       // Json文字列をXML　objectに
             return (xmlDoc);
         }
-        XmlElement makeMenu(XmlDocument xmlDoc, string name, Dictionary<string, string>item)
+        XmlElement makeMenu(XmlElement menu, string name, Dictionary<string, string> item)
         {
-            XmlElement menu = xmlDoc.CreateElement("menu");
+            string[] x = name.Split('/');
+            XmlDocument xmlDoc = menu.OwnerDocument;
+            if (x.Length > 1)
+            {
+                int indexToRemove = 0;
+                string[] z = x.Where((source, index) => index != indexToRemove).ToArray();
+                string new_name = String.Join("/", z);
+                XmlElement node = xmlDoc.CreateElement("menu");
+                node.SetAttribute("name", z[0]);
+                XmlElement s_menu = makeMenu(node, new_name, item);
+                menu.AppendChild(node);
+            }
+            else
+            {
+                menu.SetAttribute("name", x[0]);
+                menu.SetAttribute("mode", "method");
+            }
+            return (menu);
+        }
+        XmlElement makeMenux(XmlElement menu, string name, Dictionary<string, string>item)
+        {
+            XmlDocument xmlDoc = menu.OwnerDocument;
+            MyDebug.Write("--makeMenu", xmlDoc.SelectSingleNode("root/test").InnerXml);
             string[] x = name.Split('/');
             if (x.Length > 1)
             {
-                menu.SetAttribute("name", x[0]);
-                //MyDebug.Write(">>>", x.Length.ToString(), name);
+                name = x[0];
+                XmlElement node = xmlDoc.CreateElement("menu");
+
                 int indexToRemove = 0;
-                x = x.Where((source, index) => index != indexToRemove).ToArray();
-                string xx = String.Join("/", x);
-                XmlElement s_menu = makeMenu(xmlDoc, xx, item);
+                string[] z = x.Where((source, index) => index != indexToRemove).ToArray();
+                node.SetAttribute("name", z[0]);
+                //node.SetAttribute("user", "ZZ");
+                string new_name = String.Join("/", z);
+                XmlElement s_menu = makeMenu(node, new_name, item);
                 menu.AppendChild(s_menu);
             }
             else
             {
-                //menu.SetAttribute("memo", "実行" + item["func"]);
-                menu.SetAttribute("name", name);
-                menu.SetAttribute("func", item["func"]);
+                XmlElement ret_menu = xmlDoc.CreateElement("menu");
+                MyDebug.Write("memo", "実行" + item["func"]);
+                menu.SetAttribute("name", x[0]);
                 menu.SetAttribute("mode", item["mode"]);
-                menu.SetAttribute("option", item["option"]);
+                //menu.SetAttribute("func", item["func"]);
+                //menu.SetAttribute("option", item["option"]);
                 //menu.SetAttribute("memo", x.Length.ToString());
             }
             //JObject Json = new JObject();
@@ -123,36 +175,36 @@ namespace WebApi_project.hostProc
                 { "func", "hostProc/TestC" },
                 { "option", "{year:2022,actual:5}" }
             } },
-            { "売上予測/売上予実_部門",new Dictionary<string, string>(){
-                { "mode", "json" },
-                { "func", "http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_部門_JSON.asp" },
-                { "option", "{year:2022,actual:5}" }
-            } },
-            { "売上予測/売上予実_分類",new Dictionary<string, string>(){
-                { "mode", "json" },
-                { "func", "http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_分類_JSON.asp" },
-                { "option", "{year:2022,actual:5}" }
-            } },
-            { "売上予測/売上予実_新規",new Dictionary<string, string>(){
-                { "mode", "json" },
-                { "func", "http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_新規_JSON.asp" },
-                { "option", "{year:2022,actual:5}" }
-            } },
-            { "売上予測/売上予実_新規2",new Dictionary<string, string>(){
-                { "mode", "json" },
-                { "func", "http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_新規2_JSON.asp" },
-                { "option", "{year:2022,actual:5}" }
-            } },
-            { "費用予測/費用状況",new Dictionary<string, string>(){
-                { "mode", "json" },
-                { "func", "http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp" },
-                { "option", "{year:2022,actual:5}" }
-            } },
-            { "要員情報/要員一覧",new Dictionary<string, string>(){
-                { "mode", "xml" },
-                { "func", "http://kansa.in.eandm.co.jp/Project/要員情報/要員一覧/xml/要員一覧_XML.asp" },
-                { "option", "{year:2022,actual:5}" }
-            } },
+            //{ "売上予測/売上予実_部門",new Dictionary<string, string>(){
+            //    { "mode", "json" },
+            //    { "func", "http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_部門_JSON.asp" },
+            //    { "option", "{year:2022,actual:5}" }
+            //} },
+            //{ "売上予測/売上予実_分類",new Dictionary<string, string>(){
+            //    { "mode", "json" },
+            //    { "func", "http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_分類_JSON.asp" },
+            //    { "option", "{year:2022,actual:5}" }
+            //} },
+            //{ "売上予測/売上予実_新規",new Dictionary<string, string>(){
+            //    { "mode", "json" },
+            //    { "func", "http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_新規_JSON.asp" },
+            //    { "option", "{year:2022,actual:5}" }
+            //} },
+            //{ "売上予測/売上予実_新規2",new Dictionary<string, string>(){
+            //    { "mode", "json" },
+            //    { "func", "http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_新規2_JSON.asp" },
+            //    { "option", "{year:2022,actual:5}" }
+            //} },
+            //{ "費用予測/費用状況",new Dictionary<string, string>(){
+            //    { "mode", "json" },
+            //    { "func", "http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp" },
+            //    { "option", "{year:2022,actual:5}" }
+            //} },
+            //{ "要員情報/要員一覧",new Dictionary<string, string>(){
+            //    { "mode", "xml" },
+            //    { "func", "http://kansa.in.eandm.co.jp/Project/要員情報/要員一覧/xml/要員一覧_XML.asp" },
+            //    { "option", "{year:2022,actual:5}" }
+            //} },
         };
     }
 }

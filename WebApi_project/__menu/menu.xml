@@ -9,7 +9,9 @@
   </menu>
   <menu name="関数(JSON)" memo="" >
   </menu>
-  
+  <menu name="関数(TEST)" memo="" >
+  </menu>
+
   <menu name="_Test-Dialog" memo="" >
     <menu name="editGroup" memo="" mode="url" value="/WebApi/project/_Test/Dialog/editGroup.html"/>
     <menu name="dialog" memo="" mode="url" value="/WebApi/project/_Test/Dialog/dialog.html"/>
