@@ -141,6 +141,7 @@
     <Content Include="_Test\Dialog\data\corp.json" />
     <Content Include="_Test\Dialog\data\sales.json" />
     <Content Include="_home\_Content\_Scripts\jquery.json2xml.js" />
+    <Content Include="_Test\_Test\menu2.xml" />
     <Content Include="__menu\debug\jquery.my.debug.js" />
     <Content Include="__menu\images\bg00.gif" />
     <Content Include="__menu\images\EM.png" />

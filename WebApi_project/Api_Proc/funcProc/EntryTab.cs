@@ -59,100 +59,73 @@ namespace WebApi_project.hostProc
             root.SetAttribute("name", "EMG");
             xmlDoc.AppendChild(root);
 
-            XmlElement new_menu = null;
             XmlElement root_xml = xmlDoc.CreateElement("test");
             root.AppendChild(root_xml);
             int i = 0;
             foreach (var item in xmlEntryTab)
             {
-                string[] x = item.Key.Split('/');
-                XmlElement menu = (XmlElement)root_xml.SelectSingleNode("menu");
-                //MyDebug.Write(menu.OuterXml);
-                if (menu == null)
-                {
-                    MyDebug.Write(item.Key, "null");
-                }
-                else
-                {
-                    MyDebug.Write(item.Key, menu.OuterXml);
-                }
-                if (menu == null)
-                {
-                    new_menu = xmlDoc.CreateElement("menu");
-                    new_menu.SetAttribute("aaa", i.ToString());
-                }
-                else if (menu.HasAttribute("mode"))
-                {
-                    new_menu = xmlDoc.CreateElement("menu");
-                    new_menu.SetAttribute("xxx", i.ToString());
-                }
-                else
-                {
-                    new_menu = xmlDoc.CreateElement("menu");
-                    new_menu.SetAttribute("zzz", i.ToString());
-
-                }
-                i++;
-                XmlElement s_menu = makeMenu(new_menu, item.Key, item.Value);
-                root_xml.AppendChild(s_menu);
+                XmlElement s_menu = makeMenu(root_xml, item.Key, item.Key, item.Value, i);
+                //root_xml.AppendChild(s_menu);
             }
-            //string jsonStr = JsonConvert.SerializeObject(xmlEntryTab);             // Json形式を文字列に
-            //var jo = JsonConvert.DeserializeObject(jsonStr);
-            //xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr, "root");       // Json文字列をXML　objectに
             return (xmlDoc);
         }
-        XmlElement makeMenu(XmlElement menu, string name, Dictionary<string, string> item)
+        XmlElement makeMenu(XmlElement p_menu, string name, string fullName, Dictionary<string, string> item, int i)
         {
             string[] x = name.Split('/');
-            XmlDocument xmlDoc = menu.OwnerDocument;
+            XmlDocument xmlDoc = p_menu.OwnerDocument;
+            XmlElement menu = xmlDoc.CreateElement("menu");
             if (x.Length > 1)
             {
                 int indexToRemove = 0;
                 string[] z = x.Where((source, index) => index != indexToRemove).ToArray();
                 string new_name = String.Join("/", z);
-                XmlElement node = xmlDoc.CreateElement("menu");
-                node.SetAttribute("name", z[0]);
-                XmlElement s_menu = makeMenu(node, new_name, item);
-                menu.AppendChild(node);
+                menu.SetAttribute("name", z[0]);
+                menu.SetAttribute("data", fullName);
+                menu.SetAttribute("i", i++.ToString());
+                XmlElement s_menu = makeMenu(menu, new_name, fullName, item, i);
+                p_menu.AppendChild(s_menu);
             }
             else
             {
                 menu.SetAttribute("name", x[0]);
                 menu.SetAttribute("mode", "method");
+                menu.SetAttribute("data", fullName);
+                menu.SetAttribute("i", i++.ToString());
+                p_menu.AppendChild(menu);
             }
             return (menu);
         }
-        XmlElement makeMenux(XmlElement menu, string name, Dictionary<string, string>item)
-        {
-            XmlDocument xmlDoc = menu.OwnerDocument;
-            MyDebug.Write("--makeMenu", xmlDoc.SelectSingleNode("root/test").InnerXml);
-            string[] x = name.Split('/');
-            if (x.Length > 1)
-            {
-                name = x[0];
-                XmlElement node = xmlDoc.CreateElement("menu");
+        //XmlElement makeMenux(XmlElement menu, string name, Dictionary<string, string>item)
+        //{
+        //    XmlDocument xmlDoc = menu.OwnerDocument;
+        //    MyDebug.Write("--makeMenu", xmlDoc.SelectSingleNode("root/test").InnerXml);
+        //    string[] x = name.Split('/');
+        //    if (x.Length > 1)
+        //    {
+        //        name = x[0];
+        //        XmlElement node = xmlDoc.CreateElement("menu");
 
-                int indexToRemove = 0;
-                string[] z = x.Where((source, index) => index != indexToRemove).ToArray();
-                node.SetAttribute("name", z[0]);
-                //node.SetAttribute("user", "ZZ");
-                string new_name = String.Join("/", z);
-                XmlElement s_menu = makeMenu(node, new_name, item);
-                menu.AppendChild(s_menu);
-            }
-            else
-            {
-                XmlElement ret_menu = xmlDoc.CreateElement("menu");
-                MyDebug.Write("memo", "実行" + item["func"]);
-                menu.SetAttribute("name", x[0]);
-                menu.SetAttribute("mode", item["mode"]);
-                //menu.SetAttribute("func", item["func"]);
-                //menu.SetAttribute("option", item["option"]);
-                //menu.SetAttribute("memo", x.Length.ToString());
-            }
-            //JObject Json = new JObject();
-            return (menu);
-        }
+        //        int indexToRemove = 0;
+        //        string[] z = x.Where((source, index) => index != indexToRemove).ToArray();
+        //        node.SetAttribute("name", z[0]);
+        //        //node.SetAttribute("user", "ZZ");
+        //        string new_name = String.Join("/", z);
+        //        XmlElement s_menu = makeMenu(node, new_name, item);
+        //        menu.AppendChild(s_menu);
+        //    }
+        //    else
+        //    {
+        //        XmlElement ret_menu = xmlDoc.CreateElement("menu");
+        //        MyDebug.Write("memo", "実行" + item["func"]);
+        //        menu.SetAttribute("name", x[0]);
+        //        menu.SetAttribute("mode", item["mode"]);
+        //        //menu.SetAttribute("func", item["func"]);
+        //        //menu.SetAttribute("option", item["option"]);
+        //        //menu.SetAttribute("memo", x.Length.ToString());
+        //    }
+        //    //JObject Json = new JObject();
+        //    return (menu);
+        //}
 
         public Dictionary<string, Dictionary<string, string>> xmlEntryTab = new Dictionary<string, Dictionary<string, string>>() {
             { "ABC",new Dictionary<string, string>(){

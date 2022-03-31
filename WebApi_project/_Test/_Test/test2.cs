@@ -40,7 +40,8 @@ namespace WebApi_project.hostProc
 
             var xmlDoc = EntryList();
 
-
+            //XmlDocument xmlDoc = new XmlDocument();
+            //xmlDoc.LoadXml("<root><menu name='ABC'/><menu mode='method' name='ABC'/></root>");
 
             //string jsonStr = JsonConvert.SerializeObject(Tab);             // Json形式を文字列に
 
