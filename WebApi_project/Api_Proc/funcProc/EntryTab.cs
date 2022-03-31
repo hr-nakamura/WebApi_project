@@ -11,45 +11,14 @@ namespace WebApi_project.hostProc
 {
     public partial class hostProc
     {
-        //XmlDocument methodList1()
-        //{
-        //    //Debug.Write("methodList");
-        //    XmlDocument xmlDoc = new XmlDocument();
-        //    xmlDoc.CreateXmlDeclaration("1.0", null, null);
-
-        //    var xmlMain = xmlDoc.CreateProcessingInstruction("xml", "version='1.0' encoding='Shift_JIS'");
-        //    XmlElement root = xmlDoc.CreateElement("root");
-        //    xmlDoc.AppendChild(xmlMain);
-        //    root.SetAttribute("name", "EMG");
-        //    xmlDoc.AppendChild(root);
-
-        //    XmlElement root_xml = xmlDoc.CreateElement("xml");
-        //    root.AppendChild(root_xml);
-
-        //    Dictionary<string, object> list = (Dictionary<string, object>)EntryList();
-        //    Dictionary<string, List<string>> Tab_xml = (Dictionary<string, List<string>>)list["xml"];
-
-        //    foreach (var x1 in Tab_xml)
-        //    {
-        //        XmlElement node1 = xmlDoc.CreateElement("menu");
-        //        string className = x1.Key;
-        //        node1.SetAttribute("name", className);
-        //        root_xml.AppendChild(node1);
-        //        foreach (var methodName in x1.Value)
-        //        {
-        //            XmlElement node2 = xmlDoc.CreateElement("menu");
-        //            node2.SetAttribute("type", "xml");
-        //            node2.SetAttribute("name", methodName);
-        //            node2.SetAttribute("mode", "method");
-        //            node2.SetAttribute("item", className);
-        //            node2.SetAttribute("func", methodName);
-        //            node1.AppendChild(node2);
-        //        }
-        //    }
-        //    return (xmlDoc);
-        //}
-        public XmlDocument EntryList()
+        public XmlDocument xmlEntry(string Item, string Json)
         {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc = LoadAsp(Item, Json);
+            return (xmlDoc);
+        }
+        public XmlDocument EntryList()
+            {
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.CreateXmlDeclaration("1.0", null, null);
 
@@ -80,6 +49,8 @@ namespace WebApi_project.hostProc
                 string[] z = x.Where((source, index) => index != indexToRemove).ToArray();
                 string new_name = String.Join("/", z);
                 menu.SetAttribute("name", z[0]);
+                menu.SetAttribute("mode", item["mode"]);
+                menu.SetAttribute("func", item["func"]);
                 menu.SetAttribute("data", fullName);
                 menu.SetAttribute("i", i++.ToString());
                 XmlElement s_menu = makeMenu(menu, new_name, fullName, item, i);
@@ -88,7 +59,8 @@ namespace WebApi_project.hostProc
             else
             {
                 menu.SetAttribute("name", x[0]);
-                menu.SetAttribute("mode", "method");
+                menu.SetAttribute("mode", item["mode"]);
+                menu.SetAttribute("func", item["func"]);
                 menu.SetAttribute("data", fullName);
                 menu.SetAttribute("i", i++.ToString());
                 p_menu.AppendChild(menu);
@@ -128,25 +100,40 @@ namespace WebApi_project.hostProc
         //}
 
         public Dictionary<string, Dictionary<string, string>> xmlEntryTab = new Dictionary<string, Dictionary<string, string>>() {
-            { "ABC",new Dictionary<string, string>(){
-                { "mode", "method" },
-                { "func", "hostProc/TestD" },
-                { "option", "{year:2022,actual:5}" }
+            //{ "ABC",new Dictionary<string, string>(){
+            //    { "mode", "method" },
+            //    { "func", "hostProc/TestD" },
+            //    { "option", "{year:2022,actual:5}" }
+            //} },
+            //{ "ABC/機能",new Dictionary<string, string>(){
+            //    { "mode", "method" },
+            //    { "func", "hostProc/TestA" },
+            //    { "option", "{year:2022,actual:5}" }
+            //} },
+            //{ "ABC/機能/xyz",new Dictionary<string, string>(){
+            //    { "mode", "method" },
+            //    { "func", "hostProc/TestB" },
+            //    { "option", "{year:2022,actual:5}" }
+            //} },            
+            //{ "ABC/機能/zzz",new Dictionary<string, string>(){
+            //    { "mode", "method" },
+            //    { "func", "hostProc/TestC" },
+            //    { "option", "{year:2022,actual:5}" }
+            //} },
+            { "projectCostProc/xml/projectInfo_XML_Detail",new Dictionary<string, string>(){
+                { "mode", "xml" },
+                { "func", "http://kansa.in.eandm.co.jp/Project/projectCostProc/xml/projectInfo_XML_Detail.asp" },
+                { "option", "{pNum:20214693}" }
             } },
-            { "ABC/機能",new Dictionary<string, string>(){
-                { "mode", "method" },
-                { "func", "hostProc/TestA" },
-                { "option", "{year:2022,actual:5}" }
+            { "projectCostProc/xml/projectInfo_XML_Join",new Dictionary<string, string>(){
+                { "mode", "xml" },
+                { "func", "http://kansa.in.eandm.co.jp/Project/projectCostProc/xml/projectInfo_XML_Join.asp" },
+                { "option", "{pNum:20214693}" }
             } },
-            { "ABC/機能/xyz",new Dictionary<string, string>(){
-                { "mode", "method" },
-                { "func", "hostProc/TestB" },
-                { "option", "{year:2022,actual:5}" }
-            } },            
-            { "ABC/機能/zzz",new Dictionary<string, string>(){
-                { "mode", "method" },
-                { "func", "hostProc/TestC" },
-                { "option", "{year:2022,actual:5}" }
+            { "projectCostProc/xml/projectInfoList_XML",new Dictionary<string, string>(){
+                { "mode", "xml" },
+                { "func", "http://kansa.in.eandm.co.jp/Project/projectCostProc/xml/projectInfoList_XML.asp" },
+                { "option", "{s_yymm:202110,mCnt:12}" }
             } },
             //{ "売上予測/売上予実_部門",new Dictionary<string, string>(){
             //    { "mode", "json" },

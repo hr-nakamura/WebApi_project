@@ -32,9 +32,9 @@ namespace WebApi_project.Controllers
         {
             paraOut("GET", Item, Json);
 
-            var hProc = new entryProc.entryProcEntry();
+            var hProc = new hostProc.hostProc();
 
-            XmlDocument xmlDoc = hProc.Entry(Item, Json);
+            XmlDocument xmlDoc = hProc.xmlEntry(Item, Json);
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
             return (response);

@@ -56,8 +56,8 @@
                 var menu_data = $.loadXMLDoc("menu.xml");
 
                 // methodListの取得
-                var methodList2 = $.loadXMLDoc("menu2.xml");
-                //var methodList2 = $.WebApi("GET", WebApi_url_test);
+                //var methodList2 = $.loadXMLDoc("menu2.xml");
+                var methodList2 = $.WebApi("GET", WebApi_url_test);
                 var menu_data = $.loadXMLDoc("menu.xml");
 
                 menu_Xml = menuData_Join(menu_data, methodList,methodList2);
@@ -105,10 +105,21 @@
         function menu_clickX(o) {
             var mode = o.mode;          // method,xml,json
             var func = o.func;          // url , method
-            var value = o.text;      // parameter
+            var value = o.name;      // parameter
+            var data = o.data;
+            //var value = item + "/" + func;
+            var xmlDoc = $.WebApi("GET", WebApi_url_test, data, Send_Option);
+            var Str = $.xml2str(xmlDoc);
+            //StrOut(Str);
+            $.storage("viewStr", Str);
+            $("iframe.iframe_content").attr("src", "Util/viewValue.html");
         }
         function menu_click(o) {
             var m_type = o.type;
+            if (typeof (o.type) == "undefined") {
+                menu_clickX(o);
+                return;
+            }
             var mode = o.mode;
             var item = o.item;
             var func = o.func;
