@@ -20,9 +20,10 @@ namespace WebApi_project.hostProc
             var Tab = xmlEntryTab[name];
             var mode = Tab["mode"];
             var func = Tab["func"];
-            var opt = Tab["option"];
-            var option = JsonMerge(opt, s_option);
+            string opt = Tab["option"];
 
+
+            string option = JsonMerge(opt, s_option);
             if (mode == "json")
             {
                 var oJson = (JObject)LoadJson(func, option);

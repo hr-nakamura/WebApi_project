@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root name="EMG">
 	<menu name="監査" memo="" >
-    <menu name="監査ページ" memo="" mode="url" value="http://kansa.in.eandm.co.jp/Project"/>
-    <menu name="監査ページ(NEW)" memo="" mode="url" value="/WebApi/project/_home/manageMenu.html"/>
-  </menu>
+        <menu name="監査ページ" memo="" mode="url" value="http://kansa.in.eandm.co.jp/Project"/>
+        <menu name="監査ページ(NEW)" memo="" mode="url" value="/WebApi/project/_home/manageMenu.html"/>
+    </menu>
 
-  <menu name="関数(XML)" memo="" >
-  </menu>
-  <menu name="関数(JSON)" memo="" >
-  </menu>
-  <menu name="関数(TEST)" memo="" >
-  </menu>
+	<menu name="関数(TEST)" memo="" >
+	</menu>
+	<menu name="関数(XML)" memo="" >
+    </menu>
+    <menu name="関数(JSON)" memo="" >
+    </menu>
 
   <menu name="_Test-Dialog" memo="" >
     <menu name="editGroup" memo="" mode="url" value="/WebApi/project/_Test/Dialog/editGroup.html"/>

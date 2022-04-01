@@ -20,20 +20,24 @@ namespace WebApi_project.Controllers
         // GET api/<controller>/5
         public HttpResponseMessage Get()
         {
+            // 呼び出せるリストを戻す
             var hProc = new hostProc.hostProc();
-            XmlDocument xmlDoc = hProc.methodList();
+            XmlDocument xmlDoc = hProc.EntryList();
+            //XmlDocument xmlDoc = new XmlDocument();
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
             return (response);
 
         }
-        public HttpResponseMessage Get(string Item,  string Json)
+        public HttpResponseMessage Get(string Item, string Json)
         {
             paraOut("GET", Item, Json);
 
-            var hProc = new entryProc.entryProcEntry();
+            Json = Json.Trim('"');
 
-            XmlDocument xmlDoc = hProc.Entry(Item, Json);
+            var hProc = new hostProc.hostProc();
+
+            XmlDocument xmlDoc = hProc.xmlEntry(Item, Json);
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
             return (response);
@@ -54,8 +58,8 @@ namespace WebApi_project.Controllers
             var Json = para.Json;
             paraOut("POST", Item, Json);
 
-            var hProc = new entryProc.entryProcEntry();
-            XmlDocument xmlDoc = hProc.Entry(Item, Json);
+            var hProc = new hostProc.hostProc();
+            XmlDocument xmlDoc = hProc.xmlEntry(Item, Json);
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
             return (response);
@@ -69,8 +73,8 @@ namespace WebApi_project.Controllers
             var Json = para.Json;
             paraOut("PUT", Item, Json);
 
-            var hProc = new entryProc.entryProcEntry();
-            XmlDocument xmlDoc = hProc.Entry(Item, Json);
+            var hProc = new hostProc.hostProc();
+            XmlDocument xmlDoc = hProc.xmlEntry(Item, Json);
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
             return (response);
@@ -83,8 +87,8 @@ namespace WebApi_project.Controllers
             var Json = para.Json;
             paraOut("Delete", Item, Json);
 
-            var hProc = new entryProc.entryProcEntry();
-            XmlDocument xmlDoc = hProc.Entry(Item, Json);
+            var hProc = new hostProc.hostProc();
+            XmlDocument xmlDoc = hProc.xmlEntry(Item, Json);
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
             return (response);
@@ -105,5 +109,6 @@ namespace WebApi_project.Controllers
             work.Add(Json);
             //Debug.WriteLog("[" + string.Join("][", work) + "]");
         }
+
     }
 }

@@ -52,12 +52,12 @@
                 WebApi_url_test = url + "/WebApi/project/api/test";
 
                 // methodListの取得
-                var methodList = $.WebApi("GET", WebApi_url_xml);
+                var methodList = $.WebApi("GET", WebApi_url_test);
                 var menu_data = $.loadXMLDoc("menu.xml");
 
                 // methodListの取得
                 //var methodList2 = $.loadXMLDoc("menu2.xml");
-                var methodList2 = $.WebApi("GET", WebApi_url_test);
+                var methodList2 = $.WebApi("GET", WebApi_url_xml);
                 var menu_data = $.loadXMLDoc("menu.xml");
 
                 menu_Xml = menuData_Join(menu_data, methodList,methodList2);
@@ -104,11 +104,9 @@
     <script type="text/javascript">
         function menu_clickX(o) {
             var mode = o.mode;          // method,xml,json
-            var func = o.func;          // url , method
-            var value = o.name;      // parameter
-            var data = o.data;
-            //var value = item + "/" + func;
-            var xmlDoc = $.WebApi("GET", WebApi_url_test, data, Send_Option);
+            var option = o.option;      // parameter
+            var item = o.item;
+            var xmlDoc = $.WebApi("GET", WebApi_url, item, option);
             var Str = $.xml2str(xmlDoc);
             //StrOut(Str);
             $.storage("viewStr", Str);
@@ -131,17 +129,9 @@
                 //Send_Option.limitYear = "2019";
 
 
-                if (m_type == "method") {
-                    var value = item + "/" + func;
-                    var xmlDoc = $.WebApi("GET", WebApi_url_test, value, Send_Option);
-                    var Str = $.xml2str(xmlDoc);
-                    //StrOut(Str);
-                    $.storage("viewStr", Str);
-                    $("iframe.iframe_content").attr("src", "Util/viewValue.html");
-                }
                 if (m_type == "xml") {
                     var value = item + "/" + func;
-                    var xmlDoc = $.WebApi("GET", WebApi_url, value, Send_Option);
+                    var xmlDoc = $.WebApi("GET", WebApi_url_test, value, Send_Option);
                     var Str = $.xml2str(xmlDoc);
                     //StrOut(Str);
                     $.storage("viewStr", Str);

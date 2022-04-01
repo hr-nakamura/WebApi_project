@@ -22,7 +22,7 @@
             window.status = "WebApi[" + mode + "]";
             var options = {
                 Item: item,
-                Json: JSON.stringify(json)
+                Json: (json)
            };
             var result = $.ajax({
                 url: url,
@@ -47,7 +47,7 @@
             window.status = "WebApi_json[" + mode + "]";
             var options = {
                 Item: item,
-                Json: JSON.stringify(json)
+                Json: (json)
             };
             var result = $.ajax({
                 url: url,

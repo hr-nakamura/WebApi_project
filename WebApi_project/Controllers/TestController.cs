@@ -19,10 +19,8 @@ namespace WebApi_project.Controllers
     {
         public HttpResponseMessage Get()
         {
-            // 呼び出せるリストを戻す
             var hProc = new hostProc.hostProc();
-            XmlDocument xmlDoc = hProc.EntryList();
-            //XmlDocument xmlDoc = new XmlDocument();
+            XmlDocument xmlDoc = hProc.methodList();
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
             return (response);
@@ -32,9 +30,9 @@ namespace WebApi_project.Controllers
         {
             paraOut("GET", Item, Json);
 
-            var hProc = new hostProc.hostProc();
+            var hProc = new entryProc.entryProcEntry();
 
-            XmlDocument xmlDoc = hProc.xmlEntry(Item, Json);
+            XmlDocument xmlDoc = hProc.Entry(Item, Json);
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
             return (response);
@@ -106,6 +104,5 @@ namespace WebApi_project.Controllers
             work.Add(Json);
             //Debug.WriteLog("[" + string.Join("][", work) + "]");
         }
-
     }
 }
