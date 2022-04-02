@@ -33,8 +33,6 @@ namespace WebApi_project.Controllers
         {
             paraOut("GET", Item, Json);
 
-            Json = Json.Trim('"');
-
             var hProc = new hostProc.hostProc();
 
             XmlDocument xmlDoc = hProc.xmlEntry(Item, Json);

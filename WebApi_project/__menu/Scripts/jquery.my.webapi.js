@@ -19,10 +19,11 @@
         },
         $.WebApi = function(mode, url, item, json, callback) {
             //WebApi_url = hostName + "/WebApi/project/api/xml";
+            var xjson = { year:2021 };
             window.status = "WebApi[" + mode + "]";
             var options = {
                 Item: item,
-                Json: JSON.stringify(json)
+                Json: (typeof(json) == "object" ? JSON.stringify(json) : json)
            };
             var result = $.ajax({
                 url: url,
@@ -47,7 +48,7 @@
             window.status = "WebApi_json[" + mode + "]";
             var options = {
                 Item: item,
-                Json: JSON.stringify(json)
+                Json: (typeof (json) == "object" ? JSON.stringify(json) : json)
             };
             var result = $.ajax({
                 url: url,
