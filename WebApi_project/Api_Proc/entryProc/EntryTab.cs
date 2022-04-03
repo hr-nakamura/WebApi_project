@@ -17,7 +17,7 @@ namespace WebApi_project.hostProc
             xmlDoc = LoadAsp(Item, Json);
             return (xmlDoc);
         }
-        public XmlDocument EntryList()
+        public XmlDocument xmlEntryList()
             {
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.CreateXmlDeclaration("1.0", null, null);

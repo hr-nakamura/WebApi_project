@@ -7,13 +7,13 @@ using DebugHost;
 
 namespace WebApi_project.entryProc
 {
-    partial class entryProcEntry
+    partial class entryProc
     {
-        public  entryProcEntry()
+        public  entryProc()
         {
             //Debug.WriteLog("hostProcEntry Start");
         }
-        ~entryProcEntry()
+        ~entryProc()
         {
             //Debug.WriteLog("hostProcEntry End");
         }
