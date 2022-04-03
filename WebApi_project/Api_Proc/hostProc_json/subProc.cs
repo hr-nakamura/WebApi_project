@@ -95,7 +95,7 @@ namespace WebApi_project.hostProc
                 MethodInfo method = classType.GetMethod(methodName);
                 if (method == null) throw new Exception("calss名[" + className + "] method名[" + methodName + "]が不明です");
                 xmlDoc = (XmlDocument)method.Invoke(obj, new object[] { s_option });
-                if (xmlDoc.InnerText == "") xmlDoc.LoadXml("<root/>");
+                if (xmlDoc.InnerXml == "") xmlDoc.LoadXml("<root/>");
                 return (xmlDoc);
             }
             catch (Exception ex)

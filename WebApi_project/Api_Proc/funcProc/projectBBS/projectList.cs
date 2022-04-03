@@ -31,6 +31,10 @@ namespace WebApi_project.hostProc
             var limitYear = o_json.limitYear;
 
             Dictionary<string, object> Tab = (Dictionary<string, object>)json_projectList(Json);
+
+            //XmlDocument xmlDoc1 = JsonConvert.DeserializeXmlNode(Tab.ToString(),"root");       // Json文字列をXML　objectに
+
+
             List<DB_projectNum> Data = (List<DB_projectNum>)Tab["Data"];
 
             XmlDocument xmlDoc = new XmlDocument();
@@ -43,7 +47,7 @@ namespace WebApi_project.hostProc
             XmlElement projectList = xmlDoc.CreateElement("projectList");
 
             var comment = xmlDoc.CreateComment("comment");
-            xmlDoc.AppendChild(xmlMain);
+            //xmlDoc.AppendChild(xmlMain);
             xmlDoc.AppendChild(comment);
             xmlDoc.AppendChild(root);
             foreach (DB_projectNum project in Data)
