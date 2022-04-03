@@ -55,8 +55,8 @@ namespace WebApi_project.hostProc
             MyDebug.Write(xxx);
 
 
-            //JObject oJson = readJson("http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp" + makeOption(option, "?"), "Shift_JIS");
-            JObject oJson = readJson("http://localhost/Asp/Test/test1.json", "utf-8");
+            JObject oJson = readJson("http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp" + makeOption(option, "?"), "Shift_JIS");
+            //JObject oJson = readJson("http://localhost/Asp/Test/test.json", "utf-8");
             //string s_json = Newtonsoft.Json.JsonConvert.SerializeObject(oJson);       // jsonをjson文字列に変換
 
 

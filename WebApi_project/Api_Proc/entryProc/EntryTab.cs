@@ -68,23 +68,23 @@ namespace WebApi_project.hostProc
         public Dictionary<string, Dictionary<string, string>> xmlEntryTab = new Dictionary<string, Dictionary<string, string>>() {
             { "ABC",new Dictionary<string, string>(){
                 { "mode", "method" },
-                { "func", "hostProc/TestD" },
+                { "func", "projectInfo/projectTest" },
                 { "option", "{year:2022,actual:5}" }
             } },
             { "ABC/機能",new Dictionary<string, string>(){
                 { "mode", "method" },
-                { "func", "hostProc/TestA" },
+                { "func", "projectInfo/projectTest" },
                 { "option", "{year:2022,actual:5}" }
             } },
             { "ABC/機能/xyz",new Dictionary<string, string>(){
                 { "mode", "method" },
-                { "func", "hostProc/TestB" },
+                { "func", "projectInfo/projectTest" },
                 { "option", "{year:2022,actual:5}" }
             } },
-            { "ABC/機能/zzz",new Dictionary<string, string>(){
+            { "projectBBS/projectList",new Dictionary<string, string>(){
                 { "mode", "method" },
-                { "func", "hostProc/TestC" },
-                { "option", "{year:2022,actual:5}" }
+                { "func", "projectBBS/projectList" },
+                { "option", "{beforBBS:'2021/06/30 00:00:00',visitBBS:'2021/07/07 10:12:12',limitYear:2019}" }
             } },
             { "projectCostProc/xml/projectInfo_XML_Detail",new Dictionary<string, string>(){
                 { "mode", "xml" },

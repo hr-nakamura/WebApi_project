@@ -17,9 +17,10 @@ namespace WebApi_project.hostProc
 {
     public partial class 費用予測 : hostProc
     {
-        public XmlDocument 費用状況(String s_option)
+        XmlDocument 費用状況(String s_option)
         {
-            XmlDocument xmlDoc = LoadAsp("費用状況", s_option);
+            XmlDocument xmlDoc = new XmlDocument();
+            //XmlDocument xmlDoc = LoadAsp("費用状況", s_option);
             return (xmlDoc);
         }
     }

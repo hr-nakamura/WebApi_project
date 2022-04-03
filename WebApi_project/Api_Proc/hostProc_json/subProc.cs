@@ -12,56 +12,69 @@ namespace WebApi_project.hostProc
 {
     public partial class hostProc
     {
-
-
         public XmlDocument LoadAsp(string name, string s_option)
         {
             XmlDocument xmlDoc = new XmlDocument();
-            var Tab = xmlEntryTab[name];
-            var mode = Tab["mode"];
-            var func = Tab["func"];
-            string opt = Tab["option"];
+            try
+            {
+
+                var Tab = xmlEntryTab[name];
+                var mode = Tab["mode"];
+                var func = Tab["func"];
+                string opt = Tab["option"];
 
 
-            string option = JsonMerge(opt, s_option);
-            if (mode == "json")
-            {
-                var oJson = (JObject)LoadJson(func, option);
-                xmlDoc = JsonToXml(oJson);
-            }
-            else if(mode == "xml")
-            {
-                xmlDoc = LoadXml(func, option);
-            }
-            else if( mode == "method")
-            {
-                xmlDoc = LoadMethod(func, option);
-            }
-            var Declaration = xmlDoc.FirstChild.GetType().ToString();
+                string option = JsonMerge(opt, s_option);
+                if (mode == "json")
+                {
+                    var oJson = (JObject)LoadJson(func, option);
+                    xmlDoc = JsonToXml(oJson);
+                }
+                else if (mode == "xml")
+                {
+                    xmlDoc = LoadXml(func, option);
+                }
+                else if (mode == "method")
+                {
+                    xmlDoc = LoadMethod(func, option);
+                }
+                var Declaration = xmlDoc.FirstChild.GetType().ToString();
 
-            if( Declaration != "System.Xml.XmlDeclaration")
-            {
-                XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
-                xmlDoc.PrependChild(declaration);
-            }
-            AddComment(xmlDoc, name);
-            AddComment(xmlDoc, makeOption(option));
-            //AddComment(xmlDoc, option);
-            if (xmlDoc.InnerText == "")
-            {
-                AddComment(xmlDoc, func);
-                XmlElement root = xmlDoc.DocumentElement;
-                root.SetAttribute("memo", "データは見つかりませんでした");
-            }
+                if (Declaration != "System.Xml.XmlDeclaration")
+                {
+                    XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
+                    xmlDoc.PrependChild(declaration);
+                }
+                AddComment(xmlDoc, name);
+                AddComment(xmlDoc, makeOption(option));
+                //AddComment(xmlDoc, option);
+                if (xmlDoc.InnerText == "")
+                {
+                    AddComment(xmlDoc, func);
+                    XmlElement root = xmlDoc.DocumentElement;
+                    root.SetAttribute("memo", "データは見つかりませんでした");
+                }
 
-            return (xmlDoc);
+                return (xmlDoc);
 
-        }
-        public XmlDocument TestX(string url, string s_option)
-        {
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml("<root name='TestX'><TestX>TestX</TestX></root>");
-            return (xmlDoc);
+            }
+            catch (Exception ex)
+            {
+                xmlDoc.CreateXmlDeclaration("1.0", null, null);
+
+                var xmlMain = xmlDoc.CreateProcessingInstruction("xml", "version='1.0' encoding='Shift_JIS'");
+                XmlElement error = xmlDoc.CreateElement("error");
+                var comment = xmlDoc.CreateComment(ex.Message);
+
+                //xmlDoc.AppendChild(xmlMain);
+                xmlDoc.AppendChild(error);
+                error.AppendChild(comment);
+                return (xmlDoc);
+            }
+            finally
+            {
+                //Debug.WriteErr("finally");
+            }
         }
         private XmlDocument LoadMethod(string url, string s_option)
         {
@@ -80,8 +93,8 @@ namespace WebApi_project.hostProc
                 if (classType == null) throw new Exception("calss名[" + className + "]が不明です");
                 var obj = Activator.CreateInstance(classType);
                 MethodInfo method = classType.GetMethod(methodName);
-                if (method == null) throw new Exception("method名[" + methodName + "]が不明です");
-                xmlDoc = (XmlDocument)method.Invoke(obj, new object[] { url, s_option });
+                if (method == null) throw new Exception("calss名[" + className + "] method名[" + methodName + "]が不明です");
+                xmlDoc = (XmlDocument)method.Invoke(obj, new object[] { s_option });
                 if (xmlDoc.InnerText == "") xmlDoc.LoadXml("<root/>");
                 return (xmlDoc);
             }

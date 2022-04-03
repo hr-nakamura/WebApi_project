@@ -36,7 +36,7 @@ namespace WebApi_project.hostProc
             //url = "http://localhost/Asp/projectCostProc/projectInfoDetail.json";
 
             hostWeb h = new hostWeb();
-            string jsonStr = h.GetRequest(url);
+            string jsonStr = h.GetRequest(url,"Shift_JIS");
 
             return (JObject.Parse(jsonStr));
         }

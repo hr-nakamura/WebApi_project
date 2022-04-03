@@ -28,8 +28,6 @@ namespace WebApi_project.Controllers
         }
         public HttpResponseMessage Get(string Item, string Json)
         {
-            paraOut("GET", Item, Json);
-
             var hProc = new entryProc.entryProc();
 
             XmlDocument xmlDoc = hProc.Entry(Item, Json);
@@ -41,17 +39,8 @@ namespace WebApi_project.Controllers
         // POST api/<controller>
         public HttpResponseMessage Post([FromBody] ProjectJson para)
         {
-
-            HttpContext context = HttpContext.Current;
-            var Request = context.Request;
-            var work1 = Request.UrlReferrer.Host;
-            var work2 = Request.UrlReferrer.LocalPath;
-            var work3 = Request.UrlReferrer.Port;
-            ////Debug.Write(work);
-
             var Item = para.Item;
             var Json = para.Json;
-            paraOut("POST", Item, Json);
 
             var hProc = new entryProc.entryProc();
             XmlDocument xmlDoc = hProc.Entry(Item, Json);
@@ -66,7 +55,6 @@ namespace WebApi_project.Controllers
         {
             var Item = para.Item;
             var Json = para.Json;
-            paraOut("PUT", Item, Json);
 
             var hProc = new entryProc.entryProc();
             XmlDocument xmlDoc = hProc.Entry(Item, Json);
@@ -80,7 +68,6 @@ namespace WebApi_project.Controllers
         {
             var Item = para.Item;
             var Json = para.Json;
-            paraOut("Delete", Item, Json);
 
             var hProc = new entryProc.entryProc();
             XmlDocument xmlDoc = hProc.Entry(Item, Json);
@@ -93,16 +80,6 @@ namespace WebApi_project.Controllers
             HttpResponseMessage response = new HttpResponseMessage();
             response.Content = new StringContent(value);
             return (response);
-        }
-        void paraOut(String Mode, String Item, String Json)
-        {
-            string[] ItemWork = Item.Split('/');
-            var work = new List<string>();
-            work.Add(Mode);
-            work.Add(ItemWork[0]);
-            work.Add(ItemWork[1]);
-            work.Add(Json);
-            //Debug.WriteLog("[" + string.Join("][", work) + "]");
         }
     }
 }
