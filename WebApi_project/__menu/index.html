@@ -47,17 +47,17 @@
                 url = (location.protocol == "https:" && window.location.port != "" ? "" : url)
 
                 //hostName = "http://kansa.in.eandm.co.jp";
-                WebApi_url_json = url + "/WebApi/project/api/json";
-                WebApi_url_xml = url + "/WebApi/project/api/xml";
+                WebApi_url = url + "/WebApi/project/api/xml";
                 WebApi_url_test = url + "/WebApi/project/api/test";
-
-                // methodListの取得
-                var methodList = $.WebApi("GET", WebApi_url_test);
-                var menu_data = $.loadXMLDoc("menu.xml");
+                WebApi_url_json = url + "/WebApi/project/api/json";
 
                 // methodListの取得
                 //var methodList2 = $.loadXMLDoc("menu2.xml");
-                var methodList2 = $.WebApi("GET", WebApi_url_xml);
+                var methodList = $.WebApi("GET", WebApi_url);
+                var menu_data = $.loadXMLDoc("menu.xml");
+
+                // methodListの取得
+                var methodList2 = $.WebApi("GET", WebApi_url_test);
                 var menu_data = $.loadXMLDoc("menu.xml");
 
                 menu_Xml = menuData_Join(menu_data, methodList,methodList2);
@@ -82,12 +82,12 @@
             var xml_methodTop = $(menu_xml).find("menu[name='関数(XML)']");
             xml_methodTop.prepend(xml_menus);
 
-            var json_menus = $(methodList).find("root>json>menu");
-            var json_methodTop = $(menu_xml).find("menu[name='関数(JSON)']");
+            var json_menus = $(methodList2).find("root>json>menu");
+            var json_methodTop = $(menu_xml).find("menu[name='関数(TEST_JSON)']");
             json_methodTop.prepend(json_menus);
 
-            var test_menus = $(methodList2).find("root>test>menu");
-            var test_methodTop = $(menu_xml).find("menu[name='関数(TEST)']");
+            var test_menus = $(methodList2).find("root>xml>menu");
+            var test_methodTop = $(menu_xml).find("menu[name='関数(TEST_XML)']");
             test_methodTop.prepend(test_menus);
 
             return (menu_xml);
@@ -102,22 +102,23 @@
 
     </script>
     <script type="text/javascript">
-        function menu_clickX(o) {
+        function menu_click(o) {
             var mode = o.mode;          // method,xml,json
             var option = o.option;      // parameter
             var item = o.item;
+            var type = o.type;
+            if (type == "url" || type == "xml" || type == "json") {
+                menu_click_test(o);
+                return;
+            }
             var xmlDoc = $.WebApi("GET", WebApi_url, item, option);
             var Str = $.xml2str(xmlDoc);
             //StrOut(Str);
             $.storage("viewStr", Str);
             $("iframe.iframe_content").attr("src", "Util/viewValue.html");
         }
-        function menu_click(o) {
+        function menu_click_test(o) {
             var m_type = o.type;
-            if (typeof (o.type) == "undefined") {
-                menu_clickX(o);
-                return;
-            }
             var mode = o.mode;
             var item = o.item;
             var func = o.func;

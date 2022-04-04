@@ -18,7 +18,7 @@ namespace WebApi_project.hostProc
             try
             {
 
-                var Tab = xmlEntryTab[name];
+                var Tab = EntryTab[name];
                 var mode = Tab["mode"];
                 var func = Tab["func"];
                 string opt = Tab["option"];
@@ -40,7 +40,7 @@ namespace WebApi_project.hostProc
                 }
                 var Declaration = xmlDoc.FirstChild.GetType().ToString();
 
-                if (Declaration != "System.Xml.XmlDeclaration")
+                if ( !(Declaration == "System.Xml.XmlDeclaration" || Declaration == "System.Xml.XmlProcessingInstruction") )
                 {
                     XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
                     xmlDoc.PrependChild(declaration);
@@ -48,7 +48,7 @@ namespace WebApi_project.hostProc
                 AddComment(xmlDoc, name);
                 AddComment(xmlDoc, makeOption(option));
                 //AddComment(xmlDoc, option);
-                if (xmlDoc.InnerText == "")
+                if (xmlDoc.InnerXml == "")
                 {
                     AddComment(xmlDoc, func);
                     XmlElement root = xmlDoc.DocumentElement;

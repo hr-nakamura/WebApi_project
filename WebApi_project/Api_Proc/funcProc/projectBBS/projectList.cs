@@ -47,7 +47,7 @@ namespace WebApi_project.hostProc
             XmlElement projectList = xmlDoc.CreateElement("projectList");
 
             var comment = xmlDoc.CreateComment("comment");
-            //xmlDoc.AppendChild(xmlMain);
+            xmlDoc.AppendChild(xmlMain);
             xmlDoc.AppendChild(comment);
             xmlDoc.AppendChild(root);
             foreach (DB_projectNum project in Data)

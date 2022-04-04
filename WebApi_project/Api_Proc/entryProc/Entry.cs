@@ -10,13 +10,13 @@ namespace WebApi_project.hostProc
 {
     public partial class hostProc
     {
-        public XmlDocument xmlEntry(string Item, string Json)
+        public XmlDocument Entry(string Item, string Json)
         {
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc = LoadAsp(Item, Json);
             return (xmlDoc);
         }
-        public XmlDocument xmlEntryList()
+        public XmlDocument EntryList()
         {
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.CreateXmlDeclaration("1.0", null, null);
@@ -27,10 +27,10 @@ namespace WebApi_project.hostProc
             root.SetAttribute("name", "EMG");
             xmlDoc.AppendChild(root);
 
-            XmlElement root_xml = xmlDoc.CreateElement("test");
+            XmlElement root_xml = xmlDoc.CreateElement("xml");
             root.AppendChild(root_xml);
             int i = 0;
-            foreach (var item in xmlEntryTab)
+            foreach (var item in EntryTab)
             {
                 makeMenu(root_xml, item.Key, item.Key, item.Value, i);
                 //root_xml.AppendChild(s_menu);

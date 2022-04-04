@@ -26,7 +26,7 @@ namespace WebApi_project.hostProc
         {
             MyDebug.Write("projectTest2");
 
-            var xmlDoc = xmlEntryList();
+            var xmlDoc = EntryList();
 
             //XmlDocument xmlDoc = new XmlDocument();
             //xmlDoc.LoadXml("<root><menu name='ABC'/><menu mode='method' name='ABC'/></root>");

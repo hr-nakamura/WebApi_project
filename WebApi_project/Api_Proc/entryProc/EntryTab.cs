@@ -11,7 +11,7 @@ namespace WebApi_project.hostProc
 {
     public partial class hostProc
     {
-        public Dictionary<string, Dictionary<string, string>> xmlEntryTab = new Dictionary<string, Dictionary<string, string>>() {
+        public Dictionary<string, Dictionary<string, string>> EntryTab = new Dictionary<string, Dictionary<string, string>>() {
             { "projectTest",new Dictionary<string, string>(){
                 { "mode", "method" },
                 { "func", "projectInfo/projectTest" },
