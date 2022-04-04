@@ -107,7 +107,7 @@
             var option = o.option;      // parameter
             var item = o.item;
             var type = o.type;
-            if (type == "url" || type == "xml" || type == "json") {
+            if (type == "url" || type == "method") {
                 menu_click_test(o);
                 return;
             }
@@ -124,13 +124,13 @@
             var func = o.func;
             var option = o.option;
             var value = o.value;
-            if (mode == "method") {
+            if (m_type == "method") {
                 $.debug("click", mode, item + "/" + func);
                 //Send_Option.visitBBS = "2019/07/01 10:10:00";
                 //Send_Option.limitYear = "2019";
 
 
-                if (m_type == "xml") {
+                if (mode == "xml") {
                     var value = item + "/" + func;
                     var xmlDoc = $.WebApi("GET", WebApi_url_test, value, Send_Option);
                     var Str = $.xml2str(xmlDoc);
@@ -138,7 +138,7 @@
                     $.storage("viewStr", Str);
                     $("iframe.iframe_content").attr("src", "Util/viewValue.html");
                 }
-                else if (m_type == "json") {
+                else if (mode == "json") {
                     var value = item + "/" + func;
                     var Str = $.WebApi_json("GET", WebApi_url_json, value, Send_Option);
                     //$.alert.json(Str);
@@ -148,7 +148,7 @@
                 else {
                 }
             }
-            else if (mode == "url") {
+            else if (m_type == "url") {
                 $.debug("click", mode, value);
                 $("iframe.iframe_content").attr("src", value);
             }
