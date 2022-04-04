@@ -52,7 +52,7 @@
             var result = $.ajax({
                 url: url,
                 type: mode,
-                data: options,
+                data: json,
                 dataType: 'json',
                 dataFilter: function (data, type) {
                     return (data);

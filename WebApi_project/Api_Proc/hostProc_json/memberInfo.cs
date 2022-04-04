@@ -30,7 +30,7 @@ namespace WebApi_project.hostProc
         public object json_memberInfo(string Json)
         {
             var o_json = JsonConvert.DeserializeObject<para_mailInfo>(Json);
-            if(o_json.mailAddr == null ) o_json.mailAddr = "azuma@psl-em.co.jp";
+            if (o_json.mailAddr == null) o_json.mailAddr = "azuma@psl-em.co.jp";
 
             s_memberInfo memberInfo; 
             string mailAddr = o_json.mailAddr;

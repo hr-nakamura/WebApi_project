@@ -58,7 +58,7 @@ namespace WebApi_project.hostProc
             {
                 XmlElement menu = xmlDoc.CreateElement("menu");
                 menu.SetAttribute("name", x[0]);
-                menu.SetAttribute("mode", item["mode"]);
+                menu.SetAttribute("type", item["type"]);
                 menu.SetAttribute("option", item["option"]);
                 menu.SetAttribute("item", fullName);
                 p_menu.AppendChild(menu);

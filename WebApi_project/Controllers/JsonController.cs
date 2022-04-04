@@ -4,6 +4,7 @@ using System.Web;
 using System.Web.Http;
 using System.Xml;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Net.Http;
 
 using WebApi_project.Models;
@@ -35,6 +36,18 @@ namespace WebApi_project.Controllers
         }
         public HttpResponseMessage Get(string Item, string Json)
         {
+            paraOut("GET", Item, Json);
+
+            var hProc = new entryProc.entryProc();
+            object Obj = hProc.testEntry_json(Item, Json);
+
+            HttpResponseMessage response = response_conv(JsonConvert.SerializeObject(Obj));
+            return (response);
+        }
+
+        public HttpResponseMessage Get(string Item, JObject o_Json)
+        {
+            string Json = "";
             paraOut("GET", Item, Json);
 
             var hProc = new entryProc.entryProc();

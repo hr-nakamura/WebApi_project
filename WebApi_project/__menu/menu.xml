@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root name="EMG">
-	<menu name="監査" memo="" >
-        <menu name="監査ページ" memo="" type="url" value="http://kansa.in.eandm.co.jp/Project"/>
-        <menu name="監査ページ(NEW)" memo="" type="url" value="/WebApi/project/_home/manageMenu.html"/>
-    </menu>
+    <menu name="監査ページ(NEW)" memo="" mode="url" url="/WebApi/project/_home/manageMenu.html"/>
+
 
 	<menu name="関数(XML)" memo="" >
 	</menu>
@@ -13,36 +11,36 @@
     </menu>
 
   <menu name="_Test-Dialog" memo="" >
-    <menu name="editGroup" memo="" type="url" value="/WebApi/project/_Test/Dialog/editGroup.html"/>
-    <menu name="dialog" memo="" type="url" value="/WebApi/project/_Test/Dialog/dialog.html"/>
-    <menu name="dialog1" memo="" type="url" value="/WebApi/project/_Test/Dialog/dialog1.html"/>
-    <menu name="test" memo="" type="url" value="/WebApi/project/_Test/Dialog/test.html"/>
+    <menu name="editGroup" memo="" mode="url" url="/WebApi/project/_Test/Dialog/editGroup.html"/>
+    <menu name="dialog" memo="" mode="url" url="/WebApi/project/_Test/Dialog/dialog.html"/>
+    <menu name="dialog1" memo="" mode="url" url="/WebApi/project/_Test/Dialog/dialog1.html"/>
+    <menu name="test" memo="" mode="url" url="/WebApi/project/_Test/Dialog/test.html"/>
   </menu>
 
 	<menu name="_Test" memo="" >
-    <menu name="History" memo="" type="url" value="/WebApi/project/_Test/History/History.html"/>
-    <menu name="QOSMIO" memo="" type="url" value="/WebApi/project/_Test/QOSMIO/qosmio.html"/>
-    <menu name="TEST2(html)" memo="" type="url" value="/WebApi/project/_Test/TEST/test.html"/>
+    <menu name="History" memo="" mode="url" url="/WebApi/project/_Test/History/History.html"/>
+    <menu name="QOSMIO" memo="" mode="url" url="/WebApi/project/_Test/QOSMIO/qosmio.html"/>
+    <menu name="TEST2(html)" memo="" mode="url" url="/WebApi/project/_Test/TEST/test.html"/>
   </menu>
   <menu name="TEST" memo="" >
-    <menu name="要員一覧" memo="" type="url" value="/WebApi/project/_home/要員情報/要員一覧.html"/>
+    <menu name="要員一覧" memo="" mode="url" url="/WebApi/project/_home/要員情報/要員一覧.html"/>
   </menu>
 
   <menu name="__menu" memo="" >
-    <menu name="viewJson" memo="" type="url" value="/WebApi/project/__menu/Util/viewJson/viewJson.html"/>
-    <menu name="viewXML" memo="" type="url" value="/WebApi/project/__menu/Util/viewXML/viewXML_Main.html"/>
+    <menu name="viewJson" memo="" mode="url" url="/WebApi/project/__menu/Util/viewJson/viewJson.html"/>
+    <menu name="viewXML" memo="" mode="url" url="/WebApi/project/__menu/Util/viewXML/viewXML_Main.html"/>
   </menu>
 
 
   <menu name="機能1" memo="" >
-    <menu name="機能2-1" memo="" type="url" value="/WebApi/project/__menu/Util/viewJson/viewJson.html"/>
-    <menu name="機能2-2" memo="" type="url" value="/WebApi/project/__menu/Util/viewXML/viewXML_Main.html"/>
+    <menu name="機能2-1" memo="" mode="url" url="/WebApi/project/__menu/Util/viewJson/viewJson.html"/>
+    <menu name="機能2-2" memo="" mode="url" url="/WebApi/project/__menu/Util/viewXML/viewXML_Main.html"/>
     <menu name="機能2" memo="" >
-      <menu name="viewJson" memo="" type="url" value="/WebApi/project/__menu/Util/viewJson/viewJson.html"/>
-      <menu name="viewXML" memo="" type="url" value="/WebApi/project/__menu/Util/viewXML/viewXML_Main.html"/>
+      <menu name="viewJson" memo="" mode="url" url="/WebApi/project/__menu/Util/viewJson/viewJson.html"/>
+      <menu name="viewXML" memo="" mode="url" url="/WebApi/project/__menu/Util/viewXML/viewXML_Main.html"/>
       <menu name="機能3" memo="" >
-        <menu name="viewJson" memo="" type="url" value="/WebApi/project/__menu/Util/viewJson/viewJson.html"/>
-        <menu name="viewXML" memo="" type="url" value="/WebApi/project/__menu/Util/viewXML/viewXML_Main.html"/>
+        <menu name="viewJson" memo="" mode="url" url="/WebApi/project/__menu/Util/viewJson/viewJson.html"/>
+        <menu name="viewXML" memo="" mode="url" url="/WebApi/project/__menu/Util/viewXML/viewXML_Main.html"/>
       </menu>
     </menu>
   </menu>

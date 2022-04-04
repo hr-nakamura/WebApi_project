@@ -103,43 +103,32 @@
     </script>
     <script type="text/javascript">
         function menu_click(o) {
-            var mode = o.mode;          // method,xml,json
-            var option = o.option;      // parameter
-            var item = o.item;
-            var type = o.type;
-            if (type == "url" || type == "method") {
+            var mode = o.mode;          // method,url,undefined
+            if (mode == "url" || mode == "method") {
                 menu_click_test(o);
                 return;
             }
-            var xmlDoc = $.WebApi("GET", WebApi_url, item, option);
+            var xmlDoc = $.WebApi("GET", WebApi_url, o.item, o.option);
             var Str = $.xml2str(xmlDoc);
             //StrOut(Str);
             $.storage("viewStr", Str);
             $("iframe.iframe_content").attr("src", "Util/viewValue.html");
         }
         function menu_click_test(o) {
-            var m_type = o.type;
             var mode = o.mode;
-            var item = o.item;
-            var func = o.func;
-            var option = o.option;
-            var value = o.value;
-            if (m_type == "method") {
-                $.debug("click", mode, item + "/" + func);
-                //Send_Option.visitBBS = "2019/07/01 10:10:00";
-                //Send_Option.limitYear = "2019";
-
-
-                if (mode == "xml") {
-                    var value = item + "/" + func;
+            if (mode == "method") {
+                $.debug("click", mode, o.item + "/" + o.func);
+                var type = o.type;
+                var option = o.option;
+                var value = o.item + "/" + o.func;
+                if (type == "xml") {
                     var xmlDoc = $.WebApi("GET", WebApi_url_test, value, Send_Option);
                     var Str = $.xml2str(xmlDoc);
                     //StrOut(Str);
                     $.storage("viewStr", Str);
                     $("iframe.iframe_content").attr("src", "Util/viewValue.html");
                 }
-                else if (mode == "json") {
-                    var value = item + "/" + func;
+                else if (type == "json") {
                     var Str = $.WebApi_json("GET", WebApi_url_json, value, Send_Option);
                     //$.alert.json(Str);
                     $.storage("viewStr", JSON.stringify(Str, null, 2));
@@ -148,9 +137,9 @@
                 else {
                 }
             }
-            else if (m_type == "url") {
-                $.debug("click", mode, value);
-                $("iframe.iframe_content").attr("src", value);
+            else if (mode == "url") {
+                $.debug("click", mode, o.url);
+                $("iframe.iframe_content").attr("src", o.url);
             }
         }
 

@@ -19,22 +19,22 @@ namespace WebApi_project.hostProc
             {
 
                 var Tab = EntryTab[name];
-                var mode = Tab["mode"];
+                var type = Tab["type"];
                 var func = Tab["func"];
                 string opt = Tab["option"];
 
 
                 string option = JsonMerge(opt, s_option);
-                if (mode == "json")
+                if (type == "json")
                 {
                     var oJson = (JObject)LoadJson(func, option);
                     xmlDoc = JsonToXml(oJson);
                 }
-                else if (mode == "xml")
+                else if (type == "xml")
                 {
                     xmlDoc = LoadXml(func, option);
                 }
-                else if (mode == "method")
+                else if (type == "method")
                 {
                     xmlDoc = LoadMethod(func, option);
                 }

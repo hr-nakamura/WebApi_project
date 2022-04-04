@@ -206,8 +206,8 @@ namespace WebApi_project.hostProc
                 foreach (var methodName in x1.Value)
                 {
                     XmlElement node2 = xmlDoc.CreateElement("menu");
-                    node2.SetAttribute("type", "method");
-                    node2.SetAttribute("mode", "xml");
+                    node2.SetAttribute("mode", "method");
+                    node2.SetAttribute("type", "xml");
                     node2.SetAttribute("name", methodName);
                     node2.SetAttribute("item", className);
                     node2.SetAttribute("func", methodName);
@@ -223,8 +223,8 @@ namespace WebApi_project.hostProc
                 foreach (var methodName in x1.Value)
                 {
                     XmlElement node2 = xmlDoc.CreateElement("menu");
-                    node2.SetAttribute("type", "method");
-                    node2.SetAttribute("mode", "json");
+                    node2.SetAttribute("mode", "method");
+                    node2.SetAttribute("type", "json");
                     node2.SetAttribute("name", methodName);
                     node2.SetAttribute("item", className);
                     node2.SetAttribute("func", methodName);
