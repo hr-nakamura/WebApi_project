@@ -332,7 +332,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Api_Proc\entryProc\Entry.cs" />
+    <Compile Include="Api_Proc\entryProc\testEntry.cs" />
     <Compile Include="Api_Proc\hostProc\hostProc.cs" />
     <Compile Include="Api_Proc\hostProc\hostWeb.cs">
       <SubType>ASPXCodeBehind</SubType>

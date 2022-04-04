@@ -30,7 +30,7 @@ namespace WebApi_project.Controllers
         {
             var hProc = new entryProc.entryProc();
 
-            XmlDocument xmlDoc = hProc.Entry(Item, Json);
+            XmlDocument xmlDoc = hProc.testEntry(Item, Json);
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
             return (response);
@@ -43,7 +43,7 @@ namespace WebApi_project.Controllers
             var Json = para.Json;
 
             var hProc = new entryProc.entryProc();
-            XmlDocument xmlDoc = hProc.Entry(Item, Json);
+            XmlDocument xmlDoc = hProc.testEntry(Item, Json);
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
             return (response);
@@ -57,7 +57,7 @@ namespace WebApi_project.Controllers
             var Json = para.Json;
 
             var hProc = new entryProc.entryProc();
-            XmlDocument xmlDoc = hProc.Entry(Item, Json);
+            XmlDocument xmlDoc = hProc.testEntry(Item, Json);
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
             return (response);
@@ -70,7 +70,7 @@ namespace WebApi_project.Controllers
             var Json = para.Json;
 
             var hProc = new entryProc.entryProc();
-            XmlDocument xmlDoc = hProc.Entry(Item, Json);
+            XmlDocument xmlDoc = hProc.testEntry(Item, Json);
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
             return (response);
