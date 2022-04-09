@@ -75,7 +75,5 @@ namespace WebApi_project.hostProc
 			}
 			return (target.Day);
 		}
-
-
 	}
 }

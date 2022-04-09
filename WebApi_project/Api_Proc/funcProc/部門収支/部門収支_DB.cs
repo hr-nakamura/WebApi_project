@@ -102,9 +102,7 @@ namespace WebApi_project.hostProc
 
 				SqlConnection DB = new SqlConnection(DB_connectString);
 				DB.Open();
-				Debug.noWrite("DB Open", DB_connectString);
 				SqlDataReader reader = dbRead(DB, SQL);
-				Debug.noWrite("reader Start");
 
 				while (reader.Read())
 				{
@@ -172,12 +170,9 @@ namespace WebApi_project.hostProc
 					//};
 					//dataTab.Add(data);
 				}
-				Debug.noWrite("reader Close");
 				reader.Close();
 
-				Debug.noWrite("DB Close");
 				DB.Close();
-				Debug.noWrite("DB Dispose");
 				DB.Dispose();
 			}
 			return (dataTab);
@@ -275,9 +270,7 @@ namespace WebApi_project.hostProc
 
 				SqlConnection DB = new SqlConnection(DB_connectString);
 			DB.Open();
-			Debug.noWrite("DB Open", DB_connectString);
 			SqlDataReader reader = dbRead(DB, SQL);
-			Debug.noWrite("reader Start");
 
 			while (reader.Read())
 			{
@@ -330,12 +323,9 @@ namespace WebApi_project.hostProc
 			}
 
 
-			Debug.noWrite("reader Close");
 			reader.Close();
 
-			Debug.noWrite("DB Close");
 			DB.Close();
-			Debug.noWrite("DB Dispose");
 			DB.Dispose();
 
 			}
@@ -428,9 +418,7 @@ namespace WebApi_project.hostProc
 
 			SqlConnection DB = new SqlConnection(DB_connectString);
 			DB.Open();
-			Debug.noWrite("DB Open", DB_connectString);
 			SqlDataReader reader = dbRead(DB, SQL);
-			Debug.noWrite("reader Start");
 
 			while (reader.Read())
 			{
@@ -462,12 +450,9 @@ namespace WebApi_project.hostProc
 				Tab[secName]["実績"]["売上高"]["売上"][n] += amount;
 			}
 
-			Debug.noWrite("reader Close");
 			reader.Close();
 
-			Debug.noWrite("DB Close");
 			DB.Close();
-			Debug.noWrite("DB Dispose");
 			DB.Dispose();
 
 			}
@@ -611,9 +596,7 @@ namespace WebApi_project.hostProc
 				string SQL = string.Join(" UNION ALL ", SQLTab);
 				SqlConnection DB = new SqlConnection(DB_connectString);
 			DB.Open();
-			Debug.noWrite("DB Open", DB_connectString);
 			SqlDataReader reader = dbRead(DB, SQL);
-			Debug.noWrite("reader Start");
 			while (reader.Read())
 			{
 				S_name = (string)reader["S_name"].ToString();
@@ -654,17 +637,13 @@ namespace WebApi_project.hostProc
 				{
 					var work1 = "[" + yymm + "][" + 科目 + "][" + amount + "]";
 					work1 = string.Concat("[", 分類, "][", yymm, "][", 科目, "][", amount);
-                    Debug.WriteLog("[会計データ集計での不明科目データ]" + work1);
                 }
 
 			}
 
-			Debug.noWrite("reader Close");
 			reader.Close();
 
-			Debug.noWrite("DB Close");
 			DB.Close();
-			Debug.noWrite("DB Dispose");
 			DB.Dispose();
 
 			}
@@ -792,9 +771,7 @@ namespace WebApi_project.hostProc
 			double cost;
 			SqlConnection DB = new SqlConnection(DB_connectString);
 			DB.Open();
-			Debug.noWrite("DB Open", DB_connectString);
 			SqlDataReader reader = dbRead(DB, SQL);
-			Debug.noWrite("reader Start");
 			while (reader.Read())
 			{
 				sql.Append("      S_name  = @S_name,");
@@ -837,12 +814,9 @@ namespace WebApi_project.hostProc
 
 			}
 
-			Debug.noWrite("reader Close");
 			reader.Close();
 
-			Debug.noWrite("DB Close");
 			DB.Close();
-			Debug.noWrite("DB Dispose");
 			DB.Dispose();
 
 			}
@@ -936,9 +910,7 @@ namespace WebApi_project.hostProc
 
 				SqlConnection DB = new SqlConnection(DB_connectString);
 			DB.Open();
-			Debug.noWrite("DB Open", DB_connectString);
 			SqlDataReader reader = dbRead(DB, SQL);
-			Debug.noWrite("reader Start");
 			int 付替;
 			int yymm, n, 直間;
 			double cost;
@@ -975,12 +947,9 @@ namespace WebApi_project.hostProc
 
 			}
 
-			Debug.noWrite("reader Close");
 			reader.Close();
 
-			Debug.noWrite("DB Close");
 			DB.Close();
-			Debug.noWrite("DB Dispose");
 			DB.Dispose();
 
 			}
@@ -1126,9 +1095,7 @@ namespace WebApi_project.hostProc
 				string SQL = string.Join(" UNION ALL ", SQLTab);
 				SqlConnection DB = new SqlConnection(DB_connectString);
 			DB.Open();
-			Debug.noWrite("DB Open", DB_connectString);
 			SqlDataReader reader = dbRead(DB, SQL);
-			Debug.noWrite("reader Start");
 			int yymm, n, 直間;
 			double amount;
 			string 種別, 大項目, 項目;
@@ -1166,12 +1133,9 @@ namespace WebApi_project.hostProc
 ;
 			}
 
-			Debug.noWrite("reader Close");
 			reader.Close();
 
-			Debug.noWrite("DB Close");
 			DB.Close();
-			Debug.noWrite("DB Dispose");
 			DB.Dispose();
 
             }
