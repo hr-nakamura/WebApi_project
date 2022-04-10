@@ -6,11 +6,91 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Linq;
 using DebugHost;
+using WebApi_project.Models;
 
 namespace WebApi_project.hostProc
 {
     public partial class hostProc
     {
+        public Dictionary<string, EntryInfo> projectInfo = new Dictionary<string, EntryInfo>() {
+            { "projectTest", new EntryInfo{
+                type = "method",
+                data = "projectInfo/projectTest",
+                option = "{year:2022,actual:5}"
+                }
+            },
+        };
+        public Dictionary<string, EntryInfo> projectBBS = new Dictionary<string, EntryInfo>(){
+            { "projectBBS/projectList", new EntryInfo{
+                type = "method",
+                data ="projectBBS/projectList",
+                option ="{beforBBS:'2021/06/30 00:00:00',visitBBS:'2021/07/07 10:12:12',limitYear:2019}"
+                }
+            },
+        };
+        public Dictionary<string, EntryInfo> projectCostProc = new Dictionary<string, EntryInfo>(){
+            { "projectCostProc/xml/projectInfo_XML_Detail", new EntryInfo{
+                type = "xml",
+                data ="http://kansa.in.eandm.co.jp/Project/projectCostProc/xml/projectInfo_XML_Detail.asp",
+                option ="{pNum:20214693}"
+                }
+            },
+            { "projectCostProc/xml/projectInfo_XML_Join", new EntryInfo{
+                type = "xml",
+                data ="http://kansa.in.eandm.co.jp/Project/projectCostProc/xml/projectInfo_XML_Join.asp",
+                option ="{pNum:20214693}"
+                }
+            },
+            { "projectCostProc/xml/projectInfoList_XML", new EntryInfo{
+                type = "xml",
+                data ="http://kansa.in.eandm.co.jp/Project/projectCostProc/xml/projectInfoList_XML.asp",
+                option ="{pNum:20214693}"
+                }
+            },
+        };
+        public Dictionary<string, EntryInfo> 売上予測 = new Dictionary<string, EntryInfo>(){
+            { "売上予測/売上予実_部門", new EntryInfo{
+                type = "json",
+                data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_部門_JSON.asp",
+                option ="{year:2022,actual:5}"
+                }
+            },
+            { "売上予測/売上予実_分類", new EntryInfo{
+                type = "json",
+                data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_分類_JSON.asp",
+                option ="{year:2022,actual:5}"
+                }
+            },
+            { "売上予測/売上予実_新規", new EntryInfo{
+                type = "json",
+                data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_新規_JSON.asp",
+                option ="{year:2022,actual:5}"
+                }
+            },
+            { "売上予測/売上予実_新規2", new EntryInfo{
+                type = "json",
+                data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_新規2_JSON.asp",
+                option ="{year:2022,actual:5}"
+                }
+            },
+        };
+        public Dictionary<string, EntryInfo> 費用予測 = new Dictionary<string, EntryInfo>(){
+            { "費用予測/費用状況", new EntryInfo{
+                type = "json",
+                data ="http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp",
+                option ="{year:2022,actual:5}"
+                }
+            },
+        };
+        public Dictionary<string, EntryInfo> 要員情報 = new Dictionary<string, EntryInfo>(){
+            { "要員情報/要員一覧", new EntryInfo{
+                type = "xml",
+                data ="http://kansa.in.eandm.co.jp/Project/要員情報/要員一覧/xml/要員一覧_XML.asp",
+                option ="{year:2022,actual:5}"
+                }
+            },
+        };
+
         public Dictionary<string, Dictionary<string, string>> EntryTab = new Dictionary<string, Dictionary<string, string>>() {
             { "projectTest",new Dictionary<string, string>(){
                 { "type", "method" },
@@ -37,6 +117,8 @@ namespace WebApi_project.hostProc
                 { "func", "http://kansa.in.eandm.co.jp/Project/projectCostProc/xml/projectInfoList_XML.asp" },
                 { "option", "{s_yymm:202110,mCnt:12}" }
             } },
+
+
             { "売上予測/売上予実_部門",new Dictionary<string, string>(){
                 { "type", "json" },
                 { "func", "http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_部門_JSON.asp" },

@@ -20,13 +20,140 @@ using DebugHost;
 
 namespace WebApi_project.hostProc
 {
-    partial class _Test_Json : hostProc
+    public class _Test_Json2 : hostProc
     {
+
+        public Dictionary<string, EntryInfo> 要員情報XX = new Dictionary<string, EntryInfo>(){
+            { "要員情報/要員一覧", new EntryInfo{
+                type = "xml",
+                data ="http://kansa.in.eandm.co.jp/Project/要員情報/要員一覧/xml/要員一覧_XML.asp",
+                option ="{year:2022,actual:5}"
+                }
+            },
+        };
+        public Dictionary<TKey, TValue> Marge<TKey, TValue>(Dictionary<TKey, TValue> a,
+                                                            Dictionary<TKey, TValue> b)
+        {
+            var table = new Dictionary<TKey, TValue>();
+            foreach (var item in a)
+            {
+                table[item.Key] = item.Value;
+            }
+
+            foreach (var item in b)
+            {
+                if (!table.ContainsKey(item.Key))
+                {
+                    table[item.Key] = item.Value;
+                }
+            }
+
+            return table;
+        }
+        public Dictionary<string, object> mList()
+        {
+            //object o_obj = new object();
+            String nameSpace = "WebApi_project.hostProc";
+
+            Dictionary<string, List<string>> xTab = new Dictionary<string, List<string>>();
+            Dictionary<string, List<string>> Tab_xml = new Dictionary<string, List<string>>();
+            Dictionary<string, List<string>> Tab_json = new Dictionary<string, List<string>>();
+            Dictionary<string, object> Tab = new Dictionary<string, object>();
+            Tab.Add("xml", Tab_xml);
+            Tab.Add("json", Tab_json);
+            Assembly assm = Assembly.GetExecutingAssembly();
+
+            List<string> className_X = new List<string>()
+                {
+                "hostWeb"
+                };
+            List<string> methdName_X = new List<string>()
+                {
+                "Entry","Json2Xml","JsonToXml","methodList"
+                };
+
+            // 指定した名前空間のクラスをすべて取得
+            var types = assm.GetTypes()
+                .Where(p => p.Namespace == nameSpace)
+                .OrderBy(o => o.Name)
+                .Select(s => s);
+
+            foreach (Type t in types)
+            {
+                //Debug.Write("====",t.Name);
+                string className = t.Name;
+                var mList = t.GetMethods();
+
+                foreach (var m in mList)
+                {
+                    string methodName = m.Name;
+                    if (className == "_Test_Json2")
+                    {
+                        MyDebug.Write(className, methodName, m.ReturnType.ToString());
+                    }
+
+                        //MyDebug.Write(className, methodName, m.ReturnType.ToString());
+                    if (!className_X.Contains(className) && !methdName_X.Contains(methodName))
+                    {
+                        if (m.ReturnType == typeof(IDictionary<string,EntryInfo>))
+                        {
+                            MyDebug.Write("############",className, methodName, m.ReturnType.ToString());
+                        }
+
+                        //Debug.Write(className, methodName, m.ReturnType.ToString());
+                        if (m.ReturnType == typeof(IDictionary<string, EntryInfo>))
+                        {
+                            if (!Tab_xml.ContainsKey(className))
+                            {
+                                var methodTab = new List<string>();
+                                Tab_xml.Add(className, methodTab);
+                            }
+                            //Type classType = Type.GetType(nameSpace + "." + className);
+                            //var obj = Activator.CreateInstance(classType);
+
+                            Tab_xml[className].Add(methodName);
+                            //Debug.Write(className, methodName, m.ReturnType.ToString());
+                        }
+                        else if (m.ReturnType == typeof(Object))
+                        {
+                            if (!Tab_json.ContainsKey(className))
+                            {
+                                var methodTab = new List<string>();
+                                Tab_json.Add(className, methodTab);
+                            }
+                            //Type classType = Type.GetType(nameSpace + "." + className);
+                            //var obj = Activator.CreateInstance(classType);
+
+                            Tab_json[className].Add(methodName);
+                            //MyDebug.Write(className, methodName, m.ReturnType.ToString());
+                        }
+                    }
+                    else
+                    {
+                        //MyDebug.Write("###",className, methodName, m.ReturnType.ToString());
+                    }
+                }
+            }
+            return (Tab);
+        }
+
         public XmlDocument projectTest2(String Json)
         {
             MyDebug.Write("projectTest2");
 
-            var xmlDoc = EntryList();
+            var x = mList();
+
+            var EntryTab = new Dictionary<string,EntryInfo>();
+            EntryTab = Marge(EntryTab, projectInfo);
+            EntryTab = Marge(EntryTab, projectCostProc);
+
+            string entryName = "projectCostProc/xml/projectInfo_XML_Detail";
+            MyDebug.Write(EntryTab[entryName].type);
+            MyDebug.Write(EntryTab[entryName].data);
+            MyDebug.Write(EntryTab[entryName].option);
+
+
+            //            var xmlDoc = EntryList();
 
             //XmlDocument xmlDoc = new XmlDocument();
             //xmlDoc.LoadXml("<root><menu name='ABC'/><menu mode='method' name='ABC'/></root>");
@@ -35,7 +162,7 @@ namespace WebApi_project.hostProc
 
             //XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(jsonStr,"root");       // Json文字列をXML　objectに
 
-            //XmlDocument xmlDoc = new XmlDocument();
+            XmlDocument xmlDoc = new XmlDocument();
             return (xmlDoc);
         }
         public JObject json_projectTest2(String Json)

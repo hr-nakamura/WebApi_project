@@ -26,6 +26,7 @@ namespace WebApi_project.hostProc
         public XmlDocument projectTest(String opt_Json)
         {
             MyDebug.Write("projectTest");
+
             /*
                         var para = new JsonOption.projectPara();
                         var str_para = JsonConvert.SerializeObject(para);
