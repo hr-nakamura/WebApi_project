@@ -16,7 +16,7 @@ namespace WebApi_project.hostProc
 
         public XmlDocument Entry(string Item, string Json)
         {
-            EntryTab = GetEntryTab();
+            if( EntryTab.Count == 0 ) EntryTab = GetEntryTab();
 
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc = LoadAsp(EntryTab,Item, Json);
@@ -60,7 +60,7 @@ namespace WebApi_project.hostProc
                 //AddComment(xmlDoc, option);
                 if (xmlDoc.InnerXml == "")
                 {
-                    AddComment(xmlDoc, func);
+                    AddComment(xmlDoc, data);
                     XmlElement root = xmlDoc.DocumentElement;
                     root.SetAttribute("memo", "データは見つかりませんでした");
                 }

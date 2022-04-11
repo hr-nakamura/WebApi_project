@@ -20,7 +20,7 @@ using DebugHost;
 
 namespace WebApi_project.hostProc
 {
-    public class _Test_Json2 : hostProc
+    public class _Test_Json : hostProc
     {
 
         private Dictionary<TKey, TValue> Marge<TKey, TValue>(Dictionary<TKey, TValue> a,
@@ -64,7 +64,7 @@ namespace WebApi_project.hostProc
         }
         void xxx2()
         {
-            Type t = typeof(WebApi_project.hostProc._Test_Json2);
+            Type t = typeof(WebApi_project.hostProc._Test_Json);
             MemberInfo[] members = t.GetMembers(BindingFlags.Public | BindingFlags.Instance);
             foreach (MemberInfo m in members)
             {
@@ -78,7 +78,7 @@ namespace WebApi_project.hostProc
             MyDebug.Write("projectTest2");
             var EntryTab = GetEntryTab();
 
-            string entryName = "projectCostProc/xml/projectInfo_XML_Detail";
+            string entryName = "projectCostProc/projectInfo_XML_Detail";
             MyDebug.Write(EntryTab[entryName].type);
             MyDebug.Write(EntryTab[entryName].data);
             MyDebug.Write(EntryTab[entryName].option);
