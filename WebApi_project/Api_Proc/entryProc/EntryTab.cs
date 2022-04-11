@@ -12,14 +12,14 @@ namespace WebApi_project.hostProc
 {
     public partial class hostProc
     {
-        //public Dictionary<string, EntryInfo> projectInfo = new Dictionary<string, EntryInfo>() {
-        //    { "projectTest", new EntryInfo{
-        //        type = "method",
-        //        data = "projectInfo/projectTest",
-        //        option = "{year:2022,actual:5}"
-        //        }
-        //    },
-        //};
+        public Dictionary<string, EntryInfo> projectInfo = new Dictionary<string, EntryInfo>() {
+            { "projectTest", new EntryInfo{
+                type = "method",
+                data = "projectInfo/projectTest",
+                option = "{year:2022,actual:5}"
+                }
+            },
+        };
         public Dictionary<string, EntryInfo> projectBBS = new Dictionary<string, EntryInfo>(){
             { "projectBBS/projectList", new EntryInfo{
                 type = "method",
