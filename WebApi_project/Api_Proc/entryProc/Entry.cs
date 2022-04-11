@@ -58,7 +58,7 @@ namespace WebApi_project.hostProc
                 AddComment(xmlDoc, name);
                 AddComment(xmlDoc, makeOption(option));
                 //AddComment(xmlDoc, option);
-                if (xmlDoc.InnerXml == "")
+                if (xmlDoc.InnerText == "")
                 {
                     AddComment(xmlDoc, data);
                     XmlElement root = xmlDoc.DocumentElement;
@@ -241,7 +241,6 @@ namespace WebApi_project.hostProc
             root.AppendChild(root_xml);
             foreach (var item in EntryTab)
             {
-                var a = 1;
                 makeMenu(root_xml, item.Key, item.Key,item.Value, EntryTab);
                 //root_xml.AppendChild(s_menu);
             }
