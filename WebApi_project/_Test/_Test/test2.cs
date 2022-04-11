@@ -20,7 +20,7 @@ using DebugHost;
 
 namespace WebApi_project.hostProc
 {
-    public class _Test_Json : hostProc
+    partial class _Test_Json : hostProc
     {
 
         private Dictionary<TKey, TValue> Marge<TKey, TValue>(Dictionary<TKey, TValue> a,

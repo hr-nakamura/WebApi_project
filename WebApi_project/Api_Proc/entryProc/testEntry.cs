@@ -22,6 +22,7 @@ namespace WebApi_project.entryProc
             XmlDocument xmlDoc = new XmlDocument();
             try
             {
+                Item = Item.Trim('/');
                 string[] ItemWork = Item.Split('/');
                 string className = ItemWork[0];
                 string methodName = ItemWork[1];

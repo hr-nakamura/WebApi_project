@@ -100,6 +100,7 @@ namespace WebApi_project.hostProc
                 if (NetErrorCount++ < MAX_SHOW_ERROR)
                 {
                     MyDebug.Write(MyDebug.LOG_NG, "GetRequest(" + url + ")[" + ex.Message + "]");
+                    //returnBuff = "{"+ex.Message+"}";
                 }
             }
             finally

@@ -12,12 +12,14 @@ namespace WebApi_project.hostProc
 {
     public partial class hostProc
     {
-        Dictionary<string, EntryInfo> EntryTab = new Dictionary<string, EntryInfo>();
+        private static Dictionary<string, EntryInfo> EntryTab = new Dictionary<string, EntryInfo>();
 
         public XmlDocument Entry(string Item, string Json)
         {
-            if( EntryTab.Count == 0 ) EntryTab = GetEntryTab();
-
+            if (EntryTab.Count == 0)
+            {
+                EntryTab = GetEntryTab();
+            }
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc = LoadAsp(EntryTab,Item, Json);
             return (xmlDoc);
@@ -91,6 +93,7 @@ namespace WebApi_project.hostProc
             XmlDocument xmlDoc = new XmlDocument();
             try
             {
+                url = url.Trim('/');
                 string[] ItemWork = url.Split('/');
                 if (ItemWork.Length != 2) throw new Exception("引数[" + s_option + "]が不明です");
 
@@ -128,13 +131,12 @@ namespace WebApi_project.hostProc
         }
         private XmlDocument LoadXml(string url, string s_option)
         {
+            XmlDocument xmlDoc = new XmlDocument();
             url += makeOption(s_option, "?");
             hostWeb h = new hostWeb();
             string xmlStr = h.GetRequest(url, "Shift_JIS");
-            XmlDocument xmlDoc = new XmlDocument();
             if (xmlStr == null) xmlStr = "<root/>";
             xmlDoc.LoadXml(xmlStr);
-
             return (xmlDoc);
         }
         private JObject LoadJson(string url, string s_option)

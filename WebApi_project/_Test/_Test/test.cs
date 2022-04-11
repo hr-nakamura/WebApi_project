@@ -21,7 +21,7 @@ using DebugHost;
 
 namespace WebApi_project.hostProc
 {
-    partial class projectInfo : hostProc 
+    partial class _Test_Json : hostProc 
     {
         public XmlDocument projectTest(String opt_Json)
         {

@@ -13,7 +13,7 @@ using DebugHost;
 
 namespace WebApi_project.hostProc
 {
-    public partial class projectInfo
+    public partial class projectInfo : hostProc
     {
         public XmlDocument 部門リスト(String Json)
         {
