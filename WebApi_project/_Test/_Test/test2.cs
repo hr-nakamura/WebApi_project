@@ -20,69 +20,12 @@ using DebugHost;
 
 namespace WebApi_project.hostProc
 {
-    public class _Test_Json : hostProc
+    partial class _Test_Json : hostProc
     {
-
-        private Dictionary<TKey, TValue> Marge<TKey, TValue>(Dictionary<TKey, TValue> a,
-                                                            Dictionary<TKey, TValue> b)
-        {
-            var table = new Dictionary<TKey, TValue>();
-            foreach (var item in a)
-            {
-                table[item.Key] = item.Value;
-            }
-
-            foreach (var item in b)
-            {
-                if (!table.ContainsKey(item.Key))
-                {
-                    table[item.Key] = item.Value;
-                }
-            }
-
-            return table;
-        }
-        private Dictionary<string, EntryInfo> GetEntryTab()
-        {
-
-            var EntryTab = new Dictionary<string, EntryInfo>();
-
-            Type type = typeof(WebApi_project.hostProc.hostProc);
-            FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
-            foreach (FieldInfo f in fields)
-            {
-                if( f.FieldType.Name == "Dictionary`2" && f.ToString().Contains("EntryInfo"))
-                {
-                    MyDebug.Write(f.MemberType.ToString(), f.FieldType.Name.ToString(), f.Name, f.FieldType.ToString());
-                    FieldInfo field = type.GetField(f.Name);
-                    var obj = Activator.CreateInstance(type);
-                    var oDic = field.GetValue(obj);
-                    EntryTab = Marge(EntryTab, (Dictionary<string, EntryInfo>)oDic);
-                }
-            }
-            return (EntryTab);
-        }
-        void xxx2()
-        {
-            Type t = typeof(WebApi_project.hostProc._Test_Json);
-            MemberInfo[] members = t.GetMembers(BindingFlags.Public | BindingFlags.Instance);
-            foreach (MemberInfo m in members)
-            {
-                MyDebug.Write(m.MemberType.ToString(), m.Name);
-            }
-
-        }
 
         public XmlDocument projectTest2(String Json)
         {
             MyDebug.Write("projectTest2");
-            var EntryTab = GetEntryTab();
-
-            string entryName = "projectCostProc/projectInfo_XML_Detail";
-            MyDebug.Write(EntryTab[entryName].type);
-            MyDebug.Write(EntryTab[entryName].data);
-            MyDebug.Write(EntryTab[entryName].option);
-
 
             //            var xmlDoc = EntryList();
 
