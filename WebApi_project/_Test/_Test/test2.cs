@@ -23,15 +23,7 @@ namespace WebApi_project.hostProc
     public class _Test_Json2 : hostProc
     {
 
-        public Dictionary<string, EntryInfo> 要員情報XX = new Dictionary<string, EntryInfo>(){
-            { "要員情報/要員一覧", new EntryInfo{
-                type = "xml",
-                data ="http://kansa.in.eandm.co.jp/Project/要員情報/要員一覧/xml/要員一覧_XML.asp",
-                option ="{year:2022,actual:5}"
-                }
-            },
-        };
-        public Dictionary<TKey, TValue> Marge<TKey, TValue>(Dictionary<TKey, TValue> a,
+        private Dictionary<TKey, TValue> Marge<TKey, TValue>(Dictionary<TKey, TValue> a,
                                                             Dictionary<TKey, TValue> b)
         {
             var table = new Dictionary<TKey, TValue>();
@@ -50,102 +42,41 @@ namespace WebApi_project.hostProc
 
             return table;
         }
-        public Dictionary<string, object> mList()
+        private Dictionary<string, EntryInfo> GetEntryTab()
         {
-            //object o_obj = new object();
-            String nameSpace = "WebApi_project.hostProc";
 
-            Dictionary<string, List<string>> xTab = new Dictionary<string, List<string>>();
-            Dictionary<string, List<string>> Tab_xml = new Dictionary<string, List<string>>();
-            Dictionary<string, List<string>> Tab_json = new Dictionary<string, List<string>>();
-            Dictionary<string, object> Tab = new Dictionary<string, object>();
-            Tab.Add("xml", Tab_xml);
-            Tab.Add("json", Tab_json);
-            Assembly assm = Assembly.GetExecutingAssembly();
+            var EntryTab = new Dictionary<string, EntryInfo>();
 
-            List<string> className_X = new List<string>()
-                {
-                "hostWeb"
-                };
-            List<string> methdName_X = new List<string>()
-                {
-                "Entry","Json2Xml","JsonToXml","methodList"
-                };
-
-            // 指定した名前空間のクラスをすべて取得
-            var types = assm.GetTypes()
-                .Where(p => p.Namespace == nameSpace)
-                .OrderBy(o => o.Name)
-                .Select(s => s);
-
-            foreach (Type t in types)
+            Type type = typeof(WebApi_project.hostProc.hostProc);
+            FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
+            foreach (FieldInfo f in fields)
             {
-                //Debug.Write("====",t.Name);
-                string className = t.Name;
-                var mList = t.GetMethods();
-
-                foreach (var m in mList)
+                if( f.FieldType.Name == "Dictionary`2" && f.ToString().Contains("EntryInfo"))
                 {
-                    string methodName = m.Name;
-                    if (className == "_Test_Json2")
-                    {
-                        MyDebug.Write(className, methodName, m.ReturnType.ToString());
-                    }
-
-                        //MyDebug.Write(className, methodName, m.ReturnType.ToString());
-                    if (!className_X.Contains(className) && !methdName_X.Contains(methodName))
-                    {
-                        if (m.ReturnType == typeof(IDictionary<string,EntryInfo>))
-                        {
-                            MyDebug.Write("############",className, methodName, m.ReturnType.ToString());
-                        }
-
-                        //Debug.Write(className, methodName, m.ReturnType.ToString());
-                        if (m.ReturnType == typeof(IDictionary<string, EntryInfo>))
-                        {
-                            if (!Tab_xml.ContainsKey(className))
-                            {
-                                var methodTab = new List<string>();
-                                Tab_xml.Add(className, methodTab);
-                            }
-                            //Type classType = Type.GetType(nameSpace + "." + className);
-                            //var obj = Activator.CreateInstance(classType);
-
-                            Tab_xml[className].Add(methodName);
-                            //Debug.Write(className, methodName, m.ReturnType.ToString());
-                        }
-                        else if (m.ReturnType == typeof(Object))
-                        {
-                            if (!Tab_json.ContainsKey(className))
-                            {
-                                var methodTab = new List<string>();
-                                Tab_json.Add(className, methodTab);
-                            }
-                            //Type classType = Type.GetType(nameSpace + "." + className);
-                            //var obj = Activator.CreateInstance(classType);
-
-                            Tab_json[className].Add(methodName);
-                            //MyDebug.Write(className, methodName, m.ReturnType.ToString());
-                        }
-                    }
-                    else
-                    {
-                        //MyDebug.Write("###",className, methodName, m.ReturnType.ToString());
-                    }
+                    MyDebug.Write(f.MemberType.ToString(), f.FieldType.Name.ToString(), f.Name, f.FieldType.ToString());
+                    FieldInfo field = type.GetField(f.Name);
+                    var obj = Activator.CreateInstance(type);
+                    var oDic = field.GetValue(obj);
+                    EntryTab = Marge(EntryTab, (Dictionary<string, EntryInfo>)oDic);
                 }
             }
-            return (Tab);
+            return (EntryTab);
+        }
+        void xxx2()
+        {
+            Type t = typeof(WebApi_project.hostProc._Test_Json2);
+            MemberInfo[] members = t.GetMembers(BindingFlags.Public | BindingFlags.Instance);
+            foreach (MemberInfo m in members)
+            {
+                MyDebug.Write(m.MemberType.ToString(), m.Name);
+            }
+
         }
 
         public XmlDocument projectTest2(String Json)
         {
             MyDebug.Write("projectTest2");
-
-            var x = mList();
-
-            var EntryTab = new Dictionary<string,EntryInfo>();
-            EntryTab = Marge(EntryTab, projectInfo);
-            EntryTab = Marge(EntryTab, projectCostProc);
+            var EntryTab = GetEntryTab();
 
             string entryName = "projectCostProc/xml/projectInfo_XML_Detail";
             MyDebug.Write(EntryTab[entryName].type);

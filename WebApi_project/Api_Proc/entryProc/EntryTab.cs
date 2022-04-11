@@ -12,14 +12,14 @@ namespace WebApi_project.hostProc
 {
     public partial class hostProc
     {
-        public Dictionary<string, EntryInfo> projectInfo = new Dictionary<string, EntryInfo>() {
-            { "projectTest", new EntryInfo{
-                type = "method",
-                data = "projectInfo/projectTest",
-                option = "{year:2022,actual:5}"
-                }
-            },
-        };
+        //public Dictionary<string, EntryInfo> projectInfo = new Dictionary<string, EntryInfo>() {
+        //    { "projectTest", new EntryInfo{
+        //        type = "method",
+        //        data = "projectInfo/projectTest",
+        //        option = "{year:2022,actual:5}"
+        //        }
+        //    },
+        //};
         public Dictionary<string, EntryInfo> projectBBS = new Dictionary<string, EntryInfo>(){
             { "projectBBS/projectList", new EntryInfo{
                 type = "method",
@@ -29,19 +29,19 @@ namespace WebApi_project.hostProc
             },
         };
         public Dictionary<string, EntryInfo> projectCostProc = new Dictionary<string, EntryInfo>(){
-            { "projectCostProc/xml/projectInfo_XML_Detail", new EntryInfo{
+            { "projectCostProc/projectInfo_XML_Detail", new EntryInfo{
                 type = "xml",
                 data ="http://kansa.in.eandm.co.jp/Project/projectCostProc/xml/projectInfo_XML_Detail.asp",
                 option ="{pNum:20214693}"
                 }
             },
-            { "projectCostProc/xml/projectInfo_XML_Join", new EntryInfo{
+            { "projectCostProc/projectInfo_XML_Join", new EntryInfo{
                 type = "xml",
                 data ="http://kansa.in.eandm.co.jp/Project/projectCostProc/xml/projectInfo_XML_Join.asp",
                 option ="{pNum:20214693}"
                 }
             },
-            { "projectCostProc/xml/projectInfoList_XML", new EntryInfo{
+            { "projectCostProc/projectInfoList_XML", new EntryInfo{
                 type = "xml",
                 data ="http://kansa.in.eandm.co.jp/Project/projectCostProc/xml/projectInfoList_XML.asp",
                 option ="{pNum:20214693}"
@@ -91,7 +91,7 @@ namespace WebApi_project.hostProc
             },
         };
 
-        public Dictionary<string, Dictionary<string, string>> EntryTab = new Dictionary<string, Dictionary<string, string>>() {
+        public Dictionary<string, Dictionary<string, string>> EntryTabX = new Dictionary<string, Dictionary<string, string>>() {
             { "projectTest",new Dictionary<string, string>(){
                 { "type", "method" },
                 { "func", "projectInfo/projectTest" },

@@ -6,90 +6,47 @@ using System.Xml;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Linq;
+using WebApi_project.Models;
 
 namespace WebApi_project.hostProc
 {
     public partial class hostProc
     {
+        Dictionary<string, EntryInfo> EntryTab = new Dictionary<string, EntryInfo>();
+
         public XmlDocument Entry(string Item, string Json)
         {
+            EntryTab = GetEntryTab();
+
             XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc = LoadAsp(Item, Json);
+            xmlDoc = LoadAsp(EntryTab,Item, Json);
             return (xmlDoc);
         }
-        public XmlDocument EntryList()
-        {
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.CreateXmlDeclaration("1.0", null, null);
-
-            var xmlMain = xmlDoc.CreateProcessingInstruction("xml", "version='1.0' encoding='Shift_JIS'");
-            XmlElement root = xmlDoc.CreateElement("root");
-            xmlDoc.AppendChild(xmlMain);
-            root.SetAttribute("name", "EMG");
-            xmlDoc.AppendChild(root);
-
-            XmlElement root_xml = xmlDoc.CreateElement("xml");
-            root.AppendChild(root_xml);
-            int i = 0;
-            foreach (var item in EntryTab)
-            {
-                makeMenu(root_xml, item.Key, item.Key, item.Value, i);
-                //root_xml.AppendChild(s_menu);
-            }
-            return (xmlDoc);
-        }
-        void makeMenu(XmlElement p_menu, string name, string fullName, Dictionary<string, string> item, int i)
-        {
-            string[] x = name.Split('/');
-            XmlDocument xmlDoc = p_menu.OwnerDocument;
-            if (x.Length > 1)
-            {
-                XmlElement menu = (XmlElement)p_menu.SelectSingleNode("menu[@mode='sub' and @name='" + x[0] + "']");
-                if (menu == null) menu = xmlDoc.CreateElement("menu");
-                menu.SetAttribute("name", x[0]);
-                menu.SetAttribute("mode", "sub");
-                p_menu.AppendChild(menu);
-
-                int indexToRemove = 0;
-                string[] z = x.Where((source, index) => index != indexToRemove).ToArray();
-                string new_name = String.Join("/", z);
-                makeMenu(menu, new_name, fullName, item, i);
-            }
-            else
-            {
-                XmlElement menu = xmlDoc.CreateElement("menu");
-                menu.SetAttribute("name", x[0]);
-                menu.SetAttribute("type", item["type"]);
-                menu.SetAttribute("option", item["option"]);
-                menu.SetAttribute("item", fullName);
-                p_menu.AppendChild(menu);
-            }
-        }
-        private XmlDocument LoadAsp(string name, string s_option)
+        private XmlDocument LoadAsp(Dictionary<string, EntryInfo> EntryTab, string name, string s_option)
         {
             XmlDocument xmlDoc = new XmlDocument();
             try
             {
 
                 var Tab = EntryTab[name];
-                var type = Tab["type"];
-                var func = Tab["func"];
-                string opt = Tab["option"];
+                var type = Tab.type;
+                var data = Tab.data;
+                string opt = Tab.option;
 
 
                 string option = JsonMerge(opt, s_option);
                 if (type == "json")
                 {
-                    var oJson = (JObject)LoadJson(func, option);
+                    var oJson = (JObject)LoadJson(data, option);
                     xmlDoc = JsonToXml(oJson);
                 }
                 else if (type == "xml")
                 {
-                    xmlDoc = LoadXml(func, option);
+                    xmlDoc = LoadXml(data, option);
                 }
                 else if (type == "method")
                 {
-                    xmlDoc = LoadMethod(func, option);
+                    xmlDoc = LoadMethod(data, option);
                 }
                 var Declaration = xmlDoc.FirstChild.GetType().ToString();
 
@@ -227,6 +184,95 @@ namespace WebApi_project.hostProc
             o_dst.Merge(o_src);
             return (o_dst);
         }
+        //==========================================================================================
+        private Dictionary<TKey, TValue> Marge<TKey, TValue>(Dictionary<TKey, TValue> a,
+                                                    Dictionary<TKey, TValue> b)
+        {
+            var table = new Dictionary<TKey, TValue>();
+            foreach (var item in a)
+            {
+                table[item.Key] = item.Value;
+            }
 
+            foreach (var item in b)
+            {
+                if (!table.ContainsKey(item.Key))
+                {
+                    table[item.Key] = item.Value;
+                }
+            }
+
+            return table;
+        }
+        private Dictionary<string, EntryInfo> GetEntryTab()
+        {
+
+            var EntryTab = new Dictionary<string, EntryInfo>();
+
+            Type type = typeof(WebApi_project.hostProc.hostProc);
+            FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
+            foreach (FieldInfo f in fields)
+            {
+                if (f.FieldType.Name == "Dictionary`2" && f.ToString().Contains("EntryInfo"))
+                {
+                    FieldInfo field = type.GetField(f.Name);
+                    var obj = Activator.CreateInstance(type);
+                    var oDic = field.GetValue(obj);
+                    EntryTab = Marge(EntryTab, (Dictionary<string, EntryInfo>)oDic);
+                }
+            }
+            return (EntryTab);
+        }
+
+        public XmlDocument EntryList()
+        {
+            EntryTab = GetEntryTab();
+
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.CreateXmlDeclaration("1.0", null, null);
+
+            var xmlMain = xmlDoc.CreateProcessingInstruction("xml", "version='1.0' encoding='Shift_JIS'");
+            XmlElement root = xmlDoc.CreateElement("root");
+            xmlDoc.AppendChild(xmlMain);
+            root.SetAttribute("name", "EMG");
+            xmlDoc.AppendChild(root);
+
+            XmlElement root_xml = xmlDoc.CreateElement("xml");
+            root.AppendChild(root_xml);
+            foreach (var item in EntryTab)
+            {
+                var a = 1;
+                makeMenu(root_xml, item.Key, item.Key,item.Value, EntryTab);
+                //root_xml.AppendChild(s_menu);
+            }
+            return (xmlDoc);
+        }
+        void makeMenu(XmlElement p_menu, string name, string fullName, EntryInfo value, Dictionary<string, EntryInfo> EntryTab)
+        {
+            string[] x = name.Split('/');
+            XmlDocument xmlDoc = p_menu.OwnerDocument;
+            if (x.Length > 1)
+            {
+                XmlElement menu = (XmlElement)p_menu.SelectSingleNode("menu[@mode='sub' and @name='" + x[0] + "']");
+                if (menu == null) menu = xmlDoc.CreateElement("menu");
+                menu.SetAttribute("name", x[0]);
+                menu.SetAttribute("mode", "sub");
+                p_menu.AppendChild(menu);
+
+                int indexToRemove = 0;
+                string[] z = x.Where((source, index) => index != indexToRemove).ToArray();
+                string new_name = String.Join("/", z);
+                makeMenu(menu, new_name, fullName, value, EntryTab);
+            }
+            else
+            {
+                XmlElement menu = xmlDoc.CreateElement("menu");
+                menu.SetAttribute("name", x[0]);
+                menu.SetAttribute("type", value.type);
+                menu.SetAttribute("option", value.option);
+                menu.SetAttribute("item", fullName);
+                p_menu.AppendChild(menu);
+            }
+        }
     }
 }
