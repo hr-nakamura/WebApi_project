@@ -28,7 +28,7 @@
         <tbody>
           <tr>
             <td>
-              <xsl:value-of select="'データはありません'"/>
+              <xsl:value-of select="'データはありません]'"/>
             </td>
           </tr>
         </tbody>

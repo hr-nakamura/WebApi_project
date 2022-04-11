@@ -228,7 +228,10 @@ namespace WebApi_project.hostProc
 
         public XmlDocument EntryList()
         {
-            EntryTab = GetEntryTab();
+            if (EntryTab.Count == 0)
+            {
+                EntryTab = GetEntryTab();
+            }
 
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.CreateXmlDeclaration("1.0", null, null);
