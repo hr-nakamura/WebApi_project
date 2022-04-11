@@ -27,45 +27,25 @@ namespace WebApi_project.hostProc
         {
             MyDebug.Write("projectTest");
 
-            /*
-                        var para = new JsonOption.projectPara();
-                        var str_para = JsonConvert.SerializeObject(para);
-                        var o_para = JObject.Parse(str_para);
-                        var o_src = JObject.Parse(opt_Json);
-                        var option = JsonMerge(o_para, o_src);
-
-                        string str_Json = JsonConvert.SerializeObject(option);
-
-                        var oJson = (JObject)json_projectTest(str_Json);
-
-                        XmlDocument xmlDoc = JsonToXml(oJson);
-
-                        XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
-                        AddComment(xmlDoc, makeOption(str_Json));
-                        xmlDoc.PrependChild(declaration);
-            */
             XmlDocument xmlDoc = new XmlDocument();
+
             return (xmlDoc);
         }
 
         public JObject json_projectTest(String opt_Json)
         {
             MyDebug.Write("json_projectTest");
-            /*
-                        var option = JObject.Parse(opt_Json);
 
-                        string xxx = makeOption(option, "?");
-                        MyDebug.Write(xxx);
+            var option = JObject.Parse(opt_Json);
 
-
-                        JObject oJson = readJson("http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp" + makeOption(option, "?"), "Shift_JIS");
-                        //JObject oJson = readJson("http://localhost/Asp/Test/test.json", "utf-8");
-                        //string s_json = Newtonsoft.Json.JsonConvert.SerializeObject(oJson);       // jsonをjson文字列に変換
+            //JObject oJson = readJson("http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp" + makeOption(option, "?"), "Shift_JIS");
+            JObject oJson = readJson("http://localhost/Asp/Test/test.json", "utf-8");
+            //string s_json = Newtonsoft.Json.JsonConvert.SerializeObject(oJson);       // jsonをjson文字列に変換
 
 
-                        JsonArrayConvert(ref oJson, "月", "m");
-            */
-            JObject oJson = new JObject();
+            JsonArrayConvert(ref oJson, "月", "m");
+
+
             return (oJson);
         }
 
