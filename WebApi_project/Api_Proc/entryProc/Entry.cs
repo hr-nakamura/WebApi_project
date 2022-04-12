@@ -50,6 +50,10 @@ namespace WebApi_project.hostProc
                 {
                     xmlDoc = LoadMethod(data, option);
                 }
+                else
+                {
+                    xmlDoc = LoadText(data, option);
+                }
                 var Declaration = xmlDoc.FirstChild.GetType().ToString();
 
                 if (!(Declaration == "System.Xml.XmlDeclaration" || Declaration == "System.Xml.XmlProcessingInstruction"))
@@ -58,13 +62,15 @@ namespace WebApi_project.hostProc
                     xmlDoc.PrependChild(declaration);
                 }
                 AddComment(xmlDoc, name);
+                AddComment(xmlDoc, data);
                 AddComment(xmlDoc, makeOption(option));
                 //AddComment(xmlDoc, option);
                 if (xmlDoc.InnerText == "")
                 {
-                    AddComment(xmlDoc, data);
+//                    AddComment(xmlDoc, data);
                     XmlElement root = xmlDoc.DocumentElement;
-                    root.SetAttribute("memo", "データは見つかりませんでした");
+                    root.InnerText = "データは見つかりませんでした";
+//                    root.SetAttribute("memo", "データは見つかりませんでした");
                 }
 
                 return (xmlDoc);
@@ -128,6 +134,30 @@ namespace WebApi_project.hostProc
             {
                 //Debug.WriteErr("finally");
             }
+        }
+        private XmlDocument LoadText(string url, string s_option)
+        {
+            System.Text.Encoding enc_utf8 = System.Text.Encoding.GetEncoding("UTF-8");
+            System.Text.Encoding enc_euc = System.Text.Encoding.GetEncoding("euc-jp");
+            System.Text.Encoding enc_sjis = System.Text.Encoding.GetEncoding("Shift_Jis");
+
+            var option = makeOption(s_option, "");
+            option = System.Web.HttpUtility.UrlEncode(option, enc_sjis);
+
+            //var query = System.Web.HttpUtility.ParseQueryString("");
+            //query.Add("name", " 漢字ABC");
+            ////option = query.ToString();
+
+            var urlX = url + "?" + option;
+
+            XmlDocument xmlDoc = new XmlDocument();
+            //xmlDoc.Load(urlX);
+
+            hostWeb h = new hostWeb();
+            string text = h.GetRequest(urlX, "Shift_JIS");
+            xmlDoc.LoadXml("<root/>");
+            xmlDoc.DocumentElement.InnerText = text;
+            return (xmlDoc);
         }
         private XmlDocument LoadXml(string url, string s_option)
         {

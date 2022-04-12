@@ -58,6 +58,11 @@ namespace WebApi_project.hostProc
             try
             {
                 // WebRequest作成
+                //System.Text.Encoding enc_utf8 = System.Text.Encoding.GetEncoding("UTF-8");
+                //System.Text.Encoding enc_euc = System.Text.Encoding.GetEncoding("euc-jp");
+                //System.Text.Encoding enc_sjis = System.Text.Encoding.GetEncoding("Shift_Jis");
+
+                //url = System.Web.HttpUtility.UrlEncode(url, enc_sjis);
                 request = (HttpWebRequest)WebRequest.Create(url);
 
                 // タイムアウト設定
