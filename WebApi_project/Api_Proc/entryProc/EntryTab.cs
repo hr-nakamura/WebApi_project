@@ -12,6 +12,32 @@ namespace WebApi_project.hostProc
 {
     public partial class hostProc
     {
+        public Dictionary<string, EntryInfo> 部門収支 = new Dictionary<string, EntryInfo>() {
+            { "部門収支/EMG収支計画", new EntryInfo{
+                type = "method",
+                data = "部門収支/部門収支_XML",
+                option = "{dispCmd:'EMG',year:2022,fix:70,yosoku:3}"
+                }
+            },
+            { "部門収支/統括収支計画", new EntryInfo{
+                type = "method",
+                data = "部門収支/部門収支_XML",
+                option = "{dispCmd:'統括一覧',year:2022,fix:70,yosoku:3}"
+                }
+            },
+            { "部門収支/部門収支A", new EntryInfo{
+                type = "method",
+                data = "部門収支/部門収支_XML",
+                option = "{year:2022,yosoku:4,dispCmd:'EMG'}"
+                }
+            },
+            { "部門収支/部門収支B", new EntryInfo{
+                type = "method",
+                data = "部門収支/部門収支_XML",
+                option = "{year:2022,yosoku:4,dispCmd:'EMG'}"
+                }
+            },
+        };
         public Dictionary<string, EntryInfo> projectInfo = new Dictionary<string, EntryInfo>() {
             { "projectTest", new EntryInfo{
                 type = "method",

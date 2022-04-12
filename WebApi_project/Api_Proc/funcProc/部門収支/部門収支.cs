@@ -47,7 +47,7 @@ namespace WebApi_project.hostProc
 				//Json = "{dispCmd:'統括一覧',year:'2021', yosoku:'3', fix:'70' }";
 				//Json = "{dispCmd:'詳細',統括:'営業本部',year:'2021', yosoku:'3', fix:'70' }";
 			}
-			Json = @"{dispCmd:'EMG',year:'2022', yosoku:'4', fix:'70' }";
+			//Json = @"{dispCmd:'EMG',year:'2022', yosoku:'4', fix:'70' }";
 			//Json = @"{'dispCmd': '統括一覧','secMode':'開発','year':'2022','yosoku':'3','fix':'70'}";
 			//Json = @"{'dispCmd': '部門一覧','secMode':'開発','year':'2022','yosoku':'3','fix':'70'}";
 
