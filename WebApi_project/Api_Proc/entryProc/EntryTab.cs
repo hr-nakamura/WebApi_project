@@ -20,7 +20,7 @@ namespace WebApi_project.hostProc
                 }
             },
             { "projectTest/kanji", new EntryInfo{
-                type = "text",
+                type = "xml",
                 data = "http://localhost/Asp/Test/漢字.asp",
                 option = "{year:2022,actual:'漢字'}"
                 }
