@@ -28,27 +28,27 @@ namespace WebApi_project.hostProc
         };
         public Dictionary<string, EntryInfo> 部門収支 = new Dictionary<string, EntryInfo>() {
             { "部門収支/EMG収支計画", new EntryInfo{
-                type = "method",
-                data = "部門収支/部門収支_XML",
+                type = "xml",
+                data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML_5.asp",
                 option = "{dispCmd:'EMG',year:2022,fix:70,yosoku:3}"
                 }
             },
             { "部門収支/統括収支計画", new EntryInfo{
-                type = "method",
-                data = "部門収支/部門収支_XML",
+                type = "xml",
+                data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML_5.asp",
                 option = "{dispCmd:'統括一覧',year:2022,fix:70,yosoku:3}"
                 }
             },
-            { "部門収支/部門収支A", new EntryInfo{
-                type = "method",
-                data = "部門収支/部門収支_XML",
-                option = "{year:2022,yosoku:4,dispCmd:'EMG'}"
+            { "部門収支/部収支計画", new EntryInfo{
+                type = "xml",
+                data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML_5.asp",
+                option = "{dispCmd:'部門一覧',secMode:'開発',dispName:'',year:2022,fix:70,yosoku:3}"
                 }
             },
-            { "部門収支/部門収支B", new EntryInfo{
-                type = "method",
-                data = "部門収支/部門収支_XML",
-                option = "{year:2022,yosoku:4,dispCmd:'EMG'}"
+            { "部門収支/課収支計画", new EntryInfo{
+                type = "xml",
+                data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML_5.asp",
+                option = "{dispCmd:'課一覧',dispName:'営業本部',secMode:'開発',year:2022,fix:70,yosoku:3}"
                 }
             },
         };

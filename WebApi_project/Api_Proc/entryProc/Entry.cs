@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Web;
 using System.Reflection;
 using System.Collections.Generic;
@@ -190,18 +191,34 @@ namespace WebApi_project.hostProc
 
         private string makeOption(string s_opt, string head = "")
         {
-
+            var query = System.Web.HttpUtility.ParseQueryString("", Encoding.GetEncoding("shift-jis"));
             var o_opt = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, object>>(s_opt);
 
             List<string> work = new List<string>();
             foreach (var item in o_opt)
             {
                 if (item.Value.ToString() == "") continue;
-                work.Add(item.Key + "=" + item.Value.ToString());
+                query.Add(item.Key, item.Value.ToString());
             }
-            string result = head + String.Join("&", work);
+            string query1 = "dispCmd=%93%9D%8A%87%88%EA%97%97&year=2022";
+            string result = head + query1;
             return (result);
         }
+
+        //private string makeOption(string s_opt, string head = "")
+        //{
+
+        //    var o_opt = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, object>>(s_opt);
+
+        //    List<string> work = new List<string>();
+        //    foreach (var item in o_opt)
+        //    {
+        //        if (item.Value.ToString() == "") continue;
+        //        work.Add(item.Key + "=" + item.Value.ToString());
+        //    }
+        //    string result = head + String.Join("&", work);
+        //    return (result);
+        //}
 
         private string JsonMerge(string s_dst, string s_src)
         {
