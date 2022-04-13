@@ -11,6 +11,7 @@ using System.Linq;
 using System.Runtime.Serialization.Json;
 using System.Xml.Linq;
 using Newtonsoft.Json.Linq;
+
 //using System.Diagnostics;
 using System.Text.RegularExpressions;
 
@@ -26,6 +27,14 @@ namespace WebApi_project.hostProc
         public XmlDocument projectTest(String opt_Json)
         {
             MyDebug.Write("projectTest");
+
+
+            var query = System.Web.HttpUtility.ParseQueryString("ABC統括一覧XYZ", Encoding.GetEncoding("shift_jis"));
+
+            //query.Add("name","統括一覧");
+            //string query1 = @"dispCmd=%93%9D%8A%87%88%EA%97%97&year=2022";
+
+            MyDebug.Write(query.ToString());
 
             XmlDocument xmlDoc = new XmlDocument();
 
