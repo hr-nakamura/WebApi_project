@@ -24,17 +24,20 @@ namespace WebApi_project.hostProc
 {
     partial class _Test_Json : hostProc 
     {
+        static Encoding Encode = Encoding.GetEncoding("Shift_JIS");
         public XmlDocument projectTest(String opt_Json)
         {
             MyDebug.Write("projectTest");
 
 
-            var query = System.Web.HttpUtility.ParseQueryString("ABC統括一覧XYZ", Encoding.GetEncoding("shift_jis"));
+        var query = System.Web.HttpUtility.ParseQueryString("", Encode);
 
-            //query.Add("name","統括一覧");
+            query.Add("name", "統括一覧");
             //string query1 = @"dispCmd=%93%9D%8A%87%88%EA%97%97&year=2022";
+            string x = System.Web.HttpUtility.UrlEncode("name=統括一覧", Encode);
 
             MyDebug.Write(query.ToString());
+            MyDebug.Write(x);
 
             XmlDocument xmlDoc = new XmlDocument();
 

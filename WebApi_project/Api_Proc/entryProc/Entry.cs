@@ -189,36 +189,38 @@ namespace WebApi_project.hostProc
             return (makeOption(s_opt, head));
         }
 
-        private string makeOption(string s_opt, string head = "")
-        {
-            var query = System.Web.HttpUtility.ParseQueryString("", Encoding.GetEncoding("shift-jis"));
-            var o_opt = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, object>>(s_opt);
-
-            List<string> work = new List<string>();
-            foreach (var item in o_opt)
-            {
-                if (item.Value.ToString() == "") continue;
-                query.Add(item.Key, item.Value.ToString());
-            }
-            string query1 = "dispCmd=%93%9D%8A%87%88%EA%97%97&year=2022";
-            string result = head + query1;
-            return (result);
-        }
-
         //private string makeOption(string s_opt, string head = "")
         //{
-
+        //    var query = System.Web.HttpUtility.ParseQueryString("", Encoding.GetEncoding("shift-jis"));
         //    var o_opt = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, object>>(s_opt);
 
         //    List<string> work = new List<string>();
         //    foreach (var item in o_opt)
         //    {
         //        if (item.Value.ToString() == "") continue;
-        //        work.Add(item.Key + "=" + item.Value.ToString());
+        //        query.Add(item.Key, item.Value.ToString());
         //    }
-        //    string result = head + String.Join("&", work);
+        //    string query1 = "dispCmd=%93%9D%8A%87%88%EA%97%97&year=2022";
+        //    string result = head + query1;
         //    return (result);
         //}
+
+        private string makeOption(string s_opt, string head = "")
+        {
+            Encoding Encode = Encoding.GetEncoding("shift_jis");
+
+            var o_opt = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, object>>(s_opt);
+
+            List<string> work = new List<string>();
+            foreach (var item in o_opt)
+            {
+                if (item.Value.ToString() == "") continue;
+                work.Add(item.Key + "=" + item.Value.ToString());
+            }
+            string Buff = String.Join("&", work);
+            string result = head + System.Web.HttpUtility.UrlEncode(Buff, Encode);
+            return (result);
+        }
 
         private string JsonMerge(string s_dst, string s_src)
         {
