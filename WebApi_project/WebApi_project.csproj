@@ -125,7 +125,7 @@
     <Content Include="Scripts\json2.js" />
     <Content Include="Scripts\json2.min.js" />
     <Content Include="_home\_Content\_Scripts\json2xml.js" />
-    <Content Include="_home\部門収支\EMG収支計画.asp" />
+    <Content Include="_Test\_Test\test.asp" />
     <Content Include="_Test\Dialog\back.gif" />
     <Content Include="_Test\Dialog\bg01.gif" />
     <Content Include="_Test\Dialog\bg09.jpg" />
