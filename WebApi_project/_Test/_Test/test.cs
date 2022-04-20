@@ -29,16 +29,6 @@ namespace WebApi_project.hostProc
         {
             MyDebug.Write("projectTest");
 
-
-        var query = System.Web.HttpUtility.ParseQueryString("", Encode);
-
-            query.Add("name", "統括一覧");
-            //string query1 = @"dispCmd=%93%9D%8A%87%88%EA%97%97&year=2022";
-            string x = System.Web.HttpUtility.UrlEncode("name=統括一覧", Encode);
-
-            MyDebug.Write(query.ToString());
-            MyDebug.Write(x);
-
             XmlDocument xmlDoc = new XmlDocument();
 
             return (xmlDoc);

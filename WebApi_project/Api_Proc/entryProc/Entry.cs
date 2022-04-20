@@ -14,6 +14,7 @@ namespace WebApi_project.hostProc
     public partial class hostProc
     {
         private static Dictionary<string, EntryInfo> EntryTab = new Dictionary<string, EntryInfo>();
+        private static Encoding Encode = Encoding.GetEncoding("shift_jis");
 
         public XmlDocument Entry(string Item, string Json)
         {
@@ -62,11 +63,12 @@ namespace WebApi_project.hostProc
                     XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
                     xmlDoc.PrependChild(declaration);
                 }
+                string comment = System.Web.HttpUtility.UrlDecode(makeOption(option), Encode);
                 AddComment(xmlDoc, name);
                 AddComment(xmlDoc, data);
-                AddComment(xmlDoc, makeOption(option));
+                AddComment(xmlDoc, comment);
                 //AddComment(xmlDoc, option);
-                if (xmlDoc.InnerText == "")
+                if (xmlDoc.InnerXml == "")
                 {
 //                    AddComment(xmlDoc, data);
                     XmlElement root = xmlDoc.DocumentElement;
@@ -115,7 +117,7 @@ namespace WebApi_project.hostProc
                 MethodInfo method = classType.GetMethod(methodName);
                 if (method == null) throw new Exception("calss名[" + className + "] method名[" + methodName + "]が不明です");
                 xmlDoc = (XmlDocument)method.Invoke(obj, new object[] { s_option });
-                if (xmlDoc.InnerXml == "") xmlDoc.LoadXml("<root/>");
+                if (xmlDoc.InnerXml == "") xmlDoc.LoadXml("<root comment='データがありません'/>");
                 return (xmlDoc);
             }
             catch (Exception ex)
@@ -207,8 +209,6 @@ namespace WebApi_project.hostProc
 
         private string makeOption(string s_opt, string head = "")
         {
-            Encoding Encode = Encoding.GetEncoding("shift_jis");
-
             var o_opt = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, object>>(s_opt);
 
             List<string> work = new List<string>();

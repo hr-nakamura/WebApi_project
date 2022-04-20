@@ -23,8 +23,8 @@ namespace WebApi_project.hostProc
         private static Encoding Encode = Encoding.GetEncoding("Shift_JIS");
         private const string SHIFT_JIS = "Shift_JIS";
 
-        // リクエストタイムアウト秒数(30秒)
-        private const int REQUEST_TIME_OUT = 30 * 1000;
+        // リクエストタイムアウト秒数(630秒)
+        private const int REQUEST_TIME_OUT = 60 * 1000;
 
         // サーバー通信エラー
         private static int NetErrorCount = 0;
@@ -49,20 +49,20 @@ namespace WebApi_project.hostProc
             HttpWebResponse response = null;
             StreamReader streamReader = null;
             string returnBuff = null;
-            Encoding Encode = Encoding.GetEncoding("utf-8");
+            Encoding Encode = Encoding.GetEncoding("Shift_JIS");
             if (encode != null)
             {
                 Encode = System.Text.Encoding.GetEncoding(encode);
             }
+            // Stopwatchクラス生成
+            var sw = new System.Diagnostics.Stopwatch();
 
             try
             {
+                // 計測開始
+                sw.Start();
+                
                 // WebRequest作成
-                //System.Text.Encoding enc_utf8 = System.Text.Encoding.GetEncoding("UTF-8");
-                //System.Text.Encoding enc_euc = System.Text.Encoding.GetEncoding("euc-jp");
-                //System.Text.Encoding enc_sjis = System.Text.Encoding.GetEncoding("Shift_Jis");
-
-                //url = System.Web.HttpUtility.UrlEncode(url, enc_sjis);
                 request = (HttpWebRequest)WebRequest.Create(url);
 
                 // タイムアウト設定
@@ -90,21 +90,21 @@ namespace WebApi_project.hostProc
                 }
                 if (NetErrorCount > MAX_SHOW_ERROR)
                 {
-                    MyDebug.Write(MyDebug.LOG_OK, "ネットワーク回復 GetRequest(" + url + ")[ErrCount = " + NetErrorCount + "]");
+                    MyDebug.Write(MyDebug.LOG_OK, "[ErrCount = " + NetErrorCount + "] ネットワーク回復 GetRequest(" + url + ")");
                 }
                 NetErrorCount = 0;
             }
             catch (OutOfMemoryException ex)
             {
                 returnBuff = null;
-                MyDebug.Write(MyDebug.LOG_NG, "GetRequest(" + url + ")[" + ex.Message + "]");
+                MyDebug.Write(MyDebug.LOG_NG, "[" + ex.Message + "] GetRequest(" + url + ")");
             }
             catch (Exception ex)
             {
                 returnBuff = null;
                 if (NetErrorCount++ < MAX_SHOW_ERROR)
                 {
-                    MyDebug.Write(MyDebug.LOG_NG, "GetRequest(" + url + ")[" + ex.Message + "]");
+                    MyDebug.Write(MyDebug.LOG_NG, "[" + ex.Message + "] GetRequest(" + url + ")");
                     //returnBuff = "{"+ex.Message+"}";
                 }
             }
@@ -126,6 +126,11 @@ namespace WebApi_project.hostProc
                     request = null;
                 }
             }
+            // 計測停止
+            sw.Stop();
+            //結果出力
+            MyDebug.Write($"処理時間 [" + sw.Elapsed + "] GetRequest(" + url + ")");
+
             return returnBuff;
         }
 

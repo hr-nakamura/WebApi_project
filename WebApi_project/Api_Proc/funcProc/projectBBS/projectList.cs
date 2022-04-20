@@ -32,9 +32,6 @@ namespace WebApi_project.hostProc
 
             Dictionary<string, object> Tab = (Dictionary<string, object>)json_projectList(Json);
 
-            //XmlDocument xmlDoc1 = JsonConvert.DeserializeXmlNode(Tab.ToString(),"root");       // Json文字列をXML　objectに
-
-
             List<DB_projectNum> Data = (List<DB_projectNum>)Tab["Data"];
 
             XmlDocument xmlDoc = new XmlDocument();

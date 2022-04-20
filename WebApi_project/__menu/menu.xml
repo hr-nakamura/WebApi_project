@@ -23,7 +23,8 @@
     <menu name="TEST2(html)" memo="" mode="url" url="/WebApi/project/_Test/TEST/test.html"/>
   </menu>
   <menu name="TEST" memo="" >
-    <menu name="要員一覧" memo="" mode="url" url="/WebApi/project/_home/要員情報/要員一覧.html"/>
+	  <menu name="要員一覧" memo="" mode="url" url="/WebApi/project/_home/要員情報/要員一覧.html"/>
+	  <menu name="EMG収支計画" memo="" mode="url" url="/WebApi/project/_home/部門収支/EMG収支計画.asp"/>
   </menu>
 
   <menu name="__menu" memo="" >

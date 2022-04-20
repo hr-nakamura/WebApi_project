@@ -37,7 +37,7 @@
 
         }
         function viewJson(str) {
-            $.debug("viewJson Start");
+            //$.debug("viewJson Start");
             if ($.Browser.name == "msie") {
                 $("#jsonBase").JSONView(str, { collapsed: true });
                 //$("#jsonBase_text").text(str);
@@ -61,7 +61,7 @@
             //$.debug("viewJson End");
         }
         function viewXML(xmlStr) {
-            $.debug("viewXML Start");
+            //$.debug("viewXML Start");
             try {
                 $("#xmlBase").empty().simpleXML({ xmlString: xmlStr });
             } catch (e) {
