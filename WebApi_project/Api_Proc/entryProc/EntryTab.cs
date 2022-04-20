@@ -19,14 +19,20 @@ namespace WebApi_project.hostProc
                 option = "{year:2022,actual:'漢字'}"
                 }
             },
-            { "projectTest/kanji", new EntryInfo{
-                type = "xml",
-                data = "http://localhost/Asp/Test/漢字.asp",
-                option = "{year:2022,actual:'漢字'}"
+            { "hostProc/json_dayChk", new EntryInfo{
+                type = "method",
+                data = "hostProc/json_dayChk",
+                option = "{year:2022}"
                 }
             },
         };
         public Dictionary<string, EntryInfo> 部門収支 = new Dictionary<string, EntryInfo>() {
+            { "部門収支/部門収支_XML", new EntryInfo{
+                type = "xml",
+                data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp",
+                option = "{dispCmd:'EMG',year:2022,fix:70,yosoku:3}"
+                }
+            },
             { "部門収支/EMG収支計画", new EntryInfo{
                 type = "xml",
                 data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp",

@@ -18,6 +18,7 @@ namespace WebApi_project.Controllers
         // GET api/<controller>/5
         public HttpResponseMessage Get()
         {
+            MyDebug.Write("Json", "Get");
             var hProc = new hostProc.hostProc();
             object Tab = hProc.methodList_xml_json();
 
@@ -27,6 +28,7 @@ namespace WebApi_project.Controllers
         }
         public HttpResponseMessage Get(string mailAddr)
         {
+            MyDebug.Write("Json", "Get string mailAddr");
             string jsonStr = "{'mailAddr':'" + mailAddr + "'}";
             var jProc = new hostProc.projectInfo();
             object Obj = jProc.json_memberInfo(jsonStr);
@@ -36,7 +38,7 @@ namespace WebApi_project.Controllers
         }
         public HttpResponseMessage Get(string Item, string Json)
         {
-            paraOut("GET", Item, Json);
+            MyDebug.Write("Json", "Get string Item, string Json");
 
             var hProc = new entryProc.entryProc();
             object Obj = hProc.testEntry_json(Item, Json);
@@ -47,8 +49,8 @@ namespace WebApi_project.Controllers
 
         public HttpResponseMessage Get(string Item, JObject o_Json)
         {
+            MyDebug.Write("Json", "Get string Item, JObject o_Json");
             string Json = "";
-            paraOut("GET", Item, Json);
 
             var hProc = new entryProc.entryProc();
             object Obj = hProc.testEntry_json(Item, Json);
@@ -66,7 +68,6 @@ namespace WebApi_project.Controllers
 
             var Item = para.Item;
             var Json = para.Json;
-            paraOut("POST", Item, Json);
 
             var hProc = new entryProc.entryProc();
             object Obj = hProc.testEntry_json(Item, Json);
@@ -81,7 +82,6 @@ namespace WebApi_project.Controllers
         {
             var Item = para.Item;
             var Json = para.Json;
-            paraOut("PUT", Item, Json);
 
             var hProc = new entryProc.entryProc();
             object Obj = hProc.testEntry_json(Item, Json);
