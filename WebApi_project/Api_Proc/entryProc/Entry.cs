@@ -11,7 +11,7 @@ using WebApi_project.Models;
 
 namespace WebApi_project.hostProc
 {
-    public partial class hostProc
+    public partial class entryProc 
     {
         private static Dictionary<string, EntryInfo> EntryTab = new Dictionary<string, EntryInfo>();
         private static Encoding Encode = Encoding.GetEncoding("shift_jis");
@@ -37,12 +37,12 @@ namespace WebApi_project.hostProc
                 var data = Tab.data;
                 string opt = Tab.option;
 
-
+                var hProc = new hostProc();
                 string option = JsonMerge(opt, s_option);
                 if (type == "json")
                 {
                     var oJson = (JObject)LoadJson(data, option);
-                    xmlDoc = JsonToXml(oJson);
+                    xmlDoc = hProc.JsonToXml(oJson);
                 }
                 else if (type == "xml")
                 {
@@ -64,9 +64,9 @@ namespace WebApi_project.hostProc
                     xmlDoc.PrependChild(declaration);
                 }
                 string comment = System.Web.HttpUtility.UrlDecode(makeOption(option), Encode);
-                AddComment(xmlDoc, name);
-                AddComment(xmlDoc, data);
-                AddComment(xmlDoc, comment);
+                hProc.AddComment(xmlDoc, name);
+                hProc.AddComment(xmlDoc, data);
+                hProc.AddComment(xmlDoc, comment);
                 //AddComment(xmlDoc, option);
                 if (xmlDoc.InnerXml == "")
                 {
@@ -174,6 +174,7 @@ namespace WebApi_project.hostProc
         }
         private JObject LoadJson(string url, string s_option)
         {
+            var hProc = new hostProc();
             JObject oJson = new JObject();
             url += makeOption(s_option, "?");
             hostWeb h = new hostWeb();
@@ -181,7 +182,7 @@ namespace WebApi_project.hostProc
             if (jsonStr != null)
             {
                 oJson = JObject.Parse(jsonStr);
-                JsonArrayConvert(ref oJson, "月", "m");
+                hProc.JsonArrayConvert(ref oJson, "月", "m");
             }
             return (oJson);
         }

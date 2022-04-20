@@ -21,7 +21,7 @@ namespace WebApi_project.Controllers
         public HttpResponseMessage Get()
         {
             // 呼び出せるリストを戻す
-            var hProc = new hostProc.hostProc();
+            var hProc = new hostProc.entryProc();
             XmlDocument xmlDoc = hProc.EntryList();
             //XmlDocument xmlDoc = new XmlDocument();
 
@@ -31,7 +31,7 @@ namespace WebApi_project.Controllers
         }
         public HttpResponseMessage Get(string Item, string Json)
         {
-            var hProc = new hostProc.hostProc();
+            var hProc = new hostProc.entryProc();
 
             XmlDocument xmlDoc = hProc.Entry(Item, Json);
 
@@ -45,7 +45,7 @@ namespace WebApi_project.Controllers
             var Item = para.Item;
             var Json = para.Json;
 
-            var hProc = new hostProc.hostProc();
+            var hProc = new hostProc.entryProc();
             XmlDocument xmlDoc = hProc.Entry(Item, Json);
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
@@ -59,7 +59,7 @@ namespace WebApi_project.Controllers
             var Item = para.Item;
             var Json = para.Json;
 
-            var hProc = new hostProc.hostProc();
+            var hProc = new hostProc.entryProc();
             XmlDocument xmlDoc = hProc.Entry(Item, Json);
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
@@ -71,7 +71,7 @@ namespace WebApi_project.Controllers
         {
             var Item = para.Item;
             var Json = para.Json;
-            var hProc = new hostProc.hostProc();
+            var hProc = new hostProc.entryProc();
             XmlDocument xmlDoc = hProc.Entry(Item, Json);
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);

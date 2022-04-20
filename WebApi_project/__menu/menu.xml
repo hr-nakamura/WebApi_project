@@ -27,10 +27,10 @@
 	  <menu name="要員一覧" memo="" mode="url" url="/WebApi/project/_home/要員情報/要員一覧.html"/>
   </menu>
 
-  <menu name="__menu" memo="" >
-    <menu name="viewJson" memo="" mode="url" url="/WebApi/project/__menu/Util/viewJson/viewJson.html"/>
-    <menu name="viewXML" memo="" mode="url" url="/WebApi/project/__menu/Util/viewXML/viewXML_Main.html"/>
-  </menu>
+    <!--<menu name="__menu" memo="" >
+        <menu name="viewJson" memo="" mode="url" url="/WebApi/project/__menu/Util/viewJson/viewJson.html"/>
+        <menu name="viewXML" memo="" mode="url" url="/WebApi/project/__menu/Util/viewXML/viewXML_Main.html"/>
+    </menu>
 
 
   <menu name="機能1" memo="" >
@@ -44,7 +44,7 @@
         <menu name="viewXML" memo="" mode="url" url="/WebApi/project/__menu/Util/viewXML/viewXML_Main.html"/>
       </menu>
     </menu>
-  </menu>
+  </menu>-->
 
 
 
