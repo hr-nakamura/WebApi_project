@@ -34,7 +34,7 @@
                 mailPara.mailAddr = $.queryString("mail",mailPara.mailAddr);
 
                 var Url = hostName + WebApi_url_json;
-                memberInfo = $.WebApi_json("GET", Url, "hostProc/json_memberInfo", mailPara);
+                memberInfo = $.WebApi_json0("GET", Url, mailPara);
                 hostInfo.Tag.forEach(function (elem) { memberInfo.Tag.push(elem); });
 
 

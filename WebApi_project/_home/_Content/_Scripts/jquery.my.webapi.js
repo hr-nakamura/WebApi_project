@@ -69,7 +69,7 @@
                 });
                 return (returnValue);
             },
-            $.WebApi_json1 = function (mode, url, json) {
+            $.WebApi_json0 = function (mode, url, json) {
                 //WebApi_url_json = hostName + "/WebApi/project/api/json";
                 $.debug("_home/WebApi_json [json]", item);
                 window.status = "WebApi_json[" + mode + "]";
