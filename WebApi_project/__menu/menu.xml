@@ -10,26 +10,32 @@
     <menu name="関数(TEST_JSON)" memo="" >
     </menu>
 
-	<menu name="_home" memo="" >
-		<menu name="要員一覧" memo="" mode="url" url="/WebApi/project/_home/要員情報/要員一覧.html"/>
-	</menu>
-	
+  <menu name="_Test" memo="" >
+    <menu name="_Test/test.html" memo="" mode="url" url="/WebApi/project/_Test/test.html"/>
+    <menu name="History">
+      <menu name="History" memo="" mode="url" url="/WebApi/project/_Test/History/History.html"/>
+    </menu>
+    <menu name="QOSMIO">
+      <menu name="QOSMIO" memo="" mode="url" url="/WebApi/project/_Test/QOSMIO/qosmio.html"/>
+    </menu>
+    <menu name="TEST2(html)" memo="" mode="url" url="/WebApi/project/_Test/_Test/test.html"/>
+    <menu name="test.asp" memo="" mode="url" url="/WebApi/project/_Test/_test/test.asp?ABC=123"/>
+  </menu>
+
     <menu name="_Test/Dialog" memo="" >
         <menu name="editGroup" memo="" mode="url" url="/WebApi/project/_Test/Dialog/editGroup.html"/>
         <menu name="dialog" memo="" mode="url" url="/WebApi/project/_Test/Dialog/dialog.html"/>
         <menu name="dialog1" memo="" mode="url" url="/WebApi/project/_Test/Dialog/dialog1.html"/>
-        <menu name="test" memo="" mode="url" url="/WebApi/project/_Test/Dialog/test.html"/>
     </menu>
 
-	<menu name="_Test" memo="" >
-        <menu name="History" memo="" mode="url" url="/WebApi/project/_Test/History/History.html"/>
-        <menu name="QOSMIO" memo="" mode="url" url="/WebApi/project/_Test/QOSMIO/qosmio.html"/>
-        <menu name="TEST2(html)" memo="" mode="url" url="/WebApi/project/_Test/_Test/test.html"/>
-	    <menu name="test.asp" memo="" mode="url" url="/WebApi/project/_Test/_test/test.asp?ABC=123"/>
+
+
+  <!--
+	<menu name="_home" memo="" >
+		<menu name="要員一覧" memo="" mode="url" url="/WebApi/project/_home/要員情報/要員一覧.html"/>
 	</menu>
-
-
-    <!--<menu name="__menu" memo="" >
+-->
+  <!--<menu name="__menu" memo="" >
         <menu name="viewJson" memo="" mode="url" url="/WebApi/project/__menu/Util/viewJson/viewJson.html"/>
         <menu name="viewXML" memo="" mode="url" url="/WebApi/project/__menu/Util/viewXML/viewXML_Main.html"/>
     </menu>

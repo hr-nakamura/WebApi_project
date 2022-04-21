@@ -28,7 +28,7 @@ namespace WebApi_project.Controllers
         }
         public HttpResponseMessage Get(string mailAddr)
         {
-            MyDebug.Write("Json", "Get string mailAddr");
+            MyDebug.Write("Json", "Get string mailAddr", mailAddr);
             string jsonStr = "{'mailAddr':'" + mailAddr + "'}";
             var jProc = new hostProc.projectInfo();
             object Obj = jProc.json_memberInfo(jsonStr);
@@ -38,7 +38,7 @@ namespace WebApi_project.Controllers
         }
         public HttpResponseMessage Get(string Item, string Json)
         {
-            MyDebug.Write("Json", "Get string Item, string Json");
+            MyDebug.Write("Json", "Get string Item, string Json",Item,Json.ToString());
 
             var hProc = new entryProc.entryProc();
             object Obj = hProc.testEntry_json(Item, Json);

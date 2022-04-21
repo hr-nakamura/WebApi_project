@@ -173,7 +173,7 @@
     <Content Include="_Test\Dialog\xx.xsl" />
     <Content Include="_Test\History\HIstory.html" />
     <Content Include="_Test\_Test\memo.txt" />
-    <Content Include="_Test\_Test\test.html" />
+    <Content Include="_Test\test.html" />
     <Content Include="_Test\Dialog\dialog.html" />
     <Content Include="_Test\TEST\ACEL.mdb" />
     <Content Include="_Test\TEST\EM.mdb" />
