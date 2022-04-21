@@ -17,7 +17,7 @@
                 }, 1);
             });
         },
-        $.WebApi = function(mode, url, item, json, callback) {
+        $.WebApi = function(mode, url, item, json) {
             //WebApi_url = hostName + "/WebApi/project/api/xml";
             $.debug("__menu/WebApi");
             var xjson = { year: 2021 };
@@ -44,7 +44,7 @@
             });
             return (returnValue);
         },
-        $.WebApi_json = function(mode, url, item, json, callback) {
+        $.WebApi_json = function(mode, url, item, json) {
             //WebApi_url_json = hostName + "/WebApi/project/api/json";
             $.debug("__menu/WebApi_json");
             window.status = "WebApi_json[" + mode + "]";

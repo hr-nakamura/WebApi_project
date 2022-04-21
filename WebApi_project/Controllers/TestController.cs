@@ -19,6 +19,8 @@ namespace WebApi_project.Controllers
     {
         public HttpResponseMessage Get()
         {
+            MyDebug.Write("Test", "Get");
+
             var hProc = new hostProc.hostProc();
             XmlDocument xmlDoc = hProc.methodList();
 
@@ -28,6 +30,7 @@ namespace WebApi_project.Controllers
         }
         public HttpResponseMessage Get(string Item, string Json)
         {
+            MyDebug.Write("Test", "Get string Item, string Json",Item,Json.ToString());
             var hProc = new entryProc.entryProc();
 
             XmlDocument xmlDoc = hProc.testEntry(Item, Json);

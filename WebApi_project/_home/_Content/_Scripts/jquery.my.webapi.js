@@ -17,7 +17,7 @@
                 }, 1);
             });
         },
-        $.WebApi = function(mode, url, item, json, callback) {
+        $.WebApi = function(mode, url, item, json) {
             //WebApi_url = hostName + "/WebApi/project/api/xml";
             $.debug("_home/WebApi", item);
             window.status = "WebApi[" + mode + "]";
@@ -43,32 +43,58 @@
             });
             return (returnValue);
         },
-        $.WebApi_json = function(mode, url, item, json, callback) {
-            //WebApi_url_json = hostName + "/WebApi/project/api/json";
-            $.debug("_home/WebApi_json",item);
-            window.status = "WebApi_json[" + mode + "]";
-            var options = {
-                Item: item,
-                Json: (typeof (json) == "object" ? JSON.stringify(json) : json)
-            };
-            var result = $.ajax({
-                url: url,
-                type: mode,
-                data: json,
-                dataType: 'json',
-                dataFilter: function (data, type) {
-                    return (data);
-                },
-                async: false
-            }).done(function (data, status, xhr) {
-                returnValue = data;
-            }).fail(function (xhr, status, error) {
-                returnValue = status;
-                window.status = xhr.statusText;
-                $.alert("WebApi_json error:" + xhr.statusText);
-            });
-            return (returnValue);
-        },
+            $.WebApi_json2 = function (mode, url, item, json) {
+                //WebApi_url_json = hostName + "/WebApi/project/api/json";
+                $.debug("_home/WebApi_json [item, json]", item);
+                window.status = "WebApi_json[" + mode + "]";
+                var options = {
+                    Item: item,
+                    Json: (typeof (json) == "object" ? JSON.stringify(json) : json)
+                };
+                var result = $.ajax({
+                    url: url,
+                    type: mode,
+                    data: options,
+                    dataType: 'json',
+                    dataFilter: function (data, type) {
+                        return (data);
+                    },
+                    async: false
+                }).done(function (data, status, xhr) {
+                    returnValue = data;
+                }).fail(function (xhr, status, error) {
+                    returnValue = status;
+                    window.status = xhr.statusText;
+                    $.alert("WebApi_json error:" + xhr.statusText);
+                });
+                return (returnValue);
+            },
+            $.WebApi_json = function (mode, url, json) {
+                //WebApi_url_json = hostName + "/WebApi/project/api/json";
+                $.debug("_home/WebApi_json [json]", item);
+                window.status = "WebApi_json[" + mode + "]";
+                //var options = {
+                //    Item: item,
+                //    Json: (typeof (json) == "object" ? JSON.stringify(json) : json)
+                //};
+                var result = $.ajax({
+                    url: url,
+                    type: mode,
+                    data: json,
+                    dataType: 'json',
+                    dataFilter: function (data, type) {
+                        return (data);
+                    },
+                    async: false
+                }).done(function (data, status, xhr) {
+                    returnValue = data;
+                }).fail(function (xhr, status, error) {
+                    returnValue = status;
+                    window.status = xhr.statusText;
+                    $.alert("WebApi_json error:" + xhr.statusText);
+                });
+                return (returnValue);
+            },
         $.WebApi_get = function(url, options) {
             //WebApi_url = hostName + "/WebApi/project/api/xml";
             $.debug("_home/WebApi_get");
