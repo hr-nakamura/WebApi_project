@@ -43,7 +43,7 @@
             });
             return (returnValue);
         },
-            $.WebApi_json2 = function (mode, url, item, json) {
+            $.WebApi_json = function (mode, url, item, json) {
                 //WebApi_url_json = hostName + "/WebApi/project/api/json";
                 $.debug("_home/WebApi_json [item, json]", item);
                 window.status = "WebApi_json[" + mode + "]";
@@ -69,7 +69,7 @@
                 });
                 return (returnValue);
             },
-            $.WebApi_json = function (mode, url, json) {
+            $.WebApi_json1 = function (mode, url, json) {
                 //WebApi_url_json = hostName + "/WebApi/project/api/json";
                 $.debug("_home/WebApi_json [json]", item);
                 window.status = "WebApi_json[" + mode + "]";
