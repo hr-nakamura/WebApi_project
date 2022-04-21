@@ -47,18 +47,6 @@ namespace WebApi_project.Controllers
             return (response);
         }
 
-        public HttpResponseMessage Get(string Item, JObject o_Json)
-        {
-            MyDebug.Write("Json", "Get string Item, JObject o_Json");
-            string Json = "";
-
-            var hProc = new entryProc.entryProc();
-            object Obj = hProc.testEntry_json(Item, Json);
-
-            HttpResponseMessage response = response_conv(JsonConvert.SerializeObject(Obj));
-            return (response);
-        }
-
         // POST api/<controller>
         public HttpResponseMessage Post([FromBody] ProjectJson para)
         {

@@ -19,6 +19,7 @@
         },
         $.WebApi = function(mode, url, item, json, callback) {
             //WebApi_url = hostName + "/WebApi/project/api/xml";
+            $.debug("_home/WebApi", item);
             window.status = "WebApi[" + mode + "]";
             var options = {
                 Item: item,
@@ -44,6 +45,7 @@
         },
         $.WebApi_json = function(mode, url, item, json, callback) {
             //WebApi_url_json = hostName + "/WebApi/project/api/json";
+            $.debug("_home/WebApi_json",item);
             window.status = "WebApi_json[" + mode + "]";
             var options = {
                 Item: item,
@@ -69,6 +71,7 @@
         },
         $.WebApi_get = function(url, options) {
             //WebApi_url = hostName + "/WebApi/project/api/xml";
+            $.debug("_home/WebApi_get");
             window.status = "WebApi_get";
             var result = $.ajax({
                 url: url,

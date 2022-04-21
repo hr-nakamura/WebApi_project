@@ -10,7 +10,7 @@
     if (typeof (window.debugTab) === "undefined") window.debugTab = {};
     if (typeof (window.debugTab[fileName]) === "undefined") window.debugTab[fileName] = 0;
     //if (typeof (window.debug_mode) === "undefined") window.debug_mode = true;
-    var debug_mode = ($.UrlExists(debugUrl) ? true : false);
+    var debug_mode = ($.UrlExists(debugUrl) ? true : true);
 
     var methods = {
 
