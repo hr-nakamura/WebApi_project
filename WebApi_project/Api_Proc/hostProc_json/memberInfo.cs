@@ -36,8 +36,14 @@ namespace WebApi_project.hostProc
             string mailAddr = o_json.mailAddr;
 
             memberInfo = memberInfoX1(mailAddr);
-            memberInfo.Tag = memberInfoX2(mailAddr);
-            if(memberInfo.mail == null) memberInfo.mail = mailAddr;
+            if (memberInfo.mail == null)
+            {
+                memberInfo.mail = mailAddr;
+            }
+            else
+            {
+                memberInfo.Tag = memberInfoX2(mailAddr);
+            }
             return (memberInfo);
         }
         s_memberInfo memberInfoX1(string mailAddr)
@@ -50,7 +56,7 @@ namespace WebApi_project.hostProc
 
             try
             {
-                MyDebug.noWrite("DB Open", DB_connectString);
+                MyDebug.Write("DB Open", DB_connectString);
                 DB.Open();
 
                 StringBuilder sql = new StringBuilder("");
