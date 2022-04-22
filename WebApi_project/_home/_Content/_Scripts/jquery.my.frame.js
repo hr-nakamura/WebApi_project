@@ -67,7 +67,7 @@
         }
     }
     function frame_init(o) {
-        $.debug("frame_init","====================");
+        $.debug.no("frame_init","====================");
         //var o2 = $.stopwatch();
         //$(o2).stopwatch("frame_init start");
         var target_name = $(o)[0].className;
@@ -95,7 +95,7 @@
         //$.debug("frame_init", Buff);
     }
     function frame_resize(o) {
-        $.debug("frame_resize", "====================");
+        $.debug.no("frame_resize", "====================");
         //$.debug.json("frame_resize", o);
         //var o2 = $.stopwatch();
         //$(o2).stopwatch("frame_resize start");
@@ -145,7 +145,7 @@
         //$.debug("frame_resize", Buff);
     }
     function iframe_resize(o) {
-        $.debug("iframe_resize", "====================");
+        $.debug.no("iframe_resize", "====================");
         //$.debug.json("iframe_resize", o);
         //var o2 = $.stopwatch();
         //$(o2).stopwatch("iframe_resize start");
@@ -186,7 +186,7 @@
         //$.debug("iframe_resize", Buff);
     }
     function table_resize(o) {
-        $.debug("table_resize", "====================");
+        $.debug.no("table_resize", "====================");
 
         //$.debug("table_resize");
         //$.debug.json("table_resize", o);

@@ -115,7 +115,6 @@
   <ItemGroup>
     <Content Include="Api_Proc\funcProc\projectCostProc\projectInfoDetail.xml" />
     <Content Include="Api_Proc\funcProc\projectCostProc\projectInfoList.xml" />
-    <Content Include="Api_Proc\funcProc\費用予測\test.txt" />
     <Content Include="Api_Proc\funcProc\部門収支\BASE.xml" />
     <Content Include="Global.asax" />
     <Content Include="Api_Proc\funcProc\projectBBS\projectData_XML.xml" />
@@ -336,7 +335,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Api_Proc\entryProc\testEntry.cs" />
+    <Compile Include="Api_Proc\entryProc\Entry_xxx.cs" />
     <Compile Include="Api_Proc\hostProc\hostProc.cs" />
     <Compile Include="Api_Proc\hostProc\hostWeb.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -350,7 +349,6 @@
     <Compile Include="_Test\_Test\test.cs" />
     <Compile Include="Api_Proc\funcProc\projectCostProc\test1.cs" />
     <Compile Include="Api_Proc\funcProc\要員情報\要員一覧.cs" />
-    <Compile Include="Api_Proc\funcProc\費用予測\費用状況.cs" />
     <Compile Include="Api_Proc\hostProc_json\dayCheck.cs" />
     <Compile Include="Api_Proc\hostProc_json\memberInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

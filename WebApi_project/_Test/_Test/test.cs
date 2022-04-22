@@ -34,7 +34,7 @@ namespace WebApi_project.hostProc
             return (xmlDoc);
         }
 
-        public JObject json_projectTest(String opt_Json)
+        public JObject projectTest_json(String opt_Json)
         {
             MyDebug.Write("json_projectTest");
 

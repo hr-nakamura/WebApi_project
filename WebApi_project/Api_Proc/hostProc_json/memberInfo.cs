@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Xml;
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 using DebugHost;
 
@@ -20,14 +21,16 @@ namespace WebApi_project.hostProc
                 Json = "{mailAddr : 'nakamura@eandm.co.jp'}";
             }
             //            var o_json = JsonConvert.DeserializeObject<SampleData>(Json);
-            object json_data = json_memberInfo(Json);
+            object json_data = memberInfo_json(Json);
+            string sJson = JsonConvert.SerializeObject(json_data);                      // Json形式を文字列に
+            XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(sJson, "root");         // Json文字列をXML　objectに
+
             //XmlDocument xmlDoc = Json2Xml(json_data);
-            XmlDocument xmlDoc = new XmlDocument();
 
             return (xmlDoc);
         }
 
-        public object json_memberInfo(string Json)
+        public object memberInfo_json(string Json)
         {
             var o_json = JsonConvert.DeserializeObject<para_mailInfo>(Json);
             if (o_json.mailAddr == null) o_json.mailAddr = "azuma@psl-em.co.jp";
@@ -56,7 +59,7 @@ namespace WebApi_project.hostProc
 
             try
             {
-                MyDebug.Write("DB Open", DB_connectString);
+                MyDebug.noWrite("DB Open", DB_connectString);
                 DB.Open();
 
                 StringBuilder sql = new StringBuilder("");

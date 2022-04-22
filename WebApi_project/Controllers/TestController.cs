@@ -19,7 +19,7 @@ namespace WebApi_project.Controllers
     {
         public HttpResponseMessage Get()
         {
-            MyDebug.Write("Test", "Get");
+            MyDebug.noWrite("Test", "Get");
 
             var hProc = new hostProc.hostProc();
             XmlDocument xmlDoc = hProc.methodList();
@@ -30,10 +30,10 @@ namespace WebApi_project.Controllers
         }
         public HttpResponseMessage Get(string Item, string Json)
         {
-            MyDebug.Write("Test", "Get string Item, string Json",Item,Json.ToString());
+            MyDebug.noWrite("Test", "Get string Item, string Json",Item,Json.ToString());
             var hProc = new entryProc.entryProc();
 
-            XmlDocument xmlDoc = hProc.testEntry(Item, Json);
+            XmlDocument xmlDoc = hProc.Entry_xml(Item, Json);
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
             return (response);
@@ -46,7 +46,7 @@ namespace WebApi_project.Controllers
             var Json = para.Json;
 
             var hProc = new entryProc.entryProc();
-            XmlDocument xmlDoc = hProc.testEntry(Item, Json);
+            XmlDocument xmlDoc = hProc.Entry_xml(Item, Json);
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
             return (response);
@@ -60,7 +60,7 @@ namespace WebApi_project.Controllers
             var Json = para.Json;
 
             var hProc = new entryProc.entryProc();
-            XmlDocument xmlDoc = hProc.testEntry(Item, Json);
+            XmlDocument xmlDoc = hProc.Entry_xml(Item, Json);
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
             return (response);
@@ -73,7 +73,7 @@ namespace WebApi_project.Controllers
             var Json = para.Json;
 
             var hProc = new entryProc.entryProc();
-            XmlDocument xmlDoc = hProc.testEntry(Item, Json);
+            XmlDocument xmlDoc = hProc.Entry_xml(Item, Json);
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
             return (response);

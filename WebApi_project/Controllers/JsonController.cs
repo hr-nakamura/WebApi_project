@@ -18,7 +18,7 @@ namespace WebApi_project.Controllers
         // GET api/<controller>/5
         public HttpResponseMessage Get()
         {
-            MyDebug.Write("Json", "Get");
+            MyDebug.noWrite("Json", "Get");
             var hProc = new hostProc.hostProc();
             object Tab = hProc.methodList_xml_json();
 
@@ -28,20 +28,20 @@ namespace WebApi_project.Controllers
         }
         public HttpResponseMessage Get(string mailAddr)
         {
-            MyDebug.Write("Json", "Get string mailAddr", mailAddr);
+            MyDebug.noWrite("Json", "Get string mailAddr", mailAddr);
             string jsonStr = "{'mailAddr':'" + mailAddr + "'}";
-            var jProc = new hostProc.projectInfo();
-            object Obj = jProc.json_memberInfo(jsonStr);
+            var hProc = new hostProc.projectInfo();
+            object Obj = hProc.memberInfo_json(jsonStr);
 
             var response = response_conv(JsonConvert.SerializeObject(Obj));
             return (response);
         }
         public HttpResponseMessage Get(string Item, string Json)
         {
-            MyDebug.Write("Json", "Get string Item, string Json",Item,Json.ToString());
+            MyDebug.noWrite("Json", "Get string Item, string Json",Item,Json.ToString());
 
             var hProc = new entryProc.entryProc();
-            object Obj = hProc.testEntry_json(Item, Json);
+            object Obj = hProc.Entry_json(Item, Json);
 
             HttpResponseMessage response = response_conv(JsonConvert.SerializeObject(Obj));
             return (response);
@@ -58,7 +58,7 @@ namespace WebApi_project.Controllers
             var Json = para.Json;
 
             var hProc = new entryProc.entryProc();
-            object Obj = hProc.testEntry_json(Item, Json);
+            object Obj = hProc.Entry_json(Item, Json);
 
             HttpResponseMessage response = response_conv(JsonConvert.SerializeObject(Obj));
             return (response);
@@ -72,7 +72,7 @@ namespace WebApi_project.Controllers
             var Json = para.Json;
 
             var hProc = new entryProc.entryProc();
-            object Obj = hProc.testEntry_json(Item, Json);
+            object Obj = hProc.Entry_json(Item, Json);
 
             HttpResponseMessage response = response_conv(JsonConvert.SerializeObject(Obj));
             return (response);
@@ -86,7 +86,7 @@ namespace WebApi_project.Controllers
             paraOut("Delete", Item, Json);
 
             var hProc = new entryProc.entryProc();
-            object Obj = hProc.testEntry_json(Item, Json);
+            object Obj = hProc.Entry_json(Item, Json);
 
             var response = response_conv(JsonConvert.SerializeObject(Obj));
             return (response);

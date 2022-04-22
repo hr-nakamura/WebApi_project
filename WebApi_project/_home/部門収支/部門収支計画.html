@@ -47,7 +47,7 @@
             var dd = d.getDate();
             var yymm = (yy * 100) + mm;
             var json = { yymm: yymm }
-            var json = $.WebApi_json("GET", web_api_json, "projectInfo/json_dayChk", json);
+            var json = $.WebApi_json("GET", web_api_json, "hostProc/dayChk_json", json);
             var OKday = json.day;
             yymm = (parseInt(dd) < parseInt(OKday) ? $.yymmAdd(yymm, -1) : $.yymmAdd(yymm, 0)) 	 // データ有効月の計算(12日以前は前々月)
 

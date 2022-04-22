@@ -39,7 +39,7 @@ namespace WebApi_project.hostProc
             XmlDocument xmlDoc = new XmlDocument();
             return (xmlDoc);
         }
-        public JObject json_projectTest2(String Json)
+        public JObject projectTest2_json(String Json)
         {
             MyDebug.Write("json_projectTest2");
             string classPath = this.GetType().FullName;                                         //クラスパスの取得

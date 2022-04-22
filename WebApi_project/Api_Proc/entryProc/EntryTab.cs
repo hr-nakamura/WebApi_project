@@ -12,20 +12,6 @@ namespace WebApi_project.hostProc
 {
     public partial class hostProc
     {
-        public Dictionary<string, EntryInfo> projectInfo = new Dictionary<string, EntryInfo>() {
-            { "hostProc/memberInfo", new EntryInfo{
-                type = "method",
-                data = "hostProc/memberInfo",
-                option = "{memberID:451862'}"
-                }
-            },
-            { "hostProc/json_dayChk", new EntryInfo{
-                type = "method",
-                data = "hostProc/json_dayChk",
-                option = "{year:2022}"
-                }
-            },
-        };
         public Dictionary<string, EntryInfo> 部門収支 = new Dictionary<string, EntryInfo>() {
             { "部門収支/部門収支_XML", new EntryInfo{
                 type = "xml",
@@ -127,7 +113,27 @@ namespace WebApi_project.hostProc
                 option ="{year:2022,actual:5}"
                 }
             },
+            { "要員情報/要員一覧_method", new EntryInfo{
+                type = "method",
+                data ="要員情報/要員一覧",
+                option ="{year:2022,actual:5}"
+                }
+            },
         };
 
+        public Dictionary<string, EntryInfo> projectInfo = new Dictionary<string, EntryInfo>() {
+            { "projectInfo/memberInfo_json", new EntryInfo{
+                type = "json",
+                data = "hostProc/memberInfo_json",
+                option = "{mailAddr:'nakamura@eandm.co.jp'}"
+                }
+            },
+            { "projectInfo/dayChk_json", new EntryInfo{
+                type = "json",
+                data = "hostProc/dayChk_json",
+                option = "{yymm:202204}"
+                }
+            },
+        };
     }
 }

@@ -17,7 +17,7 @@ namespace WebApi_project.entryProc
         {
             //Debug.WriteLog("hostProcEntry End");
         }
-        public XmlDocument testEntry(String Item, String Json)
+        public XmlDocument Entry_xml(String Item, String Json)
         {
             XmlDocument xmlDoc = new XmlDocument();
             try
@@ -56,7 +56,7 @@ namespace WebApi_project.entryProc
                 //Debug.WriteErr("finally");
             }
         }
-        public object testEntry_json(String Item, String Json)
+        public object Entry_json(String Item, String Json)
         {
             object o_obj = new object();
             try

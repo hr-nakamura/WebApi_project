@@ -12,10 +12,10 @@ namespace WebApi_project.hostProc
 {
     public class 要員情報 : hostProc
     {
-        XmlDocument 要員一覧(String s_option)
+        public XmlDocument 要員一覧(String s_option)
         {
             XmlDocument xmlDoc = new XmlDocument();
-            //XmlDocument xmlDoc = LoadAsp("要員一覧", s_option);
+            Dictionary<string, section>  x = xxx();
             return (xmlDoc);
         }
 

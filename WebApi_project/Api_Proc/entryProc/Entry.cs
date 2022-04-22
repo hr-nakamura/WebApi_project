@@ -147,10 +147,6 @@ namespace WebApi_project.hostProc
             var option = makeOption(s_option, "");
             option = System.Web.HttpUtility.UrlEncode(option, enc_sjis);
 
-            //var query = System.Web.HttpUtility.ParseQueryString("");
-            //query.Add("name", " 漢字ABC");
-            ////option = query.ToString();
-
             var urlX = url + "?" + option;
 
             XmlDocument xmlDoc = new XmlDocument();
