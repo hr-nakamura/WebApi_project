@@ -19,7 +19,7 @@
         },
         $.WebApi = function(mode, url, item, json) {
             //WebApi_url = hostName + "/WebApi/project/api/xml";
-            $.debug("_home/WebApi", item);
+            $.debug.no("_home/WebApi", item);
             window.status = "WebApi[" + mode + "]";
             var options = {
                 Item: item,
@@ -45,7 +45,7 @@
         },
             $.WebApi_json = function (mode, url, item, json) {
                 //WebApi_url_json = hostName + "/WebApi/project/api/json";
-                $.debug("_home/WebApi_json [item, json]", item);
+                $.debug.no("_home/WebApi_json [item, json]", item);
                 window.status = "WebApi_json[" + mode + "]";
                 var options = {
                     Item: item,
@@ -71,7 +71,7 @@
             },
             $.WebApi_json0 = function (mode, url, json) {
                 //WebApi_url_json = hostName + "/WebApi/project/api/json";
-                $.debug("_home/WebApi_json [json]", item);
+                $.debug.no("_home/WebApi_json [json]", item);
                 window.status = "WebApi_json[" + mode + "]";
                 //var options = {
                 //    Item: item,

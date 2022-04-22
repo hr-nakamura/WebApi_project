@@ -19,7 +19,7 @@
         },
 
 
-        func: function (o) {
+        no: function (o) {
             return;
         },
         Abandon: function () {
@@ -221,6 +221,9 @@
 
         //return (this);
     };
+    $.debug.no = function () {
+        return methods["no"].apply(this, Array.prototype.slice.call(arguments, 0));
+    }
     $.debug.json = function () {
         return methods["json"].apply(this, Array.prototype.slice.call(arguments, 0));
     }

@@ -19,7 +19,7 @@
         },
         $.WebApi = function(mode, url, item, json) {
             //WebApi_url = hostName + "/WebApi/project/api/xml";
-            $.debug("__menu/WebApi");
+            $.debug.no("__menu/WebApi");
             var xjson = { year: 2021 };
             window.status = "WebApi[" + mode + "]";
             var options = {
@@ -46,7 +46,7 @@
         },
         $.WebApi_json = function(mode, url, item, json) {
             //WebApi_url_json = hostName + "/WebApi/project/api/json";
-            $.debug("__menu/WebApi_json");
+            $.debug.no("__menu/WebApi_json");
             window.status = "WebApi_json[" + mode + "]";
             var options = {
                 Item: item,
@@ -72,7 +72,7 @@
         },
         $.WebApi_get = function(url, options) {
             //WebApi_url = hostName + "/WebApi/project/api/xml";
-            $.debug("__menu/WebApi_get");
+            $.debug.no("__menu/WebApi_get");
             window.status = "WebApi_get";
             var result = $.ajax({
                 url: url,
