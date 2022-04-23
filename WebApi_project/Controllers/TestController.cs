@@ -41,7 +41,7 @@ namespace WebApi_project.Controllers
             }
             else if( mode == "json")
             {
-                object returnValue = hProc.testEntry_xml(className, methodName, Json);
+                object returnValue = hProc.testEntry_json(className, methodName, Json);
                 response = (HttpResponseMessage)returnValue;
             }
             return (response);
