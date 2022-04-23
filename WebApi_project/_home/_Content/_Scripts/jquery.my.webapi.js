@@ -17,7 +17,7 @@
                 }, 1);
             });
         },
-        $.WebApi = function(mode, url, item, json) {
+        $.WebApi = function(url, item, json) {
             //WebApi_url = hostName + "/WebApi/project/api/xml";
             $.debug.no("_home/WebApi", item);
             window.status = "WebApi[" + mode + "]";
@@ -27,7 +27,7 @@
            };
             var result = $.ajax({
                 url: url,
-                type: mode,
+                type: "GET",
                 data: options,
                 dataType: 'text',
                 dataFilter: function (data, type) {
@@ -53,7 +53,7 @@
                 };
                 var result = $.ajax({
                     url: url,
-                    type: mode,
+                    type: "GET",
                     data: options,
                     dataType: 'json',
                     dataFilter: function (data, type) {
@@ -69,18 +69,19 @@
                 });
                 return (returnValue);
             },
-            $.WebApi_json0 = function (mode, url, json) {
-                //WebApi_url_json = hostName + "/WebApi/project/api/json";
-                $.debug.no("_home/WebApi_json [json]", item);
-                window.status = "WebApi_json[" + mode + "]";
-                //var options = {
-                //    Item: item,
-                //    Json: (typeof (json) == "object" ? JSON.stringify(json) : json)
-                //};
+            $.WebApi_test = function (mode, className, methodName, json) {
+                var url = hostName + "/WebApi/project/api/test";
+                $.debug.no("_home/WebApi_test", mode,className, methodName);
+                var options = {
+                    mode:mode,
+                    className: className,
+                    methodName:methodName,
+                    Json: (typeof (json) == "object" ? JSON.stringify(json) : json)
+                    };
                 var result = $.ajax({
                     url: url,
-                    type: mode,
-                    data: json,
+                    type: "GET",
+                    data: option,
                     dataType: 'json',
                     dataFilter: function (data, type) {
                         return (data);

@@ -40,7 +40,7 @@ namespace WebApi_project.Controllers
         {
             MyDebug.noWrite("Json", "Get string Item, string Json",Item,Json.ToString());
 
-            var hProc = new entryProc.entryProc();
+            var hProc = new hostProc.entryProc();
             object Obj = hProc.Entry_json(Item, Json);
 
             HttpResponseMessage response = response_conv(JsonConvert.SerializeObject(Obj));
@@ -50,17 +50,17 @@ namespace WebApi_project.Controllers
         // POST api/<controller>
         public HttpResponseMessage Post([FromBody] ProjectJson para)
         {
-
+            HttpResponseMessage response = new HttpResponseMessage();
             HttpContext context = HttpContext.Current;
             var Request = context.Request;
 
             var Item = para.Item;
             var Json = para.Json;
 
-            var hProc = new entryProc.entryProc();
-            object Obj = hProc.Entry_json(Item, Json);
+            //var hProc = new entryProc.entryProc();
+            //object Obj = hProc.Entry_json(Item, Json);
 
-            HttpResponseMessage response = response_conv(JsonConvert.SerializeObject(Obj));
+            //HttpResponseMessage response = response_conv(JsonConvert.SerializeObject(Obj));
             return (response);
         }
 
@@ -68,27 +68,29 @@ namespace WebApi_project.Controllers
         // PUT api/<controller>/5
         public HttpResponseMessage Put([FromBody] ProjectJson para)
         {
+            HttpResponseMessage response = new HttpResponseMessage();
             var Item = para.Item;
             var Json = para.Json;
 
-            var hProc = new entryProc.entryProc();
-            object Obj = hProc.Entry_json(Item, Json);
+            //var hProc = new entryProc.entryProc();
+            //object Obj = hProc.Entry_json(Item, Json);
 
-            HttpResponseMessage response = response_conv(JsonConvert.SerializeObject(Obj));
+            //HttpResponseMessage response = response_conv(JsonConvert.SerializeObject(Obj));
             return (response);
         }
 
         // DELETE api/<controller>/5
         public HttpResponseMessage Delete([FromBody] ProjectJson para)
         {
+            HttpResponseMessage response = new HttpResponseMessage();
             var Item = para.Item;
             var Json = para.Json;
             paraOut("Delete", Item, Json);
 
-            var hProc = new entryProc.entryProc();
-            object Obj = hProc.Entry_json(Item, Json);
+            //var hProc = new entryProc.entryProc();
+            //object Obj = hProc.Entry_json(Item, Json);
 
-            var response = response_conv(JsonConvert.SerializeObject(Obj));
+            //var response = response_conv(JsonConvert.SerializeObject(Obj));
             return (response);
         }
         HttpResponseMessage response_conv(string value)

@@ -23,8 +23,17 @@ namespace WebApi_project.hostProc
                 EntryTab = GetEntryTab();
             }
             XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc = LoadAsp(EntryTab,Item, Json);
+            xmlDoc = LoadAsp(EntryTab, Item, Json);
             return (xmlDoc);
+        }
+        public JObject Entry_json(string Item, string Json)
+        {
+            if (EntryTab.Count == 0)
+            {
+                EntryTab = GetEntryTab();
+            }
+            JObject jObj = new JObject();
+            return (jObj);
         }
         private XmlDocument LoadAsp(Dictionary<string, EntryInfo> EntryTab, string name, string s_option)
         {

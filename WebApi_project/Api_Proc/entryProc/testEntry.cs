@@ -17,16 +17,11 @@ namespace WebApi_project.entryProc
         {
             //Debug.WriteLog("hostProcEntry End");
         }
-        public XmlDocument Entry_xml(String Item, String Json)
+        public XmlDocument testEntry_xml(String className, String methodName, String Json)
         {
             XmlDocument xmlDoc = new XmlDocument();
             try
             {
-                Item = Item.Trim('/');
-                string[] ItemWork = Item.Split('/');
-                string className = ItemWork[0];
-                string methodName = ItemWork[1];
-
                 String nameSpace = "WebApi_project.hostProc";
 
                 Type classType = Type.GetType(string.Concat(nameSpace ,"." ,className) );
@@ -56,15 +51,11 @@ namespace WebApi_project.entryProc
                 //Debug.WriteErr("finally");
             }
         }
-        public object Entry_json(String Item, String Json)
+        public object testEntry_json(String className, String methodName, String Json)
         {
             object o_obj = new object();
             try
             {
-                string[] ItemWork = Item.Split('/');
-                string className = ItemWork[0];
-                string methodName = ItemWork[1];
-
                 String nameSpace = "WebApi_project.hostProc";
 
                 Type classType = Type.GetType(string.Concat(nameSpace, ".", className));

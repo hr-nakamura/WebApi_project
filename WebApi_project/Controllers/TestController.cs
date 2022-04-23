@@ -28,14 +28,22 @@ namespace WebApi_project.Controllers
             return (response);
 
         }
-        public HttpResponseMessage Get(string Item, string Json)
+        public HttpResponseMessage Get(string mode, string className, string methodName, string Json)
         {
-            MyDebug.noWrite("Test", "Get string Item, string Json",Item,Json.ToString());
+            MyDebug.noWrite("Test", "Get string Item, string Json",mode, className, methodName, Json.ToString());
             var hProc = new entryProc.entryProc();
+            HttpResponseMessage response = new HttpResponseMessage();
+            if ( mode == "xml")
+            {
+                XmlDocument xmlDoc = hProc.testEntry_xml(className, methodName, Json);
+                response = response_conv(xmlDoc.OuterXml);
 
-            XmlDocument xmlDoc = hProc.Entry_xml(Item, Json);
-
-            HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
+            }
+            else if( mode == "json")
+            {
+                object returnValue = hProc.testEntry_xml(className, methodName, Json);
+                response = (HttpResponseMessage)returnValue;
+            }
             return (response);
         }
 
@@ -45,8 +53,7 @@ namespace WebApi_project.Controllers
             var Item = para.Item;
             var Json = para.Json;
 
-            var hProc = new entryProc.entryProc();
-            XmlDocument xmlDoc = hProc.Entry_xml(Item, Json);
+            XmlDocument xmlDoc = new XmlDocument();
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
             return (response);
@@ -59,8 +66,7 @@ namespace WebApi_project.Controllers
             var Item = para.Item;
             var Json = para.Json;
 
-            var hProc = new entryProc.entryProc();
-            XmlDocument xmlDoc = hProc.Entry_xml(Item, Json);
+            XmlDocument xmlDoc = new XmlDocument();
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
             return (response);
@@ -72,8 +78,7 @@ namespace WebApi_project.Controllers
             var Item = para.Item;
             var Json = para.Json;
 
-            var hProc = new entryProc.entryProc();
-            XmlDocument xmlDoc = hProc.Entry_xml(Item, Json);
+            XmlDocument xmlDoc = new XmlDocument();
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
             return (response);
