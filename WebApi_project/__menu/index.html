@@ -112,6 +112,7 @@
                 menu_click_test(o);
                 return;
             }
+            // ここでxml/json分ける
             var xmlDoc = $.WebApi(o.item, o.option);
             var Str = $.xml2str(xmlDoc);
             //StrOut(Str);
