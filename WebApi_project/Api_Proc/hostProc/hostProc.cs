@@ -248,7 +248,7 @@ namespace WebApi_project.hostProc
 
             List<string> className_X = new List<string>()
                 {
-                "hostWeb"
+                "hostWeb","entryProc"
                 };
             List<string> methdName_X = new List<string>()
                 {
@@ -290,7 +290,7 @@ namespace WebApi_project.hostProc
                             //var obj = Activator.CreateInstance(classType);
 
                             Tab_xml[className].Add(methodName);
-                            //Debug.Write(className, methodName, m.ReturnType.ToString());
+                            //MyDebug.Write(className, methodName, m.ReturnType.ToString());
                         }
                         else if (m.ReturnType == typeof(JObject))
                         {
@@ -303,7 +303,7 @@ namespace WebApi_project.hostProc
                             //var obj = Activator.CreateInstance(classType);
 
                             Tab_json[className].Add(methodName);
-                            //Debug.Write(className, methodName, m.ReturnType.ToString());
+                            //MyDebug.Write(className, methodName, m.ReturnType.ToString());
                         }
                     }
                     else

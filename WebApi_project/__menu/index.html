@@ -50,13 +50,14 @@
                 WebApi_url = url + "/WebApi/project/api/xml";
                 WebApi_url_test = url + "/WebApi/project/api/test";
 
-                // methodListの取得
+                // EntryTabの取得
                 //var methodList2 = $.loadXMLDoc("menu2.xml");
-                var methodList = $.WebApi("GET", WebApi_url);
-                var menu_data = $.loadXMLDoc("menu.xml");
+                var methodList = $.WebApi();
 
-                // methodListの取得
-                var methodList2 = $.WebApi("GET", WebApi_url_test);
+                // methodList(xml,json)の取得
+                var methodList2 = $.WebApi_test("xml");
+
+                // menu データの取得
                 var menu_data = $.loadXMLDoc("menu.xml");
 
                 menu_Xml = menuData_Join(menu_data, methodList,methodList2);
@@ -81,13 +82,13 @@
             var xml_methodTop = $(menu_xml).find("menu[name='関数(XML)']");
             xml_methodTop.prepend(xml_menus);
 
-            var json_menus = $(methodList2).find("root>json>menu");
-            var json_methodTop = $(menu_xml).find("menu[name='関数(TEST_JSON)']");
-            json_methodTop.prepend(json_menus);
+            var test_json_menus = $(methodList2).find("root>json>menu");
+            var test_json_methodTop = $(menu_xml).find("menu[name='関数(TEST_JSON)']");
+            test_json_methodTop.prepend(test_json_menus);
 
-            var test_menus = $(methodList2).find("root>xml>menu");
-            var test_methodTop = $(menu_xml).find("menu[name='関数(TEST_XML)']");
-            test_methodTop.prepend(test_menus);
+            var test_xml_menus = $(methodList2).find("root>xml>menu");
+            var test_xml_methodTop = $(menu_xml).find("menu[name='関数(TEST_XML)']");
+            test_xml_methodTop.prepend(test_xml_menus);
 
             return (menu_xml);
         }

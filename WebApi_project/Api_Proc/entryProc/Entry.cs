@@ -26,12 +26,12 @@ namespace WebApi_project.hostProc
             xmlDoc = LoadAsp(EntryTab, Item, Json);
             return (xmlDoc);
         }
-        public JObject Entry_json(string Item, string Json)
+        public JObject Entry_json1(string Item, string Json)
         {
-            if (EntryTab.Count == 0)
-            {
-                EntryTab = GetEntryTab();
-            }
+            //if (EntryTab.Count == 0)
+            //{
+            //    EntryTab = GetEntryTab();
+            //}
             JObject jObj = new JObject();
             return (jObj);
         }
