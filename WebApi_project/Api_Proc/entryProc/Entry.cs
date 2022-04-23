@@ -336,7 +336,7 @@ namespace WebApi_project.hostProc
             }
             return (xmlDoc);
         }
-        void makeMenuXml(XmlElement p_menu, string name, string fullName, EntryXmlInfo value, Dictionary<string, EntryXmlInfo> EntryTab)
+        private void makeMenuXml(XmlElement p_menu, string name, string fullName, EntryXmlInfo value, Dictionary<string, EntryXmlInfo> EntryTab)
         {
             string[] x = name.Split('/');
             XmlDocument xmlDoc = p_menu.OwnerDocument;
@@ -363,7 +363,7 @@ namespace WebApi_project.hostProc
                 p_menu.AppendChild(menu);
             }
         }
-        void makeMenuJson(XmlElement p_menu, string name, string fullName, EntryJsonInfo value, Dictionary<string, EntryJsonInfo> EntryTab)
+        private void makeMenuJson(XmlElement p_menu, string name, string fullName, EntryJsonInfo value, Dictionary<string, EntryJsonInfo> EntryTab)
         {
             string[] x = name.Split('/');
             XmlDocument xmlDoc = p_menu.OwnerDocument;
