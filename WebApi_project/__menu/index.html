@@ -79,8 +79,12 @@
 
         function menuData_Join(menu_xml, methodList,methodList2) {
             var xml_menus = $(methodList).find("root>xml>menu");
-            var xml_methodTop = $(menu_xml).find("menu[name='関数(XML)']");
+            var xml_methodTop = $(menu_xml).find("menu[name='テーブル(XML)']");
             xml_methodTop.prepend(xml_menus);
+
+            var json_menus = $(methodList).find("root>json>menu");
+            var json_methodTop = $(menu_xml).find("menu[name='テーブル(JSON)']");
+            json_methodTop.prepend(json_menus);
 
             var test_json_menus = $(methodList2).find("root>json>menu");
             var test_json_methodTop = $(menu_xml).find("menu[name='関数(TEST_JSON)']");
@@ -108,7 +112,7 @@
                 menu_click_test(o);
                 return;
             }
-            var xmlDoc = $.WebApi("GET", WebApi_url, o.item, o.option);
+            var xmlDoc = $.WebApi(o.item, o.option);
             var Str = $.xml2str(xmlDoc);
             //StrOut(Str);
             $.storage("viewStr", Str);
@@ -122,14 +126,14 @@
                 var option = o.option;
                 var value = o.item + "/" + o.func;
                 if (type == "xml") {
-                    var xmlDoc = $.WebApi("GET", WebApi_url_test, value, Send_Option);
+                    var xmlDoc = $.WebApi_test("xml", o.item, o.func, Send_Option);
                     var Str = $.xml2str(xmlDoc);
                     //StrOut(Str);
                     $.storage("viewStr", Str);
                     $("iframe.iframe_content").attr("src", "Util/viewValue.html");
                 }
                 else if (type == "json") {
-                    var Str = $.WebApi_json("GET", WebApi_url_json, value, Send_Option);
+                    var Str = $.WebApi_test("json", o.item, o.func, Send_Option);
                     //$.alert.json(Str);
                     $.storage("viewStr", JSON.stringify(Str, null, 2));
                     $("iframe.iframe_content").attr("src", "Util/viewValue.html");

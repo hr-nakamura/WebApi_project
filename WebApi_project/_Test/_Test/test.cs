@@ -29,6 +29,23 @@ namespace WebApi_project.hostProc
         {
             MyDebug.Write("projectTest");
 
+
+
+            var EntryTab = new Dictionary<string, EntryXmlInfo>();
+
+            Type type = typeof(WebApi_project.hostProc.hostProc);
+            FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
+            foreach (FieldInfo f in fields)
+            {
+                if (f.FieldType.Name == "Dictionary`2" && f.ToString().Contains("EntryInfo"))
+                {
+                    FieldInfo field = type.GetField(f.Name);
+                    var obj = Activator.CreateInstance(type);
+                    var oDic = field.GetValue(obj);
+                    //EntryTab = Marge(EntryTab, (Dictionary<string, EntryInfo>)oDic);
+                }
+            }
+
             XmlDocument xmlDoc = new XmlDocument();
 
             return (xmlDoc);

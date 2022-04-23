@@ -21,11 +21,16 @@ namespace WebApi_project.Models
         public string Func { get; set; }
         public string Json { get; set; }
     }
-    public class EntryInfo
+    public class EntryXmlInfo
     {
         public string type { get; set; }
         public string data { get; set; }
         public string option { get; set; }
-
+    }
+    public class EntryJsonInfo
+    {
+        public string type { get; set; }
+        public string data { get; set; }
+        public string option { get; set; }
     }
 }

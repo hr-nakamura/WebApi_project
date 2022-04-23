@@ -3,9 +3,11 @@
     <menu name="監査ページ(NEW)" memo="" mode="url" url="/WebApi/project/_home/manageMenu.html"/>
 
 
-	<menu name="関数(XML)" memo="" >
-	</menu>
-	<menu name="関数(TEST_XML)" memo="" >
+  <menu name="テーブル(XML)" memo="" >
+  </menu>
+  <menu name="テーブル(JSON)" memo="" >
+  </menu>
+  <menu name="関数(TEST_XML)" memo="" >
 	</menu>
     <menu name="関数(TEST_JSON)" memo="" >
     </menu>
