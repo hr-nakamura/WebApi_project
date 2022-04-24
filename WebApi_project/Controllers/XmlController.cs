@@ -35,8 +35,8 @@ namespace WebApi_project.Controllers
         {
             MyDebug.Write("Xml", "Get string Item, string Json",Item,Json.ToString());
             var hProc = new hostProc.entryProc();
-
-            XmlDocument xmlDoc = hProc.Entry(Item, Json);
+            EntryXmlInfo EntryTab = new EntryXmlInfo();
+            XmlDocument xmlDoc = hProc.Entry(EntryTab,Item, Json);
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
             return (response);
@@ -49,7 +49,8 @@ namespace WebApi_project.Controllers
             var Json = para.Json;
 
             var hProc = new hostProc.entryProc();
-            XmlDocument xmlDoc = hProc.Entry(Item, Json);
+            EntryXmlInfo EntryTab = new EntryXmlInfo();
+            XmlDocument xmlDoc = hProc.Entry(EntryTab, Item, Json);
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
             return (response);
@@ -63,7 +64,8 @@ namespace WebApi_project.Controllers
             var Json = para.Json;
 
             var hProc = new hostProc.entryProc();
-            XmlDocument xmlDoc = hProc.Entry(Item, Json);
+            EntryXmlInfo EntryTab = new EntryXmlInfo();
+            XmlDocument xmlDoc = hProc.Entry(EntryTab, Item, Json);
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
             return (response);
@@ -75,7 +77,8 @@ namespace WebApi_project.Controllers
             var Item = para.Item;
             var Json = para.Json;
             var hProc = new hostProc.entryProc();
-            XmlDocument xmlDoc = hProc.Entry(Item, Json);
+            EntryXmlInfo EntryTab = new EntryXmlInfo();
+            XmlDocument xmlDoc = hProc.Entry(EntryTab,Item, Json);
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
             return (response);

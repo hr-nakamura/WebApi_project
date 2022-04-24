@@ -17,11 +17,9 @@ namespace WebApi_project.hostProc
         private static Dictionary<string, EntryJsonInfo> EntryTab_json = new Dictionary<string, EntryJsonInfo>();
         private static Encoding Encode = Encoding.GetEncoding("shift_jis");
 
-        public XmlDocument Entry(string Item, string Json)
+        public XmlDocument Entry(EntryXmlInfo EntryTab,string Item, string Json)
         {
-            EntryTab_xml = GetEntryTab_xml();
-
-            var Tab = EntryTab_xml[Item];
+            var Tab = GetEntryTab_xml(Item);
             var type = Tab.type;
             var data = Tab.data;
             string opt = Tab.option;
@@ -29,7 +27,7 @@ namespace WebApi_project.hostProc
             object returnValue;
             if( type == "method")
             {
-                returnValue = LoadMethod(data, opt);
+                returnValue = LoadMethod(EntryTab_xml, data, opt);
             }
             else
             {
@@ -37,11 +35,9 @@ namespace WebApi_project.hostProc
             }
             return ((XmlDocument)returnValue);
         }
-        public JObject Entry_json(string Item, string Json)
+        public JObject Entry(EntryJsonInfo EntryTab, string Item, string Json)
         {
-            EntryTab_json = GetEntryTab_json();
-
-            var Tab = EntryTab_json[Item];
+            var Tab = GetEntryTab_json(Item);
             var type = Tab.type;
             var data = Tab.data;
             string opt = Tab.option;
@@ -49,7 +45,7 @@ namespace WebApi_project.hostProc
             object returnValue;
             if (type == "method")
             {
-                returnValue = LoadMethod( data, opt);
+                returnValue = LoadMethod(EntryTab_json, data, opt);
             }
             else
             {
@@ -129,8 +125,9 @@ namespace WebApi_project.hostProc
                 //Debug.WriteErr("finally");
             }
         }
-        private object LoadMethod(string Item, string s_option)
+        private JObject LoadMethod(Dictionary<string, EntryJsonInfo> EntryTab, string Item, string s_option)
         {
+            JObject jObj = new JObject();
             Item = Item.Trim('/');
             string[] ItemWork = Item.Split('/');
             if (ItemWork.Length != 2) throw new Exception("引数[" + s_option + "]が不明です");
@@ -145,10 +142,11 @@ namespace WebApi_project.hostProc
             var obj = Activator.CreateInstance(classType);
             MethodInfo method = classType.GetMethod(methodName);
             if (method == null) throw new Exception("calss名[" + className + "] method名[" + methodName + "]が不明です");
-            object returnValue = (JObject)method.Invoke(obj, new object[] { s_option });
-            return (returnValue);
+            jObj = (JObject)method.Invoke(obj, new object[] { s_option });
+
+            return (jObj);
         }
-        private XmlDocument LoadMethod_xml(Dictionary<string, EntryXmlInfo> EntryTab, string url, string s_option)
+        private XmlDocument LoadMethod(Dictionary<string, EntryXmlInfo> EntryTab, string url, string s_option)
         {
             XmlDocument xmlDoc = new XmlDocument();
             try
@@ -302,7 +300,7 @@ namespace WebApi_project.hostProc
 
             return table;
         }
-        private Dictionary<string, EntryXmlInfo> GetEntryTab_xml()
+        private EntryXmlInfo GetEntryTab_xml(string Item)
         {
 
             //EntryTab_xml = new Dictionary<string, EntryXmlInfo>();
@@ -321,9 +319,10 @@ namespace WebApi_project.hostProc
                     }
                 }
             }
-            return (EntryTab_xml);
+            var Tab = ( Item != "" ? EntryTab_xml[Item] : new EntryXmlInfo() );
+            return (Tab);
         }
-        private Dictionary<string, EntryJsonInfo> GetEntryTab_json()
+        private EntryJsonInfo GetEntryTab_json(string Item)
         {
             if (EntryTab_json.Count == 0)
             {
@@ -340,13 +339,14 @@ namespace WebApi_project.hostProc
                     }
                 }
             }
-            return (EntryTab_json);
+            var Tab = (Item != "" ? EntryTab_json[Item] : new EntryJsonInfo());
+            return (Tab);
         }
 
         public XmlDocument EntryList()
         {
-            EntryTab_xml = GetEntryTab_xml();
-            EntryTab_json = GetEntryTab_json();
+            GetEntryTab_xml("");
+            GetEntryTab_json("");
 
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.CreateXmlDeclaration("1.0", null, null);
