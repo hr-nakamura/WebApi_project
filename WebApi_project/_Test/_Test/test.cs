@@ -31,7 +31,7 @@ namespace WebApi_project.hostProc
 
 
 
-            var EntryTab = new Dictionary<string, EntryXmlInfo>();
+            var EntryTab = new Dictionary<string, EntryInfoXml>();
 
             Type type = typeof(WebApi_project.hostProc.hostProc);
             FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);

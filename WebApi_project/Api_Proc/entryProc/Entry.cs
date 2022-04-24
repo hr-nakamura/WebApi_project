@@ -13,11 +13,11 @@ namespace WebApi_project.hostProc
 {
     public partial class entryProc 
     {
-        private static Dictionary<string, EntryXmlInfo> EntryTab_xml = new Dictionary<string, EntryXmlInfo>();
-        private static Dictionary<string, EntryJsonInfo> EntryTab_json = new Dictionary<string, EntryJsonInfo>();
+        private static Dictionary<string, EntryInfoXml> EntryTab_xml = new Dictionary<string, EntryInfoXml>();
+        private static Dictionary<string, EntryInfoJson> EntryTab_json = new Dictionary<string, EntryInfoJson>();
         private static Encoding Encode = Encoding.GetEncoding("shift_jis");
 
-        public XmlDocument Entry(EntryXmlInfo EntryTab,string Item, string Json)
+        public XmlDocument Entry(EntryInfoXml EntryTab,string Item, string Json)
         {
             var Tab = GetEntryTab_xml(Item);
             var type = Tab.type;
@@ -35,7 +35,7 @@ namespace WebApi_project.hostProc
             }
             return ((XmlDocument)returnValue);
         }
-        public JObject Entry(EntryJsonInfo EntryTab, string Item, string Json)
+        public JObject Entry(EntryInfoJson EntryTab, string Item, string Json)
         {
             var Tab = GetEntryTab_json(Item);
             var type = Tab.type;
@@ -53,12 +53,12 @@ namespace WebApi_project.hostProc
             }
             return ((JObject)returnValue);
         }
-        private JObject LoadAsp(Dictionary<string, EntryJsonInfo> EntryTab, string name, string s_option)
+        private JObject LoadAsp(Dictionary<string, EntryInfoJson> EntryTab, string name, string s_option)
         {
             JObject jObj = new JObject();
             return (jObj);
         }
-        private XmlDocument LoadAsp(Dictionary<string, EntryXmlInfo> EntryTab, string name, string s_option)
+        private XmlDocument LoadAsp(Dictionary<string, EntryInfoXml> EntryTab, string name, string s_option)
         {
             XmlDocument xmlDoc = new XmlDocument();
             try
@@ -125,7 +125,7 @@ namespace WebApi_project.hostProc
                 //Debug.WriteErr("finally");
             }
         }
-        private JObject LoadMethod(Dictionary<string, EntryJsonInfo> EntryTab, string Item, string s_option)
+        private JObject LoadMethod(Dictionary<string, EntryInfoJson> EntryTab, string Item, string s_option)
         {
             JObject jObj = new JObject();
             Item = Item.Trim('/');
@@ -146,7 +146,7 @@ namespace WebApi_project.hostProc
 
             return (jObj);
         }
-        private XmlDocument LoadMethod(Dictionary<string, EntryXmlInfo> EntryTab, string url, string s_option)
+        private XmlDocument LoadMethod(Dictionary<string, EntryInfoXml> EntryTab, string url, string s_option)
         {
             XmlDocument xmlDoc = new XmlDocument();
             try
@@ -300,29 +300,29 @@ namespace WebApi_project.hostProc
 
             return table;
         }
-        private EntryXmlInfo GetEntryTab_xml(string Item)
+        private EntryInfoXml GetEntryTab_xml(string Item)
         {
 
-            //EntryTab_xml = new Dictionary<string, EntryXmlInfo>();
+            //EntryTab_xml = new Dictionary<string, EntryInfoXml>();
             if(EntryTab_xml.Count == 0)
             {
                 Type type = typeof(WebApi_project.hostProc.hostProc);
                 FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
                 foreach (FieldInfo f in fields)
                 {
-                    if (f.FieldType.Name == "Dictionary`2" && f.ToString().Contains("EntryXmlInfo"))
+                    if (f.FieldType.Name == "Dictionary`2" && f.ToString().Contains("EntryInfoXml"))
                     {
                         FieldInfo field = type.GetField(f.Name);
                         var obj = Activator.CreateInstance(type);
                         var oDic = field.GetValue(obj);
-                        EntryTab_xml = Marge(EntryTab_xml, (Dictionary<string, EntryXmlInfo>)oDic);
+                        EntryTab_xml = Marge(EntryTab_xml, (Dictionary<string, EntryInfoXml>)oDic);
                     }
                 }
             }
-            var Tab = ( Item != "" ? EntryTab_xml[Item] : new EntryXmlInfo() );
+            var Tab = ( Item != "" ? EntryTab_xml[Item] : new EntryInfoXml() );
             return (Tab);
         }
-        private EntryJsonInfo GetEntryTab_json(string Item)
+        private EntryInfoJson GetEntryTab_json(string Item)
         {
             if (EntryTab_json.Count == 0)
             {
@@ -330,16 +330,16 @@ namespace WebApi_project.hostProc
                 FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
                 foreach (FieldInfo f in fields)
                 {
-                    if (f.FieldType.Name == "Dictionary`2" && f.ToString().Contains("EntryJsonInfo"))
+                    if (f.FieldType.Name == "Dictionary`2" && f.ToString().Contains("EntryInfoJson"))
                     {
                         FieldInfo field = type.GetField(f.Name);
                         var obj = Activator.CreateInstance(type);
                         var oDic = field.GetValue(obj);
-                        EntryTab_json = Marge(EntryTab_json, (Dictionary<string, EntryJsonInfo>)oDic);
+                        EntryTab_json = Marge(EntryTab_json, (Dictionary<string, EntryInfoJson>)oDic);
                     }
                 }
             }
-            var Tab = (Item != "" ? EntryTab_json[Item] : new EntryJsonInfo());
+            var Tab = (Item != "" ? EntryTab_json[Item] : new EntryInfoJson());
             return (Tab);
         }
 
@@ -373,7 +373,7 @@ namespace WebApi_project.hostProc
             }
             return (xmlDoc);
         }
-        private void makeMenu(XmlElement p_menu, string name, string fullName, EntryXmlInfo value, Dictionary<string, EntryXmlInfo> EntryTab)
+        private void makeMenu(XmlElement p_menu, string name, string fullName, EntryInfoXml value, Dictionary<string, EntryInfoXml> EntryTab)
         {
             string[] x = name.Split('/');
             XmlDocument xmlDoc = p_menu.OwnerDocument;
@@ -401,7 +401,7 @@ namespace WebApi_project.hostProc
                 p_menu.AppendChild(menu);
             }
         }
-        private void makeMenu(XmlElement p_menu, string name, string fullName, EntryJsonInfo value, Dictionary<string, EntryJsonInfo> EntryTab)
+        private void makeMenu(XmlElement p_menu, string name, string fullName, EntryInfoJson value, Dictionary<string, EntryInfoJson> EntryTab)
         {
             string[] x = name.Split('/');
             XmlDocument xmlDoc = p_menu.OwnerDocument;
