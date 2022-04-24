@@ -28,6 +28,10 @@ namespace WebApi_project.hostProc
             var data = Tab.data;
             string opt = Tab.option;
             XmlDocument xmlDoc = new XmlDocument();
+            if( type == "method")
+            {
+                xmlDoc = LoadMethod_xml(data, opt);
+            }
             xmlDoc = LoadAsp(EntryTab_xml, Item, Json);
             return (xmlDoc);
         }
@@ -41,6 +45,13 @@ namespace WebApi_project.hostProc
             var type = Tab.type;
             var data = Tab.data;
             string opt = Tab.option;
+            if (type == "method")
+            {
+                JObject ret = LoadMethod_json(data, opt);
+            }
+            else
+            {
+            }
             JObject jObj = new JObject();
             return (jObj);
         }
@@ -65,10 +76,6 @@ namespace WebApi_project.hostProc
                 else if (type == "xml")
                 {
                     xmlDoc = LoadXml(data, option);
-                }
-                else if (type == "method")
-                {
-                    xmlDoc = LoadMethod(data, option);
                 }
                 else
                 {
@@ -115,7 +122,12 @@ namespace WebApi_project.hostProc
                 //Debug.WriteErr("finally");
             }
         }
-        private XmlDocument LoadMethod(string url, string s_option)
+        private JObject LoadMethod_json(string Item, string s_option)
+        {
+            JObject o = new JObject();
+            return (o);
+        }
+        private XmlDocument LoadMethod_xml(string url, string s_option)
         {
             XmlDocument xmlDoc = new XmlDocument();
             try
@@ -332,19 +344,19 @@ namespace WebApi_project.hostProc
             root.AppendChild(root_xml);
             foreach (var item in EntryTab_xml)
             {
-                makeMenuXml(root_xml, item.Key, item.Key, item.Value, EntryTab_xml);
+                makeMenu(root_xml, item.Key, item.Key, item.Value, EntryTab_xml);
                 //root_xml.AppendChild(s_menu);
             }
             XmlElement root_json = xmlDoc.CreateElement("json");
             root.AppendChild(root_json);
             foreach (var item in EntryTab_json)
             {
-                makeMenuJson(root_json, item.Key, item.Key, item.Value, EntryTab_json);
+                makeMenu(root_json, item.Key, item.Key, item.Value, EntryTab_json);
                 //root_xml.AppendChild(s_menu);
             }
             return (xmlDoc);
         }
-        private void makeMenuXml(XmlElement p_menu, string name, string fullName, EntryXmlInfo value, Dictionary<string, EntryXmlInfo> EntryTab)
+        private void makeMenu(XmlElement p_menu, string name, string fullName, EntryXmlInfo value, Dictionary<string, EntryXmlInfo> EntryTab)
         {
             string[] x = name.Split('/');
             XmlDocument xmlDoc = p_menu.OwnerDocument;
@@ -359,7 +371,7 @@ namespace WebApi_project.hostProc
                 int indexToRemove = 0;
                 string[] z = x.Where((source, index) => index != indexToRemove).ToArray();
                 string new_name = String.Join("/", z);
-                makeMenuXml(menu, new_name, fullName, value, EntryTab);
+                makeMenu(menu, new_name, fullName, value, EntryTab);
             }
             else
             {
@@ -371,7 +383,7 @@ namespace WebApi_project.hostProc
                 p_menu.AppendChild(menu);
             }
         }
-        private void makeMenuJson(XmlElement p_menu, string name, string fullName, EntryJsonInfo value, Dictionary<string, EntryJsonInfo> EntryTab)
+        private void makeMenu(XmlElement p_menu, string name, string fullName, EntryJsonInfo value, Dictionary<string, EntryJsonInfo> EntryTab)
         {
             string[] x = name.Split('/');
             XmlDocument xmlDoc = p_menu.OwnerDocument;
@@ -386,7 +398,7 @@ namespace WebApi_project.hostProc
                 int indexToRemove = 0;
                 string[] z = x.Where((source, index) => index != indexToRemove).ToArray();
                 string new_name = String.Join("/", z);
-                makeMenuJson(menu, new_name, fullName, value, EntryTab);
+                makeMenu(menu, new_name, fullName, value, EntryTab);
             }
             else
             {
