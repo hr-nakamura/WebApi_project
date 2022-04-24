@@ -19,10 +19,12 @@ namespace WebApi_project.hostProc
 
         public XmlDocument Entry(EntryInfoXml EntryTab,string Item, string Json)
         {
-            var Tab = GetEntryTab_xml(Item);
-            var type = Tab.type;
-            var data = Tab.data;
-            string opt = Tab.option;
+            EntryTab = GetEntryTab_xml(Item);
+            var type = EntryTab.type;
+            var data = EntryTab.data;
+            string opt = EntryTab.option;
+            EntryTab.option = JsonMerge(EntryTab.option, Json);
+
             XmlDocument xmlDoc = new XmlDocument();
             object returnValue;
             if( type == "method")
@@ -37,10 +39,12 @@ namespace WebApi_project.hostProc
         }
         public JObject Entry(EntryInfoJson EntryTab, string Item, string Json)
         {
-            var Tab = GetEntryTab_json(Item);
-            var type = Tab.type;
-            var data = Tab.data;
-            string opt = Tab.option;
+            EntryTab = GetEntryTab_json(Item);
+            var type = EntryTab.type;
+            var data = EntryTab.data;
+            string opt = EntryTab.option;
+            EntryTab.option = JsonMerge(EntryTab.option, Json);
+
             JObject jObj = new JObject();
             object returnValue;
             if (type == "method")
