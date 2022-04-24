@@ -56,7 +56,7 @@
                     url: WebApi_url_json,
                     type: "GET",
                     data: options,
-                    dataType: 'json',
+                    dataType: 'text',
                     dataFilter: function (data, type) {
                         return (data);
                     },

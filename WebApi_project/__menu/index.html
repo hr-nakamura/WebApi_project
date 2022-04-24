@@ -113,8 +113,13 @@
                 return;
             }
             // ここでxml/json分ける
-            var xmlDoc = $.WebApi(o.item, o.option);
-            var Str = $.xml2str(xmlDoc);
+            if (o.table == "xml") {
+                var xmlDoc = $.WebApi(o.item, o.option);
+                var Str = $.xml2str(xmlDoc);
+            }
+            else {
+                var json = $.WebApi_json(o.item, o.option);
+            }
             //StrOut(Str);
             $.storage("viewStr", Str);
             $("iframe.iframe_content").attr("src", "Util/viewValue.html");

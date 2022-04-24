@@ -394,6 +394,7 @@ namespace WebApi_project.hostProc
             {
                 XmlElement menu = xmlDoc.CreateElement("menu");
                 menu.SetAttribute("name", x[0]);
+                menu.SetAttribute("table", "xml");
                 menu.SetAttribute("type", value.type);
                 menu.SetAttribute("option", value.option);
                 menu.SetAttribute("item", fullName);
@@ -421,6 +422,7 @@ namespace WebApi_project.hostProc
             {
                 XmlElement menu = xmlDoc.CreateElement("menu");
                 menu.SetAttribute("name", x[0]);
+                menu.SetAttribute("table", "json");
                 menu.SetAttribute("type", value.type);
                 menu.SetAttribute("option", value.option);
                 menu.SetAttribute("item", fullName);
