@@ -23,6 +23,10 @@ namespace WebApi_project.hostProc
             {
                 EntryTab_xml = GetEntryTab_xml();
             }
+            var Tab = EntryTab_xml[Item];
+            var type = Tab.type;
+            var data = Tab.data;
+            string opt = Tab.option;
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc = LoadAsp(EntryTab_xml, Item, Json);
             return (xmlDoc);
@@ -33,6 +37,10 @@ namespace WebApi_project.hostProc
             {
                 EntryTab_json = GetEntryTab_json();
             }
+            var Tab = EntryTab_json[Item];
+            var type = Tab.type;
+            var data = Tab.data;
+            string opt = Tab.option;
             JObject jObj = new JObject();
             return (jObj);
         }
