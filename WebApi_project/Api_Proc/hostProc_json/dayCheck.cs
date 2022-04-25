@@ -3,6 +3,8 @@ using System.Web;
 using System.Xml;
 using System.Text;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 using System.Data.SqlClient;
 using System.Collections.Generic;
 
@@ -19,9 +21,11 @@ namespace WebApi_project.hostProc
 		}
 		public object dayChk_json(string Json)
         {
-            var o_json = JsonConvert.DeserializeObject<para_dayChk>(Json);
-			o_json.day = dayChk(o_json.yymm);
-			return (o_json);
+			para_dayChk o_json;
+
+			o_json = JsonConvert.DeserializeObject<para_dayChk>(Json);
+            o_json.day = dayChk(o_json.yymm);
+            return (o_json);
 		}
 		public int dayChk(int yymm, int adjustDayCnt = 7)
 		{

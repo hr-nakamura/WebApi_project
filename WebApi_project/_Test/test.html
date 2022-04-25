@@ -37,21 +37,16 @@
         var web_api = "/webapi/project/api/xml";
 
         function test1() {
-            var yymm = 111111;
 
-            var json = { mailAddr: yymm }
-            var json = $.WebApi_json();
-            $.debug("test1");
         }
         function test2() {
             var yymm = 202201;
-
-            var json1 = { yymm: yymm ,mailAddr:"nakamura"}
-            var json = $.WebApi_test( "json", "hostProc","dayChk_json", json1);
+            var json = { yymm: yymm }
+            var json = $.WebApi_test("json", "hostProc", "dayChk_json", json);
             $.debug("test2-1");
 
             var json2 = { Item: "ABC", Json: "XYZ" }
-            var json = $.WebApi("hostProc/dayChk_json", json2);
+            var json = $.WebApi_json("projectInfo/dayChk_json", json);
             $.debug("test2-2");
 
         }

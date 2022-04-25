@@ -62,7 +62,7 @@
                     },
                     async: false
                 }).done(function (data, status, xhr) {
-                    returnValue = data;
+                    returnValue = JSON.parse(data);
                 }).fail(function (xhr, status, error) {
                     returnValue = status;
                     window.status = xhr.statusText;
@@ -93,7 +93,7 @@
                         returnValue = $.str2xml(data);
                     }
                     else {
-                        returnValue = data;
+                        returnValue = JSON.parse(data);
                     }
                 }).fail(function (xhr, status, error) {
                     returnValue = status;

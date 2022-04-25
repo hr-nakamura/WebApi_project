@@ -76,7 +76,7 @@
                 fix: para.fix
             };
             $.debug.json("para", json);
-            xmlDoc = $.WebApi("GET", url, "部門収支/部門収支_XML", json);
+            xmlDoc = $.WebApi("部門収支/部門収支_XML", json);
 
 
             var xsl_name = "EMG部門収支.xsl";

@@ -41,8 +41,8 @@ namespace WebApi_project.Controllers
             }
             else if( mode == "json")
             {
-                object returnValue = hProc.testEntry_json(className, methodName, Json);
-                response = (HttpResponseMessage)returnValue;
+                object jsonObj = hProc.testEntry_json(className, methodName, Json);
+                response = response_conv(JsonConvert.SerializeObject(jsonObj));
             }
             return (response);
         }

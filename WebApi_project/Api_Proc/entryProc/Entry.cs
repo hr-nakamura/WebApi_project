@@ -123,7 +123,7 @@ namespace WebApi_project.hostProc
         }
         private JObject LoadMethod(EntryInfoJson EntryInfo)
         {
-            JObject jObj = new JObject();
+            //JObject jObj = new JObject();
             var option = EntryInfo.option;
             string Item = EntryInfo.data.Trim('/');
             string[] ItemWork = Item.Split('/');
@@ -139,8 +139,10 @@ namespace WebApi_project.hostProc
             var obj = Activator.CreateInstance(classType);
             MethodInfo method = classType.GetMethod(methodName);
             if (method == null) throw new Exception("calss名[" + className + "] method名[" + methodName + "]が不明です");
-            jObj = (JObject)method.Invoke(obj, new object[] { option });
 
+            var jsonObj = method.Invoke(obj, new object[] { option });
+            var jsonStr = JsonConvert.SerializeObject(jsonObj);
+            var jObj = JObject.Parse(jsonStr);
             return (jObj);
         }
         private XmlDocument LoadMethod(EntryInfoXml EntryInfo)
