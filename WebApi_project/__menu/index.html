@@ -119,6 +119,7 @@
             }
             else {
                 var json = $.WebApi_json(o.item, o.option);
+                var Str = JSON.stringify(json);
             }
             //StrOut(Str);
             $.storage("viewStr", Str);
@@ -141,7 +142,8 @@
                 else if (type == "json") {
                     var Str = $.WebApi_test("json", o.item, o.func, Send_Option);
                     //$.alert.json(Str);
-                    $.storage("viewStr", JSON.stringify(Str, null, 2));
+                    //$.storage("viewStr", JSON.stringify(Str, null, 2));
+                    $.storage("viewStr", Str);
                     $("iframe.iframe_content").attr("src", "Util/viewValue.html");
                 }
                 else {

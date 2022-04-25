@@ -29,24 +29,16 @@ namespace WebApi_project.hostProc
         {
             MyDebug.Write("projectTest");
 
+            var option = JObject.Parse(opt_Json);
+
+            //JObject oJson = readJson("http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp" + makeOption(option, "?"), "Shift_JIS");
+            JObject oJson = readJson("http://localhost/Asp/Test/test.json", "utf-8");
+            //string s_json = Newtonsoft.Json.JsonConvert.SerializeObject(oJson);       // jsonをjson文字列に変換
 
 
-            var EntryTab = new Dictionary<string, EntryInfoXml>();
-
-            Type type = typeof(WebApi_project.hostProc.hostProc);
-            FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
-            foreach (FieldInfo f in fields)
-            {
-                if (f.FieldType.Name == "Dictionary`2" && f.ToString().Contains("EntryInfo"))
-                {
-                    FieldInfo field = type.GetField(f.Name);
-                    var obj = Activator.CreateInstance(type);
-                    var oDic = field.GetValue(obj);
-                    //EntryTab = Marge(EntryTab, (Dictionary<string, EntryInfo>)oDic);
-                }
-            }
-
-            XmlDocument xmlDoc = new XmlDocument();
+            JsonArrayConvert(ref oJson, "月", "m");
+            hostProc hProc = new hostProc();
+            XmlDocument xmlDoc = hProc.JsonToXml(oJson); 
 
             return (xmlDoc);
         }
