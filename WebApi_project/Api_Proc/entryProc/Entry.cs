@@ -185,28 +185,7 @@ namespace WebApi_project.hostProc
                 //Debug.WriteErr("finally");
             }
         }
-        private XmlDocument LoadText(EntryInfoXml EntryInfo)
-        {
-            System.Text.Encoding enc_utf8 = System.Text.Encoding.GetEncoding("UTF-8");
-            System.Text.Encoding enc_euc = System.Text.Encoding.GetEncoding("euc-jp");
-            System.Text.Encoding enc_sjis = System.Text.Encoding.GetEncoding("Shift_Jis");
-            var url = EntryInfo.data;
-            var option = EntryInfo.option;
 
-            option = makeOption(option, "");
-            option = System.Web.HttpUtility.UrlEncode(option, enc_sjis);
-
-            var urlX = url + "?" + option;
-
-            XmlDocument xmlDoc = new XmlDocument();
-            //xmlDoc.Load(urlX);
-
-            hostWeb h = new hostWeb();
-            string text = h.GetRequest(urlX, "Shift_JIS");
-            xmlDoc.LoadXml("<root/>");
-            xmlDoc.DocumentElement.InnerText = text;
-            return (xmlDoc);
-        }
         private XmlDocument LoadXml(EntryInfoXml EntryInfo)
         {
             XmlDocument xmlDoc = new XmlDocument();
@@ -251,6 +230,28 @@ namespace WebApi_project.hostProc
                 hProc.JsonArrayConvert(ref oJson, "月", "m");
                 xmlDoc = hProc.JsonToXml(oJson);
             }
+            return (xmlDoc);
+        }
+        private XmlDocument LoadText(EntryInfoXml EntryInfo)
+        {
+            System.Text.Encoding enc_utf8 = System.Text.Encoding.GetEncoding("UTF-8");
+            System.Text.Encoding enc_euc = System.Text.Encoding.GetEncoding("euc-jp");
+            System.Text.Encoding enc_sjis = System.Text.Encoding.GetEncoding("Shift_Jis");
+            var url = EntryInfo.data;
+            var option = EntryInfo.option;
+
+            option = makeOption(option, "");
+            option = System.Web.HttpUtility.UrlEncode(option, enc_sjis);
+
+            var urlX = url + "?" + option;
+
+            XmlDocument xmlDoc = new XmlDocument();
+            //xmlDoc.Load(urlX);
+
+            hostWeb h = new hostWeb();
+            string text = h.GetRequest(urlX, "Shift_JIS");
+            xmlDoc.LoadXml("<root/>");
+            xmlDoc.DocumentElement.InnerText = text;
             return (xmlDoc);
         }
         private string makeOption(JObject o_opt, string head = "")
