@@ -24,6 +24,7 @@ namespace WebApi_project.Controllers
 
             // 呼び出せるリストを戻す
             var hProc = new hostProc.entryProc();
+
             XmlDocument xmlDoc = hProc.EntryList();
             //XmlDocument xmlDoc = new XmlDocument();
 
@@ -35,8 +36,9 @@ namespace WebApi_project.Controllers
         {
             MyDebug.Write("Xml", "Get string Item, string Json",Item,Json.ToString());
             var hProc = new hostProc.entryProc();
-            EntryInfoXml EntryTab = new EntryInfoXml();
-            XmlDocument xmlDoc = hProc.Entry(EntryTab,Item, Json);
+
+            EntryInfoXml EntryInfo = new EntryInfoXml();
+            XmlDocument xmlDoc = hProc.Entry(EntryInfo, Item, Json);
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
             return (response);

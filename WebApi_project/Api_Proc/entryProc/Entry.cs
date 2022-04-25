@@ -17,76 +17,68 @@ namespace WebApi_project.hostProc
         private static Dictionary<string, EntryInfoJson> EntryTab_json = new Dictionary<string, EntryInfoJson>();
         private static Encoding Encode = Encoding.GetEncoding("shift_jis");
 
-        public XmlDocument Entry(EntryInfoXml EntryTab,string Item, string Json)
+        public XmlDocument Entry(EntryInfoXml EntryInfo,string Item, string Json)
         {
-            EntryTab = GetEntryTab_xml(Item);
-            var type = EntryTab.type;
-            var data = EntryTab.data;
-            string opt = EntryTab.option;
-            EntryTab.option = JsonMerge(EntryTab.option, Json);
+            EntryInfo = GetEntryTab_xml(Item);
+            EntryInfo.option = JsonMerge(EntryInfo.option, Json);
 
             XmlDocument xmlDoc = new XmlDocument();
-            object returnValue;
-            if( type == "method")
-            {
-                returnValue = LoadMethod(EntryTab_xml, data, opt);
-            }
-            else
-            {
-                returnValue = LoadAsp(EntryTab_xml, data, opt);
-            }
-            return ((XmlDocument)returnValue);
+            xmlDoc = LoadFunc(EntryInfo);
+
+            return (xmlDoc);
         }
-        public JObject Entry(EntryInfoJson EntryTab, string Item, string Json)
+        public JObject Entry(EntryInfoJson EntryInfo, string Item, string Json)
         {
-            EntryTab = GetEntryTab_json(Item);
-            var type = EntryTab.type;
-            var data = EntryTab.data;
-            string opt = EntryTab.option;
-            EntryTab.option = JsonMerge(EntryTab.option, Json);
+            EntryInfo = GetEntryTab_json(Item);
+            EntryInfo.option = JsonMerge(EntryInfo.option, Json);
 
             JObject jObj = new JObject();
-            object returnValue;
-            if (type == "method")
-            {
-                returnValue = LoadMethod(EntryTab_json, data, opt);
-            }
-            else
-            {
-                returnValue = LoadAsp(EntryTab_json,data, opt);
-            }
-            return ((JObject)returnValue);
-        }
-        private JObject LoadAsp(Dictionary<string, EntryInfoJson> EntryTab, string name, string s_option)
-        {
-            JObject jObj = new JObject();
+            jObj = LoadFunc(EntryInfo);
             return (jObj);
         }
-        private XmlDocument LoadAsp(Dictionary<string, EntryInfoXml> EntryTab, string name, string s_option)
+        private JObject LoadFunc(EntryInfoJson EntryInfo)
+        {
+            var type = EntryInfo.type;
+            var data = EntryInfo.data;
+            string opt = EntryInfo.option;
+            JObject jObj = new JObject();
+            var hProc = new hostProc();
+            if (type == "method")
+            {
+                jObj = LoadMethod(EntryInfo);
+            }
+            else if (type == "json")
+            {
+                jObj = LoadJson(EntryInfo);
+            }
+            return (jObj);
+        }
+        private XmlDocument LoadFunc(EntryInfoXml EntryInfo)
         {
             XmlDocument xmlDoc = new XmlDocument();
             try
             {
 
-                var Tab = EntryTab[name];
-                var type = Tab.type;
-                var data = Tab.data;
-                string opt = Tab.option;
+                var type = EntryInfo.type;
+                var data = EntryInfo.data;
+                string option = EntryInfo.option;
 
                 var hProc = new hostProc();
-                string option = JsonMerge(opt, s_option);
-                if (type == "json")
+                if( type == "method")
                 {
-                    var oJson = (JObject)LoadJson(data, option);
-                    xmlDoc = hProc.JsonToXml(oJson);
+                    xmlDoc = LoadMethod(EntryInfo);
+                }
+                else if (type == "json")
+                {
+                    xmlDoc = LoadJson(EntryInfo);
                 }
                 else if (type == "xml")
                 {
-                    xmlDoc = LoadXml(data, option);
+                    xmlDoc = LoadXml(EntryInfo);
                 }
                 else
                 {
-                    xmlDoc = LoadText(data, option);
+                    xmlDoc = LoadText(EntryInfo);
                 }
                 var Declaration = xmlDoc.FirstChild.GetType().ToString();
 
@@ -96,7 +88,7 @@ namespace WebApi_project.hostProc
                     xmlDoc.PrependChild(declaration);
                 }
                 string comment = System.Web.HttpUtility.UrlDecode(makeOption(option), Encode);
-                hProc.AddComment(xmlDoc, name);
+                //hProc.AddComment(xmlDoc, name);
                 hProc.AddComment(xmlDoc, data);
                 hProc.AddComment(xmlDoc, comment);
                 //AddComment(xmlDoc, option);
@@ -129,12 +121,13 @@ namespace WebApi_project.hostProc
                 //Debug.WriteErr("finally");
             }
         }
-        private JObject LoadMethod(Dictionary<string, EntryInfoJson> EntryTab, string Item, string s_option)
+        private JObject LoadMethod(EntryInfoJson EntryInfo)
         {
             JObject jObj = new JObject();
-            Item = Item.Trim('/');
+            var option = EntryInfo.option;
+            string Item = EntryInfo.data.Trim('/');
             string[] ItemWork = Item.Split('/');
-            if (ItemWork.Length != 2) throw new Exception("引数[" + s_option + "]が不明です");
+            if (ItemWork.Length != 2) throw new Exception("引数[" + option + "]が不明です");
 
             string className = ItemWork[0];
             string methodName = ItemWork[1];
@@ -146,18 +139,19 @@ namespace WebApi_project.hostProc
             var obj = Activator.CreateInstance(classType);
             MethodInfo method = classType.GetMethod(methodName);
             if (method == null) throw new Exception("calss名[" + className + "] method名[" + methodName + "]が不明です");
-            jObj = (JObject)method.Invoke(obj, new object[] { s_option });
+            jObj = (JObject)method.Invoke(obj, new object[] { option });
 
             return (jObj);
         }
-        private XmlDocument LoadMethod(Dictionary<string, EntryInfoXml> EntryTab, string url, string s_option)
+        private XmlDocument LoadMethod(EntryInfoXml EntryInfo)
         {
             XmlDocument xmlDoc = new XmlDocument();
             try
             {
-                url = url.Trim('/');
-                string[] ItemWork = url.Split('/');
-                if (ItemWork.Length != 2) throw new Exception("引数[" + s_option + "]が不明です");
+                var option = EntryInfo.option;
+                string Item = EntryInfo.data.Trim('/');
+                string[] ItemWork = Item.Split('/');
+                if (ItemWork.Length != 2) throw new Exception("引数[" + option + "]が不明です");
 
                 string className = ItemWork[0];
                 string methodName = ItemWork[1];
@@ -169,7 +163,7 @@ namespace WebApi_project.hostProc
                 var obj = Activator.CreateInstance(classType);
                 MethodInfo method = classType.GetMethod(methodName);
                 if (method == null) throw new Exception("calss名[" + className + "] method名[" + methodName + "]が不明です");
-                xmlDoc = (XmlDocument)method.Invoke(obj, new object[] { s_option });
+                xmlDoc = (XmlDocument)method.Invoke(obj, new object[] { option });
                 if (xmlDoc.InnerXml == "") xmlDoc.LoadXml("<root comment='データがありません'/>");
                 return (xmlDoc);
             }
@@ -191,13 +185,15 @@ namespace WebApi_project.hostProc
                 //Debug.WriteErr("finally");
             }
         }
-        private XmlDocument LoadText(string url, string s_option)
+        private XmlDocument LoadText(EntryInfoXml EntryInfo)
         {
             System.Text.Encoding enc_utf8 = System.Text.Encoding.GetEncoding("UTF-8");
             System.Text.Encoding enc_euc = System.Text.Encoding.GetEncoding("euc-jp");
             System.Text.Encoding enc_sjis = System.Text.Encoding.GetEncoding("Shift_Jis");
+            var url = EntryInfo.data;
+            var option = EntryInfo.option;
 
-            var option = makeOption(s_option, "");
+            option = makeOption(option, "");
             option = System.Web.HttpUtility.UrlEncode(option, enc_sjis);
 
             var urlX = url + "?" + option;
@@ -211,21 +207,25 @@ namespace WebApi_project.hostProc
             xmlDoc.DocumentElement.InnerText = text;
             return (xmlDoc);
         }
-        private XmlDocument LoadXml(string url, string s_option)
+        private XmlDocument LoadXml(EntryInfoXml EntryInfo)
         {
             XmlDocument xmlDoc = new XmlDocument();
-            url += makeOption(s_option, "?");
+            var url = EntryInfo.data;
+            var option = EntryInfo.option;
+            url += makeOption(option, "?");
             hostWeb h = new hostWeb();
             string xmlStr = h.GetRequest(url, "Shift_JIS");
             if (xmlStr == null) xmlStr = "<root/>";
             xmlDoc.LoadXml(xmlStr);
             return (xmlDoc);
         }
-        private JObject LoadJson(string url, string s_option)
+        private JObject LoadJson(EntryInfoJson EntryInfo)
         {
             var hProc = new hostProc();
             JObject oJson = new JObject();
-            url += makeOption(s_option, "?");
+            var url = EntryInfo.data;
+            var option = EntryInfo.option;
+            url += makeOption(option, "?");
             hostWeb h = new hostWeb();
             string jsonStr = h.GetRequest(url, "Shift_JIS");
             if (jsonStr != null)
@@ -234,6 +234,24 @@ namespace WebApi_project.hostProc
                 hProc.JsonArrayConvert(ref oJson, "月", "m");
             }
             return (oJson);
+        }
+        private XmlDocument LoadJson(EntryInfoXml EntryInfo)
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            var hProc = new hostProc();
+            JObject oJson = new JObject();
+            var url = EntryInfo.data;
+            var option = EntryInfo.option;
+            url += makeOption(option, "?");
+            hostWeb h = new hostWeb();
+            string jsonStr = h.GetRequest(url, "Shift_JIS");
+            if (jsonStr != null)
+            {
+                oJson = JObject.Parse(jsonStr);
+                hProc.JsonArrayConvert(ref oJson, "月", "m");
+                xmlDoc = hProc.JsonToXml(oJson);
+            }
+            return (xmlDoc);
         }
         private string makeOption(JObject o_opt, string head = "")
         {

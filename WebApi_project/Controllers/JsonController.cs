@@ -40,8 +40,9 @@ namespace WebApi_project.Controllers
         {
             MyDebug.noWrite("Json", "Get string Item, string Json",Item,Json.ToString());
             var hProc = new hostProc.entryProc();
-            EntryInfoJson EntryTab = new EntryInfoJson();
-            object Obj = hProc.Entry(EntryTab,Item, Json);
+
+            EntryInfoJson EntryInfo = new EntryInfoJson();
+            object Obj = hProc.Entry(EntryInfo, Item, Json);
 
             HttpResponseMessage response = response_conv(JsonConvert.SerializeObject(Obj));
             return (response);

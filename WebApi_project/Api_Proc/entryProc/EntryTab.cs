@@ -122,7 +122,7 @@ namespace WebApi_project.hostProc
         };
 
         public Dictionary<string, EntryInfoJson> projectInfo = new Dictionary<string, EntryInfoJson>() {
-            { "hostProc/memberInfo_json", new EntryInfoJson{
+            { "projectInfo/memberInfo_json", new EntryInfoJson{
                 type = "method",
                 data = "hostProc/memberInfo_json",
                 option = "{mailAddr:'nakamura@eandm.co.jp'}"
