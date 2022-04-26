@@ -42,7 +42,7 @@ namespace WebApi_project.hostProc
             var x = new __menu.debug.fileOut();
 
 
-            x.Write_Notepad("AA");
+            x.Write_Notepad("http://localhost/Asp/Test/test.json", xmlDoc.OuterXml);
             return (xmlDoc);
         }
 

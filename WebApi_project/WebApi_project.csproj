@@ -316,6 +316,8 @@
     <Content Include="_Test\_Test\test1.json" />
     <Content Include="_Test\_Test\sales.json" />
     <Content Include="__menu\debug\debug.ashx" />
+    <Content Include="__menu\debug\jquery.my.fileOut.js" />
+    <Content Include="__menu\debug\fileOut.ashx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api_Proc\entryProc\EntryTab.cs" />
@@ -357,6 +359,9 @@
       <DependentUpon>debug.ashx</DependentUpon>
     </Compile>
     <Compile Include="__menu\debug\debug.cs" />
+    <Compile Include="__menu\debug\fileOut.ashx.cs">
+      <DependentUpon>fileOut.ashx</DependentUpon>
+    </Compile>
     <Compile Include="__menu\debug\fileOut.cs" />
   </ItemGroup>
   <ItemGroup>

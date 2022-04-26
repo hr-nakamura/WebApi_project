@@ -5,9 +5,11 @@ using System.IO.Pipes;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Web;
+using System.Xml;
+
 namespace WebApi_project.__menu.debug
 {
-    public class fileOut  
+    public class fileOutX  
     {
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         private static extern IntPtr FindWindowEx(IntPtr hWnd, IntPtr hwndChildAfter, String lpszClass, String lpszWindow);
@@ -17,34 +19,34 @@ namespace WebApi_project.__menu.debug
         [DllImport("User32.dll")]
         private static extern int SendMessage(IntPtr hWnd, int uMsg, int wParam, string lParam);
 
-        public void Write_Notepad(string str)
+        public void Write_Notepad(string fName, string str)
         {
-            var debugMode = true;
-            if (debugMode == false) return;
-            //IntPtr wParam;
+
+            var x = IsXml(str) ? ".xml" : ".txt";
             Encoding Encode = Encoding.GetEncoding("Shift_JIS");
-            using (StreamWriter writer = new StreamWriter(@"D:\test\Test.txt", true, Encode))
+            string fileName = Path.GetFileNameWithoutExtension(fName);
+
+            using (StreamWriter writer = new StreamWriter(@"D:\test\" + fileName + x, false, Encode))
             {
-                writer.WriteLine("ABCDEF");
+                writer.WriteLine(str);
             }
 
-            // メモ帳を起動する
-            //Process.Start("notepad");
 
-            const int EM_REPLACESEL = 0x00C2;
 
-            IntPtr lnghWnd = FindWindowEx(IntPtr.Zero, IntPtr.Zero, "Notepad", "*無題 - メモ帳");
-            if (lnghWnd == IntPtr.Zero)
+        }
+        private bool IsXml(string xmlStr)
+        {
+            try
             {
-                lnghWnd = FindWindowEx(IntPtr.Zero, IntPtr.Zero, "Notepad", "無題 - メモ帳");
-                if (lnghWnd == IntPtr.Zero)
-                {
-                    return;
-                }
+                XmlDocument myDoc = new XmlDocument();
+                myDoc.LoadXml(xmlStr);
             }
-            IntPtr lnghWndTarget = FindWindowEx(lnghWnd, IntPtr.Zero, "Edit", "");           // '子ウィンドウのEdit
-
-            SendMessage(lnghWndTarget, EM_REPLACESEL, 1, String.Concat(str, "\x0d"));
+            catch (XmlException ex)
+            {
+                //take care of the exception
+                return (false);
+            }
+            return (true);
         }
     }
 }

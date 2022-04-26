@@ -1,22 +1,60 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
+using System.IO;
+using System.IO.Pipes;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Web;
+using System.Xml;
 
 namespace WebApi_project.__menu.debug
 {
     /// <summary>
     /// fileOut1 の概要の説明です
     /// </summary>
-    public class fileOut1 : IHttpHandler
+    public class fileOut : IHttpHandler
     {
 
         public void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/plain";
-            context.Response.Write("Hello World");
+            //context.Response.Write("Hello World");
+
+            string Str = context.Request.Form["Str"];
+            if (Str == null) return;
+            string name = context.Request.Form["Name"];
+            Write_Notepad(name,Str);
         }
 
+        public void Write_Notepad(string fName, string str)
+        {
+
+            var x = IsXml(str) ? ".xml" : ".txt";
+            Encoding Encode = Encoding.GetEncoding("Shift_JIS");
+            string fileName = Path.GetFileNameWithoutExtension(fName);
+
+            using (StreamWriter writer = new StreamWriter(@"D:\test\" + fileName + x, false, Encode))
+            {
+                writer.WriteLine(str);
+            }
+
+
+
+        }
+        private bool IsXml(string xmlStr)
+        {
+            try
+            {
+                XmlDocument myDoc = new XmlDocument();
+                myDoc.LoadXml(xmlStr);
+            }
+            catch (XmlException ex)
+            {
+                //take care of the exception
+                return (false);
+            }
+            return (true);
+        }
         public bool IsReusable
         {
             get

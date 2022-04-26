@@ -12,15 +12,16 @@
     <script src="../_home/_Content/_Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
     <script src="../_home/_Content/_Scripts/jquery.stopWatch.js" type="text/javascript"></script>
     <script src="../_home/_Content/_debug/jquery.my.debug.js" type="text/javascript"></script>
+    <script src="../__menu/debug/jquery.my.fileOut.js" type="text/javascript"></script>
 
     <SCRIPT FOR="window" EVENT="onload" LANGUAGE="JavaScript">
         try {
-//            pNum = window.dialogArguments.pNum;
-//            alert(pNum);
+            //            pNum = window.dialogArguments.pNum;
+            //            alert(pNum);
             //alert($.fn.jquery);
+            var str = "AAA";
 
-            test1();
-            test2();
+            $.fileOut("ABC.xxx", str);
 
 
         } catch (e) {
