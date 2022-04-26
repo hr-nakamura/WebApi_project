@@ -357,6 +357,7 @@
       <DependentUpon>debug.ashx</DependentUpon>
     </Compile>
     <Compile Include="__menu\debug\debug.cs" />
+    <Compile Include="__menu\debug\fileOut.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\system.ini" />

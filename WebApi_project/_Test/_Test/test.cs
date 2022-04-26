@@ -38,8 +38,9 @@ namespace WebApi_project.hostProc
 
             JsonArrayConvert(ref oJson, "月", "m");
             hostProc hProc = new hostProc();
-            XmlDocument xmlDoc = hProc.JsonToXml(oJson); 
-
+            XmlDocument xmlDoc = hProc.JsonToXml(oJson);
+            var x = new __menu.debug.fileOut();
+            x.Write_Notepad("AA");
             return (xmlDoc);
         }
 

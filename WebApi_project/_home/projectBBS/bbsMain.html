@@ -72,7 +72,7 @@
                     dispProject(xmlDoc);
 
                     var Buff = $(o1).stopwatch();
-                    $.debug("終了", webapi_url, Buff);
+                    $.debug.no("終了", webapi_url, Buff);
 
                 } catch (e) {
                     $.alert("ERROR", e.message);
@@ -230,7 +230,7 @@
                         })
                     }
                     $(".count").text(disp.length);
-                    $.debug("==", containsText, disp.length);
+                    $.debug.no("==", containsText, disp.length);
                     //$(".target").focus();
                 } catch (e) {
                     $.debug("cancel発生", e.message);
@@ -313,7 +313,7 @@
                     $.debug("error", e.message);
                 } finally {
                     var Buff = $(o2).stopwatch();
-                    $.debug("selectProject 終了", selector, disp.length, Buff);
+                    $.debug.no("selectProject 終了", selector, disp.length, Buff);
                     projectInfo.Do = false;
                     //$.debug("selectProject 終了");
                 }
