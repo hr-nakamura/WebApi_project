@@ -17,6 +17,8 @@
     <script src="Scripts/jquery.my.mymenu.js" type="text/javascript"></script>
     <script src="Scripts/jquery.my.mnmenu.js" type="text/javascript"></script>
 
+    <!-- fileOut -->
+    <script src="debug/jquery.my.fileOut.js" type="text/javascript"></script>
     <script type="text/javascript">
         (function ($) {
         })(jQuery);
@@ -60,7 +62,7 @@
                 // menu データの取得
                 var menu_data = $.loadXMLDoc("menu.xml");
 
-                menu_Xml = menuData_Join(menu_data, methodList,methodList2);
+                menu_Xml = menuData_Join(menu_data, methodList, methodList2);
 
                 $(".menuBlock_content").mymenu(menu_Xml, {
                     color_menu_base: "cornflowerblue",
@@ -77,7 +79,7 @@
 
         });
 
-        function menuData_Join(menu_xml, methodList,methodList2) {
+        function menuData_Join(menu_xml, methodList, methodList2) {
             var xml_menus = $(methodList).find("root>xml>menu");
             var xml_methodTop = $(menu_xml).find("menu[name='テーブル(XML)']");
             xml_methodTop.prepend(xml_menus);
@@ -116,6 +118,7 @@
             if (o.table == "xml") {
                 var xmlDoc = $.WebApi(o.item, o.option);
                 var Str = $.xml2str(xmlDoc);
+                $.fileOut(o.item, Str);
             }
             else {
                 var json = $.WebApi_json(o.item, o.option);

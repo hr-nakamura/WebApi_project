@@ -124,6 +124,18 @@
     <Content Include="Scripts\json2.js" />
     <Content Include="Scripts\json2.min.js" />
     <Content Include="_home\_Content\_Scripts\json2xml.js" />
+    <Content Include="_home\_Content\_xmlData\EMG収支計画.xml" />
+    <Content Include="_home\_Content\_xmlData\projectInfoList_XML.xml" />
+    <Content Include="_home\_Content\_xmlData\projectInfo_XML_Detail.xml" />
+    <Content Include="_home\_Content\_xmlData\projectInfo_XML_Join.xml" />
+    <Content Include="_home\_Content\_xmlData\売上予実_分類.xml" />
+    <Content Include="_home\_Content\_xmlData\売上予実_新規.xml" />
+    <Content Include="_home\_Content\_xmlData\売上予実_新規2.xml" />
+    <Content Include="_home\_Content\_xmlData\売上予実_部門.xml" />
+    <Content Include="_home\_Content\_xmlData\統括収支計画.xml" />
+    <Content Include="_home\_Content\_xmlData\課収支計画.xml" />
+    <Content Include="_home\_Content\_xmlData\費用状況.xml" />
+    <Content Include="_home\_Content\_xmlData\部収支計画.xml" />
     <Content Include="_Test\_Test\test.asp" />
     <Content Include="_Test\Dialog\back.gif" />
     <Content Include="_Test\Dialog\bg01.gif" />
@@ -362,7 +374,6 @@
     <Compile Include="__menu\debug\fileOut.ashx.cs">
       <DependentUpon>fileOut.ashx</DependentUpon>
     </Compile>
-    <Compile Include="__menu\debug\fileOut.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\system.ini" />

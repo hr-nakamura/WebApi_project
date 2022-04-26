@@ -36,7 +36,7 @@ namespace WebApi_project.__menu.debug
             Encoding Encode = Encoding.GetEncoding("Shift_JIS");
             string fileName = Path.GetFileNameWithoutExtension(fName);
 
-            using (StreamWriter writer = new StreamWriter(@"D:\test\" + fileName + x, false, Encode))
+            using (StreamWriter writer = new StreamWriter(@"D:\xmlData\" + fileName + x, false, Encode))
             {
                 writer.WriteLine(str);
             }
