@@ -3,7 +3,7 @@
     $.fileOut = function (fName,str) {
         var sendObj = {
             Name: fName,
-            Str: str
+            Str: escape(str)
         }
 
         send_PostMessage(sendObj);

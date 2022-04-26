@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Web;
 using System.Xml;
+using System.Text.RegularExpressions;
 
 namespace WebApi_project.__menu.debug
 {
@@ -22,6 +23,8 @@ namespace WebApi_project.__menu.debug
 
             string Str = context.Request.Form["Str"];
             if (Str == null) return;
+            StringWriter myWriter = new StringWriter();
+            Str = HttpUtility.UrlDecode(Str);
             string name = context.Request.Form["Name"];
             Write_Notepad(name,Str);
         }
