@@ -22,6 +22,15 @@ namespace WebApi_project.__menu.debug
             var debugMode = true;
             if (debugMode == false) return;
             //IntPtr wParam;
+            Encoding Encode = Encoding.GetEncoding("Shift_JIS");
+            using (StreamWriter writer = new StreamWriter(@"D:\test\Test.txt", true, Encode))
+            {
+                writer.WriteLine("ABCDEF");
+            }
+
+            // メモ帳を起動する
+            //Process.Start("notepad");
+
             const int EM_REPLACESEL = 0x00C2;
 
             IntPtr lnghWnd = FindWindowEx(IntPtr.Zero, IntPtr.Zero, "Notepad", "*無題 - メモ帳");

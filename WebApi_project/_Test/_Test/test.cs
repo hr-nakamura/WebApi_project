@@ -40,6 +40,8 @@ namespace WebApi_project.hostProc
             hostProc hProc = new hostProc();
             XmlDocument xmlDoc = hProc.JsonToXml(oJson);
             var x = new __menu.debug.fileOut();
+
+
             x.Write_Notepad("AA");
             return (xmlDoc);
         }
