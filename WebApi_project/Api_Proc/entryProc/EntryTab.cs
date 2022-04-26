@@ -15,7 +15,8 @@ namespace WebApi_project.hostProc
         public Dictionary<string, EntryInfoXml> 部門収支 = new Dictionary<string, EntryInfoXml>() {
             { "部門収支/部門収支_XML", new EntryInfoXml{
                 type = "xml",
-                data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp",
+                //data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp",
+                data = "http://localhost/test/_xmlData/EMG収支計画.xml",
                 option = "{dispCmd:'EMG',year:2022,fix:70,yosoku:3}"
                 }
             },
@@ -41,14 +42,6 @@ namespace WebApi_project.hostProc
                 type = "xml",
                 data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp",
                 option = "{dispCmd:'課一覧',dispName:'営業本部',secMode:'開発',year:2022,fix:70,yosoku:3}"
-                }
-            },
-        };
-        public Dictionary<string, EntryInfoXml> projectBBS = new Dictionary<string, EntryInfoXml>(){
-            { "projectBBS/projectList", new EntryInfoXml{
-                type = "method",
-                data ="projectBBS/projectList",
-                option ="{beforBBS:'2021/06/30 00:00:00',visitBBS:'2021/07/07 10:12:12',limitYear:2019}"
                 }
             },
         };
@@ -117,6 +110,14 @@ namespace WebApi_project.hostProc
                 type = "method",
                 data ="要員情報/要員一覧",
                 option ="{year:2022,actual:5}"
+                }
+            },
+        };
+        public Dictionary<string, EntryInfoXml> projectBBS = new Dictionary<string, EntryInfoXml>(){
+            { "projectBBS/projectList", new EntryInfoXml{
+                type = "method",
+                data ="projectBBS/projectList",
+                option ="{beforBBS:'2021/06/30 00:00:00',visitBBS:'2021/07/07 10:12:12',limitYear:2019}"
                 }
             },
         };

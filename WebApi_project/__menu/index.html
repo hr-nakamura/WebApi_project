@@ -118,7 +118,7 @@
             if (o.table == "xml") {
                 var xmlDoc = $.WebApi(o.item, o.option);
                 var Str = $.xml2str(xmlDoc);
-                $.fileOut(o.item, Str);
+                //$.fileOut(o.item, Str);
             }
             else {
                 var json = $.WebApi_json(o.item, o.option);
