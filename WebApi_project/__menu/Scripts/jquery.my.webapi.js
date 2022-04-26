@@ -56,13 +56,13 @@
                     url: WebApi_url_json,
                     type: "GET",
                     data: options,
-                    dataType: 'json',
+                    dataType: 'text',
                     dataFilter: function (data, type) {
                         return (data);
                     },
                     async: false
                 }).done(function (data, status, xhr) {
-                    returnValue = data;
+                    returnValue = JSON.parse(data);
                 }).fail(function (xhr, status, error) {
                     returnValue = status;
                     window.status = xhr.statusText;

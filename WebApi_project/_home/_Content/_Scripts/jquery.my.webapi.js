@@ -21,7 +21,7 @@
             //WebApi_url = hostName + "/WebApi/project/api/xml";
             var WebApi_url_xml = "/WebApi/project/api/xml";
 
-            $.debug("__menu/WebApi");
+            $.debug("_home/WebApi");
             var options = {
                 Item: item,
                 Json: (typeof(json) == "object" ? JSON.stringify(json) : json)
@@ -30,14 +30,13 @@
                 url: WebApi_url_xml,
                 type: "GET",
                 data: options,
-                dataType: 'xml',
+                dataType: 'text',
                 dataFilter: function (data, type) {
                     return (data);
                 },
                 async: false
             }).done(function (data, status, xhr) {
-                //returnValue = $.str2xml(data);
-                returnValue = data;
+                returnValue = $.str2xml(data);
             }).fail(function (xhr, status, error) {
                 returnValue = status;
                 window.status = xhr.statusText;
@@ -48,7 +47,7 @@
             $.WebApi_json = function (item, json) {
                 var WebApi_url_json = "/WebApi/project/api/json";
                 //WebApi_url_json = hostName + "/WebApi/project/api/json";
-                $.debug("__menu/WebApi_json");
+                $.debug("_home/WebApi_json");
                 var options = {
                     Item: item,
                     Json: (typeof (json) == "object" ? JSON.stringify(json) : json)
@@ -57,7 +56,7 @@
                     url: WebApi_url_json,
                     type: "GET",
                     data: options,
-                    dataType: 'json',
+                    dataType: 'text',
                     dataFilter: function (data, type) {
                         return (data);
                     },
@@ -73,7 +72,7 @@
             },
             $.WebApi_test = function (mode, className, methodName, json) {
                 var WebApi_url_test = "/WebApi/project/api/test";
-                $.debug("__menu/WebApi_test");
+                $.debug("_home/WebApi_test");
                 var options = {
                     mode: mode,
                     className: className,
@@ -105,7 +104,7 @@
             },
         $.WebApi_get = function(url, options) {
             //WebApi_url = hostName + "/WebApi/project/api/xml";
-            $.debug.no("__menu/WebApi_get");
+            $.debug.no("_home/WebApi_get");
             window.status = "WebApi_get";
             var result = $.ajax({
                 url: url,

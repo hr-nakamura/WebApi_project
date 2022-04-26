@@ -4,6 +4,9 @@
     <meta charset="utf-8" />
     <title></title>
     <script src="../_Content/_Scripts/jquery-1.12.4.js" type="text/javascript"></script>
+    <script src="../_Content/_Scripts/jquery.stopWatch.js" type="text/javascript"></script>
+    <script src="../_Content/_debug/jquery.my.debug.js" type="text/javascript"></script>
+
     <script src="../_Content/_Scripts/encoding.js" type="text/javascript"></script>
     <script src="../_Content/_Scripts/jquery.my.frame.js" type="text/javascript"></script>
     <script src="../_Content/_Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
@@ -15,13 +18,11 @@
     <script src="../_Content/_Scripts/jquery.inview.js" type="text/javascript"></script>
     <script src="../_Content/_Scripts/store.min.js" type="text/javascript"></script>
 
-    <script src="../_Content/_Scripts/jquery.stopWatch.js" type="text/javascript"></script>
-    <script src="../_Content/_debug/jquery.my.debug.js" type="text/javascript"></script>
     <script type="text/javascript">
         ; (function ($) {
             $.alert = function () {
             },
-                $.debug = function () {
+                $.debugXX = function () {
                 }
         })(jQuery);
     </script>
@@ -34,9 +35,6 @@
             optionInfo: false
         };
         var searchCancel = false;
-        var hostName = "http://kansa.in.eandm.co.jp";
-        //var hostName = "http://localhost";
-        //var hostName = "";
         var xslDoc = null;
         var xmlDoc = null;
         $(function () {
@@ -62,17 +60,13 @@
 
                     //選択表示(非同期実行)
 
-                    var hostName = (window.location.hostname == "localhost" ? "" : "http://kansa.in.eandm.co.jp");
-                    var webapi_url = hostName + "/WebApi/project/api/xml";
                     var item = "projectBBS/projectList";
-
                     var para = {
                         limitYear: 2019,
                         visitBBS: "2021/11/25"
                     }
                     $(o1).stopwatch("xml読込2");
-                    //var work = $.WebApi("GET", webapi_url, item, para, dispProject);
-                    var xmlDoc = $.WebApi("GET", webapi_url, item, para);
+                    var xmlDoc = $.WebApi(item, para);
 
                     $(o1).stopwatch("xml表示2");
                     dispProject(xmlDoc);

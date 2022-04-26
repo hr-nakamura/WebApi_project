@@ -33,7 +33,7 @@
                 }
 
                 var Buff = $(o2).stopwatch();
-                $.debug("html", Buff);
+                $.debug.no("html", Buff);
 
             }
         },
@@ -186,7 +186,7 @@
         //$.debug("iframe_resize", Buff);
     }
     function table_resize(o) {
-        $.debug.no("table_resize", "====================");
+        $.debug("table_resize", "====================");
 
         //$.debug("table_resize");
         //$.debug.json("table_resize", o);
