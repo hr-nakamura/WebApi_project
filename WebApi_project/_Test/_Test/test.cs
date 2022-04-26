@@ -32,7 +32,7 @@ namespace WebApi_project.hostProc
             var option = JObject.Parse(opt_Json);
 
             //JObject oJson = readJson("http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp" + makeOption(option, "?"), "Shift_JIS");
-            JObject oJson = readJson("http://localhost/Asp/Test/test.json", "utf-8");
+            JObject oJson = readJson("http://localhost/Asp/Test/test.json", "shift_JIS");
             //string s_json = Newtonsoft.Json.JsonConvert.SerializeObject(oJson);       // jsonをjson文字列に変換
 
 
@@ -50,7 +50,7 @@ namespace WebApi_project.hostProc
             var option = JObject.Parse(opt_Json);
 
             //JObject oJson = readJson("http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp" + makeOption(option, "?"), "Shift_JIS");
-            JObject oJson = readJson("http://localhost/Asp/Test/test.json", "utf-8");
+            JObject oJson = readJson("http://localhost/Asp/Test/test.json", "shift_JIS");
             //string s_json = Newtonsoft.Json.JsonConvert.SerializeObject(oJson);       // jsonをjson文字列に変換
 
 

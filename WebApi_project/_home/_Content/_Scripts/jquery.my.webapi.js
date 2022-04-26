@@ -30,13 +30,14 @@
                 url: WebApi_url_xml,
                 type: "GET",
                 data: options,
-                dataType: 'text',
+                dataType: 'xml',
                 dataFilter: function (data, type) {
                     return (data);
                 },
                 async: false
             }).done(function (data, status, xhr) {
-                returnValue = $.str2xml(data);
+                //returnValue = $.str2xml(data);
+                returnValue = data;
             }).fail(function (xhr, status, error) {
                 returnValue = status;
                 window.status = xhr.statusText;
@@ -56,7 +57,7 @@
                     url: WebApi_url_json,
                     type: "GET",
                     data: options,
-                    dataType: 'text',
+                    dataType: 'json',
                     dataFilter: function (data, type) {
                         return (data);
                     },
