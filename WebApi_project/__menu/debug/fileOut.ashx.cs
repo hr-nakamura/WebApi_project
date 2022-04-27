@@ -53,6 +53,7 @@ namespace WebApi_project.__menu.debug
             }
             catch (XmlException ex)
             {
+                var x = ex.Message;
                 //take care of the exception
                 return (false);
             }

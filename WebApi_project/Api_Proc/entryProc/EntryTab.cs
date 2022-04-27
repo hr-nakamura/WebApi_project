@@ -15,86 +15,109 @@ namespace WebApi_project.hostProc
         public Dictionary<string, EntryInfoXml> 部門収支 = new Dictionary<string, EntryInfoXml>() {
             { "部門収支/部門収支_XML", new EntryInfoXml{
                 type = "xml",
-                //data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp",
-                data = "http://localhost/test/_xmlData/EMG収支計画.xml",
+                data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp",
                 option = "{dispCmd:'EMG',year:2022,fix:70,yosoku:3}"
                 }
             },
             { "部門収支/EMG収支計画", new EntryInfoXml{
+                //type = "xml",
+                //data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp",
                 type = "xml",
-                data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp",
+                data = "http://localhost/test/_xmlData/EMG収支計画.xml",
                 option = "{dispCmd:'EMG',year:2022,fix:70,yosoku:3}"
                 }
             },
             { "部門収支/統括収支計画", new EntryInfoXml{
+                //type = "xml",
+                //data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp",
                 type = "xml",
-                data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp",
+                data = "http://localhost/test/_xmlData/統括収支計画.xml",
                 option = "{dispCmd:'統括一覧',year:2022,fix:70,yosoku:3}"
                 }
             },
             { "部門収支/部収支計画", new EntryInfoXml{
+                //type = "xml",
+                //data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp",
                 type = "xml",
-                data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp",
+                data = "http://localhost/test/_xmlData/部収支計画.xml",
                 option = "{dispCmd:'部門一覧',secMode:'開発',dispName:'',year:2022,fix:70,yosoku:3}"
                 }
             },
             { "部門収支/課収支計画", new EntryInfoXml{
+                //type = "xml",
+                //data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp",
                 type = "xml",
-                data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp",
+                data = "http://localhost/test/_xmlData/課収支計画.xml",
                 option = "{dispCmd:'課一覧',dispName:'営業本部',secMode:'開発',year:2022,fix:70,yosoku:3}"
                 }
             },
         };
         public Dictionary<string, EntryInfoXml> projectCostProc = new Dictionary<string, EntryInfoXml>(){
             { "projectCostProc/projectInfo_XML_Detail", new EntryInfoXml{
+                //type = "xml",
+                //data ="http://kansa.in.eandm.co.jp/Project/projectCostProc/xml/projectInfo_XML_Detail.asp",
                 type = "xml",
-                data ="http://kansa.in.eandm.co.jp/Project/projectCostProc/xml/projectInfo_XML_Detail.asp",
+                data = "http://localhost/test/_xmlData/projectInfo_XML_Detail.xml",
                 option ="{pNum:20214693}"
                 }
             },
             { "projectCostProc/projectInfo_XML_Join", new EntryInfoXml{
+                //type = "xml",
+                //data ="http://kansa.in.eandm.co.jp/Project/projectCostProc/xml/projectInfo_XML_Join.asp",
                 type = "xml",
-                data ="http://kansa.in.eandm.co.jp/Project/projectCostProc/xml/projectInfo_XML_Join.asp",
+                data = "http://localhost/test/_xmlData/projectInfo_XML_Join.xml",
                 option ="{pNum:20214693}"
                 }
             },
             { "projectCostProc/projectInfoList_XML", new EntryInfoXml{
+                //type = "xml",
+                //data ="http://kansa.in.eandm.co.jp/Project/projectCostProc/xml/projectInfoList_XML.asp",
                 type = "xml",
-                data ="http://kansa.in.eandm.co.jp/Project/projectCostProc/xml/projectInfoList_XML.asp",
+                data = "http://localhost/test/_xmlData/projectInfoList_XML.xml",
                 option ="{pNum:20214693}"
                 }
             },
         };
         public Dictionary<string, EntryInfoXml> 売上予測 = new Dictionary<string, EntryInfoXml>(){
             { "売上予測/売上予実_部門", new EntryInfoXml{
-                type = "json",
-                data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_部門_JSON.asp",
+                //type = "json",
+                //data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_部門_JSON.asp",
+                type = "xml",
+                data = "http://localhost/test/_xmlData/売上予実_部門.xml",
                 option ="{year:2022,actual:5}"
                 }
             },
             { "売上予測/売上予実_分類", new EntryInfoXml{
-                type = "json",
-                data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_分類_JSON.asp",
+                //type = "json",
+                //data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_分類_JSON.asp",
+                type = "xml",
+                data = "http://localhost/test/_xmlData/売上予実_分類.xml",
                 option ="{year:2022,actual:5}"
                 }
             },
             { "売上予測/売上予実_新規", new EntryInfoXml{
-                type = "json",
-                data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_新規_JSON.asp",
+                //type = "json",
+                //data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_新規_JSON.asp",
+                type = "xml",
+                data = "http://localhost/test/_xmlData/売上予実_新規.xml",
                 option ="{year:2022,actual:5}"
                 }
             },
             { "売上予測/売上予実_新規2", new EntryInfoXml{
-                type = "json",
-                data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_新規2_JSON.asp",
+                //type = "json",
+                //data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_新規2_JSON.asp",
+                type = "xml",
+                data = "http://localhost/test/_xmlData/売上予実_新規2.xml",
                 option ="{year:2022,actual:5}"
                 }
             },
         };
         public Dictionary<string, EntryInfoXml> 費用予測 = new Dictionary<string, EntryInfoXml>(){
             { "費用予測/費用状況", new EntryInfoXml{
-                type = "json",
-                data ="http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp",
+                //type = "json",
+                //data ="http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp",
+                type = "xml",
+                data = "http://localhost/test/_xmlData/費用状況.xml",
                 option ="{year:2022,actual:5}"
                 }
             },
