@@ -2,7 +2,13 @@
 <root name="EMG">
     <menu name="監査ページ(NEW)" memo="" mode="url" url="/WebApi/project/_home/manageMenu.html"/>
 
+    <menu name="_home" memo="" >
+      <menu name="売上予測" memo="" >
+        <menu name="売上予実_新規" memo="" mode="url" url="/WebApi/project/_home/売上予測/売上予実_新規.html"/>
+      </menu>
+    </menu>
 
+  
   <menu name="テーブル(XML)" memo="" >
   </menu>
   <menu name="テーブル(JSON)" memo="" >
@@ -12,6 +18,8 @@
     <menu name="関数(TEST_JSON)" memo="" >
     </menu>
 
+
+  
   <menu name="_Test" memo="" >
     <menu name="_Test/test.html" memo="" mode="url" url="/WebApi/project/_Test/test.html"/>
     <menu name="History">
