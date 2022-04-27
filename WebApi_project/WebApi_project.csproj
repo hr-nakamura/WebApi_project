@@ -124,6 +124,9 @@
     <Content Include="Models\memo.txt" />
     <Content Include="Scripts\json2.js" />
     <Content Include="Scripts\json2.min.js" />
+    <Content Include="_home\projectCostProc\projectInfo_Join.html" />
+    <Content Include="_home\projectCostProc\projectInfoList.html" />
+    <Content Include="_home\projectCostProc\projectInfo_Detail.html" />
     <Content Include="_home\_Content\_Scripts\json2xml.js" />
     <Content Include="_home\_Content\_xmlData\EMG収支計画.xml" />
     <Content Include="_home\_Content\_xmlData\projectInfoList_XML.xml" />
@@ -137,6 +140,11 @@
     <Content Include="_home\_Content\_xmlData\課収支計画.xml" />
     <Content Include="_home\_Content\_xmlData\費用状況.xml" />
     <Content Include="_home\_Content\_xmlData\部収支計画.xml" />
+    <Content Include="_home\売上予測\売上予実_新規.html" />
+    <Content Include="_home\売上予測\売上予実_分類.html" />
+    <Content Include="_home\売上予測\売上予実_新規2.html" />
+    <Content Include="_home\売上予測\売上予実_部門.html" />
+    <Content Include="_home\費用予測\費用状況.html" />
     <Content Include="_Test\_Test\test.asp" />
     <Content Include="_Test\Dialog\back.gif" />
     <Content Include="_Test\Dialog\bg01.gif" />
