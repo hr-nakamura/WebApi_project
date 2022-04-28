@@ -127,6 +127,12 @@
     <Content Include="_home\projectCostProc\projectInfo_Join.html" />
     <Content Include="_home\projectCostProc\projectInfoList.html" />
     <Content Include="_home\projectCostProc\projectInfo_Detail.html" />
+    <Content Include="_home\_Content\bmp\EMG費用状況.gif" />
+    <Content Include="_home\_Content\bmp\売上予実_分類.gif" />
+    <Content Include="_home\_Content\bmp\売上予実_新規.gif" />
+    <Content Include="_home\_Content\bmp\売上予実_新規2.gif" />
+    <Content Include="_home\_Content\bmp\売上予実_部門.gif" />
+    <Content Include="_home\_Content\bmp\売上目標_部門.gif" />
     <Content Include="_home\_Content\_Scripts\json2xml.js" />
     <Content Include="_home\_Content\_xmlData\EMG収支計画.xml" />
     <Content Include="_home\_Content\_xmlData\projectInfoList_XML.xml" />
