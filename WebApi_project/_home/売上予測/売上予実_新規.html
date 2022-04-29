@@ -30,6 +30,16 @@
         function test() {
             var url = location.href;
 
+            var json = {
+                year: 2022,
+                actual: 5
+            };
+            $.debug.json("para", json);
+            xmlDoc = $.WebApi("売上予測/売上予実_新規", json);
+            var xslDoc = $.loadXMLDoc("xsl/売上予実.xsl");
+
+            var Buff = $.transformNode(xmlDoc,xslDoc);
+            $(".dataG").html(Buff);
 
             //const matchedFileName = url.match(/^(?:[^:\/?#]+:)?(?:\/\/[^\/?#]*)?(?:([^?#]*\/)([^\/?#]*))?(\?[^#]*)?(?:#.*)?$/) ?? [];
             //const [, dir, fileName, query] = matchedFileName.map(match => match ?? '');
@@ -40,5 +50,14 @@
     </script>
 </head>
 <body>
+    <table align="center">
+        <tbody>
+            <TR>
+                <TD align="center">
+                    <DIV align="center" class="dataG"></DIV>
+                </TD>
+            </TR>
+        </tbody>
+    </table>
 </body>
 </html >
