@@ -80,7 +80,7 @@
           <xsl:attribute name="rowspan" >
             <xsl:value-of select="$cnt1"/>
           </xsl:attribute>
-          <xsl:value-of select="../../@_name_"/>
+          <xsl:value-of select="$‹qæ/../../@_name_"/>
         </td>
       </xsl:if>
       <td>
