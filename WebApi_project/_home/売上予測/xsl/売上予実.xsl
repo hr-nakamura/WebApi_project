@@ -38,46 +38,68 @@
 	<xsl:template name="•ª—Þ">
     <xsl:param name="•ª—Þ"/>
     <xsl:variable name="cnt0" select="count($•ª—Þ)"/>
-          <xsl:for-each select="$•ª—Þ">
-    <xsl:variable name="pos0" select="position()"/>
-    <xsl:variable name="cnt1" select="count(uName/*)"/>
-  <xsl:for-each select="uName/*">
-    <xsl:variable name="pos1" select="position()"/>
-            <xsl:call-template name="‹qæ">
-              <xsl:with-param name="‹qæ" select="."/>
-              <xsl:with-param name="pos0" select="$pos0"/>
-              <xsl:with-param name="pos1" select="$pos1"/>
-              <xsl:with-param name="cnt0" select="$cnt0"/>
-              <xsl:with-param name="cnt1" select="$cnt1"/>
-            </xsl:call-template>
-          </xsl:for-each>
-          </xsl:for-each>
+    <xsl:for-each select="$•ª—Þ">
+      <xsl:variable name="pos0" select="position()"/>
+      <xsl:variable name="cnt1" select="count(uName/*)"/>
+      <xsl:for-each select="uName/*">
+        <xsl:variable name="pos1" select="position()"/>
+        <xsl:call-template name="‹qæ">
+          <xsl:with-param name="‹qæ" select="."/>
+          <xsl:with-param name="pos0" select="$pos0"/>
+          <xsl:with-param name="pos1" select="$pos1"/>
+          <xsl:with-param name="cnt0" select="$cnt0"/>
+          <xsl:with-param name="cnt1" select="$cnt1+2"/>
+        </xsl:call-template>
+      </xsl:for-each>
+      <tr>
+        <td>‡Œv</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>—ÝŒv</td>
+        <td>2</td>
+        <td>2</td>
+      </tr>
+
+    </xsl:for-each>
   </xsl:template>
 
 
-	<xsl:template name="‹qæ">
+
+
+  <xsl:template name="‹qæ">
     <xsl:param name="‹qæ"/>
     <xsl:param name="pos0"/>
     <xsl:param name="pos1"/>
     <xsl:param name="cnt0"/>
     <xsl:param name="cnt1"/>
-
-          <tr>
-          <xsl:for-each select="$‹qæ">
-          <td>
-            <xsl:value-of select="$pos0"/>-
-            <xsl:value-of select="$pos1"/>|
-            <xsl:value-of select="$cnt0"/>-
+    <tr>
+      <xsl:if test="$pos1 = 1">
+        <td>
+          <xsl:attribute name="rowspan" >
             <xsl:value-of select="$cnt1"/>
-            <xsl:value-of select="../../@_name_"/>
-            <xsl:value-of select="@_name_"/>
-            <xsl:value-of select="EMG"/>
-            <xsl:value-of select="count(data/ŒŽ)"/>
+          </xsl:attribute>
+          <xsl:value-of select="../../@_name_"/>
         </td>
-          </xsl:for-each>
-        </tr>
-
-	</xsl:template>
+      </xsl:if>
+      <td>
+        <xsl:value-of select="@_name_"/>
+      </td>
+      <td>
+        <xsl:value-of select="EMG"/>
+      </td>
+      <td>
+        <xsl:value-of select="count($‹qæ/data/ŒŽ)"/>
+      </td>
+      <td>
+          <xsl:value-of select="$pos0"/>-
+          <xsl:value-of select="$pos1"/>|
+          <xsl:value-of select="$cnt0"/>-
+          <xsl:value-of select="$cnt1"/>
+        </td>
+      </tr>
+  </xsl:template>
 
   <!-- ########################################################### -->
 
