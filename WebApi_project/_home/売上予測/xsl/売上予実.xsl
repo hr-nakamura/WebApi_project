@@ -56,23 +56,66 @@
         <td>
           <xsl:value-of select="sum(uName/*/data/月)"/>
         </td>
-        <xsl:variable name="月" select="uName/*/data/月"/>
-          <td>
-            <xsl:variable name="x" select="2"/>
-            <xsl:value-of select="sum($月[@m=$x])"/>
-          </td>
+        <xsl:call-template name="合計">
+          <xsl:with-param name="table" select="uName/*/data/月"/>
+          <xsl:with-param name="begin" select="0"/>
+          <xsl:with-param name="max" select="12"/>
+        </xsl:call-template>
       </tr>
       <tr>
         <td>累計</td>
-        <td>2</td>
+        <td></td>
+        <xsl:call-template name="累計">
+          <xsl:with-param name="table" select="uName/*/data/月"/>
+          <xsl:with-param name="begin" select="0"/>
+          <xsl:with-param name="max" select="12"/>
+        </xsl:call-template>
       </tr>
 
     </xsl:for-each>
   </xsl:template>
 
 
+	<xsl:template name="合計">
+    <xsl:param name="table"/>
+		<xsl:param name="begin" />
+		<xsl:param name="mCnt" />
+		<xsl:param name="max" select="$begin+$mCnt"/>
+		<xsl:param name="cnt" select="$begin"/>
+		<xsl:if test="$cnt &lt; $max">
+			<td>
 
+				<xsl:value-of select="sum($table[@m=$cnt])"/>
+			</td>
+			<xsl:call-template name="合計">
+				<xsl:with-param name="table" select="$table" />
+				<xsl:with-param name="max" select="$max" />
+				<xsl:with-param name="cnt" select="$cnt + 1" />
+			</xsl:call-template>
+		</xsl:if>
+	</xsl:template>
 
+  	<xsl:template name="累計">
+    <xsl:param name="table"/>
+		<xsl:param name="begin" />
+		<xsl:param name="mCnt" />
+		<xsl:param name="max" select="$begin+$mCnt"/>
+		<xsl:param name="cnt" select="$begin"/>
+    <xsl:param name="work" select="sum($table[@m=$cnt])"/>
+		<xsl:if test="$cnt &lt; $max">
+			<td>
+				<xsl:value-of select="$work"/>
+			</td>
+			<xsl:call-template name="累計">
+				<xsl:with-param name="table" select="$table" />
+				<xsl:with-param name="max" select="$max" />
+				<xsl:with-param name="cnt" select="$cnt + 1" />
+				<xsl:with-param name="work" select="$work + sum($table[@m=$cnt])" />
+			</xsl:call-template>
+		</xsl:if>
+	</xsl:template>
+
+  
   <xsl:template name="客先">
     <xsl:param name="客先"/>
     <xsl:param name="pos0"/>
