@@ -53,12 +53,17 @@
       </xsl:for-each>
       <tr>
         <td>çáåv</td>
-        <td>1</td>
-        <td>1</td>
+        <td>
+          <xsl:value-of select="sum(uName/*/data/åé)"/>  
+      </td>
+            <xsl:for-each select="uName/*/data">
+        <td>
+          <xsl:value-of select="."/>
+      </td>
+      </xsl:for-each>
       </tr>
       <tr>
         <td>ó›åv</td>
-        <td>2</td>
         <td>2</td>
       </tr>
 
@@ -86,18 +91,27 @@
       <td>
         <xsl:value-of select="@_name_"/>
       </td>
+
       <td>
+        <xsl:value-of select="sum($ãqêÊ/data/åé)"/>
+      </td>
+      <xsl:for-each select="$ãqêÊ/data/åé">
+        <td>
+          <xsl:value-of select="."/>
+      </td>
+      </xsl:for-each>
+            <td>
         <xsl:value-of select="EMG"/>
       </td>
-      <td>
-        <xsl:value-of select="count($ãqêÊ/data/åé)"/>
-      </td>
-      <td>
+        <td>
+          <xsl:value-of select="@_name_"/>
+        </td>
+      <!--<td>
           <xsl:value-of select="$pos0"/>-
           <xsl:value-of select="$pos1"/>|
           <xsl:value-of select="$cnt0"/>-
           <xsl:value-of select="$cnt1"/>
-        </td>
+        </td>-->
       </tr>
   </xsl:template>
 
