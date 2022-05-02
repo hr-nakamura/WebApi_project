@@ -54,13 +54,13 @@
       <tr>
         <td>çáåv</td>
         <td>
-          <xsl:value-of select="sum(uName/*/data/åé)"/>  
-      </td>
-            <xsl:for-each select="uName/*/data">
-        <td>
-          <xsl:value-of select="."/>
-      </td>
-      </xsl:for-each>
+          <xsl:value-of select="sum(uName/*/data/åé)"/>
+        </td>
+        <xsl:variable name="åé" select="uName/*/data/åé"/>
+          <td>
+            <xsl:variable name="x" select="2"/>
+            <xsl:value-of select="sum($åé[@m=$x])"/>
+          </td>
       </tr>
       <tr>
         <td>ó›åv</td>
