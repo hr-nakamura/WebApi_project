@@ -10,6 +10,7 @@
     <script src="../_Content/_Scripts/json2.js" type="text/javascript"></script>
     <script src="../_Content/_debug/jquery.my.debug.js" type="text/javascript"></script>
 
+
     <title></title>
     <script type="text/javascript">
         window.onload = function () {
@@ -38,7 +39,7 @@
             xmlDoc = $.WebApi("売上予測/売上予実_新規", json);
             var xslDoc = $.loadXMLDoc("xsl/売上予実_新規.xsl");
 
-            var Buff = $.transformNode(xmlDoc,xslDoc);
+            var Buff = $.transformNode(xmlDoc, xslDoc);
             $(".dataG").html(Buff);
 
             //const matchedFileName = url.match(/^(?:[^:\/?#]+:)?(?:\/\/[^\/?#]*)?(?:([^?#]*\/)([^\/?#]*))?(\?[^#]*)?(?:#.*)?$/) ?? [];

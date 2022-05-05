@@ -16,8 +16,10 @@ TD {
 	WHITE-SPACE: nowrap;
 	}
 .table {
-	FONT-SIZE: x-small;
-	BACKGROUND-COLOR: snow;
+	FONT-SIZE: larger;
+	BACKGROUND-COLOR: red;
+	border-collapse:collapse;
+	border:1px red solid;
 	}
 .groupType{
 	WHITE-SPACE: nowrap;

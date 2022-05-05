@@ -25,7 +25,7 @@
     </xsl:if>
 
     <xsl:if test="count(*) > 0">
-      <table border="1" align="left">
+      <table class="table1">
         <tbody>
           <xsl:call-template name="•ª—Þ">
               <xsl:with-param name="•ª—Þ" select="*"/>
