@@ -26,9 +26,10 @@
     <xsl:if test="count(*) > 0">
       <table border="1" align="left">
         <tbody>
-            <xsl:call-template name="分類">
+          <xsl:call-template name="分類">
               <xsl:with-param name="分類" select="*"/>
             </xsl:call-template>
+
         </tbody>
     </table>
     </xsl:if>
@@ -39,20 +40,20 @@
 	<xsl:template name="分類">
     <xsl:param name="分類"/>
     <xsl:variable name="cnt0" select="count($分類)"/>
-          <tr>
-        <th>
-          <xsl:value-of select="'分類名'"/>
-        </th>
-        <th>
-          <xsl:value-of select="'客先名'"/>
-        </th>
-        <th>
-        </th>
-        <xsl:call-template name="year_Loop">
-          <xsl:with-param name="year" select="2021"/>
-          <xsl:with-param name="begin" select="10"/>
-          <xsl:with-param name="mCnt" select="12"/>
-        </xsl:call-template>
+    <tr>
+      <th>
+        <xsl:value-of select="'分類名'"/>
+      </th>
+      <th>
+        <xsl:value-of select="'客先名'"/>
+      </th>
+      <th>
+      </th>
+      <xsl:call-template name="year_Loop">
+        <xsl:with-param name="year" select="2021"/>
+        <xsl:with-param name="begin" select="10"/>
+        <xsl:with-param name="mCnt" select="12"/>
+      </xsl:call-template>
     </tr>
     <xsl:for-each select="$分類">
       <tr>
@@ -65,17 +66,19 @@
           <xsl:with-param name="begin" select="10"/>
           <xsl:with-param name="mCnt" select="12"/>
         </xsl:call-template>
+        <th>
+          <xsl:value-of select="'合　計'"/>
+        </th>
+        <th colspan="3">
+        </th>
       </tr>
-      <xsl:variable name="pos0" select="position()"/>
-      <xsl:variable name="cnt1" select="count(uName/*)"/>
+      <xsl:variable name="Cnt" select="count(uName/*)"/>
       <xsl:for-each select="uName/*">
-        <xsl:variable name="pos1" select="position()"/>
+        <xsl:variable name="Pos" select="position()"/>
         <xsl:call-template name="客先">
           <xsl:with-param name="客先" select="."/>
-          <xsl:with-param name="pos0" select="$pos0"/>
-          <xsl:with-param name="pos1" select="$pos1"/>
-          <xsl:with-param name="cnt0" select="$cnt0"/>
-          <xsl:with-param name="cnt1" select="$cnt1+2"/>
+          <xsl:with-param name="Pos" select="$Pos"/>
+          <xsl:with-param name="Cnt" select="$Cnt+2"/>
         </xsl:call-template>
       </xsl:for-each>
       <tr>
@@ -89,6 +92,13 @@
           <xsl:with-param name="begin" select="0"/>
           <xsl:with-param name="max" select="12"/>
         </xsl:call-template>
+        <td class="value">
+          <!--<xsl:value-of select="sum(uName/*/data/月)"/>-->
+          <xsl:value-of select="format-number( sum(uName/*/data/月) ,$form)"/>
+        </td>
+        <th colspan="2">
+          <xsl:value-of select="'合　計'"/>
+        </th>
       </tr>
       <tr>
         <td>累計</td>
@@ -98,9 +108,54 @@
           <xsl:with-param name="begin" select="0"/>
           <xsl:with-param name="max" select="12"/>
         </xsl:call-template>
+        <th></th>
+        <th colspan="2">
+          <xsl:value-of select="'累　計'"/>
+        </th>
       </tr>
 
     </xsl:for-each>
+    <tr>
+      <th colspan="2">
+      </th>
+      <th>
+        <xsl:value-of select="'合　計'"/>
+      </th>
+      <xsl:call-template name="month_Loop">
+        <xsl:with-param name="begin" select="10"/>
+        <xsl:with-param name="mCnt" select="12"/>
+      </xsl:call-template>
+    </tr>
+    <tr>
+      <td colspan="2">総　合 計</td>
+      <td>
+        <xsl:value-of select="format-number( sum($分類/uName/*/data/月) ,$form)"/>
+      </td>
+      <xsl:call-template name="合計">
+        <xsl:with-param name="data" select="$分類/uName/*/data/月"/>
+        <xsl:with-param name="begin" select="0"/>
+        <xsl:with-param name="max" select="12"/>
+      </xsl:call-template>
+      <td>
+        <xsl:value-of select="format-number( sum($分類/uName/*/data/月) ,$form)"/>
+      </td>
+      <th colspan="2">
+        <xsl:value-of select="'総　合　計'"/>
+      </th>
+    </tr>
+    <tr>
+      <td colspan="2">総　累 計</td>
+      <td></td>
+      <xsl:call-template name="累計">
+        <xsl:with-param name="data" select="$分類/uName/*/data/月"/>
+        <xsl:with-param name="begin" select="0"/>
+        <xsl:with-param name="max" select="12"/>
+      </xsl:call-template>
+      <th></th>
+      <th colspan="2">
+        <xsl:value-of select="'総　累　計'"/>
+      </th>
+    </tr>
   </xsl:template>
 
 
@@ -131,12 +186,12 @@
 		<xsl:param name="mCnt" />
 		<xsl:param name="max" select="$begin+$mCnt"/>
 		<xsl:param name="cnt" select="$begin"/>
-        <xsl:param name="work" select="sum($data[@m=$cnt])"/>
-        <xsl:param name="form" select="'#,###'" />
+    <xsl:param name="work" select="0"/>
+    <xsl:param name="form" select="'#,###'" />
 		<xsl:if test="$cnt &lt; $max">
 			<td class="value">
-				<!--<xsl:value-of select="$work"/>-->
-                <xsl:value-of select="format-number( $work ,$form)"/>
+				<!--<xsl:value-of select="$work + sum($data[@m=$cnt])"/>-->
+                <xsl:value-of select="format-number( $work + sum($data[@m=$cnt]) ,$form)"/>
 			</td>
 			<xsl:call-template name="累計">
 				<xsl:with-param name="data" select="$data" />
@@ -150,17 +205,15 @@
   
   <xsl:template name="客先">
     <xsl:param name="客先"/>
-    <xsl:param name="pos0"/>
-    <xsl:param name="pos1"/>
-    <xsl:param name="cnt0"/>
-    <xsl:param name="cnt1"/>
+    <xsl:param name="Pos"/>
+    <xsl:param name="Cnt"/>
     <xsl:param name="form" select="'#,###'" />
 
     <tr>
-      <xsl:if test="$pos1 = 1">
+      <xsl:if test="$Pos = 1">
         <td>
           <xsl:attribute name="rowspan" >
-            <xsl:value-of select="$cnt1"/>
+            <xsl:value-of select="$Cnt"/>
           </xsl:attribute>
           <xsl:value-of select="$客先/../../@_name_"/>
         </td>
@@ -181,25 +234,54 @@
 
       </td>
       </xsl:for-each>
-            <td>
-        <xsl:value-of select="EMG"/>
+      <td class="value">
+        <!--<xsl:value-of select="sum($客先/data/月)"/>-->
+        <xsl:value-of select="format-number( sum($客先/data/月) ,$form)"/>
+      </td>
+      <td>
+        <xsl:call-template name="EMG_mark">
+          <xsl:with-param name="mark" select="EMG"/>
+        </xsl:call-template>
       </td>
         <td>
           <xsl:value-of select="@_name_"/>
         </td>
-      <!--<td>
-          <xsl:value-of select="$pos0"/>-
-          <xsl:value-of select="$pos1"/>|
-          <xsl:value-of select="$cnt0"/>-
-          <xsl:value-of select="$cnt1"/>
-        </td>-->
+      <xsl:if test="$Pos = 1">
+        <td>
+          <xsl:attribute name="rowspan" >
+            <xsl:value-of select="$Cnt"/>
+          </xsl:attribute>
+          <xsl:value-of select="$客先/../../@_name_"/>
+        </td>
+      </xsl:if>
       </tr>
   </xsl:template>
 
   <!-- ########################################################### -->
 
   <!--		-->
-<xsl:template name="year_Loop">
+  <xsl:template name="EMG_mark">
+    <xsl:param name="mark" />
+    <xsl:choose>
+      <xsl:when test="$mark = 'EM'">
+        <xsl:value-of select="'E'"/>
+      </xsl:when>
+      <xsl:when test="$mark = 'ACEL'">
+        <xsl:value-of select="'A'"/>
+      </xsl:when>
+      <xsl:when test="$mark = 'PSL'">
+        <xsl:value-of select="'P'"/>
+      </xsl:when>
+      <xsl:when test="'-'">
+        <xsl:value-of select="'-'"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="'x'"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
+  <xsl:template name="year_Loop">
   <xsl:param name="begin" />
   <xsl:param name="year" />
   <xsl:param name="mCnt" />
