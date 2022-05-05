@@ -38,7 +38,33 @@
 	<xsl:template name="•ª—Þ">
     <xsl:param name="•ª—Þ"/>
     <xsl:variable name="cnt0" select="count($•ª—Þ)"/>
+          <tr>
+        <th>
+          <xsl:value-of select="'•ª—Þ–¼'"/>
+        </th>
+        <th>
+          <xsl:value-of select="'‹qæ–¼'"/>
+        </th>
+        <th>
+        </th>
+        <xsl:call-template name="year_Loop">
+          <xsl:with-param name="year" select="2021"/>
+          <xsl:with-param name="begin" select="10"/>
+          <xsl:with-param name="mCnt" select="12"/>
+        </xsl:call-template>
+    </tr>
     <xsl:for-each select="$•ª—Þ">
+      <tr>
+        <th colspan="2">
+        </th>
+        <th>
+          <xsl:value-of select="'‡@Œv'"/>
+        </th>
+        <xsl:call-template name="month_Loop">
+          <xsl:with-param name="begin" select="10"/>
+          <xsl:with-param name="mCnt" select="12"/>
+        </xsl:call-template>
+      </tr>
       <xsl:variable name="pos0" select="position()"/>
       <xsl:variable name="cnt1" select="count(uName/*)"/>
       <xsl:for-each select="uName/*">
@@ -160,6 +186,7 @@
 
   <!-- ########################################################### -->
 
+  <xsl:include href="./cmn.js"/>
 
 
 
