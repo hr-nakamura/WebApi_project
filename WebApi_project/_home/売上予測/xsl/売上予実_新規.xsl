@@ -2,6 +2,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">	
     <xsl:variable name="form" select="'#,###'" />
 
+   <xsl:variable name="year" select="2021" />
 
   <xsl:template match="/">
     <html>
@@ -39,7 +40,6 @@
 
 	<xsl:template name="•ª—Þ">
     <xsl:param name="•ª—Þ"/>
-    <xsl:variable name="cnt0" select="count($•ª—Þ)"/>
     <tr>
       <th>
         <xsl:value-of select="'•ª—Þ–¼'"/>
@@ -50,7 +50,7 @@
       <th>
       </th>
       <xsl:call-template name="year_Loop">
-        <xsl:with-param name="year" select="2021"/>
+        <xsl:with-param name="year" select="$year"/>
         <xsl:with-param name="begin" select="10"/>
         <xsl:with-param name="mCnt" select="12"/>
       </xsl:call-template>
@@ -264,7 +264,7 @@
     <xsl:param name="mark" />
     <xsl:choose>
       <xsl:when test="$mark = 'EM'">
-        <xsl:value-of select="'E'"/>
+        <xsl:value-of select="' '"/>
       </xsl:when>
       <xsl:when test="$mark = 'ACEL'">
         <xsl:value-of select="'A'"/>
