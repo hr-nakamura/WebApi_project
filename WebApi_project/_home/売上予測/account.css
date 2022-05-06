@@ -1,3 +1,15 @@
+.table .yosoku {
+	background-color:lightgray;
+	color: blue;
+	text-align: right;
+	FONT-FAMILY: "Arial";
+	PADDING-RIGHT: 2px;
+	PADDING-LEFT: 8px;
+	PADDING-BOTTOM: 2px;
+	PADDING-TOP: 2px;
+	WHITE-SPACE: nowrap;
+	border: 1px gray solid;
+}
 .table .num {
 	text-align: right;
 	FONT-FAMILY: "Arial";
@@ -7,6 +19,7 @@
 	PADDING-TOP: 2px;
 	WHITE-SPACE: nowrap;
 	border: 1px gray solid;
+	BACKGROUND-COLOR:snow;
 }
 .table .emg_mark {
 	text-align: center;

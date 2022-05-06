@@ -40,8 +40,8 @@
     <xsl:param name="•ª—Þ"/>
     <xsl:param name="form" select="'#,###'"/>
     <tr class="sub_line">
-      <td>•ª—Þ–¼</td>
-      <td>‹qæ–¼</td>
+      <th>•ª—Þ–¼</th>
+      <th>‹qæ–¼</th>
       <td></td>
       <xsl:call-template name="year_Loop">
         <xsl:with-param name="year" select="$year"/>
@@ -49,7 +49,8 @@
         <xsl:with-param name="mCnt" select="12"/>
       </xsl:call-template>
       <td></td>
-      <td colspan="3"></td>
+      <th colspan="2">‹qæ–¼</th>
+      <th>•ª—Þ–¼</th>
     </tr>
     <xsl:for-each select="$•ª—Þ">
       <tr class="sub_line">
@@ -147,8 +148,10 @@
     <xsl:param name="form" select="'#,##0'" />
 		<xsl:if test="$cnt &lt; $max">
 			<td class="num">
-        <xsl:if test="$cnt &lt; $actual">
-          <xsl:value-of select="'*'"/>
+        <xsl:if test="$cnt &gt;= $actual">
+          <xsl:attribute name="class">
+            <xsl:value-of select="'yosoku'"/>
+          </xsl:attribute> 
         </xsl:if>          
         <xsl:value-of select="format-number( sum($data[@m=$cnt]) ,$form)"/>
 			</td>
@@ -170,8 +173,10 @@
     <xsl:param name="form" select="'#,##0'" />
 		<xsl:if test="$cnt &lt; $max">
 			<td class="num">
-        <xsl:if test="$cnt &lt; $actual">
-          <xsl:value-of select="'*'"/>
+        <xsl:if test="$cnt &gt;= $actual">
+          <xsl:attribute name="class">
+            <xsl:value-of select="'yosoku'"/>
+          </xsl:attribute> 
         </xsl:if>
         <xsl:value-of select="format-number( $work + sum($data[@m=$cnt]) ,$form)"/>
 			</td>
@@ -211,8 +216,10 @@
       </td>
       <xsl:for-each select="$‹qæ/data/ŒŽ">
       <td class="num">
-        <xsl:if test="position()-1 &lt; $actual">
-          <xsl:value-of select="'*'"/>
+        <xsl:if test="position()-1 &gt;= $actual">
+          <xsl:attribute name="class">
+            <xsl:value-of select="'yosoku'"/>
+          </xsl:attribute> 
         </xsl:if>
         <!--<xsl:if test=". != 0">-->
               <xsl:value-of select="format-number( . ,$form)"/>
