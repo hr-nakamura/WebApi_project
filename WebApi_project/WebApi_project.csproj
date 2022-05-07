@@ -160,6 +160,10 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="_home\費用予測\費用状況.html" />
+    <Content Include="_Test\xml\sub_cmn.xsl" />
+    <Content Include="_Test\xml\test.html" />
+    <Content Include="_Test\xml\x.xml" />
+    <Content Include="_Test\xml\x.xsl" />
     <Content Include="_Test\_Test\test.asp" />
     <Content Include="_Test\Dialog\back.gif" />
     <Content Include="_Test\Dialog\bg01.gif" />

@@ -1,0 +1,31 @@
+<html>
+<SCRIPT Language="JavaScript">
+window.onload = function()
+	{
+	try{
+alert("x");
+	var xmlFile = "x.xml";
+	var xslFile = "x.xsl";
+	var xmlDoc = new ActiveXObject("Microsoft.XMLDom");
+	var xslDoc = new ActiveXObject("Microsoft.XMLDom");
+
+	// ”ñ“¯Šú‚É‚·‚é
+	xmlDoc.async = false;
+	xmlDoc.load(xmlFile);
+	xslDoc.async = false;
+	xslDoc.load(xslFile);
+		
+	var Buff = xmlDoc.transformNode(xslDoc)
+
+
+	alert("["+Buff+"]");
+
+	}catch(e){
+		alert(e.message);
+		}
+	}
+</SCRIPT>
+
+<body>
+</body>
+</html>
