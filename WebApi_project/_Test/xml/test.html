@@ -6,28 +6,28 @@
 	<title></title>
 	<SCRIPT Language="JavaScript">
 		window.onload = function () {
-			try {
-				var xmlFile = "”„ã—\À_V‹K.xml";
+            try {
+
+
+                var Tab = { "V‹K": [], "Šù‘¶": [] };
+                var xTab = { "V‹K": "ABC", "Šù‘¶": "XYZ", "V‹K2": "XYZ2", "Šù‘¶2": "XYZ2"};
+                var keyList = Object.keys(xTab)
+                for (let i in keyList) {
+                    if (keyList[i].indexOf("V‹K")) {
+                        Tab["V‹K"].push(xTab[keyList[i]]);
+                    }
+                    else {
+                        Tab["Šù‘¶"].push(xTab[keyList[i]]);
+                    }
+                }
+
+
+                var xmlFile = "”„ã—\À_V‹K.xml";
 				var xslFile = "”„ã—\À_V‹K.xsl";
-				//var xmlFile = "x.xml";
-				//var xslFile = "x.xsl";
 
-				//var xmlDoc = new ActiveXObject("Microsoft.XMLDom");
-				//var xslDoc = new ActiveXObject("Microsoft.XMLDom");
-
-				// ”ñ“¯Šú‚É‚·‚é
-				//xmlDoc.async = false;
-				//xmlDoc.load(xmlFile);
-				//alert(xmlDoc.xml);
-
-				//xslDoc.async = false;
-				//xslDoc.load(xslFile);
-				//alert(xslDoc.xml);
 
 				var xmlDoc = $.loadXMLDoc(xmlFile);
 				var xslDoc = $.loadXMLDoc(xslFile);
-
-				//var Buff = xmlDoc.transformNode(xslDoc)
 
 				var Buff = $.transformNode(xmlDoc, xslDoc);
 
