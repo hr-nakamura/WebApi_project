@@ -164,6 +164,10 @@
     <Content Include="_Test\xml\test.html" />
     <Content Include="_Test\xml\x.xml" />
     <Content Include="_Test\xml\x.xsl" />
+    <Content Include="_Test\xml\売上予実_新規.xml" />
+    <Content Include="_Test\xml\売上予実_新規.xsl">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="_Test\_Test\test.asp" />
     <Content Include="_Test\Dialog\back.gif" />
     <Content Include="_Test\Dialog\bg01.gif" />

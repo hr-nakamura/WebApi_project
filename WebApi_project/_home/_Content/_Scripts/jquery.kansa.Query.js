@@ -243,9 +243,9 @@
                 Buff["Arg"] = nvc.ToEncodeString();
                 var returnValue = "";
 
-                if ((window.ActiveXObject || "ActiveXObject" in window) && Buff["Url"].match(/.+\.(xslt_X|xsl_X)$/i)) {
+                if ((window.ActiveXObject || "ActiveXObject" in window) && Buff["Url"].match(/.+\.(xslt|xsl)$/i)) {
                     //$.debug("IE and xsl", Buff["Url"]);
-                    var xslDoc = new ActiveXObject("Microsoft.XMLDOM");
+                    var xslDoc = new ActiveXObject("Microsoft.XMLDom");
                     xslDoc.async = false;
                     xslDoc.load(Buff["Url"]);
                     return (xslDoc);
