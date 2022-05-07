@@ -153,8 +153,9 @@
                 }
             }
             else if (mode == "url") {
-                $.debug("click", mode, o.url);
-                $("iframe.iframe_content").attr("src", o.url);
+                var url = o.url + "?TimeSpan=" + Number(new Date());
+                $.debug("click", mode, url);
+                $("iframe.iframe_content").attr("src", url);
             }
         }
 

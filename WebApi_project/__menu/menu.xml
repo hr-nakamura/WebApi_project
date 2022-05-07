@@ -5,6 +5,9 @@
     <menu name="_home" memo="" >
       <menu name="売上予測" memo="" >
         <menu name="売上予実_新規" memo="" mode="url" url="/WebApi/project/_home/売上予測/売上予実_新規.html"/>
+        <menu name="売上予実_新規2" memo="" mode="url" url="/WebApi/project/_home/売上予測/売上予実_新規2.html"/>
+        <menu name="売上予実_部門" memo="" mode="url" url="/WebApi/project/_home/売上予測/売上予実_部門.html"/>
+        <menu name="売上予実_分類" memo="" mode="url" url="/WebApi/project/_home/売上予測/売上予実_分類.html"/>
       </menu>
     </menu>
 

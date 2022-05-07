@@ -244,6 +244,7 @@
                 var returnValue = "";
 
                 if ((window.ActiveXObject || "ActiveXObject" in window) && Buff["Url"].match(/.+\.(xslt|xsl)$/i)) {
+                    // IEでxslの時ActiveXで読み込む
                     //$.debug("IE and xsl", Buff["Url"]);
                     var xslDoc = new ActiveXObject("Microsoft.XMLDom");
                     xslDoc.async = false;
