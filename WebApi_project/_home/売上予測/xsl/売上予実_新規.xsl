@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="Shift_JIS" ?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
-  <xsl:variable name="year" select="2021" />
+  <xsl:variable name="year" select="2022" />
   <xsl:variable name="actual" select="6" />
 
   <xsl:template match="/">
@@ -44,7 +44,7 @@
       <th>客先名</th>
       <td></td>
       <xsl:call-template name="year_Loop">
-        <xsl:with-param name="year" select="$year"/>
+        <xsl:with-param name="year" select="$year-1"/>
         <xsl:with-param name="begin" select="10"/>
         <xsl:with-param name="mCnt" select="12"/>
       </xsl:call-template>
