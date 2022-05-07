@@ -18,7 +18,7 @@
 
 	</xsl:template>
 
-	<xsl:template match="root">
+	<xsl:template match="root/データ/*">
     <xsl:if test="count(*) = 0">
               <xsl:value-of select="'データはありません'"/>
 
