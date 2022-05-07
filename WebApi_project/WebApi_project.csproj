@@ -136,6 +136,7 @@
     <Content Include="_home\_Content\bmp\売上目標_部門.gif" />
     <Content Include="_home\_Content\xsl\sub_cmn.xsl" />
     <Content Include="_home\_Content\xsl\sub_jscript.xsl" />
+    <Content Include="_home\_Content\xsl\xmlProc.js" />
     <Content Include="_home\_Content\xsl\部門収支.xsl" />
     <Content Include="_home\_Content\_Scripts\json2xml.js" />
     <Content Include="_home\_Content\_xmlData\EMG収支計画.xml" />
