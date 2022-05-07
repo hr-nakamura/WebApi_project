@@ -104,10 +104,10 @@ namespace WebApi_project.hostProc
                 }
             },
             { "売上予測/売上予実_新規2", new EntryInfoXml{
-                //type = "json",
-                //data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_新規2_JSON.asp",
-                type = "xml",
-                data = "http://localhost/test/_xmlData/売上予実_新規2.xml",
+                type = "json",
+                data ="http://localhost/Project/売上予測/json/売上予実_新規2_JSON.asp",
+                //type = "xml",
+                //data = "http://localhost/test/_xmlData/売上予実_新規2.xml",
                 option ="{year:2022,actual:6}"
                 }
             },
@@ -146,6 +146,12 @@ namespace WebApi_project.hostProc
         };
 
         public Dictionary<string, EntryInfoJson> projectInfo = new Dictionary<string, EntryInfoJson>() {
+            { "売上予実_新規2_JSON", new EntryInfoJson{
+                type = "json",
+                data ="http://localhost/Project/売上予測/json/売上予実_新規2_JSON.asp",
+                option ="{year:2022,actual:6}"
+                }
+            },
             { "projectInfo/memberInfo_json", new EntryInfoJson{
                 type = "method",
                 data = "hostProc/memberInfo_json",
