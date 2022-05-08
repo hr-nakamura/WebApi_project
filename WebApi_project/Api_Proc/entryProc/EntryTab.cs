@@ -112,11 +112,13 @@ namespace WebApi_project.hostProc
                 }
             },
             { "売上予測/売上予実_新規2", new EntryInfoXml{
-                type = "json",
-                data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_新規2_JSON.asp",
                 //type = "json",
-                //data = "http://localhost/test/_xmlData/売上予実_新規2_Json.json",
-                option ="{year:2022,fix:70,actual:6}"
+                //data ="http://localhost/Project/売上予測/json/売上予実_新規2_JSON.asp",
+                type = "json",
+                data ="http://localhost/Project/売上予測/json/売上予実_新規2_JSON.asp",
+                //type = "xml",
+                //data = "http://localhost/test/_xmlData/売上予実_新規2.xml",
+                option ="{year:2022,actual:6}"
                 }
             },
         };
