@@ -79,36 +79,44 @@ namespace WebApi_project.hostProc
             },
         };
         public Dictionary<string, EntryInfoXml> 売上予測 = new Dictionary<string, EntryInfoXml>(){
+            { "売上予測/売上目標_部門", new EntryInfoXml{
+                type = "json",
+                data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上目標_部門_JSON.asp",
+                //type = "xml",
+                //data = "http://localhost/test/_xmlData/売上予実_部門.xml",
+                option ="{year:2022,fix:70}"
+                }
+            },
             { "売上予測/売上予実_部門", new EntryInfoXml{
-                //type = "json",
-                //data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_部門_JSON.asp",
-                type = "xml",
-                data = "http://localhost/test/_xmlData/売上予実_部門.xml",
+                type = "json",
+                data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_部門_JSON.asp",
+                //type = "xml",
+                //data = "http://localhost/test/_xmlData/売上予実_部門.xml",
                 option ="{year:2022,actual:6}"
                 }
             },
             { "売上予測/売上予実_分類", new EntryInfoXml{
-                //type = "json",
-                //data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_分類_JSON.asp",
-                type = "xml",
-                data = "http://localhost/test/_xmlData/売上予実_分類.xml",
-                option ="{year:2022,actual:6}"
+                type = "json",
+                data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_分類_JSON.asp",
+                //type = "xml",
+                //data = "http://localhost/test/_xmlData/売上予実_分類.xml",
+                option ="{year:2022,fix:70,actual:6}"
                 }
             },
             { "売上予測/売上予実_新規", new EntryInfoXml{
+                type = "json",
+                data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_新規_JSON.asp",
                 //type = "json",
-                //data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_新規_JSON.asp",
-                type = "xml",
-                data = "http://localhost/test/_xmlData/売上予実_新規.xml",
-                option ="{year:2022,actual:6}"
+                //data = "http://localhost/test/_xmlData/売上予実_新規_JSON.asp",
+                option ="{year:2022,fix:70,actual:6}"
                 }
             },
             { "売上予測/売上予実_新規2", new EntryInfoXml{
-                //type = "json",
-                //data ="http://localhost/Project/売上予測/json/売上予実_新規2_JSON.asp",
                 type = "json",
-                data = "http://localhost/test/_xmlData/売上予実_新規2_Json.json",
-                option ="{year:2022,actual:6}"
+                data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_新規2_JSON.asp",
+                //type = "json",
+                //data = "http://localhost/test/_xmlData/売上予実_新規2_Json.json",
+                option ="{year:2022,fix:70,actual:6}"
                 }
             },
         };
@@ -118,7 +126,7 @@ namespace WebApi_project.hostProc
                 //data ="http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp",
                 type = "xml",
                 data = "http://localhost/test/_xmlData/費用状況.xml",
-                option ="{year:2022,actual:5}"
+                option ="{year:2022,fix:70,actual:5}"
                 }
             },
         };
