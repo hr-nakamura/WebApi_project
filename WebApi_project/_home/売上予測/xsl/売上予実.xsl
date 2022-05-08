@@ -18,7 +18,9 @@
 
 	</xsl:template>
 
-	<xsl:template match="root/データ/*">
+	<xsl:template match="root/データ">
+    
+    
     <xsl:if test="count(*) = 0">
               <xsl:value-of select="'データはありません'"/>
 
@@ -27,12 +29,25 @@
     <xsl:if test="count(*) > 0">
       <table class="table">
         <tbody>
-          <xsl:call-template name="分類">
+          <xsl:for-each select="*">
+            <xsl:if test="position() !=1">
+              <tr>
+                <td colspan="19" style="border:none;">
+                  <xsl:value-of select="'　'"/>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="19" style="border:none;">
+                  <xsl:value-of select="'　'"/>
+                </td>
+              </tr>
+            </xsl:if>
+            <xsl:call-template name="分類">
               <xsl:with-param name="分類" select="*"/>
             </xsl:call-template>
-
+          </xsl:for-each>
         </tbody>
-    </table>
+      </table>
     </xsl:if>
 
   </xsl:template>

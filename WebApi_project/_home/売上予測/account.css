@@ -1,3 +1,7 @@
+.table .onKind {
+	vertical-align: bottom;
+	text-align: left;
+}
 .table .yosoku {
 	background-color:lightgray;
 	color: blue;
