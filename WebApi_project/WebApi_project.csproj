@@ -162,8 +162,6 @@
     <Content Include="_Test\xml\JavaScript.js" />
     <Content Include="_Test\xml\sub_cmn.xsl" />
     <Content Include="_Test\xml\test.html" />
-    <Content Include="_Test\xml\x.xml" />
-    <Content Include="_Test\xml\x.xsl" />
     <Content Include="_Test\xml\売上予実_新規.xml" />
     <Content Include="_Test\xml\売上予実_新規.xsl">
       <SubType>Designer</SubType>
@@ -362,7 +360,7 @@
     <Content Include="__menu\debug\debug.ashx" />
     <Content Include="__menu\debug\jquery.my.fileOut.js" />
     <Content Include="__menu\debug\fileOut.ashx" />
-    <Content Include="_Test\xml\xxx.json" />
+    <Content Include="_Test\xml\売上予実_新規2_JSON.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api_Proc\entryProc\EntryTab.cs" />
