@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="Shift_JIS" ?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
   <xsl:include href="sub_cmn.xsl"/>
-  
-  <xsl:variable name="year" select="2022" />
-  <xsl:variable name="actual" select="6" />
+
+  <xsl:variable name="year">
+    <xsl:value-of select="/root/情報/@year"/>
+  </xsl:variable>
+  <xsl:variable name="actual">
+    <xsl:value-of select="/root/情報/@actual"/>
+  </xsl:variable>
 
   <xsl:template match="/">
     <html>
