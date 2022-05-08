@@ -611,9 +611,9 @@
 			var Json = JSON.stringify(Tab);
 
 			var xml = $.json2xml(Tab);
-			var xsl = $.loadXMLDoc("xx.xsl");
-            var xmlDoc = $.parseXML(xml);
-            var xx = $(xmlDoc).transformNode(xsl);
+			var xmlDoc = $.str2xml(xml);
+            var xslDoc = $.loadXMLDoc("xx.xsl");
+            var xx = $.transformNode(xmlDoc,xslDoc);
 			var a = $(xmlDoc).find("gName");
 
 

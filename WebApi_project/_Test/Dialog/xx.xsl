@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="Shift_JIS" ?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">	
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
 
   <xsl:variable name="年度"><xsl:value-of select="/root/全体/年度"/></xsl:variable>
   <xsl:variable name="開始年"><xsl:value-of select="/root/全体/開始年"/></xsl:variable>
