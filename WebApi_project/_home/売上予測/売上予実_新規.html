@@ -19,36 +19,9 @@
 
     <title></title>
     <style>
-        .wkDialogClassMain {
-            background-color: silver;
-        }
-
-            .wkDialogClassMain .ui-dialog-titlebar {
-                color: white;
-                background-color: royalblue;
-            }
-
-            .wkDialogClassMain .ui-dialog-content {
-                color: red;
-                background: green;
-            }
-
-
-        .wkBtnOk {
-            color: red;
-            background-color: yellow;
-        }
-
-        .wkBtnNg {
-            color: blue;
-            background-color: greenyellow;
-        }
-
-        .iFBox {
-            width: 100%;
-            height: 100%;
-            padding: 0px;
-            margin: 0px;
+        .ui-button-text{
+            font-size:1.8em;
+            background-color:red;
         }
     </style>
     <script type="text/javascript">
@@ -113,25 +86,40 @@
     </script>
     <script>
         $(function () {
-            $("select, button[name='AA'], button[name = 'BB']")
+            $(".prev")
+                .button({ text: true, label: '前年', icons: { primary: 'ui-icon-triangle-1-w' } })
+            $(".next")
+                .button({ text: true, label: '次年', icons: { secondary: 'ui-icon-triangle-1-e' } })
+            $(".XX")
+                .button()
+                .change(function (event) {
+                    $.debug("AA", event.target.selectedIndex, $(this).text());
+                });
+            $("button")
                 .button()
                 .click(function (event) {
                     event.preventDefault();
-                    $.debug($(this).text());
+                    //$.debug($(this).text());
                 });
         });
     </script>
+    <style>
+        .prev, .next, .XX {
+            background-color: pink;
+            padding: 4px 4px;
+        }
+    </style>
 </head>
 <body>
     <div>
-        <button name="AA">前の年</button>
-        <select size="1">
+        <button class="prev">前の年</button>
+        <select class="XX" size="1">
             <option value="">項目名１</option>
             <option value="">項目名２</option>
             <option value="">項目名３３３３３３</option>
             <option value="">項目名４４４４４４４４４</option>
         </select>
-        <button name="BB">次の年</button>
+        <button class="next">次の年</button>
     </div>
     <table align="center">
         <tbody>
