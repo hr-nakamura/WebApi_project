@@ -18,7 +18,7 @@
         $("<iframe class='iFBox'></iframe>").dialog({
             dialogClass: "wkDialogClassMain",
             closeOnEscape: true,
-            modal: false,
+            modal: true,
             minHeight: 660,
             minWidth: 640,
             autoOpen: true,
@@ -62,7 +62,7 @@
             dialogClass: "wkDialogClass",
             closeOnEscape: false,
             autoOpen: true,
-            modal: false,
+            modal: true,
             title: Buff.TITLE,
             height: "auto",
             width: "auto",

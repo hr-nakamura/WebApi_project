@@ -8,12 +8,53 @@
     <script src="../_Content/_Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
     <script src="../_Content/_Scripts/DocumentWindow.js" type="text/javascript"></script>
     <script src="../_Content/_Scripts/json2.js" type="text/javascript"></script>
+    <script src="../_Content/_Scripts/showModalDialog.js" type="text/javascript"></script>
     <script src="../_Content/_debug/jquery.my.debug.js" type="text/javascript"></script>
+
+    <!-- dialog -->
+    <script src="../_Content/_Scripts/jquery-1.13.0-ui.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="../_Content/_Scripts/jquery-1.13.0-ui.css" />
 
     <link rel="stylesheet" type="text/css" href="account.css" />
 
     <title></title>
+    <style>
+        .wkDialogClassMain {
+            background-color: silver;
+        }
+
+            .wkDialogClassMain .ui-dialog-titlebar {
+                color: white;
+                background-color: royalblue;
+            }
+
+            .wkDialogClassMain .ui-dialog-content {
+                color: red;
+                background: green;
+            }
+
+
+        .wkBtnOk {
+            color: red;
+            background-color: yellow;
+        }
+
+        .wkBtnNg {
+            color: blue;
+            background-color: greenyellow;
+        }
+
+        .iFBox {
+            width: 100%;
+            height: 100%;
+            padding: 0px;
+            margin: 0px;
+        }
+    </style>
     <script type="text/javascript">
+        function callBack(ret) {
+            alert(ret);
+        }
         window.onload = function () {
             try {
                 $.debug("onload Start", location.href);
@@ -64,11 +105,34 @@
                     $(this).css("cursor", "");
                 }
             });
-        });
 
+        });
+        $(function () {
+            $("#wkCalender").datepicker();
+        });
+    </script>
+    <script>
+        $(function () {
+            $("select, button[name='AA'], button[name = 'BB']")
+                .button()
+                .click(function (event) {
+                    event.preventDefault();
+                    $.debug($(this).text());
+                });
+        });
     </script>
 </head>
 <body>
+    <div>
+        <button name="AA">前の年</button>
+        <select size="1">
+            <option value="">項目名１</option>
+            <option value="">項目名２</option>
+            <option value="">項目名３３３３３３</option>
+            <option value="">項目名４４４４４４４４４</option>
+        </select>
+        <button name="BB">次の年</button>
+    </div>
     <table align="center">
         <tbody>
             <TR>

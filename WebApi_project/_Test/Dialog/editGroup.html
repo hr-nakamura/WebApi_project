@@ -614,39 +614,39 @@
 			var xmlDoc = $.str2xml(xml);
             var xslDoc = $.loadXMLDoc("xx.xsl");
             var xx = $.transformNode(xmlDoc,xslDoc);
-			var a = $(xmlDoc).find("gName");
+			//var a = $(xmlDoc).find("gName");
 
 
-			var table = new makeTable()
+			//var table = new makeTable()
 
-			table.Begin("class='insideFrameColor' ALIGN='CENTER' WIDTH='100%'");
-			table.Caption("class='SUB'", "売上履歴");
+			//table.Begin("class='insideFrameColor' ALIGN='CENTER' WIDTH='100%'");
+			//table.Caption("class='SUB'", "売上履歴");
 
-			table.HeadBegin("");
-			table.RowBegin("valign='middle' bordercolor='black' bgcolor='#aac2ea'");
-			table.HeadCell("WIDTH='25%' nowrap", "月");
-			table.HeadCell("WIDTH='35%' nowrap", "グループ名");
-			table.HeadCell("WIDTH='20%' nowrap", "予測");
-			table.HeadCell("WIDTH='20%' nowrap", "実績");
-			table.RowEnd();
-			table.HeadEnd();
+			//table.HeadBegin("");
+			//table.RowBegin("valign='middle' bordercolor='black' bgcolor='#aac2ea'");
+			//table.HeadCell("WIDTH='25%' nowrap", "月");
+			//table.HeadCell("WIDTH='35%' nowrap", "グループ名");
+			//table.HeadCell("WIDTH='20%' nowrap", "予測");
+			//table.HeadCell("WIDTH='20%' nowrap", "実績");
+			//table.RowEnd();
+			//table.HeadEnd();
 
-			table.BodyBegin("bgcolor='snow'");
-			var pCode, pName, gName
+			//table.BodyBegin("bgcolor='snow'");
+			//var pCode, pName, gName
 
 
-			for (var yymm in Tab) {
-				table.RowBegin("")
-				table.DataCell("ALIGN='CENTER' nowrap", strMonth(yymm))
-				table.DataCell("ALIGN='LEFT' nowrap", Tab[yymm].gName)
-				table.DataCell("ALIGN='RIGHT' nowrap", formatNum(Tab[yymm].plan, 0))
-				table.DataCell("ALIGN='RIGHT' nowrap", formatNum(Tab[yymm].actual, 0))
-				table.RowEnd()
-			}
-			table.BodyEnd()
-			table.End()
+			//for (var yymm in Tab) {
+			//	table.RowBegin("")
+			//	table.DataCell("ALIGN='CENTER' nowrap", strMonth(yymm))
+			//	table.DataCell("ALIGN='LEFT' nowrap", Tab[yymm].gName)
+			//	table.DataCell("ALIGN='RIGHT' nowrap", formatNum(Tab[yymm].plan, 0))
+			//	table.DataCell("ALIGN='RIGHT' nowrap", formatNum(Tab[yymm].actual, 0))
+			//	table.RowEnd()
+			//}
+			//table.BodyEnd()
+			//table.End()
 
-			return (table.GetData())
+			//return (table.GetData())
 		}
 	</SCRIPT>
 

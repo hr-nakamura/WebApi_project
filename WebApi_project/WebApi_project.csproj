@@ -137,6 +137,7 @@
     <Content Include="_home\_Content\xsl\sub_cmn.xsl" />
     <Content Include="_home\_Content\xsl\sub_jscript.xsl" />
     <Content Include="_home\_Content\_Scripts\json2xml.js" />
+    <Content Include="_home\_Content\_Scripts\showModalDialog.js" />
     <Content Include="_home\_Content\_xmlData\EMG収支計画.xml" />
     <Content Include="_home\_Content\_xmlData\projectInfoList_XML.xml" />
     <Content Include="_home\_Content\_xmlData\projectInfo_XML_Detail.xml" />
