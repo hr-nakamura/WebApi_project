@@ -113,7 +113,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Api_Proc\entryProc\EMG収支計画.xml" />
     <Content Include="Api_Proc\funcProc\projectCostProc\projectInfoDetail.xml" />
     <Content Include="Api_Proc\funcProc\projectCostProc\projectInfoList.xml" />
     <Content Include="Api_Proc\funcProc\部門収支\BASE.xml" />

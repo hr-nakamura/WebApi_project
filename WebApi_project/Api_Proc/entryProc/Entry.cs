@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Linq;
 using WebApi_project.Models;
+using DebugHost;
 
 namespace WebApi_project.hostProc
 {
@@ -21,6 +22,7 @@ namespace WebApi_project.hostProc
         {
             EntryInfo = GetEntryTab_xml(Item);
             EntryInfo.option = JsonMerge(EntryInfo.option, Json);
+            MyDebug.Json(EntryInfo.option);
 
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc = LoadFunc(EntryInfo);
