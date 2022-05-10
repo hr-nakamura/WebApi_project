@@ -22,7 +22,10 @@
     </menu>
 
 
-  
+
+  <menu name="_Test/select" memo="" >
+    <menu name="test" memo="" mode="url" url="/WebApi/project/_Test/select/test.html"/>
+  </menu>
   <menu name="_Test" memo="" >
 	  <menu name="_Test/test.html" memo="" mode="url" url="/WebApi/project/_Test/test.html"/>
 	  <menu name="xml/test.html" memo="" mode="url" url="/WebApi/project/_Test/xml/test.html"/>

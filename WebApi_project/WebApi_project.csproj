@@ -163,6 +163,7 @@
     <Content Include="_Test\Dialog\xxx.xsl">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="_Test\select\test.html" />
     <Content Include="_Test\xml\JavaScript.js" />
     <Content Include="_Test\xml\sub_cmn.xsl" />
     <Content Include="_Test\xml\test.html" />
