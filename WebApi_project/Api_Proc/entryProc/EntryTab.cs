@@ -88,29 +88,29 @@ namespace WebApi_project.hostProc
             },
             { "売上予測/売上予実_部門", new EntryInfoXml{
                 type = "json",
-                data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_部門_JSON.asp",
-                //data = "http://localhost/test/_jsonData/売上予実_部門_JSON.json",
+                //data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_部門_JSON.asp",
+                data = "http://localhost/test/_jsonData/売上予実_部門_JSON.json",
                 option ="{year:2022,fix:70,actual:6}"
                 }
             },
             { "売上予測/売上予実_分類", new EntryInfoXml{
                 type = "json",
-                data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_分類_JSON.asp",
-                //data = "http://localhost/test/_jsonData/売上予実_分類_JSON.json",
+                //data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_分類_JSON.asp",
+                data = "http://localhost/test/_jsonData/売上予実_分類_JSON.json",
                 option ="{year:2022,fix:70,actual:6}"
                 }
             },
             { "売上予測/売上予実_新規", new EntryInfoXml{
                 type = "json",
-                data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_新規_JSON.asp",
-                //data = "http://localhost/test/_jsonData/売上予実_新規_JSON.json",
+                //data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_新規_JSON.asp",
+                data = "http://localhost/test/_jsonData/売上予実_新規_JSON.json",
                 option ="{year:2022,fix:70,actual:6}"
                 }
             },
             { "売上予測/売上予実_新規2", new EntryInfoXml{
                 type = "json",
-                data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_新規2_JSON.asp",
-                //data = "http://localhost/test/_jsonData/売上予実_新規2_JSON.json",
+                //data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_新規2_JSON.asp",
+                data = "http://localhost/test/_jsonData/売上予実_新規2_JSON.json",
                 option ="{year:2022,fix:70,actual:6}"
                 }
             },

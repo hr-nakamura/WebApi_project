@@ -71,9 +71,9 @@
     <script>
         $(function () {
             $(".prev")
-                .button({ text: true, label: '前年', icons: { primary: 'ui-icon-triangle-1-w' } })
+                .button({ text: false, label: '前の期', icons: { primary: 'ui-icon-triangle-1-w' } })
             $(".next")
-                .button({ text: true, label: '次年', icons: { secondary: 'ui-icon-triangle-1-e' } })
+                .button({ text: false, label: '次の期', icons: { secondary: 'ui-icon-triangle-1-e' } })
             $(".XX")
                 .button()
                 .change(function (event) {
@@ -94,8 +94,12 @@
         });
     </script>
     <style>
+        .XXX {
+            padding: 4px 4px;
+            border:none;
+        }
         .prev, .next, .XX {
-            background-color: pink;
+            background-color: lavender;
             padding: 4px 4px;
         }
 /*        select {
@@ -107,6 +111,12 @@
 </head>
 <body>
     <div>
+        <button class="prev"></button>
+        <label class="XXX">2021年10月-2022年9月</label>
+        <button class="next"></button>
+    </div>
+    <hr />
+    <div>
         <button class="prev">前の年</button>
         <select class="XX" size="1">
             <option value="">項目名１</option>
@@ -116,7 +126,7 @@
         </select>
         <button class="next">次の年</button>
     </div>
-<hr/>
+    <hr />
     <!-- 要素A -->
     <div class="selectArea">
 
