@@ -5,6 +5,7 @@ using System.IO.Pipes;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace DebugHost
 {
@@ -107,7 +108,15 @@ namespace DebugHost
         }
         public static void Json(object Json)
         {
-            MyDebug.Write_LogFile(Json.ToString());
+            string timeStatusStr = "[" + DateTime.Now.ToString("MM/dd HH:mm:ss.fff") + "]";
+            var caller = new System.Diagnostics.StackFrame(1, false);
+            string callerClassName = caller.GetMethod().DeclaringType.FullName;
+            string callerMethodName = caller.GetMethod().Name;
+            string work = timeStatusStr + "\t" + string.Join( ".", callerClassName, callerMethodName);
+
+            dynamic parsedJson = JsonConvert.DeserializeObject(Json.ToString());
+            string jsonStr = JsonConvert.SerializeObject(parsedJson, Formatting.Indented);
+            MyDebug.Write_LogFile(jsonStr);
         }
         public static void Write_LogFile(string str)
         {
