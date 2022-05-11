@@ -16,7 +16,7 @@ namespace WebApi_project.hostProc
             { "部門収支/部門収支_XML", new EntryInfoXml{
                 type = "xml",
                 data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp",
-                option = "{dispCmd:'EMG',year:2022,fix:70,yosoku:3}"
+                option = "{dispCmd:'EMG',year:2022,fix:70,yosoku:3}",
                 }
             },
         };
@@ -24,22 +24,22 @@ namespace WebApi_project.hostProc
             { "projectCostProc/projectInfo_XML_Detail", new EntryInfoXml{
                 type = "xml",
                 data ="http://kansa.in.eandm.co.jp/Project/projectCostProc/xml/projectInfo_XML_Detail.asp",
-                //data = "http://localhost/test/_xmlData/projectInfo_XML_Detail.xml",
-                option ="{pNum:20214693}"
+                option ="{pNum:20214693}",
+                dataX = "http://localhost/test/_xmlData/projectInfo_XML_Detail.xml",
                 }
             },
             { "projectCostProc/projectInfo_XML_Join", new EntryInfoXml{
                 type = "xml",
                 data ="http://kansa.in.eandm.co.jp/Project/projectCostProc/xml/projectInfo_XML_Join.asp",
-                //data = "http://localhost/test/_xmlData/projectInfo_XML_Join.xml",
-                option ="{pNum:20214693}"
+                option ="{pNum:20214693}",
+                dataX = "http://localhost/test/_xmlData/projectInfo_XML_Join.xml",
                 }
             },
             { "projectCostProc/projectInfoList_XML", new EntryInfoXml{
                 type = "xml",
                 data ="http://kansa.in.eandm.co.jp/Project/projectCostProc/xml/projectInfoList_XML.asp",
-                //data = "http://localhost/test/_xmlData/projectInfoList_XML.xml",
-                option ="{pNum:20214693}"
+                option ="{pNum:20214693}",
+                dataX = "http://localhost/test/_xmlData/projectInfoList_XML.xml",
                 }
             },
         };
@@ -47,36 +47,36 @@ namespace WebApi_project.hostProc
             { "売上予測/売上目標_部門", new EntryInfoXml{
                 type = "json",
                 data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上目標_部門_JSON.asp",
-                //data = "http://localhost/test/_jsonData/売上目標_部門_JSON.json",
-                option ="{year:2022,fix:70}"
+                option ="{year:2022,fix:70}",
+                dataX = "http://localhost/test/_jsonData/売上目標_部門_JSON.json",
                 }
             },
             { "売上予測/売上予実_部門", new EntryInfoXml{
                 type = "json",
                 data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_部門_JSON.asp",
-                //data = "http://localhost/test/_jsonData/売上予実_部門_JSON.json",
-                option ="{year:2022,fix:70,actual:6}"
+                option ="{year:2022,fix:70,actual:6}",
+                dataX = "http://localhost/test/_jsonData/売上予実_部門_JSON.json",
                 }
             },
             { "売上予測/売上予実_分類", new EntryInfoXml{
                 type = "json",
                 data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_分類_JSON.asp",
-                //data = "http://localhost/test/_jsonData/売上予実_分類_JSON.json",
-                option ="{year:2022,fix:70,actual:6}"
+                option ="{year:2022,fix:70,actual:6}",
+                dataX = "http://localhost/test/_jsonData/売上予実_分類_JSON.json",
                 }
             },
             { "売上予測/売上予実_新規", new EntryInfoXml{
                 type = "json",
                 data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_新規_JSON.asp",
-                //data = "http://localhost/test/_jsonData/売上予実_新規_JSON.json",
-                option ="{year:2022,fix:70,actual:6}"
+                option ="{year:2022,fix:70,actual:6}",
+                dataX = "http://localhost/test/_jsonData/売上予実_新規_JSON.json",
                 }
             },
             { "売上予測/売上予実_新規2", new EntryInfoXml{
                 type = "json",
                 data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_新規2_JSON.asp",
-                //data = "http://localhost/test/_jsonData/売上予実_新規2_JSON.json",
-                option ="{year:2022,fix:70,actual:6}"
+                option ="{year:2022,fix:70,actual:6}",
+                dataX = "http://localhost/test/_jsonData/売上予実_新規2_JSON.json",
                 }
             },
         };
@@ -84,9 +84,9 @@ namespace WebApi_project.hostProc
             { "費用予測/費用状況", new EntryInfoXml{
                 type = "json",
                 data ="http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp",
-                //type = "xml",
-                //data = "http://localhost/test/_xmlData/費用状況.xml",
-                option ="{year:2022,fix:70,actual:5}"
+                option ="{year:2022,fix:70,actual:5}",
+                typeX = "xml",
+                dataX = "http://localhost/test/_xmlData/費用状況.xml",
                 }
             },
         };
@@ -126,29 +126,29 @@ namespace WebApi_project.hostProc
             { "_sample/部門収支/EMG収支計画", new EntryInfoXml{
                 type = "xml",
                 data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp",
-                //data = "http://localhost/test/_xmlData/EMG収支計画.xml",
-                option = "{dispCmd:'EMG',year:2022,fix:70,yosoku:3}"
+                option = "{dispCmd:'EMG',year:2022,fix:70,yosoku:3}",
+                dataX = "http://localhost/test/_xmlData/EMG収支計画.xml",
                 }
             },
             { "_sample/部門収支/統括収支計画", new EntryInfoXml{
                 type = "xml",
                 data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp",
-                //data = "http://localhost/test/_xmlData/統括収支計画.xml",
-                option = "{dispCmd:'統括一覧',year:2022,fix:70,yosoku:3}"
+                option = "{dispCmd:'統括一覧',year:2022,fix:70,yosoku:3}",
+                dataX = "http://localhost/test/_xmlData/統括収支計画.xml",
                 }
             },
             { "_sample/部門収支/部収支計画", new EntryInfoXml{
                 type = "xml",
                 data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp",
-                //data = "http://localhost/test/_xmlData/部収支計画.xml",
-                option = "{dispCmd:'部門一覧',secMode:'開発',dispName:'',year:2022,fix:70,yosoku:3}"
+                option = "{dispCmd:'部門一覧',secMode:'開発',dispName:'',year:2022,fix:70,yosoku:3}",
+                dataX = "http://localhost/test/_xmlData/部収支計画.xml",
                 }
             },
             { "_sample/部門収支/課収支計画", new EntryInfoXml{
                 type = "xml",
                 data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp",
-                //data = "http://localhost/test/_xmlData/課収支計画.xml",
-                option = "{dispCmd:'課一覧',dispName:'営業本部',secMode:'開発',year:2022,fix:70,yosoku:3}"
+                option = "{dispCmd:'課一覧',dispName:'営業本部',secMode:'開発',year:2022,fix:70,yosoku:3}",
+                dataX = "http://localhost/test/_xmlData/課収支計画.xml",
                 }
             },
         };

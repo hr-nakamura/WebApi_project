@@ -26,11 +26,15 @@ namespace WebApi_project.Models
         public string type { get; set; }
         public string data { get; set; }
         public string option { get; set; }
+        public string typeX { get; set; }
+        public string dataX { get; set; }
     }
     public class EntryInfoJson
     {
         public string type { get; set; }
         public string data { get; set; }
         public string option { get; set; }
+        public string typeX { get; set; }
+        public string dataX { get; set; }
     }
 }
