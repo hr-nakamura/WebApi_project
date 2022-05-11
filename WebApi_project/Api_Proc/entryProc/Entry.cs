@@ -345,6 +345,15 @@ namespace WebApi_project.hostProc
                         EntryTab_xml = Marge(EntryTab_xml, (SortedDictionary<string, EntryInfoXml>)oDic);
                     }
                 }
+                var hProc = new hostProc();
+                if( hProc.debug_mode)
+                {
+                    foreach (var item in EntryTab_xml)
+                    {
+                        if (!String.IsNullOrEmpty(item.Value.dataX)) item.Value.data = item.Value.dataX;
+                        if (!String.IsNullOrEmpty(item.Value.typeX)) item.Value.type = item.Value.typeX;
+                    }
+                }
             }
             var Tab = ( Item != "" ? EntryTab_xml[Item] : new EntryInfoXml() );
             return (Tab);
@@ -363,6 +372,15 @@ namespace WebApi_project.hostProc
                         var obj = Activator.CreateInstance(type);
                         var oDic = field.GetValue(obj);
                         EntryTab_json = Marge(EntryTab_json, (SortedDictionary<string, EntryInfoJson>)oDic);
+                    }
+                }
+                var hProc = new hostProc();
+                if (hProc.debug_mode)
+                {
+                    foreach (var item in EntryTab_json)
+                    {
+                        if (!String.IsNullOrEmpty(item.Value.dataX)) item.Value.data = item.Value.dataX;
+                        if (!String.IsNullOrEmpty(item.Value.typeX)) item.Value.type = item.Value.typeX;
                     }
                 }
             }

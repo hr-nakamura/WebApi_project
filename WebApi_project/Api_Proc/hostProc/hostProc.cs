@@ -11,6 +11,8 @@ using Newtonsoft.Json;
 using System.Runtime.CompilerServices;
 using System.IO;
 using System.Text;
+using System.Net;
+using System.Net.Sockets;
 
 using System.Collections;
 
@@ -31,6 +33,8 @@ namespace WebApi_project.hostProc
         public SqlConnectionStringBuilder DB_builder = new SqlConnectionStringBuilder();
         public string DB_comment = "123";
         public string LogPath = "";
+        public string IPAddress = "";
+        public bool debug_mode = false;
 
         HttpContext context = HttpContext.Current;
         public hostProc()
@@ -41,24 +45,20 @@ namespace WebApi_project.hostProc
             //MyCookieColl = HttpContext.Current.Request.Cookies;
             //String[] arr1 = MyCookieColl.AllKeys;
 
+            debug_mode = check_online();
+
             string mName = Environment.MachineName;
+
             //Debug.Write("hostProc Start", mName);
             string DB_mode = "データベース";
             switch (mName)
             {
-                case "QOSMIO":
-                    DB_mode = "データベース_QOSMIO";
-                    break;
-                case "SURFACE-PC":
-                    DB_mode = "データベース_SURFACE";
-                    basePath = @"E:\GitHub\hr-nakamura\WebApi_project\WebApi_project";
-                    break;
-                case "NAKAMURA-RD":
+                case "NAKAMURA-RD2":
                     DB_mode = "データベース_naka";
                     basePath = @"D:\GitHub\hr-nakamura\WebApi_project\WebApi_project";
                     break;
-                case "NAKAMURA-RD2":
-                    DB_mode = "データベース_naka";
+                case "NAKAMURA-RD":
+                    DB_mode = "データベース_EMG";
                     basePath = @"D:\GitHub\hr-nakamura\WebApi_project\WebApi_project";
                     break;
                 case "EMG-APSV":                            /// kansa Web サーバ
@@ -123,6 +123,19 @@ namespace WebApi_project.hostProc
                 cmd.Dispose();
                 cmd = null;
             }
+        }
+        bool check_online()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    IPAddress = ip.ToString();
+                }
+            }
+            bool stat = IPAddress.IndexOf("10.") == 0 ? false : true;
+            return (stat);
         }
         void IP_Chech(string IPAddr)
         {
