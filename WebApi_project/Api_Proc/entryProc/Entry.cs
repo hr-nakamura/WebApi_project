@@ -14,8 +14,8 @@ namespace WebApi_project.hostProc
 {
     public partial class entryProc 
     {
-        private static Dictionary<string, EntryInfoXml> EntryTab_xml = new Dictionary<string, EntryInfoXml>();
-        private static Dictionary<string, EntryInfoJson> EntryTab_json = new Dictionary<string, EntryInfoJson>();
+        private static SortedDictionary<string, EntryInfoXml> EntryTab_xml = new SortedDictionary<string, EntryInfoXml>();
+        private static SortedDictionary<string, EntryInfoJson> EntryTab_json = new SortedDictionary<string, EntryInfoJson>();
         private static Encoding Encode = Encoding.GetEncoding("shift_jis");
 
         public XmlDocument Entry(EntryInfoXml EntryInfo,string Item, string Json)
@@ -308,10 +308,10 @@ namespace WebApi_project.hostProc
             return (o_dst);
         }
         //==========================================================================================
-        private Dictionary<TKey, TValue> Marge<TKey, TValue>(Dictionary<TKey, TValue> a,
-                                                    Dictionary<TKey, TValue> b)
+        private SortedDictionary<TKey, TValue> Marge<TKey, TValue>(SortedDictionary<TKey, TValue> a,
+                                                    SortedDictionary<TKey, TValue> b)
         {
-            var table = new Dictionary<TKey, TValue>();
+            var table = new SortedDictionary<TKey, TValue>();
             foreach (var item in a)
             {
                 table[item.Key] = item.Value;
@@ -337,12 +337,12 @@ namespace WebApi_project.hostProc
                 FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
                 foreach (FieldInfo f in fields)
                 {
-                    if (f.FieldType.Name == "Dictionary`2" && f.ToString().Contains("EntryInfoXml"))
+                    if (f.FieldType.Name == "SortedDictionary`2" && f.ToString().Contains("EntryInfoXml"))
                     {
                         FieldInfo field = type.GetField(f.Name);
                         var obj = Activator.CreateInstance(type);
                         var oDic = field.GetValue(obj);
-                        EntryTab_xml = Marge(EntryTab_xml, (Dictionary<string, EntryInfoXml>)oDic);
+                        EntryTab_xml = Marge(EntryTab_xml, (SortedDictionary<string, EntryInfoXml>)oDic);
                     }
                 }
             }
@@ -357,12 +357,12 @@ namespace WebApi_project.hostProc
                 FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
                 foreach (FieldInfo f in fields)
                 {
-                    if (f.FieldType.Name == "Dictionary`2" && f.ToString().Contains("EntryInfoJson"))
+                    if (f.FieldType.Name == "SortedDictionary`2" && f.ToString().Contains("EntryInfoJson"))
                     {
                         FieldInfo field = type.GetField(f.Name);
                         var obj = Activator.CreateInstance(type);
                         var oDic = field.GetValue(obj);
-                        EntryTab_json = Marge(EntryTab_json, (Dictionary<string, EntryInfoJson>)oDic);
+                        EntryTab_json = Marge(EntryTab_json, (SortedDictionary<string, EntryInfoJson>)oDic);
                     }
                 }
             }
@@ -400,7 +400,7 @@ namespace WebApi_project.hostProc
             }
             return (xmlDoc);
         }
-        private void makeMenu(XmlElement p_menu, string name, string fullName, EntryInfoXml value, Dictionary<string, EntryInfoXml> EntryTab)
+        private void makeMenu(XmlElement p_menu, string name, string fullName, EntryInfoXml value, SortedDictionary<string, EntryInfoXml> EntryTab)
         {
             string[] x = name.Split('/');
             XmlDocument xmlDoc = p_menu.OwnerDocument;
@@ -428,7 +428,7 @@ namespace WebApi_project.hostProc
                 p_menu.AppendChild(menu);
             }
         }
-        private void makeMenu(XmlElement p_menu, string name, string fullName, EntryInfoJson value, Dictionary<string, EntryInfoJson> EntryTab)
+        private void makeMenu(XmlElement p_menu, string name, string fullName, EntryInfoJson value, SortedDictionary<string, EntryInfoJson> EntryTab)
         {
             string[] x = name.Split('/');
             XmlDocument xmlDoc = p_menu.OwnerDocument;

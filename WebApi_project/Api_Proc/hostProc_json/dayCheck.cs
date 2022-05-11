@@ -8,7 +8,7 @@ using Newtonsoft.Json.Linq;
 using System.Data.SqlClient;
 using System.Collections.Generic;
 
-
+using DebugHost;
 
 namespace WebApi_project.hostProc
 {
@@ -21,11 +21,18 @@ namespace WebApi_project.hostProc
 		}
 		public object dayChk_json(string Json)
         {
-			para_dayChk o_json;
-
-			o_json = JsonConvert.DeserializeObject<para_dayChk>(Json);
+			try
+			{
+				para_dayChk o_json;
+				o_json = JsonConvert.DeserializeObject<para_dayChk>(Json);
             o_json.day = dayChk(o_json.yymm);
-            return (o_json);
+				return (o_json);
+			}
+			catch (Exception ex)
+            {
+				MyDebug.Write(ex.Message);
+				return (new object());
+			}
 		}
 		public int dayChk(int yymm, int adjustDayCnt = 7)
 		{

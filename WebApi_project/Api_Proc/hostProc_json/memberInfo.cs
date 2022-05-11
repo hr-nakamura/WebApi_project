@@ -32,6 +32,9 @@ namespace WebApi_project.hostProc
 
         public object memberInfo_json(string Json)
         {
+            try
+            {
+
             var o_json = JsonConvert.DeserializeObject<para_mailInfo>(Json);
             if (o_json.mailAddr == null) o_json.mailAddr = "azuma@psl-em.co.jp";
 
@@ -48,6 +51,11 @@ namespace WebApi_project.hostProc
                 memberInfo.Tag = memberInfoX2(mailAddr);
             }
             return (memberInfo);
+            }catch(Exception ex)
+            {
+                MyDebug.Write(ex.Message);
+                return (new object());
+            }
         }
         s_memberInfo memberInfoX1(string mailAddr)
         {
