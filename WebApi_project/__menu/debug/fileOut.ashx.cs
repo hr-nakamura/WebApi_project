@@ -35,12 +35,18 @@ namespace WebApi_project.__menu.debug
             var x = IsXml(str) ? ".xml" : ".txt";
             Encoding Encode = Encoding.GetEncoding("Shift_JIS");
             string fileName = Path.GetFileNameWithoutExtension(fName);
+            try
+            {
 
             using (StreamWriter writer = new StreamWriter(@"D:\xmlData\" + fileName + x, false, Encode))
             {
                 writer.WriteLine(str);
             }
 
+            }catch(Exception ex)
+            {
+                var a = ex.Message;
+            }
 
 
         }
