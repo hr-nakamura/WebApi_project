@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="Shift_JIS" ?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
-  <xsl:import href="xsl/sub_cmn.xsl"/>
+  <xsl:import href="sub_cmn.xsl"/>
   
   <!--
-  chrome [loadXMLDoc]からの場所
-  IE     [本体xsl]からの場所
+  chrome [loadXMLDoc]からの場所  xsl/sub_cmn.xsl
+  IE     [本体xsl]からの場所     sub_cmn.xsl
   -->
   
   <xsl:variable name="year">
