@@ -29,7 +29,8 @@
   <menu name="_Test" memo="" >
 	  <menu name="_Test/test.html" memo="" mode="url" url="/WebApi/project/_Test/test.html"/>
 	  <menu name="xml/test.html" memo="" mode="url" url="/WebApi/project/_Test/xml/test.html"/>
-	  <menu name="History">
+
+    <menu name="History">
       <menu name="History" memo="" mode="url" url="/WebApi/project/_Test/History/History.html"/>
     </menu>
     <menu name="QOSMIO">

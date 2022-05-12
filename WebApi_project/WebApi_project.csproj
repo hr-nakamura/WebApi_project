@@ -166,6 +166,11 @@
     <Content Include="_Test\xml\JavaScript.js" />
     <Content Include="_Test\xml\sub_cmn.xsl" />
     <Content Include="_Test\xml\test.html" />
+    <Content Include="_Test\xml\xsl\sub_cmn.xsl" />
+    <Content Include="_Test\xml\xsl\売上予実.xsl">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="_Test\xml\xsl\売上予実_新規.xml" />
     <Content Include="_Test\_Test\test.asp" />
     <Content Include="_Test\Dialog\back.gif" />
     <Content Include="_Test\Dialog\bg01.gif" />

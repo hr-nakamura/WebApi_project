@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="shift_jis" ?>
-	<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">	
+<!--	<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">	-->
 
-<!--<xsl:stylesheet version="2.0"
+<xsl:stylesheet version="1.0"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:msxsl="urn:schemas-microsoft-com:xslt"
-	xmlns:user="mynamespace">-->
+	xmlns:user="mynamespace">
 
 
 <!--	年の表示	-->
@@ -30,8 +30,7 @@
 	<xsl:param name="cnt" select="12 - $begin + 1"/>
 	<xsl:if test="$mCnt &gt; 0">
 		<th>
-      <xsl:attribute name="nowrap"/>
-      <xsl:attribute name="colspan">
+			<xsl:attribute name="colspan">
 				<xsl:if test="$cnt &gt;= $mCnt">
 					<xsl:value-of select="$mCnt"/>
 				</xsl:if>
@@ -70,54 +69,21 @@
 	<xsl:param name="max" select="$begin+$mCnt"/>
 	<xsl:param name="cnt" select="$begin"/>
 	<xsl:if test="$cnt &lt; $max">
-		<th class="m">
-      <xsl:attribute name="nowrap"/>
-      <small>
-        <xsl:if test="($cnt mod 12)>0">
+		<th width="60">
+      <xsl:attribute name="nowrap" />
+      <xsl:if test="($cnt mod 12)>0">
 				<xsl:value-of select="$cnt mod 12"/>
 			</xsl:if>
 			<xsl:if test="($cnt mod 12)=0">
 				<xsl:value-of select="12"/>
 			</xsl:if>
 			<xsl:value-of select="'月'"/>
-      </small>
-    </th>
-    <xsl:call-template name="month_Loop">
+		</th>
+		<xsl:call-template name="month_Loop">
 			<xsl:with-param name="max" select="$max" />
 			<xsl:with-param name="cnt" select="$cnt + 1" />
-    </xsl:call-template>
-</xsl:if>
+		</xsl:call-template>
+	</xsl:if>
 </xsl:template>
-
-  <!--	月の表示	-->
-  <!--	begin : 開始月	-->
-  <!--	mCnt  : 表示月数	-->
-  <!--
-====使用例=============
-<tr>
-	<xsl:call-template name="data_Loop">
-		<xsl:with-param name="mCnt" select="$mCnt" />
-	</xsl:call-template>
-</tr>
-=======================
--->
-  <xsl:template name="data_Loop">
-    <xsl:param name="begin" select="0"/>
-    <xsl:param name="data" />
-    <xsl:param name="mCnt" />
-    <xsl:param name="max" select="$begin+$mCnt"/>
-    <xsl:param name="cnt" select="$begin"/>
-    <xsl:if test="$cnt &lt; $max">
-      <td>
-        <xsl:attribute name="nowrap"/>
-        <xsl:value-of select="$data"/>
-      </td>
-      <xsl:call-template name="data_Loop">
-        <xsl:with-param name="data" select="$data" />
-        <xsl:with-param name="max" select="$max" />
-        <xsl:with-param name="cnt" select="$cnt + 1" />
-      </xsl:call-template>
-    </xsl:if>
-  </xsl:template>
 
 </xsl:stylesheet>

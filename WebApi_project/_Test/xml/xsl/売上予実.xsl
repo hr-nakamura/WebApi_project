@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="Shift_JIS" ?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
-  <xsl:import href="xsl/sub_cmn.xsl"/>
-  
-  <!--
-  chrome [loadXMLDoc]からの場所
-  IE     [本体xsl]からの場所
-  -->
-  
+  <xsl:import href="sub_cmn.xsl"/>
+
   <xsl:variable name="year">
     <xsl:value-of select="/root/情報/@year"/>
   </xsl:variable>

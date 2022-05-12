@@ -166,7 +166,9 @@
                     alert("NG");
                 }
                 return (transformed);
-            } catch (e) { $.alert("[$.transformNode]", e.message); }
+            } catch (e) {
+                $.alert("[$.transformNode]", e.message);
+            }
         },
         $.fn.setParameter = function () {
             var Tab = {};
