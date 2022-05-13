@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="shift_jis" />
+    <title></title>
+    <script src="../_Content/_Scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="../_Content/_Scripts/jquery.my.webapi.js" type="text/javascript"></script>
+    <script src="../_Content/_Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
+    <script src="../_Content/_Scripts/DocumentWindow.js" type="text/javascript"></script>
+    <script src="../_Content/_Scripts/json2.js" type="text/javascript"></script>
+    <script src="../_Content/_Scripts/showModalDialog.js" type="text/javascript"></script>
+    <script src="../_Content/_debug/jquery.my.debug.js" type="text/javascript"></script>
+
+    <!-- dialog -->
+    <script src="../_Content/_Scripts/jquery-1.13.0-ui.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="../_Content/_Scripts/jquery-1.13.0-ui.css" />
+
+    <link rel="stylesheet" type="text/css" href="account.css" />
+
+    <title></title>
+    <style>
+        .ui-button-text {
+            font-size: 1.8em;
+            background-color: red;
+        }
+    </style>
+    <script type="text/javascript">
+        function callBack(ret) {
+            alert(ret);
+        }
+        window.onload = function () {
+            try {
+                $.debug("onload Start", location.href);
+                test();
+
+            } catch (e) {
+                $.alert("onload", e.message);
+            }
+        }
+        window.onunload = function () {
+            $.debug("onunload", location.href);
+        }
+    </script>
+
+    <script type="text/javascript">
+        function test() {
+            var url = location.href;
+
+            var json = {
+                year: 2022,
+                //actual: 5
+            };
+            //$.debug.json("para", json);
+            var xmlDoc = $.WebApi("売上予測/売上目標_部門", json);
+            var xslDoc = $.loadXMLDoc("売上目標.xsl");
+
+            //$.alert($.xml2str(xmlDoc));
+            //$.alert($.xml2str(xslDoc));
+            var Buff = $.transformNode(xmlDoc, xslDoc);
+            $(".dataG").html(Buff);
+
+            //const matchedFileName = url.match(/^(?:[^:\/?#]+:)?(?:\/\/[^\/?#]*)?(?:([^?#]*\/)([^\/?#]*))?(\?[^#]*)?(?:#.*)?$/) ?? [];
+            //const [, dir, fileName, query] = matchedFileName.map(match => match ?? '');
+
+            //const matchedExt = fileName.match(/^(.+?)(\.[^.]+)?$/) ?? [];
+            //const [, name, ext] = matchedExt.map(match => match ?? '');
+        }
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $(document).on("click", ".onKind", function (event) {
+                alert(this.getAttribute("kind"));
+            });
+            $(document).on("mouseenter mouseleave", ".onKind", function (event) {
+                if (event.type == "mouseenter") {
+                    $(this).css("background-color", "pink");
+                    $(this).css("cursor", "pointer");
+                } else if (event.type == "mouseleave") {
+                    $(this).css("background-color", "");
+                    $(this).css("cursor", "");
+                }
+            });
+
+        });
+        $(function () {
+            $("#wkCalender").datepicker();
+        });
+    </script>
+    <script>
+        $(function () {
+            $(".prev")
+                .button({ text: false, label: '前の期', icons: { primary: 'ui-icon-triangle-1-w' } })
+            $(".next")
+                .button({ text: false, label: '次の期', icons: { secondary: 'ui-icon-triangle-1-e' } })
+            $(".XX")
+                .button()
+                .change(function (event) {
+                    $.debug("AA", event.target.selectedIndex, $(this).text());
+                });
+            $("button")
+                .button()
+                .click(function (event) {
+                    event.preventDefault();
+                    //$.debug($(this).text());
+                });
+        });
+    </script>
+    <style>
+        .XXX {
+            padding: 4px 4px;
+            border: none;
+        }
+
+        .prev, .next, .XX {
+            background-color: lavender;
+            padding: 4px 4px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <button class="prev"></button>
+        <label class="XXX">2021年10月-2022年9月</label>
+        <button class="next"></button>
+    </div>
+    <table align="center">
+        <tbody>
+            <TR>
+                <TD align="center">
+                    <DIV align="center" class="dataG"></DIV>
+                </TD>
+            </TR>
+        </tbody>
+    </table>
+</body>
+</html >
