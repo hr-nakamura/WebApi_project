@@ -308,9 +308,10 @@
 		<xsl:param name="cnt" select="$begin"/>
 		<xsl:param name="form" select="'#,###'" />
 		<xsl:if test="$cnt &lt; $max">
+			<xsl:variable name="temp" select="sum($data/ŒŽ[@m=$cnt])"/>
 			<td class="num">
 				<xsl:attribute name="nowrap"/>
-				<xsl:value-of select="format-number( sum($data/ŒŽ[@m=$cnt]) div 1000 ,$form)"/>
+				<xsl:value-of select="format-number( $temp div 1000 ,$form)"/>
 			</td>
 			<xsl:call-template name="item_Loop">
 				<xsl:with-param name="data" select="$data" />
@@ -328,9 +329,10 @@
 		<xsl:param name="form" select="'#,###'" />
 		<xsl:param name="work" select="0"/>
 		<xsl:if test="$cnt &lt; $max">
+			<xsl:variable name="temp" select="sum($data/ŒŽ[@m=$cnt])"/>
 			<td class="num">
 				<xsl:attribute name="nowrap"/>
-				<xsl:value-of select="format-number( ( $work + sum($data/ŒŽ[@m=$cnt])) div 1000 ,'#,##0')"/>
+				<xsl:value-of select="format-number( ($work + $temp) div 1000 ,'#,##0')"/>
 			</td>
 			<xsl:call-template name="item_Loop_—ÝŒv">
 				<xsl:with-param name="data" select="$data" />
@@ -351,11 +353,16 @@
 		<xsl:param name="work_A" select="0"/>
 		<xsl:param name="work_B" select="0"/>
 		<xsl:if test="$cnt &lt; $max">
-			<xsl:variable name="work" select="($work_B + sum($data_B/ŒŽ[@m=$cnt])) - ($work_A + sum($data_A/ŒŽ[@m=$cnt]))"/>
+			<xsl:variable name="temp" select="($work_B + sum($data_B/ŒŽ[@m=$cnt])) - ($work_A + sum($data_A/ŒŽ[@m=$cnt]))"/>
 
 			<td class="num">
 				<xsl:attribute name="nowrap"/>
-				<xsl:value-of select="format-number( $work div 1000 ,'#,##0')"/>
+				<xsl:if test="$temp &lt; 0">
+					<xsl:attribute name="style">
+						<xsl:value-of select="'color:tomato;'"/>
+					</xsl:attribute>
+				</xsl:if>
+				<xsl:value-of select="format-number( $temp div 1000 ,'#,##0')"/>
 			</td>
 			<xsl:call-template name="item_Loop_·">
 				<xsl:with-param name="data_A" select="$data_A" />
@@ -379,18 +386,18 @@
 		<xsl:param name="work_A" select="0"/>
 		<xsl:param name="work_B" select="0"/>
 		<xsl:if test="$cnt &lt; $max">
-			<xsl:variable name="work" select="($work_B + sum($data_B/ŒŽ[@m=$cnt])) div ($work_A + sum($data_A/ŒŽ[@m=$cnt]))"/>
+			<xsl:variable name="temp" select="($work_B + sum($data_B/ŒŽ[@m=$cnt])) div ($work_A + sum($data_A/ŒŽ[@m=$cnt]))"/>
 			<td class="num">
 				<xsl:attribute name="nowrap"/>
 				<xsl:choose>
-					<xsl:when test="string($work) = 'NaN'">
+					<xsl:when test="string($temp) = 'NaN'">
 						<xsl:value-of select="'='"/>
 					</xsl:when>
-					<xsl:when test="string($work) = 'Infinity'">
+					<xsl:when test="string($temp) = 'Infinity'">
 						<xsl:value-of select="'-'"/>
 					</xsl:when>
 					<xsl:otherwise>
-						<xsl:value-of select="format-number( $work * 100 ,'##0.0')"/>
+						<xsl:value-of select="format-number( $temp * 100 ,'##0.0')"/>
 						<xsl:value-of select="'%'"/>
 					</xsl:otherwise>
 				</xsl:choose>

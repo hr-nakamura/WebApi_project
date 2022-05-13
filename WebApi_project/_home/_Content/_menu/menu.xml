@@ -79,7 +79,7 @@
     </block>
     <block name="予測・実績">
       <menu>
-  		  <a url="売上予測/売上目標_部門.html" mode="F_TEST">売上目標</a>
+  		<a url="売上予測/売上目標_部門.html" mode="F_TEST">売上目標</a>
         <a url="売上予測/売上予実_部門.html" mode="F_TEST">売上実績+予測</a>
         <a url="売上予測/売上予実_分類.html" mode="F_TEST">売上実績+予測（分類別）</a>
         <a url="売上予測/売上予実_新規.html" mode="F_TEST">売上実績+予測（新規別）</a>
