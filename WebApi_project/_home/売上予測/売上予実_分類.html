@@ -16,7 +16,7 @@
     <script type="text/javascript">
         window.onload = function () {
             try {
-                $.debug("onload Start", location.href);
+                $.debug("onload Start", decodeURI(location.href));
                 test();
 
             } catch (e) {
