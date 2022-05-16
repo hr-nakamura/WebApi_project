@@ -19,7 +19,7 @@
         },
         $.WebApi = function(item, json) {
             //WebApi_url = hostName + "/WebApi/project/api/xml";
-            var WebApi_url_xml = "http://kansa.in.eandm.co.jp/WebApi/project/api/xml";
+            var WebApi_url_xml = "/WebApi/project/api/xml";
 
             $.debug("_home/WebApi");
             var options = {
@@ -45,7 +45,8 @@
             return (returnValue);
         },
             $.WebApi_json = function (item, json) {
-            var WebApi_url_json = "http://kansa.in.eandm.co.jp/WebApi/project/api/json";
+            var WebApi_url_json = "/WebApi/project/api/json";
+            alert(WebApi_url_json);
                 //WebApi_url_json = hostName + "/WebApi/project/api/json";
                 $.debug("_home/WebApi_json");
                 var options = {
