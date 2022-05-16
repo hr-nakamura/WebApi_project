@@ -150,8 +150,8 @@
     <Content Include="_home\_Content\_xmlData\費用状況.xml" />
     <Content Include="_home\_Content\_xmlData\部収支計画.xml" />
     <Content Include="_home\売上予測\account.css" />
-    <Content Include="_home\売上予測\sub_cmn.xsl" />
-    <Content Include="_home\売上予測\売上目標.xsl">
+    <Content Include="_home\売上予測\xsl\sub_cmn.xsl" />
+    <Content Include="_home\売上予測\xsl\売上目標.xsl">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="_home\売上予測\売上目標_部門.html" />
@@ -159,7 +159,7 @@
     <Content Include="_home\売上予測\売上予実_分類.html" />
     <Content Include="_home\売上予測\売上予実_新規2.html" />
     <Content Include="_home\売上予測\売上予実_部門.html" />
-    <Content Include="_home\売上予測\売上予実.xsl">
+    <Content Include="_home\売上予測\xsl\売上予実.xsl">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="_home\費用予測\費用状況.html" />
