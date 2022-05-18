@@ -42,17 +42,8 @@
         $(window).on("load", function () {
             try {
                 $.debug("Start Menu");
-                //$.alert("XX", $.fn.jquery, window.location, window.location.protocol,window.location.port);
-                var work = window.location.href.split("/");
-                work.length = 3;
-                var url = work.join("/");
-                url = (location.protocol == "https:" && window.location.port != "" ? "" : url)
 
-                //hostName = "http://kansa.in.eandm.co.jp";
-                WebApi_url = url + "/WebApi/project/api/xml";
-                WebApi_url_test = url + "/WebApi/project/api/test";
-
-                // EntryTabの取得
+                // EntryTab テーブルの取得
                 //var methodList2 = $.loadXMLDoc("menu2.xml");
                 var methodList = $.WebApi();
 

@@ -123,6 +123,7 @@
     <Content Include="Models\memo.txt" />
     <Content Include="Scripts\json2.js" />
     <Content Include="Scripts\json2.min.js" />
+    <Content Include="_home\MySession_json.asp" />
     <Content Include="_home\projectCostProc\projectInfo_Join.html" />
     <Content Include="_home\projectCostProc\projectInfoList.html" />
     <Content Include="_home\projectCostProc\projectInfo_Detail.html" />
@@ -228,7 +229,7 @@
     <Content Include="_Test\TEST\EM.mdb" />
     <Content Include="_Test\TEST\PSL.mdb" />
     <Content Include="_Test\TEST\test1.html" />
-    <Content Include="_home\manageMenu.html" />
+    <Content Include="_home\Menu.asp" />
     <Content Include="_home\projectBBS\bbsMain.html" />
     <Content Include="_Test\_Test\editProject.asp" />
     <Content Include="_home\projectBBS\jquery.complete.js" />

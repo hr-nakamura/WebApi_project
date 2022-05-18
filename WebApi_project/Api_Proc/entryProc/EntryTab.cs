@@ -108,6 +108,12 @@ namespace WebApi_project.hostProc
         };
 
         public SortedDictionary<string, EntryInfoJson> projectInfo = new SortedDictionary<string, EntryInfoJson>() {
+            { "projectInfo/memberData_json", new EntryInfoJson{
+                type = "json",
+                data = "http://localhost/Project/_home/session.asp",
+                option = "{}"
+                }
+            },
             { "projectInfo/memberInfo_json", new EntryInfoJson{
                 type = "method",
                 data = "hostProc/memberInfo_json",

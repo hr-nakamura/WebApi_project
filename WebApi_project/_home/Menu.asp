@@ -1,3 +1,16 @@
+<%@ Language=JScript %>
+<%
+//Response.Write("メンテナンスしています<BR>")
+//Response.Write("しばらくお待ちください")
+//Response.End
+    var mailAddr = "";
+
+    try {
+        mailAddr = Session("mailAddress");
+    } catch (e) {
+        mailAddr = e.message;
+    }
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,9 +25,10 @@
 
     <script src="_Content/_debug/jquery.my.debug.js" type="text/javascript"></script>
     <script type="text/javascript">
+		var mailAddress = "<%=mailAddr%>"
         var debug_mode = true;
         var mailPara = {
-            mailAddr: "nakamura@eandm.co.jp"
+            mailAddr: "test@eandm.co.jp"
         };
         var memberInfo = {};
         var hostInfo = {
@@ -26,16 +40,19 @@
         var viewXmlWindow;
         $(window).ready(function () {
             try {
-                docWin = new DocumentWindow();
                 var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
-                
-                mailPara.mailAddr = $.queryString("mail",mailPara.mailAddr);
-                alert(mailPara.mailAddr);
+
+                if ( mailAddress != "" ) {
+                    mailPara.mailAddr = mailAddress;
+                }
+                docWin = new DocumentWindow();
+
                 memberInfo = $.WebApi_json("projectInfo/memberInfo_json", mailPara);
-                alert("X")
 
                 hostInfo.Tag.forEach(function (elem) { memberInfo.Tag.push(elem); });
-                alert("Y")
+
+                $(".debug").JsonOut(memberInfo);
+
 
             } catch (e) {
                 $.alert("onready", e.message);
@@ -51,7 +68,7 @@
 
                 if (typeof (memberInfo) == "undefined" || memberInfo.mail == "") {
                     alert("認証されていません、ログインしてください");
-                    window.open('about:blank', '_self').close();
+                    //window.open('about:blank', '_self').close();
                 }
                 else {
                     $(".memberName").text("【" + memberInfo.name + "】");
@@ -254,13 +271,18 @@
     </style>
 </head>
 <body>
+
     <div class="main">
         <h4><STRONG>ＥＭＧ プロジェクト情報</STRONG></h4>
         <div>
-        <span class="memberName" />
+            <span class="memberName" />
         </div>
 
         <div class="menu" />
+    </div>
+    <div style="vertical-align:bottom;text-align:left;">
+        <textarea class="debug">
+        </textarea>
     </div>
 </body>
 </html>

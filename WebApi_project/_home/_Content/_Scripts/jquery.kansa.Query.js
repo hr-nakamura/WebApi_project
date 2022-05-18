@@ -362,6 +362,7 @@
                             }
                         }
                         Buff["Arg"] = nvc.ToEncodeString();
+                        //Buff["Arg"] = nvc.ToString();
                     }
 
                 var returnValue = "";
@@ -606,7 +607,11 @@
     };
 })(jQuery);
 
-;(function ($) {
+; (function ($) {
+    $.fn.JsonOut = function(JsonInfo){
+        var Buff = JSON.stringify(JsonInfo, null, 2);
+        $(this[0]).text(Buff);
+    },
 	$.Browser = {
 		get name() {
 			var ua = window.navigator.userAgent.toLowerCase();

@@ -1,13 +1,8 @@
 ﻿; (function ($) {
-    /*
-            var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
-            var x = window.location.pathname.split("/");
-            //hostName = "http://kansa.in.eandm.co.jp";
-            WebApi_url = hostName + "/WebApi/project/api/xml";
-            WebApi_url_json = hostName + "/WebApi/project/api/json";
-            WebApi_url_test = hostName + "/WebApi/project/api/test";
+        var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
+        var x = window.location.pathname.split("/");
+    //hostName = "http://kansa.in.eandm.co.jp";
 
-     */ 
     // 非同期実行
         $.asyncExecute = function (method, para) {
         // Promise を返す
@@ -18,10 +13,9 @@
             });
         },
         $.WebApi = function(item, json) {
-            //WebApi_url = hostName + "/WebApi/project/api/xml";
-            var WebApi_url_xml = "/WebApi/project/api/xml";
+            var WebApi_url_xml = hostName + "/WebApi/project/api/xml";
 
-            $.debug("_home/WebApi");
+            $.debug("_home/WebApi", WebApi_url_xml);
             var options = {
                 Item: item,
                 Json: (typeof(json) == "object" ? JSON.stringify(json) : json)
@@ -45,10 +39,8 @@
             return (returnValue);
         },
             $.WebApi_json = function (item, json) {
-            var WebApi_url_json = "/WebApi/project/api/json";
-            alert(WebApi_url_json);
-                //WebApi_url_json = hostName + "/WebApi/project/api/json";
-                $.debug("_home/WebApi_json");
+                var WebApi_url_json = hostName + "/WebApi/project/api/json";
+                $.debug("_home/WebApi_json", WebApi_url_json);
                 var options = {
                     Item: item,
                     Json: (typeof (json) == "object" ? JSON.stringify(json) : json)
@@ -72,8 +64,8 @@
                 return (returnValue);
             },
             $.WebApi_test = function (mode, className, methodName, json) {
-            var WebApi_url_test = "http://kansa.in.eandm.co.jp/WebApi/project/api/test";
-                $.debug("_home/WebApi_test");
+                var WebApi_url_test = hostName + "/WebApi/project/api/test";
+                $.debug("_home/WebApi_test", WebApi_url_test);
                 var options = {
                     mode: mode,
                     className: className,

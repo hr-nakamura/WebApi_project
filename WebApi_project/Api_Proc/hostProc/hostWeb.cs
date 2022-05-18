@@ -24,7 +24,7 @@ namespace WebApi_project.hostProc
         private const string SHIFT_JIS = "Shift_JIS";
 
         // リクエストタイムアウト秒数(630秒)
-        private const int REQUEST_TIME_OUT = 60 * 1000;
+        private const int REQUEST_TIME_OUT = 90 * 1000;
 
         // サーバー通信エラー
         private static int NetErrorCount = 0;
