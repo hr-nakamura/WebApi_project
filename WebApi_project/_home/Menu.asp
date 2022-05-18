@@ -3,7 +3,7 @@
 //Response.Write("メンテナンスしています<BR>")
 //Response.Write("しばらくお待ちください")
 //Response.End
-    var mailAddr = "";
+    var mailAddr = "XX";
 
     try {
         mailAddr = Session("mailAddress");
@@ -28,7 +28,7 @@
 		var mailAddress = "<%=mailAddr%>"
         var debug_mode = true;
         var mailPara = {
-            mailAddr: "test@eandm.co.jp"
+            mailAddr: "nakamura@eandm.co.jp"
         };
         var memberInfo = {};
         var hostInfo = {
@@ -42,7 +42,7 @@
             try {
                 var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
 
-                if ( mailAddress != "" ) {
+                if (mailAddress != "") {
                     mailPara.mailAddr = mailAddress;
                 }
                 docWin = new DocumentWindow();
@@ -51,6 +51,7 @@
 
                 hostInfo.Tag.forEach(function (elem) { memberInfo.Tag.push(elem); });
 
+                memberInfo["hostName"] = window.location.hostname;
                 $(".debug").JsonOut(memberInfo);
 
 
@@ -64,9 +65,9 @@
     <script type="text/javascript">
         window.onload = function () {
             try {
-                $.debug("onload Start");
+                $.debug("onload Start",mailAddress);
 
-                if (typeof (memberInfo) == "undefined" || memberInfo.mail == "") {
+                if (typeof (memberInfo) == "undefined" || memberInfo.name == null ) {
                     alert("認証されていません、ログインしてください");
                     //window.open('about:blank', '_self').close();
                 }
