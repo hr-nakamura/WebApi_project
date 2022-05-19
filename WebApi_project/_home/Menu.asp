@@ -52,7 +52,11 @@
                 hostInfo.Tag.forEach(function (elem) { memberInfo.Tag.push(elem); });
 
                 memberInfo["hostName"] = window.location.hostname;
-                $(".debug").JsonOut(memberInfo);
+
+				var url = hostName + "/Project/_home/MySession_json.asp";
+				var work = $.loadJSONDocX(url,"test=1234","session=mailAddress,userName");
+				work["hostName"] = hostName;
+                $(".debug").JsonOut(work);
 
 
             } catch (e) {
@@ -199,6 +203,61 @@
         });
     </script>
 
+    <script type="text/javascript">
+            $.loadJSONDocX = function (url) {
+                // ‡@@$.loadXMLDoc("/aaa/bbb/abc.asp?p1=1&p2=2&p3=3");
+                // ‡A@$.loadXMLDoc(url,"p1=1&p2=2&p3=3");
+                // ‡B@$.loadXMLDoc(url,para1,para2,para3,.......);
+                // ‡C@$.loadXMLDoc(url,{p1:"p1",p2:"p2",.....});
+
+                var Buff = {};
+                var xmlDoc = null;
+                try {
+                    var nvc = new $.NameValueCollection();
+
+                    // URL@‚Éƒpƒ‰ƒ[ƒ^‚ª‚Â‚¢‚Ä‚¢‚éê‡‡@
+                    var Work = arguments[0].split("?");
+                    Buff["Url"] = Work[0];
+                    if (Work.length > 1) {
+                        nvc.Add(Work[1]);
+                    }
+
+                    if (arguments.length == 2 && typeof (arguments[1]) == "object") {
+                        Buff["Arg"] = arguments[1];
+                    }
+                    //ƒpƒ‰ƒ[ƒ^‚ð•Ê‚ÉŽw’è‚µ‚½ê‡‡A‡B
+                    else if (arguments.length >= 2) {
+                        for (var i = 1; i < arguments.length; i++) {
+                            if (typeof (arguments[i]) == "string") {
+                                nvc.Add(arguments[i]);
+                            }
+                        }
+//                        Buff["Arg"] = nvc.ToEncodeString();
+                        Buff["Arg"] = nvc.ToString();
+                    }
+
+                var returnValue = "";
+                $.ajax({
+                    url: Buff["Url"],
+                    type: "GET",
+                    data: Buff["Arg"],
+                    contentType: "application/json",
+                    cache: false,
+                    async: false,
+                    timeout: 10
+                }).done(function (data, status, xhr) {
+                    returnValue = data;
+                }).fail(function (xhr, status, error) {
+                    throw new Error(xhr.statusText);
+                }).always(function () {
+                    //$.alert("always");
+                });
+            } catch (e) {
+                $.debug("loadJSON", e.message, url);
+            }
+            return (returnValue);
+        }
+    </script>
     <style type="text/css">
         body {
             overflow: hidden;
