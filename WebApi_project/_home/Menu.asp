@@ -53,8 +53,8 @@
 
                 memberInfo["hostName"] = window.location.hostname;
 
-				var url = hostName + "/Project/_home/MySession_json.asp";
-				var work = $.loadJSONDocX(url,"test=1234","session=mailAddress,userName");
+				var url = hostName + "/Project/_home/hostInfo_json.asp";
+				var work = $.loadJSONDocX(url);
 				work["hostName"] = hostName;
                 $(".debug").JsonOut(work);
 
