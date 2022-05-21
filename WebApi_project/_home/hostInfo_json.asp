@@ -4,12 +4,16 @@
 
 <%
 
-    var sessionName = Request.QueryString("session");
-
-    sessionName += "";
-    var Tab = sessionName.split(',');
-
     var Json = {};
+
+    var para = Request.QueryString("session");
+    para += "";
+    var Tab = para.split(',');
+    if (Tab[0] != "kansa") {
+        Response.End();
+    }
+   
+
     for (var i = 0; i < Tab.length; i++) {
         Json[Tab[i]] = Session(Tab[i]);
     }
