@@ -54,7 +54,7 @@
                 memberInfo["hostName"] = window.location.hostname;
 
 				var url = "./hostInfo_json.asp";
-				var url = hostName + "/Project/_home/hostInfo_json.asp";
+				var url = hostName + "/Project/auth/hostInfo_json.asp";
 				var work = $.loadJSONDocX(url, "session=kansa,mailAddress");
 				work["hostName"] = hostName;
                 $(".debug").JsonOut(work);
