@@ -79,17 +79,17 @@ namespace WebApi_project.hostProc
                 dataX = "http://localhost/test/_jsonData/売上予実_新規2_JSON.json",
                 }
             },
-            { "売上予測/グループ予実_部門_JSON", new EntryInfoXml{
+            { "売上予測/グループ予実_部門", new EntryInfoXml{
                 type = "json",
                 data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/グループ予実_部門_JSON.asp",
-                option ="{gName:'ACEL事業推進本部',yymm:202110,dispCnt:12,actualCnt:6,fix:70}",
+                option ="{gName:'ACEL事業推進本部',yymm:202110,dispCnt:12,fix:70}",
                 dataX = "http://localhost/Project/売上予測/json/グループ予実_部門_JSON.asp",
                 }
             },
-            { "売上予測/グループ予実_分類_JSON", new EntryInfoXml{
+            { "売上予測/グループ予実_分類", new EntryInfoXml{
                 type = "json",
                 data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/グループ予実_分類_JSON.asp",
-                option ="{mode:'新規名',kind:'新規顧客',yymm:202110,dispCnt:12,actualCnt:7,fix:70}",
+                option ="{mode:'新規名',kind:'新規顧客',yymm:202110,dispCnt:12,fix:70}",
                 dataX = "http://localhost/Project/売上予測/json/グループ予実_分類_JSON.asp",
                 }
             },

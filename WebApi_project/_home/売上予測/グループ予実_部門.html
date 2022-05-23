@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="shift_jis" />
+    <title></title>
+    <script src="../_Content/_Scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="../_Content/_Scripts/jquery.my.webapi.js" type="text/javascript"></script>
+    <script src="../_Content/_Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
+    <script src="../_Content/_Scripts/DocumentWindow.js" type="text/javascript"></script>
+    <script src="../_Content/_Scripts/json2.js" type="text/javascript"></script>
+    <script src="../_Content/_Scripts/showModalDialog.js" type="text/javascript"></script>
+    <script src="../_Content/_debug/jquery.my.debug.js" type="text/javascript"></script>
+
+    <!-- dialog -->
+    <script src="../_Content/_Scripts/jquery-1.13.0-ui.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="../_Content/_Scripts/jquery-1.13.0-ui.css" />
+
+    <link rel="stylesheet" type="text/css" href="account.css" />
+
+    <title></title>
+    <style>
+        .ui-button-text {
+            font-size: 1.8em;
+            background-color: red;
+        }
+    </style>
+    <script type="text/javascript">
+        function callBack(ret) {
+            alert(ret);
+        }
+        window.onload = function () {
+            try {
+                $.debug("onload Start", decodeURI(location.href));
+                test();
+
+            } catch (e) {
+                $.alert("onload", e.message);
+            }
+        }
+        window.onunload = function () {
+            $.debug("onunload", location.href);
+        }
+    </script>
+
+    <script type="text/javascript">
+        function test() {
+            var url = location.href;
+
+            var json = {
+                year: 2022,
+                //actual: 5
+            };
+            //$.debug.json("para", json);
+            var xmlDoc = $.WebApi("売上予測/グループ予実_部門", json);
+            var xslDoc = $.loadXMLDoc("xsl/グループ予実.xsl");
+
+            //$.alert($.xml2str(xmlDoc));
+            //$.alert($.xml2str(xslDoc));
+            var Buff = $.transformNode(xmlDoc, xslDoc);
+            $(".dataG").html(Buff);
+
+            //const matchedFileName = url.match(/^(?:[^:\/?#]+:)?(?:\/\/[^\/?#]*)?(?:([^?#]*\/)([^\/?#]*))?(\?[^#]*)?(?:#.*)?$/) ?? [];
+            //const [, dir, fileName, query] = matchedFileName.map(match => match ?? '');
+
+            //const matchedExt = fileName.match(/^(.+?)(\.[^.]+)?$/) ?? [];
+            //const [, name, ext] = matchedExt.map(match => match ?? '');
+        }
+    </script>
+</head>
+<body>
+    <table align="center">
+        <tbody>
+            <TR>
+                <TD align="center">
+                    <DIV align="center" class="dataG"></DIV>
+                </TD>
+            </TR>
+        </tbody>
+    </table>
+</body>
+</html >

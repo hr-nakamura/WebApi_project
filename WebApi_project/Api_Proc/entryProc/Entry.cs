@@ -294,8 +294,7 @@ namespace WebApi_project.hostProc
             foreach (var item in o_opt)
             {
                 if (item.Value.ToString() == "") continue;
-                //work.Add(item.Key + "=" + System.Web.HttpUtility.UrlEncode(item.Value.ToString(), Encode));
-                work.Add(item.Key + "=" + item.Value.ToString() );
+                work.Add(item.Key + "=" + System.Web.HttpUtility.UrlEncode(item.Value.ToString(), Encode));
             }
             string result = head + String.Join("&", work);
             return (result);
