@@ -86,7 +86,7 @@
             $("#wkCalender").datepicker();
         });
     </script>
-    <script>
+    <script type="text/javascript">
         $(function () {
             $(".prev")
                 .button({ text: false, label: '前の期', icons: { primary: 'ui-icon-triangle-1-w' } })
@@ -104,6 +104,25 @@
                     //$.debug($(this).text());
                 });
         });
+    </script>
+    <script type="text/javascript">
+        var newWin = null;
+        function winOpen(kind, yymm, dispCnt, actualCnt) {
+            var aspName = "グループ予実_分類.asp"
+            var mode = "新規名"
+            var para
+            para = "?mode=" + mode
+            para += "&kind=" + kind
+            para += "&yymm=" + yymm
+            para += "&dispCnt=" + dispCnt
+            para += "&actualCnt=" + actualCnt
+            para += "&fix=" + fixLevel
+            newWin = window.open(aspName + para, "uriageWin", "width=800,height=700,scrollbars,resizable,status=no");
+        }
+
+        function winClose() {
+            if (newWin != null && !newWin.closed) newWin.close();
+        }
     </script>
     <style>
         .XXX {

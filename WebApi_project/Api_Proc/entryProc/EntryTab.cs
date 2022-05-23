@@ -76,7 +76,21 @@ namespace WebApi_project.hostProc
                 type = "json",
                 data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_新規2_JSON.asp",
                 option ="{year:2022,fix:70,actual:6}",
-                dataX = "http://localhost/test/_jsonData/売上予実_新規2_JSON.json",
+                dataX = "http://localhost/Project/売上予測/json/売上予実_新規2_JSON.json",
+                }
+            },
+            { "売上予測/グループ予実_部門_JSON", new EntryInfoXml{
+                type = "json",
+                data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/グループ予実_部門_JSON.asp",
+                option ="{year:2022,fix:70,actual:6}",
+                dataX = "http://localhost/Project/売上予測/json/グループ予実_部門_JSON.asp",
+                }
+            },
+            { "売上予測/グループ予実_分類_JSON", new EntryInfoXml{
+                type = "json",
+                data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/グループ予実_分類_JSON.asp",
+                option ="{year:2022,fix:70,actual:6}",
+                dataX = "http://localhost/test/_jsonData/グループ予実_分類_JSON.asp",
                 }
             },
         };

@@ -67,6 +67,23 @@
         });
 
     </script>
+    <script type="text/javascript">
+        var newWin = null;
+        function winOpen(gName, yymm, dispCnt, actualCnt) {
+            var aspName = "グループ予実_部門.asp"
+            var para
+            para = "?gName=" + gName
+            para += "&yymm=" + yymm
+            para += "&dispCnt=" + dispCnt
+            para += "&actualCnt=" + actualCnt
+            para += "&fix=" + fixLevel
+            newWin = window.open(aspName + para, "uriageWin", "width=800,height=700,scrollbars,resizable,status=no");
+        }
+
+        function winClose() {
+            if (newWin != null && !newWin.closed) newWin.close();
+        }
+    </script>
 </head>
 <body>
     <table align="center">

@@ -3,13 +3,10 @@
 //Response.Write("ƒƒ“ƒeƒiƒ“ƒX‚µ‚Ä‚¢‚Ü‚·<BR>")
 //Response.Write("‚µ‚Î‚ç‚­‚¨‘Ò‚¿‚­‚¾‚³‚¢")
 //Response.End
-    var mailAddr = "XX";
-
-    try {
+    var mailAddr = "";
         mailAddr = Session("mailAddress");
-    } catch (e) {
-        mailAddr = e.message;
-    }
+    if( mailAddr + "" == "undefined" ) mailAddr = "nakamura@eandm.co.jp";
+
 %>
 <!DOCTYPE html>
 <html>
@@ -53,11 +50,7 @@
 
                 memberInfo["hostName"] = window.location.hostname;
 
-				var url = "./hostInfo_json.asp";
-				var url = hostName + "/Project/auth/hostInfo_json.asp";
-				var work = $.loadJSONDocX(url, "session=kansa,mailAddress");
-				work["hostName"] = hostName;
-                $(".debug").JsonOut(work);
+                $(".debug").JsonOut(memberInfo);
 
 
             } catch (e) {

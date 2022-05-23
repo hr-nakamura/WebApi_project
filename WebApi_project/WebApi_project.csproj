@@ -123,7 +123,7 @@
     <Content Include="Models\memo.txt" />
     <Content Include="Scripts\json2.js" />
     <Content Include="Scripts\json2.min.js" />
-    <Content Include="_home\hostInfo_json.asp" />
+    <Content Include="_home\_Content\hostInfo_json.asp" />
     <Content Include="_home\projectCostProc\projectInfo_Join.html" />
     <Content Include="_home\projectCostProc\projectInfoList.html" />
     <Content Include="_home\projectCostProc\projectInfo_Detail.html" />

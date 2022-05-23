@@ -34,7 +34,7 @@ namespace WebApi_project.hostProc
         public string DB_comment = "123";
         public string LogPath = "";
         public string IPAddress = "";
-        public bool debug_mode = false;
+        public bool debug_mode = true;
 
         HttpContext context = HttpContext.Current;
         public hostProc()
@@ -134,7 +134,7 @@ namespace WebApi_project.hostProc
                     IPAddress = ip.ToString();
                 }
             }
-            bool stat = IPAddress.IndexOf("10.") == 0 ? false : true;
+            bool stat = IPAddress.IndexOf("10.10.10") == 0 ? false : true;
             return (stat);
         }
         void IP_Chech(string IPAddr)

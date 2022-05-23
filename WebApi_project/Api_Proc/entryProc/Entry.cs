@@ -234,6 +234,12 @@ namespace WebApi_project.hostProc
                 hProc.JsonArrayConvert(ref oJson, "月", "m");
                 xmlDoc = hProc.JsonToXml(oJson);
             }
+            else
+            {
+                MyDebug.Write("読込できませんでした", url);
+                xmlDoc.LoadXml("<root/>");
+                xmlDoc.DocumentElement.InnerText = "読込できませんでした" + url;
+            }
             return (xmlDoc);
         }
         private XmlDocument LoadText(EntryInfoXml EntryInfo)
