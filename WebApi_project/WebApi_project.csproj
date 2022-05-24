@@ -221,8 +221,6 @@
     <Content Include="__menu\Scripts\my.mnmenu.css" />
     <Content Include="__menu\Scripts\superfish.css" />
     <Content Include="__menu\Scripts\superfish.js" />
-    <Content Include="_home\売上予測\xsl\グループ予実_部門.json" />
-    <Content Include="_home\売上予測\xsl\グループ予実_分類.json" />
     <None Include="_Test\Dialog\data\project.json" />
     <None Include="_Test\Dialog\data\group.json" />
     <Content Include="_Test\Dialog\showModalDialog.js" />
