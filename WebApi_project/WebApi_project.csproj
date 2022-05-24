@@ -155,7 +155,6 @@
     <Content Include="_home\売上予測\xsl\グループ予実.xsl">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="_home\売上予測\xsl\グループ予実_部門.gif" />
     <Content Include="_home\売上予測\xsl\売上目標.xsl">
       <SubType>Designer</SubType>
     </Content>
