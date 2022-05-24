@@ -39,19 +39,7 @@
       <table class="table">
         <tbody>
           <xsl:for-each select="*">
-            <xsl:if test="position() !=1">
-              <tr>
-                <td colspan="19" style="border:none;">
-                  <xsl:value-of select="'@'"/>
-                </td>
-              </tr>
-              <tr>
-                <td colspan="19" style="border:none;">
-                  <xsl:value-of select="'@'"/>
-                </td>
-              </tr>
-            </xsl:if>
-            <xsl:call-template name="•ª—Þ">
+             <xsl:call-template name="•ª—Þ">
               <xsl:with-param name="•ª—Þ" select="*"/>
             </xsl:call-template>
           </xsl:for-each>
@@ -63,6 +51,30 @@
 
 
 	<xsl:template name="•ª—Þ">
+    <xsl:for-each select="*">
+      <xsl:variable name="Cnt" select="count(*)"/>
+      <xsl:for-each select="*">
+        <tr>
+          <xsl:if test="position() = 1">
+            <td>
+              <xsl:attribute name="rowspan">
+                <xsl:value-of select="$Cnt"/>
+              </xsl:attribute>
+              <xsl:value-of select="../@_name_"/>
+            </td>
+          </xsl:if>
+          <td>
+            <xsl:value-of select="'['"/>
+            <xsl:value-of select="pCode"/>
+            <xsl:value-of select="']'"/>
+          </td>
+          </tr>
+        </xsl:for-each>
+    </xsl:for-each>
+  </xsl:template>
+
+
+  <xsl:template name="•ª—Þ1">
     <xsl:param name="•ª—Þ"/>
     <xsl:param name="form" select="'#,###'"/>
     <tr class="sub_line">
