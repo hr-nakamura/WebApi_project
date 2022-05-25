@@ -20,13 +20,6 @@
                 $.debug("onload Start", decodeURI(location.href));
                 test();
 
-                Object.defineProperty(window, "inputValue", {
-                    set(v) {
-                        $(winObj.document.body).html(v);
-                        $.debug("v");
-                    }
-                });
-
             } catch (e) {
                 $.alert("onload", e.message);
             }
@@ -57,7 +50,6 @@
     <script type="text/javascript">
         $(function () {
             $(document).on("click", ".onKind", function (event) {
-//                alert(this.getAttribute("kind"));
                 var gName = this.getAttribute("kind");
                 var json = { gName: gName, yymm: 202110, dispCnt: 12, fix: 70 };
 
@@ -66,20 +58,13 @@
 
                 var Buff = $.transformNode(xmlDoc, xslDoc);
 
-
-//                "about:blank"
                 if (!(winObj && !winObj.closed)) {
-                    winObj = window.open("test.html", "uriageWin", "width=800,height=700,scrollbars,resizable,status=no");
-//                    winObj.onload = () => window.inputValue = Buff;
+                    winObj = window.open("target.html", "uriageWin", "width=800,height=700,scrollbars,resizable,status=no");
                     winObj.onload = () => winObj.postMessage(Buff, window.location.origin);
                 }
                 else {
                     winObj.postMessage(Buff, window.location.origin);
-                    //window.inputValue = Buff;
                 }
-
-
-
             });
 
             $(document).on("mouseenter mouseleave", ".onKind", function (event) {
@@ -91,32 +76,13 @@
                     $(this).css("cursor", "");
                 }
             });
-            $(".test").on("click", function (event) {
-                window.inputValue = "ABCDEF";
-            });
         });
 
     </script>
     <script type="text/javascript">
-        var newWin = null;
-        function winOpen(gName, yymm, dispCnt, actualCnt) {
-            var aspName = "グループ予実_部門.asp"
-            var para
-            para = "?gName=" + gName
-            para += "&yymm=" + yymm
-            para += "&dispCnt=" + dispCnt
-            para += "&actualCnt=" + actualCnt
-            para += "&fix=" + fixLevel
-            newWin = window.open(aspName + para, "uriageWin", "width=800,height=700,scrollbars,resizable,status=no");
-        }
-
-        function winClose() {
-            if (newWin != null && !newWin.closed) newWin.close();
-        }
     </script>
 </head>
 <body>
-    <button class="test">ABCD</button>
     <table align="center">
         <tbody>
             <TR>
