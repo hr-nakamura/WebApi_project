@@ -26,6 +26,7 @@
         }
         window.onunload = function () {
             $.debug("onunload", location.href);
+            if (winObj != null && !winObj.closed) winObj.close();
         }
     </script>
 
@@ -57,7 +58,10 @@
                 var xslDoc = $.loadXMLDoc("xsl/グループ予実.xsl");
 
                 var Buff = $.transformNode(xmlDoc, xslDoc);
-
+//                "about:blank"
+                if ((winObj && !winObj.closed) ) {
+                    winObj.close();
+                }
                 winObj = window.open("test.html", "uriageWin", "width=800,height=700,scrollbars,resizable,status=no");
                 winObj.onload = () => winObj.postMessage(Buff, window.location.origin);
 
@@ -72,11 +76,6 @@
                     $(this).css("cursor", "");
                 }
             });
-            $(winObj).on('load', function (event) {
-                alert("X");
-                $(winObj.document.body).html("XXXXXXXX");
-            });
-
         });
 
     </script>
