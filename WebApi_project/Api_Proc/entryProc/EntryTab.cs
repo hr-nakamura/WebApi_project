@@ -141,8 +141,8 @@ namespace WebApi_project.hostProc
                 }
             },
         };
-
-        public SortedDictionary<string, EntryInfoXml> sample_部門収支 = new SortedDictionary<string, EntryInfoXml>() {
+//=========================================================================================
+        public SortedDictionary<string, EntryInfoXml> sample_XML_部門収支 = new SortedDictionary<string, EntryInfoXml>() {
             { "_sample/部門収支/EMG収支計画", new EntryInfoXml{
                 type = "xml",
                 data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp",
@@ -173,15 +173,7 @@ namespace WebApi_project.hostProc
             },
         };
 
-        public SortedDictionary<string, EntryInfoJson> sample_projectInfo = new SortedDictionary<string, EntryInfoJson>() {
-            { "_sample/売上予実_新規2_JSON", new EntryInfoJson{
-                type = "json",
-                data ="http://localhost/Project/売上予測/json/売上予実_新規2_JSON.asp",
-                option ="{year:2022,actual:6}"
-                }
-            },
-        };
-        public SortedDictionary<string, EntryInfoXml> sample_要員情報 = new SortedDictionary<string, EntryInfoXml>(){
+        public SortedDictionary<string, EntryInfoXml> sample_XML_要員情報 = new SortedDictionary<string, EntryInfoXml>(){
             { "_sample/要員情報/要員一覧_method", new EntryInfoXml{
                 type = "method",
                 data ="要員情報/要員一覧",
@@ -189,5 +181,30 @@ namespace WebApi_project.hostProc
                 }
             },
         };
+        public SortedDictionary<string, EntryInfoJson> sample_JSON_売上予測 = new SortedDictionary<string, EntryInfoJson>() {
+            { "_sample/売上予実_新規2_JSON", new EntryInfoJson{
+                type = "json",
+                data ="http://localhost/Project/売上予測/json/売上予実_新規2_JSON.asp",
+                option ="{year:2022,actual:6}"
+                }
+            },
+        };
+        public SortedDictionary<string, EntryInfoJson> sample_JSON = new SortedDictionary<string, EntryInfoJson>() {
+            { "売上予測/グループ予実_部門", new EntryInfoJson{
+                type = "json",
+                data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/グループ予実_部門_JSON.asp",
+                option ="{gName:'ACEL事業推進本部',yymm:202110,dispCnt:12,fix:70}",
+                dataX = "http://localhost/test/_jsonData/グループ予実_部門_JSON.json",
+                }
+            },
+            { "売上予測/グループ予実_分類", new EntryInfoJson{
+                type = "json",
+                data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/グループ予実_分類_JSON.asp",
+                option ="{mode:'新規名',kind:'新規顧客',yymm:202110,dispCnt:12,fix:70}",
+                dataX = "http://localhost/test/_jsonData/グループ予実_分類_JSON.json",
+                }
+            },
+        };
+
     }
 }

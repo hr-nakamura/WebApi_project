@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript">
+        window.onload = function () {
+
+            let w3 = window;
+            let w4 = window.open("http://localhost/test/test4.html")
+        var a = 1;
+            Object.defineProperty(w3, "inputValue", {
+                set(v){
+                    console.log("w3.inputValue was set!:"+v)
+                    w4.document.getElementById("input4").value=v
+                }
+            });
+
+            Object.defineProperty(w4, "inputValue", {
+                set(v){
+                    console.log("w4.inputValue was set!:" + v)
+                    w3.document.getElementById("input3").value = v
+                }
+            });
+
+            function func(e){
+                w3.inputValue = e.target.value
+            }
+        }
+    </script>
+</head>
+<body>
+    input3 :
+    <input type="text" id="input3" oninput="func(event)">
+</body>
+</html>

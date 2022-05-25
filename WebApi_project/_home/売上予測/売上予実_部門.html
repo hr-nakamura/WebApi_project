@@ -14,6 +14,7 @@
 
     <title></title>
     <script type="text/javascript">
+        var winObj;
         window.onload = function () {
             try {
                 $.debug("onload Start", decodeURI(location.href));
@@ -43,18 +44,25 @@
             var Buff = $.transformNode(xmlDoc, xslDoc);
             $(".dataG").html(Buff);
 
-            //const matchedFileName = url.match(/^(?:[^:\/?#]+:)?(?:\/\/[^\/?#]*)?(?:([^?#]*\/)([^\/?#]*))?(\?[^#]*)?(?:#.*)?$/) ?? [];
-            //const [, dir, fileName, query] = matchedFileName.map(match => match ?? '');
-
-            //const matchedExt = fileName.match(/^(.+?)(\.[^.]+)?$/) ?? [];
-            //const [, name, ext] = matchedExt.map(match => match ?? '');
         }
     </script>
     <script type="text/javascript">
         $(function () {
             $(document).on("click", ".onKind", function (event) {
-                alert(this.getAttribute("kind"));
+//                alert(this.getAttribute("kind"));
+                var gName = this.getAttribute("kind");
+                var json = { gName: gName, yymm: 202110, dispCnt: 12, fix: 70 };
+
+                var xmlDoc = $.WebApi("売上予測/グループ予実_部門", json);
+                var xslDoc = $.loadXMLDoc("xsl/グループ予実.xsl");
+
+                var Buff = $.transformNode(xmlDoc, xslDoc);
+
+                winObj = window.open("test.html", "uriageWin", "width=800,height=700,scrollbars,resizable,status=no");
+                winObj.onload = () => winObj.postMessage(Buff, window.location.origin);
+
             });
+
             $(document).on("mouseenter mouseleave", ".onKind", function (event) {
                 if (event.type == "mouseenter") {
                     $(this).css("background-color", "pink");
@@ -64,6 +72,11 @@
                     $(this).css("cursor", "");
                 }
             });
+            $(winObj).on('load', function (event) {
+                alert("X");
+                $(winObj.document.body).html("XXXXXXXX");
+            });
+
         });
 
     </script>

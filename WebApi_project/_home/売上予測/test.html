@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="shift_jis" />
+    <script src="../_Content/_Scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="account.css" />
+
+    <title></title>
+    <script type="text/javascript">
+        window.addEventListener('message', (event) => {
+            var work = "";
+            work += event.origin + "][";
+            work += window.location.origin + "][";
+            work += event.data.id;
+
+            //        alert(work);
+
+            if (event.origin === window.location.origin) {
+                $("body").html(event.data);
+                this.id = message.id;
+                this.description = message.description;
+            }
+        });
+
+    </script>
+</head>
+<body>
+    ABCDE
+</body>
+</html>
