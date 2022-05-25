@@ -20,6 +20,13 @@
                 $.debug("onload Start", decodeURI(location.href));
                 test();
 
+                Object.defineProperty(window, "inputValue", {
+                    set(v) {
+                        $(winObj.document.body).html(v);
+                        $.debug("v");
+                    }
+                });
+
             } catch (e) {
                 $.alert("onload", e.message);
             }
@@ -58,12 +65,20 @@
                 var xslDoc = $.loadXMLDoc("xsl/グループ予実.xsl");
 
                 var Buff = $.transformNode(xmlDoc, xslDoc);
+
+
 //                "about:blank"
-                if ((winObj && !winObj.closed) ) {
-                    winObj.close();
+                if (!(winObj && !winObj.closed)) {
+                    winObj = window.open("test.html", "uriageWin", "width=800,height=700,scrollbars,resizable,status=no");
+//                    winObj.onload = () => window.inputValue = Buff;
+                    winObj.onload = () => winObj.postMessage(Buff, window.location.origin);
                 }
-                winObj = window.open("test.html", "uriageWin", "width=800,height=700,scrollbars,resizable,status=no");
-                winObj.onload = () => winObj.postMessage(Buff, window.location.origin);
+                else {
+                    winObj.postMessage(Buff, window.location.origin);
+                    //window.inputValue = Buff;
+                }
+
+
 
             });
 
@@ -75,6 +90,9 @@
                     $(this).css("background-color", "");
                     $(this).css("cursor", "");
                 }
+            });
+            $(".test").on("click", function (event) {
+                window.inputValue = "ABCDEF";
             });
         });
 
@@ -98,6 +116,7 @@
     </script>
 </head>
 <body>
+    <button class="test">ABCD</button>
     <table align="center">
         <tbody>
             <TR>
