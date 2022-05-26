@@ -10,15 +10,28 @@
     <script src="../_Content/_Scripts/json2.js" type="text/javascript"></script>
     <script src="../_Content/_debug/jquery.my.debug.js" type="text/javascript"></script>
 
-    <link rel="stylesheet" type="text/css" href="account.css" />
+    <!-- dialog -->
+    <script src="../_Content/_Scripts/jquery-1.13.0-ui.js" type="text/javascript"></script>
+    <link href="../_Content/_Scripts/jquery-1.13.0-ui.css" rel="stylesheet" type="text/css" />
+    <link href="account.css" rel="stylesheet" type="text/css" />
 
     <title></title>
     <script type="text/javascript">
         var winObj;
+        var main_XML_name = "売上予測/売上予実_部門";
+        var main_XSL_name = "xsl/売上予実.xsl";
+        var sub_XML_name = "売上予測/グループ予実_部門";
+        var sub_XSL_name = "xsl/グループ予実.xsl";
+        var year = 2022;
+        var fix = 70;
+        var actual = 7;
+    </script>
+
+    <script type="text/javascript">
         window.onload = function () {
             try {
                 $.debug("onload Start", decodeURI(location.href));
-                test();
+                mainDisp();
 
             } catch (e) {
                 $.alert("onload", e.message);
@@ -31,32 +44,45 @@
     </script>
 
     <script type="text/javascript">
-        function test() {
-            var url = location.href;
+        function mainDisp() {
+
+            var work_main = "%year年度　売上実績 + 予測".replace("%year", year);
+
+            var s_yyyy = year - 1;
+            var e_yyyy = year;
+            var work_sub = "%s_yyyy年10月～%e_yyyy年09月".replace("%s_yyyy", s_yyyy).replace("%e_yyyy", e_yyyy);
+
+            $(".mainTitle").html(work_main);
+            $(".subTitle").html(work_sub);
+            $(".level[value='"+fix+"']").prop('checked', true);
 
             var json = {
-                year: 2022,
-                //actual: 5
+                year: year,
+                fix:fix,
+                actual: actual
             };
-            //$.debug.json("para", json);
-            xmlDoc = $.WebApi("売上予測/売上予実_部門", json);
-            var xslDoc = $.loadXMLDoc("xsl/売上予実.xsl");
-
-            var Buff = $.transformNode(xmlDoc, xslDoc);
+            $.debug.json("para", json);
+            var Buff = makeHTML(main_XML_name, main_XSL_name, json);
             $(".dataG").html(Buff);
 
+            //$(".mainTitle").css("color", "");
+        }
+        function makeHTML(xml_name, xsl_name, json) {
+            var xmlDoc = $.WebApi(xml_name, json);
+            var xslDoc = $.loadXMLDoc(xsl_name);
+
+            var Buff = $.transformNode(xmlDoc, xslDoc);
+            return (Buff);
         }
     </script>
     <script type="text/javascript">
         $(function () {
             $(document).on("click", ".onKind", function (event) {
                 var gName = this.getAttribute("kind");
-                var json = { gName: gName, yymm: 202110, dispCnt: 12, fix: 70 };
+                var yymm = ((year-1) * 100) + 10;
+                var json = { gName: gName, yymm: yymm, dispCnt: 12, fix: fix };
 
-                var xmlDoc = $.WebApi("売上予測/グループ予実_部門", json);
-                var xslDoc = $.loadXMLDoc("xsl/グループ予実.xsl");
-
-                var Buff = $.transformNode(xmlDoc, xslDoc);
+                var Buff = makeHTML(sub_XML_name, sub_XSL_name, json);
 
                 if (!(winObj && !winObj.closed)) {
                     winObj = window.open("target.html", "uriageWin", "width=800,height=700,scrollbars,resizable,status=no");
@@ -81,9 +107,72 @@
 
     </script>
     <script type="text/javascript">
+        $(function () {
+            $(".prev")
+                .button({ text: false, label: '前の期', icons: { primary: 'ui-icon-triangle-1-w' } })
+            $(".next")
+                .button({ text: false, label: '次の期', icons: { secondary: 'ui-icon-triangle-1-e' } })
+
+            $(".prev, .next")
+                .button()
+                .click(function (event) {
+                    event.preventDefault();
+                    $(".mainTitle").css("color","tomato");
+
+                    if ($(this).hasClass('next')) {
+                        year += 1;
+                        mainDisp();
+                        winObj.close();
+                    }
+                    else if ($(this).hasClass('prev')) {
+                        year -= 1;
+                        mainDisp();
+                        winObj.close();
+                    }
+                });
+            //$(".wkRadio")
+            //    .buttonset();
+
+        });
     </script>
+    <script type="text/javascript">
+        $(function () {
+            $(".level").on("click", function (event) {
+                var x = $('input[name="level"]:checked').val();
+                fix = this.value;
+                mainDisp();
+            });
+        });
+    </script>
+    <style>
+        .title {
+            padding: 4px 4px;
+            border: none;
+        }
+
+        .prev, .next, .title {
+            background-color: lavender;
+            padding: 4px 4px;
+        }
+        .wkRadio {
+            background-color: lavender;
+            padding: 4px 4px;
+        }
+    </style>
 </head>
 <body>
+    <div><label class="mainTitle">2021年度　売上実績+予測</label></div>
+    <div class="wkRadio">
+        <input class="level" name="level" type="radio" value="70"><label>Ａ</label>
+        <input class="level" name="level" type="radio" value="50"><label>Ｂ</label>
+        <input class="level" name="level" type="radio" value="30"><label>Ｃ</label>
+        <input class="level" name="level" type="radio" value="10"><label>Ｄ</label>
+    </div>
+    <div>
+        <button class="prev"></button>
+        <label class="subTitle">2021年10月-2022年9月</label>
+        <button class="next"></button>
+    </div>
     <table align="center">
         <tbody>
             <TR>
