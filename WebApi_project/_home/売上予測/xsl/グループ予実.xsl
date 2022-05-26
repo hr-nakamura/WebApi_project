@@ -54,10 +54,11 @@
 			  <xsl:value-of select="'ÅzÇÃîÑè„é¿ê—ÅEó\ë™'"/>
 		  </caption>
 		  <caption style="text-align:left">
+			  <xsl:value-of select="'Åi'"/>
 			  <xsl:value-of select="$s_year"/>
 			  <xsl:value-of select="'îN10åéÅ`'"/>
 			  <xsl:value-of select="$e_year"/>
-			  <xsl:value-of select="'îN09åé'"/>
+			  <xsl:value-of select="'îN09åéÅj'"/>
 		  </caption>
 		  <thead>
           <th>ãqêÊñº</th>
