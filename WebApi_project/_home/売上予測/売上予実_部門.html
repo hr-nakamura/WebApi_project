@@ -51,10 +51,11 @@
             var s_yyyy = year - 1;
             var e_yyyy = year;
             var work_sub = "%s_yyyy年10月～%e_yyyy年09月".replace("%s_yyyy", s_yyyy).replace("%e_yyyy", e_yyyy);
+            var work_level = "[value='%level']".replace("%level", fix);
 
             $(".mainTitle").html(work_main);
             $(".subTitle").html(work_sub);
-            $(".level[value='"+fix+"']").prop('checked', true);
+            $(".level" + work_level).prop('checked', true);
 
             var json = {
                 year: year,
@@ -65,7 +66,7 @@
             var Buff = makeHTML(main_XML_name, main_XSL_name, json);
             $(".dataG").html(Buff);
 
-            //$(".mainTitle").css("color", "");
+            $(".mainTitle").css("color", "");
         }
         function makeHTML(xml_name, xsl_name, json) {
             var xmlDoc = $.WebApi(xml_name, json);
@@ -130,16 +131,12 @@
                         winObj.close();
                     }
                 });
-            //$(".wkRadio")
-            //    .buttonset();
-
         });
     </script>
     <script type="text/javascript">
         $(function () {
             $(".level").on("click", function (event) {
-                var x = $('input[name="level"]:checked').val();
-                fix = this.value;
+                fix = $(this, "[checked]").val();
                 mainDisp();
             });
         });
@@ -154,25 +151,32 @@
             background-color: lavender;
             padding: 4px 4px;
         }
-        .wkRadio {
-            background-color: lavender;
-            padding: 4px 4px;
+        .memo{
+            text-align:center;
         }
     </style>
 </head>
 <body>
-    <div><label class="mainTitle">2021年度　売上実績+予測</label></div>
-    <div class="wkRadio">
-        <input class="level" name="level" type="radio" value="70"><label>Ａ</label>
-        <input class="level" name="level" type="radio" value="50"><label>Ｂ</label>
-        <input class="level" name="level" type="radio" value="30"><label>Ｃ</label>
-        <input class="level" name="level" type="radio" value="10"><label>Ｄ</label>
-    </div>
-    <div>
-        <button class="prev"></button>
-        <label class="subTitle">2021年10月-2022年9月</label>
-        <button class="next"></button>
-    </div>
+    <table>
+        <tr>
+            <td class="memo"><label class="mainTitle">2021年度　売上実績+予測</label></td>
+        </tr>
+        <tr>
+            <td class="memo">
+                <input class="level" name="level" type="radio" value="70"><label>Ａ</label>
+                <input class="level" name="level" type="radio" value="50"><label>Ｂ</label>
+                <input class="level" name="level" type="radio" value="30"><label>Ｃ</label>
+                <input class="level" name="level" type="radio" value="10"><label>Ｄ</label>
+            </td>
+        </tr>
+        <tr>
+            <td class="memo">
+                <button class="prev"></button>
+                <label class="subTitle">2021年10月-2022年9月</label>
+                <button class="next"></button>
+            </td>
+        </tr>
+    </table>
     <table align="center">
         <tbody>
             <TR>
