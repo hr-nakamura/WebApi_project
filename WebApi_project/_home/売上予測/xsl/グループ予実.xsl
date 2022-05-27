@@ -87,7 +87,8 @@
               <xsl:with-param name="•ª—Þ" select="*"/>
             </xsl:call-template>
           </xsl:for-each>
-
+        </tbody>
+		<tfoot>
 			<tr>
 				<td colspan="4">
 					<xsl:value-of select="name(*/*/*/—\‘ª)"/>
@@ -121,7 +122,7 @@
             </xsl:call-template>
             <td colspan="4">aa</td>
           </tr>
-        </tbody>
+		</tfoot>
       </table>
     </xsl:if>
 
