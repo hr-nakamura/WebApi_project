@@ -118,18 +118,14 @@
                 .button()
                 .click(function (event) {
                     event.preventDefault();
-                    $(".mainTitle").css("color","tomato");
-
                     if ($(this).hasClass('next')) {
                         year += 1;
-                        mainDisp();
-                        winObj.close();
                     }
                     else if ($(this).hasClass('prev')) {
                         year -= 1;
-                        mainDisp();
-                        winObj.close();
                     }
+                    mainDisp();
+                    winObj.close();
                 });
         });
     </script>
@@ -138,6 +134,7 @@
             $(".level").on("click", function (event) {
                 fix = $(this, "[checked]").val();
                 mainDisp();
+                winObj.close();
             });
         });
     </script>
@@ -159,7 +156,7 @@
 <body>
     <table>
         <tr>
-            <td class="memo"><label class="mainTitle">2021年度　売上実績+予測</label></td>
+            <td class="memo"><label class="mainTitle">売上実績+予測</label></td>
         </tr>
         <tr>
             <td class="memo">
@@ -172,7 +169,7 @@
         <tr>
             <td class="memo">
                 <button class="prev"></button>
-                <label class="subTitle">2021年10月-2022年9月</label>
+                <label class="subTitle"></label>
                 <button class="next"></button>
             </td>
         </tr>
