@@ -3,16 +3,15 @@
     <menu name="監査ページ(NEW)" memo="" mode="url" url="/WebApi/project/_home/Menu.asp"/>
 
     <menu name="_home" memo="" >
-      <menu name="売上予測" memo="" >
-		  <menu name="売上予実_新規_1" memo="" mode="url" url="/WebApi/project/_home/売上予測/売上予実_新規_1.html"/>
-		  <menu name="売上目標_部門" memo="" mode="url" url="/WebApi/project/_home/売上予測/売上目標_部門.html"/>
-		<menu name="売上予実_部門" memo="" mode="url" url="/WebApi/project/_home/売上予測/売上予実_部門.html"/>
-		<menu name="売上予実_新規" memo="" mode="url" url="/WebApi/project/_home/売上予測/売上予実_新規.html"/>
-        <menu name="売上予実_新規2" memo="" mode="url" url="/WebApi/project/_home/売上予測/売上予実_新規2.html"/>
-		  <menu name="売上予実_分類" memo="" mode="url" url="/WebApi/project/_home/売上予測/売上予実_分類.html"/>
-		  <menu name="グループ予実_部門" memo="" mode="url" url="/WebApi/project/_home/売上予測/グループ予実_部門.html"/>
-		  <menu name="グループ予実_分類" memo="" mode="url" url="/WebApi/project/_home/売上予測/グループ予実_分類.html"/>
-	  </menu>
+        <menu name="売上予測" memo="" >
+	        <menu name="売上目標_部門" memo="" mode="url" url="/WebApi/project/_home/売上予測/売上目標_部門.html"/>
+	        <menu name="売上予実_部門" memo="" mode="url" url="/WebApi/project/_home/売上予測/売上予実_部門.html"/>
+            <menu name="売上予実_新規" memo="" mode="url" url="/WebApi/project/_home/売上予測/売上予実_新規.html"/>
+            <menu name="売上予実_新規2" memo="" mode="url" url="/WebApi/project/_home/売上予測/売上予実_新規2.html"/>
+	        <menu name="売上予実_分類" memo="" mode="url" url="/WebApi/project/_home/売上予測/売上予実_分類.html"/>
+	        <menu name="グループ予実_部門" memo="" mode="url" url="/WebApi/project/_home/売上予測/グループ予実_部門.html"/>
+	        <menu name="グループ予実_分類" memo="" mode="url" url="/WebApi/project/_home/売上予測/グループ予実_分類.html"/>
+	    </menu>
     </menu>
 
   
