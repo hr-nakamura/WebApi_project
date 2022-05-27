@@ -47,7 +47,7 @@
     </xsl:if>
 
     <xsl:if test="count(*) > 0">
-      <table class="table">
+      <table>
 		  <caption style="text-align:left">
 			  <xsl:value-of select="'【'" />
 			  <xsl:value-of select="$kind"/>
@@ -60,7 +60,10 @@
 			  <xsl:value-of select="$e_year"/>
 			  <xsl:value-of select="'年09月）'"/>
 		  </caption>
-		  <thead>
+      </table>
+      <table class="table">
+        <thead>
+        <tr class="sub_line">
           <th>客先名</th>
           <th>プロジェクト名</th>
           <th>プロジェクト<br/>コード</th>
@@ -77,6 +80,7 @@
           </th>
           <th>プロジェクト名</th>
           <th>客先名</th>
+        </tr>
         </thead>
         <tbody>
           <xsl:for-each select="*">

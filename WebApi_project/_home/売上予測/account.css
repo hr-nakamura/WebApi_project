@@ -1,3 +1,8 @@
+.table {
+	FONT-SIZE: x-small;
+	BACKGROUND-COLOR: snow;
+	border-collapse: collapse;
+}
 .table .onKind {
 	vertical-align: bottom;
 	text-align: left;
@@ -41,13 +46,14 @@
 	text-align: center;
 	background-color: lavender;
 }
-.table TH {
-	PADDING-RIGHT: 4px;
-	PADDING-LEFT: 4px;
-	PADDING-BOTTOM: 4px;
-	PADDING-TOP: 4px;
-	border: 1px gray solid;
-}
+	.table TH {
+		PADDING-RIGHT: 4px;
+		PADDING-LEFT: 4px;
+		PADDING-BOTTOM: 4px;
+		PADDING-TOP: 4px;
+		border: 1px gray solid;
+		WHITE-SPACE: nowrap;
+	}
 .table TD {
 	FONT-FAMILY: "Arial";
 	PADDING-RIGHT: 2px;
@@ -57,13 +63,15 @@
 	WHITE-SPACE: nowrap;
 	border: 1px gray solid;
 }
-.table {
-	FONT-SIZE: small;
-	BACKGROUND-COLOR: snow;
-	border-collapse:collapse;
-	}
+
 .month {
 	WHITE-SPACE: nowrap;
 	BACKGROUND-COLOR: lavender;
 	TEXT-ALIGN: center;
 	}
+caption {
+	text-align: center;
+	FONT-FAMILY: "Arial";
+	PADDING: 2px;
+	WHITE-SPACE: nowrap;
+}
