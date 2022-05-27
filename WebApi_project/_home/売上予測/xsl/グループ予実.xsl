@@ -39,8 +39,7 @@
 	</xsl:template>
 
 	<xsl:template match="root/ƒf[ƒ^">
-    
-    
+
     <xsl:if test="count(*) = 0">
               <xsl:value-of select="'ƒf[ƒ^‚Í‚ ‚è‚Ü‚¹‚ñ'"/>
 
@@ -91,28 +90,38 @@
 
 			<tr>
 				<td colspan="4">
-					<xsl:value-of select="name(*/*/*/ŽÀÑ)"/>
+					<xsl:value-of select="name(*/*/*/—\‘ª)"/>
 				</td>
 				<xsl:call-template name="item_Loop1">
 					<xsl:with-param name="mCnt" select="12"/>
-					<xsl:with-param name="data" select="*" />
+					<xsl:with-param name="data" select="*/*/*/—\‘ª" />
 					<xsl:with-param name="mode" select="'—\‘ª'" />
 				</xsl:call-template>
 				<td colspan="4">
 					<xsl:value-of select="name(*/*/*/ŽÀÑ)"/>
 				</td>			</tr>
-			<tr>
-				<td colspan="4">
-					<xsl:value-of select="name(*/*/*/ŽÀÑ)"/>
-				</td>
-				<xsl:call-template name="item_Loop2">
-					<xsl:with-param name="mCnt" select="12"/>
-					<xsl:with-param name="data" select="*" />
-					<xsl:with-param name="mode" select="'ŽÀÑ'" />
-				</xsl:call-template>
-				<td colspan="4">aa</td>
-			</tr>
-		</tbody>
+          <tr>
+            <td colspan="4">
+              <xsl:value-of select="name(*/*/*/ŽÀÑ)"/>
+            </td>
+            <xsl:call-template name="item_Loop1">
+              <xsl:with-param name="mCnt" select="12"/>
+              <xsl:with-param name="data" select="*/*/*/ŽÀÑ" />
+              <xsl:with-param name="mode" select="'ŽÀÑ'" />
+            </xsl:call-template>
+            <td colspan="4">aa</td>
+          </tr>
+          <tr>
+            <td colspan="4">
+              <xsl:value-of select="name(*/*/*/ŽÀÑ)"/>
+            </td>
+            <xsl:call-template name="item_Loop2">
+              <xsl:with-param name="mCnt" select="12"/>
+              <xsl:with-param name="data" select="*/*/*" />
+            </xsl:call-template>
+            <td colspan="4">aa</td>
+          </tr>
+        </tbody>
       </table>
     </xsl:if>
 
@@ -159,7 +168,7 @@
                 </td>
                 <xsl:call-template name="item_Loop">
                   <xsl:with-param name="mCnt" select="12"/>
-					<xsl:with-param name="data" select="—\‘ª" />
+					<xsl:with-param name="data" select="../—\‘ª" />
 					<xsl:with-param name="mode" select="'—\‘ª'" />
 				</xsl:call-template>
               </xsl:if>
@@ -171,7 +180,7 @@
                 </td>
                 <xsl:call-template name="item_Loop">
                   <xsl:with-param name="mCnt" select="12"/>
-                  <xsl:with-param name="data" select="ŽÀÑ" />
+                  <xsl:with-param name="data" select="../ŽÀÑ" />
 					<xsl:with-param name="mode" select="'ŽÀÑ'" />
 				</xsl:call-template>
               </xsl:if>
@@ -217,17 +226,17 @@
 	</xsl:template>
 
 	<xsl:template name="item_Loop1">
-		<xsl:param name="data" />
-		<xsl:param name="mCnt" />
+    <xsl:param name="data" />
+    <xsl:param name="mCnt" />
 		<xsl:param name="mode" />
 		<xsl:param name="begin" select="0"/>
 		<xsl:param name="max" select="$begin+$mCnt"/>
 		<xsl:param name="cnt" select="$begin"/>
 		<xsl:param name="form" select="'#,###'" />
 
-		<xsl:if test="$cnt &lt; $max">
-			<xsl:variable name="temp" select="sum(*/*/*/—\‘ª/ŒŽ[@m=$cnt])"/>
-			<td class="num">
+    <xsl:if test="$cnt &lt; $max">
+      <xsl:variable name="temp" select="sum($data/ŒŽ[@m=$cnt])"/>
+      <td class="num">
 				<xsl:if test="$mode ='—\‘ª'">
 					<xsl:attribute name="class">
 						<xsl:value-of select="'yosoku'"/>
@@ -250,20 +259,16 @@
 	<xsl:template name="item_Loop2">
 		<xsl:param name="data" />
 		<xsl:param name="mCnt" />
-		<xsl:param name="mode" />
 		<xsl:param name="begin" select="0"/>
 		<xsl:param name="max" select="$begin+$mCnt"/>
 		<xsl:param name="cnt" select="$begin"/>
-		<xsl:param name="form" select="'#,###'" />
+		<xsl:param name="form" select="'#,###.000'" />
 
 		<xsl:if test="$cnt &lt; $max">
-			<xsl:variable name="temp" select="sum(*/*/*/ŽÀÑ/ŒŽ[@m=$cnt])"/>
-			<td class="num">
-				<xsl:if test="$mode ='—\‘ª'">
-					<xsl:attribute name="class">
-						<xsl:value-of select="'yosoku'"/>
-					</xsl:attribute>
-				</xsl:if>
+      <xsl:variable name="temp_—\‘ª" select="sum($data/—\‘ª/ŒŽ[@m=$cnt])"/>
+      <xsl:variable name="temp_ŽÀÑ" select="sum($data/ŽÀÑ/ŒŽ[@m=$cnt])"/>
+      <xsl:variable name="temp" select="$temp_ŽÀÑ div $temp_—\‘ª"/>
+      <td class="num">
 				<xsl:attribute name="nowrap"/>
 				<xsl:if test="$temp &gt; 0">
 					<xsl:value-of select="format-number( $temp ,$form)"/>
@@ -271,7 +276,6 @@
 			</td>
 			<xsl:call-template name="item_Loop2">
 				<xsl:with-param name="data" select="$data" />
-				<xsl:with-param name="mode" select="$mode" />
 				<xsl:with-param name="max" select="$max" />
 				<xsl:with-param name="cnt" select="$cnt + 1" />
 			</xsl:call-template>
@@ -288,7 +292,7 @@
     <xsl:param name="cnt" select="$begin"/>
     <xsl:param name="form" select="'#,###'" />
     <xsl:if test="$cnt &lt; $max">
-      <xsl:variable name="temp" select="sum(ŒŽ[@m=$cnt])"/>
+      <xsl:variable name="temp" select="sum($data/ŒŽ[@m=$cnt])"/>
       <td class="num">
 		  <xsl:if test="$mode ='—\‘ª'">
     		  <xsl:attribute name="class">
