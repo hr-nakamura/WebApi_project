@@ -79,9 +79,9 @@
     <script type="text/javascript">
         $(function () {
             $(document).on("click", ".onKind", function (event) {
-                var gName = this.getAttribute("kind");
+                var kind = this.getAttribute("kind");
                 var yymm = ((year-1) * 100) + 10;
-                var json = { gName: gName, yymm: yymm, dispCnt: 12, fix: fix };
+                var json = { kind: kind, yymm: yymm, dispCnt: 12, fix: fix };
 
                 var Buff = makeHTML(sub_XML_name, sub_XSL_name, json);
 

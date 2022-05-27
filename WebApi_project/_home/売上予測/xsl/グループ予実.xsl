@@ -9,8 +9,8 @@
   IE     [–{‘Ìxsl]‚©‚ç‚ÌêŠ     sub_cmn.xsl
   -->
 
-	<xsl:variable name="gName">
-		<xsl:value-of select="/root/î•ñ/@gName"/>
+	<xsl:variable name="kind">
+		<xsl:value-of select="/root/î•ñ/@kind"/>
 	</xsl:variable>
 	<xsl:variable name="yymm">
 		<xsl:value-of select="/root/î•ñ/@yymm"/>
@@ -50,7 +50,7 @@
       <table class="table">
 		  <caption style="text-align:left">
 			  <xsl:value-of select="'y'" />
-			  <xsl:value-of select="$gName"/>
+			  <xsl:value-of select="$kind"/>
 			  <xsl:value-of select="'z‚Ì”„ãŽÀÑE—\‘ª'"/>
 		  </caption>
 		  <caption style="text-align:left">

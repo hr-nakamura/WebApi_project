@@ -200,7 +200,14 @@ namespace WebApi_project.hostProc
             { "売上予測/グループ予実_分類", new EntryInfoJson{
                 type = "json",
                 data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/グループ予実_分類_JSON.asp",
-                option ="{mode:'新規名',kind:'新規顧客',yymm:202110,dispCnt:12,fix:70}",
+                option ="{mode:'新規名',kind:'指定なし',yymm:202110,dispCnt:12,fix:70}",
+                dataX = "http://localhost/test/_jsonData/グループ予実_分類_JSON.json",
+                }
+            },
+            { "売上予測/グループ予実_分類2", new EntryInfoJson{
+                type = "json",
+                data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/グループ予実_分類_JSON.asp",
+                option = "{mode:'分類名',kind:'指定なし',yymm:202110,dispCnt:12,actualCnt:7,fix:70}",
                 dataX = "http://localhost/test/_jsonData/グループ予実_分類_JSON.json",
                 }
             },
