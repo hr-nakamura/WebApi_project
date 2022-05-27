@@ -262,12 +262,12 @@
 		<xsl:param name="begin" select="0"/>
 		<xsl:param name="max" select="$begin+$mCnt"/>
 		<xsl:param name="cnt" select="$begin"/>
-		<xsl:param name="form" select="'#,###.000'" />
+		<xsl:param name="form" select="'#,###.0000'" />
 
 		<xsl:if test="$cnt &lt; $max">
       <xsl:variable name="temp_—\‘ª" select="sum($data/—\‘ª/ŒŽ[@m=$cnt])"/>
       <xsl:variable name="temp_ŽÀÑ" select="sum($data/ŽÀÑ/ŒŽ[@m=$cnt])"/>
-      <xsl:variable name="temp" select="$temp_ŽÀÑ div $temp_—\‘ª"/>
+      <xsl:variable name="temp" select="($temp_ŽÀÑ div $temp_—\‘ª)"/>
       <td class="num">
 				<xsl:attribute name="nowrap"/>
 				<xsl:if test="$temp &gt; 0">
