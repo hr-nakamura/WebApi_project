@@ -90,38 +90,37 @@
         </tbody>
 		<tfoot>
 			<tr>
-				<td colspan="4">
-					<xsl:value-of select="name(*/*/*/ó\ë™)"/>
+				<td rowspan="3" colspan="2">
+					<xsl:value-of select="'çáÅ@åv'"/>
 				</td>
+				<td colspan="2">ó\ë™</td>
 				<xsl:call-template name="item_Loop1">
 					<xsl:with-param name="mCnt" select="12"/>
 					<xsl:with-param name="data" select="*/*/*/ó\ë™" />
 					<xsl:with-param name="mode" select="'ó\ë™'" />
 				</xsl:call-template>
-				<td colspan="4">
-					<xsl:value-of select="name(*/*/*/é¿ê—)"/>
-				</td>			</tr>
-          <tr>
-            <td colspan="4">
-              <xsl:value-of select="name(*/*/*/é¿ê—)"/>
-            </td>
+				<td colspan="2">ó\ë™</td>
+				<td rowspan="3" colspan="2">
+					<xsl:value-of select="'çáÅ@åv'"/>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">é¿ê—</td>
             <xsl:call-template name="item_Loop1">
               <xsl:with-param name="mCnt" select="12"/>
               <xsl:with-param name="data" select="*/*/*/é¿ê—" />
               <xsl:with-param name="mode" select="'é¿ê—'" />
             </xsl:call-template>
-            <td colspan="4">aa</td>
-          </tr>
+				<td colspan="2">é¿ê—</td>
+			</tr>
           <tr>
-            <td colspan="4">
-              <xsl:value-of select="name(*/*/*/é¿ê—)"/>
-            </td>
-            <xsl:call-template name="item_Loop2">
+			  <td colspan="2">é¿åªó¶</td>
+			  <xsl:call-template name="item_Loop2">
               <xsl:with-param name="mCnt" select="12"/>
               <xsl:with-param name="data" select="*/*/*" />
             </xsl:call-template>
-            <td colspan="4">aa</td>
-          </tr>
+			  <td colspan="2">é¿åªó¶</td>
+		  </tr>
 		</tfoot>
       </table>
     </xsl:if>
@@ -263,7 +262,7 @@
 		<xsl:param name="begin" select="0"/>
 		<xsl:param name="max" select="$begin+$mCnt"/>
 		<xsl:param name="cnt" select="$begin"/>
-		<xsl:param name="form" select="'#00.00%'" />
+		<xsl:param name="form" select="'#00%'" />
 
 		<xsl:if test="$cnt &lt; $max">
       <xsl:variable name="temp_ó\ë™" select="sum($data/ó\ë™/åé[@m=$cnt])"/>

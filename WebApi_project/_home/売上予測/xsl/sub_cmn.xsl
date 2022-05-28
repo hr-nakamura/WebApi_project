@@ -70,7 +70,7 @@
 	<xsl:param name="max" select="$begin+$mCnt"/>
 	<xsl:param name="cnt" select="$begin"/>
 	<xsl:if test="$cnt &lt; $max">
-		<th class="m">
+	<th class="m">
       <xsl:attribute name="nowrap"/>
       <small>
         <xsl:if test="($cnt mod 12)>0">
