@@ -263,7 +263,7 @@
 		<xsl:param name="begin" select="0"/>
 		<xsl:param name="max" select="$begin+$mCnt"/>
 		<xsl:param name="cnt" select="$begin"/>
-		<xsl:param name="form" select="'#,###.0000'" />
+		<xsl:param name="form" select="'#00.00%'" />
 
 		<xsl:if test="$cnt &lt; $max">
       <xsl:variable name="temp_—\‘ª" select="sum($data/—\‘ª/ŒŽ[@m=$cnt])"/>
