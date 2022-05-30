@@ -3,6 +3,11 @@
 	BACKGROUND-COLOR: snow;
 	border-collapse: collapse;
 }
+	.table th.m {
+		WHITE-SPACE: nowrap;
+		width: 5%;
+		background-color: pink;
+	}
 
 .table .onKind {
 	vertical-align: bottom;
@@ -27,6 +32,14 @@
 		PADDING-LEFT: 8px;
 		PADDING-BOTTOM: 2px;
 		PADDING-TOP: 2px;
+		WHITE-SPACE: nowrap;
+		border: 1px gray solid;
+		BACKGROUND-COLOR: snow;
+	}
+	.table .level {
+		text-align: center;
+		FONT-FAMILY: "Arial";
+		PADDING: 2px;
 		WHITE-SPACE: nowrap;
 		border: 1px gray solid;
 		BACKGROUND-COLOR: snow;
@@ -68,7 +81,7 @@
 
 .month {
 	WHITE-SPACE: nowrap;
-	*BACKGROUND-COLOR: lavender;
+	BACKGROUND-COLOR: lavender;
 	TEXT-ALIGN: center;
 	}
 caption {

@@ -608,35 +608,42 @@
 })(jQuery);
 
 ; (function ($) {
-    $.fn.JsonOut = function(JsonInfo){
+    $.fn.JsonOut = function (JsonInfo) {
         var Buff = JSON.stringify(JsonInfo, null, 2);
         $(this[0]).text(Buff);
     },
-	$.Browser = {
-		get name() {
-			var ua = window.navigator.userAgent.toLowerCase();
-			var browser = "";
-			if(ua.indexOf("opera") > -1) {
-                browser = "opera";
+        $.Browser = {
+            get name() {
+                var ua = window.navigator.userAgent.toLowerCase();
+                var browser = "";
+                if (ua.indexOf("opera") > -1) {
+                    browser = "opera";
+                }
+                else if (ua.indexOf("edge") > -1) {
+                    browser = "edge";
+                }
+                else if (ua.indexOf("chrome") > -1) {
+                    browser = "chrome";
+                }
+                else if (ua.indexOf("safari") > -1) {
+                    browser = "safari";
+                }
+                else if (ua.indexOf("msie") > -1) {
+                    browser = "msie";
+                }
+                else if (ua.indexOf("trident") > -1) {
+                    browser = "msie";
+                }
+                return (browser);
             }
-			else if (ua.indexOf("edge") > -1) {
-				browser = "edge";
-			}
-			else if (ua.indexOf("chrome") > -1) {
-				browser = "chrome";
-			}
-			else if (ua.indexOf("safari") > -1) {
-				browser = "safari";
-			}
-			else if (ua.indexOf("msie") > -1) {
-				browser = "msie";
-			}
-			else if (ua.indexOf("trident") > -1) {
-				browser = "msie";
-			}
-            return (browser);
-		}
-    },
+        },
+        $.TimeStamp = {
+        get get() {
+                var now = new Date().valueOf();
+                var TimeStamp = String(now);
+                return (TimeStamp);
+                }
+            },
         $.window = {
             get top() {
                 var o = window.top;

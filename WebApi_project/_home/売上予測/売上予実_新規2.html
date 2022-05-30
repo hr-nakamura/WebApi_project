@@ -86,7 +86,8 @@
                 var Buff = makeHTML(sub_XML_name, sub_XSL_name, json);
 
                 if (!(winObj && !winObj.closed)) {
-                    winObj = window.open("target.html", "uriageWin", "width=800,height=700,scrollbars,resizable,status=no");
+                    var url = "target.html" + "?timestamp=" + $.TimeStamp.get;
+                    winObj = window.open(url, "uriageWin", "width=800,height=700,scrollbars,resizable,status=no");
                     winObj.onload = () => winObj.postMessage(Buff, window.location.origin);
                 }
                 else {

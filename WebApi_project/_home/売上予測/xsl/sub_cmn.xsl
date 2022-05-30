@@ -108,7 +108,7 @@
     <xsl:param name="max" select="$begin+$mCnt"/>
     <xsl:param name="cnt" select="$begin"/>
     <xsl:if test="$cnt &lt; $max">
-      <td>
+		<td class="num">
         <xsl:attribute name="nowrap"/>
         <xsl:value-of select="$data"/>
       </td>

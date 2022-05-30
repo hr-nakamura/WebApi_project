@@ -1,19 +1,21 @@
-<?xml version="1.0" encoding="Shift_JIS" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
-  <xsl:import href="xsl/sub_cmn.xsl"/>
-  <xsl:template match="nbsp">
+
+	<xsl:import href="xsl/sub_cmn.xsl"/>
+
+	<xsl:template match="nbsp">
     <xsl:text disable-output-escaping="yes">&amp;nbsp;</xsl:text>
   </xsl:template>
   <!--
-  chrome [loadXMLDoc]Ç©ÇÁÇÃèÍèä  xsl/sub_cmn.xsl
-  IE     [ñ{ëÃxsl]Ç©ÇÁÇÃèÍèä     sub_cmn.xsl
+  chrome [loadXMLDoc]„Åã„Çâ„ÅÆÂ†¥ÊâÄ  xsl/sub_cmn.xsl
+  IE     [Êú¨‰Ωìxsl]„Åã„Çâ„ÅÆÂ†¥ÊâÄ     sub_cmn.xsl
   -->
 
 	<xsl:variable name="kind">
-		<xsl:value-of select="/root/èÓïÒ/@kind"/>
+		<xsl:value-of select="/root/ÊÉÖÂ†±/@kind"/>
 	</xsl:variable>
 	<xsl:variable name="yymm">
-		<xsl:value-of select="/root/èÓïÒ/@yymm"/>
+		<xsl:value-of select="/root/ÊÉÖÂ†±/@yymm"/>
 	</xsl:variable>
 	<xsl:variable name="s_year">
 		<xsl:value-of select="floor($yymm div 100)"/>
@@ -22,13 +24,13 @@
 		<xsl:value-of select="floor($yymm div 100) + 1"/>
 	</xsl:variable>
 	<xsl:variable name="actual">
-    <xsl:value-of select="/root/èÓïÒ/@actual"/>
+    <xsl:value-of select="/root/ÊÉÖÂ†±/@actual"/>
   </xsl:variable>
 
   <xsl:template match="/">
     <html>
 			<head>
-				<title>é˚éxèÛãµ</title>
+				<title>ÂèéÊîØÁä∂Ê≥Å</title>
 			</head>
 
 			<body background="bg.gif">
@@ -38,88 +40,88 @@
 
 	</xsl:template>
 
-	<xsl:template match="root/ÉfÅ[É^">
+	<xsl:template match="root/„Éá„Éº„Çø">
 
     <xsl:if test="count(*) = 0">
-              <xsl:value-of select="'ÉfÅ[É^ÇÕÇ†ÇËÇ‹ÇπÇÒ'"/>
+              <xsl:value-of select="'„Éá„Éº„Çø„ÅØ„ÅÇ„Çä„Åæ„Åõ„Çì'"/>
 
     </xsl:if>
 
     <xsl:if test="count(*) > 0">
       <table>
 		  <caption style="text-align:left">
-			  <xsl:value-of select="'Åy'" />
+			  <xsl:value-of select="'„Äê'" />
 			  <xsl:value-of select="$kind"/>
-			  <xsl:value-of select="'ÅzÇÃîÑè„é¿ê—ÅEó\ë™'"/>
+			  <xsl:value-of select="'„Äë„ÅÆÂ£≤‰∏äÂÆüÁ∏æ„Éª‰∫àÊ∏¨'"/>
 		  </caption>
 		  <caption style="text-align:left">
-			  <xsl:value-of select="'Åi'"/>
+			  <xsl:value-of select="'Ôºà'"/>
 			  <xsl:value-of select="$s_year"/>
-			  <xsl:value-of select="'îN10åéÅ`'"/>
+			  <xsl:value-of select="'Âπ¥10ÊúàÔΩû'"/>
 			  <xsl:value-of select="$e_year"/>
-			  <xsl:value-of select="'îN09åéÅj'"/>
+			  <xsl:value-of select="'Âπ¥09ÊúàÔºâ'"/>
 		  </caption>
       </table>
       <table class="table">
         <thead>
         <tr class="sub_line">
-          <th>ãqêÊñº</th>
-          <th>ÉvÉçÉWÉFÉNÉgñº</th>
-          <th>ÉvÉçÉWÉFÉNÉg<br/>ÉRÅ[Éh</th>
-          <th>ó\ë™<br/>ämìx</th>
+          <th>ÂÆ¢ÂÖàÂêç</th>
+          <th>„Éó„É≠„Ç∏„Çß„ÇØ„ÉàÂêç</th>
+          <th>„Éó„É≠„Ç∏„Çß„ÇØ„Éà<br/>„Ç≥„Éº„Éâ</th>
+          <th>‰∫àÊ∏¨<br/>Á¢∫Â∫¶</th>
           <xsl:call-template name="month_Loop">
             <xsl:with-param name="mCnt" select="12"/>
             <xsl:with-param name="begin" select="10"/>
           </xsl:call-template>
           <th>
-            ó\ë™<br/>ämìx
+            ‰∫àÊ∏¨<br/>Á¢∫Â∫¶
           </th>
           <th>
-            ÉvÉçÉWÉFÉNÉg<br/>ÉRÅ[Éh
+            „Éó„É≠„Ç∏„Çß„ÇØ„Éà<br/>„Ç≥„Éº„Éâ
           </th>
-          <th>ÉvÉçÉWÉFÉNÉgñº</th>
-          <th>ãqêÊñº</th>
+          <th>„Éó„É≠„Ç∏„Çß„ÇØ„ÉàÂêç</th>
+          <th>ÂÆ¢ÂÖàÂêç</th>
         </tr>
         </thead>
         <tbody>
           <xsl:for-each select="*">
-             <xsl:call-template name="ï™óﬁ">
-              <xsl:with-param name="ï™óﬁ" select="*"/>
+             <xsl:call-template name="ÂàÜÈ°û">
+              <xsl:with-param name="ÂàÜÈ°û" select="*"/>
             </xsl:call-template>
           </xsl:for-each>
         </tbody>
 		<tfoot>
-			<tr>
+			<tr class="sub_line">
 				<td rowspan="3" colspan="2">
-					<xsl:value-of select="'çáÅ@åv'"/>
+					<xsl:value-of select="'Âêà„ÄÄË®à'"/>
 				</td>
-				<td colspan="2">ó\ë™</td>
+				<td colspan="2">‰∫àÊ∏¨</td>
 				<xsl:call-template name="item_Loop1">
 					<xsl:with-param name="mCnt" select="12"/>
-					<xsl:with-param name="data" select="*/*/*/ó\ë™" />
-					<xsl:with-param name="mode" select="'ó\ë™'" />
+					<xsl:with-param name="data" select="*/*/*/‰∫àÊ∏¨" />
+					<xsl:with-param name="mode" select="'‰∫àÊ∏¨'" />
 				</xsl:call-template>
-				<td colspan="2">ó\ë™</td>
+				<td colspan="2">‰∫àÊ∏¨</td>
 				<td rowspan="3" colspan="2">
-					<xsl:value-of select="'çáÅ@åv'"/>
+					<xsl:value-of select="'Âêà„ÄÄË®à'"/>
 				</td>
 			</tr>
-			<tr>
-				<td colspan="2">é¿ê—</td>
+			<tr class="sub_line">
+				<td colspan="2">ÂÆüÁ∏æ</td>
             <xsl:call-template name="item_Loop1">
               <xsl:with-param name="mCnt" select="12"/>
-              <xsl:with-param name="data" select="*/*/*/é¿ê—" />
-              <xsl:with-param name="mode" select="'é¿ê—'" />
+              <xsl:with-param name="data" select="*/*/*/ÂÆüÁ∏æ" />
+              <xsl:with-param name="mode" select="'ÂÆüÁ∏æ'" />
             </xsl:call-template>
-				<td colspan="2">é¿ê—</td>
+				<td colspan="2">ÂÆüÁ∏æ</td>
 			</tr>
-          <tr>
-			  <td colspan="2">é¿åªó¶</td>
+			<tr class="sub_line">
+			  <td colspan="2">ÂÆüÁèæÁéá</td>
 			  <xsl:call-template name="item_Loop2">
               <xsl:with-param name="mCnt" select="12"/>
               <xsl:with-param name="data" select="*/*/*" />
             </xsl:call-template>
-			  <td colspan="2">é¿åªó¶</td>
+			  <td colspan="2">ÂÆüÁèæÁéá</td>
 		  </tr>
 		</tfoot>
       </table>
@@ -128,15 +130,15 @@
   </xsl:template>
 
 
-	<xsl:template name="ï™óﬁ">
+	<xsl:template name="ÂàÜÈ°û">
     <xsl:for-each select="*">
       <xsl:variable name="Cnt" select="count(*)"/>
       <xsl:variable name="Pos1" select="position()"/>
       <xsl:for-each select="*">
         <xsl:variable name="Pos2" select="position()"/>
-        <xsl:for-each select="*[name()='ó\ë™' or name() = 'é¿ê—']">
+        <xsl:for-each select="*[name()='‰∫àÊ∏¨' or name() = 'ÂÆüÁ∏æ']">
           <xsl:variable name="Pos3" select="position()"/>
-          <tr>
+			<tr>
               <xsl:if test="$Pos2=1 and $Pos3=1">
               <td>
                 <xsl:attribute name="rowspan">
@@ -163,13 +165,13 @@
                 </td>
               </xsl:if>
               <xsl:if test="$Pos3=1">
-                <td>
+				  <td class="level">
 					<xsl:value-of select="../level"/>
                 </td>
                 <xsl:call-template name="item_Loop">
                   <xsl:with-param name="mCnt" select="12"/>
-					<xsl:with-param name="data" select="../ó\ë™" />
-					<xsl:with-param name="mode" select="'ó\ë™'" />
+					<xsl:with-param name="data" select="../‰∫àÊ∏¨" />
+					<xsl:with-param name="mode" select="'‰∫àÊ∏¨'" />
 				</xsl:call-template>
               </xsl:if>
               <xsl:if test="$Pos3=2">
@@ -180,13 +182,13 @@
                 </td>
                 <xsl:call-template name="item_Loop">
                   <xsl:with-param name="mCnt" select="12"/>
-                  <xsl:with-param name="data" select="../é¿ê—" />
-					<xsl:with-param name="mode" select="'é¿ê—'" />
+                  <xsl:with-param name="data" select="../ÂÆüÁ∏æ" />
+					<xsl:with-param name="mode" select="'ÂÆüÁ∏æ'" />
 				</xsl:call-template>
               </xsl:if>
 
             <xsl:if test="$Pos3=1">
-              <td>
+              <td class="level">
                 <xsl:value-of select="../level"/>
               </td>
             </xsl:if>
@@ -235,18 +237,22 @@
 		<xsl:param name="form" select="'#,###'" />
 
     <xsl:if test="$cnt &lt; $max">
-      <xsl:variable name="temp" select="sum($data/åé[@m=$cnt])"/>
+      <xsl:variable name="temp" select="sum($data/Êúà[@m=$cnt])"/>
       <td class="num">
-				<xsl:if test="$mode ='ó\ë™'">
+				<xsl:if test="$mode ='‰∫àÊ∏¨'">
 					<xsl:attribute name="class">
 						<xsl:value-of select="'yosoku'"/>
 					</xsl:attribute>
 				</xsl:if>
 				<xsl:attribute name="nowrap"/>
-				<xsl:if test="$temp &gt; 0">
-					<xsl:value-of select="format-number( $temp ,$form)"/>
-				</xsl:if>
-			</td>
+		  <xsl:if test="$temp &gt; 0">
+			  <xsl:value-of select="format-number( $temp ,$form)"/>
+		  </xsl:if>
+		  <xsl:if test="$temp = 0">
+			  <xsl:text>&#160;</xsl:text>
+		  </xsl:if>
+
+	  </td>
 			<xsl:call-template name="item_Loop1">
 				<xsl:with-param name="data" select="$data" />
 				<xsl:with-param name="mode" select="$mode" />
@@ -265,9 +271,9 @@
 		<xsl:param name="form" select="'#00%'" />
 
 		<xsl:if test="$cnt &lt; $max">
-      <xsl:variable name="temp_ó\ë™" select="sum($data/ó\ë™/åé[@m=$cnt])"/>
-      <xsl:variable name="temp_é¿ê—" select="sum($data/é¿ê—/åé[@m=$cnt])"/>
-      <xsl:variable name="temp" select="($temp_é¿ê— div $temp_ó\ë™)"/>
+      <xsl:variable name="temp_‰∫àÊ∏¨" select="sum($data/‰∫àÊ∏¨/Êúà[@m=$cnt])"/>
+      <xsl:variable name="temp_ÂÆüÁ∏æ" select="sum($data/ÂÆüÁ∏æ/Êúà[@m=$cnt])"/>
+      <xsl:variable name="temp" select="($temp_ÂÆüÁ∏æ div $temp_‰∫àÊ∏¨)"/>
       <td class="num">
 				<xsl:attribute name="nowrap"/>
 				<xsl:if test="$temp &gt; 0">
@@ -292,9 +298,9 @@
     <xsl:param name="cnt" select="$begin"/>
     <xsl:param name="form" select="'#,###'" />
     <xsl:if test="$cnt &lt; $max">
-      <xsl:variable name="temp" select="sum($data/åé[@m=$cnt])"/>
-      <td class="num">
-		  <xsl:if test="$mode ='ó\ë™'">
+      <xsl:variable name="temp" select="sum($data/Êúà[@m=$cnt])"/>
+      <td class="num" style="font-color:red;">
+		  <xsl:if test="$mode ='‰∫àÊ∏¨'">
     		  <xsl:attribute name="class">
 	    		  <xsl:value-of select="'yosoku'"/>
 		      </xsl:attribute>
@@ -303,6 +309,9 @@
 		  <xsl:if test="$temp &gt; 0">
           <xsl:value-of select="format-number( $temp ,$form)"/>
         </xsl:if>
+		  <xsl:if test="$temp = 0">
+			  <xsl:text>&#160;</xsl:text>
+		  </xsl:if>
       </td>
       <xsl:call-template name="item_Loop">
     	  <xsl:with-param name="data" select="$data" />

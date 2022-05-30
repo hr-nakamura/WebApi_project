@@ -72,7 +72,7 @@
         <xsl:with-param name="mCnt" select="12"/>
       </xsl:call-template>
     </tr>
-		<xsl:call-template name="全体X">
+		<xsl:call-template name="全体集計">
 			<xsl:with-param name="全体" select="*"/>
 		</xsl:call-template>
 		
@@ -84,7 +84,7 @@
 
   </xsl:template>
 
-	<xsl:template name="全体X">
+	<xsl:template name="全体集計">
 		<xsl:param name="全体"/>
 		<tr>
 			<tr class="sub_line">
@@ -311,7 +311,12 @@
 			<xsl:variable name="temp" select="sum($data/月[@m=$cnt])"/>
 			<td class="num">
 				<xsl:attribute name="nowrap"/>
+				<xsl:if test="$temp &gt; 0">
 				<xsl:value-of select="format-number( $temp div 1000 ,$form)"/>
+				</xsl:if>
+				<xsl:if test="$temp = 0">
+					<xsl:text>&#160;</xsl:text>
+				</xsl:if>
 			</td>
 			<xsl:call-template name="item_Loop">
 				<xsl:with-param name="data" select="$data" />
@@ -391,10 +396,10 @@
 				<xsl:attribute name="nowrap"/>
 				<xsl:choose>
 					<xsl:when test="string($temp) = 'NaN'">
-						<xsl:value-of select="'='"/>
+						<xsl:text>-&#160;</xsl:text>
 					</xsl:when>
 					<xsl:when test="string($temp) = 'Infinity'">
-						<xsl:value-of select="'-'"/>
+						<xsl:text>-&#160;</xsl:text>
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:value-of select="format-number( $temp * 100 ,'##0.0')"/>

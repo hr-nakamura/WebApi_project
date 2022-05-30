@@ -25,13 +25,25 @@
         }
     </style>
     <script type="text/javascript">
+        var winObj;
+        var main_XML_name = "売上予測/売上目標_部門";
+        var main_XSL_name = "xsl/売上目標.xsl";
+        var sub_XML_name = "売上予測/グループ予実_部門";
+        var sub_XSL_name = "xsl/グループ予実.xsl";
+        var year = 2022;
+        var fix = 70;
+        var actual = 7;
+        var TransferMode = 1;
+    </script>
+    <script type="text/javascript">
         function callBack(ret) {
             alert(ret);
         }
         window.onload = function () {
             try {
                 $.debug("onload Start", decodeURI(location.href));
-                test();
+
+                mainDisp();
 
             } catch (e) {
                 $.alert("onload", e.message);
@@ -43,16 +55,30 @@
     </script>
 
     <script type="text/javascript">
-        function test() {
+        function mainDisp() {
             var url = location.href;
+            var work_main = "%year年度　売上目標　達成状況".replace("%year", year);
+
+            var s_yyyy = year - 1;
+            var e_yyyy = year;
+            var work_sub = "%s_yyyy年10月～%e_yyyy年09月".replace("%s_yyyy", s_yyyy).replace("%e_yyyy", e_yyyy);
+            var work_level = "[value='%level']".replace("%level", fix);
+            var work_transfer = "[value='%trans']".replace("%trans", TransferMode);
+
+            $(".mainTitle").html(work_main);
+            $(".subTitle").html(work_sub);
+            $(".level" + work_level).prop('checked', true);
+            $(".transfer" + work_transfer).prop('checked', true);
 
             var json = {
-                year: 2022,
+                year: year,
+                fix: fix,
+                TransferMode: TransferMode
                 //actual: 5
             };
             //$.debug.json("para", json);
-            var xmlDoc = $.WebApi("売上予測/売上目標_部門", json);
-            var xslDoc = $.loadXMLDoc("xsl/売上目標.xsl");
+            var xmlDoc = $.WebApi(main_XML_name, json);
+            var xslDoc = $.loadXMLDoc(main_XSL_name);
 
             //$.alert($.xml2str(xmlDoc));
             //$.alert($.xml2str(xslDoc));
@@ -68,10 +94,10 @@
     </script>
     <script type="text/javascript">
         $(function () {
-            $(document).on("click", ".onKind", function (event) {
-                alert(this.getAttribute("kind"));
+            $(document).on("click", ".onKind_X", function (event) {
+                //alert(this.getAttribute("kind"));
             });
-            $(document).on("mouseenter mouseleave", ".onKind", function (event) {
+            $(document).on("mouseenter mouseleave", ".onKind_X", function (event) {
                 if (event.type == "mouseenter") {
                     $(this).css("background-color", "pink");
                     $(this).css("cursor", "pointer");
@@ -92,17 +118,30 @@
                 .button({ text: false, label: '前の期', icons: { primary: 'ui-icon-triangle-1-w' } })
             $(".next")
                 .button({ text: false, label: '次の期', icons: { secondary: 'ui-icon-triangle-1-e' } })
-            $(".XX")
-                .button()
-                .change(function (event) {
-                    $.debug("AA", event.target.selectedIndex, $(this).text());
-                });
-            $("button")
+            $(".prev, .next")
                 .button()
                 .click(function (event) {
                     event.preventDefault();
-                    //$.debug($(this).text());
+                    if ($(this).hasClass('next')) {
+                        year += 1;
+                    }
+                    else if ($(this).hasClass('prev')) {
+                        year -= 1;
+                    }
+                    mainDisp();
                 });
+        });
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $(".level").on("click", function (event) {
+                fix = $(this, "[checked]").val();
+                mainDisp();
+            });
+            $(".transfer").on("click", function (event) {
+                TransferMode = $(this, "[checked]").val();
+                mainDisp();
+            });
         });
     </script>
     <style>
@@ -115,15 +154,49 @@
             background-color: lavender;
             padding: 4px 4px;
         }
+        .title_table {
+            width:10%;
+            border:0px solid red;
+            FONT-SIZE: small;
+            BACKGROUND-COLOR: snow;
+            border-collapse: collapse;
+            WHITE-SPACE: nowrap;
+        }
+
     </style>
 </head>
 <body>
-    <div>
-        <button class="prev"></button>
-        <label class="XXX">2021年10月-2022年9月</label>
-        <button class="next"></button>
-    </div>
-    <table align="center">
+    <table class="title_table">
+        <tr>
+            <td colspan="2" style="text-align:center"><label class="mainTitle"></label></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:center">
+                <input class="level" name="level" type="radio" value="70"><label>Ａ</label>
+                <input class="level" name="level" type="radio" value="50"><label>Ｂ</label>
+                <input class="level" name="level" type="radio" value="30"><label>Ｃ</label>
+                <input class="level" name="level" type="radio" value="10"><label>Ｄ</label>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center">
+                売上付替<br />
+                (計画・予測)
+            </td>
+            <td style="width:50%">
+                <input class="transfer" name="transfer" type="radio" value="1"><label>あり</label>
+                <input class="transfer" name="transfer" type="radio" value="0"><label>なし</label>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:center">
+                <button class="prev"></button>
+                <label class="subTitle"></label>
+                <button class="next"></button>
+            </td>
+        </tr>
+    </table>
+    <table align="left">
         <tbody>
             <TR>
                 <TD align="center">
