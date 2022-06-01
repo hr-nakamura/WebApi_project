@@ -28,7 +28,6 @@ namespace WebApi_project.Models
         public string option { get; set; }
         public string typeX { get; set; }
         public string dataX { get; set; }
-        public string optionX { get; set; }
     }
     public class EntryInfoJson
     {
@@ -37,6 +36,5 @@ namespace WebApi_project.Models
         public string option { get; set; }
         public string typeX { get; set; }
         public string dataX { get; set; }
-        public string optionX { get; set; }
     }
 }

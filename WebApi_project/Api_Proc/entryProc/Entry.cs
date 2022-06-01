@@ -359,7 +359,6 @@ namespace WebApi_project.hostProc
                     {
                         if (!String.IsNullOrEmpty(item.Value.typeX)) item.Value.type = item.Value.typeX;
                         if (!String.IsNullOrEmpty(item.Value.dataX)) item.Value.data = item.Value.dataX;
-                        if (!String.IsNullOrEmpty(item.Value.optionX)) item.Value.option = item.Value.optionX;
                     }
                 }
             }
@@ -389,7 +388,6 @@ namespace WebApi_project.hostProc
                     {
                         if (!String.IsNullOrEmpty(item.Value.typeX)) item.Value.type = item.Value.typeX;
                         if (!String.IsNullOrEmpty(item.Value.dataX)) item.Value.data = item.Value.dataX;
-                        if (!String.IsNullOrEmpty(item.Value.optionX)) item.Value.option = item.Value.optionX;
                     }
                 }
             }
