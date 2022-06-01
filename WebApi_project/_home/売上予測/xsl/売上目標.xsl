@@ -63,7 +63,7 @@
 	<xsl:template name="客先">
     <xsl:param name="客先"/>
     <xsl:param name="form" select="'#,###'"/>
-    <tr class="sub_line">
+    <tr class="sub_title">
 		<th>グループ名</th>
 		<th>項目</th>
 		<xsl:call-template name="year_Loop">
@@ -90,20 +90,20 @@
 			<tr class="sub_line">
 				<td rowspan="9">EMG</td>
 
-				<td>月</td>
+				<td class="item">月</td>
 				<xsl:call-template name="month_Loop">
 					<xsl:with-param name="begin" select="10"/>
 					<xsl:with-param name="mCnt" select="12"/>
 				</xsl:call-template>
 			</tr>
-			<td>目　標</td>
+			<td class="item">目　標</td>
 			<xsl:call-template name="item_Loop">
 				<xsl:with-param name="data" select="$全体[name() != '全体']/目標"/>
 				<xsl:with-param name="mCnt" select="12"/>
 			</xsl:call-template>
 		</tr>
 		<tr>
-			<td>実績・予測</td>
+			<td class="item">実績・予測</td>
 			<xsl:call-template name="item_Loop">
 				<xsl:with-param name="data" select="$全体[name() != '全体']/予実"/>
         <xsl:with-param name="mCnt" select="12"/>
@@ -111,21 +111,21 @@
       </xsl:call-template>
 		</tr>
 		<tr>
-			<td>前年度実績*</td>
+			<td class="item">前年度実績*</td>
 			<xsl:call-template name="item_Loop">
 				<xsl:with-param name="data" select="$全体[name() = '全体']/前年"/>
 				<xsl:with-param name="mCnt" select="12"/>
 			</xsl:call-template>
 		</tr>
 		<tr>
-			<td>累計[目標](A)</td>
+			<td class="item">累計[目標](A)</td>
 			<xsl:call-template name="item_Loop_累計">
 				<xsl:with-param name="data" select="$全体[name() != '全体']/目標"/>
 				<xsl:with-param name="mCnt" select="12"/>
 			</xsl:call-template>
 		</tr>
 		<tr>
-			<td>累計[実予](B)</td>
+			<td class="item">累計[実予](B)</td>
 			<xsl:call-template name="item_Loop_累計">
 				<xsl:with-param name="data" select="$全体[name() != '全体']/予実"/>
 				<xsl:with-param name="mCnt" select="12"/>
@@ -133,14 +133,14 @@
       </xsl:call-template>
 		</tr>
 		<tr>
-			<td>累計[前実]*</td>
+			<td class="item">累計[前実]*</td>
 			<xsl:call-template name="item_Loop_累計">
 				<xsl:with-param name="data" select="$全体[name() = '全体']/前年"/>
 				<xsl:with-param name="mCnt" select="12"/>
 			</xsl:call-template>
 		</tr>
 		<tr>
-			<td>率 (B/A)</td>
+			<td class="item">率 (B/A)</td>
 			<xsl:call-template name="item_Loop_率">
 				<xsl:with-param name="data_A" select="$全体[name() != '全体']/目標"/>
 				<xsl:with-param name="data_B" select="$全体[name() != '全体']/予実"/>
@@ -149,7 +149,7 @@
       </xsl:call-template>
 		</tr>
 		<tr>
-			<td>差 (B-A)</td>
+			<td class="item">差 (B-A)</td>
 			<xsl:call-template name="item_Loop_差">
 				<xsl:with-param name="data_A" select="$全体[name() != '全体']/目標"/>
 				<xsl:with-param name="data_B" select="$全体[name() != '全体']/予実"/>
@@ -165,14 +165,14 @@
 				<td  class="onKind" rowspan="7">
 					<xsl:value-of select="@_name_"/>
 				</td>
-				<td>月</td>
+				<td class="item">月</td>
 				<xsl:call-template name="month_Loop">
 					<xsl:with-param name="begin" select="10"/>
 					<xsl:with-param name="mCnt" select="12"/>
 				</xsl:call-template>
 			</tr>
 			<tr>
-				<td>
+				<td class="item">
 					<xsl:value-of select="'目　標'"/>
 				</td>
 				<xsl:call-template name="item_Loop">
@@ -181,7 +181,7 @@
 				</xsl:call-template>
 			</tr>
 			<tr>
-				<td>
+				<td class="item">
 					<xsl:value-of select="'実績・予測'"/>
 				</td>
 				<xsl:call-template name="item_Loop">
@@ -191,7 +191,7 @@
         </xsl:call-template>
 			</tr>
 			<tr>
-				<td>
+				<td class="item">
 					<xsl:value-of select="'累計[目標] (A)'"/>
 				</td>
 				<xsl:call-template name="item_Loop_累計">
@@ -200,7 +200,7 @@
 				</xsl:call-template>
 			</tr>
 			<tr>
-				<td>
+				<td class="item">
 					<xsl:value-of select="'累計[実予] (B)'"/>
 				</td>
 				<xsl:call-template name="item_Loop_累計">
@@ -210,7 +210,7 @@
         </xsl:call-template>
 			</tr>
 			<tr>
-				<td>
+				<td class="item">
 					<xsl:value-of select="'率 (B/A)'"/>
 				</td>
 				<xsl:call-template name="item_Loop_率">
@@ -221,7 +221,7 @@
         </xsl:call-template>
 			</tr>
 			<tr>
-				<td>
+				<td class="item">
 					<xsl:value-of select="'差 (B-A)'"/>
 				</td>
 				<xsl:call-template name="item_Loop_差">
@@ -242,14 +242,14 @@
 		  <td  class="onKind" rowspan="7">
 			  <xsl:value-of select="@_name_"/>
 		  </td>
-		  <td>月</td>
+		  <td class="item">月</td>
 		  <xsl:call-template name="month_Loop">
 			  <xsl:with-param name="begin" select="10"/>
 			  <xsl:with-param name="mCnt" select="12"/>
 		  </xsl:call-template>
 	  </tr>
 		  <tr>
-			  <td>
+			  <td class="item">
 				  <xsl:value-of select="'目　標'"/>
 			  </td>
 			  <xsl:call-template name="item_Loop">
@@ -258,7 +258,7 @@
 			  </xsl:call-template>
 		  </tr>
 		  <tr>
-			  <td>
+			  <td class="item">
 				  <xsl:value-of select="'実績・予測'"/>
 			  </td>
 			  <xsl:call-template name="item_Loop">
@@ -268,7 +268,7 @@
         </xsl:call-template>
 		  </tr>
 		  <tr>
-			  <td>
+			  <td class="item">
 				  <xsl:value-of select="'累計[目標] (A)'"/>
 			  </td>
 			  <xsl:call-template name="item_Loop_累計">
@@ -277,7 +277,7 @@
 			  </xsl:call-template>
 		  </tr>
 		  <tr>
-			  <td>
+			  <td class="item">
 				  <xsl:value-of select="'累計[実予] (B)'"/>
 			  </td>
 			  <xsl:call-template name="item_Loop_累計">
@@ -287,7 +287,7 @@
         </xsl:call-template>
 		  </tr>
 		  <tr>
-			  <td>
+			  <td class="item">
 				  <xsl:value-of select="'率 (B/A)'"/>
 			  </td>
 			  <xsl:call-template name="item_Loop_率">
@@ -298,7 +298,7 @@
         </xsl:call-template>
 		  </tr>
 		  <tr>
-			  <td>
+			  <td class="item">
 				  <xsl:value-of select="'差 (B-A)'"/>
 			  </td>
 			  <xsl:call-template name="item_Loop_差">
@@ -387,20 +387,20 @@
 		<xsl:param name="work_B" select="0"/>
 		<xsl:if test="$cnt &lt; $max">
 			<xsl:variable name="temp" select="($work_B + sum($data_B/月[@m=$cnt])) - ($work_A + sum($data_A/月[@m=$cnt]))"/>
-      <xsl:variable name="style1" select="''" />
-      <xsl:variable name="style2" select="''" />
       <td class="num">
 				<xsl:attribute name="nowrap"/>
-        <xsl:if test="$cnt &gt;= $actualCnt">
-
-          <!--<xsl:variable name="style" select="contains($style,'background-color:lightgray;')"/>-->
-        </xsl:if>
-
-        <xsl:if test="$temp &lt; 0">
-          <!--<xsl:variable name="style" select="substring-after($style,'color:tomato;')"/>-->
-        </xsl:if>
         <xsl:attribute name="style">
-          <xsl:value-of select="contains($style1, $style2)"/>
+        <xsl:choose>
+        <xsl:when test="$temp &lt; 0 and $cnt &gt;= $actualCnt">
+          <xsl:value-of select="'color:tomato;background-color:lightgray;'"/>
+        </xsl:when>
+        <xsl:when test="$cnt &gt;= $actualCnt">
+          <xsl:value-of select="'background-color:lightgray;'"/>
+        </xsl:when>
+        <xsl:when test="$temp &lt; 0">
+          <xsl:value-of select="'color:tomato;'"/>
+        </xsl:when>
+        </xsl:choose>
         </xsl:attribute>
         <xsl:value-of select="format-number( $temp div 1000 ,'#,##0')"/>
 			</td>

@@ -46,8 +46,13 @@
 }
 .table .sub_title {
 	text-align: center;
-	background-color: lavender;
+	background-color: cornflowerblue;
 }
+
+	.table td.item {
+		text-align: center;
+		background-color: lightcyan;
+	}
 	.table TH {
 		PADDING-RIGHT: 4px;
 		PADDING-LEFT: 4px;

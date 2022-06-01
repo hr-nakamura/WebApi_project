@@ -57,10 +57,10 @@
 	text-align: center;
 	background-color: lavender;
 }
-.table .sub_title {
-	text-align: center;
-	background-color: lavender;
-}
+	.table .sub_title {
+		text-align: center;
+		background-color: cornflowerblue;
+	}
 	.table TH {
 		PADDING-RIGHT: 4px;
 		PADDING-LEFT: 4px;
