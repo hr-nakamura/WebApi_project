@@ -106,8 +106,9 @@
 			<td>実績・予測</td>
 			<xsl:call-template name="item_Loop">
 				<xsl:with-param name="data" select="$全体[name() != '全体']/予実"/>
-				<xsl:with-param name="mCnt" select="12"/>
-			</xsl:call-template>
+        <xsl:with-param name="mCnt" select="12"/>
+        <xsl:with-param name="actualCnt" select="$actual"/>
+      </xsl:call-template>
 		</tr>
 		<tr>
 			<td>前年度実績*</td>
@@ -128,7 +129,8 @@
 			<xsl:call-template name="item_Loop_累計">
 				<xsl:with-param name="data" select="$全体[name() != '全体']/予実"/>
 				<xsl:with-param name="mCnt" select="12"/>
-			</xsl:call-template>
+        <xsl:with-param name="actualCnt" select="$actual"/>
+      </xsl:call-template>
 		</tr>
 		<tr>
 			<td>累計[前実]*</td>
@@ -143,7 +145,8 @@
 				<xsl:with-param name="data_A" select="$全体[name() != '全体']/目標"/>
 				<xsl:with-param name="data_B" select="$全体[name() != '全体']/予実"/>
 				<xsl:with-param name="mCnt" select="12"/>
-			</xsl:call-template>
+        <xsl:with-param name="actualCnt" select="$actual"/>
+      </xsl:call-template>
 		</tr>
 		<tr>
 			<td>差 (B-A)</td>
@@ -151,7 +154,8 @@
 				<xsl:with-param name="data_A" select="$全体[name() != '全体']/目標"/>
 				<xsl:with-param name="data_B" select="$全体[name() != '全体']/予実"/>
 				<xsl:with-param name="mCnt" select="12"/>
-			</xsl:call-template>
+        <xsl:with-param name="actualCnt" select="$actual"/>
+      </xsl:call-template>
 		</tr>
 	</xsl:template>
 
@@ -183,7 +187,8 @@
 				<xsl:call-template name="item_Loop">
 					<xsl:with-param name="data" select="予実"/>
 					<xsl:with-param name="mCnt" select="12"/>
-				</xsl:call-template>
+          <xsl:with-param name="actualCnt" select="$actual"/>
+        </xsl:call-template>
 			</tr>
 			<tr>
 				<td>
@@ -201,7 +206,8 @@
 				<xsl:call-template name="item_Loop_累計">
 					<xsl:with-param name="data" select="予実"/>
 					<xsl:with-param name="mCnt" select="12"/>
-				</xsl:call-template>
+          <xsl:with-param name="actualCnt" select="$actual"/>
+        </xsl:call-template>
 			</tr>
 			<tr>
 				<td>
@@ -211,7 +217,8 @@
 					<xsl:with-param name="data_A" select="目標"/>
 					<xsl:with-param name="data_B" select="予実"/>
 					<xsl:with-param name="mCnt" select="12"/>
-				</xsl:call-template>
+          <xsl:with-param name="actualCnt" select="$actual"/>
+        </xsl:call-template>
 			</tr>
 			<tr>
 				<td>
@@ -221,7 +228,8 @@
 					<xsl:with-param name="data_A" select="目標"/>
 					<xsl:with-param name="data_B" select="予実"/>
 					<xsl:with-param name="mCnt" select="12"/>
-				</xsl:call-template>
+          <xsl:with-param name="actualCnt" select="$actual"/>
+        </xsl:call-template>
 			</tr>
 
 	</xsl:template>
@@ -255,8 +263,9 @@
 			  </td>
 			  <xsl:call-template name="item_Loop">
 				  <xsl:with-param name="data" select="予実"/>
-				  <xsl:with-param name="mCnt" select="12"/>
-			  </xsl:call-template>
+          <xsl:with-param name="mCnt" select="12"/>
+          <xsl:with-param name="actualCnt" select="$actual"/>
+        </xsl:call-template>
 		  </tr>
 		  <tr>
 			  <td>
@@ -274,7 +283,8 @@
 			  <xsl:call-template name="item_Loop_累計">
 				  <xsl:with-param name="data" select="予実"/>
 				  <xsl:with-param name="mCnt" select="12"/>
-			  </xsl:call-template>
+          <xsl:with-param name="actualCnt" select="$actual"/>
+        </xsl:call-template>
 		  </tr>
 		  <tr>
 			  <td>
@@ -284,7 +294,8 @@
 				  <xsl:with-param name="data_A" select="目標"/>
 				  <xsl:with-param name="data_B" select="予実"/>
 				  <xsl:with-param name="mCnt" select="12"/>
-			  </xsl:call-template>
+          <xsl:with-param name="actualCnt" select="$actual"/>
+        </xsl:call-template>
 		  </tr>
 		  <tr>
 			  <td>
@@ -294,7 +305,8 @@
 				  <xsl:with-param name="data_A" select="目標"/>
 				  <xsl:with-param name="data_B" select="予実"/>
 				  <xsl:with-param name="mCnt" select="12"/>
-			  </xsl:call-template>
+          <xsl:with-param name="actualCnt" select="$actual"/>
+        </xsl:call-template>
 		  </tr>
 	  </xsl:for-each>
 
@@ -303,15 +315,22 @@
 	<xsl:template name="item_Loop">
 		<xsl:param name="begin" select="0"/>
 		<xsl:param name="data" />
-		<xsl:param name="mCnt" />
-		<xsl:param name="max" select="$begin+$mCnt"/>
+    <xsl:param name="mCnt" />
+    <xsl:param name="actualCnt"/>
+    <xsl:param name="max" select="$begin+$mCnt"/>
 		<xsl:param name="cnt" select="$begin"/>
 		<xsl:param name="form" select="'#,###'" />
 		<xsl:if test="$cnt &lt; $max">
 			<xsl:variable name="temp" select="sum($data/月[@m=$cnt])"/>
 			<td class="num">
 				<xsl:attribute name="nowrap"/>
-				<xsl:if test="$temp &gt; 0">
+        <xsl:if test="$cnt &gt;= $actualCnt">
+          <xsl:attribute name="style">
+            <xsl:value-of select="'color:blue;background-color:lightgray;'"/>
+          </xsl:attribute>
+            </xsl:if>
+        
+        <xsl:if test="$temp &gt; 0">
 				<xsl:value-of select="format-number( $temp div 1000 ,$form)"/>
 				</xsl:if>
 				<xsl:if test="$temp = 0">
@@ -320,7 +339,8 @@
 			</td>
 			<xsl:call-template name="item_Loop">
 				<xsl:with-param name="data" select="$data" />
-				<xsl:with-param name="max" select="$max" />
+        <xsl:with-param name="actualCnt" select="$actualCnt" />
+        <xsl:with-param name="max" select="$max" />
 				<xsl:with-param name="cnt" select="$cnt + 1" />
 			</xsl:call-template>
 		</xsl:if>
@@ -329,7 +349,8 @@
 		<xsl:param name="begin" select="0"/>
 		<xsl:param name="data" />
 		<xsl:param name="mCnt" />
-		<xsl:param name="max" select="$begin+$mCnt"/>
+    <xsl:param name="actualCnt"/>
+    <xsl:param name="max" select="$begin+$mCnt"/>
 		<xsl:param name="cnt" select="$begin"/>
 		<xsl:param name="form" select="'#,###'" />
 		<xsl:param name="work" select="0"/>
@@ -337,11 +358,17 @@
 			<xsl:variable name="temp" select="sum($data/月[@m=$cnt])"/>
 			<td class="num">
 				<xsl:attribute name="nowrap"/>
+        <xsl:if test="$cnt &gt;= $actualCnt">
+          <xsl:attribute name="style">
+            <xsl:value-of select="'color:blue;background-color:lightgray;'"/>
+          </xsl:attribute>
+        </xsl:if>
 				<xsl:value-of select="format-number( ($work + $temp) div 1000 ,'#,##0')"/>
 			</td>
 			<xsl:call-template name="item_Loop_累計">
 				<xsl:with-param name="data" select="$data" />
-				<xsl:with-param name="max" select="$max" />
+        <xsl:with-param name="actualCnt" select="$actualCnt" />
+        <xsl:with-param name="max" select="$max" />
 				<xsl:with-param name="cnt" select="$cnt + 1" />
 				<xsl:with-param name="work" select="$work + sum($data/月[@m=$cnt])" />
 			</xsl:call-template>
@@ -352,27 +379,36 @@
 		<xsl:param name="data_A" />
 		<xsl:param name="data_B" />
 		<xsl:param name="mCnt" />
-		<xsl:param name="max" select="$begin+$mCnt"/>
+    <xsl:param name="actualCnt"/>
+    <xsl:param name="max" select="$begin+$mCnt"/>
 		<xsl:param name="cnt" select="$begin"/>
 		<xsl:param name="form" select="'#,###'" />
 		<xsl:param name="work_A" select="0"/>
 		<xsl:param name="work_B" select="0"/>
 		<xsl:if test="$cnt &lt; $max">
 			<xsl:variable name="temp" select="($work_B + sum($data_B/月[@m=$cnt])) - ($work_A + sum($data_A/月[@m=$cnt]))"/>
-
-			<td class="num">
+      <xsl:variable name="style1" select="''" />
+      <xsl:variable name="style2" select="''" />
+      <td class="num">
 				<xsl:attribute name="nowrap"/>
-				<xsl:if test="$temp &lt; 0">
-					<xsl:attribute name="style">
-						<xsl:value-of select="'color:tomato;'"/>
-					</xsl:attribute>
-				</xsl:if>
-				<xsl:value-of select="format-number( $temp div 1000 ,'#,##0')"/>
+        <xsl:if test="$cnt &gt;= $actualCnt">
+
+          <!--<xsl:variable name="style" select="contains($style,'background-color:lightgray;')"/>-->
+        </xsl:if>
+
+        <xsl:if test="$temp &lt; 0">
+          <!--<xsl:variable name="style" select="substring-after($style,'color:tomato;')"/>-->
+        </xsl:if>
+        <xsl:attribute name="style">
+          <xsl:value-of select="contains($style1, $style2)"/>
+        </xsl:attribute>
+        <xsl:value-of select="format-number( $temp div 1000 ,'#,##0')"/>
 			</td>
 			<xsl:call-template name="item_Loop_差">
 				<xsl:with-param name="data_A" select="$data_A" />
 				<xsl:with-param name="data_B" select="$data_B" />
-				<xsl:with-param name="max" select="$max" />
+        <xsl:with-param name="actualCnt" select="$actualCnt" />
+        <xsl:with-param name="max" select="$max" />
 				<xsl:with-param name="cnt" select="$cnt + 1" />
 				<xsl:with-param name="work_A" select="$work_A + sum($data_A/月[@m=$cnt])" />
 				<xsl:with-param name="work_B" select="$work_B + sum($data_B/月[@m=$cnt])" />
@@ -385,7 +421,8 @@
 		<xsl:param name="data_A" />
 		<xsl:param name="data_B" />
 		<xsl:param name="mCnt" />
-		<xsl:param name="max" select="$begin+$mCnt"/>
+    <xsl:param name="actualCnt" />
+    <xsl:param name="max" select="$begin+$mCnt"/>
 		<xsl:param name="cnt" select="$begin"/>
 		<xsl:param name="form" select="'#,###'" />
 		<xsl:param name="work_A" select="0"/>
@@ -394,7 +431,12 @@
 			<xsl:variable name="temp" select="($work_B + sum($data_B/月[@m=$cnt])) div ($work_A + sum($data_A/月[@m=$cnt]))"/>
 			<td class="num">
 				<xsl:attribute name="nowrap"/>
-				<xsl:choose>
+        <xsl:if test="$cnt &gt;= $actualCnt">
+          <xsl:attribute name="style">
+            <xsl:value-of select="'color:blue;background-color:lightgray;'"/>
+          </xsl:attribute>
+        </xsl:if>
+        <xsl:choose>
 					<xsl:when test="string($temp) = 'NaN'">
 						<xsl:text>-&#160;</xsl:text>
 					</xsl:when>
@@ -409,8 +451,9 @@
 			</td>
 			<xsl:call-template name="item_Loop_率">
 				<xsl:with-param name="data_A" select="$data_A" />
-				<xsl:with-param name="data_B" select="$data_B" />
-				<xsl:with-param name="max" select="$max" />
+        <xsl:with-param name="data_B" select="$data_B" />
+        <xsl:with-param name="actualCnt" select="$actualCnt" />
+        <xsl:with-param name="max" select="$max" />
 				<xsl:with-param name="cnt" select="$cnt + 1" />
 				<xsl:with-param name="work_A" select="$work_A + sum($data_A/月[@m=$cnt])" />
 				<xsl:with-param name="work_B" select="$work_B + sum($data_B/月[@m=$cnt])" />
