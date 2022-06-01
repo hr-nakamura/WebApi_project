@@ -34,7 +34,7 @@ namespace WebApi_project.hostProc
         public string DB_comment = "123";
         public string LogPath = "";
         public string IPAddress = "";
-        public bool debug_mode = true;
+        public bool local_mode = true;
 
         HttpContext context = HttpContext.Current;
         public hostProc()
@@ -45,7 +45,7 @@ namespace WebApi_project.hostProc
             //MyCookieColl = HttpContext.Current.Request.Cookies;
             //String[] arr1 = MyCookieColl.AllKeys;
 
-            debug_mode = check_online();
+            local_mode = check_online();
 
             string mName = Environment.MachineName;
 

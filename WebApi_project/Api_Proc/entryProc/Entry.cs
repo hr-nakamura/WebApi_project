@@ -353,12 +353,13 @@ namespace WebApi_project.hostProc
                     }
                 }
                 var hProc = new hostProc();
-                if( hProc.debug_mode)
+                if( hProc.local_mode)
                 {
                     foreach (var item in EntryTab_xml)
                     {
-                        if (!String.IsNullOrEmpty(item.Value.dataX)) item.Value.data = item.Value.dataX;
                         if (!String.IsNullOrEmpty(item.Value.typeX)) item.Value.type = item.Value.typeX;
+                        if (!String.IsNullOrEmpty(item.Value.dataX)) item.Value.data = item.Value.dataX;
+                        if (!String.IsNullOrEmpty(item.Value.optionX)) item.Value.option = item.Value.optionX;
                     }
                 }
             }
@@ -382,12 +383,13 @@ namespace WebApi_project.hostProc
                     }
                 }
                 var hProc = new hostProc();
-                if (hProc.debug_mode)
+                if (hProc.local_mode)
                 {
                     foreach (var item in EntryTab_json)
                     {
-                        if (!String.IsNullOrEmpty(item.Value.dataX)) item.Value.data = item.Value.dataX;
                         if (!String.IsNullOrEmpty(item.Value.typeX)) item.Value.type = item.Value.typeX;
+                        if (!String.IsNullOrEmpty(item.Value.dataX)) item.Value.data = item.Value.dataX;
+                        if (!String.IsNullOrEmpty(item.Value.optionX)) item.Value.option = item.Value.optionX;
                     }
                 }
             }
