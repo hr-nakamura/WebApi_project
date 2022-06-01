@@ -51,6 +51,9 @@
                 memberInfo["hostName"] = window.location.hostname;
 
                 $(".debug").JsonOut(memberInfo);
+                if (mailAddress == "nakamura@eandm.co.jp") {
+                    $(".debug").css("display", "block");
+                }
 
 
             } catch (e) {
@@ -335,7 +338,7 @@
         <div class="menu" />
     </div>
     <div style="vertical-align:bottom;text-align:left;">
-        <textarea class="debug">
+        <textarea class="debug" style="display:none;">
         </textarea>
     </div>
 </body>
