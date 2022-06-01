@@ -47,7 +47,7 @@ namespace WebApi_project.hostProc
             { "売上予測/売上目標_部門", new EntryInfoXml{
                 type = "json",
                 data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上目標_部門_JSON.asp",
-                option ="{year:2022,fix:70,TransferMode:0}",
+                option ="{year:2022,fix:70}",
                 dataX = "http://localhost/test/_jsonData/売上目標_部門_JSON.json",
                 }
             },
