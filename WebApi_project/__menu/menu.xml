@@ -3,16 +3,23 @@
     <menu name="監査ページ(NEW)" memo="" mode="url" url="/WebApi/project/_home/Menu.asp"/>
 
     <menu name="_home" memo="" >
-        <menu name="売上予測" memo="" >
-	        <menu name="売上目標_部門" memo="" mode="url" url="/WebApi/project/_home/売上予測/売上目標_部門.html"/>
-	        <menu name="売上予実_部門" memo="" mode="url" url="/WebApi/project/_home/売上予測/売上予実_部門.html"/>
-            <menu name="売上予実_新規" memo="" mode="url" url="/WebApi/project/_home/売上予測/売上予実_新規.html"/>
-            <menu name="売上予実_新規2" memo="" mode="url" url="/WebApi/project/_home/売上予測/売上予実_新規2.html"/>
-	        <menu name="売上予実_分類" memo="" mode="url" url="/WebApi/project/_home/売上予測/売上予実_分類.html"/>
-	        <menu name="グループ予実_部門" memo="" mode="url" url="/WebApi/project/_home/売上予測/グループ予実_部門.html"/>
-	        <menu name="グループ予実_分類" memo="" mode="url" url="/WebApi/project/_home/売上予測/グループ予実_分類.html"/>
-	    </menu>
-    </menu>
+        <menu name="部門収支" memo="" >
+	        <menu name="EMG収支計画" memo="" mode="url" url="/WebApi/project/_home/部門収支/EMG収支計画.html"/>
+	        <menu name="統括収支計画" memo="" mode="url" url="/WebApi/project/_home/部門収支/統括収支計画.html"/>
+            <menu name="部門収支計画" memo="" mode="url" url="/WebApi/project/_home/部門収支/部門収支計画.html"/>
+			<menu name="グループ収支計画" memo="" mode="url" url="/WebApi/project/_home/部門収支/グループ収支計画.html"/>
+		</menu>
+		<menu name="-------------" memo="" />
+		<menu name="売上予測" memo="" >
+			<menu name="売上目標_部門" memo="" mode="url" url="/WebApi/project/_home/売上予測/売上目標_部門.html"/>
+			<menu name="売上予実_部門" memo="" mode="url" url="/WebApi/project/_home/売上予測/売上予実_部門.html"/>
+			<menu name="売上予実_新規" memo="" mode="url" url="/WebApi/project/_home/売上予測/売上予実_新規.html"/>
+			<menu name="売上予実_新規2" memo="" mode="url" url="/WebApi/project/_home/売上予測/売上予実_新規2.html"/>
+			<menu name="売上予実_分類" memo="" mode="url" url="/WebApi/project/_home/売上予測/売上予実_分類.html"/>
+			<menu name="グループ予実_部門" memo="" mode="url" url="/WebApi/project/_home/売上予測/グループ予実_部門.html"/>
+			<menu name="グループ予実_分類" memo="" mode="url" url="/WebApi/project/_home/売上予測/グループ予実_分類.html"/>
+		</menu>
+	</menu>
 
   
   <menu name="テーブル(XML)" memo="" >

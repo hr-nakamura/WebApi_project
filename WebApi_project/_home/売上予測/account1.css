@@ -3,11 +3,7 @@
 	BACKGROUND-COLOR: snow;
 	border-collapse: collapse;
 }
-	.table th.m {
-		WHITE-SPACE: nowrap;
-		width: 5%;
-		background-color: pink;
-	}
+
 
 .table .onKind {
 	vertical-align: bottom;

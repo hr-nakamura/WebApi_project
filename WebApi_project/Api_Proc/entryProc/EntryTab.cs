@@ -15,7 +15,7 @@ namespace WebApi_project.hostProc
         public SortedDictionary<string, EntryInfoXml> 部門収支 = new SortedDictionary<string, EntryInfoXml>() {
             { "部門収支/部門収支_XML", new EntryInfoXml{
                 type = "xml",
-                data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp",
+                data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML_55.asp",
                 option = "{dispCmd:'EMG',year:2022,fix:70,yosoku:3}",
                 }
             },
@@ -54,28 +54,28 @@ namespace WebApi_project.hostProc
             { "売上予測/売上予実_部門", new EntryInfoXml{
                 type = "json",
                 data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_部門_JSON.asp",
-                option ="{year:2022,fix:70,actual:6}",
+                option ="{year:2022,fix:70}",
                 dataX = "http://localhost/test/_jsonData/売上予実_部門_JSON.json",
                 }
             },
             { "売上予測/売上予実_分類", new EntryInfoXml{
                 type = "json",
                 data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_分類_JSON.asp",
-                option ="{year:2022,fix:70,actual:6}",
+                option ="{year:2022,fix:70}",
                 dataX = "http://localhost/test/_jsonData/売上予実_分類_JSON.json",
                 }
             },
             { "売上予測/売上予実_新規", new EntryInfoXml{
                 type = "json",
                 data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_新規_JSON.asp",
-                option ="{year:2022,fix:70,actual:6}",
+                option ="{year:2022,fix:70}",
                 dataX = "http://localhost/test/_jsonData/売上予実_新規_JSON.json",
                 }
             },
             { "売上予測/売上予実_新規2", new EntryInfoXml{
                 type = "json",
                 data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_新規2_JSON.asp",
-                option ="{year:2022,fix:70,actual:6}",
+                option ="{year:2022,fix:70}",
                 dataX = "http://localhost/test/_jsonData/売上予実_新規2_JSON.json",
                 }
             },

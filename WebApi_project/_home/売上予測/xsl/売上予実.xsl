@@ -99,7 +99,7 @@
         </xsl:call-template>
       </xsl:for-each>
       <tr>
-        <td class="sub_title">合　計</td>
+        <td class="sub_line">合　計</td>
         <td class="num">
           <xsl:value-of select="format-number( sum(uName/*/data/月) ,$form)"/>
         </td>
@@ -111,10 +111,10 @@
         <td class="num">
           <xsl:value-of select="format-number( sum(uName/*/data/月) ,$form)"/>
         </td>
-        <td class="sub_title" colspan="2">合　計</td>
+        <td class="sub_line" colspan="2">合　計</td>
       </tr>
       <tr>
-        <td class="sub_title">累　計</td>
+        <td class="sub_line">累　計</td>
         <td></td>
         <xsl:call-template name="累計">
           <xsl:with-param name="data" select="uName/*/data/月"/>
@@ -122,7 +122,7 @@
           <xsl:with-param name="max" select="12"/>
         </xsl:call-template>
         <td></td>
-        <td class="sub_title" colspan="2">累　計</td>
+        <td class="sub_line" colspan="2">累　計</td>
       </tr>
 
     </xsl:for-each>
