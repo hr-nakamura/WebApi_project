@@ -365,9 +365,6 @@
     <Content Include="__menu\work\ajax.xlsx" />
     <Content Include="__menu\Util\viewJson-edge\jquery.json-viewer.js" />
     <Content Include="__menu\work\json.json" />
-    <Content Include="__menu\work\projectInfoXML.xml" />
-    <Content Include="__menu\work\projectInfoXML.xsl" />
-    <Content Include="__menu\work\WebApi_project_構成.xlsx" />
     <Content Include="_Test\_Test\test.json" />
     <Content Include="_Test\_Test\test_Json.json" />
     <Content Include="_home\_Content\_Scripts\jquery-3.6.0.min.js" />
@@ -378,6 +375,7 @@
     <Content Include="__menu\debug\debug.ashx" />
     <Content Include="__menu\debug\jquery.my.fileOut.js" />
     <Content Include="__menu\debug\fileOut.ashx" />
+    <Content Include="__menu\work\aaa.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api_Proc\entryProc\EntryTab.cs" />

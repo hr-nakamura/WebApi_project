@@ -1,0 +1,198 @@
+{
+  "year": "2022",
+  "dispCmd": "EMG",
+  "dispName": "",
+  "secMode": "開発",
+  "specialMode": "",
+  "fix": "70",
+  "yosoku": 3
+}
+{
+  "year": "2022",
+  "dispCmd": "統括一覧",
+  "dispName": "",
+  "secMode": "開発",
+  "specialMode": "",
+  "fix": "70",
+  "yosoku": 3
+}
+{
+  "year": "2022",
+  "dispCmd": "部門一覧",
+  "dispName": "",
+  "secMode": "開発",
+  "specialMode": "",
+  "fix": "70",
+  "yosoku": 5
+}
+{
+  "year": "2022",
+  "dispCmd": "課一覧",
+  "dispName": "営業本部",
+  "secMode": "開発",
+  "specialMode": "",
+  "fix": "70",
+  "yosoku": 5
+}
+{
+  "year": "2022",
+  "dispCmd": "統括一覧",
+  "dispName": "",
+  "secMode": "開発",
+  "specialMode": "",
+  "fix": "70",
+  "yosoku": 3
+}
+{
+  "year": "2022",
+  "dispCmd": "統括詳細",
+  "dispName": "営業本部",
+  "secMode": "開発",
+  "specialMode": "",
+  "fix": "70",
+  "yosoku": 3
+}
+{
+  "year": "2022",
+  "dispCmd": "統括詳細",
+  "dispName": "ACEL事業推進本部",
+  "secMode": "開発",
+  "specialMode": "",
+  "fix": "70",
+  "yosoku": 3
+}
+{
+  "year": "2022",
+  "dispCmd": "統括詳細",
+  "dispName": "ウェディング事業推進室",
+  "secMode": "開発",
+  "specialMode": "",
+  "fix": "70",
+  "yosoku": 3
+}
+{
+  "year": "2022",
+  "dispCmd": "部門一覧",
+  "dispName": "",
+  "secMode": "開発",
+  "specialMode": "",
+  "fix": "70",
+  "yosoku": 5
+}
+{
+  "year": "2022",
+  "dispCmd": "部門詳細",
+  "dispName": "営業本部",
+  "secMode": "開発",
+  "specialMode": "",
+  "fix": "70",
+  "yosoku": 5
+}
+{
+  "year": "2022",
+  "dispCmd": "部門詳細",
+  "dispName": "営業本部営業部",
+  "secMode": "開発",
+  "specialMode": "",
+  "fix": "70",
+  "yosoku": 5
+}
+{
+  "year": "2022",
+  "dispCmd": "課一覧",
+  "dispName": "営業本部",
+  "secMode": "開発",
+  "specialMode": "",
+  "fix": "70",
+  "yosoku": 5
+}
+{
+  "year": "2022",
+  "dispCmd": "課詳細",
+  "dispName": "297",
+  "secMode": "開発",
+  "specialMode": "",
+  "fix": "70",
+  "yosoku": 5
+}
+{
+  "year": "2022",
+  "dispCmd": "課一覧",
+  "dispName": "営業本部営業部",
+  "secMode": "開発",
+  "specialMode": "",
+  "fix": "70",
+  "yosoku": 5
+}
+{
+  "year": "2022",
+  "dispCmd": "課詳細",
+  "dispName": "348",
+  "secMode": "開発",
+  "specialMode": "",
+  "fix": "70",
+  "yosoku": 5
+}
+{
+  "year": "2022",
+  "dispCmd": "部門一覧",
+  "dispName": "",
+  "secMode": "間接",
+  "specialMode": "",
+  "fix": "70",
+  "yosoku": 5
+}
+{
+  "year": "2022",
+  "dispCmd": "部門詳細",
+  "dispName": "本社トラブル監査委員会",
+  "secMode": "間接",
+  "specialMode": "",
+  "fix": "70",
+  "yosoku": 5
+}
+{
+  "year": "2022",
+  "dispCmd": "部門詳細",
+  "dispName": "本社EMG共通",
+  "secMode": "間接",
+  "specialMode": "",
+  "fix": "70",
+  "yosoku": 5
+}
+{
+  "year": "2022",
+  "dispCmd": "部門詳細",
+  "dispName": "本社メンタルケア対策室",
+  "secMode": "間接",
+  "specialMode": "",
+  "fix": "70",
+  "yosoku": 5
+}
+{
+  "year": "2022",
+  "dispCmd": "課一覧",
+  "dispName": "本社EMG共通",
+  "secMode": "間接",
+  "specialMode": "",
+  "fix": "70",
+  "yosoku": 5
+}
+{
+  "year": "2022",
+  "dispCmd": "課一覧",
+  "dispName": "本社管理部（九州管轄）",
+  "secMode": "間接",
+  "specialMode": "",
+  "fix": "70",
+  "yosoku": 5
+}
+{
+  "year": "2022",
+  "dispCmd": "課一覧",
+  "dispName": "本社経営",
+  "secMode": "間接",
+  "specialMode": "",
+  "fix": "70",
+  "yosoku": 5
+}
