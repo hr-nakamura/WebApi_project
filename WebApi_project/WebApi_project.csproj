@@ -225,6 +225,7 @@
     <Content Include="__menu\Scripts\my.mnmenu.css" />
     <Content Include="__menu\Scripts\superfish.css" />
     <Content Include="__menu\Scripts\superfish.js" />
+    <Content Include="__menu\work\xml.asp" />
     <None Include="_Test\Dialog\data\project.json" />
     <None Include="_Test\Dialog\data\group.json" />
     <Content Include="_Test\Dialog\showModalDialog.js" />
