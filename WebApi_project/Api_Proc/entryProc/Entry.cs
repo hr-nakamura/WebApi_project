@@ -334,7 +334,7 @@ namespace WebApi_project.hostProc
 
             return table;
         }
-        private EntryInfoXml GetEntryTab_xml(string Item)
+        public EntryInfoXml GetEntryTab_xml(string Item)
         {
 
             //EntryTab_xml = new Dictionary<string, EntryInfoXml>();
@@ -365,7 +365,7 @@ namespace WebApi_project.hostProc
             var Tab = ( Item != "" ? EntryTab_xml[Item] : new EntryInfoXml() );
             return (Tab);
         }
-        private EntryInfoJson GetEntryTab_json(string Item)
+        public EntryInfoJson GetEntryTab_json(string Item)
         {
             if (EntryTab_json.Count == 0)
             {

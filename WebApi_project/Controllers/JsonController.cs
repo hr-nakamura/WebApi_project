@@ -9,6 +9,7 @@ using System.Net.Http;
 
 using WebApi_project.Models;
 using WebApi_project.hostProc;
+
 using DebugHost;
 
 namespace WebApi_project.Controllers
@@ -26,9 +27,26 @@ namespace WebApi_project.Controllers
             return (response);
 
         }
+        public HttpResponseMessage Get(string Item)
+        {
+            MyDebug.noWrite("Json", "Get string Item, string Json", Item );
+            
+            var hProc = new hostProc.entryProc();
+            EntryInfoXml EntryInfo = hProc.GetEntryTab_xml(Item);
+
+            string url = EntryInfo.data;
+            url += "?json=1";
+
+            hostWeb h = new hostWeb();
+            string jsonStr = h.GetRequest(url, "Shift_JIS");
+
+
+            HttpResponseMessage response = new HttpResponseMessage();
+            return (response);
+        }
         public HttpResponseMessage Get(string Item, string Json)
         {
-            MyDebug.noWrite("Json", "Get string Item, string Json",Item,Json.ToString());
+            MyDebug.noWrite("Json", "Get string Item, string Json", Item, Json.ToString());
             var hProc = new hostProc.entryProc();
 
             EntryInfoJson EntryInfo = new EntryInfoJson();

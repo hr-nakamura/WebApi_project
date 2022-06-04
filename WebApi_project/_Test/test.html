@@ -16,12 +16,10 @@
 
     <SCRIPT FOR="window" EVENT="onload" LANGUAGE="JavaScript">
         try {
-            //            pNum = window.dialogArguments.pNum;
-            //            alert(pNum);
-            //alert($.fn.jquery);
-            var str = "<?xml version='1.0' encoding='Shift_JIS'?>\n<root>AAA</root>";
 
-            $.fileOut("ABC.xxx", str);
+            //alert($.fn.jquery);
+            var json = $.WebApi_json("部門収支/部門収支_XML");
+            var a = 1;
 
 
         } catch (e) {
