@@ -29,7 +29,7 @@ namespace WebApi_project.Controllers
         }
         public HttpResponseMessage Get(string Item)
         {
-            MyDebug.noWrite("Json", "Get string Item, string Json", Item );
+            MyDebug.noWrite("Json", "Get string Item", Item );
             
             var hProc = new hostProc.entryProc();
             EntryInfoXml EntryInfo = hProc.GetEntryTab_xml(Item);
@@ -41,7 +41,7 @@ namespace WebApi_project.Controllers
             string jsonStr = h.GetRequest(url, "Shift_JIS");
 
 
-            HttpResponseMessage response = new HttpResponseMessage();
+            HttpResponseMessage response = response_conv(jsonStr);
             return (response);
         }
         public HttpResponseMessage Get(string Item, string Json)
