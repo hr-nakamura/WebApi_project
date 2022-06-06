@@ -39,6 +39,26 @@ namespace WebApi_project.hostProc
             jObj = LoadFunc(EntryInfo);
             return (jObj);
         }
+
+        public string Entry_Check(string Item)
+        {
+            string jsonStr = null;
+               EntryInfoXml EntryInfo = GetEntryTab_xml(Item);
+            if( EntryInfo != null)
+            {
+                string url = EntryInfo.data;
+                url += "?queryChk=1";
+
+                hostWeb h = new hostWeb();
+                jsonStr = h.GetRequest(url, "Shift_JIS");
+            }
+            else
+            {
+                jsonStr = null;     // "{'error':'ABC'}";
+            }
+            return (jsonStr);
+
+        }
         private JObject LoadFunc(EntryInfoJson EntryInfo)
         {
             var type = EntryInfo.type;
@@ -211,19 +231,11 @@ namespace WebApi_project.hostProc
             var option = EntryInfo.option;
             url += makeOption(option, "?");
             hostWeb h = new hostWeb();
-            try
+            string jsonStr = h.GetRequest(url, "Shift_JIS");
+            if (jsonStr != null)
             {
-                string jsonStr = h.GetRequest(url, "Shift_JIS");
-                if (jsonStr != null)
-                {
-                    oJson = JObject.Parse(jsonStr);
-                    hProc.JsonArrayConvert(ref oJson, "月", "m");
-                }
-
-            }
-            catch (Exception ex)
-            {
-                var a = 1;
+                oJson = JObject.Parse(jsonStr);
+                hProc.JsonArrayConvert(ref oJson, "月", "m");
             }
             return (oJson);
         }
@@ -342,7 +354,7 @@ namespace WebApi_project.hostProc
 
             return table;
         }
-        public EntryInfoXml GetEntryTab_xml(string Item)
+        private EntryInfoXml GetEntryTab_xml(string Item)
         {
 
             if (EntryTab_xml.Count == 0)
@@ -379,7 +391,7 @@ namespace WebApi_project.hostProc
             }
 
         }
-        public EntryInfoJson GetEntryTab_json(string Item)
+        private EntryInfoJson GetEntryTab_json(string Item)
         {
             if (EntryTab_json.Count == 0)
             {
