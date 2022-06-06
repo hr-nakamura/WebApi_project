@@ -29,20 +29,25 @@ namespace WebApi_project.Controllers
         }
         public HttpResponseMessage Get(string Item)
         {
+            HttpResponseMessage response = new HttpResponseMessage(); ;
             MyDebug.noWrite("Json", "Get string Item", Item );
             
             var hProc = new hostProc.entryProc();
             EntryInfoXml EntryInfo = hProc.GetEntryTab_xml(Item);
+            if(EntryInfo != null)
+            {
+                string url = EntryInfo.data;
+                url += "?queryChk=1";
 
-            string url = EntryInfo.data;
-            url += "?json=1";
-
-            hostWeb h = new hostWeb();
-            string jsonStr = h.GetRequest(url, "Shift_JIS");
-
-
-            HttpResponseMessage response = response_conv(jsonStr);
+                hostWeb h = new hostWeb();
+                string jsonStr = h.GetRequest(url, "Shift_JIS");
+                if (jsonStr != null)
+                {
+                    response = response_conv(jsonStr);
+                }
+            }
             return (response);
+
         }
         public HttpResponseMessage Get(string Item, string Json)
         {

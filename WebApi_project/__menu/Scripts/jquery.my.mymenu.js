@@ -242,6 +242,25 @@
                 }
             }
         });
+        $(eventName + ".bluemenu li").contextmenu(function () {
+            var o = $(this);
+            if ($(o).children().length == 0) {
+                //var execFunc = "menu_click";
+                if (typeof (options.context_menu) == "function") {
+                    var obj = {
+                        text: o.text()
+                    };
+                    var attrs = $(this).data();
+                    $.each(attrs, function (name, elem) {
+                        obj[name] = elem;
+                    })
+                    o.mouseleave();             // メニュを消す
+                    options.context_menu(obj);
+                    return (false);
+                }
+            }
+        });
+
     };
 
 })(jQuery);

@@ -211,11 +211,19 @@ namespace WebApi_project.hostProc
             var option = EntryInfo.option;
             url += makeOption(option, "?");
             hostWeb h = new hostWeb();
-            string jsonStr = h.GetRequest(url, "Shift_JIS");
-            if (jsonStr != null)
+            try
             {
-                oJson = JObject.Parse(jsonStr);
-                hProc.JsonArrayConvert(ref oJson, "月", "m");
+                string jsonStr = h.GetRequest(url, "Shift_JIS");
+                if (jsonStr != null)
+                {
+                    oJson = JObject.Parse(jsonStr);
+                    hProc.JsonArrayConvert(ref oJson, "月", "m");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                var a = 1;
             }
             return (oJson);
         }
@@ -337,8 +345,7 @@ namespace WebApi_project.hostProc
         public EntryInfoXml GetEntryTab_xml(string Item)
         {
 
-            //EntryTab_xml = new Dictionary<string, EntryInfoXml>();
-            if(EntryTab_xml.Count == 0)
+            if (EntryTab_xml.Count == 0)
             {
                 Type type = typeof(WebApi_project.hostProc.hostProc);
                 FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
@@ -362,8 +369,15 @@ namespace WebApi_project.hostProc
                     }
                 }
             }
-            var Tab = ( Item != "" ? EntryTab_xml[Item] : new EntryInfoXml() );
-            return (Tab);
+            try
+            {
+                var Tab = (Item != "" ? EntryTab_xml[Item] : new EntryInfoXml());
+                return (Tab);
+            }catch(Exception ex)
+            {
+                return (null);
+            }
+
         }
         public EntryInfoJson GetEntryTab_json(string Item)
         {

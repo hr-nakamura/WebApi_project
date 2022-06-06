@@ -58,7 +58,8 @@
                 $(".menuBlock_content").mymenu(menu_Xml, {
                     color_menu_base: "cornflowerblue",
                     color_menu_select: "royalblue",
-                    click: menu_click
+                    click: menu_click,
+                    context_menu: menu_click2
                 });
                 $("iframe.iframe_content").frame();
 
@@ -99,6 +100,20 @@
 
     </script>
     <script type="text/javascript">
+        function menu_click2(o) {
+            var Json = {};
+            try {
+                Json = $.WebApi_json(o.item);
+            } catch (e) {
+                Json = {
+                    error: e.message,
+                    url: o.item
+                };
+            }
+            var Str = JSON.stringify(Json);
+            $.storage("viewStr", Str);
+            $("iframe.iframe_content").attr("src", "Util/viewValue.html");
+        }
         function menu_click(o) {
             var mode = o.mode;          // method,url,undefined
             if (mode == "url" || mode == "method") {
@@ -119,6 +134,7 @@
             $.storage("viewStr", Str);
             $("iframe.iframe_content").attr("src", "Util/viewValue.html");
         }
+
         function menu_click_test(o) {
             var mode = o.mode;
             if (mode == "method") {
