@@ -47,9 +47,8 @@ namespace WebApi_project.hostProc
             if( EntryInfo != null)
             {
                 string url = EntryInfo.data;
-                string option = EntryInfo.option;
-
-                url += "?queryChk=1";
+                string option = JsonMerge(EntryInfo.option, "{queryChk:'1'}");
+                url += makeOption(option, "?");
 
                 hostWeb h = new hostWeb();
                 jsonStr = h.GetRequest(url, "Shift_JIS");
