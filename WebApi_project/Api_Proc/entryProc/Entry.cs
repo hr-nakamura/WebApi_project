@@ -47,6 +47,8 @@ namespace WebApi_project.hostProc
             if( EntryInfo != null)
             {
                 string url = EntryInfo.data;
+                string option = EntryInfo.option;
+
                 url += "?queryChk=1";
 
                 hostWeb h = new hostWeb();

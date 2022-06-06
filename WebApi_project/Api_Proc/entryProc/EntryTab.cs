@@ -15,8 +15,8 @@ namespace WebApi_project.hostProc
         public SortedDictionary<string, EntryInfoXml> 部門収支 = new SortedDictionary<string, EntryInfoXml>() {
             { "部門収支/部門収支_XML", new EntryInfoXml{
                 type = "xml",
-                data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML_55.asp",
-                option = "{dispCmd:'EMG',year:2022,fix:70,yosoku:3}",
+                data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp",
+                option = "{dispCmd:'EMG',year:2022,fix:10,yosoku:3}",
                 }
             },
         };
