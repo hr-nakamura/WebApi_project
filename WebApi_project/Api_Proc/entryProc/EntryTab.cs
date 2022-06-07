@@ -13,13 +13,20 @@ namespace WebApi_project.hostProc
     public partial class hostProc
     {
         public SortedDictionary<string, EntryInfoXml> 部門収支 = new SortedDictionary<string, EntryInfoXml>() {
-            { "部門収支/部門収支_XML", new EntryInfoXml{
+            { "部門収支/部門収支", new EntryInfoXml{
                 type = "xml",
-                data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp",
+                data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML_5.asp",
                 option = "{dispCmd:'EMG',year:2022,fix:10,yosoku:3}",
                 }
             },
+            { "部門収支/部門リスト", new EntryInfoXml{
+                type = "xml",
+                data = "http://kansa.in.eandm.co.jp/Project/common_data/xmlProc/部門リスト_XML.asp",
+                option = "{dispMode:'部',secMode:'開発',year:2022}",
+                }
+            },
         };
+
         public SortedDictionary<string, EntryInfoXml> projectCostProc = new SortedDictionary<string, EntryInfoXml>(){
             { "projectCostProc/projectInfo_XML_Detail", new EntryInfoXml{
                 type = "xml",

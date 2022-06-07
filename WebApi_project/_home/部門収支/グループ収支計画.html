@@ -17,7 +17,10 @@
 
     <script type="text/javascript">
         var url = "部門収支.html";
+        var xsl_group = "xsl/部門_リスト_select.xsl"
+        var xmlDoc_groupList;
         var o_iframe = null;
+        var year;
         var para = {
             dispCmd: "課一覧",
             dispName: "営業本部",
@@ -26,9 +29,6 @@
             fix: 70,
             yosoku: 3
         }
-        var host_name = "http://localhost";
-        host_name = "";
-        var web_api_json = host_name + "/webapi/project/api/json";
 
     </script>
     <script type="text/javascript">
@@ -36,6 +36,20 @@
             $("iframe.iframe_content").frame();
             $("iframe.iframe_content").attr("src", url);                // サブウインドオープン
             o_iframe = ($("iframe.iframe_content").length == 1 ? $("iframe.iframe_content")[0] : null);
+
+            var d = new Date();
+            var year = d.getFullYear();
+            var mm = d.getMonth() + 1;
+            var dd = d.getDate();
+            var yymm = (year * 100) + mm;
+            year = (mm > 10 ? year++ : year);
+            var json = {
+                year: year,
+                secMode: "開発"
+            }
+
+            xmlDoc_groupList = $.WebApi("部門収支/部門リスト", json);
+
         });
 
         $(window).on("load", function () {
@@ -43,11 +57,6 @@
             //var pathName = String(location.pathname).split("?")[0];
             //var name = hostInfo.url.Check(pathName);
 
-            var d = new Date();
-            var yy = d.getFullYear();
-            var mm = d.getMonth() + 1;
-            var dd = d.getDate();
-            var yymm = (yy * 100) + mm;
             var json = { yymm: yymm }
             var json = $.WebApi_json("projectInfo/dayChk_json", json);
             var OKday = json.day;
@@ -62,6 +71,9 @@
 
             var fixLevel = $(".level:checked").val();
             para.fix = fixLevel;
+
+
+
 
 
             loadHTML(para);
