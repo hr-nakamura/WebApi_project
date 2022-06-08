@@ -26,22 +26,23 @@
   </menu>
   <menu name="テーブル(JSON)" memo="" >
   </menu>
-  <menu name="関数(TEST_XML)" memo="" >
+  <menu name="関数(TEST_XML)" memo="debug" display="none">
 	</menu>
-    <menu name="関数(TEST_JSON)" memo="" >
+    <menu name="関数(TEST_JSON)" memo="debug" display="none">
     </menu>
 
 
 
-  <menu name="_Test/select" memo="" >
+  <menu name="_Test/select" memo="debug" display="none">
     <menu name="test" memo="" mode="url" url="/WebApi/project/_Test/select/test.html"/>
   </menu>
-  <menu name="_Test" memo="" >
-	  <menu name="_Test/test.html" memo="" mode="url" url="/WebApi/project/_Test/test.html"/>
+	
+  <menu name="_Test" memo="debug" display="none">
+    <menu name="_Test/test.html" memo="" mode="url" url="/WebApi/project/_Test/test.html"/>
     <menu name="xml/test.html" memo="" mode="url" url="/WebApi/project/_Test/xml/test.html"/>
     <menu name="winTest/test1.html" memo="" mode="url" url="/WebApi/project/_Test/winTest/test1.html"/>
 
-    <menu name="History">
+    <menu name="History" >
       <menu name="History" memo="" mode="url" url="/WebApi/project/_Test/History/History.html"/>
     </menu>
     <menu name="QOSMIO">
@@ -51,11 +52,11 @@
     <menu name="test.asp" memo="" mode="url" url="/WebApi/project/_Test/_test/test.asp?ABC=123"/>
   </menu>
 
-    <menu name="_Test/Dialog" memo="" >
-        <menu name="editGroup" memo="" mode="url" url="/WebApi/project/_Test/Dialog/editGroup.html"/>
-        <menu name="dialog" memo="" mode="url" url="/WebApi/project/_Test/Dialog/dialog.html"/>
-        <menu name="dialog1" memo="" mode="url" url="/WebApi/project/_Test/Dialog/dialog1.html"/>
-    </menu>
+<menu name="_Test/Dialog" memo="debug" display="none">
+    <menu name="editGroup" memo="" mode="url" url="/WebApi/project/_Test/Dialog/editGroup.html"/>
+    <menu name="dialog" memo="" mode="url" url="/WebApi/project/_Test/Dialog/dialog.html"/>
+    <menu name="dialog1" memo="" mode="url" url="/WebApi/project/_Test/Dialog/dialog1.html"/>
+</menu>
 
 
 

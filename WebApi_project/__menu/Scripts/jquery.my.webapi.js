@@ -15,7 +15,7 @@
             //WebApi_url = hostName + "/WebApi/project/api/xml";
             var WebApi_url_xml = hostName + "/WebApi/project/api/xml";
 
-            $.debug("__menu/WebApi", WebApi_url_xml);
+            //$.debug("__menu/WebApi", WebApi_url_xml);
             var options = {
                 Item: item,
                 Json: (typeof(json) == "object" ? JSON.stringify(json) : json)
@@ -41,7 +41,7 @@
             $.WebApi_json = function (item, json) {
             var WebApi_url_json = hostName + "/WebApi/project/api/json";
                 //WebApi_url_json = hostName + "/WebApi/project/api/json";
-            $.debug("__menu/WebApi_json", WebApi_url_json);
+            //$.debug("__menu/WebApi_json", WebApi_url_json);
                 var options = {
                     Item: item,
                     Json: (typeof (json) == "object" ? JSON.stringify(json) : json)
@@ -66,7 +66,7 @@
             },
             $.WebApi_test = function (mode, className, methodName, json) {
             var WebApi_url_test = hostName + "/WebApi/project/api/test";
-            $.debug("__menu/WebApi_test", WebApi_url_test);
+            //$.debug("__menu/WebApi_test", WebApi_url_test);
                 var options = {
                     mode: mode,
                     className: className,
