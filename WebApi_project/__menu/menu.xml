@@ -33,8 +33,8 @@
 
 
 
-  <menu name="_Test/select" memo="debug" display="none">
-    <menu name="test" memo="" mode="url" url="/WebApi/project/_Test/select/test.html"/>
+  <menu name="_Test" memo="debug" display="none">
+    <menu name="projectList" memo="" mode="url" url="/WebApi/project/_Test/_Test/projectList/bbsMain.html"/>
   </menu>
 	
   <menu name="_Test" memo="debug" display="none">

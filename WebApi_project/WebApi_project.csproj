@@ -184,6 +184,8 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="_Test\xml\xsl\売上予実_新規.xml" />
+    <Content Include="_Test\_Test\projectList\bbsMain.html" />
+    <Content Include="_Test\_Test\projectList\test.asp" />
     <Content Include="_Test\_Test\test.asp" />
     <Content Include="_Test\Dialog\back.gif" />
     <Content Include="_Test\Dialog\bg01.gif" />
