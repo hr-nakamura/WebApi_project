@@ -184,8 +184,15 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="_Test\xml\xsl\売上予実_新規.xml" />
-    <Content Include="_Test\_Test\projectList\bbsMain.html" />
-    <Content Include="_Test\_Test\projectList\test.asp" />
+    <Content Include="_Test\_Test\projectList\js\jquery.stopWatch.js" />
+    <Content Include="_Test\_Test\projectList\test.html" />
+    <Content Include="_Test\_Test\projectList\js\jquery-1.12.4.js" />
+    <Content Include="_Test\_Test\projectList\js\jquery.kansa.Query.js" />
+    <Content Include="_Test\_Test\projectList\js\jquery.my.frame.js" />
+    <Content Include="_Test\_Test\projectList\js\jquery.my.webapi.js" />
+    <Content Include="_Test\_Test\projectList\new.gif" />
+    <Content Include="_Test\_Test\projectList\new7.gif" />
+    <Content Include="_Test\_Test\projectList\projectList.xsl" />
     <Content Include="_Test\_Test\test.asp" />
     <Content Include="_Test\Dialog\back.gif" />
     <Content Include="_Test\Dialog\bg01.gif" />
