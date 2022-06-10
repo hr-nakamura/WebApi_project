@@ -233,7 +233,7 @@ namespace WebApi_project.hostProc
             url += makeOption(option, "?");
             hostWeb h = new hostWeb();
             string jsonStr = h.GetRequest(url, "Shift_JIS");
-            if (jsonStr != null)
+            if (!String.IsNullOrEmpty(jsonStr))
             {
                 oJson = JObject.Parse(jsonStr);
                 hProc.JsonArrayConvert(ref oJson, "月", "m");
@@ -250,7 +250,7 @@ namespace WebApi_project.hostProc
             url += makeOption(option, "?");
             hostWeb h = new hostWeb();
             string jsonStr = h.GetRequest(url, "Shift_JIS");
-            if (jsonStr != null)
+            if (!String.IsNullOrEmpty(jsonStr))
             {
                 oJson = JObject.Parse(jsonStr);
                 hProc.JsonArrayConvert(ref oJson, "月", "m");
@@ -388,6 +388,7 @@ namespace WebApi_project.hostProc
                 return (Tab);
             }catch(Exception ex)
             {
+                var x = ex.Message;
                 return (null);
             }
 

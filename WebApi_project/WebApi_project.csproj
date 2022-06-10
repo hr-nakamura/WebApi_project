@@ -388,6 +388,7 @@
     <Content Include="__menu\work\aaa.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api_Proc\entryProc\EntryTab_sample.cs" />
     <Compile Include="Api_Proc\entryProc\EntryTab.cs" />
     <Compile Include="Api_Proc\entryProc\Entry.cs" />
     <Compile Include="Api_Proc\funcProc\売上予測\売上予測.cs" />
