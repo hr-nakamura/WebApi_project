@@ -7,6 +7,8 @@ using Newtonsoft.Json;
 using System.Reflection;
 using System.Net.Http;
 
+using System.Diagnostics;
+
 
 using WebApi_project.Models;
 using WebApi_project.hostProc;
@@ -35,10 +37,21 @@ namespace WebApi_project.Controllers
         public HttpResponseMessage Get(string Item, string Json)
         {
             MyDebug.noWrite("Xml", "Get string Item, string Json",Item,Json.ToString());
+
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
             var hProc = new hostProc.entryProc();
 
             EntryInfoXml EntryInfo = new EntryInfoXml();
             XmlDocument xmlDoc = hProc.Entry(EntryInfo, Item, Json);
+
+            stopwatch.Stop();
+
+            string[] Arry = new string[] { "実行時間(Xml)", Item , stopwatch.Elapsed.ToString() };
+            string work = "[" + string.Join("][", Arry) + "]";
+            XmlComment aaa = xmlDoc.CreateComment(work);
+            XmlNode root = xmlDoc.SelectSingleNode("root");
+            xmlDoc.InsertBefore(aaa,root);
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
             return (response);
