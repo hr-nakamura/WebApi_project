@@ -90,21 +90,21 @@ namespace WebApi_project.hostProc
                 }
                 if (NetErrorCount > MAX_SHOW_ERROR)
                 {
-                    MyDebug.Write(MyDebug.LOG_OK, "[ErrCount = " + NetErrorCount + "] ネットワーク回復 GetRequest(" + url + ")");
+                    MyDebug.Write(MyDebug.LOG_OK, "[ErrCount = " + NetErrorCount + "] ネットワーク回復 GetRequest(" + HttpUtility.UrlDecode(url, Encode) + ")");
                 }
                 NetErrorCount = 0;
             }
             catch (OutOfMemoryException ex)
             {
                 returnBuff = null;
-                MyDebug.Write(MyDebug.LOG_NG, "[" + ex.Message + "] GetRequest(" + url + ")");
+                MyDebug.Write(MyDebug.LOG_NG, "[" + ex.Message + "] GetRequest(" + HttpUtility.UrlDecode(url, Encode) + ")");
             }
             catch (Exception ex)
             {
                 returnBuff = null;
                 if (NetErrorCount++ < MAX_SHOW_ERROR)
                 {
-                    MyDebug.Write(MyDebug.LOG_NG, "[" + ex.Message + "] GetRequest(" + url + ")");
+                    MyDebug.Write(MyDebug.LOG_NG, "[" + ex.Message + "] GetRequest(" + HttpUtility.UrlDecode(url, Encode) + ")");
                     //returnBuff = "{"+ex.Message+"}";
                 }
             }
@@ -128,9 +128,10 @@ namespace WebApi_project.hostProc
             }
             // 計測停止
             sw.Stop();
-            //結果出力
-            MyDebug.Write($"処理時間 [" + sw.Elapsed + "] GetRequest(" + url + ")");
 
+        //結果出力
+        MyDebug.Write($"処理時間 [" + sw.Elapsed + "] GetRequest(" + HttpUtility.UrlDecode(url, Encode) + ")");
+            
             return returnBuff;
         }
 
@@ -192,7 +193,7 @@ namespace WebApi_project.hostProc
             catch (OutOfMemoryException ex)
             {
                 returnBuff = null;
-                MyDebug.Write(MyDebug.LOG_NG, "PostRequest(" + url + ", postDataXML)[" + ex.Message + "]");
+                MyDebug.Write(MyDebug.LOG_NG, "PostRequest(" + HttpUtility.UrlDecode(url, Encode) + ", postDataXML)[" + ex.Message + "]");
             }
             catch (Exception ex)
             {

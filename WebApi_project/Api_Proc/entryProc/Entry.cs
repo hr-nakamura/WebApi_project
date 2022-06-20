@@ -43,7 +43,7 @@ namespace WebApi_project.hostProc
         public string Entry_Check(string Item)
         {
             string jsonStr = null;
-               EntryInfoXml EntryInfo = GetEntryTab_xml(Item);
+            EntryInfoXml EntryInfo = GetEntryTab_xml(Item);
             if( EntryInfo != null)
             {
                 string url = EntryInfo.data;
@@ -52,6 +52,23 @@ namespace WebApi_project.hostProc
 
                 hostWeb h = new hostWeb();
                 jsonStr = h.GetRequest(url, "Shift_JIS");
+
+                try
+                {
+                    // 戻り値がjson?
+                    JObject jsonObject = JObject.Parse(jsonStr);
+                }catch(Exception ex)
+                {
+                    var s = ex.Message;
+                    var Msg = new Dictionary<string, string>()
+                        {
+                            { "message"   ,"機能が準備されていません"},
+                            { "Item"   ,Item}
+                        };
+
+                    // Dictionaryをシリアライズします。
+                    jsonStr = System.Text.Json.JsonSerializer.Serialize(Msg);
+                }
             }
             else
             {

@@ -103,6 +103,7 @@
             try {
                 Json = $.WebApi_json(o.item);
             } catch (e) {
+                $.debug("error", e.message);
                 Json = {
                     error: e.message,
                     url: o.item
