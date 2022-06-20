@@ -69,10 +69,12 @@ namespace WebApi_project.hostProc
                 dataX = "http://localhost/test/_xmlData/統括収支計画.xml",
                 }
             },
+            // dispCmd=統括一覧 にすると：遅い、
+            // dispName=指定しないと：全部持ってくる
             { "_sample/部門収支/統括収支計画_営業本部2", new EntryInfoXml{
                 type = "xml",
                 data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp",
-                option = "{dispCmd:'統括一覧',secMode:'開発',dispName:'営業本部',year:2022,fix:70,yosoku:3}",
+                option = "{dispCmd:'統括詳細',secMode:'開発',dispName:'',year:2022,fix:70,yosoku:3}",
                 dataX = "http://localhost/test/_xmlData/統括収支計画.xml",
                 }
             },
