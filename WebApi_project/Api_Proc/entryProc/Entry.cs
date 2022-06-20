@@ -23,10 +23,11 @@ namespace WebApi_project.hostProc
         {
             EntryInfo = GetEntryTab_xml(Item);
             EntryInfo.option = JsonMerge(EntryInfo.option, Json);
-            MyDebug.Json(EntryInfo.option);
 
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc = LoadFunc(EntryInfo);
+
+            MyDebug.Json(EntryInfo.option);
 
             return (xmlDoc);
         }
@@ -46,9 +47,9 @@ namespace WebApi_project.hostProc
             EntryInfoXml EntryInfo = GetEntryTab_xml(Item);
             if( EntryInfo != null)
             {
-                string url = EntryInfo.data;
+                string target_url = EntryInfo.data;
                 string option = JsonMerge(EntryInfo.option, "{queryChk:'1'}");
-                url += makeOption(option, "?");
+                string url = target_url + makeOption(option, "?");
 
                 hostWeb h = new hostWeb();
                 jsonStr = h.GetRequest(url, "Shift_JIS");
@@ -62,8 +63,9 @@ namespace WebApi_project.hostProc
                     var s = ex.Message;
                     var Msg = new Dictionary<string, string>()
                         {
-                            { "message"   ,"機能が準備されていません"},
-                            { "Item"   ,Item}
+                            { "message" , "機能が準備されていません"},
+                            { "Item"    , Item},
+                            { "url"     , url }
                         };
 
                     // Dictionaryをシリアライズします。
