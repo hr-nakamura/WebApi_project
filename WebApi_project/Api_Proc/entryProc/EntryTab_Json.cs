@@ -17,7 +17,7 @@ namespace WebApi_project.hostProc
             { "_sample/test", new EntryInfoJson{
                 type = "json",
                 data = "http://localhost/test/test.asp",
-                option = "{func:'xxxx',p1:'P1',p2:'P2'}"
+                option = "{func:'xxxx',p1:'P1',p2:'P2',p3:'p3'}"
                 }
             },
         };
