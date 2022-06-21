@@ -392,6 +392,7 @@
     <Content Include="_Test\xml\統括一覧_JSON.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api_Proc\entryProc\EntryTab_Json.cs" />
     <Compile Include="Api_Proc\entryProc\EntryTab_sample.cs" />
     <Compile Include="Api_Proc\entryProc\EntryTab.cs" />
     <Compile Include="Api_Proc\entryProc\Entry.cs" />
