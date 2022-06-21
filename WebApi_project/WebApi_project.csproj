@@ -135,6 +135,7 @@
     <Content Include="_home\_Content\bmp\売上予実_部門.gif" />
     <Content Include="_home\_Content\bmp\売上目標_部門.gif" />
     <Content Include="_home\_Content\Jcmn.inc" />
+    <Content Include="_home\_Content\test.asp" />
     <Content Include="_home\_Content\xsl\sub_cmn.xsl" />
     <Content Include="_home\_Content\xsl\sub_jscript.xsl" />
     <Content Include="_home\_Content\_Scripts\json2xml.js" />
