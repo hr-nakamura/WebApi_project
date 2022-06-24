@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root name="EMG">
-    <menu name="監査ページ(NEW)" memo="" mode="url" url="/WebApi/project/_home/Menu.asp"/>
+	<menu name="_Test" memo="debug">
+		<menu name="test***" memo="" mode="url" url="/WebApi/project/_Test/_Test1/test.html"/>
+	</menu>
+
+	<menu name="監査ページ(NEW)" memo="" mode="url" url="/WebApi/project/_home/Menu.asp"/>
 
     <menu name="_home" memo="" >
         <menu name="部門収支" memo="" >
@@ -33,9 +37,6 @@
 
 
 
-  <menu name="_Test" memo="debug">
-    <menu name="test" memo="" mode="url" url="/WebApi/project/_Test/test.html"/>
-  </menu>
   <menu name="_Test" memo="debug" display="none">
     <menu name="projectList" memo="" mode="url" url="/WebApi/project/_Test/_Test/projectList/test.html"/>
   </menu>

@@ -5,13 +5,13 @@
 
 
 <SCRIPT LANGUAGE="JavaScript">
-var limitYear = "<%=limitYear%>"
-var dispCnt   = "<%=dispCnt%>"
-var dispCmd   = "<%=dispCmd%>"
-var dispMode  = "<%=dispMode%>"
-var year	  = "<%=year%>"
-var fixLevel  = "<%=fixLevel%>"
-var yosokuCnt = "<%=yosokuCnt%>"
+var limitYear = 2010
+var dispCnt   = 12
+var dispCmd   = "統括個別"
+var dispMode  = ""
+var year	  = 2022
+var fixLevel  = 70
+var yosokuCnt = 3
 </SCRIPT>
 <SCRIPT FOR="window" EVENT="onload" Language="JavaScript">
 //LoadComment(year)
@@ -249,17 +249,23 @@ this.style.cursor = ""
 
 <SCRIPT LANGUAGE="JavaScript" src="xmlProc.js"></SCRIPT>
 <SCRIPT Language="JavaScript">
-var xml_name1 = "xml/部門収支_XML.asp"				// 地域別
-var xsl_name1 = "xsl/部門収支.xsl"				
+var xml_name1 = "xml/BASE.xml"				// 地域別
+var xsl_name1 = "xsl/a.xsl"				
 
 var xml_proc
 var source = "ABC"
 
 function reLoad()
-	{
+{
+
+
+	var elem = document.createElement("div");
+	var target = document.getElementById("dataG");
+	target.appendChild(elem);
+
 	var dispName = ""
 	mainTitle.style.color = "tomato"
-
+	dispName = "本社";
 	var para = []
 	if( dispCmd != "" )   para.push("dispCmd="	+ dispCmd )
 	if( dispName != "" )  para.push("dispName=" + dispName )
@@ -439,7 +445,7 @@ function LoadComment(year)
 						<LI>
 						売上は請求書発行データを使用しています。(実際の入金は翌月・翌々月・手形など客先により違います)
 						<LI>
-						データの確定はEM・ACEL・PSL３社の経費データがほぼ揃った時点( <%=String(adjustDayCnt)%> 営業日)で、売上・費用とも確定とします。
+						データの確定はEM・ACEL・PSL３社の経費データがほぼ揃った時点(営業日)で、売上・費用とも確定とします。
 						<LI>
 						営業外費用の主な項目として借入金の金利支払いを含みます(借入金の返済は含まれていません)。
 						<LI>

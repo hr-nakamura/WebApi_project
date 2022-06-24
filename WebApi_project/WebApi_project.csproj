@@ -177,7 +177,10 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="_Test\select\test.html" />
-    <Content Include="_Test\xmlProc.js" />
+    <Content Include="_Test\_Test1\xml\BASE.xml" />
+    <Content Include="_Test\_Test1\cmn.js" />
+    <Content Include="_Test\_Test1\cmn.vbs" />
+    <Content Include="_Test\_Test1\xmlProc.js" />
     <Content Include="_Test\xml\JavaScript.js" />
     <Content Include="_Test\xml\xsl\sub_cmn.xsl" />
     <Content Include="_Test\xml\test.html" />
@@ -185,6 +188,8 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="_Test\xml\xsl\売上予実_新規.xml" />
+    <Content Include="_Test\_Test1\xsl\a.xsl" />
+    <Content Include="_Test\_Test1\xsl\部門収支.xsl" />
     <Content Include="_Test\_Test\projectList\js\jquery.stopWatch.js" />
     <Content Include="_Test\_Test\projectList\test.html" />
     <Content Include="_Test\_Test\projectList\js\jquery-1.12.4.js" />
@@ -243,7 +248,7 @@
     <Content Include="_Test\Dialog\xx.xsl" />
     <Content Include="_Test\History\HIstory.html" />
     <Content Include="_Test\_Test\memo.txt" />
-    <Content Include="_Test\test.html" />
+    <Content Include="_Test\_Test1\test.html" />
     <Content Include="_Test\Dialog\dialog.html" />
     <Content Include="_Test\TEST\ACEL.mdb" />
     <Content Include="_Test\TEST\EM.mdb" />
