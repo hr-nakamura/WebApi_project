@@ -136,6 +136,7 @@
     <Content Include="_home\_Content\bmp\売上目標_部門.gif" />
     <Content Include="_home\_Content\Jcmn.inc" />
     <Content Include="_home\_Content\test.asp" />
+    <Content Include="_home\_Content\xmlProc.js" />
     <Content Include="_home\_Content\xsl\sub_cmn.xsl" />
     <Content Include="_home\_Content\xsl\sub_jscript.xsl" />
     <Content Include="_home\_Content\_Scripts\json2xml.js" />
@@ -152,6 +153,7 @@
     <Content Include="_home\_Content\_xmlData\課収支計画.xml" />
     <Content Include="_home\_Content\_xmlData\費用状況.xml" />
     <Content Include="_home\_Content\_xmlData\部収支計画.xml" />
+    <Content Include="_home\_Content\統括収支計画.asp" />
     <Content Include="_home\売上予測\account.css" />
     <Content Include="_home\売上予測\account1.css" />
     <Content Include="_home\売上予測\target.html" />
