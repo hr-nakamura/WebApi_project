@@ -1,36 +1,461 @@
-ï»¿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-    <script src="../_home/_Content/_Scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
-
-    <script src="../_home/_Content/_Scripts/encoding.js" type="text/javascript"></script>
-    <script src="../_home/_Content/_Scripts/jquery.my.frame.js" type="text/javascript"></script>
-
-    <script src="../_home/_Content/_Scripts/jquery.my.webapi.js" type="text/javascript"></script>
-    <script src="../_home/_Content/_Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
-    <script src="../_home/_Content/_Scripts/jquery.stopWatch.js" type="text/javascript"></script>
-    <script src="../_home/_Content/_debug/jquery.my.debug.js" type="text/javascript"></script>
-    <script src="../__menu/debug/jquery.my.fileOut.js" type="text/javascript"></script>
-    <SCRIPT FOR="window" EVENT="onload" LANGUAGE="JavaScript">
-        try {
-
-            //alert($.fn.jquery);
-            json = $.WebApi_json("éƒ¨é–€åæ”¯/éƒ¨é–€åæ”¯_XML");
-            var Str = JSON.stringify(json);
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=SHIFT_JIS">
+<META http-equiv="X-UA-Compatible" content="IE=5" />
 
 
-        } catch (e) {
-            alert(e.message);
-        }
+<SCRIPT LANGUAGE="JavaScript">
+var limitYear = "<%=limitYear%>"
+var dispCnt   = "<%=dispCnt%>"
+var dispCmd   = "<%=dispCmd%>"
+var dispMode  = "<%=dispMode%>"
+var year	  = "<%=year%>"
+var fixLevel  = "<%=fixLevel%>"
+var yosokuCnt = "<%=yosokuCnt%>"
+</SCRIPT>
+<SCRIPT FOR="window" EVENT="onload" Language="JavaScript">
+//LoadComment(year)
 
-    </SCRIPT>
-    <script FOR="window" EVENT="onunload" LANGUAGE="JavaScript">
-        //window.dialogArguments.pNum = pNum;
-        //window.returnValue = "result";
-    </script>
-</head>
-<body>
-</body>
-</html >
+var yymm = (parseInt(year)-1)*100 + 10
+var Title = ( dispCmd == "“Š‡ˆê——" ? "“Š‡ûxŒv‰æ" : "•”–åûxŒv‰æ" )
+mainTitle.innerHTML = String(Title).big()
+subTitle.innerHTML = "(" + strMonth(yymm) + "`" + strMonth(yymmAdd(yymm,dispCnt-1)) + ")"
+
+if(parseInt(year) > parseInt(limitYear) ){
+	prev.style.display=""
+	}
+next.style.display=""
+
+var o = document.getElementsByName("section")
+for( var i = 0; i < o.length; i++ ){
+	if(o[i].value == dispMode) o[i].checked = true
+	}
+
+var o = document.getElementsByName("level")
+for( var i = 0; i < o.length; i++ ){
+	if(o[i].value == fixLevel) o[i].checked = true
+	}
+
+reLoad()
+
+window.focus()
+</SCRIPT>
+<SCRIPT FOR="window" EVENT="onunload" LANGUAGE="JavaScript">
+winClose()
+</SCRIPT>
+
+
+
+<SCRIPT FOR="yosokuMode" EVENT="onclick" LANGUAGE="JavaScript">
+yosokuCnt = this.value
+reLoad()
+</SCRIPT>
+
+<SCRIPT FOR="level" EVENT="onclick" LANGUAGE="JavaScript">
+//mainTitle.style.color = "tomato"
+//this.parentElement.style.color = "tomato"
+
+	fixLevel = this.value
+	levelChange(fixLevel)
+
+</SCRIPT>
+
+
+<SCRIPT FOR="prev" EVENT="onclick" LANGUAGE="JavaScript">
+mainTitle.style.color = "tomato"
+
+year	  = parseInt(year) - 1
+yosokuCnt = parseInt(yosokuCnt) - parseInt(dispCnt)
+
+var pTab = []
+pTab.push("dispCmd=" + dispCmd)
+pTab.push("dispName=")
+pTab.push("year="	+ year)
+pTab.push("fix=" 	+ fixLevel)
+pTab.push("yosoku="	+ yosokuCnt)
+window.location.replace(window.location.pathname + "?" + pTab.join("&") )
+</SCRIPT>
+
+<SCRIPT FOR="next" EVENT="onclick" LANGUAGE="JavaScript">
+mainTitle.style.color = "tomato"
+
+year	  = parseInt(year) + 1
+yosokuCnt = parseInt(yosokuCnt) + parseInt(dispCnt)
+
+var pTab = []
+pTab.push("dispCmd=" + dispCmd)
+pTab.push("dispName=")
+pTab.push("year="	+ year)
+pTab.push("fix=" 	+ fixLevel)
+pTab.push("yosoku="	+ yosokuCnt)
+window.location.replace(window.location.pathname + "?" + pTab.join("&") )
+</SCRIPT>
+<SCRIPT FOR="prev" EVENT="onmouseover" LANGUAGE="JavaScript">
+this.style.cursor = "hand"
+</SCRIPT>
+<SCRIPT FOR="prev" EVENT="onmouseleave" LANGUAGE="JavaScript">
+this.style.cursor = ""
+</SCRIPT>
+<SCRIPT FOR="next" EVENT="onmouseover" LANGUAGE="JavaScript">
+this.style.cursor = "hand"
+</SCRIPT>
+<SCRIPT FOR="next" EVENT="onmouseleave" LANGUAGE="JavaScript">
+this.style.cursor = ""
+</SCRIPT>
+
+<SCRIPT FOR="onGenka" EVENT="onmouseover" LANGUAGE="JavaScript">
+this.style.cursor="hand"
+</SCRIPT>
+<SCRIPT FOR="onGenka" EVENT="onmouseout" LANGUAGE="JavaScript">
+this.style.cursor=""
+</SCRIPT>
+<SCRIPT FOR="onGenka" EVENT="onclick" LANGUAGE="JavaScript">
+var oBody = this.parentElement.tBodies
+var Cnt = oBody.length
+for( var i = 0; i < Cnt; i++){
+	if( oBody[i].id == "onGenka" )	oBody[i].style.display = (oBody[i].style.display == "none" ? "" : "none")
+	}
+</SCRIPT>
+
+<SCRIPT FOR="onSales" EVENT="onmouseover" LANGUAGE="JavaScript">
+this.style.cursor="hand"
+</SCRIPT>
+<SCRIPT FOR="onSales" EVENT="onmouseout" LANGUAGE="JavaScript">
+this.style.cursor=""
+</SCRIPT>
+<SCRIPT FOR="onSales" EVENT="onclick" LANGUAGE="JavaScript">
+var oBody = this.parentElement.tBodies
+var Cnt = oBody.length
+for( var i = 0; i < Cnt; i++){
+	if( oBody[i].id == "onSales" )	oBody[i].style.display = (oBody[i].style.display == "none" ? "" : "none")
+	}
+</SCRIPT>
+
+<SCRIPT FOR="onCost" EVENT="onmouseover" LANGUAGE="JavaScript">
+this.style.cursor="hand"
+</SCRIPT>
+<SCRIPT FOR="onCost" EVENT="onmouseout" LANGUAGE="JavaScript">
+this.style.cursor=""
+</SCRIPT>
+<SCRIPT FOR="onCost" EVENT="onclick" LANGUAGE="JavaScript">
+var oBody = this.parentElement.tBodies
+var Cnt = oBody.length
+for( var i = 0; i < Cnt; i++){
+	if( oBody[i].id == "onCost" )	oBody[i].style.display = (oBody[i].style.display == "none" ? "" : "none")
+	}
+</SCRIPT>
+
+<SCRIPT FOR="onKanriHi" EVENT="onmouseover" LANGUAGE="JavaScript">
+this.style.cursor="hand"
+</SCRIPT>
+<SCRIPT FOR="onKanriHi" EVENT="onmouseout" LANGUAGE="JavaScript">
+this.style.cursor=""
+</SCRIPT>
+<SCRIPT FOR="onKanriHi" EVENT="onclick" LANGUAGE="JavaScript">
+var oBody = this.parentElement.tBodies
+var Cnt = oBody.length
+for( var i = 0; i < Cnt; i++){
+	if( oBody[i].id == "onKanriHi" )	oBody[i].style.display = (oBody[i].style.display == "none" ? "" : "none")
+	}
+</SCRIPT>
+
+<SCRIPT FOR="onKei0" EVENT="onmouseover" LANGUAGE="JavaScript">
+this.style.cursor="hand"
+</SCRIPT>
+<SCRIPT FOR="onKei0" EVENT="onmouseout" LANGUAGE="JavaScript">
+this.style.cursor=""
+</SCRIPT>
+<SCRIPT FOR="onKei0" EVENT="onclick" LANGUAGE="JavaScript">
+var oBody = this.parentElement.tBodies
+var Cnt = oBody.length
+for( var i = 0; i < Cnt; i++){
+	if( oBody[i].id == "onKei0" )	oBody[i].style.display = (oBody[i].style.display == "none" ? "" : "none")
+	}
+</SCRIPT>
+<SCRIPT FOR="onKei1" EVENT="onmouseover" LANGUAGE="JavaScript">
+this.style.cursor="hand"
+</SCRIPT>
+<SCRIPT FOR="onKei1" EVENT="onmouseout" LANGUAGE="JavaScript">
+this.style.cursor=""
+</SCRIPT>
+<SCRIPT FOR="onKei1" EVENT="onclick" LANGUAGE="JavaScript">
+var oBody = this.parentElement.tBodies
+var Cnt = oBody.length
+for( var i = 0; i < Cnt; i++){
+	if( oBody[i].id == "onKei1" )	oBody[i].style.display = (oBody[i].style.display == "none" ? "" : "none")
+	}
+</SCRIPT>
+<SCRIPT FOR="onKei2" EVENT="onmouseover" LANGUAGE="JavaScript">
+this.style.cursor="hand"
+</SCRIPT>
+<SCRIPT FOR="onKei2" EVENT="onmouseout" LANGUAGE="JavaScript">
+this.style.cursor=""
+</SCRIPT>
+<SCRIPT FOR="onKei2" EVENT="onclick" LANGUAGE="JavaScript">
+var oBody = this.parentElement.tBodies
+var Cnt = oBody.length
+for( var i = 0; i < Cnt; i++){
+	if( oBody[i].id == "onKei2" )	oBody[i].style.display = (oBody[i].style.display == "none" ? "" : "none")
+	}
+</SCRIPT>
+<SCRIPT FOR="onKei3" EVENT="onmouseover" LANGUAGE="JavaScript">
+this.style.cursor="hand"
+</SCRIPT>
+<SCRIPT FOR="onKei3" EVENT="onmouseout" LANGUAGE="JavaScript">
+this.style.cursor=""
+</SCRIPT>
+<SCRIPT FOR="onKei3" EVENT="onclick" LANGUAGE="JavaScript">
+var oBody = this.parentElement.tBodies
+var Cnt = oBody.length
+for( var i = 0; i < Cnt; i++){
+	if( oBody[i].id == "onKei3" )	oBody[i].style.display = (oBody[i].style.display == "none" ? "" : "none")
+	}
+</SCRIPT>
+
+<SCRIPT LANGUAGE="JavaScript">
+var newWin = null;
+function winOpen(aspName)
+	{
+	newWin = window.open(aspName,"planWin","width=900,height=600,scrollbars,resizable,status=no");
+	}
+	
+function winClose()
+	{
+	if(newWin != null && !newWin.closed) newWin.close();
+	}
+</SCRIPT>
+
+<SCRIPT FOR="GRP" EVENT="onmouseenter" LANGUAGE="JavaScript">
+this.style.backgroundColor = "lightgrey"
+this.style.cursor = "hand"
+</SCRIPT>
+<SCRIPT FOR="GRP" EVENT="onmouseleave" LANGUAGE="JavaScript">
+this.style.backgroundColor = ""
+this.style.cursor = ""
+</SCRIPT>
+
+<SCRIPT FOR="GRP" EVENT="onclick" LANGUAGE="JavaScript">
+	var dispName = this.dispName
+	var para = []
+	para.push("dispCmd=“Š‡Ú×" )
+	if( dispName != "" )  para.push("dispName=" + dispName )
+	if( year != "" )	  para.push("year=" 	+ year )
+	if( fixLevel != "" )  para.push("fix="		+ fixLevel )
+	if( yosokuCnt != "" ) para.push("yosoku="	+ yosokuCnt )
+
+	winOpen("ŒÂ•ÊûxŒv‰æ.asp" + "?" + para.join("&"))
+</SCRIPT>
+
+
+<SCRIPT LANGUAGE="JavaScript" src="xmlProc.js"></SCRIPT>
+<SCRIPT Language="JavaScript">
+var xml_name1 = "xml/•”–åûx_XML.asp"				// ’nˆæ•Ê
+var xsl_name1 = "xsl/•”–åûx.xsl"				
+
+var xml_proc
+var source = "ABC"
+
+function reLoad()
+	{
+	var dispName = ""
+	mainTitle.style.color = "tomato"
+
+	var para = []
+	if( dispCmd != "" )   para.push("dispCmd="	+ dispCmd )
+	if( dispName != "" )  para.push("dispName=" + dispName )
+	if( year != "" )	  para.push("year=" 	+ year )
+	if( fixLevel != "" )  para.push("fix="		+ fixLevel )
+	if( yosokuCnt != "" ) para.push("yosoku="	+ yosokuCnt )
+	var xsl = xsl_name1
+	var xml = xml_name1 + "?" + para.join("&")
+
+	xml_proc = new xmlProc()
+	xml_proc.loadXML(source,xml,xml_func)
+	}
+
+function levelChange(level)
+	{
+	mainTitle.style.color = "tomato"
+//	dataBlock.style.display="none"
+//	helpBlock.style.display="none"
+
+//	”„ã—\‘ªƒf[ƒ^‚Ì•ÏX
+
+	yosokuSet(source,level)
+
+	var xsl = xsl_name1
+	xml_proc.transfor(source,xsl,xsl_func)
+
+	}
+	
+function xml_func(xmlDoc)
+	{
+	var xsl = xsl_name1
+	xml_proc.transfor(xmlDoc,xsl,xsl_func)
+	source = xmlDoc
+	}
+
+function xsl_func(Buff)
+	{
+	dataG.innerHTML = Buff
+
+	dataBlock.style.display="block"
+	helpBlock.style.display="block"
+	mainTitle.style.color = ""
+	comment.style.display="block"
+
+
+	if( document.getElementById("yosokuDiv") != null ){
+		var o = document.getElementsByName("yosokuMode")
+		for( var i = 0; i < o.length; i++ ){
+			if( o[i].value == yosokuCnt ) o[i].checked = true
+//			alert(o[i].value)
+			}
+		yosokuDiv.style.display = "block"
+		}
+	}
+	
+function yosokuSet(xmlDoc,level)
+	{
+try{
+	var yosokuInfo = []
+	var mCnt  = xmlDoc.selectSingleNode("//Œ”").text
+	var group = xmlDoc.selectNodes("//ƒOƒ‹[ƒv")
+	var levelNode = xmlDoc.selectSingleNode("//Šm“x")
+	levelNode.text = level
+
+	for( var g = 0; g < group.length; g++ ){
+		var yosoku = group[g].selectNodes("—\‘ªƒf[ƒ^/”„ã—\‘ª/€–Ú[@name='Šm“x" + level + "']/Œ")
+		var data   = group[g].selectNodes("ƒf[ƒ^")
+		for( var d = 0; d < data.length; d++ ){
+			for( var m = 0; m < mCnt; m++ ){
+				var x = data[d].selectSingleNode("Œî•ñ/Œ[@m=" + m + "]").text
+				var z = data[d].selectSingleNode("”„ã‚/€–Ú[@name='”„ã']/Œ[@m=" + m + "]")
+				if( x == "—\‘ª" ){
+					z.text= yosoku[m].text
+					}
+				}
+			}
+		}
+	return(xmlDoc)
+}catch(e){alert(e.message)}
+	}
+
+</SCRIPT>
+
+<SCRIPT LANGUAGE="JavaScript">
+function LoadComment(year)
+	{
+	var xslDoc = new ActiveXObject("Microsoft.XMLDom");
+	xslDoc.async = false;
+	var ret = xslDoc.load("xsl/“Š‡‘gD•\.xsl");
+
+	var xmlDoc = new ActiveXObject("Microsoft.XMLDom");
+
+// ”ñ“¯Šú‚É‚·‚é
+	xmlDoc.async = true;
+	xmlDoc.onreadystatechange = function (){
+		if( xmlDoc.readyState == 4 ){
+			comment.innerHTML = xmlDoc.transformNode(xslDoc)
+			comment.style.display="none"
+			}
+		}
+
+	var path = "/Project/common_data/ƒOƒ‹[ƒv‘gD/"
+	var xmlName = "ƒOƒ‹[ƒv‘gD_" + year + ".xml"
+	var ret = xmlDoc.load( path + xmlName);
+	}
+</SCRIPT>
+
+
+<SCRIPT LANGUAGE="JavaScript" src="cmn.js"></SCRIPT>
+<SCRIPT LANGUAGE="VBScript" src="cmn.vbs"></SCRIPT>
+
+
+<!--Script End-->
+
+<title>ûxŒv‰æ</title>
+<META http-equiv="Content-Type" content="text/html; charset=SHIFT_JIS">
+<LINK rel="stylesheet" href="main.css" type="text/css">
+<LINK rel="stylesheet" href="account.css" type="text/css">
+</HEAD>
+	<body background="bg00.gif">
+		<table ALIGN="center" ID="Table1">
+		<caption><SPAN id="mainTitle"></SPAN></caption>
+		<TR>
+			<td>
+				<TABLE ALIGN="center" ID="Table2" width="70%" border=0>
+					<TR>
+						<TD align=left width="20%">
+						</TD>
+						<TD align=center width="60%">
+						<DIV>
+						<SPAN><INPUT type="radio" id="level" name="level" value="70">‚`</SPAN>
+						<SPAN><INPUT type="radio" id="level" name="level" value="50">‚a</SPAN>
+						<SPAN><INPUT type="radio" id="level" name="level" value="30">‚b</SPAN>
+						</DIV>
+						</TD>
+						<TD align=right width="20%">
+						<fieldset id="yosokuDiv" width="40%" style="display:none">
+						<legend>—\‘ª‚ÌŠúŠÔ</legend>
+						<SPAN><INPUT type="radio" id="yosokuMode" name="yosokuMode" value="3">‚Rƒ–Œ</SPAN>
+						<SPAN><INPUT type="radio" id="yosokuMode" name="yosokuMode" value="-1" checked>c‚è‘S‚Ä</SPAN>
+						</fieldset>
+						</TD>
+					</TR>
+				</TABLE>
+			</td>
+		</TR>
+		<TR>
+			<td>
+				<TABLE ALIGN="center" ID="Table2">
+					<TR>
+						<TD ALIGN="left"><IMG SRC="arrow_l1.gif" id="prev" border="0" TITLE="‘O‚ÌŠú" STYLE="DISPLAY: none"></TD>
+						<TD ALIGN="middle"><SPAN ID="subTitle">@</SPAN></TD>
+						<TD ALIGN="right"><IMG SRC="arrow_r1.gif" id="next" border="0" TITLE="Ÿ‚ÌŠú" STYLE="DISPLAY: none"></TD>
+					</TR>
+				</TABLE>
+			</td>
+		</TR>
+		<TR>
+		<TD>
+		<table id="dataBlock" align='center' width='70%' BORDER='0' style="display:none">
+		<TR>
+			<TD>
+				<DIV ID="dataG">ƒOƒ‹[ƒvƒf[ƒ^</DIV>
+			</TD>
+		</TR>
+		<TR>
+			<TD align="right">ì¬“ú•t( <%=convertDateTime(new Date())%> )</TD>
+		</TR>
+		</table>
+			<table id="helpBlock" align='center' width='70%' BORDER='0' style="display:none">
+				<tr>
+					<td ALIGN='left' >
+						<font size=-1>
+						‚±‚Ì•\‚É‚Â‚¢‚Ä
+						<LI>
+							‚±‚Ìƒf[ƒ^‚Í<font color='tomato'>ĞŠO”é</font>‚Å‚·Aæ‚èˆµ‚¢‚É‚Í\•ª’ˆÓ‚µ‚Ä‚­‚¾‚³‚¢B
+						<LI>
+						”„ã‚Í¿‹‘”­sƒf[ƒ^‚ğg—p‚µ‚Ä‚¢‚Ü‚·B(ÀÛ‚Ì“ü‹à‚Í—‚ŒE—‚XŒEèŒ`‚È‚Ç‹qæ‚É‚æ‚èˆá‚¢‚Ü‚·)
+						<LI>
+						ƒf[ƒ^‚ÌŠm’è‚ÍEMEACELEPSL‚RĞ‚ÌŒo”ïƒf[ƒ^‚ª‚Ù‚Ú‘µ‚Á‚½“_( <%=String(adjustDayCnt)%> ‰c‹Æ“ú)‚ÅA”„ãE”ï—p‚Æ‚àŠm’è‚Æ‚µ‚Ü‚·B
+						<LI>
+						‰c‹ÆŠO”ï—p‚Ìå‚È€–Ú‚Æ‚µ‚ÄØ“ü‹à‚Ì‹à—˜x•¥‚¢‚ğŠÜ‚İ‚Ü‚·(Ø“ü‹à‚Ì•ÔÏ‚ÍŠÜ‚Ü‚ê‚Ä‚¢‚Ü‚¹‚ñ)B
+						<LI>
+						‚±‚Ì•\‚ÌŒoí—˜‰v‚ÍA“ü‹àE‘‹àŒv‰æ‚È‚Ç‚ğl—¶‚µ‚Ä‚¢‚Ü‚¹‚ñB
+						</font>
+					</td>
+				</tr>
+			</table>
+		</TD>
+		</TR>
+		<TR>
+			<TD align="center">
+				<SPAN ID="comment"></SPAN>
+			</TD>
+		</TR>
+		</table>
+	</body>
+</HTML>
+

@@ -33,6 +33,9 @@
 
 
 
+  <menu name="_Test" memo="debug">
+    <menu name="test" memo="" mode="url" url="/WebApi/project/_Test/test.html"/>
+  </menu>
   <menu name="_Test" memo="debug" display="none">
     <menu name="projectList" memo="" mode="url" url="/WebApi/project/_Test/_Test/projectList/test.html"/>
   </menu>
