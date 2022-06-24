@@ -259,36 +259,20 @@
 
 		var xml_proc
 		var source = "ABC"
-		function createElem(target_elem,Tab) {
-            for (var i in Tab) {
-                var elem = document.createElement("div");
-                elem.setAttribute("class", "elem");
-                elem.setAttribute("name", Tab[i]);
-                elem.setAttribute("xmlDoc", {});
-                elem.innerText = "data:" + Tab[i];
-                var target = document.getElementById(target_elem);
-                target.appendChild(elem);
-            }
 
-        }
-		function deleteElem(elem_name) {
-            do {
-                var elems = document.getElementsByClassName(elem_name);
-                for (var i = 0; i < elems.length; i++) {
-                    var e = elems[0];
-                    e.parentNode.removeChild(e);
-                }
-            } while (elems.length > 0);
-        }
 		function reLoad() {
-            var Tab = ["第1開発本部", "第2開発本部", "本社"];
-            createElem("dataG",Tab);
-//			deleteElem("elem");
+			try {
+				var Tab = ["第1開発本部", "第2開発本部", "本社"];
+				createElem("dataG", "elem",Tab);
+				//			deleteElem("elem");
 
-            const event = document.createEvent('eventName')
-			event.initEvent('eventName', true, true)
-			target.dispatchEvent(event);
+				eventStart("elem",xml_name1,xsl_name1);
 
+
+
+			} catch (e) {
+				alert(e.message);
+			}
 			//====================================
 			var dispName = ""
 			mainTitle.style.color = "tomato"
