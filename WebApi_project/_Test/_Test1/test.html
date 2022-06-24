@@ -1,389 +1,422 @@
 <HTML>
 <HEAD>
-<META http-equiv="Content-Type" content="text/html; charset=SHIFT_JIS">
-<META http-equiv="X-UA-Compatible" content="IE=5" />
+	<META http-equiv="Content-Type" content="text/html; charset=SHIFT_JIS">
+	<META http-equiv="X-UA-Compatible" content="IE=5" />
 
 
-<SCRIPT LANGUAGE="JavaScript">
-var limitYear = 2010
-var dispCnt   = 12
-var dispCmd   = "統括個別"
-var dispMode  = ""
-var year	  = 2022
-var fixLevel  = 70
-var yosokuCnt = 3
-</SCRIPT>
-<SCRIPT FOR="window" EVENT="onload" Language="JavaScript">
-//LoadComment(year)
+	<SCRIPT LANGUAGE="JavaScript">
+		var limitYear = 2010
+		var dispCnt = 12
+		var dispCmd = "統括個別"
+		var dispMode = ""
+		var year = 2022
+		var fixLevel = 70
+		var yosokuCnt = 3
+	</SCRIPT>
+	<SCRIPT FOR="window" EVENT="onload" Language="JavaScript">
+		//LoadComment(year)
 
-var yymm = (parseInt(year)-1)*100 + 10
-var Title = ( dispCmd == "統括一覧" ? "統括収支計画" : "部門収支計画" )
-mainTitle.innerHTML = String(Title).big()
-subTitle.innerHTML = "(" + strMonth(yymm) + "～" + strMonth(yymmAdd(yymm,dispCnt-1)) + ")"
+		var yymm = (parseInt(year) - 1) * 100 + 10
+		var Title = (dispCmd == "統括一覧" ? "統括収支計画" : "部門収支計画")
+		mainTitle.innerHTML = String(Title).big()
+		subTitle.innerHTML = "(" + strMonth(yymm) + "～" + strMonth(yymmAdd(yymm, dispCnt - 1)) + ")"
 
-if(parseInt(year) > parseInt(limitYear) ){
-	prev.style.display=""
-	}
-next.style.display=""
-
-var o = document.getElementsByName("section")
-for( var i = 0; i < o.length; i++ ){
-	if(o[i].value == dispMode) o[i].checked = true
-	}
-
-var o = document.getElementsByName("level")
-for( var i = 0; i < o.length; i++ ){
-	if(o[i].value == fixLevel) o[i].checked = true
-	}
-
-reLoad()
-
-window.focus()
-</SCRIPT>
-<SCRIPT FOR="window" EVENT="onunload" LANGUAGE="JavaScript">
-winClose()
-</SCRIPT>
-
-
-
-<SCRIPT FOR="yosokuMode" EVENT="onclick" LANGUAGE="JavaScript">
-yosokuCnt = this.value
-reLoad()
-</SCRIPT>
-
-<SCRIPT FOR="level" EVENT="onclick" LANGUAGE="JavaScript">
-//mainTitle.style.color = "tomato"
-//this.parentElement.style.color = "tomato"
-
-	fixLevel = this.value
-	levelChange(fixLevel)
-
-</SCRIPT>
-
-
-<SCRIPT FOR="prev" EVENT="onclick" LANGUAGE="JavaScript">
-mainTitle.style.color = "tomato"
-
-year	  = parseInt(year) - 1
-yosokuCnt = parseInt(yosokuCnt) - parseInt(dispCnt)
-
-var pTab = []
-pTab.push("dispCmd=" + dispCmd)
-pTab.push("dispName=")
-pTab.push("year="	+ year)
-pTab.push("fix=" 	+ fixLevel)
-pTab.push("yosoku="	+ yosokuCnt)
-window.location.replace(window.location.pathname + "?" + pTab.join("&") )
-</SCRIPT>
-
-<SCRIPT FOR="next" EVENT="onclick" LANGUAGE="JavaScript">
-mainTitle.style.color = "tomato"
-
-year	  = parseInt(year) + 1
-yosokuCnt = parseInt(yosokuCnt) + parseInt(dispCnt)
-
-var pTab = []
-pTab.push("dispCmd=" + dispCmd)
-pTab.push("dispName=")
-pTab.push("year="	+ year)
-pTab.push("fix=" 	+ fixLevel)
-pTab.push("yosoku="	+ yosokuCnt)
-window.location.replace(window.location.pathname + "?" + pTab.join("&") )
-</SCRIPT>
-<SCRIPT FOR="prev" EVENT="onmouseover" LANGUAGE="JavaScript">
-this.style.cursor = "hand"
-</SCRIPT>
-<SCRIPT FOR="prev" EVENT="onmouseleave" LANGUAGE="JavaScript">
-this.style.cursor = ""
-</SCRIPT>
-<SCRIPT FOR="next" EVENT="onmouseover" LANGUAGE="JavaScript">
-this.style.cursor = "hand"
-</SCRIPT>
-<SCRIPT FOR="next" EVENT="onmouseleave" LANGUAGE="JavaScript">
-this.style.cursor = ""
-</SCRIPT>
-
-<SCRIPT FOR="onGenka" EVENT="onmouseover" LANGUAGE="JavaScript">
-this.style.cursor="hand"
-</SCRIPT>
-<SCRIPT FOR="onGenka" EVENT="onmouseout" LANGUAGE="JavaScript">
-this.style.cursor=""
-</SCRIPT>
-<SCRIPT FOR="onGenka" EVENT="onclick" LANGUAGE="JavaScript">
-var oBody = this.parentElement.tBodies
-var Cnt = oBody.length
-for( var i = 0; i < Cnt; i++){
-	if( oBody[i].id == "onGenka" )	oBody[i].style.display = (oBody[i].style.display == "none" ? "" : "none")
-	}
-</SCRIPT>
-
-<SCRIPT FOR="onSales" EVENT="onmouseover" LANGUAGE="JavaScript">
-this.style.cursor="hand"
-</SCRIPT>
-<SCRIPT FOR="onSales" EVENT="onmouseout" LANGUAGE="JavaScript">
-this.style.cursor=""
-</SCRIPT>
-<SCRIPT FOR="onSales" EVENT="onclick" LANGUAGE="JavaScript">
-var oBody = this.parentElement.tBodies
-var Cnt = oBody.length
-for( var i = 0; i < Cnt; i++){
-	if( oBody[i].id == "onSales" )	oBody[i].style.display = (oBody[i].style.display == "none" ? "" : "none")
-	}
-</SCRIPT>
-
-<SCRIPT FOR="onCost" EVENT="onmouseover" LANGUAGE="JavaScript">
-this.style.cursor="hand"
-</SCRIPT>
-<SCRIPT FOR="onCost" EVENT="onmouseout" LANGUAGE="JavaScript">
-this.style.cursor=""
-</SCRIPT>
-<SCRIPT FOR="onCost" EVENT="onclick" LANGUAGE="JavaScript">
-var oBody = this.parentElement.tBodies
-var Cnt = oBody.length
-for( var i = 0; i < Cnt; i++){
-	if( oBody[i].id == "onCost" )	oBody[i].style.display = (oBody[i].style.display == "none" ? "" : "none")
-	}
-</SCRIPT>
-
-<SCRIPT FOR="onKanriHi" EVENT="onmouseover" LANGUAGE="JavaScript">
-this.style.cursor="hand"
-</SCRIPT>
-<SCRIPT FOR="onKanriHi" EVENT="onmouseout" LANGUAGE="JavaScript">
-this.style.cursor=""
-</SCRIPT>
-<SCRIPT FOR="onKanriHi" EVENT="onclick" LANGUAGE="JavaScript">
-var oBody = this.parentElement.tBodies
-var Cnt = oBody.length
-for( var i = 0; i < Cnt; i++){
-	if( oBody[i].id == "onKanriHi" )	oBody[i].style.display = (oBody[i].style.display == "none" ? "" : "none")
-	}
-</SCRIPT>
-
-<SCRIPT FOR="onKei0" EVENT="onmouseover" LANGUAGE="JavaScript">
-this.style.cursor="hand"
-</SCRIPT>
-<SCRIPT FOR="onKei0" EVENT="onmouseout" LANGUAGE="JavaScript">
-this.style.cursor=""
-</SCRIPT>
-<SCRIPT FOR="onKei0" EVENT="onclick" LANGUAGE="JavaScript">
-var oBody = this.parentElement.tBodies
-var Cnt = oBody.length
-for( var i = 0; i < Cnt; i++){
-	if( oBody[i].id == "onKei0" )	oBody[i].style.display = (oBody[i].style.display == "none" ? "" : "none")
-	}
-</SCRIPT>
-<SCRIPT FOR="onKei1" EVENT="onmouseover" LANGUAGE="JavaScript">
-this.style.cursor="hand"
-</SCRIPT>
-<SCRIPT FOR="onKei1" EVENT="onmouseout" LANGUAGE="JavaScript">
-this.style.cursor=""
-</SCRIPT>
-<SCRIPT FOR="onKei1" EVENT="onclick" LANGUAGE="JavaScript">
-var oBody = this.parentElement.tBodies
-var Cnt = oBody.length
-for( var i = 0; i < Cnt; i++){
-	if( oBody[i].id == "onKei1" )	oBody[i].style.display = (oBody[i].style.display == "none" ? "" : "none")
-	}
-</SCRIPT>
-<SCRIPT FOR="onKei2" EVENT="onmouseover" LANGUAGE="JavaScript">
-this.style.cursor="hand"
-</SCRIPT>
-<SCRIPT FOR="onKei2" EVENT="onmouseout" LANGUAGE="JavaScript">
-this.style.cursor=""
-</SCRIPT>
-<SCRIPT FOR="onKei2" EVENT="onclick" LANGUAGE="JavaScript">
-var oBody = this.parentElement.tBodies
-var Cnt = oBody.length
-for( var i = 0; i < Cnt; i++){
-	if( oBody[i].id == "onKei2" )	oBody[i].style.display = (oBody[i].style.display == "none" ? "" : "none")
-	}
-</SCRIPT>
-<SCRIPT FOR="onKei3" EVENT="onmouseover" LANGUAGE="JavaScript">
-this.style.cursor="hand"
-</SCRIPT>
-<SCRIPT FOR="onKei3" EVENT="onmouseout" LANGUAGE="JavaScript">
-this.style.cursor=""
-</SCRIPT>
-<SCRIPT FOR="onKei3" EVENT="onclick" LANGUAGE="JavaScript">
-var oBody = this.parentElement.tBodies
-var Cnt = oBody.length
-for( var i = 0; i < Cnt; i++){
-	if( oBody[i].id == "onKei3" )	oBody[i].style.display = (oBody[i].style.display == "none" ? "" : "none")
-	}
-</SCRIPT>
-
-<SCRIPT LANGUAGE="JavaScript">
-var newWin = null;
-function winOpen(aspName)
-	{
-	newWin = window.open(aspName,"planWin","width=900,height=600,scrollbars,resizable,status=no");
-	}
-	
-function winClose()
-	{
-	if(newWin != null && !newWin.closed) newWin.close();
-	}
-</SCRIPT>
-
-<SCRIPT FOR="GRP" EVENT="onmouseenter" LANGUAGE="JavaScript">
-this.style.backgroundColor = "lightgrey"
-this.style.cursor = "hand"
-</SCRIPT>
-<SCRIPT FOR="GRP" EVENT="onmouseleave" LANGUAGE="JavaScript">
-this.style.backgroundColor = ""
-this.style.cursor = ""
-</SCRIPT>
-
-<SCRIPT FOR="GRP" EVENT="onclick" LANGUAGE="JavaScript">
-	var dispName = this.dispName
-	var para = []
-	para.push("dispCmd=統括詳細" )
-	if( dispName != "" )  para.push("dispName=" + dispName )
-	if( year != "" )	  para.push("year=" 	+ year )
-	if( fixLevel != "" )  para.push("fix="		+ fixLevel )
-	if( yosokuCnt != "" ) para.push("yosoku="	+ yosokuCnt )
-
-	winOpen("個別収支計画.asp" + "?" + para.join("&"))
-</SCRIPT>
-
-
-<SCRIPT LANGUAGE="JavaScript" src="xmlProc.js"></SCRIPT>
-<SCRIPT Language="JavaScript">
-var xml_name1 = "xml/BASE.xml"				// 地域別
-var xsl_name1 = "xsl/a.xsl"				
-
-var xml_proc
-var source = "ABC"
-
-function reLoad()
-{
-
-
-	var elem = document.createElement("div");
-	var target = document.getElementById("dataG");
-	target.appendChild(elem);
-
-	var dispName = ""
-	mainTitle.style.color = "tomato"
-	dispName = "本社";
-	var para = []
-	if( dispCmd != "" )   para.push("dispCmd="	+ dispCmd )
-	if( dispName != "" )  para.push("dispName=" + dispName )
-	if( year != "" )	  para.push("year=" 	+ year )
-	if( fixLevel != "" )  para.push("fix="		+ fixLevel )
-	if( yosokuCnt != "" ) para.push("yosoku="	+ yosokuCnt )
-	var xsl = xsl_name1
-	var xml = xml_name1 + "?" + para.join("&")
-
-	xml_proc = new xmlProc()
-	xml_proc.loadXML(source,xml,xml_func)
-	}
-
-function levelChange(level)
-	{
-	mainTitle.style.color = "tomato"
-//	dataBlock.style.display="none"
-//	helpBlock.style.display="none"
-
-//	売上予測データの変更
-
-	yosokuSet(source,level)
-
-	var xsl = xsl_name1
-	xml_proc.transfor(source,xsl,xsl_func)
-
-	}
-	
-function xml_func(xmlDoc)
-	{
-	var xsl = xsl_name1
-	xml_proc.transfor(xmlDoc,xsl,xsl_func)
-	source = xmlDoc
-	}
-
-function xsl_func(Buff)
-	{
-	dataG.innerHTML = Buff
-
-	dataBlock.style.display="block"
-	helpBlock.style.display="block"
-	mainTitle.style.color = ""
-	comment.style.display="block"
-
-
-	if( document.getElementById("yosokuDiv") != null ){
-		var o = document.getElementsByName("yosokuMode")
-		for( var i = 0; i < o.length; i++ ){
-			if( o[i].value == yosokuCnt ) o[i].checked = true
-//			alert(o[i].value)
-			}
-		yosokuDiv.style.display = "block"
+		if (parseInt(year) > parseInt(limitYear)) {
+			prev.style.display = ""
 		}
-	}
-	
-function yosokuSet(xmlDoc,level)
-	{
-try{
-	var yosokuInfo = []
-	var mCnt  = xmlDoc.selectSingleNode("//月数").text
-	var group = xmlDoc.selectNodes("//グループ")
-	var levelNode = xmlDoc.selectSingleNode("//確度")
-	levelNode.text = level
+		next.style.display = ""
 
-	for( var g = 0; g < group.length; g++ ){
-		var yosoku = group[g].selectNodes("予測データ/売上予測/項目[@name='確度" + level + "']/月")
-		var data   = group[g].selectNodes("データ")
-		for( var d = 0; d < data.length; d++ ){
-			for( var m = 0; m < mCnt; m++ ){
-				var x = data[d].selectSingleNode("月情報/月[@m=" + m + "]").text
-				var z = data[d].selectSingleNode("売上高/項目[@name='売上']/月[@m=" + m + "]")
-				if( x == "予測" ){
-					z.text= yosoku[m].text
+		var o = document.getElementsByName("section")
+		for (var i = 0; i < o.length; i++) {
+			if (o[i].value == dispMode) o[i].checked = true
+		}
+
+		var o = document.getElementsByName("level")
+		for (var i = 0; i < o.length; i++) {
+			if (o[i].value == fixLevel) o[i].checked = true
+		}
+
+		reLoad()
+
+		window.focus()
+	</SCRIPT>
+	<SCRIPT FOR="window" EVENT="onunload" LANGUAGE="JavaScript">
+		winClose()
+	</SCRIPT>
+
+
+
+	<SCRIPT FOR="yosokuMode" EVENT="onclick" LANGUAGE="JavaScript">
+		yosokuCnt = this.value
+		reLoad()
+	</SCRIPT>
+
+	<SCRIPT FOR="level" EVENT="onclick" LANGUAGE="JavaScript">
+		//mainTitle.style.color = "tomato"
+		//this.parentElement.style.color = "tomato"
+
+		fixLevel = this.value
+		levelChange(fixLevel)
+
+	</SCRIPT>
+
+
+	<SCRIPT FOR="prev" EVENT="onclick" LANGUAGE="JavaScript">
+		mainTitle.style.color = "tomato"
+
+		year = parseInt(year) - 1
+		yosokuCnt = parseInt(yosokuCnt) - parseInt(dispCnt)
+
+		var pTab = []
+		pTab.push("dispCmd=" + dispCmd)
+		pTab.push("dispName=")
+		pTab.push("year=" + year)
+		pTab.push("fix=" + fixLevel)
+		pTab.push("yosoku=" + yosokuCnt)
+		window.location.replace(window.location.pathname + "?" + pTab.join("&"))
+	</SCRIPT>
+
+	<SCRIPT FOR="next" EVENT="onclick" LANGUAGE="JavaScript">
+		mainTitle.style.color = "tomato"
+
+		year = parseInt(year) + 1
+		yosokuCnt = parseInt(yosokuCnt) + parseInt(dispCnt)
+
+		var pTab = []
+		pTab.push("dispCmd=" + dispCmd)
+		pTab.push("dispName=")
+		pTab.push("year=" + year)
+		pTab.push("fix=" + fixLevel)
+		pTab.push("yosoku=" + yosokuCnt)
+		//window.location.replace(window.location.pathname + "?" + pTab.join("&"))
+	</SCRIPT>
+	<SCRIPT FOR="prev" EVENT="onmouseover" LANGUAGE="JavaScript">
+		this.style.cursor = "hand"
+	</SCRIPT>
+	<SCRIPT FOR="prev" EVENT="onmouseleave" LANGUAGE="JavaScript">
+		this.style.cursor = ""
+	</SCRIPT>
+	<SCRIPT FOR="next" EVENT="onmouseover" LANGUAGE="JavaScript">
+		this.style.cursor = "hand"
+	</SCRIPT>
+	<SCRIPT FOR="next" EVENT="onmouseleave" LANGUAGE="JavaScript">
+		this.style.cursor = ""
+	</SCRIPT>
+
+	<SCRIPT FOR="onGenka" EVENT="onmouseover" LANGUAGE="JavaScript">
+		this.style.cursor = "hand"
+	</SCRIPT>
+	<SCRIPT FOR="onGenka" EVENT="onmouseout" LANGUAGE="JavaScript">
+		this.style.cursor = ""
+	</SCRIPT>
+	<SCRIPT FOR="onGenka" EVENT="onclick" LANGUAGE="JavaScript">
+		var oBody = this.parentElement.tBodies
+		var Cnt = oBody.length
+		for (var i = 0; i < Cnt; i++) {
+			if (oBody[i].id == "onGenka") oBody[i].style.display = (oBody[i].style.display == "none" ? "" : "none")
+		}
+	</SCRIPT>
+
+	<SCRIPT FOR="onSales" EVENT="onmouseover" LANGUAGE="JavaScript">
+		this.style.cursor = "hand"
+	</SCRIPT>
+	<SCRIPT FOR="onSales" EVENT="onmouseout" LANGUAGE="JavaScript">
+		this.style.cursor = ""
+	</SCRIPT>
+	<SCRIPT FOR="onSales" EVENT="onclick" LANGUAGE="JavaScript">
+		var oBody = this.parentElement.tBodies
+		var Cnt = oBody.length
+		for (var i = 0; i < Cnt; i++) {
+			if (oBody[i].id == "onSales") oBody[i].style.display = (oBody[i].style.display == "none" ? "" : "none")
+		}
+	</SCRIPT>
+
+	<SCRIPT FOR="onCost" EVENT="onmouseover" LANGUAGE="JavaScript">
+		this.style.cursor = "hand"
+	</SCRIPT>
+	<SCRIPT FOR="onCost" EVENT="onmouseout" LANGUAGE="JavaScript">
+		this.style.cursor = ""
+	</SCRIPT>
+	<SCRIPT FOR="onCost" EVENT="onclick" LANGUAGE="JavaScript">
+		var oBody = this.parentElement.tBodies
+		var Cnt = oBody.length
+		for (var i = 0; i < Cnt; i++) {
+			if (oBody[i].id == "onCost") oBody[i].style.display = (oBody[i].style.display == "none" ? "" : "none")
+		}
+	</SCRIPT>
+
+	<SCRIPT FOR="onKanriHi" EVENT="onmouseover" LANGUAGE="JavaScript">
+		this.style.cursor = "hand"
+	</SCRIPT>
+	<SCRIPT FOR="onKanriHi" EVENT="onmouseout" LANGUAGE="JavaScript">
+		this.style.cursor = ""
+	</SCRIPT>
+	<SCRIPT FOR="onKanriHi" EVENT="onclick" LANGUAGE="JavaScript">
+		var oBody = this.parentElement.tBodies
+		var Cnt = oBody.length
+		for (var i = 0; i < Cnt; i++) {
+			if (oBody[i].id == "onKanriHi") oBody[i].style.display = (oBody[i].style.display == "none" ? "" : "none")
+		}
+	</SCRIPT>
+
+	<SCRIPT FOR="onKei0" EVENT="onmouseover" LANGUAGE="JavaScript">
+		this.style.cursor = "hand"
+	</SCRIPT>
+	<SCRIPT FOR="onKei0" EVENT="onmouseout" LANGUAGE="JavaScript">
+		this.style.cursor = ""
+	</SCRIPT>
+	<SCRIPT FOR="onKei0" EVENT="onclick" LANGUAGE="JavaScript">
+		var oBody = this.parentElement.tBodies
+		var Cnt = oBody.length
+		for (var i = 0; i < Cnt; i++) {
+			if (oBody[i].id == "onKei0") oBody[i].style.display = (oBody[i].style.display == "none" ? "" : "none")
+		}
+	</SCRIPT>
+	<SCRIPT FOR="onKei1" EVENT="onmouseover" LANGUAGE="JavaScript">
+		this.style.cursor = "hand"
+	</SCRIPT>
+	<SCRIPT FOR="onKei1" EVENT="onmouseout" LANGUAGE="JavaScript">
+		this.style.cursor = ""
+	</SCRIPT>
+	<SCRIPT FOR="onKei1" EVENT="onclick" LANGUAGE="JavaScript">
+		var oBody = this.parentElement.tBodies
+		var Cnt = oBody.length
+		for (var i = 0; i < Cnt; i++) {
+			if (oBody[i].id == "onKei1") oBody[i].style.display = (oBody[i].style.display == "none" ? "" : "none")
+		}
+	</SCRIPT>
+	<SCRIPT FOR="onKei2" EVENT="onmouseover" LANGUAGE="JavaScript">
+		this.style.cursor = "hand"
+	</SCRIPT>
+	<SCRIPT FOR="onKei2" EVENT="onmouseout" LANGUAGE="JavaScript">
+		this.style.cursor = ""
+	</SCRIPT>
+	<SCRIPT FOR="onKei2" EVENT="onclick" LANGUAGE="JavaScript">
+		var oBody = this.parentElement.tBodies
+		var Cnt = oBody.length
+		for (var i = 0; i < Cnt; i++) {
+			if (oBody[i].id == "onKei2") oBody[i].style.display = (oBody[i].style.display == "none" ? "" : "none")
+		}
+	</SCRIPT>
+	<SCRIPT FOR="onKei3" EVENT="onmouseover" LANGUAGE="JavaScript">
+		this.style.cursor = "hand"
+	</SCRIPT>
+	<SCRIPT FOR="onKei3" EVENT="onmouseout" LANGUAGE="JavaScript">
+		this.style.cursor = ""
+	</SCRIPT>
+	<SCRIPT FOR="onKei3" EVENT="onclick" LANGUAGE="JavaScript">
+		var oBody = this.parentElement.tBodies
+		var Cnt = oBody.length
+		for (var i = 0; i < Cnt; i++) {
+			if (oBody[i].id == "onKei3") oBody[i].style.display = (oBody[i].style.display == "none" ? "" : "none")
+		}
+	</SCRIPT>
+
+	<SCRIPT LANGUAGE="JavaScript">
+		var newWin = null;
+		function winOpen(aspName) {
+			newWin = window.open(aspName, "planWin", "width=900,height=600,scrollbars,resizable,status=no");
+		}
+
+		function winClose() {
+			if (newWin != null && !newWin.closed) newWin.close();
+		}
+	</SCRIPT>
+
+	<SCRIPT FOR="GRP" EVENT="onmouseenter" LANGUAGE="JavaScript">
+		this.style.backgroundColor = "lightgrey"
+		this.style.cursor = "hand"
+	</SCRIPT>
+	<SCRIPT FOR="GRP" EVENT="onmouseleave" LANGUAGE="JavaScript">
+		this.style.backgroundColor = ""
+		this.style.cursor = ""
+	</SCRIPT>
+
+	<SCRIPT FOR="GRP" EVENT="onclick" LANGUAGE="JavaScript">
+		var dispName = this.dispName
+		var para = []
+		para.push("dispCmd=統括詳細")
+		if (dispName != "") para.push("dispName=" + dispName)
+		if (year != "") para.push("year=" + year)
+		if (fixLevel != "") para.push("fix=" + fixLevel)
+		if (yosokuCnt != "") para.push("yosoku=" + yosokuCnt)
+
+		winOpen("個別収支計画.asp" + "?" + para.join("&"))
+	</SCRIPT>
+
+
+	<SCRIPT LANGUAGE="JavaScript" src="xmlProc.js"></SCRIPT>
+
+
+
+	<SCRIPT FOR="elem" EVENT="onclick" LANGUAGE="JavaScript">
+		alert(this.name);
+	</SCRIPT>
+
+	<SCRIPT Language="JavaScript">
+		var xml_name1 = "xml/BASE.xml"				// 地域別
+		var xsl_name1 = "xsl/a.xsl"
+
+		var xml_proc
+		var source = "ABC"
+		function createElem(target_elem,Tab) {
+            for (var i in Tab) {
+                var elem = document.createElement("div");
+                elem.setAttribute("class", "elem");
+                elem.setAttribute("name", Tab[i]);
+                elem.setAttribute("xmlDoc", {});
+                elem.innerText = "data:" + Tab[i];
+                var target = document.getElementById(target_elem);
+                target.appendChild(elem);
+            }
+
+        }
+		function deleteElem(elem_name) {
+            do {
+                var elems = document.getElementsByClassName(elem_name);
+                for (var i = 0; i < elems.length; i++) {
+                    var e = elems[0];
+                    e.parentNode.removeChild(e);
+                }
+            } while (elems.length > 0);
+        }
+		function reLoad() {
+            var Tab = ["第1開発本部", "第2開発本部", "本社"];
+            createElem("dataG",Tab);
+//			deleteElem("elem");
+
+            const event = document.createEvent('eventName')
+			event.initEvent('eventName', true, true)
+			target.dispatchEvent(event);
+
+			//====================================
+			var dispName = ""
+			mainTitle.style.color = "tomato"
+			dispName = "本社";
+			var para = []
+			if (dispCmd != "") para.push("dispCmd=" + dispCmd)
+			if (dispName != "") para.push("dispName=" + dispName)
+			if (year != "") para.push("year=" + year)
+			if (fixLevel != "") para.push("fix=" + fixLevel)
+			if (yosokuCnt != "") para.push("yosoku=" + yosokuCnt)
+			var xsl = xsl_name1
+			var xml = xml_name1 + "?" + para.join("&")
+
+//			xml_proc = new xmlProc()
+//			xml_proc.loadXML(source, xml, xml_func)
+		}
+
+		function levelChange(level) {
+			mainTitle.style.color = "tomato"
+			//	dataBlock.style.display="none"
+			//	helpBlock.style.display="none"
+
+			//	売上予測データの変更
+
+			yosokuSet(source, level)
+
+			var xsl = xsl_name1
+			xml_proc.transfor(source, xsl, xsl_func)
+
+		}
+
+		function xml_func(xmlDoc) {
+			var xsl = xsl_name1
+			xml_proc.transfor(xmlDoc, xsl, xsl_func)
+			source = xmlDoc
+		}
+
+		function xsl_func(Buff) {
+			dataG.innerHTML = Buff
+
+			dataBlock.style.display = "block"
+			helpBlock.style.display = "block"
+			mainTitle.style.color = ""
+			comment.style.display = "block"
+
+
+			if (document.getElementById("yosokuDiv") != null) {
+				var o = document.getElementsByName("yosokuMode")
+				for (var i = 0; i < o.length; i++) {
+					if (o[i].value == yosokuCnt) o[i].checked = true
+					//			alert(o[i].value)
+				}
+				yosokuDiv.style.display = "block"
+			}
+		}
+
+		function yosokuSet(xmlDoc, level) {
+			try {
+				var yosokuInfo = []
+				var mCnt = xmlDoc.selectSingleNode("//月数").text
+				var group = xmlDoc.selectNodes("//グループ")
+				var levelNode = xmlDoc.selectSingleNode("//確度")
+				levelNode.text = level
+
+				for (var g = 0; g < group.length; g++) {
+					var yosoku = group[g].selectNodes("予測データ/売上予測/項目[@name='確度" + level + "']/月")
+					var data = group[g].selectNodes("データ")
+					for (var d = 0; d < data.length; d++) {
+						for (var m = 0; m < mCnt; m++) {
+							var x = data[d].selectSingleNode("月情報/月[@m=" + m + "]").text
+							var z = data[d].selectSingleNode("売上高/項目[@name='売上']/月[@m=" + m + "]")
+							if (x == "予測") {
+								z.text = yosoku[m].text
+							}
+						}
 					}
 				}
-			}
-		}
-	return(xmlDoc)
-}catch(e){alert(e.message)}
-	}
-
-</SCRIPT>
-
-<SCRIPT LANGUAGE="JavaScript">
-function LoadComment(year)
-	{
-	var xslDoc = new ActiveXObject("Microsoft.XMLDom");
-	xslDoc.async = false;
-	var ret = xslDoc.load("xsl/統括組織表.xsl");
-
-	var xmlDoc = new ActiveXObject("Microsoft.XMLDom");
-
-// 非同期にする
-	xmlDoc.async = true;
-	xmlDoc.onreadystatechange = function (){
-		if( xmlDoc.readyState == 4 ){
-			comment.innerHTML = xmlDoc.transformNode(xslDoc)
-			comment.style.display="none"
-			}
+				return (xmlDoc)
+			} catch (e) { alert(e.message) }
 		}
 
-	var path = "/Project/common_data/グループ組織/"
-	var xmlName = "グループ組織_" + year + ".xml"
-	var ret = xmlDoc.load( path + xmlName);
+	</SCRIPT>
+
+	<SCRIPT LANGUAGE="JavaScript">
+		function LoadComment(year) {
+			var xslDoc = new ActiveXObject("Microsoft.XMLDom");
+			xslDoc.async = false;
+			var ret = xslDoc.load("xsl/統括組織表.xsl");
+
+			var xmlDoc = new ActiveXObject("Microsoft.XMLDom");
+
+			// 非同期にする
+			xmlDoc.async = true;
+			xmlDoc.onreadystatechange = function () {
+				if (xmlDoc.readyState == 4) {
+					comment.innerHTML = xmlDoc.transformNode(xslDoc)
+					comment.style.display = "none"
+				}
+			}
+
+			var path = "/Project/common_data/グループ組織/"
+			var xmlName = "グループ組織_" + year + ".xml"
+			var ret = xmlDoc.load(path + xmlName);
+		}
+	</SCRIPT>
+
+
+	<SCRIPT LANGUAGE="JavaScript" src="cmn.js"></SCRIPT>
+	<SCRIPT LANGUAGE="VBScript" src="cmn.vbs"></SCRIPT>
+
+
+	<!--Script End-->
+
+	<title>収支計画</title>
+	<META http-equiv="Content-Type" content="text/html; charset=SHIFT_JIS">
+	<LINK rel="stylesheet" href="main.css" type="text/css">
+	<LINK rel="stylesheet" href="account.css" type="text/css">
+
+<style>
+    #dataG {
+        display: block;
+        border: solid 1px blue;
+    }
+	.elem{
+		display:block;
+		border:solid 1px pink;
 	}
-</SCRIPT>
-
-
-<SCRIPT LANGUAGE="JavaScript" src="cmn.js"></SCRIPT>
-<SCRIPT LANGUAGE="VBScript" src="cmn.vbs"></SCRIPT>
-
-
-<!--Script End-->
-
-<title>収支計画</title>
-<META http-equiv="Content-Type" content="text/html; charset=SHIFT_JIS">
-<LINK rel="stylesheet" href="main.css" type="text/css">
-<LINK rel="stylesheet" href="account.css" type="text/css">
+</style>
 </HEAD>
 	<body background="bg00.gif">
 		<table ALIGN="center" ID="Table1">
@@ -425,14 +458,14 @@ function LoadComment(year)
 		</TR>
 		<TR>
 		<TD>
-		<table id="dataBlock" align='center' width='70%' BORDER='0' style="display:none">
+		<table id="dataBlock" align='center' width='70%' BORDER='0' style="display:block">
 		<TR>
 			<TD>
-				<DIV ID="dataG">グループデータ</DIV>
+				<DIV ID="dataG"></DIV>
 			</TD>
 		</TR>
 		<TR>
-			<TD align="right">作成日付( <%=convertDateTime(new Date())%> )</TD>
+			<TD align="right">作成日付( )</TD>
 		</TR>
 		</table>
 			<table id="helpBlock" align='center' width='70%' BORDER='0' style="display:none">
