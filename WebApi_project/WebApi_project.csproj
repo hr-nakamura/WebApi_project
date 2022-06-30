@@ -190,15 +190,6 @@
     <Content Include="_Test\xml\xsl\売上予実_新規.xml" />
     <Content Include="_Test\_Test1\xsl\a.xsl" />
     <Content Include="_Test\_Test1\xsl\部門収支.xsl" />
-    <Content Include="_Test\_Test\projectList\js\jquery.stopWatch.js" />
-    <Content Include="_Test\_Test\projectList\test.html" />
-    <Content Include="_Test\_Test\projectList\js\jquery-1.12.4.js" />
-    <Content Include="_Test\_Test\projectList\js\jquery.kansa.Query.js" />
-    <Content Include="_Test\_Test\projectList\js\jquery.my.frame.js" />
-    <Content Include="_Test\_Test\projectList\js\jquery.my.webapi.js" />
-    <Content Include="_Test\_Test\projectList\new.gif" />
-    <Content Include="_Test\_Test\projectList\new7.gif" />
-    <Content Include="_Test\_Test\projectList\projectList.xsl" />
     <Content Include="_Test\_Test\test.asp" />
     <Content Include="_Test\Dialog\back.gif" />
     <Content Include="_Test\Dialog\bg01.gif" />
@@ -216,7 +207,6 @@
     <Content Include="_Test\Dialog\data\corp.json" />
     <Content Include="_Test\Dialog\data\sales.json" />
     <Content Include="_home\_Content\_Scripts\jquery.json2xml.js" />
-    <Content Include="_Test\_Test\menu2.xml" />
     <Content Include="__menu\debug\jquery.my.debug.js" />
     <Content Include="__menu\images\bg00.gif" />
     <Content Include="__menu\images\EM.png" />
@@ -247,7 +237,6 @@
     <Content Include="_Test\Dialog\test.html" />
     <Content Include="_Test\Dialog\xx.xsl" />
     <Content Include="_Test\History\HIstory.html" />
-    <Content Include="_Test\_Test\memo.txt" />
     <Content Include="_Test\_Test1\test.html" />
     <Content Include="_Test\Dialog\dialog.html" />
     <Content Include="_Test\TEST\ACEL.mdb" />
@@ -256,7 +245,6 @@
     <Content Include="_Test\TEST\test1.html" />
     <Content Include="_home\Menu.asp" />
     <Content Include="_home\projectBBS\bbsMain.html" />
-    <Content Include="_Test\_Test\editProject.asp" />
     <Content Include="_home\projectBBS\jquery.complete.js" />
     <Content Include="_home\projectBBS\new.gif" />
     <Content Include="_home\projectBBS\new7.gif" />
@@ -361,7 +349,6 @@
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config" />
-    <Content Include="_Test\_Test\qosmio.html" />
     <Content Include="__menu\Util\viewXML\menu.xml" />
     <Content Include="__menu\Util\viewXML\viewXML_Main.html" />
     <Content Include="__menu\work\index5.html" />
@@ -381,13 +368,9 @@
     <Content Include="__menu\work\ajax.xlsx" />
     <Content Include="__menu\Util\viewJson-edge\jquery.json-viewer.js" />
     <Content Include="__menu\work\json.json" />
-    <Content Include="_Test\_Test\test.json" />
-    <Content Include="_Test\_Test\test_Json.json" />
     <Content Include="_home\_Content\_Scripts\jquery-3.6.0.min.js" />
     <Content Include="_home\_Content\_Scripts\jquery-3.6.0.js" />
     <Content Include="_Test\Dialog\data\sales - コピー.json" />
-    <Content Include="_Test\_Test\test1.json" />
-    <Content Include="_Test\_Test\sales.json" />
     <Content Include="__menu\debug\debug.ashx" />
     <Content Include="__menu\debug\jquery.my.fileOut.js" />
     <Content Include="__menu\debug\fileOut.ashx" />
@@ -428,13 +411,11 @@
     <Compile Include="Models\group.cs" />
     <Compile Include="Models\json.cs" />
     <Compile Include="_Test\History\history.cs" />
-    <Compile Include="_Test\_Test\test.cs" />
     <Compile Include="Api_Proc\funcProc\projectCostProc\test1.cs" />
     <Compile Include="Api_Proc\funcProc\要員情報\要員一覧.cs" />
     <Compile Include="Api_Proc\hostProc_json\dayCheck.cs" />
     <Compile Include="Api_Proc\hostProc_json\memberInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="_Test\_Test\test2.cs" />
     <Compile Include="__menu\debug\debug.ashx.cs">
       <DependentUpon>debug.ashx</DependentUpon>
     </Compile>
