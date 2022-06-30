@@ -49,19 +49,19 @@
     <列>
         <block name="収支状況">
             <menu>
-                <a url="部門収支/EMG収支計画.html" mode="F_TEST">ＥＭＧ収支計画</a>
+                <a url="部門収支/EMG収支計画.html" mode="F_OK">ＥＭＧ収支計画</a>
 			</menu>
             <menu>
-                <a url="部門収支/統括収支計画.html" mode="F_TEST">統括収支計画</a>
+                <a url="部門収支/統括収支計画.html" mode="F_OK">統括収支計画</a>
             </menu>
             <menu>
-                <a url="部門収支/部門収支計画.html" mode="F_TEST">部門収支計画</a>
+                <a url="部門収支/部門収支計画.html" mode="F_OK">部門収支計画</a>
                 <a url="/Project/計画入力/GRP予測入力.asp" mode="" style="font-size:smaller">(予測データ設定)</a>
                 <a url="/Project/計画入力/付替処理/index_開発.asp" mode="" style="font-size:smaller">(付替予測設定)</a>
             </menu>
       <menu>
         <label>== 開発部門(課) ==</label>
-        <a url="部門収支/グループ収支計画.html" mode="F_TEST">課 別収支</a>
+        <a url="部門収支/グループ収支計画.html" mode="F_OK">課 別収支</a>
       </menu>
       <menu>
         <label>== 間接部門 ==</label>
@@ -79,11 +79,11 @@
     </block>
     <block name="予測・実績">
       <menu>
-  		<a url="売上予測/売上目標_部門.html" mode="F_TEST">売上目標</a>
-        <a url="売上予測/売上予実_部門.html" mode="F_TEST">売上実績+予測</a>
-        <a url="売上予測/売上予実_分類.html" mode="F_TEST">売上実績+予測（分類別）</a>
-        <a url="売上予測/売上予実_新規.html" mode="F_TEST">売上実績+予測（新規別）</a>
-        <a url="売上予測/売上予実_新規2.html" mode="F_TEST">売上実績+予測（新規別2）</a>
+  		<a url="売上予測/売上目標_部門.html" mode="F_OK">売上目標</a>
+        <a url="売上予測/売上予実_部門.html" mode="F_OK">売上実績+予測</a>
+        <a url="売上予測/売上予実_分類.html" mode="F_OK">売上実績+予測（分類別）</a>
+        <a url="売上予測/売上予実_新規.html" mode="F_OK">売上実績+予測（新規別）</a>
+        <a url="売上予測/売上予実_新規2.html" mode="F_OK">売上実績+予測（新規別2）</a>
         <a url="/Project/費用予測/EMG費用状況.asp" mode="">費用状況</a>
         <a url="/Project/営業情報/保有リソース/本部要員数.asp" mode="">保有リソース</a>
       </menu>
@@ -114,7 +114,7 @@
   <列>
     <block name="データ入力">
       <menu>
-        <a url="projectBBS/bbsMain.html" mode="F_Project" test="F_TEST">プロジェクト引合</a>
+        <a url="projectBBS/bbsMain.html" mode="F_Project" test="F_OK">プロジェクト引合</a>
         <a url="/Project/projectCostProc/projectAssumption/main.asp" mode="">プロジェクト　初期情報</a>
         <a url="/Project/projectCostProc/projectCostList_差分.asp" mode="">プロジェクト工数比較<br/><small>【予実 －　予測（計画）】</small>
         </a>

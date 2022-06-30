@@ -7,7 +7,11 @@
 	<menu name="監査ページ(NEW)" memo="" mode="url" url="/WebApi/project/_home/Menu.asp"/>
 
     <menu name="_home" memo="" >
-        <menu name="部門収支" memo="" >
+		<menu name="projectCostProc" memo="" >
+			<menu name="JoinProject" memo="" mode="url" url="/WebApi/project/_home/projectCostProc/JoinProject.html"/>
+		</menu>
+		<menu name="-------------" memo="" />
+		<menu name="部門収支" memo="" >
 	        <menu name="EMG収支計画" memo="" mode="url" url="/WebApi/project/_home/部門収支/EMG収支計画.html"/>
 	        <menu name="統括収支計画" memo="" mode="url" url="/WebApi/project/_home/部門収支/統括収支計画.html"/>
             <menu name="部門収支計画" memo="" mode="url" url="/WebApi/project/_home/部門収支/部門収支計画.html"/>

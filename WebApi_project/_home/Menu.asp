@@ -31,7 +31,7 @@
         var hostInfo = {
             "name": "テスト　データ",
             "mail": "test@eandm.co.jp",
-            "Tag": ["F_TEST"]
+            "Tag": ["F_OK"]
         }
         var docWin;
         var viewXmlWindow;
@@ -139,6 +139,8 @@
 
         function menu_click() {
             var url = this.getAttribute("url");
+            var randomh = Math.random();
+            url += "?tm=" + randomh;
             if (url) {
                 docWin.open(url);
                 //w_open(url);
