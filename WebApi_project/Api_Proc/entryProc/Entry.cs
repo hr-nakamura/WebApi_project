@@ -456,11 +456,21 @@ namespace WebApi_project.hostProc
             root.SetAttribute("name", "EMG");
             xmlDoc.AppendChild(root);
 
+            XmlElement root_sample = xmlDoc.CreateElement("sample");
+            root.AppendChild(root_sample);
+
             XmlElement root_xml = xmlDoc.CreateElement("xml");
             root.AppendChild(root_xml);
             foreach (var item in EntryTab_xml)
             {
-                makeMenu(root_xml, item.Key, item.Key, item.Value, EntryTab_xml);
+                if(item.Key.IndexOf("_sample/") == 0)
+                {
+                    makeMenu(root_sample, item.Key, item.Key, item.Value, EntryTab_xml);
+                }
+                else
+                {
+                    makeMenu(root_xml, item.Key, item.Key, item.Value, EntryTab_xml);
+                }
                 //root_xml.AppendChild(s_menu);
             }
             XmlElement root_json = xmlDoc.CreateElement("json");

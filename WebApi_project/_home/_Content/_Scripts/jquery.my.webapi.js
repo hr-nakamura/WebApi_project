@@ -65,7 +65,7 @@
             },
             $.WebApi_test = function (mode, className, methodName, json) {
                 var WebApi_url_test = hostName + "/WebApi/project/api/test";
-                $.debug("_home/WebApi_test", WebApi_url_test);
+                $.debug("_home/WebApi_test", WebApi_url_test,mode,className,methodName,json);
                 var options = {
                     mode: mode,
                     className: className,

@@ -78,6 +78,10 @@
             var json_methodTop = $(menu_xml).find("menu[name='テーブル(JSON)']");
             json_methodTop.prepend(json_menus);
 
+            var sample_menus = $(methodList).find("root>sample>menu");
+            var sample_methodTop = $(menu_xml).find("menu[name='テーブル(sample)']");
+            sample_methodTop.prepend(sample_menus);
+
             var test_json_menus = $(methodList2).find("root>json>menu");
             var test_json_methodTop = $(menu_xml).find("menu[name='関数(TEST_JSON)']");
             test_json_methodTop.prepend(test_json_menus);
@@ -122,11 +126,13 @@
             }
             // ここでxml/json分ける
             if (o.table == "xml") {
+                $.debug("click_xml", mode, o.item);
                 var xmlDoc = $.WebApi(o.item, o.option);
                 var Str = $.xml2str(xmlDoc);
                 //$.fileOut(o.item, Str);
             }
             else {
+                $.debug("click_json", mode, o.item);
                 var json = $.WebApi_json(o.item, o.option);
                 var Str = JSON.stringify(json);
             }
@@ -138,19 +144,21 @@
         function menu_click_test(o) {
             var mode = o.mode;
             if (mode == "method") {
-                $.debug.no("click", mode, o.item + "/" + o.func);
+                //$.debug("click_test", mode, o.item + "/" + o.func);
                 var type = o.type;
-                var option = o.option;
+                var option = (typeof(o.option) == "undefined" ? "" : o.option);
                 var value = o.item + "/" + o.func;
                 if (type == "xml") {
-                    var xmlDoc = $.WebApi_test("xml", o.item, o.func, Send_Option);
+                    //$.debug("click_test_xml", mode, o.item + "/" + o.func,option);
+                    var xmlDoc = $.WebApi_test("xml", o.item, o.func, option);
                     var Str = $.xml2str(xmlDoc);
                     //StrOut(Str);
                     $.storage("viewStr", Str);
                     $("iframe.iframe_content").attr("src", "Util/viewValue.html");
                 }
                 else if (type == "json") {
-                    var Str = $.WebApi_test("json", o.item, o.func, Send_Option);
+                    //$.debug("click_test_json", mode, o.item + "/" + o.func,option);
+                    var Str = $.WebApi_test("json", o.item, o.func, option);
                     //$.alert.json(Str);
                     //$.storage("viewStr", JSON.stringify(Str, null, 2));
                     $.storage("viewStr", Str);

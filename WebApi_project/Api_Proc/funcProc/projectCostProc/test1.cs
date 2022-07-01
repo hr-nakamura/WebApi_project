@@ -50,7 +50,7 @@ namespace WebApi_project.hostProc
             Top.Add("Info", O_Inf);
             //Top.Add("Data", O_Top);
 
-            string JsonStr = JsonConvert.SerializeObject(Top);
+            string JsonStr = JsonConvert.SerializeObject(o_json);
             XmlDocument xmlDoc = JsonConvert.DeserializeXmlNode(JsonStr, "root");
 
             return (xmlDoc);

@@ -224,6 +224,7 @@ namespace WebApi_project.hostProc
                     node2.SetAttribute("name", methodName);
                     node2.SetAttribute("item", className);
                     node2.SetAttribute("func", methodName);
+                    node2.SetAttribute("option", "{}");
                     node1.AppendChild(node2);
                 }
             }
@@ -241,6 +242,7 @@ namespace WebApi_project.hostProc
                     node2.SetAttribute("name", methodName);
                     node2.SetAttribute("item", className);
                     node2.SetAttribute("func", methodName);
+                    node2.SetAttribute("option", "{}");
                     node1.AppendChild(node2);
                 }
             }

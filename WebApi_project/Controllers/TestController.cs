@@ -30,7 +30,7 @@ namespace WebApi_project.Controllers
         }
         public HttpResponseMessage Get(string mode, string className, string methodName, string Json)
         {
-            MyDebug.noWrite("Test", "Get string Item, string Json",mode, className, methodName, Json.ToString());
+            MyDebug.noWrite("Test", "Get string Item, string Json",mode, className, methodName, Json);
             var hProc = new entryProc.entryProc();
             HttpResponseMessage response = new HttpResponseMessage();
             if ( mode == "xml")

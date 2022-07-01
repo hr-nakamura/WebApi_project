@@ -13,14 +13,6 @@ namespace WebApi_project.hostProc
     public partial class hostProc
     {
         //===================================================================================================================
-        public SortedDictionary<string, EntryInfoJson> _sample = new SortedDictionary<string, EntryInfoJson>() {
-            { "_sample/test", new EntryInfoJson{
-                type = "json",
-                data = "http://localhost/test/test.asp",
-                option = "{func:'xxxx',p1:'P1',p2:'P2',p3:'p3'}"
-                }
-            },
-        };
         public SortedDictionary<string, EntryInfoJson> projectInfo = new SortedDictionary<string, EntryInfoJson>() {
             { "projectInfo/memberInfo_json", new EntryInfoJson{
                 type = "method",

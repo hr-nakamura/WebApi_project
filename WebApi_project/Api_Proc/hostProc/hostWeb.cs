@@ -41,7 +41,7 @@ namespace WebApi_project.hostProc
 
         public string GetRequest(string url)
         {
-            return (GetRequest(url, "utf-8"));          // 指定がないときは「utf-8」
+            return (GetRequest(url, "Shift_JIS"));          // 指定がないときは「utf-8」
         }
         public string GetRequest(string url, string encode)
         {
