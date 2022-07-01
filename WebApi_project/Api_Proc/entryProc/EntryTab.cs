@@ -36,10 +36,18 @@ namespace WebApi_project.hostProc
                 dataX = "http://localhost/test/_xmlData/projectInfo_XML_Detail.xml",
                 }
             },
+            { "projectCostProc/projectInfo_XML_Detail2", new EntryInfoXml{
+                type = "xml",
+                data ="http://kansa.in.eandm.co.jp/Project/projectCostProc/xml/projectInfo_XML_Detail2.asp",
+                //option ="{pNum:20214693}",
+                option ="{pNum:20212329}",
+                dataX = "http://localhost/test/_xmlData/projectInfo_XML_Detail.xml",
+                }
+            },
             { "projectCostProc/projectInfo_XML_Join", new EntryInfoXml{
                 type = "xml",
                 data ="http://kansa.in.eandm.co.jp/Project/projectCostProc/xml/projectInfo_XML_Join.asp",
-                option ="{pNum:20214693}",
+                option ="{pNum:20212329}",
                 dataX = "http://localhost/test/_xmlData/projectInfo_XML_Join.xml",
                 }
             },

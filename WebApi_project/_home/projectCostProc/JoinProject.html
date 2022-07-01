@@ -3,8 +3,125 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
+
+    <script src="../_Content/_Scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+
+    <script src="../_Content/_Scripts/encoding.js" type="text/javascript"></script>
+    <script src="../_Content/_Scripts/jquery.my.webapi.js" type="text/javascript"></script>
+    <script src="../_Content/_Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
+    <script src="../_Content/_Scripts/cmn.js" type="text/javascript" charset="Shift_JIS"></script>
+    <LINK rel="stylesheet" href="account.css" type="text/css">
+
+    <script src="../_Content/_Scripts/jquery.stopWatch.js" type="text/javascript"></script>
+    <script src="../_Content/_debug/jquery.my.debug.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        var yymm = "";
+        var manTitle = "";
+        var subTitle = "";
+        var xmlDoc = "";
+        var 部門;
+        var 直間;
+        var json = {
+            pNum:20221763
+        }
+        var xsl_head = "xsl/projectDisp_Head.xsl"
+        var xsl_body_input = "xsl/projectDisp_Input.xsl"
+        var xsl_body_data = "xsl/projectDisp_Data.xsl"
+        var xsl_body_status = "xsl/projectDisp_Status.xsl"
+
+        var xmlDoc
+        var xslDoc
+
+        var xsl_Detail = "xsl/projectDisp_Detail.xsl"
+        var xsl_Detail2 = "test/projectDisp_Detail2.xsl"
+        var xml_Detail = "xml/projectInfo_XML_Detail.asp"
+        var xml_Detail2 = "test/projectInfo_XML_Detail2.asp"
+    </script>
+    <script type="text/javascript">
+        var xml_main = "projectCostProc/projectInfo_XML_Join"
+        var xmlDoc;
+        function reDisp() {
+            xmlDoc = $.WebApi(xml_main, json);
+            //	情報表示
+            headXML.innerHTML = convertXSL(xmlDoc, xsl_head)
+            bodyInputXML.innerHTML = convertXSL(xmlDoc, xsl_body_input)		// 入力の表
+            bodyDataXML.innerHTML = convertXSL(xmlDoc, xsl_body_data)		// 実績の表
+            bodyStatusXML.innerHTML = convertXSL(xmlDoc, xsl_body_status)		// 実績の表
+            // 結合ツリー表示
+            //projectTreeDisp(pNum)
+            ////	if( editMode != 1 ) projectTreeDisp(pNum)
+            ////	表示情報初期化
+            //yymmEditBlock.style.display = (editMode == 1 ? "block" : "none")
+            //if (editMode == 1) update_yymmList(pNum, mCnt)
+
+            //	グラフ表示
+            //grphDisp(xmlDoc)
+
+            // イベントのリストを縮める
+            //eventInfoCheck.checked = (eventInfoMode == 1 ? true : false)
+            //eventInfoCheck.click()
+
+            //editTitle.innerHTML = (editMode == 1 ? "　(データ設定可)" : "")
+        }
+        function convertXSL(xmlDoc, xsl_name) {
+            var xslDoc = $.loadXMLDoc(xsl_name);
+            var Buff = $.transformNode(xmlDoc, xslDoc);
+            return (Buff);
+        }
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $(window).on("load", function (e) {
+                reDisp();
+            });
+        });
+    </script>
+
 </head>
+
 <body>
-    JoinProject
+    <SPAN style="display:none"><textarea rows=30 cols=80 id="responseText"></textarea></SPAN>
+    <INPUT type="button" value="Button" id="TEST" style="display:none">
+
+    <DIV ID="dispBLOCK">
+        <table border=0 ID="mainTable">
+            <caption><span nowrap><b>プロジェクト情報</b></span><span id="editTitle"></span></caption>
+            <tr>
+                <td><SPAN ID="headXML"></SPAN></td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td>
+                    <table ID="yymmEditBlock" align="right" style="display:none">
+                        <tr>
+                            <td>
+                                <fieldset>
+                                    <legend>入力可能年月の設定</legend>
+                                    <SPAN ID="obj_s_yymm"></SPAN>～<SPAN ID="obj_yymmList"></SPAN>
+                                </fieldset>
+                            </td>
+                        </tr>
+                    </table>
+
+                </td>
+            </tr>
+            <tr>
+                <td><SPAN ID="bodyInputXML"></SPAN></td>
+            </tr>
+            <tr>
+                <td><SPAN ID="bodyDataXML"></SPAN></td>
+            </tr>
+            <tr>
+                <td><hr></td>
+            </tr>
+            <tr>
+                <td><SPAN ID="bodyStatusXML"></SPAN></td>
+            </tr>
+        </table>
+    </DIV>
 </body>
+
 </html>
