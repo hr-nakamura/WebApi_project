@@ -31,7 +31,8 @@ namespace WebApi_project.hostProc
             { "projectCostProc/projectInfo_XML_Detail", new EntryInfoXml{
                 type = "xml",
                 data ="http://kansa.in.eandm.co.jp/Project/projectCostProc/xml/projectInfo_XML_Detail.asp",
-                option ="{pNum:20214693}",
+                //option ="{pNum:20214693}",
+                option ="{pNum:20212329}",
                 dataX = "http://localhost/test/_xmlData/projectInfo_XML_Detail.xml",
                 }
             },

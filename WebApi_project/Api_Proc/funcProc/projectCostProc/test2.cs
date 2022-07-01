@@ -13,7 +13,7 @@ namespace WebApi_project.hostProc
 {
     public partial class projectCostProc : hostProc
     {
-        public object json_projectInfoDetail(String Json)
+        public JObject json_projectInfoDetail(String Json)
         {
             Dictionary<string, object> Tab = new Dictionary<string, object>();
             Dictionary<string, object> Info = new Dictionary<string, object>();
