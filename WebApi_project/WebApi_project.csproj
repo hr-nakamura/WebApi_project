@@ -123,6 +123,16 @@
     <Content Include="Models\memo.txt" />
     <Content Include="Scripts\json2.js" />
     <Content Include="Scripts\json2.min.js" />
+    <Content Include="_home\projectBBS_XX\bbsDB.asp" />
+    <Content Include="_home\projectBBS_XX\bbsMain.asp" />
+    <Content Include="_home\projectBBS_XX\editGroup.asp" />
+    <Content Include="_home\projectBBS_XX\editProject.asp" />
+    <Content Include="_home\projectBBS_XX\inputText.asp" />
+    <Content Include="_home\projectBBS_XX\js\bbsMain.js" />
+    <Content Include="_home\projectBBS_XX\js\editProject.js" />
+    <Content Include="_home\projectBBS_XX\js\showDialog.js" />
+    <Content Include="_home\projectBBS_XX\projectDataCsv.asp" />
+    <Content Include="_home\projectCostProc\cost.css" />
     <Content Include="_home\projectCostProc\JoinProject.asp" />
     <Content Include="_home\projectCostProc\JoinProject.html" />
     <Content Include="_home\projectCostProc\xsl\GRP_リスト.xsl" />

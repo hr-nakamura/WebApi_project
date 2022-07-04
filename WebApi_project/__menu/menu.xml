@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root name="EMG">
-	<menu name="_Test" memo="debug">
+	<menu name="_Test" memo="debug" display="none">
 		<menu name="test***" memo="" mode="url" url="/WebApi/project/_Test/_Test/test.asp"/>
 	</menu>
 
@@ -9,6 +9,9 @@
     <menu name="_home" memo="" >
 		<menu name="projectCostProc" memo="" >
 			<menu name="JoinProject" memo="" mode="url" url="/WebApi/project/_home/projectCostProc/JoinProject.html"/>
+		</menu>
+		<menu name="projectBBS" memo="" >
+			<menu name="projectBBS" memo="" mode="url" url="/WebApi/project/_home/projectBBS/bbsMain.html"/>
 		</menu>
 		<menu name="-------------" memo="" />
 		<menu name="部門収支" memo="" >
