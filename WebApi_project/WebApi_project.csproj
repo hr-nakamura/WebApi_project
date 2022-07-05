@@ -116,6 +116,7 @@
     <Content Include="Api_Proc\funcProc\projectCostProc\projectInfoDetail.xml" />
     <Content Include="Api_Proc\funcProc\projectCostProc\projectInfoList.xml" />
     <Content Include="Api_Proc\funcProc\部門収支\BASE.xml" />
+    <Content Include="global.asa" />
     <Content Include="Global.asax" />
     <Content Include="Api_Proc\funcProc\projectBBS\projectData_XML.xml" />
     <Content Include="Api_Proc\hostProc\memo.txt" />

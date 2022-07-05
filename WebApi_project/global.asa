@@ -1,0 +1,20 @@
+<OBJECT ID="EMGLog" PROGID="EMG.Log" SCOPE="Session" RUNAT="Server" VIEWASTEXT></OBJECT>
+
+<script LANGUAGE=JScript RUNAT=Server>
+function Application_OnStart()
+   {
+   }
+
+function Apprication_OnEnd()
+   {
+   }
+
+function Session_OnStart()
+	{
+	}
+
+function Session_OnEnd()
+	{
+	}
+</script>
+
