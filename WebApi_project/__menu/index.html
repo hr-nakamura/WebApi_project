@@ -55,7 +55,8 @@
                     color_menu_base: "cornflowerblue",
                     color_menu_select: "royalblue",
                     click: menu_click,
-                    context_menu: menu_click2
+                    context_menu: menu_click2,
+                    mouse_enter: mouse_enter
                 });
                 if( debug_mode ) $(".level-0[title='debug']").css("display", "inline");
 
@@ -105,8 +106,10 @@
 
     </script>
     <script type="text/javascript">
+        function mouse_enter(o) {
+            $(o)[0].setAttribute("title", $(o).data().item);
+        }
         function menu_click2(o) {
-            $.debug("AA",o.item);
             var Json = {};
             try {
                 Json = $.WebApi_json(o.item);
