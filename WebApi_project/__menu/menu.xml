@@ -66,7 +66,12 @@
 	  <menu name="History" memo="" mode="url" url="/WebApi/project/_Test/History/History.html"/>
 	</menu>
 	<menu name="QOSMIO">
-	  <menu name="QOSMIO" memo="" mode="url" url="/WebApi/project/_Test/QOSMIO/qosmio.html"/>
+    <menu name="QOSMIO">
+      <menu name="QOSMIO">
+        <menu name="QOSMIO" memo="" mode="url" url="/WebApi/project/_Test/QOSMIO/qosmio.html"/>
+      </menu>
+    </menu>
+    <menu name="QOSMIO" memo="" mode="url" url="/WebApi/project/_Test/QOSMIO/qosmio.html"/>
 	</menu>
   </menu>
 

@@ -98,11 +98,15 @@
             $(window).on("resize", function () {
                 var a = 1;
             });
+            $("li").on("mouseenter", function () {
+                $.debug("AA");
+            })
         });
 
     </script>
     <script type="text/javascript">
         function menu_click2(o) {
+            $.debug("AA",o.item);
             var Json = {};
             try {
                 Json = $.WebApi_json(o.item);
