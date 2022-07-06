@@ -262,7 +262,7 @@
         });
         $(eventName + ".bluemenu li").mouseenter(function () {
             var o = $(this);
-            if ($(o).children().length == 0) {
+            if ($(o).children().length == 0) {  // menuの最後
                 //var execFunc = "menu_click";
                 if (typeof (options.mouse_enter) == "function") {
                     var attrs = $(this).data();

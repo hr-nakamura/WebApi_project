@@ -107,7 +107,10 @@
     </script>
     <script type="text/javascript">
         function mouse_enter(o) {
-            $(o)[0].setAttribute("title", $(o).data().item);
+            var attrs = $(o).data();
+            if (typeof(attrs.mode) == "undefined") {
+                $(o)[0].setAttribute("title", attrs.item);
+            }
         }
         function menu_click2(o) {
             var Json = {};
