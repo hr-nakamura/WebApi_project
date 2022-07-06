@@ -3,6 +3,8 @@
 <head>
     <meta charset="shift_jis" />
     <title></title>
+    <script src="/Project/data/projectAccessLog.asp" async></script>
+
     <script src="../_Content/_Scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
     <script src="../_Content/_Scripts/jquery.my.webapi.js" type="text/javascript"></script>
     <script src="../_Content/_Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
@@ -59,7 +61,7 @@
 
             var json = {
                 year: year,
-                fix:fix,
+                fix: fix,
                 actual: actual
             };
             $.debug.json("para", json);
@@ -80,9 +82,9 @@
         $(function () {
             $(document).on("click", ".onKind_XX", function (event) {
                 var kind = this.getAttribute("kind");
-                var yymm = ((year-1) * 100) + 10;
+                var yymm = ((year - 1) * 100) + 10;
                 //var json = { gName: gName, yymm: yymm, dispCnt: 12, fix: fix };
-                var json = { mode: '分類名', kind: kind,yymm:yymm,dispCnt:12,fix:fix};
+                var json = { mode: '分類名', kind: kind, yymm: yymm, dispCnt: 12, fix: fix };
                 var Buff = makeHTML(sub_XML_name, sub_XSL_name, json);
 
                 if (!(winObj && !winObj.closed)) {
@@ -149,8 +151,9 @@
             background-color: lavender;
             padding: 4px 4px;
         }
-        .memo{
-            text-align:center;
+
+        .memo {
+            text-align: center;
         }
     </style>
 </head>
