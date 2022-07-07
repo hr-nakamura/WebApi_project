@@ -110,6 +110,7 @@
             var attrs = $(o).data();
             if (typeof(attrs.mode) == "undefined") {
                 $(o)[0].setAttribute("title", attrs.item);
+                $("textarea.debug").text(attrs.item);
             }
         }
         function menu_click2(o) {
@@ -281,10 +282,21 @@
             opacity: 0.6;
             *transform: translateX(10.0rem);
         }
+        .div_debug{
+            padding:0px;
+            border:1px red;
+            width:100%;
+            background-color:red;
+        }
+        textarea.debug{
+            width:100%;
+            vertical-align:middle;
+        }
     </style>
 
 </head>
 <body>
+    <div class="div_debug"><textarea class="debug"></textarea></div>
     <div class="drawer">
         <main role="main">
             <div class="menuBlock">
