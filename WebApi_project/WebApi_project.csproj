@@ -243,6 +243,7 @@
     <Content Include="_Test\Dialog\data\sales.json" />
     <Content Include="_home\_Content\_Scripts\jquery.json2xml.js" />
     <Content Include="__menu\debug\jquery.my.debug.js" />
+    <Content Include="__menu\debug_window.html" />
     <Content Include="__menu\images\bg00.gif" />
     <Content Include="__menu\images\EM.png" />
     <Content Include="__menu\index.html" />
