@@ -27,7 +27,15 @@
     <script type="text/javascript">
         var debug_mode = false;
     </script>
+    <script>
+        $(function () {
+            $("img.EMG_Logo").on("contextmenu", function (event) {
+                $("textarea.debug").appendTextarea("EMG_Logo");
+                return (false);
+            });
+        });
 
+    </script>
     <script type="text/javascript">
         $(window).on("load", function () {
             try {
@@ -124,12 +132,12 @@
     </script>
     <script>
         $(function () {
-            $("textarea.debug").on("dblclick",function (event) {
+            $("textarea.debug").on("dblclick", function (event) {
                 var value = $("textarea.debug").val();
                 //                copy_to_clipboard(value);
                 $("textarea.debug").val("");
             });
-            $("textarea.debug").on("click",function (event) {
+            $("textarea.debug").on("click", function (event) {
                 var value = $("textarea.debug").val();
                 copy_to_clipboard(value);
                 $("textarea.debug").val("");
