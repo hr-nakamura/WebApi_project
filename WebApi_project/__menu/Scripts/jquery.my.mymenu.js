@@ -269,7 +269,7 @@
                     if ( typeof(attrs.item) != "undefined") {
                         //$.debug("AA][" + attrs.item);
                         $(o)[0].setAttribute("title", attrs.item);
-                        //options.mouse_enter(this);
+                        options.mouse_enter(this);
                     }
                 }
             }

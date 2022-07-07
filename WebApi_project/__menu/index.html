@@ -97,10 +97,18 @@
     <script type="text/javascript">
         ; (function ($) {
             $.fn.focusToEnd = function () {
-                return this.each(function () {
-                    var v = $(this).val();
-                    $(this).focus().val("").val(v);
-                });
+                $("textarea.debug")[0].focus();
+                $("textarea.debug")[0].scrollTop = $("textarea.debug")[0].scrollHeight;
+            };
+            $.fn.appendTextarea = function (value) {
+                //var o = $("textarea.debug");
+                var o = $(this);
+                var work = $(o).val();
+                work += (work == "" ? value : "\n" + value);
+                $(o).val(work);
+
+                $(o)[0].focus();
+                $(o)[0].scrollTop = $(o)[0].scrollHeight;
             };
         })(jQuery);
         function copy_to_clipboard(value) {
@@ -116,7 +124,12 @@
     </script>
     <script>
         $(function () {
-            $("textarea.debug").on("click", function (event) {
+            $("textarea.debug").on("dblclick",function (event) {
+                var value = $("textarea.debug").val();
+                //                copy_to_clipboard(value);
+                $("textarea.debug").val("");
+            });
+            $("textarea.debug").on("click",function (event) {
                 var value = $("textarea.debug").val();
                 copy_to_clipboard(value);
                 $("textarea.debug").val("");
@@ -130,8 +143,8 @@
             var attrs = $(o).data();
             if (typeof (attrs.mode) == "undefined") {
                 $(o)[0].setAttribute("title", attrs.item);
-                var work = $("textarea.debug").val();
-                $("textarea.debug").val(work + attrs.item + "\n");
+
+                $("textarea.debug").appendTextarea(attrs.item);
             }
         }
         function menu_click2(o) {
