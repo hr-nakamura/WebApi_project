@@ -267,9 +267,9 @@
                 if (typeof (options.mouse_enter) == "function") {
                     var attrs = $(this).data();
                     if ( typeof(attrs.item) != "undefined") {
-//                        $.debug("AA][" + attrs.item);
-//                        $(o)[0].setAttribute("title", attrs.item);
-                        options.mouse_enter(this);
+                        //$.debug("AA][" + attrs.item);
+                        $(o)[0].setAttribute("title", attrs.item);
+                        //options.mouse_enter(this);
                     }
                 }
             }

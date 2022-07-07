@@ -58,7 +58,7 @@
                     context_menu: menu_click2,
                     mouse_enter: mouse_enter
                 });
-                if( debug_mode ) $(".level-0[title='debug']").css("display", "inline");
+                if (debug_mode) $(".level-0[title='debug']").css("display", "inline");
 
                 $("iframe.iframe_content").frame();
 
@@ -94,23 +94,44 @@
             return (menu_xml);
         }
     </script>
+    <script type="text/javascript">
+        ; (function ($) {
+            $.fn.focusToEnd = function () {
+                return this.each(function () {
+                    var v = $(this).val();
+                    $(this).focus().val("").val(v);
+                });
+            };
+        })(jQuery);
+        function copy_to_clipboard(value) {
+            if (navigator.clipboard) {
+                var copyText = value;
+                navigator.clipboard.writeText(copyText).then(function () {
+                    alert('クリップボードにコピーしました。');
+                });
+            } else {
+                alert('対応していません。');
+            }
+        }
+    </script>
     <script>
         $(function () {
-            $(window).on("resize", function () {
-                var a = 1;
+            $("textarea.debug").on("click", function (event) {
+                var value = $("textarea.debug").val();
+                copy_to_clipboard(value);
+                $("textarea.debug").val("");
             });
-            $("li").on("mouseenter", function () {
-                $.debug("AA");
-            })
         });
 
     </script>
+
     <script type="text/javascript">
         function mouse_enter(o) {
             var attrs = $(o).data();
-            if (typeof(attrs.mode) == "undefined") {
+            if (typeof (attrs.mode) == "undefined") {
                 $(o)[0].setAttribute("title", attrs.item);
-                $("textarea.debug").text(attrs.item);
+                var work = $("textarea.debug").val();
+                $("textarea.debug").val(work + attrs.item + "\n");
             }
         }
         function menu_click2(o) {
@@ -157,7 +178,7 @@
             if (mode == "method") {
                 //$.debug("click_test", mode, o.item + "/" + o.func);
                 var type = o.type;
-                var option = (typeof(o.option) == "undefined" ? "" : o.option);
+                var option = (typeof (o.option) == "undefined" ? "" : o.option);
                 var value = o.item + "/" + o.func;
                 if (type == "xml") {
                     //$.debug("click_test_xml", mode, o.item + "/" + o.func,option);
@@ -282,21 +303,23 @@
             opacity: 0.6;
             *transform: translateX(10.0rem);
         }
-        .div_debug{
-            padding:0px;
-            border:1px red;
-            width:100%;
-            background-color:red;
+
+        .div_debug {
+            padding: 0px;
+            border: 1px red;
+            width: 100%;
+            background-color: red;
         }
-        textarea.debug{
-            width:100%;
-            vertical-align:middle;
+
+        textarea.debug {
+            width: 100%;
+            vertical-align: middle;
         }
     </style>
 
 </head>
 <body>
-    <div class="div_debug"><textarea class="debug"></textarea></div>
+    <div class="div_debug"><textarea class="debug" readonly></textarea></div>
     <div class="drawer">
         <main role="main">
             <div class="menuBlock">
