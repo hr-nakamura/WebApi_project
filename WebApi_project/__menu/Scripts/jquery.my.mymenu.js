@@ -260,16 +260,16 @@
                 }
             }
         });
-        $(eventName + ".bluemenu li").mouseenter(function () {
+        $(eventName + ".bluemenu li").mouseover(function () {
             var o = $(this);
             if ($(o).children().length == 0) {  // menuの最後
                 //var execFunc = "menu_click";
-                if (typeof (options.mouse_enter) == "function") {
+                if (typeof (options.mouse_over) == "function") {
                     var attrs = $(this).data();
                     if ( typeof(attrs.item) != "undefined") {
                         //$.debug("AA][" + attrs.item);
                         $(o)[0].setAttribute("title", attrs.item);
-                        options.mouse_enter(this);
+                        options.mouse_over(o);
                     }
                 }
             }

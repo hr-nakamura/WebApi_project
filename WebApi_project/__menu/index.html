@@ -56,7 +56,7 @@
                     color_menu_select: "royalblue",
                     click: menu_click,
                     context_menu: menu_click2,
-                    mouse_enter: mouse_enter
+                    mouse_over: mouse_over
                 });
                 if (debug_mode) $(".level-0[title='debug']").css("display", "inline");
 
@@ -139,7 +139,7 @@
     </script>
 
     <script type="text/javascript">
-        function mouse_enter(o) {
+        function mouse_over(o) {
             var attrs = $(o).data();
             if (typeof (attrs.mode) == "undefined") {
                 $(o)[0].setAttribute("title", attrs.item);
