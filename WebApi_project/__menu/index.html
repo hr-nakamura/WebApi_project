@@ -31,7 +31,7 @@
         $(function () {
             $("img.EMG_Logo").on("contextmenu", function (event) {
                 $("textarea.debug").appendTextarea("EMG_Logo");
-                // debugウインドウを開く
+                // debugウインドウを開く($.debugで書き込めるようにする)
                 return (false);
             });
         });
