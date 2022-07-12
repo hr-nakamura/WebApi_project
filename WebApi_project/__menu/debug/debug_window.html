@@ -1,12 +1,45 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
+    <META http-equiv="Content-Type" content="text/html; charset=SHIFT_JIS">
     <title></title>
     <script src="../Scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
     <script src="../Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
+    <script src="../debug/jquery.my.debug.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        var local_top;
+        $(window).on("load", function () {
+            try {
+                $.debug("Start debug_window.html");
+                local_top = $window.top;
+                var xx = (window == window.parent ? "[open]で呼ばれた" : "[ifream]で呼ばれた");
+                $.debug("debug_window.html[" + xx + "]");
+                var closeMode = (!local_top.debugWin || local_top.debugWin.closed);
+                $.debug("[" + closeMode + "]");
+
+            } catch (e) {
+                alert(e.message);
+            }
+
+        });
+        function resize() {
+            var h = $(window).height();
+            //top.debugWin.appendTextarea(h.toString());
+            $("textarea.debug").css("height", h - 16);
+        }
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $(window).resize(function (elem) {
+                $("textarea.debug").appendTextarea("resize");
+                resize();
+            });
+        });
+    </script>
     <script type="text/javascript">
         function appendTextarea(msg) {
+            $.debug("appendTextarea", msg);
             $("textarea.debug").appendTextarea(msg);
         }
     </script>
@@ -28,11 +61,13 @@
             };
             $window = {
                 get top() {
-                    alert("debug_window.html-$window.top");
+                    //var mode = (window == window.parent ? "[open]で呼ばれた" : "[ifream]で呼ばれた");
+                    //var pname = wimdow.location.pathname;
+                    //$.debug("$window", pname, mode);
+
                     var o = window.top;
-                    $.alert("$window",typeof (o));
                     while ((o.opener != null && o.opener)) {
-                        alert(typeof (o.opener));
+                        $.debug(typeof (o.opener));
                         o = o.opener.top;
                     }
                     return (o.top);
@@ -52,36 +87,6 @@
         function mouse_over() {
             $("textarea.debug").appendTextarea("ABCDEF");
         }
-    </script>
-    <script type="text/javascript">
-        var top;
-        $(window).on("load", function () {
-            try {
-                //$.alert("debug_window.html load", "opener",window.opener.location,"parent",window.parent.location);
-                top = $window.top;
-                $.alert("XXX",typeof (top), typeof (top.debugWin));
-                $.alert(top.abc);
-
-                debugWin = top.debugWin;
-                resize();
-            } catch (e) {
-                alert(e.message);
-            }
-
-        });
-        function resize() {
-            var h = $(window).height();
-            top.debugWin.appendTextarea(h.toString());
-            $("textarea.debug").css("height", h - 16);
-        }
-    </script>
-    <script type="text/javascript">
-        $(function () {
-            $(window).resize(function (elem) {
-                top.debugWin.appendTextarea("resize");
-                resize();
-            });
-        });
     </script>
     <style>
         .debug {

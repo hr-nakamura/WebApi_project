@@ -7,49 +7,50 @@
     <script src="../../__menu/Scripts/jquery.kansa.Query.js"></script>
     <script src="../../__menu/debug/jquery.my.debug.js"></script>
     <script type="text/javascript">
-        $(function () {
-            //$(window).resize(function (elem) {
-            //    var top = $window.top;
-            //    var debugWin = top.debugWin;
-            //    debugWin.appendTextarea("resize")
-            //});
-        });
+        var local_top;
     </script>
+        <script type="text/javascript">
+            $(function () {
+                //$(window).resize(function (elem) {
+                //    var top = $window.top;
+                //    var debugWin = top.debugWin;
+                //    debugWin.appendTextarea("resize")
+                //});
+            });
+        </script>
     <SCRIPT FOR="window" EVENT="onload" Language="JavaScript">
         try {
 
         $.debug("Start Test.html");
-        //var top = $window.top;
-        var xx = (window == window.parent.document);
-        $.debug("[" + xx + "]");
-        var closeMode = (!top.debugWin || top.debugWin.closed);
+            local_top = $window.top;
+        var xx = (window == window.parent ? "[open]で呼ばれた" : "[ifream]で呼ばれた");
+        $.debug("test.html[" + xx + "]");
+            var closeMode = (!local_top.debugWin || local_top.debugWin.closed);
         $.debug("[" + closeMode + "]");
 
         //alert(openStat + "][" +  top + "][" + top.debugWin);
         // debugウインドウを開く($.debugで書き込めるようにする)
         if (closeMode) {
-            alert("window open");
+            //alert("window open");
             top.debugWin = window.open("../../__menu/debug/debug_window.html", "debug_window", "top=50,left=50,width=500,height=500,scrollbars=0,location=0,menubar=0,toolbar=0,status=1,directories=0,resizable=1");
         }
         else {
-            $.alert("test.html load1", top.location);
+            //$.alert("test.html load1", local_top.location);
 
         }
-        $.alert("test.html load2", top.debugWin.name);
+            //$.alert("test.html load2", local_top.debugWin.name);
 
         } catch (e) {
-            $.debug(e.messge);
+            $.debug(window.location.pathname,e.messge);
         }
     </SCRIPT>
     <script type="text/javascript">
         $(function () {
             $(".test").on("click", function (elem) {
-                var top = $.window.top;
+                var top = $window.top;
                 var debugWin = top.debugWin;
                 //alert(debugWin.name);
 
-                var z = typeof (debugWin.appendTextarea)
-                //alert("AA][" + z);
                 debugWin.appendTextarea("Hellow")
             });
         });
@@ -58,11 +59,14 @@
         (function ($) {
             $window = {
                 get top() {
-                    //alert("test.html-$window.top");
+                    //var mode = (window == window.parent ? "[open]で呼ばれた" : "[ifream]で呼ばれた");
+                    //var pname = wimdow.location.pathname;
+                    //$.debug("$window",pname, mode);
+
                     var o = window.top;
                     //$.alert("test.html-$window.top",typeof(o),o.location);
                     while ((o.opener != null && o.opener)) {
-                        alert(typeof (o.opener));
+                        $.debug(typeof (o.opener));
                         o = o.opener.top;
                     }
                     //$.alert("test.html-$window.top",typeof(o.top),o.top.location);
