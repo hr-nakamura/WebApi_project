@@ -1,0 +1,90 @@
+<HTML>
+<HEAD>
+	<META http-equiv="Content-Type" content="text/html; charset=SHIFT_JIS">
+	<META http-equiv="X-UA-Compatible" content="IE=5" />
+	<title></title>
+    <script src="../../__menu/Scripts/jquery-1.9.1.min.js"></script>
+    <script src="../../__menu/Scripts/jquery.kansa.Query.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //$(window).resize(function (elem) {
+            //    var top = $window.top;
+            //    var debugWin = top.debugWin;
+            //    debugWin.appendTextarea("resize")
+            //});
+        });
+    </script>
+	<SCRIPT FOR="window" EVENT="onload" Language="JavaScript">
+        var top = $window.top;
+
+        var closeStat = (!top.debugWin || top.debugWin.closed);
+        //alert(openStat + "][" +  top + "][" + top.debugWin);
+        // debugウインドウを開く($.debugで書き込めるようにする)
+        if (closeStat) {
+            alert("window open");
+            top.debugWin = window.open("../../__menu/debug/debug_window.html", "debug_window", "top=50,left=50,width=500,height=500,scrollbars=0,location=0,menubar=0,toolbar=0,status=1,directories=0,resizable=1");
+        }
+        else {
+            $.alert("test.html load1", top.location);
+
+        }
+        $.alert("test.html load2", top.debugWin.name);
+
+    </SCRIPT>
+        <script type="text/javascript">
+        $(function () {
+            $(".test").on("click", function (elem) {
+                var top = $.window.top;
+                var debugWin = top.debugWin;
+                //alert(debugWin.name);
+
+                var z = typeof (debugWin.appendTextarea)
+                //alert("AA][" + z);
+                debugWin.appendTextarea("Hellow")
+            });
+        });
+        </script>
+    <script type="text/javascript">
+    (function ($) {
+        $window = {
+            get top() {
+                //alert("test.html-$window.top");
+                var o = window.top;
+                //$.alert("test.html-$window.top",typeof(o),o.location);
+                while ((o.opener != null && o.opener)) {
+                    alert(typeof(o.opener));
+                    o = o.opener.top;
+                }
+                //$.alert("test.html-$window.top",typeof(o.top),o.top.location);
+            return (o.top);
+        }
+    }
+    })(jQuery);
+
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var x = document.getElementsByTagName('a');
+
+        });
+    </script>
+
+    <script type="text/javascript">
+        //(function ($) {
+        //    $(x).on('mouseover', function () {
+        //            this.title = this.href;
+        //            return(false);
+        //          });
+        //});　
+
+  </script>
+</HEAD>
+<body>
+    <input type="button" class="test" />
+	<a href="../_Test1/test.html" >AA</a>
+	<a href="../_Test1/test.html" >BB</a>
+	<a href="../_Test1/test.html" >CC</a>
+
+</body>
+</HTML>

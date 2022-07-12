@@ -26,19 +26,32 @@
 
     <script type="text/javascript">
         var debug_mode = false;
+        var debugWin;
+        var abc = "topWindow";
+        var debug_mode2 = "123";
     </script>
     <script>
         $(function () {
-            $("img.EMG_Logo").on("click", function (event) {
-                $("textarea.debug").appendTextarea("EMG_Logo");
-                // debugウインドウを開く($.debugで書き込めるようにする)
-                window.open("debug_window.html", "debug_window", "top=50,left=50,width=500,height=500,scrollbars=1,location=0,menubar=0,toolbar=0,status=1,directories=0,resizable=1");
+            $("img.EMG_Logo").on("click contextmenu", function (event) {
+                //var closeMode = (!debugWin || debugWin.closed);
+                if (event.type == "click") {
+                    // debugウインドウを開く($.debugで書き込めるようにする)
+                    //debugWin.focus();
+                    debugWin = window.open("debug_window.html", "debug_window", "top=50,left=50,width=500,height=500,scrollbars=0,location=0,menubar=0,toolbar=0,status=1,directories=0,resizable=1");
+                }
+                else {
+                    //var name = debugWin.name;
+                    debugWin.close();
+                    //window.focus();
+                }
                 return (false);
             });
         });
-
     </script>
     <script type="text/javascript">
+        $(window).on("unload", function () {
+            debugWin.close();
+        });
         $(window).on("load", function () {
             try {
                 var args = Array.prototype.slice.call(arguments, 1);
@@ -106,46 +119,8 @@
     </script>
     <script type="text/javascript">
         ; (function ($) {
-            $.fn.focusToEnd = function () {
-                $("textarea.debug")[0].focus();
-                $("textarea.debug")[0].scrollTop = $("textarea.debug")[0].scrollHeight;
-            };
-            $.fn.appendTextarea = function (value) {
-                //var o = $("textarea.debug");
-                var o = $(this);
-                var work = $(o).val();
-                work += (work == "" ? value : "\n" + value);
-                $(o).val(work);
 
-                $(o)[0].focus();
-                $(o)[0].scrollTop = $(o)[0].scrollHeight;
-            };
         })(jQuery);
-        function copy_to_clipboard(value) {
-            if (navigator.clipboard) {
-                var copyText = value;
-                navigator.clipboard.writeText(copyText).then(function () {
-                    alert('クリップボードにコピーしました。');
-                });
-            } else {
-                alert('対応していません。');
-            }
-        }
-    </script>
-    <script>
-        $(function () {
-            $("textarea.debug").on("dblclick", function (event) {
-                var value = $("textarea.debug").val();
-                //                copy_to_clipboard(value);
-                $("textarea.debug").val("");
-            });
-            $("textarea.debug").on("click", function (event) {
-                var value = $("textarea.debug").val();
-                copy_to_clipboard(value);
-                $("textarea.debug").val("");
-            });
-        });
-
     </script>
 
     <script type="text/javascript">
@@ -326,23 +301,10 @@
             opacity: 0.6;
             *transform: translateX(10.0rem);
         }
-
-        .div_debug {
-            padding: 0px;
-            border: 1px red;
-            width: 100%;
-            background-color: red;
-        }
-
-        textarea.debug {
-            width: 100%;
-            vertical-align: middle;
-        }
     </style>
 
 </head>
 <body>
-    <div class="div_debug"><textarea class="debug" readonly></textarea></div>
     <div class="drawer">
         <main role="main">
             <div class="menuBlock">

@@ -3,14 +3,15 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
-    <script src="Scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="../Scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="../Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
     <script type="text/javascript">
         function appendTextarea(msg) {
             $("textarea.debug").appendTextarea(msg);
         }
     </script>
     <script type="text/javascript">
-    ; (function ($) {
+        ; (function ($) {
             $.fn.focusToEnd = function () {
                 $("textarea.debug")[0].focus();
                 $("textarea.debug")[0].scrollTop = $("textarea.debug")[0].scrollHeight;
@@ -25,6 +26,18 @@
                 $(o)[0].focus();
                 $(o)[0].scrollTop = $(o)[0].scrollHeight;
             };
+            $window = {
+                get top() {
+                    alert("debug_window.html-$window.top");
+                    var o = window.top;
+                    $.alert("$window",typeof (o));
+                    while ((o.opener != null && o.opener)) {
+                        alert(typeof (o.opener));
+                        o = o.opener.top;
+                    }
+                    return (o.top);
+                }
+            }
         })(jQuery);
         function copy_to_clipboard(value) {
             if (navigator.clipboard) {
@@ -41,13 +54,33 @@
         }
     </script>
     <script type="text/javascript">
+        var top;
         $(window).on("load", function () {
             try {
-                mouse_over();
+                //$.alert("debug_window.html load", "opener",window.opener.location,"parent",window.parent.location);
+                top = $window.top;
+                $.alert("XXX",typeof (top), typeof (top.debugWin));
+                $.alert(top.abc);
+
+                debugWin = top.debugWin;
+                resize();
             } catch (e) {
                 alert(e.message);
             }
 
+        });
+        function resize() {
+            var h = $(window).height();
+            top.debugWin.appendTextarea(h.toString());
+            $("textarea.debug").css("height", h - 16);
+        }
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $(window).resize(function (elem) {
+                top.debugWin.appendTextarea("resize");
+                resize();
+            });
         });
     </script>
     <style>

@@ -225,7 +225,7 @@
     <Content Include="_Test\xml\xsl\売上予実_新規.xml" />
     <Content Include="_Test\_Test1\xsl\a.xsl" />
     <Content Include="_Test\_Test1\xsl\部門収支.xsl" />
-    <Content Include="_Test\_Test\test.asp" />
+    <Content Include="_Test\_Test\test.html" />
     <Content Include="_Test\Dialog\back.gif" />
     <Content Include="_Test\Dialog\bg01.gif" />
     <Content Include="_Test\Dialog\bg09.jpg" />
@@ -243,7 +243,7 @@
     <Content Include="_Test\Dialog\data\sales.json" />
     <Content Include="_home\_Content\_Scripts\jquery.json2xml.js" />
     <Content Include="__menu\debug\jquery.my.debug.js" />
-    <Content Include="__menu\debug_window.html" />
+    <Content Include="__menu\debug\debug_window.html" />
     <Content Include="__menu\images\bg00.gif" />
     <Content Include="__menu\images\EM.png" />
     <Content Include="__menu\index.html" />
