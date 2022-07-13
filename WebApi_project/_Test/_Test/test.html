@@ -26,7 +26,7 @@
         var xx = (window == window.parent ? "[open]で呼ばれた" : "[ifream]で呼ばれた");
         $.debug("test.html[" + xx + "]");
             var closeMode = (!local_top.debugWin || local_top.debugWin.closed);
-        $.debug("[" + closeMode + "]");
+        $.debug("close:[" + closeMode + "]");
 
         //alert(openStat + "][" +  top + "][" + top.debugWin);
         // debugウインドウを開く($.debugで書き込めるようにする)
@@ -59,9 +59,9 @@
         (function ($) {
             $window = {
                 get top() {
-                    //var mode = (window == window.parent ? "[open]で呼ばれた" : "[ifream]で呼ばれた");
-                    //var pname = wimdow.location.pathname;
-                    //$.debug("$window",pname, mode);
+                    var mode = (window == window.parent ? "[open]で呼ばれた" : "[ifream]で呼ばれた");
+                    var pname = window.location.pathname;
+                    $.debug("test.html => $window",pname, mode);
 
                     var o = window.top;
                     //$.alert("test.html-$window.top",typeof(o),o.location);
@@ -70,6 +70,8 @@
                         o = o.opener.top;
                     }
                     //$.alert("test.html-$window.top",typeof(o.top),o.top.location);
+                    $.debug("$window====", o.top.abc);
+
                     return (o.top);
                 }
             }

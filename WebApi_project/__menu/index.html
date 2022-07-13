@@ -33,16 +33,21 @@
     <script>
         $(function () {
             $("img.EMG_Logo").on("click contextmenu", function (event) {
-                //var closeMode = (!debugWin || debugWin.closed);
+                var closeMode = (!debugWin || debugWin.closed);
                 if (event.type == "click") {
                     // debugウインドウを開く($.debugで書き込めるようにする)
-                    //debugWin.focus();
-                    debugWin = window.open("../../__menu/debug/debug_window.html", "debug_window", "top=50,left=50,width=500,height=500,scrollbars=0,location=0,menubar=0,toolbar=0,status=1,directories=0,resizable=1");
+                    if (closeMode) {
+                        debugWin = window.open("../../__menu/debug/debug_window.html", "debug_window", "top=50,left=50,width=500,height=500,scrollbars=0,location=0,menubar=0,toolbar=0,status=1,directories=0,resizable=1");
+                    }
+                    else {
+                        debugWin.focus();
+                    }
                 }
                 else {
                     //var name = debugWin.name;
-                    //debugWin.close();
-                    window.focus();
+                    if (!closeMode) {
+                        debugWin.close();
+                    }
                 }
                 return (false);
             });

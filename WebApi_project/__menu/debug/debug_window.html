@@ -17,7 +17,7 @@
                 $.debug("debug_window.html[" + xx + "]");
                 var closeMode = (!local_top.debugWin || local_top.debugWin.closed);
                 $.debug("[" + closeMode + "]");
-
+                resize();
             } catch (e) {
                 alert(e.message);
             }
@@ -61,15 +61,15 @@
             };
             $window = {
                 get top() {
-                    //var mode = (window == window.parent ? "[open]で呼ばれた" : "[ifream]で呼ばれた");
-                    //var pname = wimdow.location.pathname;
-                    //$.debug("$window", pname, mode);
+                    var mode = (window == window.parent ? "[open]で呼ばれた" : "[ifream]で呼ばれた");
+                    var pname = window.location.pathname;
+                    $.debug("debug_window.html => $window", pname, mode);
 
                     var o = window.top;
                     while ((o.opener != null && o.opener)) {
-                        $.debug(typeof (o.opener));
                         o = o.opener.top;
                     }
+                    $.debug("$window====", o.top.abc);
                     return (o.top);
                 }
             }
