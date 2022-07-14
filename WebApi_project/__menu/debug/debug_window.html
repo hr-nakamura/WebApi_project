@@ -30,15 +30,14 @@
         function resize() {
             var h = $(window).height();
             var p_top = parseInt($("textarea.debug").css("padding-top"));
-            $("textarea.debug").appendTextarea(h + "][" + p_top);
             $("textarea.debug").css("height", h - (12 + p_top));
-            //var hh = $("textarea.debug").css("height");
+            //$("textarea.debug").appendTextarea(h + "][" + p_top);
         }
     </script>
     <script type="text/javascript">
         $(function () {
             $(window).resize(function (elem) {
-                $("textarea.debug").appendTextarea("resize");
+                //$("textarea.debug").appendTextarea("resize");
                 resize();
             });
             $("textarea.debug").on("contextmenu", function (elem) {
@@ -49,7 +48,7 @@
     </script>
     <script type="text/javascript">
         function appendTextarea(msg) {
-            $.debug("appendTextarea", msg);
+            //$.debug("appendTextarea", msg);
             $("textarea.debug").appendTextarea(msg);
         }
     </script>
@@ -73,13 +72,13 @@
                 get top() {
                     var mode = (window == window.parent ? "[open]で呼ばれた" : "[ifream]で呼ばれた");
                     var pname = window.location.pathname;
-                    $.debug("debug_window.html => $window", pname, mode);
+                    //$.debug("debug_window.html => $window", pname, mode);
 
                     var o = window.top;
                     while ((o.opener != null && o.opener)) {
                         o = o.opener.top;
                     }
-                    $.debug("$window====", o.top.abc);
+                    //$.debug("$window====", o.top.abc);
                     return (o.top);
                 }
             }
@@ -94,9 +93,6 @@
                 alert('対応していません。');
             }
         }
-        function mouse_over() {
-            $("textarea.debug").appendTextarea("ABCDEF");
-        }
     </script>
     <style>
         body{
@@ -108,10 +104,10 @@
         textarea.debug {
             width: 100%;
             height: 100%;
-            border: none;
             padding: 0px;
             outline: none;
             resize: none;
+            border:none;
         }
     </style>
 </head>

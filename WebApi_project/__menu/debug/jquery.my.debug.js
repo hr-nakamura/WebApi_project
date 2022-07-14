@@ -153,6 +153,12 @@
     function send_PostMessage(sendObj) {
         try {
             if (debug_mode == false) return;
+
+            var top = $.window.top;
+            if (!$.isEmptyObject(top.debugWin) && typeof (top.debugWin.appendTextarea) == "function"){
+                top.debugWin.appendTextarea(sendObj.LogData);
+            }
+
             var stat;
             //$.alert(sendObj.LogData);
 

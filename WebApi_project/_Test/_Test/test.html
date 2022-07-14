@@ -47,9 +47,9 @@
             var top = $window.top;
             var debugWin = top.debugWin;
             var xx = (window == window.parent ? "[open]�ŌĂ΂ꂽ" : "[ifream]�ŌĂ΂ꂽ");
-            $.debug("test.html[" + xx + "][" + debugWin + "]");
+            //$.debug("test.html[" + xx + "][" + debugWin + "]");
             if (!$.isEmptyObject(debugWin)) {
-                debugWin.appendTextarea("test.html onload");
+                $.debug("test.html onload");
             }
         } catch (e) {
             $.debug("error", e.message, window.location.pathname);
@@ -62,8 +62,8 @@
                     var top = $.window.top;
                     var debugWin = top.debugWin;
                     if (!$.isEmptyObject(debugWin)) {
-                        alert("[" + debugWin.name + "]");
-                        debugWin.appendTextarea("Hellow")
+                        //alert("[" + debugWin.name + "]");
+                        //debugWin.appendTextarea("Hellow");
                     }
 
                 } catch (e) {
