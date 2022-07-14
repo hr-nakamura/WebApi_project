@@ -43,26 +43,14 @@
     </script>
     <SCRIPT FOR="window" EVENT="onload" Language="JavaScript">
         try {
-
             //$.debug("Start Test.html");
-            local_top = $.window.top;
+            var top = $window.top;
+            var debugWin = top.debugWin;
             var xx = (window == window.parent ? "[open]で呼ばれた" : "[ifream]で呼ばれた");
-            //$.debug("test.html[" + xx + "]");
-            var closeMode = (!local_top.debugWin || local_top.debugWin.closed);
-            //$.debug("close:[" + closeMode + "]");
-
-            //alert(openStat + "][" +  top + "][" + top.debugWin);
-            // debugウインドウを開く($.debugで書き込めるようにする)
-            if (closeMode) {
-                //alert("window open");
-                top.debugWin = window.open("../../__menu/debug/debug_window.html", "debug_window", "top=10,left=10,width=500,height=500,scrollbars=0,location=0,menubar=0,toolbar=0,status=0,directories=0,resizable=1");
+            $.debug("test.html[" + xx + "][" + debugWin + "]");
+            if (!$.isEmptyObject(debugWin)) {
+                debugWin.appendTextarea("test.html onload");
             }
-            else {
-                //$.alert("test.html load1", local_top.location);
-
-            }
-            //$.alert("test.html load2", local_top.debugWin.name);
-
         } catch (e) {
             $.debug("error", e.message, window.location.pathname);
         }
@@ -70,12 +58,18 @@
     <script type="text/javascript">
         $(function () {
             $(".test").on("click", function (elem) {
-                var top = $.window.top;
-                var debugWin = top.debugWin;
-                //alert(debugWin.name);
+                try {
+                    var top = $.window.top;
+                    var debugWin = top.debugWin;
+                    if (!$.isEmptyObject(debugWin)) {
+                        alert("[" + debugWin.name + "]");
+                        debugWin.appendTextarea("Hellow")
+                    }
 
-                debugWin.appendTextarea("Hellow")
-            });
+                } catch (e) {
+                    alert("error["+e.message);
+                }
+                });
         });
     </script>
 

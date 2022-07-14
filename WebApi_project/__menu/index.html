@@ -37,7 +37,10 @@
                 if (event.type == "click") {
                     // debugウインドウを開く($.debugで書き込めるようにする)
                     if (closeMode) {
-                        debugWin = window.open("../../__menu/debug/debug_window.html", "debug_window", "top=10,left=10,width=500,height=500,scrollbars=0,location=0,menubar=0,toolbar=0,status=0,directories=0,resizable=1");
+                        var info = "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,left=0,top=0,resizable=yes,width=1014,height=740,title='abc'";
+                        debugWin = window.open("../../__menu/debug/debug_window.html", "debug_window", info);
+                        $.debug("AAAAAAAA",debugWin.name);
+//                        debugWin = window.open("../../__menu/debug/debug_window.html", "debug_window", "top=10,left=10,width=500,height=500,scrollbars=0,location=0,menubar=0,toolbar=0,status=0,directories=0,resizable=1");
                     }
                     else {
                         debugWin.focus();

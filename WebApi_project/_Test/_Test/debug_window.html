@@ -18,15 +18,6 @@
             }
 
         });
-        $(window).on("unload", function () {
-            try {
-                var top = $.window.top;
-                top.debugWin = null;
-            } catch (e) {
-                alert(e.message);
-            }
-
-        });
         function resize() {
             var h = $(window).height();
             var p_top = parseInt($("textarea.debug").css("padding-top"));
