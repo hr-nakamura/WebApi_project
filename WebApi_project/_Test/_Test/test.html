@@ -7,61 +7,12 @@
     <script src="../../__menu/Scripts/jquery.kansa.Query.js"></script>
     <script src="../../__menu/debug/jquery.my.debug.js"></script>
     <script type="text/javascript">
-        var local_top;
-    </script>
-        <script type="text/javascript">
-            $(function () {
-                //$(window).resize(function (elem) {
-                //    var top = $window.top;
-                //    var debugWin = top.debugWin;
-                //    debugWin.appendTextarea("resize")
-                //});
-            });
-        </script>
-    <SCRIPT FOR="window" EVENT="onload" Language="JavaScript">
-        try {
-
-        $.debug("Start Test.html");
-            local_top = $window.top;
-        var xx = (window == window.parent ? "[open]で呼ばれた" : "[ifream]で呼ばれた");
-        $.debug("test.html[" + xx + "]");
-            var closeMode = (!local_top.debugWin || local_top.debugWin.closed);
-        $.debug("close:[" + closeMode + "]");
-
-        //alert(openStat + "][" +  top + "][" + top.debugWin);
-        // debugウインドウを開く($.debugで書き込めるようにする)
-        if (closeMode) {
-            //alert("window open");
-            top.debugWin = window.open("../../__menu/debug/debug_window.html", "debug_window", "top=50,left=50,width=500,height=500,scrollbars=0,location=0,menubar=0,toolbar=0,status=1,directories=0,resizable=1");
-        }
-        else {
-            //$.alert("test.html load1", local_top.location);
-
-        }
-            //$.alert("test.html load2", local_top.debugWin.name);
-
-        } catch (e) {
-            $.debug(window.location.pathname,e.messge);
-        }
-    </SCRIPT>
-    <script type="text/javascript">
-        $(function () {
-            $(".test").on("click", function (elem) {
-                var top = $window.top;
-                var debugWin = top.debugWin;
-                //alert(debugWin.name);
-
-                debugWin.appendTextarea("Hellow")
-            });
-        });
-    </script>
-    <script type="text/javascript">
         (function ($) {
             $window = {
                 get top() {
                     var mode = (window == window.parent ? "[open]で呼ばれた" : "[ifream]で呼ばれた");
                     var pname = window.location.pathname;
-                    $.debug("test.html => $window",pname, mode);
+                    $.debug("test.html => $window", pname, mode);
 
                     var o = window.top;
                     //$.alert("test.html-$window.top",typeof(o),o.location);
@@ -78,6 +29,56 @@
         })(jQuery);
 
     </script>
+    <script type="text/javascript">
+        var local_top;
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            //$(window).resize(function (elem) {
+            //    var top = $window.top;
+            //    var debugWin = top.debugWin;
+            //    debugWin.appendTextarea("resize")
+            //});
+        });
+    </script>
+    <SCRIPT FOR="window" EVENT="onload" Language="JavaScript">
+        try {
+
+            //$.debug("Start Test.html");
+            local_top = $.window.top;
+            var xx = (window == window.parent ? "[open]で呼ばれた" : "[ifream]で呼ばれた");
+            //$.debug("test.html[" + xx + "]");
+            var closeMode = (!local_top.debugWin || local_top.debugWin.closed);
+            //$.debug("close:[" + closeMode + "]");
+
+            //alert(openStat + "][" +  top + "][" + top.debugWin);
+            // debugウインドウを開く($.debugで書き込めるようにする)
+            if (closeMode) {
+                //alert("window open");
+                top.debugWin = window.open("../../__menu/debug/debug_window.html", "debug_window", "top=10,left=10,width=500,height=500,scrollbars=0,location=0,menubar=0,toolbar=0,status=0,directories=0,resizable=1");
+            }
+            else {
+                //$.alert("test.html load1", local_top.location);
+
+            }
+            //$.alert("test.html load2", local_top.debugWin.name);
+
+        } catch (e) {
+            $.debug("error", e.message, window.location.pathname);
+        }
+    </SCRIPT>
+    <script type="text/javascript">
+        $(function () {
+            $(".test").on("click", function (elem) {
+                var top = $.window.top;
+                var debugWin = top.debugWin;
+                //alert(debugWin.name);
+
+                debugWin.appendTextarea("Hellow")
+            });
+        });
+    </script>
+
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -87,12 +88,12 @@
     </script>
 
     <script type="text/javascript">
-                //(function ($) {
-                //    $(x).on('mouseover', function () {
-                //            this.title = this.href;
-                //            return(false);
-                //          });
-                //});　
+                    //(function ($) {
+                    //    $(x).on('mouseover', function () {
+                    //            this.title = this.href;
+                    //            return(false);
+                    //          });
+                    //});　
 
     </script>
 </HEAD>
