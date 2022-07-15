@@ -226,7 +226,6 @@
     <Content Include="_Test\xml\xsl\売上予実_新規.xml" />
     <Content Include="_Test\_Test1\xsl\a.xsl" />
     <Content Include="_Test\_Test1\xsl\部門収支.xsl" />
-    <Content Include="_Test\_Test\debug_window.html" />
     <Content Include="_Test\_Test\test.html" />
     <Content Include="_Test\Dialog\back.gif" />
     <Content Include="_Test\Dialog\bg01.gif" />
@@ -287,7 +286,6 @@
     <Content Include="_home\projectBBS\new.gif" />
     <Content Include="_home\projectBBS\new7.gif" />
     <Content Include="_home\projectBBS\xsl\projectList.xsl" />
-    <None Include="_home\_Content\_debug\jquery.my.debug.js1" />
     <Content Include="_home\_Content\_images\alert.png" />
     <Content Include="_home\_Content\_images\arrow_l1.gif" />
     <Content Include="_home\_Content\_images\arrow_r1.gif" />
