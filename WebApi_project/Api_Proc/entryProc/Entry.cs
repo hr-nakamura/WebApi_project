@@ -45,7 +45,7 @@ namespace WebApi_project.hostProc
         {
             string jsonStr = null;
             EntryInfoXml EntryInfo = GetEntryTab_xml(Item);
-            if( EntryInfo != null)
+            if ( EntryInfo != null)
             {
                 string target_url = EntryInfo.data;
                 string option = JsonMerge(EntryInfo.option, "{queryChk:'1'}");
@@ -61,11 +61,12 @@ namespace WebApi_project.hostProc
                 }catch(Exception ex)
                 {
                     var s = ex.Message;
+                    var work = HttpUtility.UrlDecode(url, Encode);
                     var Msg = new Dictionary<string, string>()
                         {
-                            { "message" , "機能が準備されていません"},
+                            { "message" , "応答がありませんでした"},
                             { "Item"    , Item},
-                            { "url"     , url }
+                            { "url"     , work }
                         };
 
                     // Dictionaryをシリアライズします。
@@ -74,7 +75,16 @@ namespace WebApi_project.hostProc
             }
             else
             {
+                EntryInfoJson EntryInfoJson = GetEntryTab_json(Item);
+                string target_url = EntryInfoJson.data;
                 jsonStr = null;     // "{'error':'ABC'}";
+                var Msg = new Dictionary<string, string>()
+                        {
+                            { "message" , "xmlTabにはありませんでした"},
+                            { "Item"    , Item},
+                            {"url"      , target_url }
+                        };
+                jsonStr = System.Text.Json.JsonSerializer.Serialize(Msg);
             }
             return (jsonStr);
 
