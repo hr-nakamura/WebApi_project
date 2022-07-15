@@ -171,6 +171,7 @@
     <Content Include="_home\_Content\bmp\売上目標_部門.gif" />
     <Content Include="_home\_Content\xsl\sub_cmn.xsl" />
     <Content Include="_home\_Content\xsl\sub_jscript.xsl" />
+    <Content Include="_home\_Content\_debug\jquery.my.debug.js" />
     <Content Include="_home\_Content\_Scripts\json2xml.js" />
     <Content Include="_home\_Content\_Scripts\showModalDialog.js" />
     <Content Include="_home\_Content\_xmlData\EMG収支計画.xml" />
@@ -286,7 +287,7 @@
     <Content Include="_home\projectBBS\new.gif" />
     <Content Include="_home\projectBBS\new7.gif" />
     <Content Include="_home\projectBBS\xsl\projectList.xsl" />
-    <Content Include="_home\_Content\_debug\jquery.my.debug.js" />
+    <None Include="_home\_Content\_debug\jquery.my.debug.js1" />
     <Content Include="_home\_Content\_images\alert.png" />
     <Content Include="_home\_Content\_images\arrow_l1.gif" />
     <Content Include="_home\_Content\_images\arrow_r1.gif" />
