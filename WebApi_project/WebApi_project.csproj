@@ -245,6 +245,7 @@
     <Content Include="_home\_Content\_Scripts\jquery.json2xml.js" />
     <Content Include="__menu\debug\jquery.my.debug.js" />
     <Content Include="__menu\debug\debug_window.html" />
+    <Content Include="__menu\debug\test.html" />
     <Content Include="__menu\images\bg00.gif" />
     <Content Include="__menu\images\EM.png" />
     <Content Include="__menu\index.html" />
@@ -452,6 +453,7 @@
     <Compile Include="Api_Proc\hostProc_json\dayCheck.cs" />
     <Compile Include="Api_Proc\hostProc_json\memberInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="_Test\TEST\test.cs" />
     <Compile Include="__menu\debug\debug.ashx.cs">
       <DependentUpon>debug.ashx</DependentUpon>
     </Compile>
