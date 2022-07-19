@@ -14,17 +14,15 @@ namespace WebApi_project.hostProc
         {
             XmlDocument xmlDoc = new XmlDocument();
             try
-            //{
-                WebClient client = new WebClient();
-                NameValueCollection collection = new NameValueCollection();
-                NameValueCollection myCol = new NameValueCollection();
-                collection.Add("red", "rojo");
-                //collection.Add( "green", "verde" );
-                string url = "http://localhost/WebApi/project/__menu/debug/test.html";
-                byte[] resBytes = client.UploadValues(url, collection);
-                client.Dispose();
+            {
+                string url = "http://localhost/Project/Test/a.html";
+                //string url = @"/WebApi/project/__menu/debug/test.html";
+                HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+                HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
+                myHttpWebResponse.Close();
 
-            }catch(Exception ex)
+            }
+            catch(Exception ex)
             {
                 var x = ex.Message;
             }

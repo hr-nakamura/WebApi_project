@@ -3,8 +3,27 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
+    <script src="http://localhost/Project/data/projectAccessLog.asp" async></script>
+    <script src="../Scripts/jquery-1.9.1.min.js"></script>
+    <script src="../Scripts/jquery.kansa.Query.js"></script>
+    <script src="../debug/jquery.my.debug.js"></script>
+    <script FOR="window" EVENT="onload" Language="JavaScript">
+        try {
+            //alert("XX");
+            //$.debug("Start Test.html");
+            var top = $window.top;
+            var debugWin = top.debugWin;
+            var xx = (window == window.parent ? "[open]で呼ばれた" : "[ifream]で呼ばれた");
+            $.debug("test.html[" + xx + "][" + debugWin + "]");
+            if (!$.isEmptyObject(debugWin)) {
+                $.debug("test.html onload");
+            }
+        } catch (e) {
+            $.debug("error", e.message, window.location.pathname);
+        }
+    </script>
 </head>
 <body>
-
+    A
 </body>
 </html>

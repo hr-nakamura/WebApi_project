@@ -48,9 +48,9 @@
 
 
   <menu name="_Test" memo="debug" display="none">
-	  <menu name="_Test/test.html" memo="" mode="url" url="/WebApi/project/_Test/test.html"/>
+	  <menu name="_Test/test.html" memo="" mode="url" url="/WebApi/project/_Test/_Test/test.html"/>
 	  <menu name="xml/test.html" memo="" mode="url" url="/WebApi/project/_Test/xml/test.html"/>
-	  <menu name="winTest/test1.html" memo="" mode="url" url="/WebApi/project/_Test/winTest/test1.html"/>
+	  <menu name="debug/test.html" memo="" mode="url" url="/WebApi/project/__menu/debug/test.html"/>
 	  <menu name="_Test" memo="debug" >
 		<menu name="projectList" memo="" mode="url" url="/WebApi/project/_Test/_Test/projectList/test.html"/>
 	  　<menu name="TEST2(html)" memo="" mode="url" url="/WebApi/project/_Test/_Test/test.html"/>
