@@ -7,31 +7,13 @@
     <script src="../../__menu/Scripts/jquery-1.9.1.min.js"></script>
     <script src="../../__menu/Scripts/jquery.kansa.Query.js"></script>
     <script src="../../__menu/debug/jquery.my.debug.js"></script>
+    <script src="dateformat.js"></script>
     <script type="text/javascript">
         (function ($) {
-            $window = {
-                get top() {
-                    var mode = (window == window.parent ? "[open]Ç≈åƒÇŒÇÍÇΩ" : "[ifream]Ç≈åƒÇŒÇÍÇΩ");
-                    var pname = window.location.pathname;
-                    $.debug("test.html => $window", pname, mode);
-
-                    var o = window.top;
-                    //$.alert("test.html-$window.top",typeof(o),o.location);
-                    while ((o.opener != null && o.opener)) {
-                        $.debug(typeof (o.opener));
-                        o = o.opener.top;
-                    }
-                    //$.alert("test.html-$window.top",typeof(o.top),o.top.location);
-                    $.debug("$window====", o.top.abc);
-
-                    return (o.top);
-                }
-            }
         })(jQuery);
 
     </script>
     <script type="text/javascript">
-        var local_top;
     </script>
     <script type="text/javascript">
         $(function () {
@@ -42,21 +24,36 @@
             //});
         });
     </script>
-    <SCRIPT FOR="window" EVENT="onload" Language="JavaScript">
+    <script FOR="window" EVENT="onload" Language="JavaScript">
         try {
-            //alert("XX");
-            //$.debug("Start Test.html");
-            var top = $window.top;
+            var top = $.window.top;
             var debugWin = top.debugWin;
             var xx = (window == window.parent ? "[open]Ç≈åƒÇŒÇÍÇΩ" : "[ifream]Ç≈åƒÇŒÇÍÇΩ");
-            //$.debug("test.html[" + xx + "][" + debugWin + "]");
+            $.debug("test.html[" + xx + "][" + debugWin + "]");
             if (!$.isEmptyObject(debugWin)) {
                 $.debug("test.html onload");
             }
+            var dateFormat = new DateFormat("yyyy/MM/dd");
+            var nowD = new Date();
+            nowD.setHours(nowD.getHours() - 7); // 7:00ÇäJénÇ∆Ç∑ÇÈ
+            var str = dateFormat.format(nowD);
+            $.debug(str);
+
+
+            var s_dateFormat = new DateFormat("yyyy/MM/dd 07:00");
+            var e_dateFormat = new DateFormat("yyyy/MM/dd 06:59");
+            var sD = new Date(str);
+            var s_str = s_dateFormat.format(sD);
+            var eD = new Date(s_str);
+            eD.setDate(eD.getDate() + 1);
+            var e_str = e_dateFormat.format(eD);
+            $.debug(s_str,e_str);
+
+
         } catch (e) {
             $.debug("error", e.message, window.location.pathname);
         }
-    </SCRIPT>
+    </script>
     <script type="text/javascript">
         $(function () {
             $(".test").on("click", function (elem) {
@@ -84,20 +81,8 @@
     </script>
 
     <script type="text/javascript">
-                        //(function ($) {
-                        //    $(x).on('mouseover', function () {
-                        //            this.title = this.href;
-                        //            return(false);
-                        //          });
-                        //});Å@
-
     </script>
 </HEAD>
 <body>
-    <input type="button" class="test" />
-	<a href="../_Test1/test.html" >AA</a>
-	<a href="../_Test1/test.html" >BB</a>
-	<a href="../_Test1/test.html" >CC</a>
-
 </body>
 </HTML>
