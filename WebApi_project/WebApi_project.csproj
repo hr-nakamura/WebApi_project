@@ -227,6 +227,7 @@
     <Content Include="_Test\_Test1\xsl\a.xsl" />
     <Content Include="_Test\_Test1\xsl\部門収支.xsl" />
     <Content Include="_Test\_Test\dateformat.js" />
+    <Content Include="_Test\_Test\Jcmn.inc" />
     <Content Include="_Test\_Test\test.html" />
     <Content Include="_Test\Dialog\back.gif" />
     <Content Include="_Test\Dialog\bg01.gif" />
