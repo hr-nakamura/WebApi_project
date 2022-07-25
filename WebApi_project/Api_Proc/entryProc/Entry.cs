@@ -457,7 +457,6 @@ namespace WebApi_project.hostProc
                 {
                     foreach (var item in EntryTab_json)
                     {
-//                        if (item == Item) x = true;
                         if (!String.IsNullOrEmpty(item.Value.typeX)) item.Value.type = item.Value.typeX;
                         if (!String.IsNullOrEmpty(item.Value.dataX)) item.Value.data = item.Value.dataX;
                     }
