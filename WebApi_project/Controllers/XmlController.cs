@@ -36,7 +36,7 @@ namespace WebApi_project.Controllers
         }
         public HttpResponseMessage Get(string Item, string Json)
         {
-            MyDebug.noWrite("Xml", "Get string Item, string Json",Item,Json.ToString());
+            MyDebug.Write("Xml", "Get string Item, string Json",Item,Json.ToString());
 
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();

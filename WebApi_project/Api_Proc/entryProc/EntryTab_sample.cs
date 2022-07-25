@@ -55,7 +55,7 @@ namespace WebApi_project.hostProc
             },
             { "_sample/部門収支/統括収支計画2", new EntryInfoXml{
                 type = "xml",
-                data = "http://localhost/Project/部門収支/xml/部門収支_XML.asp",
+                data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp",
                 option = "{dispCmd:'統括一覧',secMode:'開発',dispName:'',year:2022,fix:70,yosoku:3}",
                 dataX = "http://localhost/test/_xmlData/統括収支計画.xml",
                 }
