@@ -45,10 +45,22 @@ namespace WebApi_project.hostProc
         {
             string jsonStr = null;
             EntryInfoXml EntryInfo = GetEntryTab_xml(Item);
-            if ( EntryInfo != null)
+            EntryInfoJson EntryInfo_json = GetEntryTab_json(Item);
+            if ( EntryInfo != null || EntryInfo_json != null)
             {
-                string target_url = EntryInfo.data;
-                string option = JsonMerge(EntryInfo.option, "{queryChk:'1'}");
+                string target_url, option;
+                if (EntryInfo != null)
+                {
+                    target_url = EntryInfo.data;
+                    option = JsonMerge(EntryInfo.option, "{queryChk:'1'}");
+
+                }
+                else
+                {
+                    target_url = EntryInfo_json.data;
+                    option = JsonMerge(EntryInfo_json.option, "{queryChk:'1'}");
+
+                }
                 string url = target_url + makeOption(option, "?");
 
                 hostWeb h = new hostWeb();
@@ -424,6 +436,7 @@ namespace WebApi_project.hostProc
         }
         private EntryInfoJson GetEntryTab_json(string Item)
         {
+            bool stat = false;
             if (EntryTab_json.Count == 0)
             {
                 Type type = typeof(WebApi_project.hostProc.hostProc);
@@ -439,16 +452,25 @@ namespace WebApi_project.hostProc
                     }
                 }
                 var hProc = new hostProc();
+                var x = false;
                 if (hProc.local_mode)
                 {
                     foreach (var item in EntryTab_json)
                     {
+//                        if (item == Item) x = true;
                         if (!String.IsNullOrEmpty(item.Value.typeX)) item.Value.type = item.Value.typeX;
                         if (!String.IsNullOrEmpty(item.Value.dataX)) item.Value.data = item.Value.dataX;
                     }
                 }
             }
-            var Tab = (Item != "" ? EntryTab_json[Item] : new EntryInfoJson());
+            else
+            {
+                foreach (var item in EntryTab_json)
+                {
+                    if (Item == item.Key) stat = true;
+                }
+            }
+            var Tab = (Item != "" && stat == true ? EntryTab_json[Item] : new EntryInfoJson());
             return (Tab);
         }
 
