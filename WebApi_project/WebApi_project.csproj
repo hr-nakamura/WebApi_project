@@ -124,15 +124,6 @@
     <Content Include="Models\memo.txt" />
     <Content Include="Scripts\json2.js" />
     <Content Include="Scripts\json2.min.js" />
-    <Content Include="_home\projectBBS_XX\bbsDB.asp" />
-    <Content Include="_home\projectBBS_XX\bbsMain.asp" />
-    <Content Include="_home\projectBBS_XX\editGroup.asp" />
-    <Content Include="_home\projectBBS_XX\editProject.asp" />
-    <Content Include="_home\projectBBS_XX\inputText.asp" />
-    <Content Include="_home\projectBBS_XX\js\bbsMain.js" />
-    <Content Include="_home\projectBBS_XX\js\editProject.js" />
-    <Content Include="_home\projectBBS_XX\js\showDialog.js" />
-    <Content Include="_home\projectBBS_XX\projectDataCsv.asp" />
     <Content Include="_home\projectCostProc\cost.css" />
     <Content Include="_home\projectCostProc\JoinProject.asp" />
     <Content Include="_home\projectCostProc\JoinProject.html" />
@@ -186,6 +177,7 @@
     <Content Include="_home\_Content\_xmlData\課収支計画.xml" />
     <Content Include="_home\_Content\_xmlData\費用状況.xml" />
     <Content Include="_home\_Content\_xmlData\部収支計画.xml" />
+    <Content Include="_home\参照設定\main.html" />
     <Content Include="_home\売上予測\account.css" />
     <Content Include="_home\売上予測\account1.css" />
     <Content Include="_home\売上予測\target.html" />

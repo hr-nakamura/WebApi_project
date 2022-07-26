@@ -1,0 +1,374 @@
+<!--/*
+	var memberID = Session("memberID")
+
+var pNum = ( Request.QueryString("pNum").Count == 1 ? Request.QueryString("pNum").Item : "20103250" )
+//if( typeof(memberID) == "undefined" ){
+//	pr("セッションが無効です[" + memberID + "]")
+//	Response.End
+//	}
+*/-->
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=SHIFT_JIS">
+<META http-equiv="X-UA-Compatible" content="IE=5" />
+
+<TITLE></TITLE>
+<META http-equiv="Content-Style-Type" content="text/css">
+<LINK rel="stylesheet" type="text/css" href="cost.css">
+<LINK rel="stylesheet" type="text/css" href="auth.css">
+
+<STYLE>
+#Cell{
+	cursor:hand;
+	}
+</STYLE>
+
+
+<SCRIPT LANGUAGE="JavaScript">
+var markColor = "mistyrose"
+var curColor  = "mediumturquoise"
+var xmlDoc
+var xslDoc
+var xmlDocList
+var xslDocList
+
+var xml_authList = "xml/authList_XML.asp"
+var xsl_authList = "xsl/authList.xsl"
+var xsl_nameList = "xsl/memberList.xsl"
+
+var aspObj
+var popMemo
+var result = false
+</SCRIPT>
+
+<SCRIPT FOR="toList" EVENT="oncontextmenu" LANGUAGE="JavaScript">
+try{
+var mID = this.value
+var node = xmlDoc.selectSingleNode("//メンバ[@mID='" + mID + "']");
+var mail = node.getAttribute("mail")
+window.open("manageMenu.asp"+ "?mailAddr=" + mail,"testWindow");
+}catch(e){
+	alert(e.message)
+	}
+return(false);
+</SCRIPT>
+
+<SCRIPT FOR="Cell" EVENT="onclick" LANGUAGE="JavaScript">
+var mark = ( this.value == 0 ? 1 : 0 )
+updateMark(mID,項目,mark)
+updateAuthList(mID,項目,mark)
+reDispAuthList(xmlDoc,xslDoc)
+</SCRIPT>
+
+<SCRIPT FOR="Cell" EVENT="onmouseenter" LANGUAGE="JavaScript">
+popMemo.dspMemo("[" + 名前 + "]<BR>[" + 項目 + "]" )
+this.style.cursor = "hand"
+this.style.backgroundColor = curColor
+</SCRIPT>
+
+<SCRIPT FOR="Cell" EVENT="onmouseleave" LANGUAGE="JavaScript">
+popMemo.clrMemo()
+this.style.cursor = ""
+this.style.backgroundColor = ( this.value == 1 ? markColor : "" )
+</SCRIPT>
+
+<SCRIPT FOR="sList" EVENT="onclick" LANGUAGE="JavaScript">
+var mID = ( this.value < 100000 ? this.value : 0 )
+auth_memberListBox.innerHTML = mID
+</SCRIPT>
+
+<SCRIPT FOR="sList" EVENT="ondblclick" LANGUAGE="JavaScript">
+listUpdate(sList,1)
+reDispList(xmlDoc,xslDocList)
+reDispAuthList(xmlDoc,xslDoc)
+</SCRIPT>
+
+<SCRIPT FOR="toList" EVENT="ondblclick" LANGUAGE="JavaScript">
+listClear(toList,1)
+reDispList(xmlDoc,xslDocList)
+reDispAuthList(xmlDoc,xslDoc)
+</SCRIPT>
+
+<SCRIPT FOR="toSelect" EVENT="onclick" LANGUAGE="JavaScript">
+listUpdate(sList,1)
+reDispList(xmlDoc,xslDocList)
+reDispAuthList(xmlDoc,xslDoc)
+</SCRIPT>
+
+<SCRIPT FOR="toCancel" EVENT="onclick" LANGUAGE="JavaScript">
+listClear(toList,1)
+reDispList(xmlDoc,xslDocList)
+reDispAuthList(xmlDoc,xslDoc)
+</SCRIPT>
+
+<SCRIPT FOR="R1" EVENT="onclick" LANGUAGE="JavaScript">
+reDispAuthList(xmlDoc,xslDoc)
+</SCRIPT>
+
+<SCRIPT FOR="window" EVENT="onunload" LANGUAGE="JavaScript">
+
+window.returnValue = result
+</SCRIPT>
+
+<SCRIPT FOR="window" EVENT="onload" LANGUAGE="JavaScript">
+//aspObj	= RSGetASPObject("authDB.asp")
+
+//popMemo = new popMemo("/inc/popMemo")
+//popMemo.init()
+	try {
+
+xmlDoc	   = new ActiveXObject("Microsoft.XMLDom");
+xslDoc	   = new ActiveXObject("Microsoft.XMLDom");
+xslDocList = new ActiveXObject("Microsoft.XMLDom");
+
+	var URL = xml_authList
+	xmlLoad(xmlDoc,URL)
+	xmlLoad(xslDoc,xsl_authList)
+
+	xmlLoad(xslDocList,xsl_nameList)
+
+	reDispList(xmlDoc,xslDocList)
+
+	}catch(e) {
+		alert(e.message);
+    }
+
+</SCRIPT>
+
+<SCRIPT FOR="BODY" EVENT="onkeydown" LANGUAGE="JavaScript">
+var keyCode = window.event.keyCode
+if(keyCode == 0x1b){
+	result = false
+   window.close()
+   }
+</SCRIPT>
+
+
+
+
+
+<SCRIPT LANGUAGE="JavaScript">
+function convCRLF(s)
+	{
+	var value = s.replace(/\n/g, "%0d%0a");
+	return(value)
+	}
+
+
+function reDispAuthList(xmlDoc,xslDoc)
+	{
+	var value
+	for( var x = 0; x < R1.length; x++){
+		if(R1[x].checked)  value = R1[x].value
+		}
+	var o = xslDoc.selectSingleNode("//xsl:variable[@name='表示モード']")
+	o.setAttribute("select",value)
+
+	var Buff = xmlDoc.transformNode(xslDoc)
+	authListBox.innerHTML = Buff
+	}
+
+function reDispList(xmlDoc,xslDoc)
+	{
+	var Buff = xmlDoc.transformNode(xslDoc)
+	memberListBox.innerHTML = Buff
+	}
+
+function xmlLoad(Doc,name)
+	{
+	Doc.async = false;
+	var ret = Doc.load(name);
+	}
+
+function listUpdate(sObj,mode)
+	{
+	var s,mID
+	var Cnt = sObj.options.length
+	var sPos = sObj.selectedIndex
+	if( sPos == -1 ) return
+	for( var i = sPos; i < Cnt; i++){
+		if(sObj.options[i].selected == true ){
+			mID = sObj.options[i].value
+			o = xmlDoc.selectSingleNode("//全体/メンバ[@mID=" + mID + "]")
+			if( o != null ){
+				o.setAttribute("mode",mode)
+				var c_o = o.cloneNode(true)
+				var sNode = xmlDoc.selectSingleNode("//選択")
+				sNode.appendChild(c_o)
+				}
+			}
+		}
+	}
+
+
+
+function listClear(sObj,mode)
+	{
+	var Cnt = sObj.length
+	var sPos = sObj.selectedIndex
+	if( sPos == -1 ) return
+	for( var i = 0; i < Cnt; i++){
+		if(sObj.options[i].selected == true ){
+			mID = sObj.options[i].value
+			o = xmlDoc.selectSingleNode("//全体/メンバ[@mID=" + mID + "]")
+			if( o != null ){
+				o.setAttribute("mode",0)
+				var d = xmlDoc.selectNodes("//選択/メンバ[@mID=" + mID + "]")
+				d.removeAll()
+				}
+			}
+		}
+	}
+
+
+function createXMLHttpRequest()
+	{
+	var XMLhttpObject = null;
+	try{
+		XMLhttpObject = new XMLHttpRequest();												// IE以外
+		}catch(e){
+			try{XMLhttpObject = new ActiveXObject("Msxml2.XMLHTTP");			// IE6.0-
+			}catch(e){
+				try{XMLhttpObject = new ActiveXObject("Microsoft.XMLHTTP");		// IE5.0-
+				}catch(e){
+					return(null)
+					}
+				}
+			}
+	return(XMLhttpObject);
+	}
+
+function updateAuthList(mID,item,mark)
+	{
+	var nodes = xmlDoc.selectNodes("//メンバ[@mID='" + mID + "']")
+	if(nodes.length > 0){
+		for( var i = 0; i < nodes.length; i++ ){
+			nodes[i].setAttribute(item,mark)
+			}
+		}
+	}
+
+function updateMark(mID,item,value)
+	{
+	var ret = aspObj.updateMark(mID,item,value)
+	}
+
+
+</SCRIPT>
+<SCRIPT FOR="ADD" EVENT="onclick" Language="JavaScript">
+var Tab = memberSelectDialog()
+//alert(Tab.mName + "][" + Tab.mID)
+	var mID   = Tab.mID
+	var mName = Tab.mName
+alert("["+mID+"]" + mName + "]")
+	var node = xmlDoc.selectSingleNode("//メンバ[@mID='" + mID + "']")
+	if( node != null ){
+		alert("["+ mName + "]さんは既に存在します")
+		}
+	else{
+		var ret = aspObj.registMember(mID)
+		alert("["+ mName + "][" + ret.return_value)
+		if( ret.return_value == true ){
+			var URL = xml_authList
+			xmlLoad(xmlDoc,URL)
+			reDispList(xmlDoc,xslDocList)
+			}
+
+		}
+</SCRIPT>
+<SCRIPT FOR="DEL" EVENT="onclick" Language="JavaScript">
+var sObj = toList
+var mID,mName,ret
+	var Cnt = sObj.options.length
+	for( var i = 0; i < Cnt; i++){
+		mID = sObj.options[i].value
+		mName = sObj.options[i].text
+		if( mID > 100000 ){
+			ret = window.confirm("【 " + mName + " 】さんを\n" + "削除しますか？")
+			if( ret == true ){
+				ret = aspObj.deleteMember(mID)
+//				alert(ret.return_value)
+				if( ret.return_value == true ){
+					var URL = xml_authList
+					xmlLoad(xmlDoc,URL)
+					reDispList(xmlDoc,xslDocList)
+					}
+				}
+			}
+		else{
+			alert("【 " + mName + " 】\n" + "この指定は削除できません")
+			}
+		}
+</SCRIPT>
+<SCRIPT Language="JavaScript">
+function memberSelectDialog()
+	{
+	var Tab = {mID:"",mName:""}
+	var URL = "memberBox/memberBox.asp"
+	var tm = new Date()
+	var TimeStamp = String(parseInt(Date.UTC(tm)/1000000))
+	URL += "?TimeStamp=" + TimeStamp
+
+	var Buff = new Object
+	var windowOption = ""
+	var value
+	windowOption  = "dialogWidth:100px;dialogHeight:400px;"
+	windowOption += "status:yes;scroll:yes;"
+	value = window.showModalDialog(URL,Buff,windowOption)
+	if( value > 0 ){
+		Tab.mID   = Buff.memberID
+		Tab.mName = Buff.memberName
+		}
+	return(Tab)
+	}
+</SCRIPT>	
+<SCRIPT Language="JavaScript" src="/inc/popMemo/popMemo.js"></SCRIPT>
+
+<!--
+<SCRIPT LANGUAGE="JavaScript" src="/_ScriptLibrary/RS.Js"></SCRIPT>
+<SCRIPT LANGUAGE="JavaScript">RSEnableRemoteScripting("/_ScriptLibrary")</SCRIPT>
+-->
+</HEAD>
+
+<BODY ID="BODY">
+
+
+<table align="left" border="0">
+<tbody>
+<TR>
+<TD align="left">
+<INPUT type="radio" id="R1" name="R1" value="0" checked>F_xxx
+<INPUT type="radio" id="R1" name="R1" value="1">その他
+</TD>
+</TR>
+<TR>
+<TD align="left">
+<SPAN ID="memberListBox">
+</TD>
+</TR>
+<TR>
+<TD align="left">
+<INPUT type="button" value="メンバ登録" id="ADD">
+<INPUT type="button" value="メンバ削除" id="DEL">
+</TD>
+</TR>
+<TR>
+<TD align="left">
+<SPAN id="authListBox">
+</TD>
+</TR>
+</tbody>
+</table>
+<table align="left" border="0">
+<tbody>
+<TR>
+<TD align="left">
+<SPAN id="auth_memberListBox">
+</TD>
+</TR>
+</tbody>
+</table>
+
+<textarea id="debug" cols=150 rows=50 style="display:none"></textarea>
+</BODY>
+</HTML>
