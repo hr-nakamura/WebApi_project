@@ -5,7 +5,7 @@
 //Response.End
     var mailAddr = "";
         mailAddr = Session("mailAddress");
-    if( mailAddr + "" == "undefined" ) mailAddr = "nakamura@eandm.co.jp";
+    if( mailAddr + "" == "undefined" ) mailAddr = "banba@eandm.co.jp";
 
 %>
 <!DOCTYPE html>
@@ -25,7 +25,7 @@
 		var mailAddress = "<%=mailAddr%>"
         var debug_mode = true;
         var mailPara = {
-            mailAddr: "nakamura@eandm.co.jp"
+            mailAddr: mailAddress
         };
         var memberInfo = {};
         var hostInfo = {
@@ -51,7 +51,7 @@
                 memberInfo["hostName"] = window.location.hostname;
 
                 $(".debug").JsonOut(memberInfo);
-                if (mailAddress == "nakamura@eandm.co.jp") {
+                if (mailAddress == mailAddress) {
                     $(".debug").css("display", "block");
                 }
 
