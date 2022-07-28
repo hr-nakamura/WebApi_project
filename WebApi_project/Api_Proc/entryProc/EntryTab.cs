@@ -32,7 +32,7 @@ namespace WebApi_project.hostProc
                 type = "xml",
                 data ="http://kansa.in.eandm.co.jp/Project/projectCostProc/xml/projectInfo_XML_Detail.asp",
                 //option ="{pNum:20214693}",
-                option ="{pNum:20212329}",
+                option ="{pNum:20214066}",
                 dataX = "http://localhost/test/_xmlData/projectInfo_XML_Detail.xml",
                 }
             },
@@ -40,21 +40,21 @@ namespace WebApi_project.hostProc
                 type = "xml",
                 data ="http://kansa.in.eandm.co.jp/Project/projectCostProc/xml/projectInfo_XML_Detail2.asp",
                 //option ="{pNum:20214693}",
-                option ="{pNum:20212329}",
+                option ="{pNum:20214066}",
                 dataX = "http://localhost/test/_xmlData/projectInfo_XML_Detail.xml",
                 }
             },
             { "projectCostProc/projectInfo_XML_Join", new EntryInfoXml{
                 type = "xml",
                 data ="http://kansa.in.eandm.co.jp/Project/projectCostProc/xml/projectInfo_XML_Join.asp",
-                option ="{pNum:20212329}",
+                option ="{pNum:20214066}",
                 dataX = "http://localhost/test/_xmlData/projectInfo_XML_Join.xml",
                 }
             },
             { "projectCostProc/projectInfoList_XML", new EntryInfoXml{
                 type = "xml",
                 data ="http://kansa.in.eandm.co.jp/Project/projectCostProc/xml/projectInfoList_XML.asp",
-                option ="{pNum:20214693}",
+                option ="{pNum:20214066}",
                 dataX = "http://localhost/test/_xmlData/projectInfoList_XML.xml",
                 }
             },
