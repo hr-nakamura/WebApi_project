@@ -96,15 +96,26 @@
                 });
                 return (returnValue);
             },
-        $.WebApi_get = function(url, options) {
+        $.WebApi_get = function(item, json) {
             //WebApi_url = hostName + "/WebApi/project/api/xml";
-            $.debug.no("__menu/WebApi_get");
+            var WebApi_url_test = hostName + "/WebApi/project/api/test";
+            $.debug("__menu/WebApi_get");
             window.status = "WebApi_get";
+            var options = {
+                Item: item,
+                Json: (typeof (json) == "object" ? JSON.stringify(json) : json)
+            };
             var result = $.ajax({
+                url: WebApi_url_test,
+                type: "GET",
+                data: options,
+                dataType: 'text',
+/*
                 url: url,
                 type: "GET",
                 data: options,
                 dataType: 'text',
+*/
                 dataFilter: function (data, type) {
                     return (data);
                 },

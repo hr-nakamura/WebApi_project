@@ -142,6 +142,7 @@
                 $(o)[0].setAttribute("title", attrs.item);
             }
         }
+        // 右クリックを実行
         function menu_click2(o) {
             var Json = {};
             try {
@@ -153,6 +154,10 @@
                     url: o.item
                 };
             }
+            // 戻ってきたJsonを元に新Json作成して保存
+            $.debug("WebApi_test", o.item, Json);
+            $.WebApi_get( o.item, Json);
+
             var Str = JSON.stringify(Json);
             $.storage("viewStr", Str);
             $("iframe.iframe_content").attr("src", "Util/viewValue.html");
@@ -164,7 +169,9 @@
                 menu_click_test(o);
                 return;
             }
+            // EntryTabを実行
             // ここでxml/json分ける
+            $.debug("o.table",o.table);
             if (o.table == "xml") {
                 $.debug("click_xml", mode, o.item);
                 var xmlDoc = $.WebApi(o.item, o.option);
@@ -180,7 +187,7 @@
             $.storage("viewStr", Str);
             $("iframe.iframe_content").attr("src", "Util/viewValue.html");
         }
-
+        // 通常のメニュ実行
         function menu_click_test(o) {
             var mode = o.mode;
             if (mode == "method") {

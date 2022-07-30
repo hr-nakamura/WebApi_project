@@ -19,7 +19,7 @@ namespace WebApi_project.Controllers
         // GET api/<controller>/5
         public HttpResponseMessage Get()
         {
-            MyDebug.noWrite("Json", "Get");
+            MyDebug.Write("Json", "Get");
             var hProc = new hostProc.hostProc();
             object Tab = hProc.methodList_xml_json();
 
@@ -43,7 +43,7 @@ namespace WebApi_project.Controllers
         }
         public HttpResponseMessage Get(string Item, string Json)
         {
-            MyDebug.noWrite("Json", "Get string Item, string Json", Item, Json.ToString());
+            MyDebug.Write("Json", "Get string Item, string Json", Item, Json.ToString());
             var hProc = new hostProc.entryProc();
 
             EntryInfoJson EntryInfo = new EntryInfoJson();

@@ -22,7 +22,7 @@ namespace WebApi_project.Controllers
         // GET api/<controller>/5
         public HttpResponseMessage Get()
         {
-            MyDebug.noWrite("Xml", "Get");
+            MyDebug.Write("Xml", "Get");
 
             // 呼び出せるリストを戻す
             var hProc = new hostProc.entryProc();
