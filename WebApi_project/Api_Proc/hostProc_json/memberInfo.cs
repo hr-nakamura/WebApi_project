@@ -41,14 +41,14 @@ namespace WebApi_project.hostProc
             s_memberInfo memberInfo; 
             string mailAddr = o_json.mailAddr;
 
-            memberInfo = memberInfoX1(mailAddr);
+            memberInfo = memberInfo_DB1(mailAddr);
             if (memberInfo.mail == null)
             {
                 memberInfo.mail = mailAddr;
             }
             else
             {
-                memberInfo.Tag = memberInfoX2(mailAddr);
+                memberInfo.Tag = memberInfo_DB2(mailAddr);
             }
             return (memberInfo);
             }catch(Exception ex)
@@ -57,7 +57,7 @@ namespace WebApi_project.hostProc
                 return (new object());
             }
         }
-        s_memberInfo memberInfoX1(string mailAddr)
+        s_memberInfo memberInfo_DB1(string mailAddr)
         {
             s_memberInfo memberInfo = new s_memberInfo();
             SqlConnection DB;
@@ -143,7 +143,7 @@ namespace WebApi_project.hostProc
                  }
             return (memberInfo);
         }
-        List<string> memberInfoX2(string mailAddr)
+        List<string> memberInfo_DB2(string mailAddr)
         {
             Dictionary<string, string> Tab = new Dictionary<string, string>();
             SqlConnection DB;
