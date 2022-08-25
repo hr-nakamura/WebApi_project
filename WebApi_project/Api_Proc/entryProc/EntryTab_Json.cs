@@ -17,7 +17,8 @@ namespace WebApi_project.hostProc
             { "projectInfo/memberInfo_json", new EntryInfoJson{
                 type = "method",
                 data = "hostProc/memberInfo_json",
-                option = "{mailAddr:'nakamura@eandm.co.jp'}"
+                option = "{mailAddr:'nakamura@eandm.co.jp'}",
+                dataX ="_Test/xml/memberInfo.json"
                 }
             },
             { "projectInfo/dayChk_json", new EntryInfoJson{
