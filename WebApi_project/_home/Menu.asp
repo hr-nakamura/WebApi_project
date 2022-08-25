@@ -1,12 +1,12 @@
 <%@ Language=JScript %>
 <%
-//Response.Write("メンテナンスしています<BR>")
+Response.Write("メンテナンスしています<BR>")
 //Response.Write("しばらくお待ちください")
 //Response.End
     var mailAddr = "";
         mailAddr = Session("mailAddress");
     if( mailAddr + "" == "undefined" ) mailAddr = "banba@eandm.co.jp";
-
+    Response.Write(mailAddr);
 %>
 <!DOCTYPE html>
 <html>
@@ -35,8 +35,10 @@
         }
         var docWin;
         var viewXmlWindow;
-        $(window).ready(function () {
+        $(window).on("ready",function () {
             try {
+                $.debug("window.ready Start", mailAddress);
+
                 var hostName = (window.location.hostname == "localhost" ? "" : "http://" + window.location.hostname);
 
                 if (mailAddress != "") {
@@ -64,11 +66,12 @@
         });
     </script>
     <script type="text/javascript">
-        window.onload = function () {
+        $(window).on("load",function () {
             try {
-                $.debug("onload Start",mailAddress);
+                alert("AA");
+                $.debug("onload Start", mailAddress);
 
-                if (typeof (memberInfo) == "undefined" || memberInfo.name == null ) {
+                if (typeof (memberInfo) == "undefined" || memberInfo.name == null) {
                     alert("認証されていません、ログインしてください");
                     //window.open('about:blank', '_self').close();
                 }
@@ -79,10 +82,10 @@
             } catch (e) {
                 $.alert("onload", e.message);
             }
-        }
-        window.onunload = function () {
+        });
+        $(window)on("unload",function () {
             docWin.close();
-        }
+        });
     </script>
     <script type="text/javascript">
         function dispMenu() {

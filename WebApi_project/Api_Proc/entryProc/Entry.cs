@@ -452,7 +452,6 @@ namespace WebApi_project.hostProc
                     }
                 }
                 var hProc = new hostProc();
-                var x = false;
                 if (hProc.local_mode)
                 {
                     foreach (var item in EntryTab_json)
