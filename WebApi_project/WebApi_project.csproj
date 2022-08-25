@@ -410,6 +410,7 @@
     <Content Include="_Test\xml\課一覧_JSON.json" />
     <Content Include="_Test\xml\部門一覧_JSON.json" />
     <Content Include="_Test\xml\統括一覧_JSON.json" />
+    <Content Include="_Test\xml\memberInfo.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api_Proc\entryProc\EntryTab_Json.cs" />
