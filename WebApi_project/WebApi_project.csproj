@@ -406,11 +406,11 @@
     <Content Include="__menu\debug\jquery.my.fileOut.js" />
     <Content Include="__menu\debug\fileOut.ashx" />
     <Content Include="__menu\work\aaa.json" />
-    <Content Include="_Test\xml\EMG_JSON.json" />
-    <Content Include="_Test\xml\課一覧_JSON.json" />
-    <Content Include="_Test\xml\部門一覧_JSON.json" />
-    <Content Include="_Test\xml\統括一覧_JSON.json" />
-    <Content Include="_Test\xml\memberInfo.json" />
+    <Content Include="_Data\json\EMG_JSON.json" />
+    <Content Include="_Data\json\課一覧_JSON.json" />
+    <Content Include="_Data\json\部門一覧_JSON.json" />
+    <Content Include="_Data\json\統括一覧_JSON.json" />
+    <Content Include="_Data\json\memberInfo.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api_Proc\entryProc\EntryTab_Json.cs" />
@@ -472,7 +472,9 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="_Data\xml\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
