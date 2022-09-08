@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root name="EMG">
-	<menu name="_Test" memo="debug" display="none">
-		<menu name="test***" memo="" mode="url" url="/WebApi/project/_Test/_Test/test.html"/>
-		<menu name="参照設定" memo="" mode="url" url="/WebApi/project/_home/参照設定/main.html"/>
+	<menu name="_Test" memo="debug" >
+		<menu name="test***" memo="" mode="url" url="/WebApi/project/_Test/excel_test/index.html"/>
 	</menu>
 
 	<menu name="監査ページ(NEW)" memo="" mode="url" url="/WebApi/project/_home/Menu.asp"/>

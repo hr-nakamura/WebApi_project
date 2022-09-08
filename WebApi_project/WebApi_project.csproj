@@ -184,6 +184,8 @@
     <Content Include="_home\売上予測\売上予実_新規.html" />
     <Content Include="_home\売上予測\売上予実_新規2.html" />
     <Content Include="_home\売上予測\売上予実_分類.html" />
+    <Content Include="_Test\excel_test\index.html" />
+    <Content Include="_Test\excel_test\script.js" />
     <Content Include="_Test\winTest\test1.html" />
     <Content Include="_Test\winTest\test2.html" />
     <Content Include="_home\売上予測\xsl\sub_cmn.xsl" />
