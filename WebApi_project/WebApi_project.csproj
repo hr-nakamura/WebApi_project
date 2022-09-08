@@ -184,8 +184,16 @@
     <Content Include="_home\売上予測\売上予実_新規.html" />
     <Content Include="_home\売上予測\売上予実_新規2.html" />
     <Content Include="_home\売上予測\売上予実_分類.html" />
-    <Content Include="_Test\excel_test\index.html" />
+    <Content Include="_Test\excel_test\asets\css\sheetjs.css" />
+    <Content Include="_Test\excel_test\asets\js\dropsheet.js" />
+    <Content Include="_Test\excel_test\asets\js\dropsheet_override_range.js" />
+    <Content Include="_Test\excel_test\asets\js\main.js" />
+    <Content Include="_Test\excel_test\asets\js\sheetjsw.js" />
+    <Content Include="_Test\excel_test\asets\js\shim.js" />
+    <Content Include="_Test\excel_test\asets\js\xhr-hack.js" />
+    <Content Include="_Test\excel_test\test1.html" />
     <Content Include="_Test\excel_test\script.js" />
+    <Content Include="_Test\excel_test\test2.html" />
     <Content Include="_Test\winTest\test1.html" />
     <Content Include="_Test\winTest\test2.html" />
     <Content Include="_home\売上予測\xsl\sub_cmn.xsl" />
@@ -413,6 +421,7 @@
     <Content Include="_Data\json\部門一覧_JSON.json" />
     <Content Include="_Data\json\統括一覧_JSON.json" />
     <Content Include="_Data\json\memberInfo.json" />
+    <Content Include="_Test\excel_test\asets\js\xlsx.full.min" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api_Proc\entryProc\EntryTab_Json.cs" />
