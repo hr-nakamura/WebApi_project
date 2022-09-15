@@ -134,7 +134,9 @@ namespace WebApi_project.hostProc
                     IPAddress = ip.ToString();
                 }
             }
-            bool stat = IPAddress.IndexOf("10.") == 0 ? false : true;
+            var work = IPAddress.Split('.');
+            // bool stat = IPAddress.IndexOf("10.") == 0 ? false : true;
+            bool stat = (Int32.Parse(work[0]) == 10 && Int32.Parse(work[1]) < 100) ? false : true;
             return (stat);
         }
         void IP_Chech(string IPAddr)
