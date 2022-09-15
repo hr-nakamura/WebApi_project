@@ -17,12 +17,14 @@ namespace WebApi_project.hostProc
             { "projectInfo/memberInfo_json", new EntryInfoJson{
                 type = "method",
                 data = "hostProc/memberInfo_json",
+                dataX = "http://localhost/test/_jsonData/グループ予実_部門_JSON.json",
                 option = "{mailAddr:'nakamura@eandm.co.jp'}"
                 }
             },
             { "projectInfo/dayChk_json", new EntryInfoJson{
                 type = "method",
                 data = "hostProc/dayChk_json",
+                dataX = "http://localhost/test/_jsonData/グループ予実_部門_JSON.json",
                 option = "{yymm:202204}"
                 }
             },
