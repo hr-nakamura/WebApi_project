@@ -25,7 +25,16 @@ namespace WebApi_project.hostProc
             EntryInfo_Xml.option = JsonMerge(EntryInfo_Xml.option, Json);
 
             XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc = LoadFunc(EntryInfo_Xml);
+
+            var hProc = new hostProc();
+            if (hProc.local_mode)                // ローカルモード(IPAddress: 10:*.*.*)以外の時
+            {
+                xmlDoc = LoadFunc(EntryInfo_Xml);
+            }
+            else
+            {
+                xmlDoc = LoadFunc(EntryInfo_Xml);
+            }
 
             MyDebug.Json(EntryInfo_Xml.option);
 
@@ -37,7 +46,15 @@ namespace WebApi_project.hostProc
             EntryInfo_Json.option = JsonMerge(EntryInfo_Json.option, Json);
 
             JObject jObj = new JObject();
-            jObj = LoadFunc(EntryInfo_Json);
+            var hProc = new hostProc();
+            if (hProc.local_mode)                // ローカルモード(IPAddress: 10:*.*.*)以外の時
+            {
+                jObj = LoadFunc(EntryInfo_Json);
+            }
+            else
+            {
+                jObj = LoadFunc(EntryInfo_Json);
+            }
             return (jObj);
         }
 
