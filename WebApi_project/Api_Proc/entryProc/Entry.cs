@@ -29,7 +29,7 @@ namespace WebApi_project.hostProc
             var hProc = new hostProc();
             if (hProc.local_mode)                // ローカルモード(IPAddress: 10:*.*.*)以外の時
             {
-                xmlDoc = LoadFunc(EntryInfo_Xml);
+                xmlDoc = LoadFunc_Local(EntryInfo_Xml);
             }
             else
             {
@@ -49,74 +49,13 @@ namespace WebApi_project.hostProc
             var hProc = new hostProc();
             if (hProc.local_mode)                // ローカルモード(IPAddress: 10:*.*.*)以外の時
             {
-                jObj = LoadFunc(EntryInfo_Json);
+                jObj = LoadFunc_Local(EntryInfo_Json);
             }
             else
             {
                 jObj = LoadFunc(EntryInfo_Json);
             }
             return (jObj);
-        }
-
-        public string Entry_Check(string Item)
-        {
-            string jsonStr = null;
-            EntryInfoXml EntryInfo_Xml = GetEntryTab_xml(Item);
-            EntryInfoJson EntryInfo_json = GetEntryTab_json(Item);
-            if (EntryInfo_Xml != null || EntryInfo_json != null)
-            {
-                string target_url, option;
-                if (EntryInfo_Xml != null)
-                {
-                    target_url = EntryInfo_Xml.data;
-                    option = JsonMerge(EntryInfo_Xml.option, "{queryChk:'1'}");
-
-                }
-                else
-                {
-                    target_url = EntryInfo_json.data;
-                    option = JsonMerge(EntryInfo_json.option, "{queryChk:'1'}");
-
-                }
-                string url = target_url + makeOption(option, "?");
-
-                hostWeb h = new hostWeb();
-                jsonStr = h.GetRequest(url, "Shift_JIS");
-
-                try
-                {
-                    // 戻り値がjson?
-                    JObject jsonObject = JObject.Parse(jsonStr);
-                }catch(Exception ex)
-                {
-                    var s = ex.Message;
-                    var work = HttpUtility.UrlDecode(url, Encode);
-                    var Msg = new Dictionary<string, string>()
-                        {
-                            { "message" , "応答がありませんでした"},
-                            { "Item"    , Item},
-                            { "url"     , work }
-                        };
-
-                    // Dictionaryをシリアライズします。
-                    jsonStr = System.Text.Json.JsonSerializer.Serialize(Msg);
-                }
-            }
-            else
-            {
-                EntryInfoJson EntryInfo_Json = GetEntryTab_json(Item);
-                string target_url = EntryInfo_Json.data;
-                jsonStr = null;     // "{'error':'ABC'}";
-                var Msg = new Dictionary<string, string>()
-                        {
-                            { "message" , "xmlTabにはありませんでした"},
-                            { "Item"    , Item},
-                            {"url"      , target_url }
-                        };
-                jsonStr = System.Text.Json.JsonSerializer.Serialize(Msg);
-            }
-            return (jsonStr);
-
         }
         private JObject LoadFunc(EntryInfoJson EntryInfo_Json)
         {
@@ -585,5 +524,91 @@ namespace WebApi_project.hostProc
                 p_menu.AppendChild(menu);
             }
         }
+        XmlDocument LoadFunc_Local(EntryInfoXml EntryInfo_Xml)
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            return (xmlDoc);
+        }
+        JObject LoadFunc_Local(EntryInfoJson EntryInfo_Json)
+        {
+            HttpContext context = HttpContext.Current;
+
+            string x = EntryInfo_Json.dataX;
+            string AppPath = context.Request.ApplicationPath;
+            string filePath = context.Server.MapPath(AppPath + "/" + x);
+
+            if (File.Exists(filePath))
+            {
+                Console.WriteLine("存在します");
+            }
+            JObject jObj = new JObject();
+            StreamReader r = new StreamReader(filePath,Encode);
+            string jsonString = r.ReadToEnd();
+            //jObj = JsonConvert.DeserializeObject(jsonString);
+
+            return (jObj);
+        }
+        public string Entry_Check(string Item)
+        {
+            string jsonStr = null;
+            EntryInfoXml EntryInfo_Xml = GetEntryTab_xml(Item);
+            EntryInfoJson EntryInfo_json = GetEntryTab_json(Item);
+            if (EntryInfo_Xml != null || EntryInfo_json != null)
+            {
+                string target_url, option;
+                if (EntryInfo_Xml != null)
+                {
+                    target_url = EntryInfo_Xml.data;
+                    option = JsonMerge(EntryInfo_Xml.option, "{queryChk:'1'}");
+
+                }
+                else
+                {
+                    target_url = EntryInfo_json.data;
+                    option = JsonMerge(EntryInfo_json.option, "{queryChk:'1'}");
+
+                }
+                string url = target_url + makeOption(option, "?");
+
+                hostWeb h = new hostWeb();
+                jsonStr = h.GetRequest(url, "Shift_JIS");
+
+                try
+                {
+                    // 戻り値がjson?
+                    JObject jsonObject = JObject.Parse(jsonStr);
+                }
+                catch (Exception ex)
+                {
+                    var s = ex.Message;
+                    var work = HttpUtility.UrlDecode(url, Encode);
+                    var Msg = new Dictionary<string, string>()
+                        {
+                            { "message" , "応答がありませんでした"},
+                            { "Item"    , Item},
+                            { "url"     , work }
+                        };
+
+                    // Dictionaryをシリアライズします。
+                    jsonStr = System.Text.Json.JsonSerializer.Serialize(Msg);
+                }
+            }
+            else
+            {
+                EntryInfoJson EntryInfo_Json = GetEntryTab_json(Item);
+                string target_url = EntryInfo_Json.data;
+                jsonStr = null;     // "{'error':'ABC'}";
+                var Msg = new Dictionary<string, string>()
+                        {
+                            { "message" , "xmlTabにはありませんでした"},
+                            { "Item"    , Item},
+                            {"url"      , target_url }
+                        };
+                jsonStr = System.Text.Json.JsonSerializer.Serialize(Msg);
+            }
+            return (jsonStr);
+
+        }
+
     }
 }
