@@ -531,11 +531,8 @@ namespace WebApi_project.hostProc
         }
         JObject LoadFunc_Local(EntryInfoJson EntryInfo_Json)
         {
-            HttpContext context = HttpContext.Current;
-
-            string x = EntryInfo_Json.dataX;
-            string AppPath = context.Request.ApplicationPath;
-            string filePath = context.Server.MapPath(AppPath + "/" + x);
+            var hProc = new hostProc();
+            string filePath = hProc.basePath + EntryInfo_Json.dataX;
 
             if (File.Exists(filePath))
             {
