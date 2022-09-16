@@ -24,7 +24,7 @@ namespace WebApi_project.hostProc
             { "projectInfo/dayChk_json", new EntryInfoJson{
                 type = "method",
                 data = "hostProc/dayChk_json",
-                dataX = "http://localhost/test/_jsonData/グループ予実_部門_JSON.json",
+                dataX = "/_Data/json/dayChk.json",
                 option = "{yymm:202204}"
                 }
             },

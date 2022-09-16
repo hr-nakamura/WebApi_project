@@ -527,23 +527,84 @@ namespace WebApi_project.hostProc
         XmlDocument LoadFunc_Local(EntryInfoXml EntryInfo_Xml)
         {
             XmlDocument xmlDoc = new XmlDocument();
+
+            var hProc = new hostProc();
+            JObject oJson = new JObject();
+            var url = EntryInfo_Xml.dataX;
+            var option = EntryInfo_Xml.option;
+            //url += makeOption(option, "?");
+            hostWeb h = new hostWeb();
+            string jsonStr = h.GetRequest(url, "Shift_JIS");
+            if (!String.IsNullOrEmpty(jsonStr))
+            {
+                oJson = JObject.Parse(jsonStr);
+                //hProc.JsonArrayConvert(ref oJson, "月", "m");
+                xmlDoc = hProc.JsonToXml(oJson);
+            }
+
+
+            //string fName = EntryInfo_Xml.dataX;
+            //var urlMode = ValidHttpURL(fName);
+            //if (urlMode)
+            //{
+            //    hostWeb h = new hostWeb();
+            //    string xmlStr = h.GetRequest(fName, "Shift_JIS");
+            //    if (!String.IsNullOrEmpty(xmlStr))
+            //    {
+            //        JObject oJson = JObject.Parse(xmlStr);
+            //        var hProc = new hostProc();
+            //        xmlDoc = hProc.JsonToXml(oJson);
+
+
+            //        //xmlDoc.LoadXml(xmlStr);
+            //    }
+            //}
+            //else
+            //{
+            //    var hProc = new hostProc();
+            //    string filePath = hProc.basePath + fName;
+            //    if (File.Exists(filePath))
+            //    {
+            //        //Console.WriteLine("存在します");
+            //        StreamReader r = new StreamReader(filePath, Encode);
+            //        string xmlString = r.ReadToEnd();
+            //        xmlDoc.LoadXml(xmlString);
+            //    }
+            //}
             return (xmlDoc);
         }
         JObject LoadFunc_Local(EntryInfoJson EntryInfo_Json)
         {
-            var hProc = new hostProc();
-            string filePath = hProc.basePath + EntryInfo_Json.dataX;
-
-            if (File.Exists(filePath))
-            {
-                Console.WriteLine("存在します");
-            }
             JObject jObj = new JObject();
-            StreamReader r = new StreamReader(filePath,Encode);
-            string jsonString = r.ReadToEnd();
-            //jObj = JsonConvert.DeserializeObject(jsonString);
-
+            string fName = EntryInfo_Json.dataX;
+            var urlMode = ValidHttpURL(fName);
+            if(urlMode)
+            {
+                hostWeb h = new hostWeb();
+                string jsonStr = h.GetRequest(fName, "Shift_JIS");
+                if (!String.IsNullOrEmpty(jsonStr))
+                {
+                    jObj = JObject.Parse(jsonStr);
+                }
+            }
+            else
+            {
+                var hProc = new hostProc();
+                string filePath = hProc.basePath + fName;
+                if (File.Exists(filePath))
+                {
+                    //Console.WriteLine("存在します");
+                    StreamReader r = new StreamReader(filePath, Encode);
+                    string jsonString = r.ReadToEnd();
+                    jObj = JObject.Parse(jsonString);
+                }
+            }
             return (jObj);
+        }
+        static bool ValidHttpURL(string s)
+        {
+            Uri uriResult;
+            return Uri.TryCreate(s, UriKind.Absolute, out uriResult) && uriResult.Scheme == Uri.UriSchemeHttp;
         }
         public string Entry_Check(string Item)
         {

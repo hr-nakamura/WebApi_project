@@ -39,6 +39,7 @@ namespace WebApi_project.hostProc
         HttpContext context = HttpContext.Current;
         public hostProc()
         {
+            string xxx = HttpContext.Current.Request.PhysicalApplicationPath;
             //QOSMIO
             //HttpContext.Current.Request.Cookies("visitBBS");
             //HttpCookieCollection MyCookieColl;
