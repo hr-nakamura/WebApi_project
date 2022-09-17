@@ -369,15 +369,6 @@ namespace WebApi_project.hostProc
                         EntryTab_xml = Marge(EntryTab_xml, (SortedDictionary<string, EntryInfoXml>)oDic);
                     }
                 }
-                var hProc = new hostProc();
-                if( hProc.local_mode)
-                {
-                    foreach (var item in EntryTab_xml)
-                    {
-                        if (!String.IsNullOrEmpty(item.Value.typeX)) item.Value.type = item.Value.typeX;
-                        if (!String.IsNullOrEmpty(item.Value.dataX)) item.Value.data = item.Value.dataX;
-                    }
-                }
             }
             try
             {
@@ -405,15 +396,6 @@ namespace WebApi_project.hostProc
                         var obj = Activator.CreateInstance(type);
                         var oDic = field.GetValue(obj);
                         EntryTab_json = Marge(EntryTab_json, (SortedDictionary<string, EntryInfoJson>)oDic);
-                    }
-                }
-                var hProc = new hostProc();
-                if (hProc.local_mode)
-                {
-                    foreach (var item in EntryTab_json)
-                    {
-                        if (!String.IsNullOrEmpty(item.Value.typeX)) item.Value.type = item.Value.typeX;
-                        if (!String.IsNullOrEmpty(item.Value.dataX)) item.Value.data = item.Value.dataX;
                     }
                 }
             }
@@ -531,51 +513,31 @@ namespace WebApi_project.hostProc
             var hProc = new hostProc();
             JObject oJson = new JObject();
             var url = EntryInfo_Xml.dataX;
+            var type = (EntryInfo_Xml.typeX != null ? EntryInfo_Xml.typeX : EntryInfo_Xml.type);
+
             var option = EntryInfo_Xml.option;
             //url += makeOption(option, "?");
             hostWeb h = new hostWeb();
             string jsonStr = h.GetRequest(url, "Shift_JIS");
             if (!String.IsNullOrEmpty(jsonStr))
             {
-                oJson = JObject.Parse(jsonStr);
-                hProc.JsonArrayConvert(ref oJson, "月", "m");
-                xmlDoc = hProc.JsonToXml(oJson);
+                if( type == "json")
+                {
+                    oJson = JObject.Parse(jsonStr);
+                    hProc.JsonArrayConvert(ref oJson, "月", "m");
+                    xmlDoc = hProc.JsonToXml(oJson);
+                }
+                else if (type == "xml")
+                {
+                    xmlDoc.LoadXml(jsonStr);
+                }
+                var Declaration = xmlDoc.FirstChild.GetType().ToString();
+                if (!(Declaration == "System.Xml.XmlDeclaration" || Declaration == "System.Xml.XmlProcessingInstruction"))
+                {
+                    XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
+                    xmlDoc.PrependChild(declaration);
+                }
             }
-            var Declaration = xmlDoc.FirstChild.GetType().ToString();
-            if (!(Declaration == "System.Xml.XmlDeclaration" || Declaration == "System.Xml.XmlProcessingInstruction"))
-            {
-                XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
-                xmlDoc.PrependChild(declaration);
-            }
-
-            //string fName = EntryInfo_Xml.dataX;
-            //var urlMode = ValidHttpURL(fName);
-            //if (urlMode)
-            //{
-            //    hostWeb h = new hostWeb();
-            //    string xmlStr = h.GetRequest(fName, "Shift_JIS");
-            //    if (!String.IsNullOrEmpty(xmlStr))
-            //    {
-            //        JObject oJson = JObject.Parse(xmlStr);
-            //        var hProc = new hostProc();
-            //        xmlDoc = hProc.JsonToXml(oJson);
-
-
-            //        //xmlDoc.LoadXml(xmlStr);
-            //    }
-            //}
-            //else
-            //{
-            //    var hProc = new hostProc();
-            //    string filePath = hProc.basePath + fName;
-            //    if (File.Exists(filePath))
-            //    {
-            //        //Console.WriteLine("存在します");
-            //        StreamReader r = new StreamReader(filePath, Encode);
-            //        string xmlString = r.ReadToEnd();
-            //        xmlDoc.LoadXml(xmlString);
-            //    }
-            //}
             return (xmlDoc);
         }
         JObject LoadFunc_Local(EntryInfoJson EntryInfo_Json)
