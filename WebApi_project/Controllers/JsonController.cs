@@ -33,7 +33,7 @@ namespace WebApi_project.Controllers
             MyDebug.Write("Json", "Get string Item", Item );
             
             var hProc = new hostProc.entryProc();
-            string jsonStr = hProc.Entry_Check(Item);
+            string jsonStr = hProc.Entry_Check(Item);           // 引数の情報表示
             if (jsonStr != null)
             {
                 response = response_conv(jsonStr);
