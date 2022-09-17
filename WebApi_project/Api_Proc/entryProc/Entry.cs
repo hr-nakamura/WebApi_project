@@ -538,10 +538,15 @@ namespace WebApi_project.hostProc
             if (!String.IsNullOrEmpty(jsonStr))
             {
                 oJson = JObject.Parse(jsonStr);
-                //hProc.JsonArrayConvert(ref oJson, "月", "m");
+                hProc.JsonArrayConvert(ref oJson, "月", "m");
                 xmlDoc = hProc.JsonToXml(oJson);
             }
-
+            var Declaration = xmlDoc.FirstChild.GetType().ToString();
+            if (!(Declaration == "System.Xml.XmlDeclaration" || Declaration == "System.Xml.XmlProcessingInstruction"))
+            {
+                XmlDeclaration declaration = xmlDoc.CreateXmlDeclaration("1.0", "Shift_JIS", null);
+                xmlDoc.PrependChild(declaration);
+            }
 
             //string fName = EntryInfo_Xml.dataX;
             //var urlMode = ValidHttpURL(fName);
