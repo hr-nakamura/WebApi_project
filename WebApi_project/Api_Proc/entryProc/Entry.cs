@@ -513,7 +513,6 @@ namespace WebApi_project.hostProc
             var hProc = new hostProc();
             hostWeb hWeb = new hostWeb();
 
-            JObject oJson = new JObject();
             string fName  = EntryInfo_Xml.dataX;
             var type = (EntryInfo_Xml.typeX != null ? EntryInfo_Xml.typeX : EntryInfo_Xml.type);
 
@@ -539,7 +538,7 @@ namespace WebApi_project.hostProc
             {
                 if( type == "json")
                 {
-                    oJson = JObject.Parse(workString);
+                    JObject oJson = JObject.Parse(workString);
                     hProc.JsonArrayConvert(ref oJson, "月", "m");
                     xmlDoc = hProc.JsonToXml(oJson);
                 }
