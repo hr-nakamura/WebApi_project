@@ -22,7 +22,8 @@ namespace WebApi_project.hostProc
             { "部門収支/部門リスト", new EntryInfoXml{
                 type = "xml",
                 data = "http://kansa.in.eandm.co.jp/Project/common_data/xmlProc/部門リスト_XML.asp",
-                option = "{dispMode:'部',secMode:'開発',year:2022}",
+                option = "{dispMode:'課',secMode:'開発',year:2022}",
+                dataX = "/_Data/xml/部門リスト_課_XML.xml"
                 }
             },
         };

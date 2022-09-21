@@ -124,6 +124,7 @@
     <Content Include="Models\memo.txt" />
     <Content Include="Scripts\json2.js" />
     <Content Include="Scripts\json2.min.js" />
+    <Content Include="_Data\xml\部門リスト_課_XML.xml" />
     <Content Include="_home\projectCostProc\cost.css" />
     <Content Include="_home\projectCostProc\JoinProject.asp" />
     <Content Include="_home\projectCostProc\JoinProject.html" />
@@ -484,9 +485,7 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="_Data\xml\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
