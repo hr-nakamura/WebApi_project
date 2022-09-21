@@ -509,27 +509,43 @@ namespace WebApi_project.hostProc
         XmlDocument LoadFunc_Local(EntryInfoXml EntryInfo_Xml)
         {
             XmlDocument xmlDoc = new XmlDocument();
-
+            string workString = "";
             var hProc = new hostProc();
+            hostWeb hWeb = new hostWeb();
+
             JObject oJson = new JObject();
-            var url = EntryInfo_Xml.dataX;
+            string fName  = EntryInfo_Xml.dataX;
             var type = (EntryInfo_Xml.typeX != null ? EntryInfo_Xml.typeX : EntryInfo_Xml.type);
 
-            var option = EntryInfo_Xml.option;
-            //url += makeOption(option, "?");
-            hostWeb h = new hostWeb();
-            string jsonStr = h.GetRequest(url, "Shift_JIS");
-            if (!String.IsNullOrEmpty(jsonStr))
+            var urlMode = ValidHttpURL(fName);
+
+            if (urlMode)
+            {
+                var option = EntryInfo_Xml.option;
+                string url = fName + makeOption(option, "?");
+                workString = hWeb.GetRequest(url, "Shift_JIS");
+            }
+            else
+            {
+                string filePath = hProc.basePath + fName;
+                if (File.Exists(filePath))
+                {
+                    //Console.WriteLine("存在します");
+                    StreamReader r = new StreamReader(filePath, Encode);
+                    workString = r.ReadToEnd();
+                }
+            }
+            if (!String.IsNullOrEmpty(workString))
             {
                 if( type == "json")
                 {
-                    oJson = JObject.Parse(jsonStr);
+                    oJson = JObject.Parse(workString);
                     hProc.JsonArrayConvert(ref oJson, "月", "m");
                     xmlDoc = hProc.JsonToXml(oJson);
                 }
                 else if (type == "xml")
                 {
-                    xmlDoc.LoadXml(jsonStr);
+                    xmlDoc.LoadXml(workString);
                 }
                 var Declaration = xmlDoc.FirstChild.GetType().ToString();
                 if (!(Declaration == "System.Xml.XmlDeclaration" || Declaration == "System.Xml.XmlProcessingInstruction"))
