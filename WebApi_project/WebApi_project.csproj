@@ -124,7 +124,11 @@
     <Content Include="Models\memo.txt" />
     <Content Include="Scripts\json2.js" />
     <Content Include="Scripts\json2.min.js" />
+    <Content Include="_Data\Jcmn.inc" />
+    <Content Include="_Data\JSon.inc" />
+    <Content Include="_Data\test.asp" />
     <Content Include="_Data\xml\部門リスト_課_XML.xml" />
+    <Content Include="_Data\部門リスト_XML.asp" />
     <Content Include="_home\projectCostProc\cost.css" />
     <Content Include="_home\projectCostProc\JoinProject.asp" />
     <Content Include="_home\projectCostProc\JoinProject.html" />
