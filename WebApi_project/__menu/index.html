@@ -144,6 +144,7 @@
         }
         // 右クリックを実行
         function menu_click2(o) {
+            $.debug("XXXX",o.item);
             var Json = {};
             try {
                 Json = $.WebApi_json(o.item);
@@ -155,10 +156,11 @@
                 };
             }
             // 戻ってきたJsonを元に新Json作成して保存
-            $.debug("WebApi_test", o.item, Json);
             $.WebApi_get( o.item, Json);
 
             var Str = JSON.stringify(Json);
+            $.debug("WebApi_test", o.item, Str);
+
             $.storage("viewStr", Str);
             $("iframe.iframe_content").attr("src", "Util/viewValue.html");
             return (false);

@@ -148,11 +148,11 @@ namespace WebApi_project.hostProc
             },
         };
         public SortedDictionary<string, EntryInfoXml> sample_test = new SortedDictionary<string, EntryInfoXml>(){
-            { "_sample/test", new EntryInfoXml{
+            { "_sample/testX", new EntryInfoXml{
                 type = "xml",
-                data ="http://localhost/test/test.asp",
-                dataX ="http://localhost/test/test.asp",
-                option ="{year:2022,actual:5}"
+                data ="http://localhost/test/testX.asp",
+                dataX ="http://localhost/test/testX.asp",
+                option ="{year:2021,actual:5}"
                 }
             },
         };
