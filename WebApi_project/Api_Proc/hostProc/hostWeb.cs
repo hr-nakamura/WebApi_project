@@ -130,7 +130,7 @@ namespace WebApi_project.hostProc
             sw.Stop();
 
         //結果出力
-        MyDebug.Write($"処理時間 [" + sw.Elapsed + "] GetRequest(" + HttpUtility.UrlDecode(url, Encode) + ")");
+        MyDebug.Write($"GetRequest：処理時間 [" + sw.Elapsed + "] (" + HttpUtility.UrlDecode(url, Encode) + ")");
             
             return returnBuff;
         }

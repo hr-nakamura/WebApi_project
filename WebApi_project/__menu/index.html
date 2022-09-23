@@ -76,10 +76,10 @@
 
                 // EntryTab テーブルの取得
                 //var methodList2 = $.loadXMLDoc("menu2.xml");
-                var methodList = $.WebApi();
+                var methodList = $.WebApi();                // メニューデータ　読み込み
 
                 // methodList(xml,json)の取得
-                var methodList2 = $.WebApi_test("xml");
+                var methodList2 = $.WebApi_test("xml");     // 関数リスト　読み込み
 
                 // menu データの取得
                 var menu_data = $.loadXMLDoc("menu.xml");
@@ -147,6 +147,7 @@
             $.debug("XXXX",o.item);
             var Json = {};
             try {
+                $.debug("WebApi_json", JSON.stringify(Json));
                 Json = $.WebApi_json(o.item);
             } catch (e) {
                 $.debug("error", e.message);
@@ -156,10 +157,11 @@
                 };
             }
             // 戻ってきたJsonを元に新Json作成して保存
+            $.debug("WebApi_get", JSON.stringify(Json));
             $.WebApi_get( o.item, Json);
 
             var Str = JSON.stringify(Json);
-            $.debug("WebApi_test", o.item, Str);
+            $.debug("結果", o.item, Str);
 
             $.storage("viewStr", Str);
             $("iframe.iframe_content").attr("src", "Util/viewValue.html");

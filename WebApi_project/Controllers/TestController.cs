@@ -19,10 +19,25 @@ namespace WebApi_project.Controllers
     {
         public HttpResponseMessage Get()
         {
-            MyDebug.Write("Test", "Get");
+            XmlDocument xmlDoc = new XmlDocument();
+/*
+            if( Item == "menu")
+            {
+                MyDebug.Write("Xml", "Get ：メニューデータ　読み込み");
+                // 呼び出せるリストを戻す
+                var hProc = new hostProc.entryProc();
 
-            var hProc = new hostProc.hostProc();
-            XmlDocument xmlDoc = hProc.methodList();
+                xmlDoc = hProc.EntryList();
+
+            }
+            else if(Item == "method")
+            {
+*/
+                MyDebug.Write("Test", "Get：関数リスト　読み込み");
+
+                var hProc = new hostProc.hostProc();
+                xmlDoc = hProc.methodList();
+            //}
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
             return (response);

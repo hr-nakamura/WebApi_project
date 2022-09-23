@@ -72,7 +72,8 @@
                     className: className,
                     methodName:methodName,
                     Json: (typeof (json) == "object" ? JSON.stringify(json) : json)
-                };
+            };
+            $.debug("XXX",mode, className, methodName);
                 var result = $.ajax({
                     url: WebApi_url_test,
                     type: "GET",
