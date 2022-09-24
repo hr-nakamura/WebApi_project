@@ -590,6 +590,7 @@ namespace WebApi_project.hostProc
         }
         public string Entry_Check(string Item)
         {
+            var hProc = new hostProc();
             string jsonStr = null;
             EntryInfoXml EntryInfo_Xml = GetEntryTab_xml(Item);
             EntryInfoJson EntryInfo_json = GetEntryTab_json(Item);
@@ -598,13 +599,13 @@ namespace WebApi_project.hostProc
                 string target_url, option;
                 if (EntryInfo_Xml != null)
                 {
-                    target_url = EntryInfo_Xml.data;
+                    target_url = hProc.local_mode ? EntryInfo_Xml.dataX : EntryInfo_Xml.data;
                     option = JsonMerge(EntryInfo_Xml.option, "{queryChk:'1'}");
 
                 }
                 else
                 {
-                    target_url = EntryInfo_json.data;
+                    target_url = hProc.local_mode ? EntryInfo_json.dataX : EntryInfo_json.data;
                     option = JsonMerge(EntryInfo_json.option, "{queryChk:'1'}");
 
                 }
