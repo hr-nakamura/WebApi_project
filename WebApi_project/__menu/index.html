@@ -142,11 +142,11 @@
         }
         // 右クリックを実行
         function menu_click2(o) {
-            $.debug("menu_click2",o.mode, o.item);
+            $.debug("menu_click2", o.mode, o.item, o.option);
             var Json = {};
             try {
-                $.debug("$.WebApi_json", o.item, JSON.stringify(Json));
-                Json = $.WebApi_json(o.item);
+                $.debug("$.WebApi_json", o.item, o.option, JSON.stringify(Json));
+                Json = $.WebApi_json(o.item);               // [queryChk]を実行する
             } catch (e) {
                 $.debug("error", e.message);
                 Json = {
@@ -155,12 +155,20 @@
                 };
             }
             var Str = JSON.stringify(Json);
-            $.debug("結果", o.item, Str);
+            $.debug("結果", o.item, o.option, Str);
+            // Jsonの中にマージされて戻ってきた[json]が入っている
 
-            // 戻ってきたJsonを元に新Json作成して保存
-            $.debug("$.WebApi_get", o.item, JSON.stringify(Json));
-            $.WebApi_get( o.item, Json);
-            $.debug("結果2", o.item, Str);
+
+            //==========================================
+            // 新しいoptionを設定する
+            //==========================================
+
+            // 新しいoptionで実行する===================
+            //$.debug("再実行", o.item, o.option);
+            //var xmlDoc = $.WebApi(o.item, o.option);
+            //var Str = $.xml2str(xmlDoc);
+            //==========================================
+
 
 
             $.storage("viewStr", Str);

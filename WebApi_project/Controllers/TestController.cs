@@ -57,11 +57,11 @@ namespace WebApi_project.Controllers
             MyDebug.Write("Test", "Get string Item, string Json", Item, Json.ToString());
             var hProc = new hostProc.entryProc();
 
-            //            EntryInfoJson EntryInfo = new EntryInfoJson();
-            //            object Obj = hProc.Entry(EntryInfo, Item, Json);
+            EntryInfoJson EntryInfo = new EntryInfoJson();
+            object Obj = hProc.Entry(EntryInfo, Item, Json);
 
-            //            HttpResponseMessage response = response_conv(JsonConvert.SerializeObject(Obj));
-            HttpResponseMessage response = new HttpResponseMessage();
+            HttpResponseMessage response = response_conv(JsonConvert.SerializeObject(Obj));
+            //HttpResponseMessage response = new HttpResponseMessage();
             return (response);
         }
         public HttpResponseMessage Get(string mode, string className, string methodName, string Json)
