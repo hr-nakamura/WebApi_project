@@ -142,10 +142,10 @@
         }
         // 右クリックを実行
         function menu_click2(o) {
-            $.debug("menu_click2",o.item);
+            $.debug("menu_click2",o.mode, o.item);
             var Json = {};
             try {
-                $.debug("WebApi_json", JSON.stringify(Json));
+                $.debug("$.WebApi_json", o.item, JSON.stringify(Json));
                 Json = $.WebApi_json(o.item);
             } catch (e) {
                 $.debug("error", e.message);
@@ -154,19 +154,21 @@
                     url: o.item
                 };
             }
-            // 戻ってきたJsonを元に新Json作成して保存
-            $.debug("WebApi_get", JSON.stringify(Json));
-            $.WebApi_get( o.item, Json);
-
             var Str = JSON.stringify(Json);
             $.debug("結果", o.item, Str);
+
+            // 戻ってきたJsonを元に新Json作成して保存
+            $.debug("$.WebApi_get", o.item, JSON.stringify(Json));
+            $.WebApi_get( o.item, Json);
+            $.debug("結果2", o.item, Str);
+
 
             $.storage("viewStr", Str);
             $("iframe.iframe_content").attr("src", "Util/viewValue.html");
             return (false);
         }
         function menu_click(o) {
-            $.debug("menu_click", o.item);
+            $.debug("menu_click", o.mode, o.item);
             var mode = o.mode;          // method,url,undefined
             if (mode == "url" || mode == "method") {
                 menu_click_test(o);

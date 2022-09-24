@@ -41,7 +41,7 @@
         },
 // json ====================================================================
         $.WebApi_json = function (item, json) {
-            $.debug("$.WebApi_json(" + WebApi_url_json + ") : item, json", item, json);
+            //$.debug("$.WebApi_json(" + WebApi_url_json + ") : item, json", item, json);
                 var options = {
                     Item: item,
                     Json: (typeof (json) == "object" ? JSON.stringify(json) : json)
@@ -124,8 +124,8 @@
                 $.alert("WebApi_json error:" + xhr.statusText);
             });
             return (returnValue);
-        }
-/*
+        },
+
 // 使っていない
         $.WebApi_get = function (item, json) {
             $.debug("$.WebApi_get(" + WebApi_url_test + ") : item, json");
@@ -152,5 +152,5 @@
             });
             return (returnValue);
         }
-*/
+
 }) (jQuery);
