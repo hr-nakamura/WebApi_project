@@ -76,10 +76,14 @@
 
                 // EntryTab テーブルの取得
                 //var methodList2 = $.loadXMLDoc("menu2.xml");
+/*
                 var methodList = $.WebApi();                // メニューデータ　読み込み
 
                 // methodList(xml,json)の取得
                 var methodList2 = $.WebApi_test("xml");     // 関数リスト　読み込み
+*/
+                var methodList = $.WebApi_menu("xml","menu");                // メニューデータ　読み込み
+                var methodList2 = $.WebApi_menu("xml","method");     // 関数リスト　読み込み
 
                 // menu データの取得
                 var menu_data = $.loadXMLDoc("menu.xml");

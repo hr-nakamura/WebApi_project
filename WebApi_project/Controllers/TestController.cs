@@ -21,23 +21,32 @@ namespace WebApi_project.Controllers
         {
             XmlDocument xmlDoc = new XmlDocument();
 /*
-            if( Item == "menu")
-            {
-                MyDebug.Write("Xml", "Get ：メニューデータ　読み込み");
+            MyDebug.Write("Test", "Get：関数リスト　読み込み");
+
+            var hProc = new hostProc.hostProc();
+            xmlDoc = hProc.methodList();
+*/
+            HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
+            return (response);
+
+        }
+        public HttpResponseMessage Get(string func)
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            if( func == "menu")
+                {
+                MyDebug.Write("Test", "Get ：メニューデータ　読み込み");
                 // 呼び出せるリストを戻す
                 var hProc = new hostProc.entryProc();
-
                 xmlDoc = hProc.EntryList();
-
-            }
-            else if(Item == "method")
-            {
-*/
+                }
+            else if(func == "method")
+                {
                 MyDebug.Write("Test", "Get：関数リスト　読み込み");
 
                 var hProc = new hostProc.hostProc();
                 xmlDoc = hProc.methodList();
-            //}
+            }
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
             return (response);
@@ -45,7 +54,7 @@ namespace WebApi_project.Controllers
         }
         public HttpResponseMessage Get(string Item, string Json)
         {
-            MyDebug.Write("Set Json", "Get string Item, string Json", Item, Json.ToString());
+            MyDebug.Write("Test", "Get string Item, string Json", Item, Json.ToString());
             var hProc = new hostProc.entryProc();
 
             //            EntryInfoJson EntryInfo = new EntryInfoJson();

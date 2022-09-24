@@ -22,13 +22,14 @@ namespace WebApi_project.Controllers
         // GET api/<controller>/5
         public HttpResponseMessage Get()
         {
-            MyDebug.Write("Xml", "Get ：メニューデータ　読み込み");
+            MyDebug.Write("Xml", "Get");
+            XmlDocument xmlDoc = new XmlDocument();
+            /*
+                        // 呼び出せるリストを戻す
+                        var hProc = new hostProc.entryProc();
 
-            // 呼び出せるリストを戻す
-            var hProc = new hostProc.entryProc();
-
-            XmlDocument xmlDoc = hProc.EntryList();
-            //XmlDocument xmlDoc = new XmlDocument();
+                        XmlDocument xmlDoc = hProc.EntryList();
+            */
 
             HttpResponseMessage response = response_conv(xmlDoc.OuterXml);
             return (response);
