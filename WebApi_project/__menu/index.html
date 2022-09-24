@@ -75,17 +75,11 @@
 
 
                 // EntryTab テーブルの取得
-                //var methodList2 = $.loadXMLDoc("menu2.xml");
-/*
-                var methodList = $.WebApi();                // メニューデータ　読み込み
+                var methodList = $.WebApi_menu("xml","menu");        // メニューデータ　読み込み
+                // 関数リストの取得
+                var methodList2 = $.WebApi_menu("xml", "method");     // 関数リスト　読み込み
 
-                // methodList(xml,json)の取得
-                var methodList2 = $.WebApi_test("xml");     // 関数リスト　読み込み
-*/
-                var methodList = $.WebApi_menu("xml","menu");                // メニューデータ　読み込み
-                var methodList2 = $.WebApi_menu("xml","method");     // 関数リスト　読み込み
-
-                // menu データの取得
+                // menu 本体データの取得
                 var menu_data = $.loadXMLDoc("menu.xml");
 
                 menu_Xml = menuData_Join(menu_data, methodList, methodList2);
@@ -148,7 +142,7 @@
         }
         // 右クリックを実行
         function menu_click2(o) {
-            $.debug("XXXX",o.item);
+            $.debug("menu_click2",o.item);
             var Json = {};
             try {
                 $.debug("WebApi_json", JSON.stringify(Json));
@@ -172,6 +166,7 @@
             return (false);
         }
         function menu_click(o) {
+            $.debug("menu_click", o.item);
             var mode = o.mode;          // method,url,undefined
             if (mode == "url" || mode == "method") {
                 menu_click_test(o);
