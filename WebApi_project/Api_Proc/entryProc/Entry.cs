@@ -445,7 +445,15 @@ namespace WebApi_project.hostProc
             root.AppendChild(root_json);
             foreach (var item in EntryTab_json)
             {
-                makeMenu(root_json, item.Key, item.Key, item.Value, EntryTab_json);
+                if (item.Key.IndexOf("_sample/") == 0)
+                {
+                    makeMenu(root_sample, item.Key, item.Key, item.Value, EntryTab_json);
+                }
+                else
+                {
+                    makeMenu(root_json, item.Key, item.Key, item.Value, EntryTab_json);
+                }
+                //makeMenu(root_json, item.Key, item.Key, item.Value, EntryTab_json);
                 //root_xml.AppendChild(s_menu);
             }
             return (xmlDoc);

@@ -12,7 +12,25 @@ namespace WebApi_project.hostProc
 {
     public partial class hostProc
     {
-        //=========================================================================================
+
+        public SortedDictionary<string, EntryInfoXml> sample_test = new SortedDictionary<string, EntryInfoXml>(){
+            { "_sample/test/testX", new EntryInfoXml{
+                type = "xml",
+                data ="http://localhost/test/testX.asp",
+                dataX ="http://localhost/test/testX.asp",
+                option ="{year:2021,actual:5}"
+                }
+            },
+        };
+        public SortedDictionary<string, EntryInfoJson> sample_test2 = new SortedDictionary<string, EntryInfoJson>(){
+            { "_sample/test/testJ", new EntryInfoJson{
+                type = "json",
+                data ="http://localhost/test/testJ.asp",
+                dataX ="http://localhost/test/testJ.asp",
+                option ="{year:2021,actual:5}"
+                }
+            },
+        };        //=========================================================================================
 
         public SortedDictionary<string, EntryInfoXml> sample_XML_部門収支 = new SortedDictionary<string, EntryInfoXml>() {
             { "_sample/部門収支/EMG収支計画", new EntryInfoXml{
@@ -147,14 +165,6 @@ namespace WebApi_project.hostProc
                 }
             },
         };
-        public SortedDictionary<string, EntryInfoXml> sample_test = new SortedDictionary<string, EntryInfoXml>(){
-            { "_sample/testX", new EntryInfoXml{
-                type = "xml",
-                data ="http://localhost/test/testX.asp",
-                dataX ="http://localhost/test/testX.asp",
-                option ="{year:2021,actual:5}"
-                }
-            },
-        };
+
     }
 }
