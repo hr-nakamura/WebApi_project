@@ -18,7 +18,7 @@ namespace WebApi_project.hostProc
                 type = "xml",
                 data ="http://localhost/test/testX.asp",
                 dataX ="http://localhost/test/testX.asp",
-                option ="{year:2021,actual:5}"
+                option ="{year:2021,actual:5,test:'testX'}"
                 }
             },
         };
@@ -27,7 +27,7 @@ namespace WebApi_project.hostProc
                 type = "json",
                 data ="http://localhost/test/testJ.asp",
                 dataX ="http://localhost/test/testJ.asp",
-                option ="{year:2021,actual:5}"
+                option ="{year:2021,actual:5,test:'testJ'}"
                 }
             },
         };        //=========================================================================================
