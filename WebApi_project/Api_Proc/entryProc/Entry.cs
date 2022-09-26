@@ -24,6 +24,8 @@ namespace WebApi_project.hostProc
             EntryInfo_Xml = GetEntryTab_xml(Item);
             EntryInfo_Xml.option = JsonMerge(EntryInfo_Xml.option, Json);
 
+            //MyDebug.Json(EntryInfo_Xml.option);
+
             XmlDocument xmlDoc = new XmlDocument();
 
             var hProc = new hostProc();
@@ -35,15 +37,14 @@ namespace WebApi_project.hostProc
             {
                 xmlDoc = LoadFunc(EntryInfo_Xml);
             }
-
-            MyDebug.Json(EntryInfo_Xml.option);
-
             return (xmlDoc);
         }
         public JObject Entry(EntryInfoJson EntryInfo_Json, string Item, string Json)
         {
             EntryInfo_Json = GetEntryTab_json(Item);
             EntryInfo_Json.option = JsonMerge(EntryInfo_Json.option, Json);
+
+            //MyDebug.Json(EntryInfo_Json.option);
 
             JObject jObj = new JObject();
             var hProc = new hostProc();

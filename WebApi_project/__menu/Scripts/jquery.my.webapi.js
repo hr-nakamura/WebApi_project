@@ -41,7 +41,7 @@
         },
 // json ====================================================================
         $.WebApi_json = function (item, json) {
-            //$.debug("$.WebApi_json(" + WebApi_url_json + ") : item, json", item, json);
+            $.debug("$.WebApi_json(" + WebApi_url_json + ") : item, json", item, json);
                 var options = {
                     Item: item,
                     Json: (typeof (json) == "object" ? JSON.stringify(json) : json)
@@ -97,8 +97,8 @@
             });
             return (returnValue);
         },
-        $.WebApi_menu = function (mode, func) {
-            $.debug("$.WebApi_menu(" + WebApi_url_test + ") : mode, func", mode, func);
+        $.WebApi_menu = function (func) {
+            $.debug("$.WebApi_menu(" + WebApi_url_test + ") : func", func);
             var options = {
                 func: func
             };
@@ -112,12 +112,7 @@
                 },
                 async: false
             }).done(function (data, status, xhr) {
-                if (mode == "xml") {
-                    returnValue = $.str2xml(data);
-                }
-                else {
-                    returnValue = data;
-                }
+                returnValue = $.str2xml(data);
             }).fail(function (xhr, status, error) {
                 returnValue = status;
                 window.status = xhr.statusText;

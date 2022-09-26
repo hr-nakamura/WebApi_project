@@ -75,14 +75,14 @@
 
 
                 // EntryTab テーブルの取得
-                var methodList = $.WebApi_menu("xml","menu");        // メニューデータ　読み込み
+                var menuList1 = $.WebApi_menu("menu");        // メニューデータ　読み込み
                 // 関数リストの取得
-                var methodList2 = $.WebApi_menu("xml", "method");     // 関数リスト　読み込み
+                var menuList2 = $.WebApi_menu("method");     // 関数リスト　読み込み
 
                 // menu 本体データの取得
                 var menu_data = $.loadXMLDoc("menu.xml");
 
-                menu_Xml = menuData_Join(menu_data, methodList, methodList2);
+                menu_Xml = menuData_Join(menu_data, menuList1, menuList2);
 
                 $(".menuBlock_content").mymenu(menu_Xml, {
                     color_menu_base: "cornflowerblue",
@@ -155,7 +155,7 @@
                 };
             }
             var Str = JSON.stringify(Json);
-            $.debug("結果", o.item, o.option, Str);
+            //$.debug("結果", o.item, o.option, Str);
             // Jsonの中にマージされて戻ってきた[json]が入っている
 
 
