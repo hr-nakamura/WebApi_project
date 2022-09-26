@@ -27,7 +27,6 @@ namespace WebApi_project.hostProc
             //MyDebug.Json(EntryInfo_Xml.option);
 
             XmlDocument xmlDoc = new XmlDocument();
-
             var hProc = new hostProc();
             if (hProc.local_mode)                // ローカルモード(IPAddress: 10:*.*.*)以外の時
             {
