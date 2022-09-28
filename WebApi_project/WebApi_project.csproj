@@ -200,6 +200,7 @@
     <Content Include="_Test\excel_test\script.js" />
     <Content Include="_Test\excel_test\test2.html" />
     <Content Include="_Test\save\Jcmn.inc" />
+    <Content Include="_Test\save\testJ.asp" />
     <Content Include="_Test\winTest\test1.html" />
     <Content Include="_Test\winTest\test2.html" />
     <Content Include="_home\売上予測\xsl\sub_cmn.xsl" />
