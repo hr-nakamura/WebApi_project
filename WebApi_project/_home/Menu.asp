@@ -5,7 +5,7 @@
 //Response.End
     var mailAddr = "";
         mailAddr = Session("mailAddress");
-    if( mailAddr + "" == "undefined" ) mailAddr = "banba@eandm.co.jp";
+    if( mailAddr + "" == "undefined" ) mailAddr = "nakamura@eandm.co.jp";
     //Response.Write(mailAddr);
 %>
 <!DOCTYPE html>
