@@ -34,7 +34,12 @@
                 $("iframe.iframe_content").attr("src", "Util/viewValue.html");
             })
             $(document).on("click", ".exec", function () {
-                window.opener.parentExec(o);
+                if (typeof (o.option.message) == "string") {
+                    alert("実行できません");
+                }
+                else {
+                    window.opener.parentExec(o);
+                }
             })
             $(document).on("click", ".exit", function () {
                 window.close();
