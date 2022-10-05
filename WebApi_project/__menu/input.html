@@ -26,15 +26,14 @@
                 $("iframe.iframe_content").frame();
 
                 var work = window.opener.parentInit();
+                //delete work["option"]["target"];
+                delete work.option.target;
                 o = work;
-                //var Json = JSON.parse(work);
-                //var Str = JSON.stringify(Json);
-                ////alert(Str);
-                //$.storage("viewStr", Str);
-                //$("iframe.iframe_content").attr("src", "Util/viewValue.html");
+                var Str = JSON.stringify(work);
+                $.storage("viewStr", Str);
+                $("iframe.iframe_content").attr("src", "Util/viewValue.html");
             })
             $(document).on("click", ".exec", function () {
-//                var work = getQueryInfo();
                 window.opener.parentExec(o);
             })
             $(document).on("click", ".exit", function () {
