@@ -9,16 +9,33 @@
     <script src="Scripts/jquery.my.webapi.js" type="text/javascript"></script>
     <script src="Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
     <script src="debug/jquery.my.debug.js" type="text/javascript"></script>
+
+    <!-- menu -->
+    <script src="Scripts/jquery.my.frame.js" type="text/javascript"></script>
+    <!-- menu -->
+    <link href="Scripts/my.mnmenu.css" rel="stylesheet" type="text/css" />
+    <script src="Scripts/jquery.my.mymenu.js" type="text/javascript"></script>
+    <script src="Scripts/jquery.my.mnmenu.js" type="text/javascript"></script>
+
+    <!-- fileOut -->
+    <script src="debug/jquery.my.fileOut.js" type="text/javascript"></script>
     <script type="text/javascript">
         (function ($) {
+            var o;
             $(window).on("load", function () {
+                $("iframe.iframe_content").frame();
+
                 var work = window.opener.parentInit();
-                var Json = JSON.parse(work);
-                alert(Json["secMode"]);
+                o = work;
+                //var Json = JSON.parse(work);
+                //var Str = JSON.stringify(Json);
+                ////alert(Str);
+                //$.storage("viewStr", Str);
+                //$("iframe.iframe_content").attr("src", "Util/viewValue.html");
             })
             $(document).on("click", ".exec", function () {
-                var work = getQueryInfo();
-                setName(work["xyz"]);
+//                var work = getQueryInfo();
+                window.opener.parentExec(o);
             })
             $(document).on("click", ".exit", function () {
                 window.close();
@@ -48,11 +65,12 @@
     </script>
     <script language="JavaScript">
         function setName(para) {
-            window.opener.parentExec("太郎"+para);
+            window.opener.parentExec("太郎" + para);
         }
     </script>
 </head>
 <body>
+    <iframe class="iframe_content"></iframe>
     <dev class="box"></dev>
     <button class="exec">実行</button>
     <button class="exit">終了</button>

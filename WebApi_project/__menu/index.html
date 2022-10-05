@@ -27,8 +27,6 @@
     <script type="text/javascript">
         var debug_mode = false;
         var debugWin;
-        var abc = "topWindow";
-        var debug_mode2 = "123";
     </script>
     <script>
         $(function () {
@@ -134,8 +132,12 @@
     </script>
     <script language="JavaScript">
         var parentInfo = "";
-        function parentExec(myname) {
-            alert(myname);
+        function parentExec(o) {
+            //alert(JSON.stringify(o));
+            var xmlDoc = $.WebApi(o.item, o.option);
+            var Str = $.xml2str(xmlDoc);
+            $.storage("viewStr", Str);
+            $("iframe.iframe_content").attr("src", "Util/viewValue.html");
         }
         function parentInit(myname) {
             return (parentInfo);
@@ -170,8 +172,8 @@
             //==========================================
             // 新しいoptionを設定する
             //==========================================
-            parentInfo = JSON.stringify(Json);
-            var url = "input.html" + "?test=123&target=789";
+            parentInfo = o;
+            var url = "input.html";
             window.open(url, "", "width=500px,height=300px");
 
 
