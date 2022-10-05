@@ -132,7 +132,15 @@
 
         })(jQuery);
     </script>
-
+    <script language="JavaScript">
+        var parentInfo = "";
+        function parentExec(myname) {
+            alert(myname);
+        }
+        function parentInit(myname) {
+            return (parentInfo);
+        }
+    </script>
     <script type="text/javascript">
         function mouse_over(o) {
             var attrs = $(o).data();
@@ -162,6 +170,10 @@
             //==========================================
             // 新しいoptionを設定する
             //==========================================
+            parentInfo = JSON.stringify(Json);
+            var url = "input.html" + "?test=123&target=789";
+            window.open(url, "", "width=500px,height=300px");
+
 
             // 新しいoptionで実行する===================
             //$.debug("再実行", o.item, o.option);
@@ -184,7 +196,7 @@
             }
             // EntryTabを実行
             // ここでxml/json分ける
-            $.debug("o.table",o.table);
+            $.debug("o.table", o.table);
             if (o.table == "xml") {
                 $.debug("click_xml", mode, o.item);
                 var xmlDoc = $.WebApi(o.item, o.option);
