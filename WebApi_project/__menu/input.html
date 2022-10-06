@@ -26,18 +26,26 @@
                 $("iframe.iframe_content").frame();
 
                 var work = window.opener.parentInit();
-                //delete work["option"]["target"];
-                delete work.option.target;
                 o = work;
-                var Str = JSON.stringify(work);
-                $.storage("viewStr", Str);
-                $("iframe.iframe_content").attr("src", "Util/viewValue.html");
+                var ret = makeBox(work);
+
+                if (ret == false) {
+                    var Str = JSON.stringify(o);
+                    $.storage("viewStr", Str);
+                    $("iframe.iframe_content").attr("src", "Util/viewValue.html");
+                }
             })
             $(document).on("click", ".exec", function () {
                 if (typeof (o.option.message) == "string") {
                     alert("実行できません");
                 }
                 else {
+                    var x = $(".data");
+                    for (var i = 0; i < x.length; i++) {
+                        var key = $(x[i]).attr("key");
+                        var val = $(x[i]).val();
+                        o.option[key] = val;
+                    }
                     window.opener.parentExec(o);
                 }
             })
@@ -47,7 +55,45 @@
         })(jQuery);
 
     </script>
+<style>
+    .table {
+        border: solid 0px;
+    }
+    .th {
+        border: solid 0px;
+        text-align:left;
+        white-space:nowrap;
+    }
+    .data{
+        width:95%;
+    }
+</style>
     <script type="text/jscript" language="javascript">
+        function makeBox(work) {
+            try {
+                $.debug("AAAAAA");
+                $(".box").append("<table class='table' width='100%'/>");
+                var thead = $(".table").append("<thead/>");
+                var title = work.item;
+                if (typeof (work.option.target) != "object") return(false)
+                //var url = "（" + work.option.target.url + "）";
+                //$(thead).append("<th colspan='2' class='th'>" + title + url + "</th>");
+
+                var tbody = $(".table").append("<tbody class='tbody'/>");
+                //delete work.option.target;
+
+                for (key in work.option) {
+                    if (key == "target") continue;
+                    var tr = $(".tbody").append("<tr/>");
+                    $(tr).append("<td><label>" + key + "</label></td>");
+                    $(tr).append("<td style='width:100%'>：<input class='data' key='" + key + "' value='" + work.option[key] + "'/></td>");
+                }
+
+            } catch (e) {
+                $.debug("ERROR:",e.message);
+            }
+            return (true);
+        }
         function getQueryInfo() {
             var queryString = window.location.search;
             var queryObject = new Object();
@@ -74,9 +120,9 @@
     </script>
 </head>
 <body>
-    <iframe class="iframe_content"></iframe>
-    <dev class="box"></dev>
+    <div class="box"></div>
     <button class="exec">実行</button>
     <button class="exit">終了</button>
+    <iframe class="iframe_content"></iframe>
 </body>
 </html>
