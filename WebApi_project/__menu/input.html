@@ -76,8 +76,8 @@
                 var thead = $(".table").append("<thead/>");
                 var title = work.item;
                 if (typeof (work.option.target) != "object") return(false)
-                //var url = "（" + work.option.target.url + "）";
-                //$(thead).append("<th colspan='2' class='th'>" + title + url + "</th>");
+                var url = "（" + work.option.target.url + "）";
+                $(thead).append("<th colspan='2' class='th'>" + title + url + "</th>");
 
                 var tbody = $(".table").append("<tbody class='tbody'/>");
                 //delete work.option.target;
