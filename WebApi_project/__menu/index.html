@@ -143,7 +143,8 @@
         var chaildWin = null;
         function parentExec(o) {
             var Str = "";
-            $.debug("o.table", o.table);
+            var mode = o.mode;
+            $.debug("XX o.table", o.table, o.mode, o.item);
             if (o.table == "xml") {
                 $.debug("click_xml", mode, o.item);
                 var xmlDoc = $.WebApi(o.item, o.option);
