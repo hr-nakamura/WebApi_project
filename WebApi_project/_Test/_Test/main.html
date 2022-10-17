@@ -21,12 +21,29 @@
         var data = "ABCDEF";
         $(function () {
             $(window).load("on", function (elem) {
-                var ret = window.open("", null, "width=500,toolbar=yes,menubar=yes,scrollbars=yes");
+                var xmlDoc = $.WebApi("部門収支/部門リスト", "{dispMode:'部',secMode:'開発',year:2022}");
+                var Str = $.xml2str(xmlDoc);
+                var xsl_name = "部門_リスト_select.xsl";
+                var xslDoc = $.loadXMLDoc(xsl_name);
+
+                var Buff = $.transformNode(xmlDoc, xslDoc);
+                $("body").html(Buff);
+                var a = 1;
+                });
+            });
+
+
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $("body,#H_name").on("change", function () {
+                var val = $("option:selected", this).val();
+                $.alert("A",val);
             });
         });
     </script>
+
 </head>
 <body>
-
 </body>
 </html>
