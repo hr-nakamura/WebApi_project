@@ -143,9 +143,18 @@
         var chaildWin = null;
         function parentExec(o) {
             var Str = "";
-            var xmlDoc = $.WebApi(o.item, o.option);
-            Str = $.xml2str(xmlDoc);
-
+            $.debug("o.table", o.table);
+            if (o.table == "xml") {
+                $.debug("click_xml", mode, o.item);
+                var xmlDoc = $.WebApi(o.item, o.option);
+                Str = $.xml2str(xmlDoc);
+                //$.fileOut(o.item, Str);
+            }
+            else {
+                $.debug("click_json", mode, o.item);
+                var json = $.WebApi_json(o.item, o.option);
+                Str = JSON.stringify(json);
+            }
             $.storage("viewStr", Str);
             $("iframe.iframe_content").attr("src", "Util/viewValue.html");
         }
