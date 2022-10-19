@@ -63,7 +63,8 @@
                     $(this)[0].contentWindow.childFunc();
                 }
                 catch (error) {
-                    alert(error.message);
+                    //alert(error.message);
+                    console.log("****************" + error.message);
                 }
             }).trigger('init');
         });
