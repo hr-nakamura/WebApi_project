@@ -23,8 +23,8 @@ namespace WebApi_project.hostProc
                 type = "xml",
                 data = "http://kansa.in.eandm.co.jp/Project/common_data/xmlProc/部門リスト_XML.asp",
                 option = "{dispMode:'課',secMode:'開発',year:2022}",
-//                dataX = "/_Data/xml/部門リスト_課_XML.xml"
-                dataX = "http://localhost/test/testX.asp"
+                dataX = "/_Data/xml/部門リスト_課_XML.xml"
+                //dataX = "http://localhost/test/testX.asp"
                 }
             },
         };
