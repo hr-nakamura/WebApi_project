@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="../../__menu/Scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+
+    <script src="../../__menu/Scripts/json2.js" type="text/javascript"></script>
+    <script src="../../__menu/Scripts/jquery.my.webapi.js" type="text/javascript"></script>
+    <script src="../../__menu/Scripts/jquery.kansa.Query.js" type="text/javascript"></script>
+    <script src="../../__menu/debug/jquery.my.debug.js" type="text/javascript"></script>
+
+    <!-- menu -->
+    <script src="../../__menu/Scripts/jquery.my.frame.js" type="text/javascript"></script>
+    <!-- menu -->
+    <link href="../../__menu/Scripts/my.mnmenu.css" rel="stylesheet" type="text/css" />
+    <script src="../../__menu/Scripts/jquery.my.mymenu.js" type="text/javascript"></script>
+    <script src="../../__menu/Scripts/jquery.my.mnmenu.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $(window).load("on", function (elem) {
+                var queryString = JSON.stringify(getParam());
+
+                var xmlDoc = $.WebApi("部門収支/部門リスト", queryString);
+                var Str = $.xml2str(xmlDoc);
+                var xsl_name = "部門_リスト_select.xsl";
+                var xslDoc = $.loadXMLDoc(xsl_name);
+
+                var Buff = $.transformNode(xmlDoc, xslDoc);
+                $("body").html(Buff);
+                var a = 1;
+                var h = $("body").css("height");
+                var w = $("body").css("width");
+                var arguments = [h, w];
+                parent.$(".group").trigger("init", arguments);
+            });
+        });
+    </script>
+
+    <script type="text/jscript" language="javascript">
+        function getParam() {
+            try {
+                var Tab = {};
+                const searchParams = new URLSearchParams(window.location.search)
+                for (const [key, val] of searchParams) {
+                    Tab[key] = val;
+                }
+                return (Tab);
+            } catch (e) {
+                alert(e.message);
+            }
+            }
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $("body,#H_name").on("change", function () {
+                var val = $("option:selected", this).val();
+                var arguments = [val];
+                parent.$(".group").trigger("change", arguments);
+                //$.alert("A", val);
+
+            });
+        });
+    </script>
+    <style>
+        body {
+            display: inline;
+            padding: 0px;
+            margin: 0px;
+            _height: auto;
+            _width: auto;
+        }
+
+        #H_name {
+            display: inline;
+            padding: 0px;
+            margin: 0px;
+            _height: auto;
+            _width: auto;
+        }
+    </style>
+</head>
+<body>
+</body>
+</html>

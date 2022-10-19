@@ -21,29 +21,40 @@
         var data = "ABCDEF";
         $(function () {
             $(window).load("on", function (elem) {
-                var xmlDoc = $.WebApi("部門収支/部門リスト", "{dispMode:'部',secMode:'開発',year:2022}");
-                var Str = $.xml2str(xmlDoc);
-                var xsl_name = "部門_リスト_select.xsl";
-                var xslDoc = $.loadXMLDoc(xsl_name);
-
-                var Buff = $.transformNode(xmlDoc, xslDoc);
-                $("body").html(Buff);
-                var a = 1;
-                });
+                var queryString = "dispMode=課&secMode=開発&year:2022";
+                $(".group").attr("src", "groupSelect.html?" + queryString);
             });
+        });
 
 
     </script>
     <script type="text/javascript">
         $(function () {
-            $("body,#H_name").on("change", function () {
-                var val = $("option:selected", this).val();
-                $.alert("A",val);
+            $(".group").on("init", function () {
+                var h = arguments[1];
+                var w = arguments[2];
+                $(".group").css("height",h);
+                $(".group").css("width",w);
+            });
+            $(".group").on("change", function () {
+                alert(arguments[1]);
             });
         });
     </script>
-
+    <style>
+        body {
+            display: inline;
+            padding: 0px;
+            margin: 0px;
+        }
+        .group {
+            border: solid 0px;
+            width: 0px;
+            height: 0px;
+        }
+    </style>
 </head>
 <body>
+<iframe class="group" ></iframe>
 </body>
 </html>
