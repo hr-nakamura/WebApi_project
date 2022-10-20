@@ -40,33 +40,29 @@
     </script>
     <script type="text/javascript">
         $(function () {
-            $(".group").on("init1", function () {
+            $("body").on("private_group_init", function () {
                 var h = arguments[1];
                 var w = arguments[2];
                 $(".group").css("height", h);
                 $(".group").css("width", w);
             });
-            $(".group").on("change", function () {
+            $("body").on("private_group_change", function () {
                 alert(arguments[1]);
             });
         });
     </script>
     <script type="text/javascript">
         $(function () {
-            $(".group").on("init", function () {
+            $(".group").on("load", function () {
                 try {
-                    
-                    var h = arguments[1];
-                    var w = arguments[2];
-                    $(".group").css("height", h);
-                    $(".group").css("width", w);
-                    $(this)[0].contentWindow.childFunc();
+                    $.debug("**** load ****");
+                    //var x = $(this)[0].contentWindow.childFunc();
                 }
                 catch (error) {
                     //alert(error.message);
-                    console.log("****************" + error.message);
+                    $.debug("******* error *********" , error.message);
                 }
-            }).trigger('init');
+            }).trigger('load');
         });
     </script>
     <style>
