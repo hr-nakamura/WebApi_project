@@ -40,13 +40,13 @@
     </script>
     <script type="text/javascript">
         $(function () {
-            $("body").on("private_group_init", function (event) {
+            $("body").on("private_groupSelect_init", function (event) {
                 var h = arguments[1];
                 var w = arguments[2];
                 $(".group").css("height", h);
                 $(".group").css("width", w);
             });
-            $("body").on("private_group_change", function (event) {
+            $("body").on("private_groupSelect_change", function (event) {
                 alert(arguments[1]);
             });
         });

@@ -35,7 +35,7 @@
                 var h = $("body").css("height");
                 var w = $("body").css("width");
                 var arguments = [h, w];
-                parent.$("body").trigger("private_group_init", arguments);
+                parent.$("body").trigger("private_groupSelect_init", arguments);
             });
         });
     </script>
@@ -59,7 +59,7 @@
             $("body,#H_name").on("change", function () {
                 var val = $("option:selected", this).val();
                 var arguments = [val];
-                parent.$("body").trigger("private_group_change", arguments);
+                parent.$("body").trigger("private_groupSelect_change", arguments);
                 //$.alert("A", val);
 
             });
