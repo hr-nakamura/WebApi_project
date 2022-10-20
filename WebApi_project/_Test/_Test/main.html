@@ -40,20 +40,20 @@
     </script>
     <script type="text/javascript">
         $(function () {
-            $("body").on("private_group_init", function () {
+            $("body").on("private_group_init", function (event) {
                 var h = arguments[1];
                 var w = arguments[2];
                 $(".group").css("height", h);
                 $(".group").css("width", w);
             });
-            $("body").on("private_group_change", function () {
+            $("body").on("private_group_change", function (event) {
                 alert(arguments[1]);
             });
         });
     </script>
     <script type="text/javascript">
         $(function () {
-            $(".group").on("load", function () {
+            $("body").on("load", function (event) {
                 try {
                     $.debug("**** load ****");
                     //var x = $(this)[0].contentWindow.childFunc();
