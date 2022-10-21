@@ -65,34 +65,40 @@
     <script type="text/javascript">
         // 親から呼ばれる
         function dispData(para) {
-            var host_name = "http://localhost";
-            host_name = "";
-            var url = host_name + "/webapi/project/api/xml";
-            var json = {
-                dispCmd: para.dispCmd,
-                dispName: para.dispName,
-                secMode: para.secMode,
-                year: para.year,
-                yosoku: para.yosoku,
-                fix: para.fix
-            };
-            $.debug.json("para", json);
-            xmlDoc = $.WebApi("部門収支/部門収支", json);
+            try {
+                //$.alert( "dispData",JSON.stringify(para));
+
+                var host_name = "http://localhost";
+                host_name = "";
+                var url = host_name + "/webapi/project/api/xml";
+                var json = {
+                    dispCmd: para.dispCmd,
+                    dispName: para.dispName,
+                    secMode: para.secMode,
+                    year: para.year,
+                    yosoku: para.yosoku,
+                    fix: para.fix
+                };
+                $.debug.json("para", json);
+                xmlDoc = $.WebApi("部門収支/部門収支", json);
 
 
-            var xsl_name = "EMG部門収支.xsl";
-            var xslDoc = $.loadXMLDoc(xsl_name);
+                var xsl_name = "xsl/EMG部門収支.xsl";
+                var xslDoc = $.loadXMLDoc(xsl_name);
+                var Buff = $.transformNode(xmlDoc, xslDoc);
+                $(".dataG").html(Buff);
 
-            var Buff = $.transformNode(xmlDoc, xslDoc);
-            $(".dataG").html(Buff);
-
-            var xd = $(xmlDoc).find("確定日").text();
-            $(".確定日").text(xd);
-            var xd = $(xmlDoc).find("作成日付").text();
-            $(".作成日付").text(xd);
+                var xd = $(xmlDoc).find("確定日").text();
+                $(".確定日").text(xd);
+                var xd = $(xmlDoc).find("作成日付").text();
+                $(".作成日付").text(xd);
 
 
-            $(".Block_help").css("display", "block");
+                $(".Block_help").css("display", "block");
+            } catch (e) {
+                $.alert("dispData",e.message);
+            }
+
 
         }
 
@@ -127,7 +133,7 @@
                             break;
                     }
                 } catch (e) {
-                    $.alert(e.message);
+                    $.alert("XXX",e.message);
                 }
             });
         });

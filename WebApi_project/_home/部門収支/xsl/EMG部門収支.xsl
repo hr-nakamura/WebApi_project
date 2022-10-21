@@ -1646,6 +1646,6 @@
   </xsl:template>
 
   <!--		-->
-  <xsl:include href="/Project/home/_inc/sub_cmn.xsl"/>
+  <xsl:include href="xsl/sub_cmn.xsl"/>
 	
 </xsl:stylesheet>

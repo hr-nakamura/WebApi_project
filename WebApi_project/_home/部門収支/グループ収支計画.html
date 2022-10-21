@@ -23,11 +23,14 @@
         var xmlDoc_groupList;
         var o_iframe = null;
         var year;
+        var mm;
+        var dd;
+        var yymm;
         var para = {
             dispCmd: "課一覧",
             dispName: "営業本部",
             secMode: "開発",
-            year: 2021,
+            year: 2023,
             fix: 70,
             yosoku: 3
         }
@@ -38,19 +41,22 @@
             $("iframe.iframe_content").frame();
             $("iframe.iframe_content").attr("src", url);                // サブウインドオープン
             o_iframe = ($("iframe.iframe_content").length == 1 ? $("iframe.iframe_content")[0] : null);
-
             var d = new Date();
-            var year = d.getFullYear();
-            var mm = d.getMonth() + 1;
-            var dd = d.getDate();
-            var yymm = (year * 100) + mm;
+            year = d.getFullYear();
+            mm = d.getMonth() + 1;
+            dd = d.getDate();
+
+
+            yymm = (year * 100) + mm;
             year = (mm > 10 ? year++ : year);
+
+
             var json = {
-                year: year,
+                year: para.year,
                 secMode: "開発"
             }
 
-            xmlDoc_groupList = $.WebApi("部門収支/部門リスト", para);
+            //xmlDoc_groupList = $.WebApi("部門収支/部門リスト", para);
 
         });
 
@@ -58,28 +64,34 @@
             //var hostInfo = $.window.top.hostInfo;
             //var pathName = String(location.pathname).split("?")[0];
             //var name = hostInfo.url.Check(pathName);
+            try {
+                var json = { yymm: yymm }
+                var json = $.WebApi_json("projectInfo/dayChk_json", json);
+                var OKday = json.day;
+                yymm = (parseInt(dd) < parseInt(OKday) ? $.yymmAdd(yymm, -1) : $.yymmAdd(yymm, 0)) 	 // データ有効月の計算(12日以前は前々月)
 
-            var json = { yymm: yymm }
-            var json = $.WebApi_json("projectInfo/dayChk_json", json);
-            var OKday = json.day;
-            yymm = (parseInt(dd) < parseInt(OKday) ? $.yymmAdd(yymm, -1) : $.yymmAdd(yymm, 0)) 	 // データ有効月の計算(12日以前は前々月)
-
-            yy = parseInt(yymm / 100)
-            mm = yymm % 100
-
-
-            var year = yy + (mm >= 10 ? 1 : 0)			   // 10月以降は次年度を表示
-            para.year = year;
-
-            var fixLevel = $(".level:checked").val();
-            para.fix = fixLevel;
+                yy = parseInt(yymm / 100)
+                mm = yymm % 100
 
 
+                var year = yy + (mm >= 10 ? 1 : 0)			   // 10月以降は次年度を表示
+                para.year = year;
+
+                var fixLevel = $(".level:checked").val();
+                para.fix = fixLevel;
+
+                var json = { dispMode: "部", secMode: "開発", year: para.year };
+                var queryString = $.json2queryString(json);
+
+                $(".group").attr("src", "groupSelect.html?" + queryString);
 
 
+                loadHTML(para);
 
-            loadHTML(para);
 
+            } catch (e) {
+                alert(e.message);
+            }
         });
 
         function loadHTML(para) {
@@ -92,7 +104,6 @@
             $(".mainTitle").html("課単位収支計画");
 
             $(".subTitle").html(subTitle);
-
             o_iframe.contentWindow.dispData(para);
 
         }
@@ -137,7 +148,32 @@
             }
         });
     </script>
+    <script type="text/javascript">
+        ; (function ($) {
+            $.json2queryString = function (json) {
+                var Tab = [];
+                for (key in json) {
+                    Tab.push(key + "=" + json[key]);
+                }
+                return (Tab.join("&"));
+            }
+        })(jQuery);
 
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $("body").on("private_groupSelect_init", function (event) {
+                var h = arguments[1];
+                var w = arguments[2];
+                $(".group").css("height", h);
+                $(".group").css("width", w);
+            });
+            $("body").on("private_groupSelect_change", function (event) {
+                para.dispName = arguments[1];
+                loadHTML(para);
+            });
+        });
+    </script>
     <script type="text/javascript">
     </script>
     <style type="text/css">
@@ -149,6 +185,12 @@
             border: 0px solid green;
             margin: 0px 0px 0px 0px;
             background-color: snow;
+        }
+
+        .group {
+            border: solid 0px;
+            width: 0px;
+            height: 0px;
         }
 
         .mainTitle {
@@ -180,6 +222,8 @@
 <body>
     <table ALIGN="center" border="0">
         <caption><SPAN class="mainTitle"></SPAN></caption>
+        <caption><iframe class="group"></iframe></caption>
+
         <tbody>
             <TR>
                 <TD align="right" width="30%">
@@ -202,6 +246,6 @@
         </tbody>
     </table>
     <br />
-    <iframe class="iframe_content"></iframe>
+    <iframe class="iframe_content" src="test.html"></iframe>
 </body>
 </html >

@@ -189,6 +189,9 @@
     <Content Include="_home\売上予測\売上予実_新規.html" />
     <Content Include="_home\売上予測\売上予実_新規2.html" />
     <Content Include="_home\売上予測\売上予実_分類.html" />
+    <Content Include="_home\部門収支\groupSelect.html" />
+    <Content Include="_home\部門収支\test.html" />
+    <Content Include="_home\部門収支\部門_リスト_select.xsl" />
     <Content Include="_Test\excel_test\asets\css\sheetjs.css" />
     <Content Include="_Test\excel_test\asets\js\dropsheet.js" />
     <Content Include="_Test\excel_test\asets\js\dropsheet_override_range.js" />
@@ -367,7 +370,6 @@
     <Content Include="_home\部門収支\グループ収支計画.html" />
     <Content Include="_home\部門収支\部門収支計画.html" />
     <Content Include="_home\部門収支\EMG収支計画.html" />
-    <Content Include="_home\部門収支\EMG部門収支.xsl" />
     <Content Include="_home\部門収支\xsl\EMG部門収支.xsl" />
     <Content Include="_home\部門収支\xsl\OLD_部門_リスト_select.xsl" />
     <Content Include="_home\部門収支\xsl\sub_cmn.xsl" />
