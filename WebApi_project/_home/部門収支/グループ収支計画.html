@@ -19,8 +19,7 @@
 
     <script type="text/javascript">
         var url = "部門収支.html";
-        var xsl_group = "xsl/部門_リスト_select.xsl"
-        var xmlDoc_groupList;
+        var o_group = null;
         var o_iframe = null;
         var year;
         var mm;
@@ -38,6 +37,11 @@
     </script>
     <script type="text/javascript">
         $(window).on("ready", function () {
+
+            $("iframe.group").attr("src","groupSelect.html");
+            o_group = ($("iframe.group").length == 1 ? $("iframe.group")[0] : null);
+
+
             $("iframe.iframe_content").frame();
             $("iframe.iframe_content").attr("src", url);                // サブウインドオープン
             o_iframe = ($("iframe.iframe_content").length == 1 ? $("iframe.iframe_content")[0] : null);
@@ -55,8 +59,6 @@
                 year: para.year,
                 secMode: "開発"
             }
-
-            //xmlDoc_groupList = $.WebApi("部門収支/部門リスト", para);
 
         });
 
@@ -80,21 +82,24 @@
                 var fixLevel = $(".level:checked").val();
                 para.fix = fixLevel;
 
-                var json = { dispMode: "部", secMode: "開発", year: para.year };
-                var queryString = $.json2queryString(json);
+                updateGroup();
 
-                $(".group").attr("src", "groupSelect.html?" + queryString);
-
-
-                loadHTML(para);
+                updateHTML(para);
 
 
             } catch (e) {
                 alert(e.message);
             }
         });
-
-        function loadHTML(para) {
+        function updateGroup() {
+            var json = { dispMode: "部", secMode: "開発", year: para.year };
+            //var ret = $("iframe.group")[0].contentWindow.updateData(json);
+            var ret = o_group.contentWindow.updateData(json);
+            $(".group").css("height", ret.height);
+            $(".group").css("width", ret.width);
+            para.dispName = ret.select;
+        }
+        function updateHTML(para) {
             var year = para.year;
             var yymm = ((year - 1) * 100) + 10;
             var dispCnt = 12;
@@ -126,7 +131,8 @@
                         para.fix = 10;
                         break;
                 }
-                loadHTML(para);
+                updateGroup();
+                updateHTML(para);
             } catch (e) {
                 $.alert(e.message);
             }
@@ -142,35 +148,18 @@
                         para.year += 1;
                         break;
                 }
-                loadHTML(para);
+                updateGroup();
+                updateHTML(para);
             } catch (e) {
                 $.alert(e.message);
             }
         });
     </script>
     <script type="text/javascript">
-        ; (function ($) {
-            $.json2queryString = function (json) {
-                var Tab = [];
-                for (key in json) {
-                    Tab.push(key + "=" + json[key]);
-                }
-                return (Tab.join("&"));
-            }
-        })(jQuery);
-
-    </script>
-    <script type="text/javascript">
         $(function () {
-            $("body").on("private_groupSelect_init", function (event) {
-                var h = arguments[1];
-                var w = arguments[2];
-                $(".group").css("height", h);
-                $(".group").css("width", w);
-            });
             $("body").on("private_groupSelect_change", function (event) {
                 para.dispName = arguments[1];
-                loadHTML(para);
+                updateHTML(para);
             });
         });
     </script>
