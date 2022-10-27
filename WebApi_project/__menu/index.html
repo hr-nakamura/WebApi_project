@@ -144,7 +144,7 @@
         function parentExec(o) {
             var Str = "";
             var mode = o.mode;
-            $.debug("XX o.table", o.table, o.mode, o.item);
+            $.debug("== parentExec == o.table", o.table, o.mode, o.item);
             if (o.table == "xml") {
                 $.debug("click_xml", mode, o.item);
                 var xmlDoc = $.WebApi(o.item, o.option);
@@ -160,6 +160,7 @@
             $("iframe.iframe_content").attr("src", "Util/viewValue.html");
         }
         function parentInit(myname) {
+            // 親の情報
             return (parentInfo);
         }
     </script>
@@ -182,7 +183,7 @@
             //$.debug("結果", o.item, o.option, Str);
             // Jsonの中にマージされて戻ってきた[json]が入っている
 
-
+            $.debug.json("XXX", Json);
             //==========================================
             // 新しいoptionを設定する
             //==========================================
@@ -200,8 +201,6 @@
             //var xmlDoc = $.WebApi(o.item, o.option);
             //var Str = $.xml2str(xmlDoc);
             //==========================================
-            $.debug("=====", Str);
-
 
             $.storage("viewStr", Str);
             $("iframe.iframe_content").attr("src", "Util/viewValue.html");

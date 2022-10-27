@@ -25,6 +25,7 @@
             $(window).on("load", function () {
                 $("iframe.iframe_content").frame();
 
+                // 親の情報取得
                 var work = window.opener.parentInit();
                 o = work;
                 var ret = makeBox(work);
@@ -71,7 +72,7 @@
     <script type="text/jscript" language="javascript">
         function makeBox(work) {
             try {
-                $.debug("AAAAAA");
+                $.debug("makeBox");
                 $(".box").append("<table class='table' width='100%'/>");
                 var thead = $(".table").append("<thead/>");
                 var title = work.item;
@@ -115,7 +116,7 @@
     </script>
     <script language="JavaScript">
         function setName(para) {
-            window.opener.parentExec("太郎" + para);
+            window.opener.parentExec("dummy" + para);
         }
     </script>
 </head>
