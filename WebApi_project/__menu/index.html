@@ -192,7 +192,7 @@
             if (chaildWin != null && !chaildWin.closed) {
                 chaildWin.close();
             }
-            childiWn = window.open(url, "chaildWin", "width=600px,height=300px");
+            chaildWin = window.open(url, "chaildWin", "width=600px,height=300px");
 
 
             // 新しいoptionで実行する===================
@@ -200,7 +200,7 @@
             //var xmlDoc = $.WebApi(o.item, o.option);
             //var Str = $.xml2str(xmlDoc);
             //==========================================
-
+            $.debug("=====", Str);
 
 
             $.storage("viewStr", Str);
