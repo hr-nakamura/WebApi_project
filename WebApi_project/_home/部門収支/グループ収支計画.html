@@ -55,11 +55,6 @@
             year = (mm > 10 ? year++ : year);
 
 
-            var json = {
-                year: para.year,
-                secMode: "開発"
-            }
-
         });
 
         $(window).on("load", function () {
@@ -82,7 +77,7 @@
                 var fixLevel = $(".level:checked").val();
                 para.fix = fixLevel;
 
-                updateGroup();
+                updateGroup(para);
 
                 updateHTML(para);
 
@@ -91,9 +86,8 @@
                 alert(e.message);
             }
         });
-        function updateGroup() {
+        function updateGroup(para) {
             var json = { dispMode: "部", secMode: "開発", year: para.year };
-            //var ret = $("iframe.group")[0].contentWindow.updateData(json);
             var ret = o_group.contentWindow.updateData(json);
             $(".group").css("height", ret.height);
             $(".group").css("width", ret.width);
@@ -131,7 +125,6 @@
                         para.fix = 10;
                         break;
                 }
-                updateGroup();
                 updateHTML(para);
             } catch (e) {
                 $.alert(e.message);
@@ -148,7 +141,7 @@
                         para.year += 1;
                         break;
                 }
-                updateGroup();
+                updateGroup(para);
                 updateHTML(para);
             } catch (e) {
                 $.alert(e.message);

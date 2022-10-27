@@ -651,7 +651,7 @@ namespace WebApi_project.hostProc
                         {
                             { "message" , "xmlTabにはありませんでした"},
                             { "Item"    , Item},
-                            {"url"      , target_url }
+                            { "url"     , target_url }
                         };
                 jsonStr = System.Text.Json.JsonSerializer.Serialize(Msg);
             }
