@@ -6,3 +6,17 @@
 	を実行する
 
 	「mode」が「url」の時、urlを呼ぶ
+
+
+===========================================
+発行
+
+①ターゲットの場所「D:¥Inetpub_kansa\wwroot/WebApi/project」に発行する
+②「localhost」に発行されるので動作確認する
+③「D:¥Inetpub_kansa\wwroot/WebApi」のところの「project」を
+　「\\10.10.10.58\inetpub_kansa\wwwroot\WebApi」の「project」にコピーする
+
+注：キャッシュクリアされていないと以前のソースで動作するのでエラーするときがある
+
+===========================================
+
