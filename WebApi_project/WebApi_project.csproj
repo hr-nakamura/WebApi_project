@@ -189,6 +189,7 @@
     <Content Include="_home\売上予測\売上予実_新規.html" />
     <Content Include="_home\売上予測\売上予実_新規2.html" />
     <Content Include="_home\売上予測\売上予実_分類.html" />
+    <Content Include="_home\部門収支\個別収支計画.html" />
     <Content Include="_home\部門収支\groupSelect.html" />
     <Content Include="_home\部門収支\test.html" />
     <Content Include="_home\部門収支\部門_リスト_select.xsl" />
