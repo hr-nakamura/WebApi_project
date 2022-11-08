@@ -34,8 +34,11 @@
     </script>
     <script type="text/javascript">
         $(window).on("ready", function () {
+            var randomh = Math.random();
+            url += "?ts=" + randomh;
             $("iframe.iframe_content").frame();
             $("iframe.iframe_content").attr("src", url);                // サブウインドオープン
+            $.debug(url);
             o_iframe = ($("iframe.iframe_content").length == 1 ? $("iframe.iframe_content")[0] : null);
         });
 

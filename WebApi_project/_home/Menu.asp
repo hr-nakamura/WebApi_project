@@ -142,7 +142,7 @@
         function menu_click() {
             var url = this.getAttribute("url");
             var randomh = Math.random();
-            url += "?tm=" + randomh;
+            url += "?ts=" + randomh;
             if (url) {
                 docWin.open(url);
                 //w_open(url);

@@ -58,9 +58,10 @@
         //var viewXmlWindow = new viewXmlWindow();               // xml表示用オブジェクト準備
         $(function () {
             $(window).on("load", function (e) {
+                $.debug("onload");
             });
-            $("#GRP").on("click", function (e) {
-                alert("X");
+            $(document).on("click", "#GRP", function (e) {
+                $.debug(e.type, this.id);
             });
         });
     </script>

@@ -36,7 +36,7 @@
                 if (event.type == "click") {
                     // debugウインドウを開く($.debugで書き込めるようにする)
                     if (closeMode) {
-                        var url = "/WebApi/project/__menu/debug/debug_window.html" + "?tm=" + event.timeStamp.toString();
+                        var url = "/WebApi/project/__menu/debug/debug_window.html" + "?ts=" + event.timeStamp.toString();
                         var info = "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,left=0,top=0,resizable=yes,width=500,height=500,title='abc'";
                         debugWin = window.open(url, "debug_window", info);
                         //$.debug("AAAAAAAA",debugWin.name);
