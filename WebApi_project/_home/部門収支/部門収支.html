@@ -62,6 +62,11 @@
             });
             $(document).on("click", "#GRP", function (e) {
                 $.debug(e.type, this.id);
+                var dispName = $(this).attr("dispName");
+                var gCode = $(this).attr("gCode");
+                var arguments = ["click",dispName,gCode];
+                parent.$("body").trigger("private_trigger", arguments);
+
             });
         });
     </script>
