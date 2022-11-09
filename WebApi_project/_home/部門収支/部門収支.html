@@ -32,7 +32,7 @@
 
     <script type="text/javascript">
         //var url = "/WebApi/project/_Func/部門収支/EMG.xml";
-        var para = {
+        var json = {
             dispCmd: "EMG",
             secMode: "",
             year: "2021",
@@ -60,14 +60,6 @@
             $(window).on("load", function (e) {
                 $.debug("onload");
             });
-            $(document).on("click", "#GRP", function (e) {
-                $.debug(e.type, this.id);
-                var dispName = $(this).attr("dispName");
-                var gCode = $(this).attr("gCode");
-                var arguments = ["click",dispName,gCode];
-                parent.$("body").trigger("private_trigger", arguments);
-
-            });
         });
     </script>
 
@@ -80,7 +72,7 @@
                 var host_name = "http://localhost";
                 host_name = "";
                 var url = host_name + "/webapi/project/api/xml";
-                var json = {
+                json = {
                     dispCmd: para.dispCmd,
                     dispName: para.dispName,
                     secMode: para.secMode,
@@ -121,7 +113,26 @@
             $(document).ready(function () {
                 //alert("onready");
             });
-
+            $(document).on("click mouseenter mouseleave", "#GRP", function (e) {
+                var work = "EMG/統括詳細/部門詳細/課詳細";
+                if (work.indexOf(json.dispCmd) >= 0) return;
+                switch (e.type) {
+                    case "mouseenter":
+                        this.style.cursor = "pointer";
+                        this.style.backgroundColor = "lightgray";
+                        break;
+                    case "mouseleave":
+                        this.style.cursor = "";
+                        this.style.backgroundColor = "";
+                        break;
+                    case "click":
+                        var dispName = $(this).attr("dispName");
+                        var gCode = $(this).attr("gCode");
+                        var arguments = ["click", dispName, gCode];
+                        parent.$("body").trigger("private_trigger", arguments);
+                        break;
+                }
+            });
 
             $(document).on("click mouseenter mouseleave", "#onUriage,#onGenka,#onSales,#onKanriHi,#onCost1,#onCost2,#onKei1,#onKei2,#onKei3", function (e) {
                 try {

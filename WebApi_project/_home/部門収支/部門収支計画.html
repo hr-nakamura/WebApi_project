@@ -64,11 +64,11 @@
             para.fix = fixLevel;
 
 
-            loadHTML(para);
+            updateHTML(para);
 
         });
 
-        function loadHTML(para) {
+        function updateHTML(para) {
             var year = para.year;
             var yymm = ((year - 1) * 100) + 10;
             var dispCnt = 12;
@@ -79,51 +79,60 @@
 
             $(".subTitle").html(subTitle);
 
-            o_iframe.contentWindow.dispData(para);
+            o_iframe.contentWindow.dispData(para);          // iframe内の関数実行
 
         }
     </script>
     <script type="text/javascript">
-        $(document).on("click", ".level", function (e) {
-            try {
-                //$.debug(this.value);
-                switch (this.value) {
-                    case "70":
-                        para.fix = 70;
-                        break;
-                    case "50":
-                        para.fix = 50;
-                        break;
-                    case "30":
-                        para.fix = 30;
-                        break;
-                    case "10":
-                        para.fix = 10;
-                        break;
+        $(function () {
+            $(document).on("click", ".level", function (e) {
+                try {
+                    //$.debug(this.value);
+                    switch (this.value) {
+                        case "70":
+                            para.fix = 70;
+                            break;
+                        case "50":
+                            para.fix = 50;
+                            break;
+                        case "30":
+                            para.fix = 30;
+                            break;
+                        case "10":
+                            para.fix = 10;
+                            break;
+                    }
+                    updateHTML(para);
+                } catch (e) {
+                    $.alert(e.message);
                 }
-                loadHTML(para);
-            } catch (e) {
-                $.alert(e.message);
-            }
-        });
-        $(document).on("click", ".prev, .next", function (e) {
-            try {
-                //$.debug(this.className);
-                switch (this.className) {
-                    case "prev":
-                        para.year -= 1;
-                        break;
-                    case "next":
-                        para.year += 1;
-                        break;
+            });
+            $(document).on("click", ".prev, .next", function (e) {
+                try {
+                    //$.debug(this.className);
+                    switch (this.className) {
+                        case "prev":
+                            para.year -= 1;
+                            break;
+                        case "next":
+                            para.year += 1;
+                            break;
+                    }
+                    updateHTML(para);
+                } catch (e) {
+                    $.alert(e.message);
                 }
-                loadHTML(para);
-            } catch (e) {
-                $.alert(e.message);
-            }
+            });
+            $("body").on("private_trigger", function (event) {
+                var trigger_type = arguments[1];
+                $.debug(arguments[2], arguments[3]);
+                window.open("個別収支計画.html");
+            });
         });
-    </script>
+</script>
 
+    <script type="text/javascript">
+    </script>
     <script type="text/javascript">
     </script>
     <style type="text/css">

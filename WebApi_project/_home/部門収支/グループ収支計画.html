@@ -33,12 +33,12 @@
             fix: 70,
             yosoku: 3
         }
-
+        var o_window;
     </script>
     <script type="text/javascript">
         $(window).on("ready", function () {
 
-            $("iframe.group").attr("src","groupSelect.html");
+            $("iframe.group").attr("src", "groupSelect.html");
             o_group = ($("iframe.group").length == 1 ? $("iframe.group")[0] : null);
 
 
@@ -55,6 +55,28 @@
             year = (mm > 10 ? year++ : year);
 
 
+        });
+        $(window).unload(function () {
+            alert('unloadイベントが通知されました。');
+        });
+        $(window).on('beforeunload', function () {
+            try {
+                alert("XX");
+
+            } catch (e) {
+                alert(e.message);
+            }
+        });
+        $(document).on("beforeunload", function () {
+            fncCheck();
+/*
+            var a = true;
+            if (o_window != undefined) {
+                a = o_window.closed;
+            }
+            var str = (a) ? "閉じています。" : "開いています。";
+            alert(str);
+*/
         });
 
         $(window).on("load", function () {
@@ -103,50 +125,71 @@
             $(".mainTitle").html("課単位収支計画");
 
             $(".subTitle").html(subTitle);
-            o_iframe.contentWindow.dispData(para);
+            o_iframe.contentWindow.dispData(para);          // iframe内の関数実行
 
         }
     </script>
     <script type="text/javascript">
-        $(document).on("click", ".level", function (e) {
-            try {
-                //$.debug(this.value);
-                switch (this.value) {
-                    case "70":
-                        para.fix = 70;
-                        break;
-                    case "50":
-                        para.fix = 50;
-                        break;
-                    case "30":
-                        para.fix = 30;
-                        break;
-                    case "10":
-                        para.fix = 10;
-                        break;
+        $(function () {
+            $(document).on("click", ".level", function (e) {
+                try {
+                    //$.debug(this.value);
+                    switch (this.value) {
+                        case "70":
+                            para.fix = 70;
+                            break;
+                        case "50":
+                            para.fix = 50;
+                            break;
+                        case "30":
+                            para.fix = 30;
+                            break;
+                        case "10":
+                            para.fix = 10;
+                            break;
+                    }
+                    updateHTML(para);
+                } catch (e) {
+                    $.alert(e.message);
                 }
-                updateHTML(para);
-            } catch (e) {
-                $.alert(e.message);
-            }
-        });
-        $(document).on("click", ".prev, .next", function (e) {
-            try {
-                //$.debug(this.className);
-                switch (this.className) {
-                    case "prev":
-                        para.year -= 1;
-                        break;
-                    case "next":
-                        para.year += 1;
-                        break;
+            });
+            $(document).on("click", ".prev, .next", function (e) {
+                try {
+                    //$.debug(this.className);
+                    switch (this.className) {
+                        case "prev":
+                            para.year -= 1;
+                            break;
+                        case "next":
+                            para.year += 1;
+                            break;
+                    }
+                    updateHTML(para);
+                } catch (e) {
+                    $.alert(e.message);
                 }
-                updateGroup(para);
-                updateHTML(para);
-            } catch (e) {
-                $.alert(e.message);
-            }
+            });
+            $("body").on("private_trigger", function (event) {
+                var trigger_type = arguments[1];
+
+                o_window = (o_window == undefined ? true : o_window.closed);
+                $.debug(arguments[2], arguments[3], o_window.closed);
+//                    a = o_window.closed;
+                $.debug("=========", typeof (o_window), typeof (o_window.closed));
+
+
+                o_window = window.open("個別収支計画.html","個別収支計画");
+            });
         });
+        function fncCheck() {
+            var a = true;
+            if (o_window != undefined) {
+                a = o_window.closed;
+            }
+            var str = (a) ? "閉じています。" : "開いています。";
+            alert(str);
+        }
+
     </script>
     <script type="text/javascript">
         $(function () {
