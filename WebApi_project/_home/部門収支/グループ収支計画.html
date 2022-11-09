@@ -33,7 +33,7 @@
             fix: 70,
             yosoku: 3
         }
-        var o_window;
+        var o_subWin = null;
     </script>
     <script type="text/javascript">
         $(window).on("ready", function () {
@@ -56,28 +56,7 @@
 
 
         });
-        $(window).unload(function () {
-            alert('unloadイベントが通知されました。');
-        });
-        $(window).on('beforeunload', function () {
-            try {
-                alert("XX");
 
-            } catch (e) {
-                alert(e.message);
-            }
-        });
-        $(document).on("beforeunload", function () {
-            fncCheck();
-/*
-            var a = true;
-            if (o_window != undefined) {
-                a = o_window.closed;
-            }
-            var str = (a) ? "閉じています。" : "開いています。";
-            alert(str);
-*/
-        });
 
         $(window).on("load", function () {
             //var hostInfo = $.window.top.hostInfo;
@@ -171,24 +150,16 @@
             });
             $("body").on("private_trigger", function (event) {
                 var trigger_type = arguments[1];
+                o_subWin = window.open("個別収支計画.html","個別収支計画");
+            });
 
-                o_window = (o_window == undefined ? true : o_window.closed);
-                $.debug(arguments[2], arguments[3], o_window.closed);
-//                    a = o_window.closed;
-                $.debug("=========", typeof (o_window), typeof (o_window.closed));
-
-
-                o_window = window.open("個別収支計画.html","個別収支計画");
+            $(window).on('unload', function () {
+                if (o_subWin != null && !o_subWin.closed) {
+                    o_subWin.close();
+                    $.debug("subWin Close");
+                }
             });
         });
-        function fncCheck() {
-            var a = true;
-            if (o_window != undefined) {
-                a = o_window.closed;
-            }
-            var str = (a) ? "閉じています。" : "開いています。";
-            alert(str);
-        }
 
     </script>
     <script type="text/javascript">

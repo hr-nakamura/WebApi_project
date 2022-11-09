@@ -29,7 +29,7 @@
         var host_name = "http://localhost";
         host_name = "";
         var web_api_json = host_name + "/webapi/project/api/json";
-
+        var o_subWin = null;
     </script>
     <script type="text/javascript">
         $(window).on("ready", function () {
@@ -125,8 +125,14 @@
             });
             $("body").on("private_trigger", function (event) {
                 var trigger_type = arguments[1];
-                $.debug(arguments[2], arguments[3]);
-                window.open("個別収支計画.html");
+                o_subWin = window.open("個別収支計画.html", "個別収支計画");
+            });
+
+            $(window).on('unload', function () {
+                if (o_subWin != null && !o_subWin.closed) {
+                    o_subWin.close();
+                    $.debug("subWin Close");
+                }
             });
         });
 </script>
