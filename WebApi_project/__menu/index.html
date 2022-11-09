@@ -207,6 +207,11 @@
             return (false);
         }
         function menu_click(o) {
+            var closeMode2 = (!chaildWin || chaildWin.closed);
+            if (!closeMode2) {
+                chaildWin.close();
+            }
+
             $.debug("menu_click", o.mode, o.item);
             var mode = o.mode;          // method,url,undefined
             if (mode == "url" || mode == "method") {
