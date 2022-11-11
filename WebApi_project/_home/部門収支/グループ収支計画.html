@@ -18,7 +18,9 @@
     <script src="../_Content/_debug/jquery.my.debug.js" type="text/javascript"></script>
 
     <script type="text/javascript">
-        var url = "部門収支.html";
+        var main_url = "部門収支.html";
+        var sub_url = "個別収支詳細.html";
+
         var o_group = null;
         var o_iframe = null;
         var year;
@@ -33,17 +35,19 @@
             fix: 70,
             yosoku: 3
         }
+        var sub_para;
         var o_subWin = null;
     </script>
     <script type="text/javascript">
         $(window).on("ready", function () {
-
             $("iframe.group").attr("src", "groupSelect.html");
             o_group = ($("iframe.group").length == 1 ? $("iframe.group")[0] : null);
 
+            var randomh = Math.random();
+            main_url += "?ts=" + randomh;
 
             $("iframe.iframe_content").frame();
-            $("iframe.iframe_content").attr("src", url);                // サブウインドオープン
+            $("iframe.iframe_content").attr("src", main_url);                // サブウインドオープン
             o_iframe = ($("iframe.iframe_content").length == 1 ? $("iframe.iframe_content")[0] : null);
             var d = new Date();
             year = d.getFullYear();
@@ -150,7 +154,10 @@
             });
             $("body").on("private_trigger", function (event) {
                 var trigger_type = arguments[1];
-                o_subWin = window.open("個別収支計画.html","個別収支計画");
+                sub_para = para;
+                sub_para.dispCmd = "課詳細";
+                sub_para.dispName = arguments[3];
+                o_subWin = window.open(sub_url,"個別収支詳細");
             });
 
             $(window).on('unload', function () {

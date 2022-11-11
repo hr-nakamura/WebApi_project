@@ -144,6 +144,7 @@
             var randomh = Math.random();
             url += "?ts=" + randomh;
             if (url) {
+                alert(url);
                 docWin.open(url);
                 //w_open(url);
             }

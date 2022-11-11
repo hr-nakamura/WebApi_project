@@ -58,7 +58,6 @@
         //var viewXmlWindow = new viewXmlWindow();               // xml表示用オブジェクト準備
         $(function () {
             $(window).on("load", function (e) {
-                $.debug("onload");
             });
         });
     </script>
@@ -80,7 +79,7 @@
                     yosoku: para.yosoku,
                     fix: para.fix
                 };
-                $.debug.json("para", json);
+                $.debug.json("dispData", json);
                 xmlDoc = $.WebApi("部門収支/部門収支", json);
 
 
@@ -115,6 +114,7 @@
             });
             $(document).on("click mouseenter mouseleave", "#GRP", function (e) {
                 var work = "EMG/統括詳細/部門詳細/課詳細";
+                $.debug(json.dispCmd);
                 if (work.indexOf(json.dispCmd) >= 0) return;
                 switch (e.type) {
                     case "mouseenter":
