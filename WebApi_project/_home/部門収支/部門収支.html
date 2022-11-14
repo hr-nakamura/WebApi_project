@@ -66,7 +66,7 @@
         // 親から呼ばれる
         function dispData(para) {
             try {
-                //$.alert( "dispData",JSON.stringify(para));
+                $.alert( "dispData" + window.parent.MasterInfo.title ,JSON.stringify(para));
 
                 var host_name = "http://localhost";
                 host_name = "";
@@ -114,7 +114,7 @@
             });
             $(document).on("click mouseenter mouseleave", "#GRP", function (e) {
                 var work = "EMG/統括詳細/部門詳細/課詳細";
-                $.debug(json.dispCmd);
+                //$.debug(json.dispCmd);
                 if (work.indexOf(json.dispCmd) >= 0) return;
                 switch (e.type) {
                     case "mouseenter":

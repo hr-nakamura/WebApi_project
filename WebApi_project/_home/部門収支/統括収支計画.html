@@ -18,18 +18,23 @@
     <script src="../_Content/_debug/jquery.my.debug.js" type="text/javascript"></script>
 
     <script type="text/javascript">
+        var MasterInfo = {
+            title : "統括収支計画",
+            main_para: {
+                dispCmd: "統括一覧",
+                secMode: "開発",
+                year: 2021,
+                fix: 70,
+                yosoku: 3
+            },
+            sub_para: {
+            }
+        };
         var main_url = "部門収支.html";
         var sub_url = "個別収支詳細.html";
 
         var o_iframe = null;
-        var para = {
-            dispCmd: "統括一覧",
-            secMode: "開発",
-            year: 2021,
-            fix: 70,
-            yosoku: 3
-        }
-        var sub_para = para;
+
         var host_name = "http://localhost";
         host_name = "";
         var web_api_json = host_name + "/webapi/project/api/json";
@@ -64,13 +69,13 @@
 
 
             var year = yy + (mm >= 10 ? 1 : 0)			   // 10月以降は次年度を表示
-            para.year = year;
+            MasterInfo.main_para.year = year;
 
             var fixLevel = $(".level:checked").val();
-            para.fix = fixLevel;
+            MasterInfo.main_para.fix = fixLevel;
 
 
-            updateHTML(para);
+            updateHTML(MasterInfo.main_para);
 
         });
 
@@ -96,19 +101,19 @@
                     //$.debug(this.value);
                     switch (this.value) {
                         case "70":
-                            para.fix = 70;
+                            MasterInfo.main_para.fix = 70;
                             break;
                         case "50":
-                            para.fix = 50;
+                            MasterInfo.main_para.fix = 50;
                             break;
                         case "30":
-                            para.fix = 30;
+                            MasterInfo.main_para.fix = 30;
                             break;
                         case "10":
-                            para.fix = 10;
+                            MasterInfo.main_para.fix = 10;
                             break;
                     }
-                    updateHTML(para);
+                    updateHTML(MasterInfo.main_para);
                 } catch (e) {
                     $.alert(e.message);
                 }
@@ -118,13 +123,13 @@
                     //$.debug(this.className);
                     switch (this.className) {
                         case "prev":
-                            para.year -= 1;
+                            MasterInfo.main_para.year -= 1;
                             break;
                         case "next":
-                            para.year += 1;
+                            MasterInfo.main_para.year += 1;
                             break;
                     }
-                    updateHTML(para);
+                    updateHTML(MasterInfo.main_para);
                 } catch (e) {
                     $.alert(e.message);
                 }
@@ -133,12 +138,14 @@
                 try {
                     var trigger_type = arguments[1];
                     $.debug(arguments[1], arguments[2], arguments[3]);
-                    sub_para = para;
-                    sub_para.dispCmd = "統括詳細";
-                    sub_para.dispName = arguments[2];
-                    $.debug.json("open", sub_para);
+                    MasterInfo.sub_para = MasterInfo.main_para;
+                    MasterInfo.sub_para.dispCmd = "統括詳細";
+                    MasterInfo.sub_para.dispName = arguments[2];
+                    $.debug.json("open", MasterInfo.sub_para);
+                    var randomh = Math.random();
+                    sub_url += "?ts=" + randomh;
                     o_subWin = window.open(sub_url, "個別収支詳細");
-                    $.debug.json("trigger", sub_para);
+                    $.debug.json("trigger", MasterInfo.sub_para);
 
                 } catch (e) {
                     alert(e.message);
