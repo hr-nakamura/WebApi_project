@@ -42,6 +42,7 @@
     </script>
     <script type="text/javascript">
         $(window).on("ready", function () {
+            $.debug("onready", MasterInfo.title);
             var randomh = Math.random();
             main_url += "?ts=" + randomh;
             $("iframe.iframe_content").frame();
@@ -50,6 +51,7 @@
         });
 
         $(window).on("load", function () {
+            $.debug("onload", MasterInfo.title);
             //var hostInfo = $.window.top.hostInfo;
             //var pathName = String(location.pathname).split("?")[0];
             //var name = hostInfo.url.Check(pathName);
@@ -77,9 +79,11 @@
 
             updateHTML(MasterInfo.main_para);
 
+            $.debug("onload9", MasterInfo.title);
         });
 
         function updateHTML(para) {
+            $.debug("updateHTML");
             var year = para.year;
             var yymm = ((year - 1) * 100) + 10;
             var dispCnt = 12;
