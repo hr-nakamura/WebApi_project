@@ -15,6 +15,7 @@
 
     <script type="text/javascript">
         function updateData(json) {
+            $.debug.json("updateData", json);
             var queryString = JSON.stringify(json);
             var xmlDoc = $.WebApi("部門収支/部門リスト", queryString);
             var Str = $.xml2str(xmlDoc);
@@ -25,6 +26,11 @@
             $("body").html(Buff);
             var h = $("body").css("height");
             var w = $("body").css("width");
+
+            var ret = $(xmlDoc).find("//部門[@名前='海外事業推進室']");
+            $.debug("XXXX", ret);
+
+            $("option[value='" + json.dispName + "']").prop("selected", true);
             var selName = $('option:selected', "#H_name").val();
             var ret = {select:selName,height:h,width:w};
             return (ret);

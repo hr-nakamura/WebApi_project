@@ -108,7 +108,7 @@
             }
         });
         function updateGroup(para) {
-            var json = { dispMode: "部", secMode: "開発", year: para.year };
+            var json = { dispMode: "部", dispName : para.dispName, secMode: "開発", year: para.year };
             var ret = o_group.contentWindow.updateData(json);
             $(".group").css("height", ret.height);
             $(".group").css("width", ret.width);
@@ -185,13 +185,6 @@
                     alert(e.message);
                 }
             });
-            $("body").on("private_triggerX", function (event) {
-                var trigger_type = arguments[1];
-                sub_para = para;
-                sub_para.dispCmd = "課詳細";
-                sub_para.dispName = arguments[3];
-                o_subWin = window.open(sub_url,"個別収支詳細");
-            });
 
             $(window).on('unload', function () {
                 if (o_subWin != null && !o_subWin.closed) {
@@ -205,8 +198,8 @@
     <script type="text/javascript">
         $(function () {
             $("body").on("private_groupSelect_change", function (event) {
-                para.dispName = arguments[1];
-                updateHTML(para);
+                MasterInfo.main_para.dispName = arguments[1];
+                updateHTML(MasterInfo.main_para);
             });
         });
     </script>
