@@ -20,24 +20,16 @@
         var MasterInfo = {
             title: "個別収支詳細",
             main_para: {
-                dispCmd: "統括一覧",
-                secMode: "開発",
+                dispCmd: "課詳細",        // 統括詳細/部門詳細/課詳細
+                dispName: "101",            // 営業本部
+                secMode: "間接",
                 year: 2021,
                 fix: 70,
                 yosoku: 3
             },
-            sub_para: {
-            }
         };
         var o_iframe = null;
-        var para = {
-            dispCmd: "課詳細",        // 統括詳細/部門詳細/課詳細
-            dispName: "101",            // 営業本部
-            secMode: "間接",
-            year: 2021,
-            fix: 70,
-            yosoku: 3
-        }
+
         var host_name = "http://localhost";
         host_name = "";
         var web_api_json = host_name + "/webapi/project/api/json";
@@ -54,8 +46,8 @@
         });
 
         $(window).on("load", function () {
-            $.debug.json("----onloadX----", "typeof(window.opener)");
-            para = window.opener.MasterInfo.sub_para;
+            $.debug.json("----onloadX----", window.opener.MasterInfo.title);
+            $.copy_json(MasterInfo.main_para,window.opener.MasterInfo.sub_para);
             //var hostInfo = $.window.top.hostInfo;
             //var pathName = String(location.pathname).split("?")[0];
             //var name = hostInfo.url.Check(pathName);
@@ -76,14 +68,15 @@
             mm = yymm % 100
 
 
-            var year = yy + (mm >= 10 ? 1 : 0)			   // 10月以降は次年度を表示
-            para.year = year;
+            //var year = yy + (mm >= 10 ? 1 : 0)			   // 10月以降は次年度を表示
+            //MasterInfo.main_para.year = year;
 
-            var fixLevel = $(".level:checked").val();
-            para.fix = fixLevel;
+            //var fixLevel = $(".level:checked").val();
+            //MasterInfo.main_para.fix = fixLevel;
+            $(".level[value='" + MasterInfo.main_para.fix + "']").prop("checked",true);
 
-            $.debug.json("updateHTML",para);
-            updateHTML(para);
+            //$.debug.json("updateHTML",MasterInfo.main_para);
+            updateHTML(MasterInfo.main_para);
 
         });
 
@@ -108,19 +101,19 @@
                 //$.debug(this.value);
                 switch (this.value) {
                     case "70":
-                        para.fix = 70;
+                        MasterInfo.main_para.fix = 70;
                         break;
                     case "50":
-                        para.fix = 50;
+                        MasterInfo.main_para.fix = 50;
                         break;
                     case "30":
-                        para.fix = 30;
+                        MasterInfo.main_para.fix = 30;
                         break;
                     case "10":
-                        para.fix = 10;
+                        MasterInfo.main_para.fix = 10;
                         break;
                 }
-                updateHTML(para);
+                updateHTML(MasterInfo.main_para);
             } catch (e) {
                 $.alert(e.message);
             }
@@ -130,13 +123,13 @@
                 //$.debug(this.className);
                 switch (this.className) {
                     case "prev":
-                        para.year -= 1;
+                        MasterInfo.main_para.year -= 1;
                         break;
                     case "next":
-                        para.year += 1;
+                        MasterInfo.main_para.year += 1;
                         break;
                 }
-                updateHTML(para);
+                updateHTML(MasterInfo.main_para);
             } catch (e) {
                 $.alert(e.message);
             }
@@ -191,7 +184,7 @@
                 </TD>
                 <TD align=center width="40%" nowrap>
                     <DIV nowrap>
-                        <SPAN><INPUT type="radio" class="level" name="level" value="70" checked>Ａ</SPAN>
+                        <SPAN><INPUT type="radio" class="level" name="level" value="70">Ａ</SPAN>
                         <SPAN><INPUT type="radio" class="level" name="level" value="50">Ｂ</SPAN>
                         <SPAN><INPUT type="radio" class="level" name="level" value="30">Ｃ</SPAN>
                         <SPAN><INPUT type="radio" class="level" name="level" value="10">Ｄ</SPAN>

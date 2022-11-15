@@ -83,7 +83,7 @@
         });
 
         function updateHTML(para) {
-            $.debug("updateHTML");
+            $.debug.json("updateHTML" + MasterInfo.title ,para);
             var year = para.year;
             var yymm = ((year - 1) * 100) + 10;
             var dispCnt = 12;
@@ -141,16 +141,14 @@
             $("body").on("private_trigger", function (event) {
                 try {
                     var trigger_type = arguments[1];
-                    $.debug(arguments[1], arguments[2], arguments[3]);
-                    MasterInfo.sub_para = MasterInfo.main_para;
+                    $.debug("private_trigger",arguments[1], arguments[2], arguments[3]);
+                    $.copy_json(MasterInfo.sub_para, MasterInfo.main_para);
+
                     MasterInfo.sub_para.dispCmd = "統括詳細";
                     MasterInfo.sub_para.dispName = arguments[2];
-                    $.debug.json("open", MasterInfo.sub_para);
                     var randomh = Math.random();
                     sub_url += "?ts=" + randomh;
                     o_subWin = window.open(sub_url, "個別収支詳細");
-                    $.debug.json("trigger", MasterInfo.sub_para);
-
                 } catch (e) {
                     alert(e.message);
                 }
@@ -162,6 +160,7 @@
                     $.debug("subWin Close");
                 }
             });
+
         });
     </script>
     <script type="text/javascript">

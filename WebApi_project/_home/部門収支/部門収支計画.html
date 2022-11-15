@@ -17,6 +17,18 @@
     <script src="../_Content/_Scripts/jquery.stopWatch.js" type="text/javascript"></script>
     <script src="../_Content/_debug/jquery.my.debug.js" type="text/javascript"></script>
     <script type="text/javascript">
+        var MasterInfo = {
+            title: "統括収支計画",
+            main_para: {
+                dispCmd: "部門一覧",
+                secMode: "開発",
+                year: 2021,
+                fix: 70,
+                yosoku: 3
+            },
+            sub_para: {
+            }
+        };
         var main_url = "部門収支.html";
         var sub_url = "個別収支詳細.html";
 
@@ -70,7 +82,7 @@
             para.fix = fixLevel;
 
 
-            updateHTML(para);
+            updateHTML(MasterInfo.main_para);
 
         });
 
@@ -96,19 +108,19 @@
                     //$.debug(this.value);
                     switch (this.value) {
                         case "70":
-                            para.fix = 70;
+                            MasterInfo.main_para.fix = 70;
                             break;
                         case "50":
-                            para.fix = 50;
+                            MasterInfo.main_para.fix = 50;
                             break;
                         case "30":
-                            para.fix = 30;
+                            MasterInfo.main_para.fix = 30;
                             break;
                         case "10":
-                            para.fix = 10;
+                            MasterInfo.main_para.fix = 10;
                             break;
                     }
-                    updateHTML(para);
+                    updateHTML(MasterInfo.main_para);
                 } catch (e) {
                     $.alert(e.message);
                 }
@@ -118,24 +130,33 @@
                     //$.debug(this.className);
                     switch (this.className) {
                         case "prev":
-                            para.year -= 1;
+                            MasterInfo.main_para.year -= 1;
                             break;
                         case "next":
-                            para.year += 1;
+                            MasterInfo.main_para.year += 1;
                             break;
                     }
-                    updateHTML(para);
+                    updateHTML(MasterInfo.main_para);
                 } catch (e) {
                     $.alert(e.message);
                 }
             });
             $("body").on("private_trigger", function (event) {
-                var trigger_type = arguments[1];
-                sub_para = para;
-                sub_para.dispCmd = "部門詳細";
-                sub_para.dispName = arguments[2];
-                o_subWin = window.open(sub_url, "個別収支詳細");
+                try {
+                    var trigger_type = arguments[1];
+                    $.debug("private_trigger", arguments[1], arguments[2], arguments[3]);
+                    $.copy_json(MasterInfo.sub_para, MasterInfo.main_para);
+
+                    MasterInfo.sub_para.dispCmd = "部門詳細";
+                    MasterInfo.sub_para.dispName = arguments[2];
+                    var randomh = Math.random();
+                    sub_url += "?ts=" + randomh;
+                    o_subWin = window.open(sub_url, "個別収支詳細");
+                } catch (e) {
+                    alert(e.message);
+                }
             });
+
 
             $(window).on('unload', function () {
                 if (o_subWin != null && !o_subWin.closed) {

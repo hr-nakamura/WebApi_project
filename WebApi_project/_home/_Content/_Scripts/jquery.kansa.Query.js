@@ -1,4 +1,9 @@
-﻿;(function ($) {
+﻿; (function ($) {
+        $.copy_json = function(d_json, s_json) {
+            for (key in s_json) {
+            d_json[key] = s_json[key];
+            }
+        },
         $.alert = function () {
             var work = [];
             var Cnt = arguments.length;
