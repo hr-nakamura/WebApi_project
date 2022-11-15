@@ -16,7 +16,8 @@ namespace WebApi_project.hostProc
             { "部門収支/部門収支", new EntryInfoXml{
                 type = "xml",
                 data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp",
-                option = "{dispCmd:'EMG',year:2022,fix:10,yosoku:3}",
+                option = "{dispCmd:'課詳細',dispName:'293',secMode:'開発',year:2018,fix:70,yosoku:3}",
+//                option = "{dispCmd:'EMG',year:2022,fix:10,yosoku:3}",
                 }
             },
             { "部門収支/部門リスト", new EntryInfoXml{
