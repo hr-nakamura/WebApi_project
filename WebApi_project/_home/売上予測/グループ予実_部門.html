@@ -49,10 +49,10 @@
             var url = location.href;
 
             var json = {
-                year: 2022,
-                //actual: 5
+                year: 2023,
+                actual: 1
             };
-            //$.debug.json("para", json);
+            $.debug.json("paraX", json);
             var xmlDoc = $.WebApi("売上予測/グループ予実_部門", json);
             var xslDoc = $.loadXMLDoc("xsl/グループ予実.xsl");
 

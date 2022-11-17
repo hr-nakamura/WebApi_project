@@ -81,9 +81,11 @@
       <menu>
   		<a url="売上予測/売上目標_部門.html" mode="F_OK">売上目標</a>
         <a url="売上予測/売上予実_部門.html" mode="F_OK">売上実績+予測</a>
+        <a url="売上予測/売上予実_部門選択.html" mode="F_OK">売上実績+予測（部門選択）</a>
         <a url="売上予測/売上予実_分類.html" mode="F_OK">売上実績+予測（分類別）</a>
         <a url="売上予測/売上予実_新規.html" mode="F_OK">売上実績+予測（新規別）</a>
         <a url="売上予測/売上予実_新規2.html" mode="F_OK">売上実績+予測（新規別2）</a>
+        
         <a url="/Project/費用予測/EMG費用状況.asp" mode="">費用状況</a>
         <a url="/Project/営業情報/保有リソース/本部要員数.asp" mode="">保有リソース</a>
       </menu>

@@ -22,15 +22,37 @@
         var main_XSL_name = "xsl/売上予実.xsl";
         var sub_XML_name = "売上予測/グループ予実_部門";
         var sub_XSL_name = "xsl/グループ予実.xsl";
-        var year = 2022;
+        var year = 2020;
         var fix = 70;
-        var actual = 7;
+        var actual = 6;
     </script>
 
     <script type="text/javascript">
         window.onload = function () {
             try {
                 $.debug("onload Start", decodeURI(location.href));
+
+                var d = new Date();
+                var yy = d.getFullYear();
+                var mm = d.getMonth() + 1;
+                var dd = d.getDate();
+                var yymm = (yy * 100) + mm;
+                var json = { yymm: yymm }
+
+                var json = $.WebApi_json("projectInfo/dayChk_json", json);
+                var OKday = json.day;
+                yymm = (parseInt(dd) < parseInt(OKday) ? $.yymmAdd(yymm, -1) : $.yymmAdd(yymm, 0)) 	 // データ有効月の計算(12日以前は前々月)
+
+                var yy = parseInt(yymm / 100)
+                var mm = yymm % 100
+
+
+                year = yy + (mm >= 10 ? 1 : 0)			   // 10月以降は次年度を表示
+
+                var b_yymm = ((year - 1) * 100) + 10
+                actual = $.yymmDiff(b_yymm, yymm)
+
+
                 mainDisp();
 
             } catch (e) {
@@ -45,7 +67,6 @@
 
     <script type="text/javascript">
         function mainDisp() {
-
             var work_main = "%year年度　売上実績 + 予測".replace("%year", year);
 
             var s_yyyy = year - 1;
@@ -62,13 +83,13 @@
                 fix:fix,
                 actual: actual
             };
-            $.debug.json("para", json);
             var Buff = makeHTML(main_XML_name, main_XSL_name, json);
             $(".dataG").html(Buff);
 
             $(".mainTitle").css("color", "");
         }
         function makeHTML(xml_name, xsl_name, json) {
+            $.debug.json("makeHTML", json);
             var xmlDoc = $.WebApi(xml_name, json);
             var xslDoc = $.loadXMLDoc(xsl_name);
 
@@ -81,8 +102,8 @@
             $(document).on("click", ".onKind", function (event) {
                 var kind = this.getAttribute("kind");
                 var yymm = ((year-1) * 100) + 10;
-                var json = { kind: kind, yymm: yymm, dispCnt: 12, fix: fix };
-
+                var json = { gName: kind, yymm: yymm, dispCnt: 12, fix: fix };
+                $.debug.json("", json);
                 var Buff = makeHTML(sub_XML_name, sub_XSL_name, json);
 
                 if (!(winObj && !winObj.closed)) {

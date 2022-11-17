@@ -1,9 +1,9 @@
 ﻿; (function ($) {
-        $.copy_json = function(d_json, s_json) {
-            for (key in s_json) {
+    $.copy_json = function (d_json, s_json) {
+        for (key in s_json) {
             d_json[key] = s_json[key];
-            }
-        },
+        }
+    },
         $.alert = function () {
             var work = [];
             var Cnt = arguments.length;
@@ -18,18 +18,18 @@
             alert(message);
 
         },
-        $.isJSON = function( arg ) {
-                arg = (typeof arg === "function") ? arg() : arg;
-                if (typeof arg !== "string") {
-                    return false;
-                }
-                try {
-                    arg = (!JSON) ? eval("(" + arg + ")") : JSON.parse(arg);
-                    return true;
-                } catch (e) {
-                    return false;
-                }
-            },
+        $.isJSON = function (arg) {
+            arg = (typeof arg === "function") ? arg() : arg;
+            if (typeof arg !== "string") {
+                return false;
+            }
+            try {
+                arg = (!JSON) ? eval("(" + arg + ")") : JSON.parse(arg);
+                return true;
+            } catch (e) {
+                return false;
+            }
+        },
         $.xml2str = function (xmlNode) {
             var xmlString = "";
             var browser = $.Browser.name;
@@ -339,36 +339,36 @@
             }
         },
         $.loadJSONDoc = function (url) {
-                // ①　$.loadXMLDoc("/aaa/bbb/abc.asp?p1=1&p2=2&p3=3");
-                // ②　$.loadXMLDoc(url,"p1=1&p2=2&p3=3");
-                // ③　$.loadXMLDoc(url,para1,para2,para3,.......);
-                // ④　$.loadXMLDoc(url,{p1:"p1",p2:"p2",.....});
+            // ①　$.loadXMLDoc("/aaa/bbb/abc.asp?p1=1&p2=2&p3=3");
+            // ②　$.loadXMLDoc(url,"p1=1&p2=2&p3=3");
+            // ③　$.loadXMLDoc(url,para1,para2,para3,.......);
+            // ④　$.loadXMLDoc(url,{p1:"p1",p2:"p2",.....});
 
-                var Buff = {};
-                var xmlDoc = null;
-                try {
-                    var nvc = new $.NameValueCollection();
+            var Buff = {};
+            var xmlDoc = null;
+            try {
+                var nvc = new $.NameValueCollection();
 
-                    // URL　にパラメータがついている場合①
-                    var Work = arguments[0].split("?");
-                    Buff["Url"] = Work[0];
-                    if (Work.length > 1) {
-                        nvc.Add(Work[1]);
-                    }
+                // URL　にパラメータがついている場合①
+                var Work = arguments[0].split("?");
+                Buff["Url"] = Work[0];
+                if (Work.length > 1) {
+                    nvc.Add(Work[1]);
+                }
 
-                    if (arguments.length == 2 && typeof (arguments[1]) == "object") {
-                        Buff["Arg"] = arguments[1];
-                    }
-                    //パラメータを別に指定した場合②③
-                    else if (arguments.length >= 2) {
-                        for (var i = 1; i < arguments.length; i++) {
-                            if (typeof (arguments[i]) == "string") {
-                                nvc.Add(arguments[i]);
-                            }
+                if (arguments.length == 2 && typeof (arguments[1]) == "object") {
+                    Buff["Arg"] = arguments[1];
+                }
+                //パラメータを別に指定した場合②③
+                else if (arguments.length >= 2) {
+                    for (var i = 1; i < arguments.length; i++) {
+                        if (typeof (arguments[i]) == "string") {
+                            nvc.Add(arguments[i]);
                         }
-                        Buff["Arg"] = nvc.ToEncodeString();
-                        //Buff["Arg"] = nvc.ToString();
                     }
+                    Buff["Arg"] = nvc.ToEncodeString();
+                    //Buff["Arg"] = nvc.ToString();
+                }
 
                 var returnValue = "";
                 $.ajax({
@@ -424,8 +424,8 @@
                 var defaultValue = arguments[1];
                 defaultValue = (typeof (defaultValue) == "undefined" ? "" : defaultValue);
                 return (typeof (para[s]) == "undefined" ? defaultValue : para[s]);
-                }
-            },
+            }
+        },
         $.convertAbsUrl = function (url) {
             return $("<a>").attr("href", url).get(0).href;
         },
@@ -474,7 +474,7 @@
                 return (value);
             }
         },
-        $.NameValueCollection = function() {
+        $.NameValueCollection = function () {
             this.Tab = {};
             this.Add = function () {
                 if (arguments.length == 1) {
@@ -494,42 +494,42 @@
                     if (value != "") this.Tab[key] = value;
                 }
             }
-        this.Check = function (key) {
-            var value = this.Tab[key];
-            value = (typeof (value) == "undefined" ? "" : value);
-            return (value);
-        }
-        this.ToEncodeString = function () {
-            var outTab = [];
-            for (var key in this.Tab) {
-                outTab.push(key + "=" + unicode2sjis(this.Tab[key]));
+            this.Check = function (key) {
+                var value = this.Tab[key];
+                value = (typeof (value) == "undefined" ? "" : value);
+                return (value);
             }
-            return (outTab.join("&"));
-        }
-        this.ToString = function () {
-            var outTab = [];
-            for (var key in this.Tab) {
-                outTab.push(key + "=" + this.Tab[key]);
+            this.ToEncodeString = function () {
+                var outTab = [];
+                for (var key in this.Tab) {
+                    outTab.push(key + "=" + unicode2sjis(this.Tab[key]));
+                }
+                return (outTab.join("&"));
             }
-            return (outTab.join("&"));
-        }
-        function unicode2sjis(str) {
-            var unicodeArray = [];
-            for (let i = 0; i < str.length; i++) {
-                unicodeArray.push(str.charCodeAt(i));
+            this.ToString = function () {
+                var outTab = [];
+                for (var key in this.Tab) {
+                    outTab.push(key + "=" + this.Tab[key]);
+                }
+                return (outTab.join("&"));
             }
-            var sjisArray = Encoding.convert(unicodeArray, {
-                to: 'SJIS',
-                from: 'UNICODE',
-                type: 'array'
-            });
-            //var sjisArray = unicode2sjis(para);
-            var sjisString = Encoding.urlEncode(sjisArray);
-            return (sjisString);
+            function unicode2sjis(str) {
+                var unicodeArray = [];
+                for (let i = 0; i < str.length; i++) {
+                    unicodeArray.push(str.charCodeAt(i));
+                }
+                var sjisArray = Encoding.convert(unicodeArray, {
+                    to: 'SJIS',
+                    from: 'UNICODE',
+                    type: 'array'
+                });
+                //var sjisArray = unicode2sjis(para);
+                var sjisString = Encoding.urlEncode(sjisArray);
+                return (sjisString);
             }
         },
 
-        $.strMonth = function(yymm) {
+        $.strMonth = function (yymm) {
             var strYYMM = "";
             if (yymm != "undefined") {
                 yy = parseInt(yymm / 100, 10);
@@ -538,7 +538,7 @@
             }
             return (strYYMM);
         },
-        $.numZ = function(num, width) {
+        $.numZ = function (num, width) {
             var n = 1;
             var w = width;
             var s = "";
@@ -554,7 +554,7 @@
             s = String(num + n);
             return (s.substr(1, width));
         },
-        $.yymmAdd = function(yymm, value) {
+        $.yymmAdd = function (yymm, value) {
             var yy, mm, ym
             yy = parseInt(yymm / 100, 10);
             mm = parseInt(yymm % 100, 10);
@@ -565,6 +565,19 @@
             mm = parseInt(ym % 12, 10);
             if (mm == 0) { yy--; mm = 12; }
             return ((yy * 100) + mm)
+        },
+        $.yymmDiff = function (base_yymm, yymm) {
+            var b_yy, b_mm, yy, mm, n
+            base_yymm = parseInt(base_yymm)
+            yymm = parseInt(yymm)
+            b_yy = parseInt(base_yymm / 100)
+            b_mm = base_yymm % 100;
+            yy = parseInt(yymm / 100)
+            mm = yymm % 100;
+
+            mm += (yy - b_yy) * 12
+            n = (mm - b_mm)
+            return (n);
         }
 
     })(jQuery);
