@@ -117,13 +117,21 @@
     <script language="JavaScript">
         function setName(para) {
             window.opener.parentExec("dummy" + para);
+            //"D:\xmlData\
+
         }
     </script>
 </head>
 <body>
+
+    <div>
+        <input type="checkbox" id="scales" name="scales" checked>
+        <label for="scales">Scales</label>
+    </div>
     <div class="box"></div>
     <button class="exec">実行</button>
     <button class="exit">終了</button>
+
     <iframe class="iframe_content"></iframe>
 </body>
 </html>

@@ -27,15 +27,16 @@
     <script type="text/javascript">
         var debug_mode = false;
         var debugWin;
+        var chaildWin;
     </script>
     <script>
         $(function () {
             $("img.EMG_Logo").on("click contextmenu", function (event) {
-                var closeMode = (!debugWin || debugWin.closed);
+                var closeMode1 = (!debugWin || debugWin.closed);
                 //$.debug("ABC", closeMode);
                 if (event.type == "click") {
                     // debugウインドウを開く($.debugで書き込めるようにする)
-                    if (closeMode) {
+                    if (closeMode1) {
                         var url = "/WebApi/project/__menu/debug/debug_window.html" + "?ts=" + event.timeStamp.toString();
                         var info = "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,left=0,top=0,resizable=yes,width=500,height=500,title='abc'";
                         debugWin = window.open(url, "debug_window", info);
@@ -47,7 +48,7 @@
                     }
                 }
                 else {
-                    if (!closeMode) {
+                    if (!closeMode1) {
                         debugWin.close();
                     }
                 }
@@ -57,9 +58,13 @@
     </script>
     <script type="text/javascript">
         $(window).on("unload", function () {
-            var closeMode = (!debugWin || debugWin.closed);
-            if (!closeMode) {
+            var closeMode1 = (!debugWin || debugWin.closed);
+            if (!closeMode1) {
                 debugWin.close();
+            }
+            var closeMode2 = (!chaildWin || chaildWin.closed);
+            if (!closeMode2) {
+                chaildWin.close();
             }
         });
         $(window).on("load", function () {
@@ -140,7 +145,6 @@
     </script>
     <script language="JavaScript">
         var parentInfo = "";
-        var chaildWin = null;
         function parentExec(o) {
             var Str = "";
             var mode = o.mode;
@@ -149,7 +153,7 @@
                 $.debug("click_xml", mode, o.item);
                 var xmlDoc = $.WebApi(o.item, o.option);
                 Str = $.xml2str(xmlDoc);
-                //$.fileOut(o.item, Str);
+                $.fileOut(o.item, Str);
             }
             else {
                 $.debug("click_json", mode, o.item);
