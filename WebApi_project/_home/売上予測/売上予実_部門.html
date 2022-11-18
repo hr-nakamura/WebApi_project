@@ -32,26 +32,9 @@
             try {
                 $.debug("onload Start", decodeURI(location.href));
 
-                var d = new Date();
-                var yy = d.getFullYear();
-                var mm = d.getMonth() + 1;
-                var dd = d.getDate();
-                var yymm = (yy * 100) + mm;
-                var json = { yymm: yymm }
-
-                var json = $.WebApi_json("projectInfo/dayChk_json", json);
-                var OKday = json.day;
-                yymm = (parseInt(dd) < parseInt(OKday) ? $.yymmAdd(yymm, -1) : $.yymmAdd(yymm, 0)) 	 // データ有効月の計算(12日以前は前々月)
-
-                var yy = parseInt(yymm / 100)
-                var mm = yymm % 100
-
-
-                year = yy + (mm >= 10 ? 1 : 0)			   // 10月以降は次年度を表示
-
-                var b_yymm = ((year - 1) * 100) + 10
-                actual = $.yymmDiff(b_yymm, yymm)
-
+                var work = chkActual();
+                year = work.year;
+                actual = work.actual;
 
                 mainDisp();
 
@@ -62,6 +45,33 @@
         window.onunload = function () {
             $.debug("onunload", location.href);
             if (winObj != null && !winObj.closed) winObj.close();
+        }
+        function chkActual() {
+            var d = new Date();
+            var yy = d.getFullYear();
+            var mm = d.getMonth() + 1;
+            var dd = d.getDate();
+            var yymm = (yy * 100) + mm;
+            var json = { yymm: yymm }
+
+            var json = $.WebApi_json("projectInfo/dayChk_json", json);
+            var OKday = json.day;
+            yymm = (parseInt(dd) < parseInt(OKday) ? $.yymmAdd(yymm, -1) : $.yymmAdd(yymm, 0)) 	 // データ有効月の計算(12日以前は前々月)
+
+            var yy = parseInt(yymm / 100)
+            var mm = yymm % 100
+
+
+            year = yy + (mm >= 10 ? 1 : 0)			   // 10月以降は次年度を表示
+
+            var b_yymm = ((year - 1) * 100) + 10
+            actual = $.yymmDiff(b_yymm, yymm);
+            var json = {
+                year: year,
+                b_yymm: b_yymm,
+                actual: actual
+            }
+            return (json);
         }
     </script>
 

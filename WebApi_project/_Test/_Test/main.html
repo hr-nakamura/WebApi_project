@@ -56,6 +56,11 @@
             $("body").on("load", function (event) {
                 try {
                     $.debug("**** load ****");
+
+                    var xstr = "/abc/xyz/123";
+                    var zstr = xstr.replace(/\//g, "-");
+                    $.alert(zstr);
+
                     //var x = $(this)[0].contentWindow.childFunc();
                 }
                 catch (error) {
@@ -79,7 +84,11 @@
         }
     </style>
 </head>
-                <body>
-                    <iframe class="group" />
-                </body>
+<body>
+    <div>
+        <input type="checkbox" class="xmlOut">
+        <label for="scales">xml出力</label>
+    </div>
+    <iframe class="group" />
+</body>
 </html >

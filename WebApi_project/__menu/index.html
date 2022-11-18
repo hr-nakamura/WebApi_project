@@ -145,7 +145,7 @@
     </script>
     <script language="JavaScript">
         var parentInfo = "";
-        function parentExec(o) {
+        function parentExec(o,xmlStat) {
             var Str = "";
             var mode = o.mode;
             $.debug("== parentExec == o.table", o.table, o.mode, o.item);
@@ -153,7 +153,10 @@
                 $.debug("click_xml", mode, o.item);
                 var xmlDoc = $.WebApi(o.item, o.option);
                 Str = $.xml2str(xmlDoc);
-                $.fileOut(o.item, Str);
+                if (xmlStat) {
+                    var fileName = o.item.replace(/\//g, "_");
+                    $.fileOut(fileName, Str);
+                }
             }
             else {
                 $.debug("click_json", mode, o.item);

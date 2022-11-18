@@ -30,7 +30,7 @@ namespace WebApi_project.Controllers
         public HttpResponseMessage Get(string Item)
         {
             HttpResponseMessage response = new HttpResponseMessage(); ;
-            MyDebug.Write("Json", "Get string Item (queryCheck)", Item );
+            //MyDebug.Write("Json", "Get string Item (queryCheck)", Item );
             
             var hProc = new hostProc.entryProc();
             string jsonStr = hProc.Entry_Check(Item);           // 引数の情報表示
@@ -43,7 +43,7 @@ namespace WebApi_project.Controllers
         }
         public HttpResponseMessage Get(string Item, string Json)
         {
-            MyDebug.Write("Json", "Get string Item, string Json", Item, Json.ToString());
+            //MyDebug.Write("Json", "Get string Item, string Json", Item, Json.ToString());
             var hProc = new hostProc.entryProc();
 
             EntryInfoJson EntryInfo = new EntryInfoJson();

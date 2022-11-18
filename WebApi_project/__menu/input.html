@@ -27,6 +27,10 @@
 
                 // 親の情報取得
                 var work = window.opener.parentInit();
+
+                $.debug.json("", work);
+                if (work.table == "xml") $(".xmlBox").attr("style", "display:'block'");
+                alert(work.item);
                 o = work;
                 var ret = makeBox(work);
 
@@ -47,7 +51,8 @@
                         var val = $(x[i]).val();
                         o.option[key] = val;
                     }
-                    window.opener.parentExec(o);
+                    var xmlStat = $(".xmlOut").prop("checked")
+                    window.opener.parentExec(o,xmlStat);
                 }
             })
             $(document).on("click", ".exit", function () {
@@ -95,24 +100,6 @@
             }
             return (true);
         }
-        function getQueryInfo() {
-            var queryString = window.location.search;
-            var queryObject = new Object();
-            if (queryString) {
-                queryString = queryString.substring(1);
-                var parameters = queryString.split('&');
-
-                for (var i = 0; i < parameters.length; i++) {
-                    var element = parameters[i].split('=');
-
-                    var paramName = decodeURIComponent(element[0]);
-                    var paramValue = decodeURIComponent(element[1]);
-
-                    queryObject[paramName] = paramValue;
-                }
-            }
-            return (queryObject);
-        }
     </script>
     <script language="JavaScript">
         function setName(para) {
@@ -124,14 +111,13 @@
 </head>
 <body>
 
-    <div>
-        <input type="checkbox" id="scales" name="scales" checked>
-        <label for="scales">Scales</label>
-    </div>
     <div class="box"></div>
     <button class="exec">実行</button>
     <button class="exit">終了</button>
-
+    <div class="xmlBox" style="display:none">
+        <input type="checkbox" class="xmlOut">
+        <label for="scales">xml出力</label>
+    </div>
     <iframe class="iframe_content"></iframe>
 </body>
 </html>

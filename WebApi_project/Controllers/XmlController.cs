@@ -22,7 +22,7 @@ namespace WebApi_project.Controllers
         // GET api/<controller>/5
         public HttpResponseMessage Get()
         {
-            MyDebug.Write("Xml", "Get");
+            //MyDebug.Write("Xml", "Get");
             XmlDocument xmlDoc = new XmlDocument();
             /*
                         // 呼び出せるリストを戻す
@@ -37,7 +37,7 @@ namespace WebApi_project.Controllers
         }
         public HttpResponseMessage Get(string Item, string Json)
         {
-            MyDebug.Write("Xml", "Get string Item, string Json", Item, Json.ToString());
+            //MyDebug.Write("Xml", "Get string Item, string Json", Item, Json.ToString());
 
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
