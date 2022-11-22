@@ -631,12 +631,16 @@ namespace WebApi_project.hostProc
                 {
                     var s = ex.Message;
                     var work = HttpUtility.UrlDecode(url, Encode);
-                    var Msg = new Dictionary<string, string>()
+                    var target_urlX = new Dictionary<string, string>()
+                        {
+                            { "url"  , work }
+                        };
+                    var Msg = new Dictionary<string, object>()
                         {
                             { "message" , "応答がありませんでした"},
                             { "Item"    , Item},
                             { "url"     , work },
-                            { "target"  , "{url:" + work + "}" }
+                            { "target"  , target_urlX }
                         };
 
                     // Dictionaryをシリアライズします。
