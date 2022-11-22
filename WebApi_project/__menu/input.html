@@ -28,7 +28,7 @@
                 // 親の情報取得
                 var work = window.opener.parentInit();
 
-                $.debug.json("", work);
+                $.debug.json("onload", work);
                 if (work.table == "xml") $(".xmlBox").attr("style", "display:'block'");
                 //alert(work.item);
                 o = work;
@@ -41,8 +41,10 @@
                 }
             })
             $(document).on("click", ".exec", function () {
-                if (typeof (o.option.message) == "string") {
-                    alert("実行できません");
+                var work = o.option.url.split("\/");
+                var ext = work[work.length-1].split('.').pop().split("?")[0];
+                if (typeof (o.option.message) == "string" && "json,xml".indexOf(ext) < 0 ) {
+                    $.alert("実行できません!", o.option.message);
                 }
                 else {
                     var x = $(".data");
