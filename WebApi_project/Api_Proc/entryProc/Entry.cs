@@ -635,7 +635,8 @@ namespace WebApi_project.hostProc
                         {
                             { "message" , "応答がありませんでした"},
                             { "Item"    , Item},
-                            { "url"     , work }
+                            { "url"     , work },
+                            { "target"  , "{url:" + work + "}" }
                         };
 
                     // Dictionaryをシリアライズします。
