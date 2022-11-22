@@ -41,8 +41,8 @@
                 }
             })
             $(document).on("click", ".exec", function () {
-                var work = o.option.url.split("\/");
-                var ext = work[work.length-1].split('.').pop().split("?")[0];
+                var work = o.option.target.url.split("\/");
+                var ext = work[work.length - 1].split('.').pop().split("?")[0];
                 if (typeof (o.option.message) == "string" && "json,xml".indexOf(ext) < 0 ) {
                     $.alert("実行できません!", o.option.message);
                 }
