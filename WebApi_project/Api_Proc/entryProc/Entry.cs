@@ -631,16 +631,15 @@ namespace WebApi_project.hostProc
                 {
                     var s = ex.Message;
                     var work = HttpUtility.UrlDecode(url, Encode);
-                    var target_urlX = new Dictionary<string, string>()
-                        {
-                            { "url"  , work }
-                        };
                     var Msg = new Dictionary<string, object>()
                         {
                             { "message" , "応答がありませんでした"},
                             { "Item"    , Item},
                             { "url"     , work },
-                            { "target"  , target_urlX }
+                            { "target"  , new Dictionary<string, string>(){
+                                { "url"  , work }
+                                }
+                            }
                         };
 
                     // Dictionaryをシリアライズします。
@@ -651,17 +650,16 @@ namespace WebApi_project.hostProc
             {
                 EntryInfoJson EntryInfo_Json = GetEntryTab_json(Item);
                 string work = EntryInfo_Json.data;
-                var target_urlX = new Dictionary<string, string>()
-                        {
-                            { "url"  , work }
-                        };
                 jsonStr = null;     // "{'error':'ABC'}";
                 var Msg = new Dictionary<string, object>()
                         {
                             { "message" , "xmlTabにはありませんでした"},
                             { "Item"    , Item},
                             { "url"     , work },
-                            { "target"  , target_urlX }
+                            { "target"  , new Dictionary<string, string>(){
+                                { "url"  , work }
+                                }
+                            }
                         };
                 jsonStr = System.Text.Json.JsonSerializer.Serialize(Msg);
             }
