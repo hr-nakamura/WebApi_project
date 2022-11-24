@@ -650,13 +650,18 @@ namespace WebApi_project.hostProc
             else
             {
                 EntryInfoJson EntryInfo_Json = GetEntryTab_json(Item);
-                string target_url = EntryInfo_Json.data;
+                string work = EntryInfo_Json.data;
+                var target_urlX = new Dictionary<string, string>()
+                        {
+                            { "url"  , work }
+                        };
                 jsonStr = null;     // "{'error':'ABC'}";
-                var Msg = new Dictionary<string, string>()
+                var Msg = new Dictionary<string, object>()
                         {
                             { "message" , "xmlTabにはありませんでした"},
                             { "Item"    , Item},
-                            { "url"     , target_url }
+                            { "url"     , work },
+                            { "target"  , target_urlX }
                         };
                 jsonStr = System.Text.Json.JsonSerializer.Serialize(Msg);
             }
