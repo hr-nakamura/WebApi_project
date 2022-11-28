@@ -17,6 +17,8 @@
 
     <title></title>
     <script type="text/javascript">
+        var selectGroup_url = "../_common/groupSelect.html";
+
         var winObj;
         var main_XML_name = "売上予測/売上予実_部門";
         var main_XSL_name = "xsl/売上予実.xsl";
@@ -27,9 +29,49 @@
         var year = 2022;
         var fix = 70;
         var actual = 7;
+
+        var o_group = null;
+
+        var MasterInfo = {
+            title: "売上予実_部門選択",
+            main_para: {
+                dispCmd: "課一覧",
+                dispName: "営業本部",
+                secMode: "開発",
+                year: 2021,
+                fix: 70,
+                yosoku: 3
+            },
+            sub_para: {
+            }
+        };
+
     </script>
 
     <script type="text/javascript">
+        $(window).on("ready", function () {
+            var randomh = Math.random();
+            selectGroup_url += "?ts=" + randomh;
+            $("iframe.group").attr("src", selectGroup_url);
+            o_group = ($("iframe.group").length == 1 ? $("iframe.group")[0] : null);
+
+            //var randomh = Math.random();
+            //main_url += "?ts=" + randomh;
+
+            //$("iframe.iframe_content").frame();
+            //$("iframe.iframe_content").attr("src", main_url);                // サブウインドオープン
+            //o_iframe = ($("iframe.iframe_content").length == 1 ? $("iframe.iframe_content")[0] : null);
+            //var d = new Date();
+            //year = d.getFullYear();
+            //mm = d.getMonth() + 1;
+            //dd = d.getDate();
+
+
+            //yymm = (year * 100) + mm;
+            //year = (mm > 10 ? year++ : year);
+
+
+        });
         window.onload = function () {
             try {
                 $.debug("onload Start", decodeURI(location.href));
@@ -52,6 +94,9 @@
 
                 var b_yymm = ((year - 1) * 100) + 10;
                 actual = $.yymmDiff(b_yymm, yymm);
+
+
+                updateGroup(MasterInfo.main_para);
 
                 mainDisp();
 
@@ -81,7 +126,7 @@
 
             var json = {
                 year: year,
-                fix:fix,
+                fix: fix,
                 actual: actual
             };
             $.debug.json("para", json);
@@ -97,12 +142,20 @@
             var Buff = $.transformNode(xmlDoc, xslDoc);
             return (Buff);
         }
+        function updateGroup(para) {
+            var json = { dispMode: "部", dispName: para.dispName, secMode: "開発", year: para.year };
+            var ret = o_group.contentWindow.updateData(json);
+            alert("X");
+            $(".group").css("height", ret.height);
+            $(".group").css("width", ret.width);
+            MasterInfo.main_para.dispName = ret.select;
+        }
     </script>
     <script type="text/javascript">
         $(function () {
             $(document).on("click", ".onKind", function (event) {
                 var kind = this.getAttribute("kind");
-                var yymm = ((year-1) * 100) + 10;
+                var yymm = ((year - 1) * 100) + 10;
                 var json = { kind: kind, yymm: yymm, dispCnt: 12, fix: fix };
 
                 var Buff = makeHTML(sub_XML_name, sub_XSL_name, json);
@@ -127,8 +180,31 @@
                     $(this).css("cursor", "");
                 }
             });
+            $("body").on("private_trigger", function (event) {
+                try {
+                    var trigger_type = arguments[1];
+                    $.debug("private_trigger", arguments[1], arguments[2], arguments[3]);
+                    $.copy_json(MasterInfo.sub_para, MasterInfo.main_para);
+
+                    MasterInfo.sub_para.dispCmd = "課詳細";
+                    MasterInfo.sub_para.dispName = arguments[3];
+                    var randomh = Math.random();
+                    sub_url += "?ts=" + randomh;
+                    o_subWin = window.open(sub_url, "個別収支詳細");
+                } catch (e) {
+                    alert(e.message);
+                }
+            });
         });
 
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $("body").on("private_groupSelect_change", function (event) {
+                MasterInfo.main_para.dispName = arguments[1];
+                //updateHTML(MasterInfo.main_para);
+            });
+        });
     </script>
     <script type="text/javascript">
         $(function () {
@@ -171,35 +247,39 @@
             background-color: lavender;
             padding: 4px 4px;
         }
-        .memo{
-            text-align:center;
+
+        .memo {
+            text-align: center;
+        }
+        .group {
+            border: solid 0px;
+            width: 0px;
+            height: 0px;
         }
     </style>
 </head>
 <body>
     <table>
-        <tr>
-            <td class="memo"><label class="mainTitle">売上実績+予測</label></td>
-        </tr>
-        <tr>
-            <td><label>グループ選択</label></td>
-            <td><iframe class="selectGroup"></iframe></td>
-        </tr>
-        <tr>
-            <td class="memo">
-                <input class="level" name="level" type="radio" value="70"><label>Ａ</label>
-                <input class="level" name="level" type="radio" value="50"><label>Ｂ</label>
-                <input class="level" name="level" type="radio" value="30"><label>Ｃ</label>
-                <input class="level" name="level" type="radio" value="10"><label>Ｄ</label>
-            </td>
-        </tr>
-        <tr>
-            <td class="memo">
-                <button class="prev"></button>
-                <label class="subTitle"></label>
-                <button class="next"></button>
-            </td>
-        </tr>
+        <caption><label class="mainTitle">売上実績+予測</label></caption>
+        <caption><label>グループ選択</label></caption>
+        <caption><iframe class="group"></iframe></caption>
+        <tbody>
+            <tr>
+                <td class="memo">
+                    <input class="level" name="level" type="radio" value="70"><label>Ａ</label>
+                    <input class="level" name="level" type="radio" value="50"><label>Ｂ</label>
+                    <input class="level" name="level" type="radio" value="30"><label>Ｃ</label>
+                    <input class="level" name="level" type="radio" value="10"><label>Ｄ</label>
+                </td>
+            </tr>
+            <tr>
+                <td class="memo">
+                    <button class="prev"></button>
+                    <label class="subTitle"></label>
+                    <button class="next"></button>
+                </td>
+            </tr>
+        </tbody>
     </table>
     <table align="center">
         <tbody>
