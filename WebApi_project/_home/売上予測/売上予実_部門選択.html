@@ -35,10 +35,9 @@
         var MasterInfo = {
             title: "売上予実_部門選択",
             main_para: {
-                dispCmd: "課一覧",
-                dispName: "営業本部",
+                dispCmd: "部",
                 secMode: "開発",
-                year: 2021,
+                year: 2023,
                 fix: 70,
                 yosoku: 3
             },
@@ -54,21 +53,6 @@
             selectGroup_url += "?ts=" + randomh;
             $("iframe.group").attr("src", selectGroup_url);
             o_group = ($("iframe.group").length == 1 ? $("iframe.group")[0] : null);
-
-            //var randomh = Math.random();
-            //main_url += "?ts=" + randomh;
-
-            //$("iframe.iframe_content").frame();
-            //$("iframe.iframe_content").attr("src", main_url);                // サブウインドオープン
-            //o_iframe = ($("iframe.iframe_content").length == 1 ? $("iframe.iframe_content")[0] : null);
-            //var d = new Date();
-            //year = d.getFullYear();
-            //mm = d.getMonth() + 1;
-            //dd = d.getDate();
-
-
-            //yymm = (year * 100) + mm;
-            //year = (mm > 10 ? year++ : year);
 
 
         });
@@ -95,11 +79,22 @@
                 var b_yymm = ((year - 1) * 100) + 10;
                 actual = $.yymmDiff(b_yymm, yymm);
 
+                var json = {
+                    year: year,
+                    fix: fix,
+                    actual: actual
+                };
 
+                var xmlDoc = $.WebApi(main_XML_name, json);
+                var xslDoc = $.loadXMLDoc("group.xsl");
+
+                var Buff = $.transformNode(xmlDoc, xslDoc);
+                alert(Buff);
+/*
                 updateGroup(MasterInfo.main_para);
 
                 mainDisp();
-
+*/
             } catch (e) {
                 $.alert("onload", e.message);
             }
