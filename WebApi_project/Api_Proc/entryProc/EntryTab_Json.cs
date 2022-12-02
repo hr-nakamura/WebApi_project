@@ -80,7 +80,12 @@ namespace WebApi_project.hostProc
                 dataX = "http://localhost/test/_jsonData/グループ予実_分類_JSON.json",
                 }
             },
-
+            { "売上予測/部門リスト", new EntryInfoJson{
+                type = "json",
+                data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_部門リスト_json.asp",
+                option ="{year:2023,fixLevel:70,dispCnt:12}",
+                }
+            },
             { "費用予測/費用状況", new EntryInfoJson{
                 type = "json",
                 data ="http://kansa.in.eandm.co.jp/Project/費用予測/json/EMG費用状況_JSON.asp",

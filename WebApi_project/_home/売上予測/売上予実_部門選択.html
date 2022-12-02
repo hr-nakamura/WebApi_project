@@ -82,19 +82,19 @@
                 var json = {
                     year: year,
                     fix: fix,
+                    dispCnt:12,
                     actual: actual
                 };
 
-                var xmlDoc = $.WebApi(main_XML_name, json);
-                var xslDoc = $.loadXMLDoc("group.xsl");
+                var xmlDoc = $.WebApi("売上予測/部門リスト", json);
+                var xslDoc = $.loadXMLDoc("xsl/売上予実_select.xsl");
 
                 var Buff = $.transformNode(xmlDoc, xslDoc);
-                alert(Buff);
-/*
-                updateGroup(MasterInfo.main_para);
+                $(".group").html(Buff);
+
 
                 mainDisp();
-*/
+
             } catch (e) {
                 $.alert("onload", e.message);
             }
@@ -175,22 +175,13 @@
                     $(this).css("cursor", "");
                 }
             });
-            $("body").on("private_trigger", function (event) {
-                try {
-                    var trigger_type = arguments[1];
-                    $.debug("private_trigger", arguments[1], arguments[2], arguments[3]);
-                    $.copy_json(MasterInfo.sub_para, MasterInfo.main_para);
 
-                    MasterInfo.sub_para.dispCmd = "課詳細";
-                    MasterInfo.sub_para.dispName = arguments[3];
-                    var randomh = Math.random();
-                    sub_url += "?ts=" + randomh;
-                    o_subWin = window.open(sub_url, "個別収支詳細");
-                } catch (e) {
-                    alert(e.message);
-                }
+            $(document,"#H_name").change(function () {
+                var r = $('option:selected').val();
+                alert(r);
             });
-        });
+
+         });
 
     </script>
     <script type="text/javascript">
@@ -257,7 +248,7 @@
     <table>
         <caption><label class="mainTitle">売上実績+予測</label></caption>
         <caption><label>グループ選択</label></caption>
-        <caption><iframe class="group"></iframe></caption>
+        <caption><dev class="group"/></caption>
         <tbody>
             <tr>
                 <td class="memo">
