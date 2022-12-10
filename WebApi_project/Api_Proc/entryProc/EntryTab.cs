@@ -16,7 +16,7 @@ namespace WebApi_project.hostProc
             { "部門収支/部門収支", new EntryInfoXml{
                 type = "xml",
                 data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp",
-                option = "{dispCmd:'課詳細',dispName:'293',secMode:'開発',year:2018,fix:70,yosoku:3}",
+                option = "{dispCmd:'部門一覧',dispName:'',secMode:'開発',year:2023,fix:70,yosoku:3}",
 //                option = "{dispCmd:'EMG',year:2022,fix:10,yosoku:3}",
                 }
             },
@@ -26,6 +26,13 @@ namespace WebApi_project.hostProc
                 option = "{dispMode:'課',secMode:'開発',year:2022}",
                 dataX = "/_Data/xml/部門リスト_課_XML.xml"
                 //dataX = "http://localhost/test/testX.asp"
+                }
+            },
+            { "部門収支/部門収支_配賦", new EntryInfoXml{
+                type = "xml",
+                data = "http://kansa.in.eandm.co.jp/Project/TEST/部門収支/xml/部門収支2_XML.asp",
+                option = "{dispCmd:'部門一覧',dispName:'',secMode:'開発',year:2023,fix:70,yosoku:3}",
+//                option = "{dispCmd:'EMG',year:2022,fix:10,yosoku:3}",
                 }
             },
         };

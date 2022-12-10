@@ -13,6 +13,15 @@ namespace WebApi_project.hostProc
     public partial class hostProc
     {
         //===================================================================================================================
+        public SortedDictionary<string, EntryInfoJson> test_JSON = new SortedDictionary<string, EntryInfoJson>() {
+            { "test/test_json", new EntryInfoJson{
+                type = "json",
+                data = "http://kansa.in.eandm.co.jp/Project/TEST/部門収支/xml/部門収支2_JSON.asp",
+                option = "{dispCmd:'部門一覧',dispName:'',secMode:'開発',year:2023,fix:70,yosoku:3}",
+                }
+            },
+        };
+        //===================================================================================================================
         public SortedDictionary<string, EntryInfoJson> projectInfo_JSON = new SortedDictionary<string, EntryInfoJson>() {
             { "projectInfo/memberInfo_json", new EntryInfoJson{
                 type = "method",
