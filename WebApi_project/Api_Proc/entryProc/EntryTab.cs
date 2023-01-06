@@ -15,23 +15,30 @@ namespace WebApi_project.hostProc
         public SortedDictionary<string, EntryInfoXml> 部門収支 = new SortedDictionary<string, EntryInfoXml>() {
             { "部門収支/部門収支", new EntryInfoXml{
                 type = "xml",
-                data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp",
+                data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支2_XML.asp",
                 option = "{dispCmd:'部門一覧',dispName:'',secMode:'開発',year:2023,fix:70,yosoku:3}",
 //                option = "{dispCmd:'EMG',year:2022,fix:10,yosoku:3}",
                 }
             },
             { "部門収支/部門リスト", new EntryInfoXml{
                 type = "xml",
-                data = "http://kansa.in.eandm.co.jp/Project/common_data/xmlProc/部門リスト_XML.asp",
-                option = "{dispMode:'課',secMode:'開発',year:2022}",
+                data = "http://kansa.in.eandm.co.jp/Project/common_data/xmlProc/部門リスト2_XML.asp",
+                option = "{dispMode:'課',secMode:'開発',year:2023}",
                 dataX = "/_Data/xml/部門リスト_課_XML.xml"
                 //dataX = "http://localhost/test/testX.asp"
                 }
             },
             { "部門収支/部門収支_配賦", new EntryInfoXml{
                 type = "xml",
-                data = "http://kansa.in.eandm.co.jp/Project/TEST/部門収支/xml/部門収支2_XML.asp",
-                option = "{dispCmd:'部門一覧',dispName:'',secMode:'開発',year:2023,fix:70,yosoku:3}",
+                data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支_XML.asp",
+                option = "{dispCmd:'EMG',dispName:'',secMode:'開発',year:2023,fix:70,yosoku:3}",
+//                option = "{dispCmd:'EMG',year:2022,fix:10,yosoku:3}",
+                }
+            },
+            { "部門収支/部門収支_配賦2", new EntryInfoXml{
+                type = "xml",
+                data = "http://kansa.in.eandm.co.jp/Project/部門収支/xml/部門収支2_XML.asp",
+                option = "{dispCmd:'統括詳細',dispName:'本社',secMode:'開発',year:2023,fix:70,yosoku:3}",
 //                option = "{dispCmd:'EMG',year:2022,fix:10,yosoku:3}",
                 }
             },

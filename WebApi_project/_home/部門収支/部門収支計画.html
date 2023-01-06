@@ -22,7 +22,7 @@
             main_para: {
                 dispCmd: "部門一覧",
                 secMode: "開発",
-                year: 2021,
+                year: 2023,
                 fix: 70,
                 yosoku: 3
             },
@@ -36,7 +36,7 @@
         var para = {
             dispCmd: "部門一覧",
             secMode: "開発",
-            year: 2020,
+            year: 2023,
             fix: 70,
             yosoku: 3
         }
@@ -92,6 +92,7 @@
             var dispCnt = 12;
             var yyyy = parseInt(yymm / 100, 10);
             var subTitle = "(" + $.strMonth(yymm) + "～" + $.strMonth($.yymmAdd(yymm, dispCnt - 1)) + ")";
+            $.debug.json(para);
 
             $(".mainTitle").html("部門収支計画");
 
