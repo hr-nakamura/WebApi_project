@@ -132,6 +132,12 @@ namespace WebApi_project.hostProc
                 option ="{year:2023,fixLevel:70,dispCnt:12}",
                 }
             },
+            { "売上予測/売上予実_部門選択", new EntryInfoXml{
+                type = "json",
+                data ="http://kansa.in.eandm.co.jp/Project/売上予測/json/売上予実_部門選択_JSON.asp",
+                option ="{year:2023,fix:70,gCode:400}",
+                }
+            },
         };
         public SortedDictionary<string, EntryInfoXml> 費用予測 = new SortedDictionary<string, EntryInfoXml>(){
             { "費用予測/費用状況", new EntryInfoXml{
